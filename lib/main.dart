@@ -31,8 +31,8 @@ import 'package:http/http.dart' as http;
 import 'en.dart';
 
 /// old url
-const String SERVER_ADDRESS = "https://demo.freaktemplate.com/bookappointment";
-const String IMAGE = "https://demo.freaktemplate.com/bookappointment/public/upload/banner/";
+const String SERVER_ADDRESS = "https://localguide.celibritychatbd.com";
+const String IMAGE = "https://localguide.celibritychatbd.com/public/upload/banner/";
 
 /// new url
 // const String SERVER_ADDRESS = "https://hairitgestione.eu";
