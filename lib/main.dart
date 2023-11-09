@@ -20,6 +20,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 //import 'package:flutter_native_admob/native_admob_controller.dart';
+//import 'package:flutter_native_admob/native_admob_controller.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:appcode3/CustomAds.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -32,7 +33,8 @@ import 'en.dart';
 
 /// old url
 const String SERVER_ADDRESS = "https://localguide.celibritychatbd.com";
-const String IMAGE = "https://localguide.celibritychatbd.com/public/upload/banner/";
+const String IMAGE =
+    "https://localguide.celibritychatbd.com/public/upload/banner/";
 
 /// new url
 // const String SERVER_ADDRESS = "https://hairitgestione.eu";
@@ -40,7 +42,7 @@ const String IMAGE = "https://localguide.celibritychatbd.com/public/upload/banne
 //
 const String serverToken =
     'AAAAPwd2Odk:APA91bHOAgCVVag8SlmMQLA_xX1mONxeNKcEK0TYOAxHfAp3CvbJ_tewOoIh7MSPK0bMy9H8A9cCJqQYZH71W_SC0nZlfR57i2lDuIGKPtS3HcUB17GpbS1QDrz-08XAXkzjqyClSgtM';
-    // 'AAAAdqUYLrU:APA91bGWUUQSVAUdLy15fhb8qQYVnX1ag7BKLzd0bQgGNI3kNBL7IUzFwa67e1ZwXgqe6K23SmvZyhnTdRmAx_QlJyn7MCpPD8awskrRjxeBLm7EAONDQwk2Pf1pfNXYrhP7xwagFuNa';
+// 'AAAAdqUYLrU:APA91bGWUUQSVAUdLy15fhb8qQYVnX1ag7BKLzd0bQgGNI3kNBL7IUzFwa67e1ZwXgqe6K23SmvZyhnTdRmAx_QlJyn7MCpPD8awskrRjxeBLm7EAONDQwk2Pf1pfNXYrhP7xwagFuNa';
 
 const LANGUAGE = "en";
 int PHONE_NUMBER_LENGTH = 10;
@@ -361,8 +363,7 @@ Future<void> onCallRejectedWhenTerminated(CallEvent callEvent) async {
       Uri.parse('https://fcm.googleapis.com/fcm/send'),
       headers: <String, String>{
         'Content-Type': 'application/json',
-        'Authorization':
-            'key=$serverToken',
+        'Authorization': 'key=$serverToken',
       },
       body: jsonEncode(
         <String, dynamic>{
