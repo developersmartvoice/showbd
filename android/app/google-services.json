@@ -1,0 +1,71 @@
+{
+  "project_info": {
+    "project_number": "270708128217",
+    "firebase_url": "https://doctor-finder-ios-default-rtdb.firebaseio.com",
+    "project_id": "doctor-finder-ios",
+    "storage_bucket": "doctor-finder-ios.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:270708128217:android:4db1853c2291d94cd401c8",
+        "android_client_info": {
+          "package_name": "doctor.finder.videocalling"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "270708128217-ck10lpr6scmhdt3b8grv1cnb23usatfu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "doctor.finder.videocalling",
+            "certificate_hash": "539fa6eab7057c3c6fb8db2a5291d61b4b3fadc7"
+          }
+        },
+        {
+          "client_id": "270708128217-ct9u3o7827cva8i6lnljh608affnovkd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "doctor.finder.videocalling",
+            "certificate_hash": "7cf18b24e781475f43e4b308699cdd3b950f0808"
+          }
+        },
+        {
+          "client_id": "270708128217-upu68dfl89jsgo1bq071rk80afv166p1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "doctor.finder.videocalling",
+            "certificate_hash": "46f956bb63f375db5f284e6fd6eeab17f726c834"
+          }
+        },
+        {
+          "client_id": "270708128217-mimr31i538gf8e8q03pc0q0296lpogc4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDFXpaf0zMSZOG1eYgN7y1vei-XFDpYDI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "270708128217-c72js549d8ruk97i4iov47gtbhlk7f2i.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "270708128217-9sect9hpe33fhmp0711el4r7p55g2mql.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "doctor.finder.videocalling"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
