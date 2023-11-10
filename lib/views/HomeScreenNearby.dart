@@ -22,6 +22,7 @@ String lon = "";
 String nextUrl = "";
 
 List<NearbyData> list2 = [];
+bool hasApiBeenCalled = false;
 NearbyDoctorsClass? nearbyDoctorsClass;
 
 class HomeScreenNearby extends StatefulWidget {
@@ -331,12 +332,13 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
 
     print("Here status ${status}");
 
-    if (status.isGranted) {
+    if (status.isGranted && !hasApiBeenCalled) {
       print("Here isGranted");
       Position position = await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.high);
 
       callApi(latitude: position.latitude, longitude: position.longitude);
+      hasApiBeenCalled = true;
 
     }  else if (status.isPermanentlyDenied) {
       print("Here isPermanentlyDenied");
