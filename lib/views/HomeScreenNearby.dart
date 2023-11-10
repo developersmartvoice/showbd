@@ -200,9 +200,9 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
           GridView.builder(
             shrinkWrap: true,
             physics: ClampingScrollPhysics(),
-            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 200,
-                childAspectRatio: 0.75,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 1,
+                childAspectRatio: 1.25,
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10),
             itemCount: list2.length,
