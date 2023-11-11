@@ -22,6 +22,7 @@ String lon = "";
 String nextUrl = "";
 
 List<NearbyData> list2 = [];
+bool hasApiBeenCalled = false;
 NearbyDoctorsClass? nearbyDoctorsClass;
 
 class HomeScreenNearby extends StatefulWidget {
@@ -200,9 +201,9 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
           GridView.builder(
             shrinkWrap: true,
             physics: ClampingScrollPhysics(),
-            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 200,
-                childAspectRatio: 0.75,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 1,
+                childAspectRatio: 1.25,
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10),
             itemCount: list2.length,
@@ -213,6 +214,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                 data.name,
                 data.departmentName,
                 data.id,
+                data.consultationFee,
               );
             },
           ),
@@ -237,7 +239,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
     );
   }
 
-  Widget nearByGridWidget(img, name, dept, id) {
+  Widget nearByGridWidget(img, name, dept, id,consultationFee) {
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -248,43 +250,76 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
       child: Container(
         decoration: BoxDecoration(
           color: WHITE,
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(5),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.25),
+              spreadRadius: 1,
+              blurRadius: 5,
+              offset: Offset(0, 2),
+            ),
+          ]
         ),
-        padding: EdgeInsets.fromLTRB(10, 10, 10, 20),
+        padding: EdgeInsets.fromLTRB(0, 0, 0, 40),
         child: Column(
           children: [
             Expanded(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: CachedNetworkImage(
-                  imageUrl: img,
-                  fit: BoxFit.cover,
-                  width: 250,
-                  placeholder: (context, url) => Container(
-                    color: Theme.of(context).primaryColorLight,
-                    child: Center(
-                      child: Image.asset(
-                        "assets/homeScreenImages/user_unactive.png",
-                        height: 50,
-                        width: 50,
+              child: Stack(
+                alignment: Alignment.topRight,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(5),
+                      topRight: Radius.circular(5),
+                    ),
+                    child: CachedNetworkImage(
+                      imageUrl: img,
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                      placeholder: (context, url) => Container(
+                        color: Theme.of(context).primaryColorLight,
+                        child: Center(
+                          child: Image.asset(
+                            "assets/homeScreenImages/user_unactive.png",
+                            height: 50,
+                            width: 50,
+                          ),
+                        ),
+                      ),
+                      errorWidget: (context, url, err) => Container(
+                        color: Theme.of(context).primaryColorLight,
+                        child: Center(
+                          child: Image.asset(
+                            "assets/homeScreenImages/user_unactive.png",
+                            height: 50,
+                            width: 50,
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                  errorWidget: (context, url, err) => Container(
-                    color: Theme.of(context).primaryColorLight,
+                  Container(
+                    width: 60.0, // Fixed width
+                    height: 40.0, // Fixed height
+                    margin: EdgeInsets.only(top: 20),
+                    decoration: BoxDecoration(
+                        color: Colors.blue.withOpacity(0.8),
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(5),
+                          bottomLeft: Radius.circular(5),
+                        )),
                     child: Center(
-                      child: Image.asset(
-                        "assets/homeScreenImages/user_unactive.png",
-                        height: 50,
-                        width: 50,
+                      child: Text(
+                        '\$' + consultationFee + "/h",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                    //child: Padding(
-                    //   padding: const EdgeInsets.all(20.0),
-                    // )
-                    //
                   ),
-                ),
+                ],
               ),
             ),
             SizedBox(
@@ -296,17 +331,22 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
               style: GoogleFonts.poppins(
-                  color: BLACK, fontSize: 13, fontWeight: FontWeight.w500),
+                color: BLACK,
+                fontSize: 13,
+                fontWeight: FontWeight.w500,
+              ),
             ),
             Text(
               dept,
               style: GoogleFonts.poppins(
-                  color: LIGHT_GREY_TEXT,
-                  fontSize: 9.5,
-                  fontWeight: FontWeight.w500),
+                color: LIGHT_GREY_TEXT,
+                fontSize: 9.5,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ],
         ),
+
       ),
     );
   }
@@ -331,12 +371,13 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
 
     print("Here status ${status}");
 
-    if (status.isGranted) {
+    if (status.isGranted && !hasApiBeenCalled) {
       print("Here isGranted");
       Position position = await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.high);
 
       callApi(latitude: position.latitude, longitude: position.longitude);
+      hasApiBeenCalled = true;
 
     }  else if (status.isPermanentlyDenied) {
       print("Here isPermanentlyDenied");
@@ -381,6 +422,8 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
           list2.addAll(nearbyDoctorsClass!.data!.nearbyData!);
           nextUrl = nearbyDoctorsClass!.data!.nextPageUrl!;
           print(nextUrl);
+          print(list2[8].name);
+          print(list2[8].consultationFee);
           isNearbyLoading = false;
         });
       }
