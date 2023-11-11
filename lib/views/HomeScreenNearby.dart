@@ -249,18 +249,26 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
       child: Container(
         decoration: BoxDecoration(
           color: WHITE,
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(5),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.25),
+              spreadRadius: 1,
+              blurRadius: 5,
+              offset: Offset(0, 2),
+            ),
+          ]
         ),
-        padding: EdgeInsets.fromLTRB(10, 10, 10, 20),
+        padding: EdgeInsets.fromLTRB(0, 0, 0, 40),
         child: Column(
           children: [
             Expanded(
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(5), topRight: Radius.circular(5)),
                 child: CachedNetworkImage(
                   imageUrl: img,
                   fit: BoxFit.cover,
-                  width: 250,
+                  width: double.infinity,
                   placeholder: (context, url) => Container(
                     color: Theme.of(context).primaryColorLight,
                     child: Center(
