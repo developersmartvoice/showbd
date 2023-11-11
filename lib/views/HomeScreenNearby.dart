@@ -299,14 +299,23 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(8.0),
-                    color: Colors.blue.withOpacity(0.8),
-                    child: Text(
-                      '\$'+consultationFee+"/h",  
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12.0,
-                        fontWeight: FontWeight.bold,
+                    width: 60.0, // Fixed width
+                    height: 40.0, // Fixed height
+                    margin: EdgeInsets.only(top: 20),
+                    decoration: BoxDecoration(
+                        color: Colors.blue.withOpacity(0.8),
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(5),
+                          bottomLeft: Radius.circular(5),
+                        )),
+                    child: Center(
+                      child: Text(
+                        '\$' + consultationFee + "/h",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
