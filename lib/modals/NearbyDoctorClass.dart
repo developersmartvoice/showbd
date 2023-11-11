@@ -108,6 +108,7 @@ class NearbyData {
   String? image;
   double? distance;
   String? departmentName;
+  String? consultationFee;
 
   NearbyData(
       {this.id,
@@ -115,7 +116,8 @@ class NearbyData {
         this.address,
         this.image,
         this.distance,
-        this.departmentName});
+        this.departmentName,
+        this.consultationFee});
 
   NearbyData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -124,6 +126,7 @@ class NearbyData {
     image = json['image'];
     //distance = double.parse(json['distance'].toString()) ?? 0.0;
     departmentName = json['department_name'];
+    consultationFee = json['consultation_fees'].toString();
   }
 
   Map<String, dynamic> toJson() {
@@ -134,6 +137,7 @@ class NearbyData {
     data['image'] = this.image;
     data['distance'] = this.distance;
     data['department_name'] = this.departmentName;
+    data['consultation_fees'] = this.consultationFee;
     return data;
   }
 }
