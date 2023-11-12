@@ -374,7 +374,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ? upCommingAppointments()
                               : Container()
                           : Container(),
-                      isLoad ? specialist() : Container(),
+                      isLoad ? Container() : Container(),
                       HomeScreenNearby(_scrollController2),
                     ],
                   ),
@@ -400,11 +400,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 carouselController: sliderController,
                 itemCount: bannerList.length,
                 itemBuilder: (context, index, realIndex) {
-                  return buildImage(index);
+                  // return buildImage(index);
+                  return Container();
                 },
                 options: CarouselOptions(
                   viewportFraction: 1,
-                  height: 220,
+                  height: 0,
                   initialPage: 0,
                   reverse: false,
                   autoPlay: true,
@@ -628,13 +629,13 @@ class _HomeScreenState extends State<HomeScreen> {
       children: [
         // Image.asset(
         //   "assets/homeScreenImages/header_bg.png",
-        //   height: MediaQuery.of(context).size.height * 0.23,
+        //   height: MediaQuery.of(context).size.height * 0.13,
         //   width: MediaQuery.of(context).size.width,
         //   fit: BoxFit.fill,
         // ),
         SafeArea(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
+            padding: const EdgeInsets.fromLTRB(16, 10, 16, 0),
             child: Column(
               children: [
                 // Row(
@@ -658,7 +659,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Expanded(
                       child: Container(
-                        height: 50,
+                        // height: 50,
                         //margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
