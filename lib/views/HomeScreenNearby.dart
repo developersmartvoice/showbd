@@ -91,31 +91,31 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                   nearByDoctors(),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16, 0, 16, 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(NEARBY_DOCTORS,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyText2!
-                            .apply(fontWeightDelta: 3)),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => AllNearby()),
-                        );
-                      },
-                      child: Text(SEE_ALL,
-                          style: Theme.of(context).textTheme.bodyText1!.apply(
-                                color: Theme.of(context).hintColor,
-                              )),
-                    )
-                  ],
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.fromLTRB(16, 0, 16, 10),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     children: [
+              //       Text(NEARBY_DOCTORS,
+              //           style: Theme.of(context)
+              //               .textTheme
+              //               .bodyText2!
+              //               .apply(fontWeightDelta: 3)),
+              //       TextButton(
+              //         onPressed: () {
+              //           Navigator.push(
+              //             context,
+              //             MaterialPageRoute(builder: (context) => AllNearby()),
+              //           );
+              //         },
+              //         child: Text(SEE_ALL,
+              //             style: Theme.of(context).textTheme.bodyText1!.apply(
+              //                   color: Theme.of(context).hintColor,
+              //                 )),
+              //       )
+              //     ],
+              //   ),
+              // ),
             ],
           );
   }
