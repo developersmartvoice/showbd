@@ -86,7 +86,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
               Column(
                 children: [
                   SizedBox(
-                    height: 10,
+                    height: 5,
                   ),
                   nearByDoctors(),
                 ],

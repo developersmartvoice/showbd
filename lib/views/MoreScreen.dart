@@ -68,23 +68,33 @@ class _MoreScreenState extends State<MoreScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
-        body: isLoading
-            ? LinearProgressIndicator()
-            : Column(
-                children: [
-                  header(),
-                  profile(),
-                  SizedBox(
-                    height: 5,
+    return Stack(
+      children: [
+        Image.asset(
+          "assets/moreScreenImages/header_bg.png",
+          height: 60,
+          fit: BoxFit.fill,
+          width: MediaQuery.of(context).size.width,
+        ),
+        SafeArea(
+          child: Scaffold(
+            backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
+            body: isLoading
+                ? LinearProgressIndicator()
+                : Column(
+                    children: [
+                      header(),
+                      profile(),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      options(),
+                      //_getAdContainer(),
+                    ],
                   ),
-                  options(),
-                  //_getAdContainer(),
-                ],
-              ),
-      ),
+          ),
+        )
+      ],
     );
   }
 
@@ -134,8 +144,7 @@ class _MoreScreenState extends State<MoreScreen> {
     return Stack(
       children: [
         Container(
-          child: Image.network(
-              "https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80",
+          child: Image.asset("assets/moreScreenImages/sign-in-banner.jpg",
               height: 130,
               width: MediaQuery.of(context).size.width,
               fit: BoxFit.cover),

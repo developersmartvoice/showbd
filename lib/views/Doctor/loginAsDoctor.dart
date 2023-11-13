@@ -253,22 +253,32 @@ class _LoginAsDoctorState extends State<LoginAsDoctor> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Stack(
-          children: [
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  header(),
-                  loginForm(),
-                ],
-              ),
-            ),
-            header(),
-          ],
+    return Stack(
+      children: [
+        Image.asset(
+          "assets/moreScreenImages/header_bg.png",
+          height: 140,
+          fit: BoxFit.fill,
+          width: MediaQuery.of(context).size.width,
         ),
-      ),
+        SafeArea(
+          child: Scaffold(
+            body: Stack(
+              children: [
+                SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      header(),
+                      loginForm(),
+                    ],
+                  ),
+                ),
+                // header(),
+              ],
+            ),
+          ),
+        )
+      ],
     );
   }
 
@@ -364,7 +374,7 @@ class _LoginAsDoctorState extends State<LoginAsDoctor> {
           children: [
             //SizedBox(height: 10,),
             Image.asset(
-              "assets/loginScreenImages/login_doctor.png",
+              "assets/loginScreenImages/guide-image.jpg",
               height: 180,
               width: 180,
             ),

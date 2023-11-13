@@ -13,7 +13,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 
 class SearchedScreen extends StatefulWidget {
-
   String keyword;
 
   SearchedScreen(this.keyword);
@@ -23,7 +22,6 @@ class SearchedScreen extends StatefulWidget {
 }
 
 class _SearchedScreenState extends State<SearchedScreen> {
-
   bool isSearching = false;
   bool isLoading = false;
   bool isErrorInLoading = false;
@@ -45,7 +43,8 @@ class _SearchedScreenState extends State<SearchedScreen> {
     _textController.text = widget.keyword;
     searchKeyword = widget.keyword;
     _scrollController.addListener(() {
-      if(_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
         //print("Loadmore");
         _loadMoreFunc();
       }
@@ -61,17 +60,16 @@ class _SearchedScreenState extends State<SearchedScreen> {
 
   Widget _getAdContainer() {
     return Container(
-      // height: 60,
-      // margin: EdgeInsets.all(10),
-      // child: NativeAdmob(
-      //   // Your ad unit id
-      //   adUnitID: ADMOB_ID,
-      //   controller: nativeAdController,
-      //   type: NativeAdmobType.banner,
-      // ),
-    );
+        // height: 60,
+        // margin: EdgeInsets.all(10),
+        // child: NativeAdmob(
+        //   // Your ad unit id
+        //   adUnitID: ADMOB_ID,
+        //   controller: nativeAdController,
+        //   type: NativeAdmobType.banner,
+        // ),
+        );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -79,63 +77,69 @@ class _SearchedScreenState extends State<SearchedScreen> {
       backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
       body: Stack(
         children: [
-          isErrorInLoading ? Container(
-            child: Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.search_off_rounded,
-                    size: 100,
-                    color: LIGHT_GREY_TEXT,
-                  ),
-                  SizedBox(height: 20,),
-                  Text(
-                    UNABLE_TO_LOAD_DATA_FORM_SERVER,
-                  )
-                ],
-              ),
-            ),
-          ) : SingleChildScrollView(
-            controller: _scrollController,
-            child: isLoading
-                ? Center(
-              child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation(
-                  Theme.of(context).hintColor
-                ),
-              ),
-            )
-                : Column(
-              children: [
-                header(),
-                upCommingAppointments(),
-                isLoadingMore
-                    ? Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CircularProgressIndicator(
-                        strokeWidth: 2,
-                      ),
-                      SizedBox(width: 5,),
-                      Text("Loading..."),
-                    ],
+          isErrorInLoading
+              ? Container(
+                  child: Center(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.search_off_rounded,
+                          size: 100,
+                          color: LIGHT_GREY_TEXT,
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          UNABLE_TO_LOAD_DATA_FORM_SERVER,
+                        )
+                      ],
+                    ),
                   ),
                 )
-                    : Container()
-              ],
-            ),
-          ),
+              : SingleChildScrollView(
+                  controller: _scrollController,
+                  child: isLoading
+                      ? Center(
+                          child: CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation(
+                                Theme.of(context).hintColor),
+                          ),
+                        )
+                      : Column(
+                          children: [
+                            header(),
+                            upCommingAppointments(),
+                            isLoadingMore
+                                ? Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        CircularProgressIndicator(
+                                          strokeWidth: 2,
+                                        ),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        Text("Loading..."),
+                                      ],
+                                    ),
+                                  )
+                                : Container()
+                          ],
+                        ),
+                ),
           header(),
         ],
       ),
     );
   }
 
-  Widget upCommingAppointments(){
+  Widget upCommingAppointments() {
     return Container(
       margin: EdgeInsets.fromLTRB(16, 0, 16, 5),
       child: ListView.builder(
@@ -143,7 +147,7 @@ class _SearchedScreenState extends State<SearchedScreen> {
         shrinkWrap: true,
         padding: EdgeInsets.all(0),
         physics: ClampingScrollPhysics(),
-        itemBuilder: (context, index){
+        itemBuilder: (context, index) {
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -154,7 +158,11 @@ class _SearchedScreenState extends State<SearchedScreen> {
                 _newData[index].address,
                 _newData[index].id,
               ),
-              ENABLE_ADS ? (index+1)%4 == 0 && index != 0 ? customAds.nativeAds(id: AD_TYPE) : Container() : Container()
+              ENABLE_ADS
+                  ? (index + 1) % 4 == 0 && index != 0
+                      ? customAds.nativeAds(id: AD_TYPE)
+                      : Container()
+                  : Container()
             ],
           );
         },
@@ -164,14 +172,15 @@ class _SearchedScreenState extends State<SearchedScreen> {
 
   Widget appointmentListWidget(img, name, department, address, id) {
     return InkWell(
-      onTap: (){
-        Navigator.push(context,
+      onTap: () {
+        Navigator.push(
+          context,
           MaterialPageRoute(builder: (context) => DetailsPage(id.toString())),
         );
       },
       child: Container(
         //height: 90,
-        margin: EdgeInsets.fromLTRB(0,0,0,10),
+        margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
         padding: EdgeInsets.all(8),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
@@ -186,17 +195,32 @@ class _SearchedScreenState extends State<SearchedScreen> {
                 height: 70,
                 width: 70,
                 fit: BoxFit.cover,
-                placeholder: (context, url) => Container(color: Theme.of(context).primaryColorLight, child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Image.asset("assets/homeScreenImages/user_unactive.png",height: 20, width: 20,),
-                ),),
-                errorWidget: (context,url,err) => Container(color: Theme.of(context).primaryColorLight, child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Image.asset("assets/homeScreenImages/user_unactive.png",height: 20, width: 20,),
-                )),
+                placeholder: (context, url) => Container(
+                  color: Theme.of(context).primaryColorLight,
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Image.asset(
+                      "assets/homeScreenImages/user_unactive.png",
+                      height: 20,
+                      width: 20,
+                    ),
+                  ),
+                ),
+                errorWidget: (context, url, err) => Container(
+                    color: Theme.of(context).primaryColorLight,
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Image.asset(
+                        "assets/homeScreenImages/user_unactive.png",
+                        height: 20,
+                        width: 20,
+                      ),
+                    )),
               ),
             ),
-            SizedBox(width: 10,),
+            SizedBox(
+              width: 10,
+            ),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -206,49 +230,51 @@ class _SearchedScreenState extends State<SearchedScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(name,
+                        Text(
+                          name,
                           style: GoogleFonts.poppins(
                               color: BLACK,
                               fontSize: 13,
-                              fontWeight: FontWeight.w500
-                          ),
+                              fontWeight: FontWeight.w500),
                         ),
-                        Text(department,
+                        Text(
+                          department,
                           style: GoogleFonts.poppins(
                               color: BLACK,
                               fontSize: 11,
-                              fontWeight: FontWeight.w400
-                          ),
+                              fontWeight: FontWeight.w400),
                         ),
                       ],
                     ),
                   ),
                   // SizedBox(height: 10,),
                   Container(
-                    child: Text(address.toString(),
+                    child: Text(
+                      address.toString(),
                       style: GoogleFonts.poppins(
                           color: LIGHT_GREY_TEXT,
                           fontSize: 10,
-                          fontWeight: FontWeight.w400
-                      ),
+                          fontWeight: FontWeight.w400),
                     ),
                   ),
                 ],
               ),
             ),
-            SizedBox(width: 10,),
+            SizedBox(
+              width: 10,
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget header(){
+  Widget header() {
     return Stack(
       children: [
         Image.asset(
           "assets/homeScreenImages/header_bg.png",
-          height: 180,
+          height: 140,
           width: MediaQuery.of(context).size.width,
           fit: BoxFit.fill,
         ),
@@ -257,24 +283,26 @@ class _SearchedScreenState extends State<SearchedScreen> {
             padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
             child: Column(
               children: [
-                Row(
-                  //crossAxisAlignment: CrossAxisAlignment.baseline,
-                  children: [
-                    Text("$SEARCH, ",
-                      style: GoogleFonts.poppins(
-                        color: WHITE,
-                      ),
-                    ),
-                    Text(HERE,
-                      style: GoogleFonts.poppins(
-                          color: WHITE,
-                          fontSize: 25,
-                          fontWeight: FontWeight.w500
-                      ),
-                    ),
-                  ],
+                // Row(
+                //   //crossAxisAlignment: CrossAxisAlignment.baseline,
+                //   children: [
+                //     Text("$SEARCH, ",
+                //       style: GoogleFonts.poppins(
+                //         color: WHITE,
+                //       ),
+                //     ),
+                //     Text(HERE,
+                //       style: GoogleFonts.poppins(
+                //           color: WHITE,
+                //           fontSize: 25,
+                //           fontWeight: FontWeight.w500
+                //       ),
+                //     ),
+                //   ],
+                // ),
+                SizedBox(
+                  height: 10,
                 ),
-                SizedBox(height: 10,),
                 Row(
                   children: [
                     Expanded(
@@ -296,9 +324,7 @@ class _SearchedScreenState extends State<SearchedScreen> {
                               ),
                               hintText: SEARCH_DOCTOR_BY_NAME,
                               hintStyle: GoogleFonts.poppins(
-                                  color: LIGHT_GREY_TEXT,
-                                  fontSize: 13
-                              ),
+                                  color: LIGHT_GREY_TEXT, fontSize: 13),
                               suffixIcon: Container(
                                 height: 20,
                                 width: 20,
@@ -308,8 +334,10 @@ class _SearchedScreenState extends State<SearchedScreen> {
                                     child: CircularProgressIndicator(
                                       strokeWidth: 1.5,
                                       valueColor: isLoading
-                                          ? AlwaysStoppedAnimation(Theme.of(context).hintColor)
-                                          : AlwaysStoppedAnimation(Colors.transparent),
+                                          ? AlwaysStoppedAnimation(
+                                              Theme.of(context).hintColor)
+                                          : AlwaysStoppedAnimation(
+                                              Colors.transparent),
                                     ),
                                   ),
                                 ),
@@ -325,28 +353,28 @@ class _SearchedScreenState extends State<SearchedScreen> {
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(color: WHITE),
                                 borderRadius: BorderRadius.circular(15),
-                              )
-                          ),
-                          onChanged: (val){
+                              )),
+                          onChanged: (val) {
                             // setState(() {
                             //   searchKeyword = val;
                             //   _onChanged(val);
                             //   print(searchKeyword);
                             // });
                           },
-                          onSubmitted: (val){
+                          onSubmitted: (val) {
                             setState(() {
                               searchKeyword = val;
                               _onSubmit(val);
                             });
                           },
                         ),
-
                       ),
                     ),
-                    SizedBox(width: 5,),
+                    SizedBox(
+                      width: 5,
+                    ),
                     InkWell(
-                      onTap: (){
+                      onTap: () {
                         _onSubmit(_textController.text);
                         //Navigator.push(context, MaterialPageRoute(builder: (context) => SearchedScreen(_textController.text)));
                       },
@@ -374,9 +402,8 @@ class _SearchedScreenState extends State<SearchedScreen> {
     );
   }
 
-  _onChanged(String value) async{
-
-    if(value.length == 0){
+  _onChanged(String value) async {
+    if (value.length == 0) {
       setState(() {
         _newData.clear();
         isErrorInLoading = false;
@@ -384,18 +411,19 @@ class _SearchedScreenState extends State<SearchedScreen> {
         print("length 0");
         print(_newData);
       });
-    }
-    else {
+    } else {
       setState(() {
         isLoading = true;
         isSearching = true;
       });
-      final response = await get(
-          Uri.parse("$SERVER_ADDRESS/api/searchdoctor?term=$value"))
-      .catchError((e){setState(() {
-        isLoading = false;
-        isErrorInLoading = true;
-      });});
+      final response =
+          await get(Uri.parse("$SERVER_ADDRESS/api/searchdoctor?term=$value"))
+              .catchError((e) {
+        setState(() {
+          isLoading = false;
+          isErrorInLoading = true;
+        });
+      });
       try {
         if (response.statusCode == 200) {
           final jsonResponse = jsonDecode(response.body);
@@ -410,26 +438,24 @@ class _SearchedScreenState extends State<SearchedScreen> {
             isLoading = false;
           });
         }
-      }catch(e){
+      } catch (e) {
         setState(() {
           isLoading = false;
           isErrorInLoading = true;
         });
       }
     }
-
   }
 
-  _loadMoreFunc() async{
-    if(nextUrl == null){
+  _loadMoreFunc() async {
+    if (nextUrl == null) {
       return;
     }
     setState(() {
       isLoadingMore = true;
     });
     print(searchKeyword);
-    final response = await get(
-        Uri.parse("$nextUrl&term=$searchKeyword"));
+    final response = await get(Uri.parse("$nextUrl&term=$searchKeyword"));
     if (response.statusCode == 200) {
       final jsonResponse = jsonDecode(response.body);
       searchDoctorClass = SearchDoctorClass.fromJson(jsonResponse);
@@ -444,10 +470,8 @@ class _SearchedScreenState extends State<SearchedScreen> {
     }
   }
 
-
-  _onSubmit(String value) async{
-
-    if(value.length == 0){
+  _onSubmit(String value) async {
+    if (value.length == 0) {
       setState(() {
         _newData.clear();
 
@@ -455,14 +479,13 @@ class _SearchedScreenState extends State<SearchedScreen> {
         print("length 0");
         print(_newData);
       });
-    }
-    else {
+    } else {
       setState(() {
         isLoading = true;
         isSearching = true;
       });
-      final response = await get(
-          Uri.parse("$SERVER_ADDRESS/api/searchdoctor?term=$value"));
+      final response =
+          await get(Uri.parse("$SERVER_ADDRESS/api/searchdoctor?term=$value"));
       if (response.statusCode == 200) {
         final jsonResponse = jsonDecode(response.body);
         searchDoctorClass = SearchDoctorClass.fromJson(jsonResponse);
@@ -477,9 +500,5 @@ class _SearchedScreenState extends State<SearchedScreen> {
         });
       }
     }
-
   }
-
-
-
 }
