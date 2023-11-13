@@ -361,7 +361,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.21,
+                        height: MediaQuery.of(context).size.height * 0.13,
                       ),
                       isLoad
                           ? slider()
@@ -782,10 +782,10 @@ class _HomeScreenState extends State<HomeScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(UPCOMING_APPOINTMENTS,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText2!
-                      .apply(fontWeightDelta: 3)),
+                  style: Theme.of(context).textTheme.bodyText2!.apply(
+                        fontWeightDelta: 3,
+                        color: Colors.orange,
+                      )),
               AppointmentList.length != 0
                   ? TextButton(
                       onPressed: () {
@@ -798,7 +798,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                       child: Text(SEE_ALL,
                           style: Theme.of(context).textTheme.bodyText1!.apply(
-                                color: Theme.of(context).hintColor,
+                                // color: Theme.of(context).hintColor,
+                                color: Colors.orange,
                               )),
                     )
                   : Container(
