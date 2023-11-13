@@ -91,31 +91,31 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                   nearByDoctors(),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(NEARBY_DOCTORS,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyText2!
-                            .apply(fontWeightDelta: 3)),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => AllNearby()),
-                        );
-                      },
-                      child: Text(SEE_ALL,
-                          style: Theme.of(context).textTheme.bodyText1!.apply(
-                                color: Theme.of(context).hintColor,
-                              )),
-                    )
-                  ],
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.fromLTRB(16, 0, 16, 10),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     children: [
+              //       Text(NEARBY_DOCTORS,
+              //           style: Theme.of(context)
+              //               .textTheme
+              //               .bodyText2!
+              //               .apply(fontWeightDelta: 3)),
+              //       TextButton(
+              //         onPressed: () {
+              //           Navigator.push(
+              //             context,
+              //             MaterialPageRoute(builder: (context) => AllNearby()),
+              //           );
+              //         },
+              //         child: Text(SEE_ALL,
+              //             style: Theme.of(context).textTheme.bodyText1!.apply(
+              //                   color: Theme.of(context).hintColor,
+              //                 )),
+              //       )
+              //     ],
+              //   ),
+              // ),
             ],
           );
   }
@@ -239,7 +239,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
     );
   }
 
-  Widget nearByGridWidget(img, name, dept, id,consultationFee) {
+  Widget nearByGridWidget(img, name, dept, id, consultationFee) {
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -249,17 +249,16 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: WHITE,
-          borderRadius: BorderRadius.circular(5),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.25),
-              spreadRadius: 1,
-              blurRadius: 5,
-              offset: Offset(0, 2),
-            ),
-          ]
-        ),
+            color: WHITE,
+            borderRadius: BorderRadius.circular(5),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.25),
+                spreadRadius: 1,
+                blurRadius: 5,
+                offset: Offset(0, 2),
+              ),
+            ]),
         padding: EdgeInsets.fromLTRB(0, 0, 0, 40),
         child: Column(
           children: [
@@ -346,7 +345,6 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
             ),
           ],
         ),
-
       ),
     );
   }
@@ -365,9 +363,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
       ].request();
     }
     status = await Permission.location.status;
-    setState(() {
-
-    });
+    setState(() {});
 
     print("Here status ${status}");
 
@@ -378,19 +374,20 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
 
       callApi(latitude: position.latitude, longitude: position.longitude);
       hasApiBeenCalled = true;
-
-    }  else if (status.isPermanentlyDenied) {
+    } else if (status.isPermanentlyDenied) {
       print("Here isPermanentlyDenied");
 
-      messageDialog(PERMISSION_NOT_GRANTED, "We required location permission to server you nearby doctors.");
+      messageDialog(PERMISSION_NOT_GRANTED,
+          "We required location permission to server you nearby doctors.");
       setState(() {
         isErrorInNearby = true;
       });
       _getLocationStart();
       return;
-    } else if(status.isDenied) {
+    } else if (status.isDenied) {
       print("Here is else part");
-      messageDialog(PERMISSION_NOT_GRANTED, "We required location permission to server you nearby doctors.");
+      messageDialog(PERMISSION_NOT_GRANTED,
+          "We required location permission to server you nearby doctors.");
       setState(() {
         isErrorInNearby = true;
       });
@@ -462,26 +459,24 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                       Map<Permission, PermissionStatus> statuses = await [
                         Permission.location,
                       ].request();
-                      print("statuses  --:  ${statuses[Permission.location]!.isDenied}");
+                      print(
+                          "statuses  --:  ${statuses[Permission.location]!.isDenied}");
                       if (statuses[Permission.location]!.isGranted) {
                         _getLocationStart();
                         // setState(() {
                         //   isErrorInNearby = false;
                         // });
                         print("call this function _getLocationStart");
-                      }else if(count==0){
+                      } else if (count == 0) {
                         _getLocationStart();
                         count++;
-                        setState(() {
-
-                        });
+                        setState(() {});
                       }
-          // else{
+                      // else{
                       //   messageDialog(PERMISSION_NOT_GRANTED, "User denied permissions to access the device's location.");
                       // }
                       // We didn't ask for permission yet or the permission has been denied before but not permanently.
                     }
-
 
 //
                     Navigator.pop(context);

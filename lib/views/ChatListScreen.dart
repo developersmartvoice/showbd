@@ -144,8 +144,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                                     itemBuilder: (context, index) {
                                       return StreamBuilder(
                                         stream: FirebaseDatabase.instance
-                                            .ref(
-                                                chatListDetails[index].userUid)
+                                            .ref(chatListDetails[index].userUid)
                                             .onValue,
                                         builder:
                                             (context, AsyncSnapshot snapshot) {
@@ -188,7 +187,8 @@ class _ChatListScreenState extends State<ChatListScreen> {
                                                 child: ListTile(
                                                   title: Text(
                                                     snapshot.data!.snapshot
-                                                        .value['name'] ?? "",
+                                                            .value['name'] ??
+                                                        "",
                                                     style: GoogleFonts.poppins(
                                                         fontWeight: chatListDetails[
                                                                         index]
@@ -442,16 +442,17 @@ class _ChatListScreenState extends State<ChatListScreen> {
             //     ],
             //   )
             : Column(
-              children: [
-                header(),
-                Container(
+                children: [
+                  header(),
+                  Container(
                     height: MediaQuery.of(context).size.height * 0.6,
                     margin: EdgeInsets.all(55),
                     alignment: Alignment.center,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset("assets/moreScreenImages/no chat vector.png"),
+                        Image.asset(
+                            "assets/moreScreenImages/no chat vector.png"),
                         SizedBox(
                           height: 20,
                         ),
@@ -468,7 +469,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                         Container(
                           alignment: Alignment.center,
                           child: Text(
-                              """"To initiate chat with doctor you need to book appointment first”""",
+                              """"To initiate chat with guide you need to book appointment first”""",
                               textAlign: TextAlign.center,
                               style: GoogleFonts.poppins(
                                 fontSize: 15,
@@ -477,8 +478,8 @@ class _ChatListScreenState extends State<ChatListScreen> {
                       ],
                     ),
                   ),
-              ],
-            ));
+                ],
+              ));
   }
 
   String messageTiming(DateTime dateTime) {

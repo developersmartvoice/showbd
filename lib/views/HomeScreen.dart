@@ -369,8 +369,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               height: Get.height * 0.35,
                               alignment: Alignment.center,
                               child: CircularProgressIndicator()),
-                      isLoad ? isLoggedIn ? upCommingAppointments() : Container() : Container(),
-                      isLoad ? specialist() : Container(),
+                      isLoad
+                          ? isLoggedIn
+                              ? upCommingAppointments()
+                              : Container()
+                          : Container(),
+                      isLoad ? Container() : Container(),
                       HomeScreenNearby(_scrollController2),
                     ],
                   ),
@@ -396,11 +400,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 carouselController: sliderController,
                 itemCount: bannerList.length,
                 itemBuilder: (context, index, realIndex) {
-                  return buildImage(index);
+                  // return buildImage(index);
+                  return Container();
                 },
                 options: CarouselOptions(
                   viewportFraction: 1,
-                  height: 220,
+                  height: 0,
                   initialPage: 0,
                   reverse: false,
                   autoPlay: true,
@@ -624,29 +629,29 @@ class _HomeScreenState extends State<HomeScreen> {
       children: [
         Image.asset(
           "assets/homeScreenImages/header_bg.png",
-          height: MediaQuery.of(context).size.height * 0.23,
+          height: MediaQuery.of(context).size.height * 0.16,
           width: MediaQuery.of(context).size.width,
           fit: BoxFit.fill,
         ),
         SafeArea(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
+            padding: const EdgeInsets.fromLTRB(16, 10, 16, 0),
             child: Column(
               children: [
-                Row(
-                  //crossAxisAlignment: CrossAxisAlignment.baseline,
-                  children: [
-                    Text("$WELCOME, ",
-                        style: Theme.of(context).textTheme.caption!.apply(
-                              color: Theme.of(context).backgroundColor,
-                              fontSizeDelta: 4,
-                            )),
-                    Text(userName,
-                        style: Theme.of(context).textTheme.headline5!.apply(
-                            color: Theme.of(context).backgroundColor,
-                            fontWeightDelta: 2)),
-                  ],
-                ),
+                // Row(
+                //   //crossAxisAlignment: CrossAxisAlignment.baseline,
+                //   children: [
+                //     Text("$WELCOME, ",
+                //         style: Theme.of(context).textTheme.caption!.apply(
+                //               color: Theme.of(context).backgroundColor,
+                //               fontSizeDelta: 4,
+                //             )),
+                //     Text(userName,
+                //         style: Theme.of(context).textTheme.headline5!.apply(
+                //             color: Theme.of(context).backgroundColor,
+                //             fontWeightDelta: 2)),
+                //   ],
+                // ),
                 SizedBox(
                   height: 10,
                 ),
@@ -654,7 +659,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Expanded(
                       child: Container(
-                        height: 50,
+                        // height: 50,
                         //margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
@@ -804,69 +809,73 @@ class _HomeScreenState extends State<HomeScreen> {
           SizedBox(
             height: 5,
           ),
-          AppointmentList.length == 0 ? Container(
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-                color: Theme.of(context).backgroundColor,
-                borderRadius: BorderRadius.circular(15)),
-            child: Padding(
-              padding: const EdgeInsets.all(30.0),
-              child: Column(
-                children: [
-                  Image.asset("assets/homeScreenImages/no_appo_img.png"),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Text(
-                    YOU_DONOT_HAVE_ANY_UPCOMING_APPOINTMENT,
-                    style: TextStyle(
-                        fontWeight: FontWeight.w900, fontSize: 11),
-                  ),
-                  SizedBox(
-                    height: 3,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        FIND_BEST_DOCTORS_NEAR_YOU_BY_SPECIALITY,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500, fontSize: 10),
-                      ),
-                      SizedBox(
-                        width: 3,
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => SpecialityScreen(),
-                              ));
-                        },
-                        child: Text(
-                          CLICK_HERE,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w900,
-                              fontSize: 10,
-                              color: AMBER),
+          AppointmentList.length == 0
+              ? Container(
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).backgroundColor,
+                      borderRadius: BorderRadius.circular(15)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(30.0),
+                    child: Column(
+                      children: [
+                        Image.asset("assets/homeScreenImages/no_appo_img.png"),
+                        SizedBox(
+                          height: 15,
                         ),
-                      ),
-                    ],
+                        Text(
+                          YOU_DONOT_HAVE_ANY_UPCOMING_APPOINTMENT,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w900, fontSize: 11),
+                        ),
+                        SizedBox(
+                          height: 3,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              FIND_BEST_DOCTORS_NEAR_YOU_BY_SPECIALITY,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500, fontSize: 10),
+                            ),
+                            SizedBox(
+                              width: 3,
+                            ),
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => SpecialityScreen(),
+                                    ));
+                              },
+                              child: Text(
+                                CLICK_HERE,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: 10,
+                                    color: AMBER),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ],
-              ),
-            ),
-          ) :ListView.builder(
-            itemCount: AppointmentList.length > 2 ? 2 : AppointmentList.length,
-            shrinkWrap: true,
-            padding: EdgeInsets.all(0),
-            physics: ClampingScrollPhysics(),
-            itemBuilder: (context, index) {
-              print("$SERVER_ADDRESS/public/upload/doctors/${AppointmentList[index].doctorls!.image}");
-              return appointmentListWidget(index, AppointmentList);
-            },
-          )
+                )
+              : ListView.builder(
+                  itemCount:
+                      AppointmentList.length > 2 ? 2 : AppointmentList.length,
+                  shrinkWrap: true,
+                  padding: EdgeInsets.all(0),
+                  physics: ClampingScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    print(
+                        "$SERVER_ADDRESS/public/upload/doctors/${AppointmentList[index].doctorls!.image}");
+                    return appointmentListWidget(index, AppointmentList);
+                  },
+                )
         ],
       ),
     );
@@ -896,7 +905,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ClipRRect(
               borderRadius: BorderRadius.circular(15),
               child: CachedNetworkImage(
-                imageUrl: "$SERVER_ADDRESS/public/upload/doctors/${data[index].doctorls!.image}",
+                imageUrl:
+                    "$SERVER_ADDRESS/public/upload/doctors/${data[index].doctorls!.image}",
                 height: 70,
                 width: 70,
                 fit: BoxFit.cover,
@@ -952,7 +962,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 9,),
+                  SizedBox(
+                    height: 9,
+                  ),
                   Container(
                     child: Text(
                       data[index].doctorls!.address!,
