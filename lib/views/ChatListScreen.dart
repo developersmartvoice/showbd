@@ -549,45 +549,57 @@ class _ChatListScreenState extends State<ChatListScreen> {
   }
 
   Widget header() {
-    return SafeArea(
-      child: Stack(
-        children: [
-          Image.asset(
-            "assets/moreScreenImages/header_bg.png",
-            height: 60,
-            fit: BoxFit.fill,
-            width: MediaQuery.of(context).size.width,
-          ),
-          Container(
-            height: 60,
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 5,
+    return Stack(
+      children: [
+        Image.asset(
+          "assets/moreScreenImages/header_bg.png",
+          height: 60,
+          fit: BoxFit.fill,
+          width: MediaQuery.of(context).size.width,
+        ),
+        SafeArea(
+          child: Stack(
+            children: [
+              Image.asset(
+                "assets/moreScreenImages/header_bg.png",
+                height: 60,
+                fit: BoxFit.fill,
+                width: MediaQuery.of(context).size.width,
+              ),
+              Container(
+                height: 60,
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 5,
+                    ),
+                    // InkWell(
+                    //   onTap: () {
+                    //     Navigator.pop(context);
+                    //   },
+                    //   child: Image.asset(
+                    //     "assets/moreScreenImages/back.png",
+                    //     height: 25,
+                    //     width: 22,
+                    //   ),
+                    // ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      'Recent chats',
+                      style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w600,
+                          color: WHITE,
+                          fontSize: 22),
+                    )
+                  ],
                 ),
-                // InkWell(
-                //   onTap: () {
-                //     Navigator.pop(context);
-                //   },
-                //   child: Image.asset(
-                //     "assets/moreScreenImages/back.png",
-                //     height: 25,
-                //     width: 22,
-                //   ),
-                // ),
-                SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  'Recent chats',
-                  style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.w600, color: WHITE, fontSize: 22),
-                )
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
+        )
+      ],
     );
   }
 }

@@ -15,13 +15,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'SpecialityScreen.dart';
 
 class UserPastAppointments extends StatefulWidget {
-
   @override
   _UserPastAppointmentsState createState() => _UserPastAppointmentsState();
 }
 
 class _UserPastAppointmentsState extends State<UserPastAppointments> {
-
   List<AppointmentData> list = [];
   String? userId;
   Future? loadAppointments;
@@ -35,16 +33,17 @@ class _UserPastAppointmentsState extends State<UserPastAppointments> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    SharedPreferences.getInstance().then((pref){
+    SharedPreferences.getInstance().then((pref) {
       setState(() {
         userId = pref.getString("userId") ?? "";
         print(userId);
-        loadAppointments = fetchUpcomingAppointments( );
+        loadAppointments = fetchUpcomingAppointments();
       });
     });
     _scrollController.addListener(() {
       print(_scrollController.position.pixels);
-      if(_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
         //print("Loadmore");
         loadMore();
       }
@@ -52,18 +51,19 @@ class _UserPastAppointmentsState extends State<UserPastAppointments> {
     //print(widget.userAppointmentsClass.data.length);
   }
 
-  fetchUpcomingAppointments() async{
-    final response = await get(Uri.parse("$SERVER_ADDRESS/api/userspastappointment?user_id=$userId"));
-    if(response.statusCode == 200){
+  fetchUpcomingAppointments() async {
+    final response = await get(
+        Uri.parse("$SERVER_ADDRESS/api/userspastappointment?user_id=$userId"));
+    if (response.statusCode == 200) {
       final jsonResponse = jsonDecode(response.body);
-      if(jsonResponse['success'].toString() == "1"){
+      if (jsonResponse['success'].toString() == "1") {
         setState(() {
           isAppointmentExist = true;
           userAppointmentsClass = UserAppointmentsClass.fromJson(jsonResponse);
           list.addAll(userAppointmentsClass!.data!.appointmentData!);
           nextUrl = userAppointmentsClass!.data!.nextPageUrl!;
         });
-      }else{
+      } else {
         setState(() {
           isAppointmentExist = false;
         });
@@ -71,10 +71,9 @@ class _UserPastAppointmentsState extends State<UserPastAppointments> {
     }
   }
 
-  loadMore() async{
-    if(nextUrl != "null") {
-      final response = await get(
-          Uri.parse("$nextUrl&user_id=$userId"));
+  loadMore() async {
+    if (nextUrl != "null") {
+      final response = await get(Uri.parse("$nextUrl&user_id=$userId"));
       if (response.statusCode == 200) {
         final jsonResponse = jsonDecode(response.body);
         if (jsonResponse['success'].toString() == "1") {
@@ -85,9 +84,7 @@ class _UserPastAppointmentsState extends State<UserPastAppointments> {
             nextUrl = userAppointmentsClass!.data!.nextPageUrl!;
           });
         } else {
-          setState(() {
-
-          });
+          setState(() {});
         }
       }
     }
@@ -95,22 +92,33 @@ class _UserPastAppointmentsState extends State<UserPastAppointments> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          flexibleSpace: header(),
-          leading: Container(),
+    return Stack(
+      children: [
+        Image.asset(
+          "assets/moreScreenImages/header_bg.png",
+          height: 60,
+          fit: BoxFit.fill,
+          width: MediaQuery.of(context).size.width,
         ),
-        backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
-        body: upCommingAppointments(),
-      ),
+        SafeArea(
+          child: Scaffold(
+            appBar: AppBar(
+              flexibleSpace: header(),
+              leading: Container(),
+            ),
+            backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
+            body: upCommingAppointments(),
+          ),
+        )
+      ],
     );
   }
 
-  Widget header(){
+  Widget header() {
     return Stack(
       children: [
-        Image.asset("assets/moreScreenImages/header_bg.png",
+        Image.asset(
+          "assets/moreScreenImages/header_bg.png",
           height: 60,
           fit: BoxFit.fill,
           width: MediaQuery.of(context).size.width,
@@ -119,14 +127,13 @@ class _UserPastAppointmentsState extends State<UserPastAppointments> {
           height: 60,
           child: Row(
             children: [
-              SizedBox(width: 15,),
+              SizedBox(
+                width: 15,
+              ),
               Text(
                 ALL_APPOINTMENTS,
                 style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w600,
-                    color: WHITE,
-                    fontSize: 22
-                ),
+                    fontWeight: FontWeight.w600, color: WHITE, fontSize: 22),
               )
             ],
           ),
@@ -137,19 +144,18 @@ class _UserPastAppointmentsState extends State<UserPastAppointments> {
 
   Widget _getAdContainer() {
     return Container(
-      // height: 60,
-      // margin: EdgeInsets.all(10),
-      // child: NativeAdmob(
-      //   // Your ad unit id
-      //   adUnitID: ADMOB_ID,
-      //   controller: nativeAdController,
-      //   type: NativeAdmobType.banner,
-      // ),
-    );
+        // height: 60,
+        // margin: EdgeInsets.all(10),
+        // child: NativeAdmob(
+        //   // Your ad unit id
+        //   adUnitID: ADMOB_ID,
+        //   controller: nativeAdController,
+        //   type: NativeAdmobType.banner,
+        // ),
+        );
   }
 
-
-  Widget upCommingAppointments(){
+  Widget upCommingAppointments() {
     return Container(
       margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
       child: SingleChildScrollView(
@@ -158,11 +164,13 @@ class _UserPastAppointmentsState extends State<UserPastAppointments> {
           //mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(height: 5,),
+            SizedBox(
+              height: 5,
+            ),
             FutureBuilder(
               future: loadAppointments,
-              builder: (context, snapshot){
-                if(snapshot.connectionState == ConnectionState.waiting){
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
                   return Container(
                     height: MediaQuery.of(context).size.height - 100,
                     width: MediaQuery.of(context).size.width,
@@ -170,77 +178,83 @@ class _UserPastAppointmentsState extends State<UserPastAppointments> {
                       child: CircularProgressIndicator(),
                     ),
                   );
-                }else if(snapshot.connectionState == ConnectionState.done && isAppointmentExist){
+                } else if (snapshot.connectionState == ConnectionState.done &&
+                    isAppointmentExist) {
                   return ListView.builder(
-                    itemCount: nextUrl == "null" ? list.length : list.length + 1,
+                    itemCount:
+                        nextUrl == "null" ? list.length : list.length + 1,
                     shrinkWrap: true,
                     padding: EdgeInsets.all(0),
                     physics: ClampingScrollPhysics(),
-                    itemBuilder: (context, index){
-                      if(list.length == index){
+                    itemBuilder: (context, index) {
+                      if (list.length == index) {
                         return Padding(
                           padding: const EdgeInsets.all(15.0),
                           child: LinearProgressIndicator(),
                         );
-                      }else {
+                      } else {
                         return Column(
                           children: [
                             appointmentListWidget(index, list),
-                            ENABLE_ADS ? (index+1)%4 == 0 && index != 0 ? customAds.nativeAds(id: AD_TYPE) : Container() : Container()
+                            ENABLE_ADS
+                                ? (index + 1) % 4 == 0 && index != 0
+                                    ? customAds.nativeAds(id: AD_TYPE)
+                                    : Container()
+                                : Container()
                           ],
                         );
                       }
                     },
                   );
-                }else{
+                } else {
                   return Container(
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                         color: Theme.of(context).backgroundColor,
-                        borderRadius: BorderRadius.circular(15)
-                    ),
+                        borderRadius: BorderRadius.circular(15)),
                     child: Padding(
                       padding: const EdgeInsets.all(30.0),
                       child: Column(
                         children: [
                           Image.asset(
-                              "assets/homeScreenImages/no_appo_img.png"
+                              "assets/homeScreenImages/no_appo_img.png"),
+                          SizedBox(
+                            height: 15,
                           ),
-                          SizedBox(height: 15,),
                           Text(
                             YOU_DONOT_HAVE_ANY_UPCOMING_APPOINTMENT,
                             style: TextStyle(
-                                fontWeight: FontWeight.w900,
-                                fontSize: 11
-                            ),
+                                fontWeight: FontWeight.w900, fontSize: 11),
                           ),
-                          SizedBox(height: 3,),
+                          SizedBox(
+                            height: 3,
+                          ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
                                 FIND_BEST_DOCTORS_NEAR_YOU_BY_SPECIALITY,
                                 style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 10
-                                ),
+                                    fontWeight: FontWeight.w500, fontSize: 10),
                               ),
-                              SizedBox(width: 3,),
+                              SizedBox(
+                                width: 3,
+                              ),
                               InkWell(
-                                onTap: (){
-                                  Navigator.push(context,
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
                                       MaterialPageRoute(
-                                        builder: (context) => SpecialityScreen(),
-                                      )
-                                  );
+                                        builder: (context) =>
+                                            SpecialityScreen(),
+                                      ));
                                 },
                                 child: Text(
                                   CLICK_HERE,
                                   style: TextStyle(
                                       fontWeight: FontWeight.w900,
                                       fontSize: 10,
-                                      color: AMBER
-                                  ),
+                                      color: AMBER),
                                 ),
                               ),
                             ],
@@ -258,17 +272,19 @@ class _UserPastAppointmentsState extends State<UserPastAppointments> {
     );
   }
 
-  Widget appointmentListWidget(int index,List<AppointmentData> data) {
+  Widget appointmentListWidget(int index, List<AppointmentData> data) {
     return InkWell(
       borderRadius: BorderRadius.circular(10),
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(
-          builder: (context) => UserAppointmentDetails(data[index].id.toString())
-        ));
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    UserAppointmentDetails(data[index].id.toString())));
       },
       child: Container(
         height: 90,
-        margin: EdgeInsets.fromLTRB(0,5,0,5),
+        margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
         padding: EdgeInsets.all(8),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
@@ -283,17 +299,32 @@ class _UserPastAppointmentsState extends State<UserPastAppointments> {
                 height: 70,
                 width: 70,
                 fit: BoxFit.cover,
-                placeholder: (context, url) => Container(color: Theme.of(context).primaryColorLight, child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Image.asset("assets/homeScreenImages/user_unactive.png",height: 20, width: 20,),
-                ),),
-                errorWidget: (context,url,err) => Container(color: Theme.of(context).primaryColorLight, child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Image.asset("assets/homeScreenImages/user_unactive.png",height: 20, width: 20,),
-                )),
+                placeholder: (context, url) => Container(
+                  color: Theme.of(context).primaryColorLight,
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Image.asset(
+                      "assets/homeScreenImages/user_unactive.png",
+                      height: 20,
+                      width: 20,
+                    ),
+                  ),
+                ),
+                errorWidget: (context, url, err) => Container(
+                    color: Theme.of(context).primaryColorLight,
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Image.asset(
+                        "assets/homeScreenImages/user_unactive.png",
+                        height: 20,
+                        width: 20,
+                      ),
+                    )),
               ),
             ),
-            SizedBox(width: 10,),
+            SizedBox(
+              width: 10,
+            ),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -303,39 +334,41 @@ class _UserPastAppointmentsState extends State<UserPastAppointments> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(data[index].name!,
+                        Text(
+                          data[index].name!,
                           style: GoogleFonts.poppins(
                               color: BLACK,
                               fontSize: 13,
-                              fontWeight: FontWeight.w500
-                          ),
+                              fontWeight: FontWeight.w500),
                         ),
-                        Text(data[index].departmentName!,
+                        Text(
+                          data[index].departmentName!,
                           style: GoogleFonts.poppins(
                               color: BLACK,
                               fontSize: 11,
-                              fontWeight: FontWeight.w400
-                          ),
+                              fontWeight: FontWeight.w400),
                         ),
                       ],
                     ),
                   ),
                   // SizedBox(height: 10,),
                   Container(
-                    child: Text(data[index].address!,
+                    child: Text(
+                      data[index].address!,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: GoogleFonts.poppins(
                           color: LIGHT_GREY_TEXT,
                           fontSize: 10,
-                          fontWeight: FontWeight.w400
-                      ),
+                          fontWeight: FontWeight.w400),
                     ),
                   ),
                 ],
               ),
             ),
-            SizedBox(width: 10,),
+            SizedBox(
+              width: 10,
+            ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -345,20 +378,24 @@ class _UserPastAppointmentsState extends State<UserPastAppointments> {
                   height: 17,
                   width: 17,
                 ),
-                SizedBox(height: 5,),
-                Text(data[index].date.toString().substring(8)+"-"+data[index].date.toString().substring(5,7)+"-"+data[index].date.toString().substring(0,4),
+                SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  data[index].date.toString().substring(8) +
+                      "-" +
+                      data[index].date.toString().substring(5, 7) +
+                      "-" +
+                      data[index].date.toString().substring(0, 4),
                   style: GoogleFonts.poppins(
                       color: LIGHT_GREY_TEXT,
                       fontSize: 11,
-                      fontWeight: FontWeight.w400
-                  ),
+                      fontWeight: FontWeight.w400),
                 ),
-                Text(data[index].slot!,
+                Text(
+                  data[index].slot!,
                   style: GoogleFonts.poppins(
-                      color: BLACK,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500
-                  ),
+                      color: BLACK, fontSize: 15, fontWeight: FontWeight.w500),
                 ),
               ],
             ),
@@ -367,5 +404,4 @@ class _UserPastAppointmentsState extends State<UserPastAppointments> {
       ),
     );
   }
-
 }

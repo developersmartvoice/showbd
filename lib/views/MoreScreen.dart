@@ -68,23 +68,33 @@ class _MoreScreenState extends State<MoreScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
-        body: isLoading
-            ? LinearProgressIndicator()
-            : Column(
-                children: [
-                  header(),
-                  profile(),
-                  SizedBox(
-                    height: 5,
+    return Stack(
+      children: [
+        Image.asset(
+          "assets/moreScreenImages/header_bg.png",
+          height: 60,
+          fit: BoxFit.fill,
+          width: MediaQuery.of(context).size.width,
+        ),
+        SafeArea(
+          child: Scaffold(
+            backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
+            body: isLoading
+                ? LinearProgressIndicator()
+                : Column(
+                    children: [
+                      header(),
+                      profile(),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      options(),
+                      //_getAdContainer(),
+                    ],
                   ),
-                  options(),
-                  //_getAdContainer(),
-                ],
-              ),
-      ),
+          ),
+        )
+      ],
     );
   }
 
