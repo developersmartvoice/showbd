@@ -209,6 +209,8 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
             itemCount: list2.length,
             itemBuilder: (BuildContext ctx, index) {
               var data = list2[index];
+
+              // print("");
               return nearByGridWidget(
                 data.image,
                 data.name,
@@ -302,7 +304,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                     height: 40.0, // Fixed height
                     margin: EdgeInsets.only(top: 20),
                     decoration: BoxDecoration(
-                        color: Colors.blue.withOpacity(0.8),
+                        color: Color.fromARGB(255, 255, 94, 0).withOpacity(0.8),
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(5),
                           bottomLeft: Radius.circular(5),
