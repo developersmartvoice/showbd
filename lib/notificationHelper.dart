@@ -1,5 +1,3 @@
-
-
 import 'dart:io';
 
 import 'package:appcode3/views/ChatScreen.dart';
@@ -9,8 +7,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'views/Doctor/DoctorAppointmentDetails.dart';
 import 'views/UserAppointmentDetails.dart';
 
-class NotificationHelper{
-
+class NotificationHelper {
   String? title;
   String? body;
   String? payload;
@@ -19,8 +16,7 @@ class NotificationHelper{
   BuildContext? context;
   FlutterLocalNotificationsPlugin? flutterLocalNotificationsPlugin;
 
-
-  NotificationHelper(){
+  NotificationHelper() {
     initialize();
     print("\n\nPayload : $payload");
   } // initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project
@@ -28,24 +24,24 @@ class NotificationHelper{
   Future<void> checkNotificationStatus(String id) async {
     final notifications = await flutterLocalNotificationsPlugin!
         .resolvePlatformSpecificImplementation<
-        AndroidFlutterLocalNotificationsPlugin>()
+            AndroidFlutterLocalNotificationsPlugin>()
         ?.getActiveNotifications();
 
     bool notificationShown = notifications!.any((notification) =>
-    notification.id == id &&
+        notification.id == id &&
         notification.channelId == 'channel_id'); // Replace with your channel ID
 
     print('Notification with ID $id is shown: $notificationShown');
 
-    if(notificationShown){
+    if (notificationShown) {
       await flutterLocalNotificationsPlugin!.cancel(int.parse(id));
     }
   }
 
-  initialize() async{
+  initialize() async {
     flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
     const AndroidInitializationSettings initializationSettingsAndroid =
-    AndroidInitializationSettings('@mipmap/launcher_icon');
+        AndroidInitializationSettings('@mipmap/launcher_icon');
     // final IOSInitializationSettings initializationSettingsIOS =
     // IOSInitializationSettings(
     //     onDidReceiveLocalNotification: onDidReceiveLocalNotification);
@@ -57,22 +53,25 @@ class NotificationHelper{
     //     onSelectNotification: onSelectNotification);
   }
 
-  showNotification({String? title, String? body, String? payload, String? id, BuildContext? context2}) async{
-
+  showNotification(
+      {String? title,
+      String? body,
+      String? payload,
+      String? id,
+      BuildContext? context2}) async {
     context = context2;
     AndroidNotificationDetails androidPlatformChannelSpecifics =
-    new AndroidNotificationDetails(
-      id!, 'Doctor Finder',
+        new AndroidNotificationDetails(
+      id!,
+      'Show BD',
       importance: Importance.max,
       priority: Priority.high,
       showWhen: true,
     );
     NotificationDetails platformChannelSpecifics =
-    NotificationDetails(android: androidPlatformChannelSpecifics);
-    await flutterLocalNotificationsPlugin!.show(
-        0, title, body, platformChannelSpecifics,
-        payload: payload);
-
+        NotificationDetails(android: androidPlatformChannelSpecifics);
+    await flutterLocalNotificationsPlugin!
+        .show(0, title, body, platformChannelSpecifics, payload: payload);
   }
 
   Future onSelectNotification(String? payload) async {
@@ -80,18 +79,22 @@ class NotificationHelper{
     if (payload != null) {
       print('\n\nnotification payload: $payload');
 
-      if(payload.split(":")[0] == "user_id"){
+      if (payload.split(":")[0] == "user_id") {
         print("In Payload");
-        await Navigator.push(context!,
-          MaterialPageRoute(builder: (context) => UserAppointmentDetails(payload.split(":")[1].toString())),
+        await Navigator.push(
+          context!,
+          MaterialPageRoute(
+              builder: (context) =>
+                  UserAppointmentDetails(payload.split(":")[1].toString())),
         );
-      }
-      else if(payload.split(":")[0] == "doctor_id"){
-        await Navigator.push(context!,
-          MaterialPageRoute(builder: (context) => DoctorAppointmentDetails(payload.split(":")[1].toString())),
+      } else if (payload.split(":")[0] == "doctor_id") {
+        await Navigator.push(
+          context!,
+          MaterialPageRoute(
+              builder: (context) =>
+                  DoctorAppointmentDetails(payload.split(":")[1].toString())),
         );
-      }
-      else if(payload.split(":")[0].toString() == '0'){
+      } else if (payload.split(":")[0].toString() == '0') {
         int ccId = int.parse(payload.split(":")[1].toString());
         // Navigator.push(context!,
         //   MaterialPageRoute(builder: (context) =>
@@ -102,7 +105,6 @@ class NotificationHelper{
         //           true)),
         // );
       }
-
     }
     // await Navigator.push(
     //   context,
@@ -136,5 +138,4 @@ class NotificationHelper{
     //   ),
     // );
   }
-
 }

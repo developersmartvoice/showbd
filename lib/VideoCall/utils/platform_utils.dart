@@ -2,10 +2,9 @@ import 'package:flutter_background/flutter_background.dart';
 import 'package:universal_io/io.dart';
 
 Future<bool> initForegroundService() async {
-
   if (Platform.isAndroid) {
     final androidConfig = FlutterBackgroundAndroidConfig(
-      notificationTitle: 'Doctor Finder',
+      notificationTitle: 'Show BD',
       notificationText: 'Screen sharing in in progress',
       notificationImportance: AndroidNotificationImportance.Default,
       // notificationIcon:
@@ -17,7 +16,6 @@ Future<bool> initForegroundService() async {
   } else {
     return Future.value(true);
   }
-
 }
 
 Future<bool> startBackgroundExecution() async {

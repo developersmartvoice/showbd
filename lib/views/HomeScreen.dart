@@ -627,12 +627,12 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget header() {
     return Stack(
       children: [
-        // Image.asset(
-        //   "assets/homeScreenImages/header_bg.png",
-        //   height: MediaQuery.of(context).size.height * 0.13,
-        //   width: MediaQuery.of(context).size.width,
-        //   fit: BoxFit.fill,
-        // ),
+        Image.asset(
+          "assets/homeScreenImages/header_bg.png",
+          height: MediaQuery.of(context).size.height * 0.16,
+          width: MediaQuery.of(context).size.width,
+          fit: BoxFit.fill,
+        ),
         SafeArea(
           child: Padding(
             padding: const EdgeInsets.fromLTRB(16, 10, 16, 0),

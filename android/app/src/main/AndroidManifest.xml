@@ -29,7 +29,7 @@
 
    <application
        tools:replace="android:label"
-       android:label="Doctor Finder"
+       android:label="Show BD"
         android:name="${applicationName}"
        android:usesCleartextTraffic="true"
        tools:ignore="Instantiatable"
