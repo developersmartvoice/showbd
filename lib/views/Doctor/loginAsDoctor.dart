@@ -374,7 +374,7 @@ class _LoginAsDoctorState extends State<LoginAsDoctor> {
           children: [
             //SizedBox(height: 10,),
             Image.asset(
-              "assets/loginScreenImages/login_doctor.png",
+              "assets/loginScreenImages/guide-image.jpg",
               height: 180,
               width: 180,
             ),

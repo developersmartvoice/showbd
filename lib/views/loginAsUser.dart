@@ -122,9 +122,8 @@ class _LoginAsUserState extends State<LoginAsUser> {
 
       print(response.body);
 
-      if(response.statusCode == 200){
-
-        if(jsonDecode(response.body)['success'] == 0){
+      if (response.statusCode == 200) {
+        if (jsonDecode(response.body)['success'] == 0) {
           setState(() {
             Navigator.pop(context);
             // print(jsonResponse);
@@ -135,8 +134,9 @@ class _LoginAsUserState extends State<LoginAsUser> {
               passErrorText = EITHER_EMAIL_OR_PASSWORD_IS_INCORRECT;
             }
           });
-        }else{
-          UserLoginResponse _response = UserLoginResponse.fromJson(jsonDecode(response.body));
+        } else {
+          UserLoginResponse _response =
+              UserLoginResponse.fromJson(jsonDecode(response.body));
           String? token = await firebaseMessaging.getToken();
           FirebaseDatabase.instance
               .reference()
@@ -154,8 +154,7 @@ class _LoginAsUserState extends State<LoginAsUser> {
             }).then((value) async {
               await SharedPreferences.getInstance().then((pref) {
                 pref.setBool("isLoggedIn", true);
-                pref.setString(
-                    "userId", _response.register!.userId.toString());
+                pref.setString("userId", _response.register!.userId.toString());
                 pref.setString("name", _response.register!.name!);
                 pref.setString(
                     "phone",
@@ -169,16 +168,14 @@ class _LoginAsUserState extends State<LoginAsUser> {
                 pref.setString("token", token.toString());
                 pref.setString(
                     "profile_image", _response.register!.profilePic!);
-                pref.setString(
-                    'myCCID',
+                pref.setString('myCCID',
                     _response.register!.connectycubeUserId.toString());
               });
               CubeUser user = CubeUser(
                 id: _response.register!.connectycubeUserId,
                 login: _response.register!.loginId,
-                fullName: _response.register!.name
-                    .toString()
-                    .replaceAll(" ", ""),
+                fullName:
+                    _response.register!.name.toString().replaceAll(" ", ""),
                 password: type == 2
                     ? _response.register!.connectycubePassword.toString()
                     : pass,
@@ -188,6 +185,7 @@ class _LoginAsUserState extends State<LoginAsUser> {
           });
         }
       }
+
       /// old code without create modal class
       /*
       // try {
@@ -454,7 +452,7 @@ class _LoginAsUserState extends State<LoginAsUser> {
                 height: 20,
               ),
               Image.asset(
-                "assets/loginScreenImages/login_icon.png",
+                "assets/loginScreenImages/tourist-with-guide-.jpg",
                 height: 180,
                 width: 180,
               ),

@@ -144,8 +144,7 @@ class _MoreScreenState extends State<MoreScreen> {
     return Stack(
       children: [
         Container(
-          child: Image.network(
-              "https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80",
+          child: Image.asset("assets/moreScreenImages/sign-in-banner.jpg",
               height: 130,
               width: MediaQuery.of(context).size.width,
               fit: BoxFit.cover),
