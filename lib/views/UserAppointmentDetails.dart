@@ -316,14 +316,14 @@ class _UserAppointmentDetailsState extends State<UserAppointmentDetails> {
                             list.status! == 0
                                 ? ABSENT
                                 : list.status! == 1
-                                ? RECEIVED
-                                : list.status! == 2
-                                ? APPROVED
-                                : list.status! == 3
-                                ? IN_PROCESS
-                                : list.status! == 4
-                                ? COMPLETED
-                                : REJECTED,
+                                    ? RECEIVED
+                                    : list.status! == 2
+                                        ? APPROVED
+                                        : list.status! == 3
+                                            ? IN_PROCESS
+                                            : list.status! == 4
+                                                ? COMPLETED
+                                                : REJECTED,
                             style: Theme.of(context).textTheme.caption!.apply(
                                   fontSizeDelta: 0.5,
                                   fontWeightDelta: 2,
@@ -511,7 +511,7 @@ class _UserAppointmentDetailsState extends State<UserAppointmentDetails> {
                       child: Container(
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
-                              color: Color(0xff01d8c9),
+                              color: Color.fromARGB(159, 236, 97, 4),
                               borderRadius: BorderRadius.circular(15)),
                           height: 40,
                           width: 45,
@@ -538,7 +538,7 @@ class _UserAppointmentDetailsState extends State<UserAppointmentDetails> {
                         //             false,list.deviceToken)));
 
                         /// new chat screen navigation
-                                      // 10,
+                        // 10,
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -555,7 +555,7 @@ class _UserAppointmentDetailsState extends State<UserAppointmentDetails> {
                       child: Container(
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
-                              color: Color(0xff01d8c9),
+                              color: Color.fromARGB(159, 236, 97, 4),
                               borderRadius: BorderRadius.circular(15)),
                           height: 40,
                           width: 45,
@@ -844,16 +844,17 @@ class _UserAppointmentDetailsState extends State<UserAppointmentDetails> {
   //   return completer.future;
   // }
 
-  Future<Map<String, dynamic>> sendCallNotification(String token,int type,Data data) async {
-
+  Future<Map<String, dynamic>> sendCallNotification(
+      String token, int type, Data data) async {
     print('send notification call');
 
-    String sessionId = "${DateTime.now().millisecondsSinceEpoch}${Random().nextInt(9999999)}";
+    String sessionId =
+        "${DateTime.now().millisecondsSinceEpoch}${Random().nextInt(9999999)}";
 
     String? mytoken;
     String? myconnectCubId;
     String? myName;
-    SharedPreferences.getInstance().then((value){
+    SharedPreferences.getInstance().then((value) {
       value.setString("currentCallToken", token);
       value.setString("currentCallSessionId", sessionId);
       mytoken = value.getString('token');
@@ -865,8 +866,8 @@ class _UserAppointmentDetailsState extends State<UserAppointmentDetails> {
     await FirebaseMessaging.instance.requestPermission(
         sound: true, badge: true, alert: true, provisional: false);
 
-
-    await http.post(
+    await http
+        .post(
       Uri.parse('https://fcm.googleapis.com/fcm/send'),
       headers: <String, String>{
         'Content-Type': 'application/json',
@@ -875,9 +876,8 @@ class _UserAppointmentDetailsState extends State<UserAppointmentDetails> {
       body: jsonEncode(
         <String, dynamic>{
           'priority': 'high',
-          'notification' : <String, dynamic>{
-            'android' : <String,String>{
-            },
+          'notification': <String, dynamic>{
+            'android': <String, String>{},
             // 'title' : "Call Notification",
             // 'body' : '',
             // 'title' : "$userName calling you",
@@ -903,19 +903,19 @@ class _UserAppointmentDetailsState extends State<UserAppointmentDetails> {
           'to': token,
         },
       ),
-    ).then((value){
+    )
+        .then((value) {
       print("\n\nMessage sent : ${value.body}");
       print('send token $token');
-    }).catchError((onError){
+    }).catchError((onError) {
       print('\n\n Catch Error on notification $onError');
     });
 
     final Completer<Map<String, dynamic>> completer =
-    Completer<Map<String, dynamic>>();
+        Completer<Map<String, dynamic>>();
 
     return completer.future;
   }
-
 
   String? statusToString(int status) {
     switch (status) {
