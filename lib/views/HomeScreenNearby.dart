@@ -258,6 +258,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
         );
       },
       child: Container(
+        // height: 500,
         decoration: BoxDecoration(
             color: WHITE,
             borderRadius: BorderRadius.circular(5),
@@ -269,66 +270,174 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                 offset: Offset(0, 2),
               ),
             ]),
+        // constraints: BoxConstraints(
+        //   minHeight: 500.0, // Set the minimum height
+        //   maxHeight: 500.0, // Set the maximum height
+        // ),
         padding: EdgeInsets.fromLTRB(0, 0, 0, 12),
         child: Column(
           children: [
-            Expanded(
-              child: Stack(
-                alignment: Alignment.topRight,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(8),
-                      topRight: Radius.circular(8),
-                    ),
-                    child: CachedNetworkImage(
-                      imageUrl: img,
-                      fit: BoxFit.cover,
-                      width: double.infinity,
-                      placeholder: (context, url) => Container(
-                        color: Theme.of(context).primaryColorLight,
-                        child: Center(
-                          child: Image.asset(
-                            "assets/homeScreenImages/user_unactive.png",
-                            height: 50,
-                            width: 50,
+            Container(
+              // height: 150,
+              child: Expanded(
+                child: Stack(
+                  alignment: Alignment.topRight,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(8),
+                        topRight: Radius.circular(8),
+                      ),
+                      child: CachedNetworkImage(
+                        imageUrl: img,
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                        placeholder: (context, url) => Container(
+                          color: Theme.of(context).primaryColorLight,
+                          child: Center(
+                            child: Image.asset(
+                              "assets/homeScreenImages/user_unactive.png",
+                              height: 50,
+                              width: 50,
+                            ),
+                          ),
+                        ),
+                        errorWidget: (context, url, err) => Container(
+                          color: Theme.of(context).primaryColorLight,
+                          child: Center(
+                            child: Image.asset(
+                              "assets/homeScreenImages/user_unactive.png",
+                              height: 50,
+                              width: 50,
+                            ),
                           ),
                         ),
                       ),
-                      errorWidget: (context, url, err) => Container(
-                        color: Theme.of(context).primaryColorLight,
-                        child: Center(
-                          child: Image.asset(
-                            "assets/homeScreenImages/user_unactive.png",
-                            height: 50,
-                            width: 50,
+                    ),
+                    Container(
+                      width: 60.0, // Fixed width
+                      height: 40.0, // Fixed height
+                      margin: EdgeInsets.only(top: 20),
+                      decoration: BoxDecoration(
+                          color:
+                              Color.fromARGB(255, 255, 94, 0).withOpacity(0.8),
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(5),
+                            bottomLeft: Radius.circular(5),
+                          )),
+                      child: Center(
+                        child: Text(
+                          '\$' + consultationFee + "/h",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  Container(
-                    width: 60.0, // Fixed width
-                    height: 40.0, // Fixed height
-                    margin: EdgeInsets.only(top: 20),
-                    decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 255, 94, 0).withOpacity(0.8),
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(5),
-                          bottomLeft: Radius.circular(5),
-                        )),
-                    child: Center(
-                      child: Text(
-                        '\$' + consultationFee + "/h",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+                    // add button
+                    Container(
+                      margin: EdgeInsets.only(top: 180),
+                      width: 120,
+                      height: 50,
+                      child: isLoggedIn
+                          ? ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => MakeAppointment(
+                                            id.toString(),
+                                            name.toString(),
+                                            consultationFee.toString())));
+                              },
+                              style: ElevatedButton.styleFrom(
+                                primary: Color.fromARGB(188, 0, 255, 42),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(5),
+                                    bottomLeft: Radius.circular(5),
+                                  ),
+                                  // Adjust the radius as needed
+                                ),
+                                minimumSize: Size(
+                                    60, 40), // Set the minimum width and height
+// Set the button color to orange
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Icon(
+                                    Icons
+                                        .calendar_today, // Add the booking icon
+                                    color: Colors
+                                        .white, // Set the icon color to white
+                                  ),
+                                  SizedBox(
+                                      width:
+                                          8), // Add some spacing between the icon and text
+                                  Text(
+                                    BOOK_NOW,
+                                    style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors
+                                          .white, // Set the text color to white
+                                      fontSize: 10,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          : ElevatedButton(
+                              onPressed: () {
+                                // Handle button click, e.g., navigate to the login screen
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => LoginAsUser()));
+                              },
+                              style: ElevatedButton.styleFrom(
+                                primary: const Color.fromARGB(255, 255, 94, 0)
+                                    .withOpacity(0.8),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(5),
+                                    bottomLeft: Radius.circular(5),
+                                  ),
+                                  // Adjust the radius as needed
+                                ),
+                                minimumSize: Size(
+                                    60, 40), // Set the minimum width and height
+// Set the button color to orange
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons
+                                        .calendar_today, // Add the booking icon
+                                    color: Colors
+                                        .white, // Set the icon color to white
+                                  ),
+                                  SizedBox(
+                                      width:
+                                          8), // Add some spacing between the icon and text
+                                  Text(
+                                    BOOK_NOW,
+                                    style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors
+                                          .white, // Set the text color to white
+                                      fontSize: 10,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                    )
+                  ],
+                ),
               ),
             ),
             SizedBox(
@@ -353,94 +462,6 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                 fontWeight: FontWeight.w500,
               ),
             ),
-            Container(
-              margin: EdgeInsets.only(top: 10),
-              width: 200,
-              height: 40,
-              child: isLoggedIn!
-                  ? ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => MakeAppointment(
-                                    id.toString(),
-                                    name.toString(),
-                                    consultationFee.toString())));
-                      },
-                      style: ElevatedButton.styleFrom(
-                        primary: const Color.fromARGB(255, 255, 102, 0),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                          // Adjust the radius as needed
-                        ),
-                        minimumSize:
-                            Size(60, 40), // Set the minimum width and height
-// Set the button color to orange
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.calendar_today, // Add the booking icon
-                            color: Colors.white, // Set the icon color to white
-                          ),
-                          SizedBox(
-                              width:
-                                  8), // Add some spacing between the icon and text
-                          Text(
-                            BOOK_NOW,
-                            style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w500,
-                              color:
-                                  Colors.white, // Set the text color to white
-                              fontSize: 10,
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                  : ElevatedButton(
-                      onPressed: () {
-                        // Handle button click, e.g., navigate to the login screen
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => LoginAsUser()));
-                      },
-                      style: ElevatedButton.styleFrom(
-                        primary: const Color.fromARGB(255, 255, 102, 0),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                          // Adjust the radius as needed
-                        ),
-                        minimumSize:
-                            Size(60, 40), // Set the minimum width and height
-// Set the button color to orange
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.calendar_today, // Add the booking icon
-                            color: Colors.white, // Set the icon color to white
-                          ),
-                          SizedBox(
-                              width:
-                                  8), // Add some spacing between the icon and text
-                          Text(
-                            LOGIN_TO_BOOK_APPOINTMENT,
-                            style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w500,
-                              color:
-                                  Colors.white, // Set the text color to white
-                              fontSize: 10,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-            )
           ],
         ),
       ),
