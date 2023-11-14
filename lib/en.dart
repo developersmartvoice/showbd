@@ -5,12 +5,12 @@ const String USER = "User";
 const String HOME = "Home";
 const String RETRY = "Retry";
 const String SEE_ALL = "see all";
-const String UPCOMING_APPOINTMENTS = "Upcoming Appointments";
+const String UPCOMING_APPOINTMENTS = "Upcoming Bookings";
 const String SEARCH_DOCTOR_BY_NAME = "Search guide by name";
 const String NEARBY_DOCTORS = "Nearby Guides";
 const String TURN_ON_LOCATION_AND_RETRY = "Turn on location and retry";
 
-const String ALL_APPOINTMENTS = "All appointments";
+const String ALL_APPOINTMENTS = "All Bookings";
 const String DOCTOR_DETAILS = "Guide detail";
 const String SEE_ALL_REVIEW = "See all reviews";
 const String PHONE_NUMBER = "Phone number";
@@ -18,9 +18,9 @@ const String ABOUT_US = "About us";
 const String ADDRESS = "Address";
 const String WORKING_TIME = "Working time";
 const String SERVICES = "Services";
-const String MAKE_AN_APPOINTMENT = "Make an appointment";
+const String MAKE_AN_APPOINTMENT = "Make a booking";
 const String MAKE_AN_SUBSCRIBE = "Make an subscribe";
-const String LOGIN_TO_BOOK_APPOINTMENT = "Login to book appointment";
+const String LOGIN_TO_BOOK_APPOINTMENT = "Login to book now";
 const String DOCTOR_DASHBOARD = "Guide dashboard";
 const String APPOINTMENTS = "Appointments";
 const String EITHER_MOBILE_NUMBER_OR_PASSWORD_IS_INCORRECT =
@@ -74,12 +74,12 @@ const String DESCRIPTION = "Description";
 const String PROCESSING = "Processing";
 const String SUCCESSFUL = "Successful";
 const String SUCCESSFUL_TIME_SLOT = "Time Slot Added Successfully";
-const String APPOINTMENT_MADE_SUCCESSFULLY = "Appointment made successfully";
+const String APPOINTMENT_MADE_SUCCESSFULLY = "Booking made successfully";
 const String PLEASE_WAIT_WHILE_MAKING_APPOINTMENT =
-    "Please wait while making appointment";
+    "Please wait while making the booking";
 
 //DoctorAppointmentDetails
-const String APPOINTMENT = "Appointment";
+const String APPOINTMENT = "Booking";
 const String ACCEPT = "Accept";
 const String CANCEL = "Cancel";
 const String EMAIL_ADDRESS = "Email Address";
@@ -138,7 +138,7 @@ const String PLEASE_WAIT_WHILE_REPORTING_ISSUE =
     "Please wait while reporting issue...";
 const String PLEASE_WAIT_WHILE_PROCESSING = "Please wait while processing...";
 const String YOU_DONOT_HAVE_ANY_UPCOMING_APPOINTMENT =
-    "You don't have any appointment";
+    "You don't have any booking";
 const String FIND_BEST_DOCTORS_NEAR_YOU_BY_SPECIALITY =
     "Find best guides near you by speciality,";
 const String CLICK_HERE = "click here";

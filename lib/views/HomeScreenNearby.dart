@@ -4,6 +4,8 @@ import 'package:appcode3/en.dart';
 import 'package:appcode3/modals/NearbyDoctorClass.dart';
 import 'package:appcode3/views/AllNearby.dart';
 import 'package:appcode3/views/DetailsPage.dart';
+import 'package:appcode3/views/MakeAppointment.dart';
+import 'package:appcode3/views/loginAsUser.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_native_admob/flutter_native_admob.dart';
@@ -14,6 +16,7 @@ import 'package:http/http.dart';
 // import 'package:loadmore/loadmore.dart';
 // import 'package:paging/paging.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../main.dart';
 
@@ -37,7 +40,7 @@ class HomeScreenNearby extends StatefulWidget {
 class _HomeScreenNearbyState extends State<HomeScreenNearby> {
   bool isErrorInNearby = false;
   bool isNearbyLoading = true;
-
+  bool isLoggedIn = false;
   bool isLoadingMore = false;
 
   int maxPosition = 0;
@@ -49,6 +52,11 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
     super.initState();
     print("Loadmore here 62");
     _getLocationStart();
+    SharedPreferences.getInstance().then((pref) {
+      setState(() {
+        isLoggedIn = pref.getBool("isLoggedIn") ?? false;
+      });
+    });
     widget.scrollController.addListener(() {
       if (widget.scrollController.position.pixels ==
           widget.scrollController.position.maxScrollExtent) {
@@ -209,6 +217,8 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
             itemCount: list2.length,
             itemBuilder: (BuildContext ctx, index) {
               var data = list2[index];
+
+              // print("");
               return nearByGridWidget(
                 data.image,
                 data.name,
@@ -259,7 +269,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                 offset: Offset(0, 2),
               ),
             ]),
-        padding: EdgeInsets.fromLTRB(0, 0, 0, 40),
+        padding: EdgeInsets.fromLTRB(0, 0, 0, 12),
         child: Column(
           children: [
             Expanded(
@@ -268,8 +278,8 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(5),
-                      topRight: Radius.circular(5),
+                      topLeft: Radius.circular(8),
+                      topRight: Radius.circular(8),
                     ),
                     child: CachedNetworkImage(
                       imageUrl: img,
@@ -302,7 +312,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                     height: 40.0, // Fixed height
                     margin: EdgeInsets.only(top: 20),
                     decoration: BoxDecoration(
-                        color: Colors.blue.withOpacity(0.8),
+                        color: Color.fromARGB(255, 255, 94, 0).withOpacity(0.8),
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(5),
                           bottomLeft: Radius.circular(5),
@@ -343,6 +353,94 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                 fontWeight: FontWeight.w500,
               ),
             ),
+            Container(
+              margin: EdgeInsets.only(top: 10),
+              width: 200,
+              height: 40,
+              child: isLoggedIn!
+                  ? ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MakeAppointment(
+                                    id.toString(),
+                                    name.toString(),
+                                    consultationFee.toString())));
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: const Color.fromARGB(255, 255, 102, 0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          // Adjust the radius as needed
+                        ),
+                        minimumSize:
+                            Size(60, 40), // Set the minimum width and height
+// Set the button color to orange
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.calendar_today, // Add the booking icon
+                            color: Colors.white, // Set the icon color to white
+                          ),
+                          SizedBox(
+                              width:
+                                  8), // Add some spacing between the icon and text
+                          Text(
+                            BOOK_NOW,
+                            style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w500,
+                              color:
+                                  Colors.white, // Set the text color to white
+                              fontSize: 10,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  : ElevatedButton(
+                      onPressed: () {
+                        // Handle button click, e.g., navigate to the login screen
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginAsUser()));
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: const Color.fromARGB(255, 255, 102, 0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          // Adjust the radius as needed
+                        ),
+                        minimumSize:
+                            Size(60, 40), // Set the minimum width and height
+// Set the button color to orange
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.calendar_today, // Add the booking icon
+                            color: Colors.white, // Set the icon color to white
+                          ),
+                          SizedBox(
+                              width:
+                                  8), // Add some spacing between the icon and text
+                          Text(
+                            LOGIN_TO_BOOK_APPOINTMENT,
+                            style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w500,
+                              color:
+                                  Colors.white, // Set the text color to white
+                              fontSize: 10,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+            )
           ],
         ),
       ),
