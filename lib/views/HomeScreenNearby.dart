@@ -353,7 +353,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                                             consultationFee.toString())));
                               },
                               style: ElevatedButton.styleFrom(
-                                primary: Color.fromARGB(188, 0, 255, 42),
+                                primary: Color.fromARGB(186, 1, 122, 21),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(5),
