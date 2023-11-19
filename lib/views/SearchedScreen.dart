@@ -35,6 +35,11 @@ class _SearchedScreenState extends State<SearchedScreen> {
   TextEditingController _textController = TextEditingController();
   SpecialityClass? specialityClass;
   List<String> departmentList = [];
+  double priceRange = 100;
+  List<String> selectedLanguages = [];
+  List<String> selectedActivities = [];
+  int selectedGender = 0; // 0: None, 1: Male, 2: Female
+  bool saveFilterSettings = false;
 
   @override
   void initState() {
@@ -43,13 +48,13 @@ class _SearchedScreenState extends State<SearchedScreen> {
     // _onChanged(widget.keyword);
     // _textController.text = widget.keyword;
     // searchKeyword = widget.keyword;
-    _scrollController.addListener(() {
-      if (_scrollController.position.pixels ==
-          _scrollController.position.maxScrollExtent) {
-        //print("Loadmore");
-        _loadMoreFunc();
-      }
-    });
+    // _scrollController.addListener(() {
+    //   if (_scrollController.position.pixels ==
+    //       _scrollController.position.maxScrollExtent) {
+    //     //print("Loadmore");
+    //     _loadMoreFunc();
+    //   }
+    // });
   }
 
   @override
@@ -276,7 +281,7 @@ class _SearchedScreenState extends State<SearchedScreen> {
       children: [
         Image.asset(
           "assets/homeScreenImages/header_bg.png",
-          height: 140,
+          height: MediaQuery.of(context).size.height * 0.14,
           width: MediaQuery.of(context).size.width,
           fit: BoxFit.fill,
         ),
@@ -447,9 +452,190 @@ class _SearchedScreenState extends State<SearchedScreen> {
   }
 
   Widget body() {
-    return Column(
-      children: [],
+    return Container(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            _buildSlider('Price Range', priceRange, (value) {
+              setState(() {
+                priceRange = value.toDouble();
+              });
+            }),
+            SizedBox(height: 16),
+            _buildMultiSelect('Languages', selectedLanguages,
+                ['English', 'Bengali', 'Hindi', 'Urdu'], (value) {
+              setState(() {
+                selectedLanguages = value;
+              });
+            }),
+            SizedBox(height: 16),
+            _buildMultiSelect('Activities', selectedActivities, [
+              'Translation & Interpretation',
+              'Pick Up & Driving Tours',
+              'Shopping',
+              'Nightlife & Bars',
+              'Food & Resturants',
+              'Arts & Museums',
+              'Sports & Recreation',
+              'History & Culture',
+              'Exploration & Sightseeing'
+            ], (value) {
+              setState(() {
+                selectedActivities = value;
+              });
+            }),
+            SizedBox(height: 16),
+            _buildRadioButtons(
+                'Gender', selectedGender, ['None', 'Male', 'Female'], (value) {
+              setState(() {
+                selectedGender = value;
+              });
+            }),
+            SizedBox(height: 16),
+            _buildCheckbox(
+                'Save my filter settings for future use', saveFilterSettings,
+                (value) {
+              setState(() {
+                saveFilterSettings = value;
+              });
+            }),
+            SizedBox(height: 32),
+            Center(
+              child: ElevatedButton(
+                onPressed: _clearFilters,
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      const Color.fromARGB(190, 255, 115,
+                          0)), // Set the background color to orange
+                ),
+                child: Text('Clear Filters'),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
+  }
+
+  Widget _buildSlider(String label, double value, ValueChanged<int> onChanged) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: GoogleFonts.poppins(
+              fontWeight: FontWeight.w600, color: BLACK, fontSize: 18),
+        ),
+        Slider(
+          value: value,
+          min: 0,
+          max: 100,
+          onChanged: (double newValue) {
+            onChanged(newValue.round()); // Round the double value to an integer
+          },
+          activeColor: Color.fromARGB(190, 255, 115, 0),
+        ),
+        Text('Selected Fees: ${value.round()}'),
+      ],
+    );
+  }
+
+  Widget _buildMultiSelect(String label, List<String> selectedValues,
+      List<String> options, ValueChanged<List<String>> onChanged) {
+    return Container(
+      child: Column(
+        // crossAxisAlignment: CrossAxisAlignment.start,
+
+        children: [
+          Text(
+            label,
+            style: GoogleFonts.poppins(
+                fontWeight: FontWeight.w600, color: BLACK, fontSize: 18),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Wrap(
+            spacing: 12.0,
+            children: options.map((option) {
+              return FilterChip(
+                label: Text(option),
+                selected: selectedValues.contains(option),
+                onSelected: (selected) {
+                  List<String> newSelectedValues = List.from(selectedValues);
+                  if (selected) {
+                    newSelectedValues.add(option);
+                  } else {
+                    newSelectedValues.remove(option);
+                  }
+                  onChanged(newSelectedValues);
+                },
+              );
+            }).toList(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildRadioButtons(String label, int selectedValue,
+      List<String> options, ValueChanged<int> onChanged) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: GoogleFonts.poppins(
+              fontWeight: FontWeight.w600, color: BLACK, fontSize: 18),
+        ),
+        Column(
+          children: options.asMap().entries.map((entry) {
+            int index = entry.key;
+            String option = entry.value;
+            return Row(
+              children: [
+                Radio(
+                  value: index,
+                  groupValue: selectedValue,
+                  onChanged: (value) {
+                    onChanged(value as int);
+                  },
+                  activeColor: Color.fromARGB(190, 255, 115, 0),
+                ),
+                Text(option),
+              ],
+            );
+          }).toList(),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildCheckbox(
+      String label, bool value, ValueChanged<bool> onChanged) {
+    return Row(
+      children: [
+        Checkbox(
+          value: value,
+          onChanged: (newValue) {
+            onChanged(newValue!);
+          },
+          activeColor: Color.fromARGB(190, 255, 115, 0),
+        ),
+        Text(label),
+      ],
+    );
+  }
+
+  void _clearFilters() {
+    setState(() {
+      priceRange = 100;
+      selectedLanguages = [];
+      selectedActivities = [];
+      selectedGender = 0;
+      saveFilterSettings = false;
+    });
   }
 
   _onChanged(String value) async {
@@ -497,28 +683,28 @@ class _SearchedScreenState extends State<SearchedScreen> {
     }
   }
 
-  _loadMoreFunc() async {
-    if (nextUrl == null) {
-      return;
-    }
-    setState(() {
-      isLoadingMore = true;
-    });
-    print(searchKeyword);
-    final response = await get(Uri.parse("$nextUrl&term=$searchKeyword"));
-    if (response.statusCode == 200) {
-      final jsonResponse = jsonDecode(response.body);
-      searchDoctorClass = SearchDoctorClass.fromJson(jsonResponse);
-      //print([0].name);
-      setState(() {
-        //print(searchDoctorClass.data.doctorData);
-        _newData.addAll(searchDoctorClass!.data!.doctorData!);
-        isLoadingMore = false;
-        nextUrl = searchDoctorClass!.data!.links!.last.url!;
-        print(nextUrl);
-      });
-    }
-  }
+  // _loadMoreFunc() async {
+  //   if (nextUrl == null) {
+  //     return;
+  //   }
+  //   setState(() {
+  //     isLoadingMore = true;
+  //   });
+  //   print(searchKeyword);
+  //   final response = await get(Uri.parse("$nextUrl&term=$searchKeyword"));
+  //   if (response.statusCode == 200) {
+  //     final jsonResponse = jsonDecode(response.body);
+  //     searchDoctorClass = SearchDoctorClass.fromJson(jsonResponse);
+  //     //print([0].name);
+  //     setState(() {
+  //       //print(searchDoctorClass.data.doctorData);
+  //       _newData.addAll(searchDoctorClass!.data!.doctorData!);
+  //       isLoadingMore = false;
+  //       nextUrl = searchDoctorClass!.data!.links!.last.url!;
+  //       print(nextUrl);
+  //     });
+  //   }
+  // }
 
   _onSubmit(String value) async {
     if (value.length == 0) {
