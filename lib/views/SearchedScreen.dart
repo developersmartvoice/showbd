@@ -13,9 +13,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 
 class SearchedScreen extends StatefulWidget {
-  String keyword;
+  // String keyword;
 
-  SearchedScreen(this.keyword);
+  // SearchedScreen(this.keyword);
+  SearchedScreen();
 
   @override
   _SearchedScreenState createState() => _SearchedScreenState();
@@ -39,9 +40,9 @@ class _SearchedScreenState extends State<SearchedScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _onChanged(widget.keyword);
-    _textController.text = widget.keyword;
-    searchKeyword = widget.keyword;
+    // _onChanged(widget.keyword);
+    // _textController.text = widget.keyword;
+    // searchKeyword = widget.keyword;
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
@@ -111,7 +112,8 @@ class _SearchedScreenState extends State<SearchedScreen> {
                       : Column(
                           children: [
                             header(),
-                            upCommingAppointments(),
+                            // upCommingAppointments(),
+                            body(),
                             isLoadingMore
                                 ? Padding(
                                     padding: const EdgeInsets.all(20.0),
@@ -139,135 +141,135 @@ class _SearchedScreenState extends State<SearchedScreen> {
     );
   }
 
-  Widget upCommingAppointments() {
-    return Container(
-      margin: EdgeInsets.fromLTRB(16, 0, 16, 5),
-      child: ListView.builder(
-        itemCount: _newData.length,
-        shrinkWrap: true,
-        padding: EdgeInsets.all(0),
-        physics: ClampingScrollPhysics(),
-        itemBuilder: (context, index) {
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              appointmentListWidget(
-                _newData[index].image,
-                _newData[index].name,
-                _newData[index].departmentName.toString(),
-                _newData[index].address,
-                _newData[index].id,
-              ),
-              ENABLE_ADS
-                  ? (index + 1) % 4 == 0 && index != 0
-                      ? customAds.nativeAds(id: AD_TYPE)
-                      : Container()
-                  : Container()
-            ],
-          );
-        },
-      ),
-    );
-  }
+  // Widget upCommingAppointments() {
+  //   return Container(
+  //     margin: EdgeInsets.fromLTRB(16, 0, 16, 5),
+  //     child: ListView.builder(
+  //       itemCount: _newData.length,
+  //       shrinkWrap: true,
+  //       padding: EdgeInsets.all(0),
+  //       physics: ClampingScrollPhysics(),
+  //       itemBuilder: (context, index) {
+  //         return Column(
+  //           mainAxisSize: MainAxisSize.min,
+  //           children: [
+  //             appointmentListWidget(
+  //               _newData[index].image,
+  //               _newData[index].name,
+  //               _newData[index].departmentName.toString(),
+  //               _newData[index].address,
+  //               _newData[index].id,
+  //             ),
+  //             ENABLE_ADS
+  //                 ? (index + 1) % 4 == 0 && index != 0
+  //                     ? customAds.nativeAds(id: AD_TYPE)
+  //                     : Container()
+  //                 : Container()
+  //           ],
+  //         );
+  //       },
+  //     ),
+  //   );
+  // }
 
-  Widget appointmentListWidget(img, name, department, address, id) {
-    return InkWell(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => DetailsPage(id.toString())),
-        );
-      },
-      child: Container(
-        //height: 90,
-        margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-        padding: EdgeInsets.all(8),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: WHITE,
-        ),
-        child: Row(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(15),
-              child: CachedNetworkImage(
-                imageUrl: img,
-                height: 70,
-                width: 70,
-                fit: BoxFit.cover,
-                placeholder: (context, url) => Container(
-                  color: Theme.of(context).primaryColorLight,
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Image.asset(
-                      "assets/homeScreenImages/user_unactive.png",
-                      height: 20,
-                      width: 20,
-                    ),
-                  ),
-                ),
-                errorWidget: (context, url, err) => Container(
-                    color: Theme.of(context).primaryColorLight,
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Image.asset(
-                        "assets/homeScreenImages/user_unactive.png",
-                        height: 20,
-                        width: 20,
-                      ),
-                    )),
-              ),
-            ),
-            SizedBox(
-              width: 10,
-            ),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          name,
-                          style: GoogleFonts.poppins(
-                              color: BLACK,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w500),
-                        ),
-                        Text(
-                          department,
-                          style: GoogleFonts.poppins(
-                              color: BLACK,
-                              fontSize: 11,
-                              fontWeight: FontWeight.w400),
-                        ),
-                      ],
-                    ),
-                  ),
-                  // SizedBox(height: 10,),
-                  Container(
-                    child: Text(
-                      address.toString(),
-                      style: GoogleFonts.poppins(
-                          color: LIGHT_GREY_TEXT,
-                          fontSize: 10,
-                          fontWeight: FontWeight.w400),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              width: 10,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  // Widget appointmentListWidget(img, name, department, address, id) {
+  //   return InkWell(
+  //     onTap: () {
+  //       Navigator.push(
+  //         context,
+  //         MaterialPageRoute(builder: (context) => DetailsPage(id.toString())),
+  //       );
+  //     },
+  //     child: Container(
+  //       //height: 90,
+  //       margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+  //       padding: EdgeInsets.all(8),
+  //       decoration: BoxDecoration(
+  //         borderRadius: BorderRadius.circular(10),
+  //         color: WHITE,
+  //       ),
+  //       child: Row(
+  //         children: [
+  //           ClipRRect(
+  //             borderRadius: BorderRadius.circular(15),
+  //             child: CachedNetworkImage(
+  //               imageUrl: img,
+  //               height: 70,
+  //               width: 70,
+  //               fit: BoxFit.cover,
+  //               placeholder: (context, url) => Container(
+  //                 color: Theme.of(context).primaryColorLight,
+  //                 child: Padding(
+  //                   padding: const EdgeInsets.all(20.0),
+  //                   child: Image.asset(
+  //                     "assets/homeScreenImages/user_unactive.png",
+  //                     height: 20,
+  //                     width: 20,
+  //                   ),
+  //                 ),
+  //               ),
+  //               errorWidget: (context, url, err) => Container(
+  //                   color: Theme.of(context).primaryColorLight,
+  //                   child: Padding(
+  //                     padding: const EdgeInsets.all(20.0),
+  //                     child: Image.asset(
+  //                       "assets/homeScreenImages/user_unactive.png",
+  //                       height: 20,
+  //                       width: 20,
+  //                     ),
+  //                   )),
+  //             ),
+  //           ),
+  //           SizedBox(
+  //             width: 10,
+  //           ),
+  //           Expanded(
+  //             child: Column(
+  //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //               crossAxisAlignment: CrossAxisAlignment.start,
+  //               children: [
+  //                 Container(
+  //                   child: Column(
+  //                     crossAxisAlignment: CrossAxisAlignment.start,
+  //                     children: [
+  //                       Text(
+  //                         name,
+  //                         style: GoogleFonts.poppins(
+  //                             color: BLACK,
+  //                             fontSize: 13,
+  //                             fontWeight: FontWeight.w500),
+  //                       ),
+  //                       Text(
+  //                         department,
+  //                         style: GoogleFonts.poppins(
+  //                             color: BLACK,
+  //                             fontSize: 11,
+  //                             fontWeight: FontWeight.w400),
+  //                       ),
+  //                     ],
+  //                   ),
+  //                 ),
+  //                 // SizedBox(height: 10,),
+  //                 Container(
+  //                   child: Text(
+  //                     address.toString(),
+  //                     style: GoogleFonts.poppins(
+  //                         color: LIGHT_GREY_TEXT,
+  //                         fontSize: 10,
+  //                         fontWeight: FontWeight.w400),
+  //                   ),
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //           SizedBox(
+  //             width: 10,
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget header() {
     return Stack(
@@ -281,124 +283,172 @@ class _SearchedScreenState extends State<SearchedScreen> {
         SafeArea(
           child: Padding(
             padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
-            child: Column(
-              children: [
-                // Row(
-                //   //crossAxisAlignment: CrossAxisAlignment.baseline,
-                //   children: [
-                //     Text("$SEARCH, ",
-                //       style: GoogleFonts.poppins(
-                //         color: WHITE,
-                //       ),
-                //     ),
-                //     Text(HERE,
-                //       style: GoogleFonts.poppins(
-                //           color: WHITE,
-                //           fontSize: 25,
-                //           fontWeight: FontWeight.w500
-                //       ),
-                //     ),
-                //   ],
-                // ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        height: 50,
-                        //margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: WHITE,
-                        ),
-                        child: TextField(
-                          controller: _textController,
-                          textInputAction: TextInputAction.search,
-                          decoration: InputDecoration(
-                              contentPadding: EdgeInsets.all(10),
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(color: WHITE),
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              hintText: SEARCH_DOCTOR_BY_NAME,
-                              hintStyle: GoogleFonts.poppins(
-                                  color: LIGHT_GREY_TEXT, fontSize: 13),
-                              suffixIcon: Container(
-                                height: 20,
-                                width: 20,
-                                child: Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(13),
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 1.5,
-                                      valueColor: isLoading
-                                          ? AlwaysStoppedAnimation(
-                                              Theme.of(context).hintColor)
-                                          : AlwaysStoppedAnimation(
-                                              Colors.transparent),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: WHITE),
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              disabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: WHITE),
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: WHITE),
-                                borderRadius: BorderRadius.circular(15),
-                              )),
-                          onChanged: (val) {
-                            // setState(() {
-                            //   searchKeyword = val;
-                            //   _onChanged(val);
-                            //   print(searchKeyword);
-                            // });
-                          },
-                          onSubmitted: (val) {
-                            setState(() {
-                              searchKeyword = val;
-                              _onSubmit(val);
-                            });
-                          },
-                        ),
-                      ),
+            // child: Column(
+            //   // children: [
+            //   //   // Row(
+            //   //   //   //crossAxisAlignment: CrossAxisAlignment.baseline,
+            //   //   //   children: [
+            //   //   //     Text("$SEARCH, ",
+            //   //   //       style: GoogleFonts.poppins(
+            //   //   //         color: WHITE,
+            //   //   //       ),
+            //   //   //     ),
+            //   //   //     Text(HERE,
+            //   //   //       style: GoogleFonts.poppins(
+            //   //   //           color: WHITE,
+            //   //   //           fontSize: 25,
+            //   //   //           fontWeight: FontWeight.w500
+            //   //   //       ),
+            //   //   //     ),
+            //   //   //   ],
+            //   //   // ),
+            //   //   SizedBox(
+            //   //     height: 10,
+            //   //   ),
+            //   //   // Row(
+            //   //   //   children: [
+            //   //   //     Expanded(
+            //   //   //       child: Container(
+            //   //   //         height: 50,
+            //   //   //         //margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
+            //   //   //         decoration: BoxDecoration(
+            //   //   //           borderRadius: BorderRadius.circular(15),
+            //   //   //           color: WHITE,
+            //   //   //         ),
+            //   //   //         child: TextField(
+            //   //   //           controller: _textController,
+            //   //   //           textInputAction: TextInputAction.search,
+            //   //   //           decoration: InputDecoration(
+            //   //   //               contentPadding: EdgeInsets.all(10),
+            //   //   //               border: OutlineInputBorder(
+            //   //   //                 borderSide: BorderSide(color: WHITE),
+            //   //   //                 borderRadius: BorderRadius.circular(15),
+            //   //   //               ),
+            //   //   //               hintText: SEARCH_DOCTOR_BY_NAME,
+            //   //   //               hintStyle: GoogleFonts.poppins(
+            //   //   //                   color: LIGHT_GREY_TEXT, fontSize: 13),
+            //   //   //               suffixIcon: Container(
+            //   //   //                 height: 20,
+            //   //   //                 width: 20,
+            //   //   //                 child: Center(
+            //   //   //                   child: Padding(
+            //   //   //                     padding: const EdgeInsets.all(13),
+            //   //   //                     child: CircularProgressIndicator(
+            //   //   //                       strokeWidth: 1.5,
+            //   //   //                       valueColor: isLoading
+            //   //   //                           ? AlwaysStoppedAnimation(
+            //   //   //                               Theme.of(context).hintColor)
+            //   //   //                           : AlwaysStoppedAnimation(
+            //   //   //                               Colors.transparent),
+            //   //   //                     ),
+            //   //   //                   ),
+            //   //   //                 ),
+            //   //   //               ),
+            //   //   //               focusedBorder: OutlineInputBorder(
+            //   //   //                 borderSide: BorderSide(color: WHITE),
+            //   //   //                 borderRadius: BorderRadius.circular(15),
+            //   //   //               ),
+            //   //   //               disabledBorder: OutlineInputBorder(
+            //   //   //                 borderSide: BorderSide(color: WHITE),
+            //   //   //                 borderRadius: BorderRadius.circular(15),
+            //   //   //               ),
+            //   //   //               enabledBorder: OutlineInputBorder(
+            //   //   //                 borderSide: BorderSide(color: WHITE),
+            //   //   //                 borderRadius: BorderRadius.circular(15),
+            //   //   //               )),
+            //   //   //           onChanged: (val) {
+            //   //   //             // setState(() {
+            //   //   //             //   searchKeyword = val;
+            //   //   //             //   _onChanged(val);
+            //   //   //             //   print(searchKeyword);
+            //   //   //             // });
+            //   //   //           },
+            //   //   //           onSubmitted: (val) {
+            //   //   //             setState(() {
+            //   //   //               searchKeyword = val;
+            //   //   //               _onSubmit(val);
+            //   //   //             });
+            //   //   //           },
+            //   //   //         ),
+            //   //   //       ),
+            //   //   //     ),
+            //   //   //     SizedBox(
+            //   //   //       width: 5,
+            //   //   //     ),
+            //   //   //     InkWell(
+            //   //   //       onTap: () {
+            //   //   //         _onSubmit(_textController.text);
+            //   //   //         //Navigator.push(context, MaterialPageRoute(builder: (context) => SearchedScreen(_textController.text)));
+            //   //   //       },
+            //   //   //       child: Container(
+            //   //   //         width: 50,
+            //   //   //         height: 50,
+            //   //   //         decoration: BoxDecoration(
+            //   //   //           color: WHITE,
+            //   //   //           borderRadius: BorderRadius.circular(15),
+            //   //   //         ),
+            //   //   //         child: Center(
+            //   //   //           child: Image.asset(
+            //   //   //             "assets/homeScreenImages/search_icon.png",
+            //   //   //           ),
+            //   //   //         ),
+            //   //   //       ),
+            //   //   //     ),
+            //   //   //   ],
+            //   //   // )
+            //   // ],
+            // ),
+            child: Container(
+              height: 60,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Image.asset(
+                      "assets/moreScreenImages/back.png",
+                      height: 25,
+                      width: 22,
                     ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    InkWell(
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    "Filters",
+                    style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w600,
+                        color: WHITE,
+                        fontSize: 22),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  InkWell(
                       onTap: () {
-                        _onSubmit(_textController.text);
-                        //Navigator.push(context, MaterialPageRoute(builder: (context) => SearchedScreen(_textController.text)));
+                        Navigator.pop(context);
                       },
-                      child: Container(
-                        width: 50,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: WHITE,
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Center(
-                          child: Image.asset(
-                            "assets/homeScreenImages/search_icon.png",
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                )
-              ],
+                      child: Text(
+                        "Apply",
+                        style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w600,
+                            color: BLACK,
+                            fontSize: 20),
+                      )),
+                ],
+              ),
             ),
           ),
         ),
       ],
+    );
+  }
+
+  Widget body() {
+    return Column(
+      children: [],
     );
   }
 
