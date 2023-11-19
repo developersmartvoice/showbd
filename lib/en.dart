@@ -6,7 +6,7 @@ const String HOME = "Home";
 const String RETRY = "Retry";
 const String SEE_ALL = "see all";
 const String UPCOMING_APPOINTMENTS = "Upcoming Bookings";
-const String SEARCH_DOCTOR_BY_NAME = "Search guide by name";
+const String SEARCH_DOCTOR_BY_NAME = "Search guide by location";
 const String NEARBY_DOCTORS = "Nearby Guides";
 const String TURN_ON_LOCATION_AND_RETRY = "Turn on location and retry";
 
