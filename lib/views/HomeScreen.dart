@@ -681,6 +681,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                             .primaryColorDark
                                             .withOpacity(0.4),
                                       ),
+                              prefixIcon: Icon(Icons.search,
+                                  color: Theme.of(context)
+                                      .primaryColorDark
+                                      .withOpacity(0.4)),
                               suffixIcon: Container(
                                 height: 20,
                                 width: 20,

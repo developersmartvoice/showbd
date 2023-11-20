@@ -537,6 +537,18 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
           print("Finished");
           list2.addAll(nearbyDoctorsClass!.data!.nearbyData!);
           nextUrl = nearbyDoctorsClass!.data!.nextPageUrl!;
+          // print("----------------------------------------------------");
+          // print(list2[0].address);
+          // print(list2[1]);
+          // print(list2[2]);
+          // print(list2[3]);
+          // print(list2[4]);
+          // print(list2[5]);
+          // print(list2[6]);
+          // print(list2[7]);
+          // print(list2[8]);
+          // print(list2[9]);
+          // print("----------------------------------------------------");
           print(nextUrl);
           print(list2[8].name);
           print(list2[8].consultationFee);

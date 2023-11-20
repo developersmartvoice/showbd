@@ -571,6 +571,12 @@ class _SearchedScreenState extends State<SearchedScreen> {
                   }
                   onChanged(newSelectedValues);
                 },
+                selectedColor: Color.fromARGB(190, 255, 115, 0),
+                labelStyle: TextStyle(
+                  color: selectedValues.contains(option)
+                      ? Colors.white
+                      : Colors.black, // Set font color based on selection
+                ),
               );
             }).toList(),
           ),
