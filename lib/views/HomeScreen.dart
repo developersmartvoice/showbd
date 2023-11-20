@@ -681,6 +681,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                             .primaryColorDark
                                             .withOpacity(0.4),
                                       ),
+                              prefixIcon: Icon(Icons.search,
+                                  color: Theme.of(context)
+                                      .primaryColorDark
+                                      .withOpacity(0.4)),
                               suffixIcon: Container(
                                 height: 20,
                                 width: 20,
@@ -719,11 +723,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               _onChanged(val);
                             });
                           },
-                          onSubmitted: (val) {
-                            setState(() {
-                              searchKeyword = val;
-                            });
-                          },
+                          // onSubmitted: (val) {
+                          //   setState(() {
+                          //     searchKeyword = val;
+                          //   });
+                          // },
                         ),
                       ),
                     ),
@@ -735,13 +739,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         await Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    SearchedScreen(_textController.text)));
+                                builder: (context) => SearchedScreen()));
                         setState(() {
-                          _newData.clear();
-                          _textController.clear();
-                          _textController.text = "";
-                          _onChanged(_textController.text);
+                          // _newData.clear();
+                          // _textController.clear();
+                          // _textController.text = "";
+                          // _onChanged(_textController.text);
                           //_textController = new TextEditingController();
                           //textField.controller.clearComposing();
                           //_textController.selection.end;
@@ -755,10 +758,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           borderRadius: BorderRadius.circular(15),
                         ),
                         child: Center(
-                          child: Image.asset(
-                            "assets/homeScreenImages/search_icon.png",
-                          ),
-                        ),
+                            // child: Image.asset(
+                            //   "assets/homeScreenImages/search_icon.png",
+                            // ),
+                            child: Icon(Icons.filter_list)),
                       ),
                     ),
                   ],
