@@ -39,18 +39,18 @@ class Data {
 
   Data(
       {this.currentPage,
-        this.nearbyData,
-        this.firstPageUrl,
-        this.from,
-        this.lastPage,
-        this.lastPageUrl,
-        this.links,
-        this.nextPageUrl,
-        this.path,
-        this.perPage,
-        this.prevPageUrl,
-        this.to,
-        this.total});
+      this.nearbyData,
+      this.firstPageUrl,
+      this.from,
+      this.lastPage,
+      this.lastPageUrl,
+      this.links,
+      this.nextPageUrl,
+      this.path,
+      this.perPage,
+      this.prevPageUrl,
+      this.to,
+      this.total});
 
   Data.fromJson(Map<String, dynamic> json) {
     currentPage = json['current_page'];
@@ -109,15 +109,21 @@ class NearbyData {
   double? distance;
   String? departmentName;
   String? consultationFee;
+  String? aboutme;
+  String? avgrating;
+  String? totalreview;
 
   NearbyData(
       {this.id,
-        this.name,
-        this.address,
-        this.image,
-        this.distance,
-        this.departmentName,
-        this.consultationFee});
+      this.name,
+      this.address,
+      this.image,
+      this.distance,
+      this.departmentName,
+      this.consultationFee,
+      this.aboutme,
+      this.avgrating,
+      this.totalreview});
 
   NearbyData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -127,6 +133,9 @@ class NearbyData {
     //distance = double.parse(json['distance'].toString()) ?? 0.0;
     departmentName = json['department_name'];
     consultationFee = json['consultation_fees'].toString();
+    aboutme = json['aboutus'];
+    avgrating = json['avgratting'].toString();
+    totalreview = json['total_review'].toString();
   }
 
   Map<String, dynamic> toJson() {
@@ -138,6 +147,10 @@ class NearbyData {
     data['distance'] = this.distance;
     data['department_name'] = this.departmentName;
     data['consultation_fees'] = this.consultationFee;
+    data['aboutus'] = this.aboutme;
+    data['avgratting'] = this.avgrating;
+    data['total_review'] = this.totalreview;
+
     return data;
   }
 }

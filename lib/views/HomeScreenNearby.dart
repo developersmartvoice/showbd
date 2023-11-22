@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 // import 'package:flutter_native_admob/flutter_native_admob.dart';
 // import 'package:flutter_native_admob/native_admob_controller.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 // import 'package:loadmore/loadmore.dart';
@@ -223,6 +224,9 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
             itemBuilder: (BuildContext ctx, index) {
               var data = list2[index];
 
+              print(
+                  'Name is ${list2[index].name} and ratings are ${list2[index].avgrating}');
+
               // for (int i = 0; i < list2.length; i++) {
               //   fetchDoctorDetails(list2[i].id);
               // }
@@ -235,13 +239,19 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
               // print(
               //     "wanna see the data ${data1.name} and total Reviews are: ${data1.totalReview}");
               return nearByGridWidget(
-                data.image, data.name,
-                data.departmentName, data.id, data.consultationFee,
+                  data.image,
+                  data.name,
+                  data.departmentName,
+                  data.id,
+                  data.consultationFee,
+                  data.aboutme,
+                  data.avgrating,
+                  data.totalreview
 
-                // data1.aboutus,
-                // data1.totalReview,
-                // data1.avgratting
-              );
+                  // data1.aboutus,
+                  // data1.totalReview,
+                  // data1.avgratting
+                  );
             },
           ),
 
@@ -265,7 +275,8 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
     );
   }
 
-  Widget nearByGridWidget(img, name, dept, id, consultationFee) {
+  Widget nearByGridWidget(
+      img, name, dept, id, consultationFee, aboutMe, avgRating, totalReview) {
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -479,7 +490,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
             //   ),
             // ),
             Text(
-              "Let's Explore Together",
+              aboutMe,
               style: GoogleFonts.poppins(
                 color: LIGHT_GREY_TEXT,
                 fontSize: 13.5,
@@ -506,7 +517,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                             ),
                           ),
                           Text(
-                            "10",
+                            totalReview,
                             style: GoogleFonts.poppins(
                               color: BLACK,
                               fontSize: 12.5,
@@ -529,7 +540,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                             ),
                           ),
                           Text(
-                            "4.5",
+                            avgRating != 'null' ? avgRating : "0",
                             style: GoogleFonts.poppins(
                               color: BLACK,
                               fontSize: 12.5,
