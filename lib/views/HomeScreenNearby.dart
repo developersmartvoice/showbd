@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:appcode3/en.dart';
-import 'package:appcode3/modals/DoctorDetailsClass.dart' as DetailsClass;
-import 'package:appcode3/modals/DoctorDetailsClass.dart';
+// import 'package:appcode3/modals/DoctorDetailsClass.dart' as DetailsClass;
+// import 'package:appcode3/modals/DoctorDetailsClass.dart';
 import 'package:appcode3/modals/NearbyDoctorClass.dart';
 import 'package:appcode3/views/AllNearby.dart';
 import 'package:appcode3/views/DetailsPage.dart';
@@ -29,10 +29,10 @@ String nextUrl = "";
 
 List<NearbyData> list2 = [];
 // List<DetailsClass.Data> list3 = [];
-List<dynamic> list3 = [];
+// List<dynamic> list3 = [];
 bool hasApiBeenCalled = false;
 NearbyDoctorsClass? nearbyDoctorsClass;
-DoctorDetailsClass? doctorDetailsClass;
+// DoctorDetailsClass? doctorDetailsClass;
 
 class HomeScreenNearby extends StatefulWidget {
   ScrollController scrollController;
@@ -582,9 +582,9 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
           desiredAccuracy: LocationAccuracy.high);
 
       callApi(latitude: position.latitude, longitude: position.longitude);
-      for (int i = 0; i < list2.length; i++) {
-        fetchDoctorDetails(list2[i].id);
-      }
+      // for (int i = 0; i < list2.length; i++) {
+      //   fetchDoctorDetails(list2[i].id);
+      // }
       hasApiBeenCalled = true;
     } else if (status.isPermanentlyDenied) {
       print("Here isPermanentlyDenied");
@@ -629,10 +629,10 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
           nearbyDoctorsClass = NearbyDoctorsClass.fromJson(jsonResponse);
           print("Finished");
           list2.addAll(nearbyDoctorsClass!.data!.nearbyData!);
-          list3.clear();
-          for (int i = 0; i < list2.length; i++) {
-            fetchDoctorDetails(list2[i].id);
-          }
+          // list3.clear();
+          // for (int i = 0; i < list2.length; i++) {
+          //   fetchDoctorDetails(list2[i].id);
+          // }
           nextUrl = nearbyDoctorsClass!.data!.nextPageUrl!;
 
           print(nextUrl);
@@ -649,40 +649,40 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
     }
   }
 
-  fetchDoctorDetails(id) async {
-    // setState(() {
-    //   isNearbyLoading = true;
-    // });
-    final response =
-        await get(Uri.parse("$SERVER_ADDRESS/api/viewdoctor?doctor_id=${id}"))
-            .catchError((e) {
-      print("ERROR ${e.toString()}");
-      setState(() {
-        isErrorInNearby = true;
-      });
-    });
+  // fetchDoctorDetails(id) async {
+  //   // setState(() {
+  //   //   isNearbyLoading = true;
+  //   // });
+  //   final response =
+  //       await get(Uri.parse("$SERVER_ADDRESS/api/viewdoctor?doctor_id=${id}"))
+  //           .catchError((e) {
+  //     print("ERROR ${e.toString()}");
+  //     setState(() {
+  //       isErrorInNearby = true;
+  //     });
+  //   });
 
-    print(response.request);
+  //   print(response.request);
 
-    if (response.statusCode == 200) {
-      final jsonResponse = jsonDecode(response.body);
-      doctorDetailsClass = DoctorDetailsClass.fromJson(jsonResponse);
-      list3.add(doctorDetailsClass!.data!);
-      // print(doctorDetailsClass!.data!.avgratting);
-      // print(id);
-      print("-------------------------------------------------------------");
-      for (int i = 0; i < list3.length; i++) {
-        DetailsClass.Data currentData = list3[i];
-        print('$i, ${currentData.name.toString()}');
-        // Access properties of currentData as needed
-      }
-      print("-------------------------------------------------------------");
-      setState(() {
-        isNearbyLoading = false;
-        //doctorDetailsClass.data.avgratting = '3';
-      });
-    }
-  }
+  //   if (response.statusCode == 200) {
+  //     final jsonResponse = jsonDecode(response.body);
+  //     doctorDetailsClass = DoctorDetailsClass.fromJson(jsonResponse);
+  //     list3.add(doctorDetailsClass!.data!);
+  //     // print(doctorDetailsClass!.data!.avgratting);
+  //     // print(id);
+  //     print("-------------------------------------------------------------");
+  //     for (int i = 0; i < list3.length; i++) {
+  //       DetailsClass.Data currentData = list3[i];
+  //       print('$i, ${currentData.name.toString()}');
+  //       // Access properties of currentData as needed
+  //     }
+  //     print("-------------------------------------------------------------");
+  //     setState(() {
+  //       isNearbyLoading = false;
+  //       //doctorDetailsClass.data.avgratting = '3';
+  //     });
+  //   }
+  // }
 
   int count = 0;
 
@@ -761,10 +761,10 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
           nextUrl = nearbyDoctorsClass!.data!.nextPageUrl!;
           print(nextUrl);
           list2.addAll(nearbyDoctorsClass!.data!.nearbyData!);
-          list3.clear();
-          for (int i = 0; i < list2.length; i++) {
-            fetchDoctorDetails(list2[i].id);
-          }
+          // list3.clear();
+          // for (int i = 0; i < list2.length; i++) {
+          //   fetchDoctorDetails(list2[i].id);
+          // }
         });
       }
     }
