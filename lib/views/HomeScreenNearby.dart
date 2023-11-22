@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:appcode3/en.dart';
+// import 'package:appcode3/modals/DoctorDetailsClass.dart' as DetailsClass;
+// import 'package:appcode3/modals/DoctorDetailsClass.dart';
 import 'package:appcode3/modals/NearbyDoctorClass.dart';
 import 'package:appcode3/views/AllNearby.dart';
 import 'package:appcode3/views/DetailsPage.dart';
@@ -11,6 +13,7 @@ import 'package:flutter/material.dart';
 // import 'package:flutter_native_admob/flutter_native_admob.dart';
 // import 'package:flutter_native_admob/native_admob_controller.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 // import 'package:loadmore/loadmore.dart';
@@ -25,8 +28,11 @@ String lon = "";
 String nextUrl = "";
 
 List<NearbyData> list2 = [];
+// List<DetailsClass.Data> list3 = [];
+// List<dynamic> list3 = [];
 bool hasApiBeenCalled = false;
 NearbyDoctorsClass? nearbyDoctorsClass;
+// DoctorDetailsClass? doctorDetailsClass;
 
 class HomeScreenNearby extends StatefulWidget {
   ScrollController scrollController;
@@ -218,14 +224,34 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
             itemBuilder: (BuildContext ctx, index) {
               var data = list2[index];
 
-              // print("");
+              print(
+                  'Name is ${list2[index].name} and ratings are ${list2[index].avgrating}');
+
+              // for (int i = 0; i < list2.length; i++) {
+              //   fetchDoctorDetails(list2[i].id);
+              // }
+
+              // var data1 = list3[index];
+              // var data1 = list3[ind2x];
+              // print("This printing from My gridbuilderview List2: $list2");
+              // print("This printing from My gridbuilderview List3: $list3");
+
+              // print(
+              //     "wanna see the data ${data1.name} and total Reviews are: ${data1.totalReview}");
               return nearByGridWidget(
-                data.image,
-                data.name,
-                data.departmentName,
-                data.id,
-                data.consultationFee,
-              );
+                  data.image,
+                  data.name,
+                  data.departmentName,
+                  data.id,
+                  data.consultationFee,
+                  data.aboutme,
+                  data.avgrating,
+                  data.totalreview
+
+                  // data1.aboutus,
+                  // data1.totalReview,
+                  // data1.avgratting
+                  );
             },
           ),
 
@@ -249,7 +275,8 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
     );
   }
 
-  Widget nearByGridWidget(img, name, dept, id, consultationFee) {
+  Widget nearByGridWidget(
+      img, name, dept, id, consultationFee, aboutMe, avgRating, totalReview) {
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -258,7 +285,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
         );
       },
       child: Container(
-        // height: 500,
+        // height: 900,
         decoration: BoxDecoration(
             color: WHITE,
             borderRadius: BorderRadius.circular(5),
@@ -274,7 +301,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
         //   minHeight: 500.0, // Set the minimum height
         //   maxHeight: 500.0, // Set the maximum height
         // ),
-        padding: EdgeInsets.fromLTRB(0, 0, 0, 12),
+        padding: EdgeInsets.fromLTRB(0, 0, 0, 2),
         child: Column(
           children: [
             Container(
@@ -338,7 +365,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                     ),
                     // add button
                     Container(
-                      margin: EdgeInsets.only(top: 180),
+                      margin: EdgeInsets.only(top: 150),
                       width: 120,
                       height: 50,
                       child: isLoggedIn
@@ -409,7 +436,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                                 ),
                                 minimumSize: Size(
                                     60, 40), // Set the minimum width and height
-// Set the button color to orange
+                                // Set the button color to orange
                               ),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -449,19 +476,82 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
               style: GoogleFonts.poppins(
-                color: BLACK,
-                fontSize: 13,
+                color: Color.fromARGB(255, 255, 94, 0).withOpacity(0.8),
+                fontSize: 16,
                 fontWeight: FontWeight.w500,
               ),
             ),
+            // Text(
+            //   dept,
+            //   style: GoogleFonts.poppins(
+            //     color: LIGHT_GREY_TEXT,
+            //     fontSize: 9.5,
+            //     fontWeight: FontWeight.w500,
+            //   ),
+            // ),
             Text(
-              dept,
+              aboutMe,
               style: GoogleFonts.poppins(
                 color: LIGHT_GREY_TEXT,
-                fontSize: 9.5,
+                fontSize: 13.5,
                 fontWeight: FontWeight.w500,
               ),
             ),
+            Container(
+              height: 40,
+              // padding: EdgeInsets.only(left: 30, right: 30),
+              child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.4,
+                      child: Column(
+                        children: [
+                          Text(
+                            "Reviews",
+                            style: GoogleFonts.poppins(
+                              color: LIGHT_GREY_TEXT,
+                              fontSize: 9.5,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          Text(
+                            totalReview,
+                            style: GoogleFonts.poppins(
+                              color: BLACK,
+                              fontSize: 12.5,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.4,
+                      child: Column(
+                        children: [
+                          Text(
+                            "Ratings",
+                            style: GoogleFonts.poppins(
+                              color: LIGHT_GREY_TEXT,
+                              fontSize: 9.5,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          Text(
+                            avgRating != 'null' ? avgRating : "0",
+                            style: GoogleFonts.poppins(
+                              color: BLACK,
+                              fontSize: 12.5,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ]),
+            )
           ],
         ),
       ),
@@ -492,6 +582,9 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
           desiredAccuracy: LocationAccuracy.high);
 
       callApi(latitude: position.latitude, longitude: position.longitude);
+      // for (int i = 0; i < list2.length; i++) {
+      //   fetchDoctorDetails(list2[i].id);
+      // }
       hasApiBeenCalled = true;
     } else if (status.isPermanentlyDenied) {
       print("Here isPermanentlyDenied");
@@ -536,19 +629,12 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
           nearbyDoctorsClass = NearbyDoctorsClass.fromJson(jsonResponse);
           print("Finished");
           list2.addAll(nearbyDoctorsClass!.data!.nearbyData!);
+          // list3.clear();
+          // for (int i = 0; i < list2.length; i++) {
+          //   fetchDoctorDetails(list2[i].id);
+          // }
           nextUrl = nearbyDoctorsClass!.data!.nextPageUrl!;
-          // print("----------------------------------------------------");
-          // print(list2[0].address);
-          // print(list2[1]);
-          // print(list2[2]);
-          // print(list2[3]);
-          // print(list2[4]);
-          // print(list2[5]);
-          // print(list2[6]);
-          // print(list2[7]);
-          // print(list2[8]);
-          // print(list2[9]);
-          // print("----------------------------------------------------");
+
           print(nextUrl);
           print(list2[8].name);
           print(list2[8].consultationFee);
@@ -562,6 +648,41 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
       messageDialog(ERROR, UNABLE_TO_LOAD_DATA_FORM_SERVER);
     }
   }
+
+  // fetchDoctorDetails(id) async {
+  //   // setState(() {
+  //   //   isNearbyLoading = true;
+  //   // });
+  //   final response =
+  //       await get(Uri.parse("$SERVER_ADDRESS/api/viewdoctor?doctor_id=${id}"))
+  //           .catchError((e) {
+  //     print("ERROR ${e.toString()}");
+  //     setState(() {
+  //       isErrorInNearby = true;
+  //     });
+  //   });
+
+  //   print(response.request);
+
+  //   if (response.statusCode == 200) {
+  //     final jsonResponse = jsonDecode(response.body);
+  //     doctorDetailsClass = DoctorDetailsClass.fromJson(jsonResponse);
+  //     list3.add(doctorDetailsClass!.data!);
+  //     // print(doctorDetailsClass!.data!.avgratting);
+  //     // print(id);
+  //     print("-------------------------------------------------------------");
+  //     for (int i = 0; i < list3.length; i++) {
+  //       DetailsClass.Data currentData = list3[i];
+  //       print('$i, ${currentData.name.toString()}');
+  //       // Access properties of currentData as needed
+  //     }
+  //     print("-------------------------------------------------------------");
+  //     setState(() {
+  //       isNearbyLoading = false;
+  //       //doctorDetailsClass.data.avgratting = '3';
+  //     });
+  //   }
+  // }
 
   int count = 0;
 
@@ -640,6 +761,10 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
           nextUrl = nearbyDoctorsClass!.data!.nextPageUrl!;
           print(nextUrl);
           list2.addAll(nearbyDoctorsClass!.data!.nearbyData!);
+          // list3.clear();
+          // for (int i = 0; i < list2.length; i++) {
+          //   fetchDoctorDetails(list2[i].id);
+          // }
         });
       }
     }
