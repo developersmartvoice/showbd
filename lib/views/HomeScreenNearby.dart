@@ -539,14 +539,12 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                               fontWeight: FontWeight.w500,
                             ),
                           ),
-                          Text(
-                            avgRating != 'null' ? avgRating : "0",
-                            style: GoogleFonts.poppins(
-                              color: BLACK,
-                              fontSize: 12.5,
-                              fontWeight: FontWeight.w500,
-                            ),
+                          SizedBox(
+                            height: 4,
                           ),
+                          avgRating != 'null'
+                              ? StarRating(double.parse(avgRating))
+                              : StarRating(0)
                         ],
                       ),
                     ),
@@ -555,6 +553,28 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget StarRating(avgRating) {
+    List<Widget> starWidgets = [];
+    for (int i = 1; i <= 5; i++) {
+      IconData iconData = Icons.star;
+      Color iconColor = i <= avgRating
+          ? Color.fromARGB(255, 255, 94, 0).withOpacity(0.8)
+          : Colors.grey;
+
+      starWidgets.add(
+        Icon(
+          iconData,
+          color: iconColor,
+          size: 10,
+        ),
+      );
+    }
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: starWidgets,
     );
   }
 
