@@ -387,156 +387,311 @@ class _DoctorProfileState extends State<DoctorProfile> {
         //width: MediaQuery.of(context).size.width,
         child: InkWell(
           onTap: () {
-            if (index == 0) {
-              print("index 0");
+            // if (index == 0) {
+            //   print("index 0");
 
-              if (name.isEmpty) {
-                setState(() {
-                  isNameError = true;
-                });
-              } else if (phone.length < 10) {
-                setState(() {
-                  isPhoneError = true;
-                });
-              }
-              // else if(password.isEmpty){
-              //   setState(() {
-              //     isPassError = true;
-              //   });
-              // }
-              else if (selectedValue == null) {
-                setState(() {
-                  isDepartmentError = true;
-                });
-              } else if (workingTime.isEmpty || workingTime.isNotEmpty) {
-                print("Main ae dhukse");
-                if (workingTime.isEmpty) {
-                  setState(() {
-                    isWorkingTimeError = true;
-                    workingType = 1;
-                    // print("kno!!!!!");
-                  });
-                } else {
-                  // print("Empty na!!!");
-                  RegExp regex = RegExp(
-                    r'^([0-9]|1[0-7])\.[0-5][0-9] - ([0-9]|1[0-7])\.[0-5][0-9]$',
-                    caseSensitive: false,
-                  );
-                  print("WorkingTimeError: $isWorkingTimeError");
-                  if (regex.hasMatch(workingTime)) {
-                    print("Regex aer vetor dhukse");
-                    List<String> times = workingTime.split(' - ');
+            //   if (name.isEmpty) {
+            //     setState(() {
+            //       isNameError = true;
+            //     });
+            //   } else if (phone.length < 10) {
+            //     setState(() {
+            //       isPhoneError = true;
+            //     });
+            //   }
+            //   // else if(password.isEmpty){
+            //   //   setState(() {
+            //   //     isPassError = true;
+            //   //   });
+            //   // }
+            //   else if (selectedValue == null) {
+            //     setState(() {
+            //       isDepartmentError = true;
+            //     });
+            //   } else if (workingTime.isEmpty || workingTime.isNotEmpty) {
+            //     print("Main ae dhukse");
+            //     if (workingTime.isEmpty) {
+            //       setState(() {
+            //         isWorkingTimeError = true;
+            //         index = 0;
+            //         workingType = 1;
+            //         // print("kno!!!!!");
+            //       });
+            //     } else {
+            //       // print("Empty na!!!");
+            //       RegExp regex = RegExp(
+            //         r'^([0-9]|1[0-7])\.[0-5][0-9] - ([0-9]|1[0-9])\.[0-5][0-9]$',
+            //         caseSensitive: false,
+            //       );
+            //       print("WorkingTimeError: $isWorkingTimeError");
+            //       if (regex.hasMatch(workingTime)) {
+            //         print("Regex aer vetor dhukse");
+            //         List<String> times = workingTime.split(' - ');
 
-                    List<String> time1 = times[0].split('.');
-                    List<String> time2 = times[1].split('.');
-                    // print("Time is $times");
-                    int startHour = int.parse(time1[0]);
-                    int startMin = int.parse(time1[1]);
-                    int endHour = int.parse(time2[0]);
-                    int endMin = int.parse(time2[1]);
-                    if (startHour >= 9 &&
-                        startHour < 17 &&
-                        endHour > 9 &&
-                        endHour <= 17 &&
-                        startMin >= 0 &&
-                        startMin < 60 &&
-                        endMin >= 0 &&
-                        endMin < 60) {
-                      print("Condition milse");
-                      setState(() {
-                        isWorkingTimeError = false;
-                      });
-                    } else {
-                      print("WorkingType 3 set hoiye gese");
-                      setState(() {
-                        isWorkingTimeError = true;
-                        workingType = 3;
-                      });
-                    }
-                  } else {
-                    setState(() {
-                      isWorkingTimeError = true;
-                      workingType = 2;
-                    });
-                  }
-                  print("Working $workingType");
-                  if (workingType != 2) {
-                    print("WorkingType 2 na dekhe dhukse");
-                  }
-                }
-              } else if (consultationFee.isEmpty) {
-                setState(() {
-                  isFeeError = true;
-                });
-              } else if (aboutUs.isEmpty) {
-                setState(() {
-                  isAboutUsError = true;
-                });
-              } else if (service.isEmpty) {
-                setState(() {
-                  isServiceError = true;
-                });
-              } else if (healthcare.isEmpty) {
-                setState(() {
-                  isHealthCareError = true;
-                });
-              } else if (facebook.isEmpty) {
-                setState(() {
-                  isFacebookError = true;
-                });
-              } else if (twitter.isEmpty) {
-                setState(() {
-                  isTwitterError = true;
-                });
-              }
-              if (isNameError &&
-                  isPhoneError &&
-                  isDepartmentError &&
-                  isWorkingTimeError &&
-                  isFeeError &&
-                  isAboutUsError &&
-                  isServiceError &&
-                  isHealthCareError &&
-                  isFacebookError &&
-                  isTwitterError) {
-                setState(() {
-                  index = 0;
-                });
-              } else {
-                setState(() {
-                  index = index + 1;
-                });
-              }
-            } else if (index == 1) {
-              print("index 1");
-              if (textEditingController.text.isEmpty) {
-                setState(() {
-                  isAddressError = true;
-                });
-              } else {
-                setState(() {
-                  index = index + 1;
-                });
-              }
-            } else if (index == 2) {
-              print("index 2");
+            //         List<String> time1 = times[0].split('.');
+            //         List<String> time2 = times[1].split('.');
+            //         // print("Time is $times");
+            //         int startHour = int.parse(time1[0]);
+            //         int startMin = int.parse(time1[1]);
+            //         int endHour = int.parse(time2[0]);
+            //         int endMin = int.parse(time2[1]);
+            //         if (startHour >= 9 &&
+            //             startHour < 17 &&
+            //             endHour > 9 &&
+            //             endHour <= 17 &&
+            //             startMin >= 0 &&
+            //             startMin < 60 &&
+            //             endMin >= 0 &&
+            //             endMin < 60) {
+            //           print("Condition milse");
+            //           setState(() {
+            //             isWorkingTimeError = false;
+            //           });
+            //         } else {
+            //           print("WorkingType 3 set hoiye gese");
+            //           setState(() {
+            //             isWorkingTimeError = true;
+            //             index = 0;
+            //             workingType = 3;
+            //           });
+            //         }
+            //       } else {
+            //         setState(() {
+            //           isWorkingTimeError = true;
+            //           index = 0;
+            //           workingType = 2;
+            //         });
+            //       }
+            //       print("Working $workingType");
+            //     }
+            //   } else if (consultationFee.isEmpty) {
+            //     setState(() {
+            //       isFeeError = true;
+            //     });
+            //   } else if (aboutUs.isEmpty) {
+            //     setState(() {
+            //       isAboutUsError = true;
+            //     });
+            //   } else if (service.isEmpty) {
+            //     setState(() {
+            //       isServiceError = true;
+            //     });
+            //   } else if (healthcare.isEmpty) {
+            //     setState(() {
+            //       isHealthCareError = true;
+            //     });
+            //   } else if (facebook.isEmpty) {
+            //     setState(() {
+            //       isFacebookError = true;
+            //     });
+            //   } else if (twitter.isEmpty) {
+            //     setState(() {
+            //       isTwitterError = true;
+            //     });
+            //   } else if (!(isNameError &&
+            //       isPhoneError &&
+            //       isDepartmentError &&
+            //       isWorkingTimeError &&
+            //       isFeeError &&
+            //       isAboutUsError &&
+            //       isServiceError &&
+            //       isHealthCareError &&
+            //       isFacebookError &&
+            //       isTwitterError)) {
+            //     setState(() {
+            //       index++;
+            //     });
+            //   } else {
+            //     setState(() {
+            //       index = 0;
+            //     });
+            //   }
+            // } else if (index == 1) {
+            //   print("index 1");
+            //   if (textEditingController.text.isEmpty) {
+            //     setState(() {
+            //       isAddressError = true;
+            //     });
+            //   } else {
+            //     setState(() {
+            //       index = index + 1;
+            //     });
+            //   }
+            // } else if (index == 2) {
+            //   print("index 2");
 
-              setState(() {
-                index++;
-              });
-              // uploadData();
-            } else if (index == 3) {
-              print("index 3");
-              uploadData();
-            } else {
-              print("else");
-            }
+            //   setState(() {
+            //     index++;
+            //   });
+            //   // uploadData();
+            // } else if (index == 3) {
+            //   print("index 3");
+            //   uploadData();
+            // } else {
+            //   print("else");
+            // }
 
             // if(index < 3){
             //   setState(() {
             //     index = index + 1;
             //   });
             // }
+
+            switch (index) {
+              case 0:
+                print("index 0");
+                if (name.isEmpty) {
+                  setState(() {
+                    isNameError = true;
+                  });
+                }
+                if (phone.length < 10) {
+                  setState(() {
+                    isPhoneError = true;
+                  });
+                }
+                if (selectedValue == null) {
+                  setState(() {
+                    isDepartmentError = true;
+                  });
+                }
+                if (workingTime.isEmpty || workingTime.isNotEmpty) {
+                  print("Main ae dhukse");
+                  if (workingTime.isEmpty) {
+                    setState(() {
+                      isWorkingTimeError = true;
+                      index = 0;
+                      workingType = 1;
+                    });
+                    break;
+                  } else {
+                    RegExp regex = RegExp(
+                      r'^([0-9]|1[0-7])\.[0-5][0-9] - ([0-9]|1[0-9])\.[0-5][0-9]$',
+                      caseSensitive: false,
+                    );
+                    print("WorkingTimeError: $isWorkingTimeError");
+                    if (regex.hasMatch(workingTime)) {
+                      print("Regex aer vetor dhukse");
+                      List<String> times = workingTime.split(' - ');
+
+                      List<String> time1 = times[0].split('.');
+                      List<String> time2 = times[1].split('.');
+                      int startHour = int.parse(time1[0]);
+                      int startMin = int.parse(time1[1]);
+                      int endHour = int.parse(time2[0]);
+                      int endMin = int.parse(time2[1]);
+                      if (startHour >= 9 &&
+                          startHour < 17 &&
+                          endHour > 9 &&
+                          endHour <= 17 &&
+                          startMin >= 0 &&
+                          startMin < 60 &&
+                          endMin >= 0 &&
+                          endMin < 60) {
+                        print("Condition milse");
+                        setState(() {
+                          isWorkingTimeError = false;
+                        });
+                      } else {
+                        print("WorkingType 3 set hoiye gese");
+                        setState(() {
+                          isWorkingTimeError = true;
+                          index = 0;
+                          workingType = 3;
+                        });
+                        break;
+                      }
+                    } else {
+                      setState(() {
+                        isWorkingTimeError = true;
+                        index = 0;
+                        workingType = 2;
+                      });
+                      break;
+                    }
+                    print("Working $workingType");
+                  }
+                }
+                if (consultationFee.isEmpty) {
+                  setState(() {
+                    isFeeError = true;
+                  });
+                }
+                if (aboutUs.isEmpty) {
+                  setState(() {
+                    isAboutUsError = true;
+                  });
+                }
+                if (service.isEmpty) {
+                  setState(() {
+                    isServiceError = true;
+                  });
+                }
+                if (healthcare.isEmpty) {
+                  setState(() {
+                    isHealthCareError = true;
+                  });
+                }
+                if (facebook.isEmpty) {
+                  setState(() {
+                    isFacebookError = true;
+                  });
+                }
+                if (twitter.isEmpty) {
+                  setState(() {
+                    isTwitterError = true;
+                  });
+                }
+                if (isNameError &&
+                    isPhoneError &&
+                    isDepartmentError &&
+                    isWorkingTimeError &&
+                    isFeeError &&
+                    isAboutUsError &&
+                    isServiceError &&
+                    isHealthCareError &&
+                    isFacebookError &&
+                    isTwitterError) {
+                  setState(() {
+                    index = 0;
+                  });
+                  break;
+                } else {
+                  setState(() {
+                    index++;
+                  });
+                }
+                break;
+
+              case 1:
+                print("index 1");
+                if (textEditingController.text.isEmpty) {
+                  setState(() {
+                    isAddressError = true;
+                  });
+                } else {
+                  setState(() {
+                    index = index + 1;
+                  });
+                }
+                break;
+
+              case 2:
+                print("index 2");
+                setState(() {
+                  index++;
+                });
+                // uploadData();
+                break;
+
+              case 3:
+                print("index 3");
+                uploadData();
+                break;
+
+              default:
+                print("else");
+            }
           },
           child: Stack(
             children: [
