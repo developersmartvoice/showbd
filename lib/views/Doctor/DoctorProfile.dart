@@ -409,7 +409,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                   isDepartmentError = true;
                 });
               } else if (workingTime.isEmpty || workingTime.isNotEmpty) {
-                // print("Main ae dhukse");
+                print("Main ae dhukse");
                 if (workingTime.isEmpty) {
                   setState(() {
                     isWorkingTimeError = true;
@@ -419,41 +419,49 @@ class _DoctorProfileState extends State<DoctorProfile> {
                 } else {
                   // print("Empty na!!!");
                   RegExp regex = RegExp(
-                      r'^([1-9]|1[0-2]) [aApP][mM] - ([1-9]|1[0-2]) [aApP][mM]$',
-                      caseSensitive: false);
+                    r'^([0-9]|1[0-7])\.[0-5][0-9] - ([0-9]|1[0-7])\.[0-5][0-9]$',
+                    caseSensitive: false,
+                  );
                   print("WorkingTimeError: $isWorkingTimeError");
                   if (regex.hasMatch(workingTime)) {
-                    // print("Regex aer vetor dhukse");
-                    setState(() {
-                      isWorkingTimeError = false;
-                    }); // Invalid time format
+                    print("Regex aer vetor dhukse");
+                    List<String> times = workingTime.split(' - ');
+
+                    List<String> time1 = times[0].split('.');
+                    List<String> time2 = times[1].split('.');
+                    // print("Time is $times");
+                    int startHour = int.parse(time1[0]);
+                    int startMin = int.parse(time1[1]);
+                    int endHour = int.parse(time2[0]);
+                    int endMin = int.parse(time2[1]);
+                    if (startHour >= 9 &&
+                        startHour < 17 &&
+                        endHour > 9 &&
+                        endHour <= 17 &&
+                        startMin >= 0 &&
+                        startMin < 60 &&
+                        endMin >= 0 &&
+                        endMin < 60) {
+                      print("Condition milse");
+                      setState(() {
+                        isWorkingTimeError = false;
+                      });
+                    } else {
+                      print("WorkingType 3 set hoiye gese");
+                      setState(() {
+                        isWorkingTimeError = true;
+                        workingType = 3;
+                      });
+                    }
                   } else {
                     setState(() {
                       isWorkingTimeError = true;
                       workingType = 2;
                     });
                   }
-                  // print("Working $workingType");
+                  print("Working $workingType");
                   if (workingType != 2) {
-                    // print("WorkingType 2 na dekhe dhukse");
-                    List<String> times = workingTime.toString().split(' - ');
-                    // print("Time is $times");
-                    int startHour = int.parse(times[0].split(' ')[0]);
-                    int endHour = int.parse(times[1].split(' ')[0]);
-                    if (startHour >= 9 &&
-                        startHour <= 5 &&
-                        endHour >= 9 &&
-                        endHour <= 5) {
-                      setState(() {
-                        isWorkingTimeError = false;
-                      });
-                    } else {
-                      // print("WorkingType 3 set hoiye gese");
-                      setState(() {
-                        isWorkingTimeError = true;
-                        workingType = 3;
-                      });
-                    }
+                    print("WorkingType 2 na dekhe dhukse");
                   }
                 }
               } else if (consultationFee.isEmpty) {
@@ -479,6 +487,20 @@ class _DoctorProfileState extends State<DoctorProfile> {
               } else if (twitter.isEmpty) {
                 setState(() {
                   isTwitterError = true;
+                });
+              }
+              if (isNameError &&
+                  isPhoneError &&
+                  isDepartmentError &&
+                  isWorkingTimeError &&
+                  isFeeError &&
+                  isAboutUsError &&
+                  isServiceError &&
+                  isHealthCareError &&
+                  isFacebookError &&
+                  isTwitterError) {
+                setState(() {
+                  index = 0;
                 });
               } else {
                 setState(() {
@@ -848,22 +870,30 @@ class _DoctorProfileState extends State<DoctorProfile> {
             controller: worktimeController,
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
-              labelText: WORKING_TIME,
-              labelStyle: TextStyle(
-                color: Theme.of(context).primaryColorDark.withOpacity(0.4),
-              ),
-              border: UnderlineInputBorder(),
-              focusedBorder: UnderlineInputBorder(
-                  borderSide:
-                      BorderSide(color: Theme.of(context).primaryColorDark)),
-              errorText: workingType == 1
-                  ? ENTER_WORKING_TIME
-                  : workingType == 2
-                      ? WORKING_TIME_FORMAT
-                      : workingType == 3
-                          ? WORKING_TIME_LIMIT
-                          : null,
-            ),
+                labelText: WORKING_TIME,
+                labelStyle: TextStyle(
+                  color: Theme.of(context).primaryColorDark.withOpacity(0.4),
+                ),
+                border: UnderlineInputBorder(),
+                focusedBorder: UnderlineInputBorder(
+                    borderSide:
+                        BorderSide(color: Theme.of(context).primaryColorDark)),
+                // errorText: workingType == 1
+                //     ? ENTER_WORKING_TIME
+                //     : workingType == 2
+                //         ? WORKING_TIME_FORMAT
+                //         : workingType == 3
+                //             ? WORKING_TIME_LIMIT
+                //             : null,
+                errorText: isWorkingTimeError
+                    ? workingType == 1
+                        ? ENTER_WORKING_TIME
+                        : workingType == 2
+                            ? WORKING_TIME_FORMAT
+                            : workingType == 3
+                                ? WORKING_TIME_LIMIT
+                                : null
+                    : null),
             style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
             onChanged: (val) {
               setState(() {
