@@ -39,7 +39,8 @@ const String LOGGING_IN = "Logging In";
 const String PLEASE_WAIT_LOGGING_IN = "Please wait while logging in...";
 const String OK = "Ok";
 const String ENTER_MOBILE_NUMBER = "Enter mobile number";
-const String ENTER_VALID_MOBILE_NUMBER = "Enter valid mobile number";
+const String ENTER_VALID_MOBILE_NUMBER =
+    "Enter valid mobile number must be length of 11 digits";
 const String SUNDAY = "Sun";
 const String MONDAY = "Mon";
 const String TUESDAY = "Tue";

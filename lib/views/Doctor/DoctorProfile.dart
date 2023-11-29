@@ -545,7 +545,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                     isNameError = true;
                   });
                 }
-                if (phone.length < 10) {
+                if (phone.length < 11) {
                   setState(() {
                     isPhoneError = true;
                   });
