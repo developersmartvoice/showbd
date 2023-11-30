@@ -33,6 +33,7 @@ import 'en.dart';
 
 /// old url
 const String SERVER_ADDRESS = "https://localguide.celibritychatbd.com";
+// const String SERVER_ADDRESS = "http://192.168.0.136/localguide";
 const String IMAGE =
     "https://localguide.celibritychatbd.com/public/upload/banner/";
 

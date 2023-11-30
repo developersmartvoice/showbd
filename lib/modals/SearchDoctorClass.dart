@@ -39,18 +39,18 @@ class Data {
 
   Data(
       {this.currentPage,
-        this.doctorData,
-        this.firstPageUrl,
-        this.from,
-        this.lastPage,
-        this.lastPageUrl,
-        this.links,
-        this.nextPageUrl,
-        this.path,
-        this.perPage,
-        this.prevPageUrl,
-        this.to,
-        this.total});
+      this.doctorData,
+      this.firstPageUrl,
+      this.from,
+      this.lastPage,
+      this.lastPageUrl,
+      this.links,
+      this.nextPageUrl,
+      this.path,
+      this.perPage,
+      this.prevPageUrl,
+      this.to,
+      this.total});
 
   Data.fromJson(Map<String, dynamic> json) {
     currentPage = json['current_page'];
@@ -108,14 +108,22 @@ class DoctorData {
   String? image;
   int? departmentId;
   String? departmentName;
+  String? consultationFee;
+  String? aboutme;
+  String? avgrating;
+  String? totalreview;
 
   DoctorData(
       {this.id,
-        this.name,
-        this.address,
-        this.image,
-        this.departmentId,
-        this.departmentName});
+      this.name,
+      this.address,
+      this.image,
+      this.departmentId,
+      this.departmentName,
+      this.consultationFee,
+      this.aboutme,
+      this.avgrating,
+      this.totalreview});
 
   DoctorData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -124,6 +132,10 @@ class DoctorData {
     image = json['image'];
     departmentId = json['department_id'] is String ? 0 : json['department_id'];
     departmentName = json['department_name'];
+    consultationFee = json['consultation_fees'].toString();
+    aboutme = json['aboutus'];
+    avgrating = json['avgratting'].toString();
+    totalreview = json['total_review'].toString();
   }
 
   Map<String, dynamic> toJson() {
@@ -134,6 +146,10 @@ class DoctorData {
     data['image'] = this.image;
     data['department_id'] = this.departmentId;
     data['department_name'] = this.departmentName;
+    data['consultation_fees'] = this.consultationFee;
+    data['aboutus'] = this.aboutme;
+    data['avgratting'] = this.avgrating;
+    data['total_review'] = this.totalreview;
     return data;
   }
 }

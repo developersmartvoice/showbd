@@ -316,6 +316,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
+                                          Container(
+                                            child: CachedNetworkImage(
+                                              imageUrl: _newData[index]
+                                                  .image
+                                                  .toString(),
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  .05,
+                                              width: 40,
+                                            ),
+                                          ),
                                           Text(
                                             _newData[index].name,
                                             style: GoogleFonts.poppins(
@@ -723,6 +735,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               _onChanged(val);
                             });
                           },
+                          // onChanged: (val) {
+
+                          // },
                           // onSubmitted: (val) {
                           //   setState(() {
                           //     searchKeyword = val;
