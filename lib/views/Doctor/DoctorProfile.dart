@@ -275,7 +275,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                                 future2 == null) {
                               return Container(
                                 height:
-                                    MediaQuery.of(context).size.height - 190,
+                                    MediaQuery.of(context).size.height - 250,
                                 child: Center(
                                   child: CircularProgressIndicator(
                                     strokeWidth: 2,

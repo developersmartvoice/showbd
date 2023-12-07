@@ -31,8 +31,10 @@ class Data {
   String? lat;
   String? lon;
   String? phoneno;
-  dynamic services;
-  dynamic healthcare;
+  // dynamic services;
+  // dynamic healthcare;
+  List<String>? services;
+  List<String>? languages;
   String? image;
   int? departmentId;
   String? workingTime;
@@ -46,30 +48,30 @@ class Data {
   int? totalReview;
   String? consultationFee;
 
-  Data(
-      {this.id,
-        this.name,
-        this.email,
-        this.aboutus,
-        this.address,
-        this.lat,
-        this.lon,
-        this.phoneno,
-        this.services,
-        this.healthcare,
-        this.image,
-        this.departmentId,
-        this.workingTime,
-        this.password,
-        this.facebookUrl,
-        this.twitterUrl,
-        this.createdAt,
-        this.updatedAt,
-        this.departmentName,
-        this.avgratting,
-        this.totalReview,
-        this.consultationFee,
-      });
+  Data({
+    this.id,
+    this.name,
+    this.email,
+    this.aboutus,
+    this.address,
+    this.lat,
+    this.lon,
+    this.phoneno,
+    this.services,
+    this.languages,
+    this.image,
+    this.departmentId,
+    this.workingTime,
+    this.password,
+    this.facebookUrl,
+    this.twitterUrl,
+    this.createdAt,
+    this.updatedAt,
+    this.departmentName,
+    this.avgratting,
+    this.totalReview,
+    this.consultationFee,
+  });
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -80,10 +82,16 @@ class Data {
     lat = json['lat'].toString();
     lon = json['lon'].toString();
     phoneno = json['phoneno'].toString();
-    services = json['services'];
-    healthcare = json['healthcare'];
+    // services = json['services'];
+    // healthcare = json['healthcare'];
+    services =
+        (json['services'] as String?)?.split(',').map((e) => e.trim()).toList();
+    languages = (json['languages'] as String?)
+        ?.split(',')
+        .map((e) => e.trim())
+        .toList();
     image = json['image'];
-    departmentId = json['department_id'] is String ? 0 : json['department_id'] ;
+    departmentId = json['department_id'] is String ? 0 : json['department_id'];
     workingTime = json['working_time'].toString();
     password = json['password'].toString();
     facebookUrl = json['facebook_url'];
@@ -91,13 +99,14 @@ class Data {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     departmentName = json['department_name'];
-    avgratting = json['avgratting'] != null ? double.parse(json['avgratting'].toString()) : 0;
+    avgratting = json['avgratting'] != null
+        ? double.parse(json['avgratting'].toString())
+        : 0;
     totalReview = json['total_review'];
     consultationFee = json['consultation_fees'].toString();
   }
 
   Map<String, dynamic> toJson() {
-    
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['name'] = this.name;
@@ -107,8 +116,10 @@ class Data {
     data['lat'] = this.lat;
     data['lon'] = this.lon;
     data['phoneno'] = this.phoneno;
-    data['services'] = this.services;
-    data['healthcare'] = this.healthcare;
+    // data['services'] = this.services;
+    // data['healthcare'] = this.healthcare;
+    data['services'] = services?.join(', ');
+    data['languages'] = languages?.join(', ');
     data['image'] = this.image;
     //data['department_id'] = this.departmentId.toString();
     data['working_time'] = this.workingTime;

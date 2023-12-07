@@ -627,6 +627,8 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
   }
 
   callApi({double? latitude, double? longitude}) async {
+    print("lat is : $latitude");
+    print("lon is : $longitude");
     final response = await get(Uri.parse(
             "$SERVER_ADDRESS/api/nearbydoctor?lat=${latitude}&lon=${longitude}"))
         .catchError((e) {

@@ -49,33 +49,33 @@ class MyData {
 
   MyData(
       {this.id,
-        this.name,
-        this.email,
-        this.aboutus,
-        this.workingTime,
-        this.address,
-        this.lat,
-        this.lon,
-        this.phoneno,
-        this.services,
-        this.healthcare,
-        this.image,
-        this.password,
-        this.facebookUrl,
-        this.twitterUrl,
-        this.createdAt,
-        this.updatedAt,
-        this.isApprove,
-        this.consultationFees,
-        this.departmentName,
-        this.avgratting});
+      this.name,
+      this.email,
+      this.aboutus,
+      this.workingTime,
+      this.address,
+      this.lat,
+      this.lon,
+      this.phoneno,
+      this.services,
+      this.healthcare,
+      this.image,
+      this.password,
+      this.facebookUrl,
+      this.twitterUrl,
+      this.createdAt,
+      this.updatedAt,
+      this.isApprove,
+      this.consultationFees,
+      this.departmentName,
+      this.avgratting});
 
   MyData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     email = json['email'];
     aboutus = json['aboutus'] ?? "";
-    workingTime = json['working_time'].toString() ;
+    workingTime = json['working_time'].toString();
     address = json['address'] ?? "";
     lat = json['lat'] == null ? "" : json['lat'].toString();
     lon = json['lon'] == null ? "" : json['lon'].toString();

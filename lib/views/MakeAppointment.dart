@@ -155,21 +155,39 @@ class _MakeAppointmentState extends State<MakeAppointment> {
     }
   }
 
+  // initializeTimeSlots(int index) {
+  //   setState(() {
+  //     selectedTimingSlot.clear();
+  //   });
+  //   for (int i = 0;
+  //       i < makeAppointmentClass!.data![index].slottime!.length;
+  //       i++) {
+  //     setState(() {
+  //       selectedTimingSlot.add(false);
+  //     });
+  //   }
+  //   setState(() {
+  //     currentSlotsIndex = index;
+  //     //timingSlotsList(0);
+  //   });
+  // }
   initializeTimeSlots(int index) {
-    setState(() {
-      selectedTimingSlot.clear();
-    });
-    for (int i = 0;
-        i < makeAppointmentClass!.data![index].slottime!.length;
-        i++) {
+    if (makeAppointmentClass != null && makeAppointmentClass!.data != null) {
       setState(() {
-        selectedTimingSlot.add(false);
+        selectedTimingSlot.clear();
+      });
+      for (int i = 0;
+          i < makeAppointmentClass!.data![index].slottime!.length;
+          i++) {
+        setState(() {
+          selectedTimingSlot.add(false);
+        });
+      }
+      setState(() {
+        currentSlotsIndex = index;
+        //timingSlotsList(0);
       });
     }
-    setState(() {
-      currentSlotsIndex = index;
-      //timingSlotsList(0);
-    });
   }
 
   @override
@@ -943,20 +961,20 @@ class _MakeAppointmentState extends State<MakeAppointment> {
             actions: [
               TextButton(
                 onPressed: () async {
-                  try{
+                  try {
                     CubeChatConnection.instance.logout();
-                  }catch(e){}
-                  await SharedPreferences.getInstance().then((pref){
+                  } catch (e) {}
+                  await SharedPreferences.getInstance().then((pref) {
                     pref.setBool("isLoggedInAsDoctor", false);
                     pref.setBool("isLoggedIn", false);
                     pref.clear();
                     pref.setString("isBack", "1");
                   });
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => LoginAsUser(),
-                        ));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LoginAsUser(),
+                      ));
                 },
                 style: TextButton.styleFrom(
                   backgroundColor: Theme.of(context).primaryColor,
