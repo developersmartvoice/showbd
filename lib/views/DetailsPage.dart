@@ -61,6 +61,10 @@ class _DetailsPageState extends State<DetailsPage> {
       final jsonResponse = jsonDecode(response.body);
       doctorDetailsClass = DoctorDetailsClass.fromJson(jsonResponse);
       print(doctorDetailsClass!.data!.avgratting);
+      print(doctorDetailsClass!.data!.services);
+      print(doctorDetailsClass!.data!.services![0]);
+      // print(doctorDetailsClass!.data!.services![3]);
+      print(doctorDetailsClass!.data!.languages);
       print(widget.id);
       setState(() {
         isLoading = false;
@@ -396,7 +400,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w500,
                         color: LIGHT_GREY_TEXT,
-                        fontSize: 10),
+                        fontSize: 12),
                   ),
                 ],
               ),
@@ -433,7 +437,7 @@ class _DetailsPageState extends State<DetailsPage> {
                 style: GoogleFonts.poppins(
                     fontWeight: FontWeight.w500,
                     color: LIGHT_GREY_TEXT,
-                    fontSize: 10),
+                    fontSize: 12),
               ),
             ],
           ),
@@ -481,7 +485,7 @@ class _DetailsPageState extends State<DetailsPage> {
                           style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w500,
                               color: LIGHT_GREY_TEXT,
-                              fontSize: 10),
+                              fontSize: 12),
                         ),
                       ),
                       SizedBox(
@@ -520,7 +524,7 @@ class _DetailsPageState extends State<DetailsPage> {
                           style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w500,
                               color: LIGHT_GREY_TEXT,
-                              fontSize: 10),
+                              fontSize: 12),
                         ),
                       ),
                     ],
@@ -578,40 +582,188 @@ class _DetailsPageState extends State<DetailsPage> {
                     fontWeight: FontWeight.w500, color: BLACK, fontSize: 15),
               ),
               //SizedBox(height: 8,),
-              Text(
-                doctorDetailsClass!.data!.services == null
-                    ? ""
-                    : doctorDetailsClass!.data!.services.toString(),
-                style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w500,
-                    color: LIGHT_GREY_TEXT,
-                    fontSize: 10),
-              ),
+              // Text(
+              //   doctorDetailsClass!.data!.services == null
+              //       ? ""
+              //       : doctorDetailsClass!.data!.services.toString(),
+              //   style: GoogleFonts.poppins(
+              //       fontWeight: FontWeight.w500,
+              //       color: LIGHT_GREY_TEXT,
+              //       fontSize: 10),
+              // ),
               SizedBox(
-                height: 8,
+                height: 0,
               ),
+              doctorDetailsClass!.data!.services == null
+                  ? Text("No Activities")
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ListView.builder(
+                          shrinkWrap:
+                              true, // This ensures that the ListView takes up as much space as needed within the Column
+                          itemCount: doctorDetailsClass!.data!.services!.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            // Use the index to access each service in the list
+                            String service =
+                                doctorDetailsClass!.data!.services![index];
+
+                            // Map service names to text and icons
+                            Map<String, dynamic> serviceData =
+                                getServiceData(service);
+
+                            // Customize text size
+                            TextStyle textStyle = TextStyle(
+                                fontSize: 12.0,
+                                color: LIGHT_GREY_TEXT,
+                                fontWeight: FontWeight
+                                    .w500); // Adjust the font size as needed
+                            // Customize ListTile height
+                            // double customListTileHeight = 0.0;
+                            // Create a widget to represent each service with an icon
+                            return Container(
+                              // padding: EdgeInsets.only(left: 0),
+                              height: 25,
+                              child: ListTile(
+                                // contentPadding: EdgeInsets.symmetric(
+                                //     vertical: customListTileHeight),
+                                dense: true,
+                                contentPadding: EdgeInsets
+                                    .zero, // Set contentPadding to zero
+                                visualDensity: VisualDensity(
+                                    horizontal: 0,
+                                    vertical: -4), // Adjust values as needed
+
+                                title: Row(
+                                  children: [
+                                    // Add an icon before the text
+
+                                    Icon(serviceData['icon'],
+                                        size:
+                                            12.0), // Replace with the desired icon
+
+                                    // Add some spacing between the icon and text
+                                    SizedBox(width: 8.0),
+
+                                    // Display the text with customized style
+
+                                    Text(
+                                      serviceData['text'],
+                                      style: textStyle,
+                                    ),
+                                  ],
+                                ),
+                                // You can customize the ListTile further if needed
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    )
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
               Text(
-                doctorDetailsClass!.data!.healthcare == null
-                    ? " "
-                    : HEALTH_CARE,
+                doctorDetailsClass!.data!.languages == null ? " " : HEALTH_CARE,
                 style: GoogleFonts.poppins(
                     fontWeight: FontWeight.w500, color: BLACK, fontSize: 15),
               ),
-              //SizedBox(height: 8,),
-              Text(
-                doctorDetailsClass!.data!.healthcare == null
-                    ? " "
-                    : doctorDetailsClass!.data!.healthcare.toString(),
-                style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w500,
-                    color: LIGHT_GREY_TEXT,
-                    fontSize: 10),
+              SizedBox(
+                height: 5,
               ),
+              doctorDetailsClass!.data!.languages == null
+                  ? Text("No Languages Selected")
+                  : Row(
+                      children:
+                          doctorDetailsClass!.data!.languages!.map((language) {
+                        // Customize text size
+                        TextStyle textStyle = TextStyle(
+                            fontSize: 12.0,
+                            color: LIGHT_GREY_TEXT,
+                            fontWeight: FontWeight.w500);
+
+                        // Map language to display text
+                        String displayText =
+                            getDisplayTextForLanguage(language);
+
+                        return Container(
+                          // padding: EdgeInsets.zero,
+                          margin: EdgeInsets.only(left: 0, right: 8.0),
+                          child: Text(
+                            displayText,
+                            style: textStyle,
+                          ),
+                        );
+                      }).toList(),
+                    )
             ],
-          ),
+          )
         ],
       ),
     );
+  }
+
+  // Function to map service names to text and icons
+  Map<String, dynamic> getServiceData(String serviceName) {
+    switch (serviceName) {
+      case 'translation':
+        return {
+          'text': 'Translation & Interpretation',
+          'icon': Icons.translate
+        };
+      case 'shopping':
+        return {'text': 'Shopping', 'icon': Icons.shopping_cart};
+      case 'food':
+        return {'text': 'Food & Restaurants', 'icon': Icons.food_bank_rounded};
+      case 'art':
+        return {'text': 'Art & Museums', 'icon': Icons.museum_rounded};
+      case 'history':
+        return {'text': 'History & Culture', 'icon': Icons.history_edu_rounded};
+      case 'exploration':
+        return {
+          'text': 'Exploration & Sightseeing',
+          'icon': Icons.data_exploration_sharp
+        };
+      case 'pick':
+        return {
+          'text': 'Pick up & Driving Tours',
+          'icon': Icons.drive_eta_rounded
+        };
+      case 'nightlife':
+        return {'text': 'Nightlife & Bars', 'icon': Icons.nightlife_rounded};
+      // Add more cases as needed for other services
+      // Default to a generic icon and the service name
+      default:
+        return {
+          'text': 'Sports & Recreation',
+          'icon': Icons.sports_soccer_rounded
+        };
+    }
+  }
+
+  String getDisplayTextForLanguage(String language) {
+    switch (language.toLowerCase()) {
+      case 'english':
+        return 'English';
+      case 'hindi':
+        return 'Hindi';
+      case 'bengali':
+        return 'Bengali';
+      case 'urdu':
+        return 'Urdu';
+      case 'french':
+        return 'French';
+      case 'spanish':
+        return 'Spanish';
+      // Add more cases for other languages
+      default:
+        return language;
+    }
   }
 
   Widget button() {
