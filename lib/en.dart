@@ -108,7 +108,7 @@ const String NO_CHANGES_HAVE_BEEN_MADE = "No changes have been made";
 const String ENDING_TIME_CAN_NOT_BE_SMALLER_THAT_STARTING_TIME =
     "Ending time can't be smaller than starting time";
 const String TIMINGS_ENTERED_INCORRECTLY = "Timings entered incorrectly";
-const String HEALTHCARE = "Heatlhcare";
+const String HEALTHCARE = "Languages";
 const String FACEBOOK = "Facebook Url";
 const String TWITTER = "Twitter Url";
 const String SELECT_DEPARTMENT = "Select department";

@@ -600,6 +600,7 @@ class _DetailsPageState extends State<DetailsPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
                           shrinkWrap:
                               true, // This ensures that the ListView takes up as much space as needed within the Column
                           itemCount: doctorDetailsClass!.data!.services!.length,
