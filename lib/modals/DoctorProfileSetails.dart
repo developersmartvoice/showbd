@@ -33,8 +33,10 @@ class MyData {
   String? lat;
   String? lon;
   dynamic phoneno;
-  String? services;
-  String? healthcare;
+  // String? services;
+  List<String>? services;
+  // String? healthcare;
+  List<String>? languages;
   String? image;
   dynamic password;
   String? facebookUrl;
@@ -58,7 +60,7 @@ class MyData {
       this.lon,
       this.phoneno,
       this.services,
-      this.healthcare,
+      this.languages,
       this.image,
       this.password,
       this.facebookUrl,
@@ -80,8 +82,14 @@ class MyData {
     lat = json['lat'] == null ? "" : json['lat'].toString();
     lon = json['lon'] == null ? "" : json['lon'].toString();
     phoneno = json['phoneno'].toString();
-    services = json['services'] ?? "";
-    healthcare = json['healthcare'] ?? "";
+    // services = json['services'] ?? "";
+    services =
+        (json['services'] as String?)?.split(',').map((e) => e.trim()).toList();
+    // healthcare = json['healthcare'] ?? "";
+    languages = (json['languages'] as String?)
+        ?.split(',')
+        .map((e) => e.trim())
+        .toList();
     image = json['image'].toString();
     password = json['password'].toString();
     facebookUrl = json['facebook_url'] ?? "";
@@ -105,8 +113,10 @@ class MyData {
     data['lat'] = this.lat;
     data['lon'] = this.lon;
     data['phoneno'] = this.phoneno;
-    data['services'] = this.services;
-    data['healthcare'] = this.healthcare;
+    // data['services'] = this.services;
+    data['services'] = services?.join(',');
+    // data['healthcare'] = this.healthcare;
+    data['languages'] = languages?.join(',');
     data['image'] = this.image;
     data['password'] = this.password;
     data['facebook_url'] = this.facebookUrl;

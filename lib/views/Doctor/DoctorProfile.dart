@@ -57,6 +57,8 @@ class _DoctorProfileState extends State<DoctorProfile> {
   ];
 
   List<MyData> myData = [];
+  List<String>? selectedServices;
+  List<String>? selectedLanguages;
 
   fetchDoctorSchedule() async {
     final response = await get(
@@ -113,10 +115,13 @@ class _DoctorProfileState extends State<DoctorProfile> {
             doctorProfileDetails!.data!.consultationFees.toString();
         aboutUsController.text =
             aboutUs = doctorProfileDetails!.data!.aboutus ?? "";
-        serviceController.text =
-            service = doctorProfileDetails!.data!.services ?? "";
-        healthcareController.text =
-            healthcare = doctorProfileDetails!.data!.healthcare ?? "";
+        // serviceController.text =
+        //     service = doctorProfileDetails!.data!.services ?? "";
+        selectedServices = doctorProfileDetails!.data!.services;
+
+        // healthcareController.text =
+        //     healthcare = doctorProfileDetails!.data!.healthcare ?? "";
+        selectedLanguages = doctorProfileDetails!.data!.languages;
         facebookController.text =
             facebook = doctorProfileDetails!.data!.facebookUrl ?? "";
         twitterController.text =
@@ -622,12 +627,12 @@ class _DoctorProfileState extends State<DoctorProfile> {
                     isAboutUsError = true;
                   });
                 }
-                if (service.isEmpty) {
+                if (selectedServices!.isEmpty) {
                   setState(() {
                     isServiceError = true;
                   });
                 }
-                if (healthcare.isEmpty) {
+                if (selectedLanguages!.isEmpty) {
                   setState(() {
                     isHealthCareError = true;
                   });
@@ -749,8 +754,51 @@ class _DoctorProfileState extends State<DoctorProfile> {
   String password = "";
   String workingTime = "";
   String aboutUs = "";
-  String service = "";
-  String healthcare = "";
+  // String service = "";
+
+  // List<String> activities = [
+  //   "Translation & Interpretation",
+  //   "Shopping",
+  //   "Food & Restaurants",
+  //   "Art & Museums",
+  //   "History & Culture",
+  //   "Exploration & Sightseeing",
+  //   "Pick up & Driving Tours",
+  //   "Nightlife & Bars",
+  //   "Sports & Recreation"
+  // ];
+  Map<String, String> serviceMap = {
+    "translation": "Translation & Interpretation",
+    "shopping": "Shopping",
+    "food": "Food & Restaurants",
+    "art": "Art & Museums",
+    "history": "History & Culture",
+    "exploration": "Exploration & Sightseeing",
+    "pick": "Pick up & Driving Tours",
+    "nightlife": "Nightlife & Bars",
+    "sports": "Sports & Recreation"
+  };
+  // List<String> servicesList = [
+  //   "translation",
+  //   "shopping",
+  //   "food",
+  //   "art",
+  //   "history",
+  //   "exploration",
+  //   "pick",
+  //   "nightlife",
+  //   "sports"
+  // ];
+  // String healthcare = "";
+
+  Map<String, String> languageMap = {
+    "english": "English",
+    "bengali": "Bengali",
+    "hindi": "Hindi",
+    "urdu": "Urdu",
+    "french": "French",
+    "spanish": "Spanish"
+  };
   String facebook = "";
   String twitter = "";
   String consultationFee = "";
@@ -888,6 +936,29 @@ class _DoctorProfileState extends State<DoctorProfile> {
           ),
         ),
       ),
+    );
+  }
+
+  // List<String> list1 = [];
+  CheckboxListTile buildCheckboxListTile(
+      String key, String title, List<String> list) {
+    return CheckboxListTile(
+      dense: true,
+      contentPadding: EdgeInsets.zero, // Set contentPadding to zero
+      visualDensity: VisualDensity(horizontal: 0, vertical: -4),
+      title: Text(title),
+      value: list.contains(key),
+      onChanged: (newValue) {
+        // list1.addAll(list);
+        setState(() {
+          if (newValue == true) {
+            list.add(key);
+          } else {
+            list.remove(key);
+          }
+          print(list);
+        });
+      },
     );
   }
 
@@ -1118,57 +1189,297 @@ class _DoctorProfileState extends State<DoctorProfile> {
           SizedBox(
             height: 3,
           ),
-          TextField(
-            minLines: 1,
-            maxLines: 5,
-            controller: serviceController,
-            keyboardType: TextInputType.text,
-            decoration: InputDecoration(
-              labelText: SERVICES,
-              labelStyle: TextStyle(
-                color: Theme.of(context).primaryColorDark.withOpacity(0.4),
-              ),
-              border: UnderlineInputBorder(),
-              focusedBorder: UnderlineInputBorder(
-                  borderSide:
-                      BorderSide(color: Theme.of(context).primaryColorDark)),
-              errorText: isServiceError ? ENTER_SERVICES : null,
+          // TextField(
+          //   minLines: 1,
+          //   maxLines: 5,
+          //   controller: serviceController,
+          //   keyboardType: TextInputType.text,
+          //   decoration: InputDecoration(
+          //     labelText: SERVICES,
+          //     labelStyle: TextStyle(
+          //       color: Theme.of(context).primaryColorDark.withOpacity(0.4),
+          //     ),
+          //     border: UnderlineInputBorder(),
+          //     focusedBorder: UnderlineInputBorder(
+          //         borderSide:
+          //             BorderSide(color: Theme.of(context).primaryColorDark)),
+          //     errorText: isServiceError ? ENTER_SERVICES : null,
+          //   ),
+          //   style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+          //   onChanged: (val) {
+          //     setState(() {
+          //       service = val;
+          //       isServiceError = false;
+          //     });
+          //   },
+          // ),
+          SizedBox(
+            height: 5,
+          ),
+          Container(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              SERVICES,
+              style: GoogleFonts.poppins(
+                  color: Theme.of(context).primaryColorDark.withOpacity(0.4),
+                  fontWeight: FontWeight.w500,
+                  fontSize: 11),
             ),
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
-            onChanged: (val) {
-              setState(() {
-                service = val;
-                isServiceError = false;
-              });
-            },
+          ),
+          // Container(
+          //   height: 300,
+          //   child: ListView.builder(
+          //       shrinkWrap: true,
+          //       itemCount: activities.length,
+          //       itemBuilder: ((context, index) {
+          //         final item = activities[index];
+          //         String content = '';
+          //         for (int i = 0; i < services.length; i++) {
+          //           if (servicesList.contains(services[i])) {
+          //             content = services[i];
+          //           }
+          //         }
+          //         switch (content) {
+          //           case 'translation':
+          //             return CheckboxListTile(
+          //                 dense: true,
+          //                 contentPadding:
+          //                     EdgeInsets.zero, // Set contentPadding to zero
+          //                 visualDensity:
+          //                     VisualDensity(horizontal: 0, vertical: -4),
+          //                 title: Text(item),
+          //                 value: content != null ? true : false,
+          //                 onChanged: (value) {
+          //                   setState(() {
+          //                     if (value == true) {
+          //                       services.add(item);
+          //                     } else {
+          //                       services.remove(item);
+          //                     }
+          //                   });
+          //                 });
+          //           case 'shopping':
+          //             return CheckboxListTile(
+          //                 dense: true,
+          //                 contentPadding:
+          //                     EdgeInsets.zero, // Set contentPadding to zero
+          //                 visualDensity:
+          //                     VisualDensity(horizontal: 0, vertical: -4),
+          //                 title: Text(item),
+          //                 value: content != null ? true : false,
+          //                 onChanged: (value) {
+          //                   setState(() {
+          //                     if (value == true) {
+          //                       services.add(item);
+          //                     } else {
+          //                       services.remove(item);
+          //                     }
+          //                   });
+          //                 });
+          //           case 'food':
+          //             return CheckboxListTile(
+          //                 dense: true,
+          //                 contentPadding:
+          //                     EdgeInsets.zero, // Set contentPadding to zero
+          //                 visualDensity:
+          //                     VisualDensity(horizontal: 0, vertical: -4),
+          //                 title: Text(item),
+          //                 value: content != null ? true : false,
+          //                 onChanged: (value) {
+          //                   setState(() {
+          //                     if (value == true) {
+          //                       services.add(item);
+          //                     } else {
+          //                       services.remove(item);
+          //                     }
+          //                   });
+          //                 });
+          //           case 'art':
+          //             return CheckboxListTile(
+          //                 dense: true,
+          //                 contentPadding:
+          //                     EdgeInsets.zero, // Set contentPadding to zero
+          //                 visualDensity:
+          //                     VisualDensity(horizontal: 0, vertical: -4),
+          //                 title: Text(item),
+          //                 value: content != null ? true : false,
+          //                 onChanged: (value) {
+          //                   setState(() {
+          //                     if (value == true) {
+          //                       services.add(item);
+          //                     } else {
+          //                       services.remove(item);
+          //                     }
+          //                   });
+          //                 });
+          //           case 'history':
+          //             return CheckboxListTile(
+          //                 dense: true,
+          //                 contentPadding:
+          //                     EdgeInsets.zero, // Set contentPadding to zero
+          //                 visualDensity:
+          //                     VisualDensity(horizontal: 0, vertical: -4),
+          //                 title: Text(item),
+          //                 value: content != null ? true : false,
+          //                 onChanged: (value) {
+          //                   setState(() {
+          //                     if (value == true) {
+          //                       services.add(item);
+          //                     } else {
+          //                       services.remove(item);
+          //                     }
+          //                   });
+          //                 });
+          //           case 'exploration':
+          //             return CheckboxListTile(
+          //                 dense: true,
+          //                 contentPadding:
+          //                     EdgeInsets.zero, // Set contentPadding to zero
+          //                 visualDensity:
+          //                     VisualDensity(horizontal: 0, vertical: -4),
+          //                 title: Text(item),
+          //                 value: content != null ? true : false,
+          //                 onChanged: (value) {
+          //                   setState(() {
+          //                     if (value == true) {
+          //                       services.add(item);
+          //                     } else {
+          //                       services.remove(item);
+          //                     }
+          //                   });
+          //                 });
+          //           case 'pick':
+          //             return CheckboxListTile(
+          //                 dense: true,
+          //                 contentPadding:
+          //                     EdgeInsets.zero, // Set contentPadding to zero
+          //                 visualDensity:
+          //                     VisualDensity(horizontal: 0, vertical: -4),
+          //                 title: Text(item),
+          //                 value: content != null ? true : false,
+          //                 onChanged: (value) {
+          //                   setState(() {
+          //                     if (value == true) {
+          //                       services.add(item);
+          //                     } else {
+          //                       services.remove(item);
+          //                     }
+          //                   });
+          //                 });
+          //           case 'nightlife':
+          //             return CheckboxListTile(
+          //                 dense: true,
+          //                 contentPadding:
+          //                     EdgeInsets.zero, // Set contentPadding to zero
+          //                 visualDensity:
+          //                     VisualDensity(horizontal: 0, vertical: -4),
+          //                 title: Text(item),
+          //                 value: content != null ? true : false,
+          //                 onChanged: (value) {
+          //                   setState(() {
+          //                     if (value == true) {
+          //                       services.add(item);
+          //                     } else {
+          //                       services.remove(item);
+          //                     }
+          //                   });
+          //                 });
+          //           case 'sports':
+          //             return CheckboxListTile(
+          //                 dense: true,
+          //                 contentPadding:
+          //                     EdgeInsets.zero, // Set contentPadding to zero
+          //                 visualDensity:
+          //                     VisualDensity(horizontal: 0, vertical: -4),
+          //                 title: Text(item),
+          //                 value: content != null ? true : false,
+          //                 onChanged: (value) {
+          //                   setState(() {
+          //                     if (value == true) {
+          //                       services.add(item);
+          //                       value = true;
+          //                     } else {
+          //                       services.remove(item);
+          //                       value = false;
+          //                     }
+          //                   });
+          //                 });
+          //         }
+
+          //         // return CheckboxListTile(
+          //         //     title: Text(item),
+          //         //     value: selectedItems.contains(item),
+
+          //         //     onChanged: (value) {
+          //         //       setState(() {
+          //         //         if (value == true) {
+          //         //           selectedItems.add(item);
+          //         //         } else {
+          //         //           selectedItems.remove(item);
+          //         //         }
+          //         //       });
+          //         //     });
+          //       })),
+          // ),
+          Container(
+            height: 300,
+            child: ListView(
+              physics: NeverScrollableScrollPhysics(),
+              children: serviceMap.keys.map((key) {
+                // print('----');
+                // print(services);
+                return buildCheckboxListTile(
+                    key, serviceMap[key]!, selectedServices!);
+              }).toList(),
+            ),
           ),
           SizedBox(
             height: 3,
           ),
-          TextField(
-            controller: healthcareController,
-            keyboardType: TextInputType.text,
-            maxLines: 3,
-            minLines: 1,
-            decoration: InputDecoration(
-              labelText: HEALTHCARE,
-              labelStyle: TextStyle(
-                color: Theme.of(context).primaryColorDark.withOpacity(0.4),
-              ),
-              border: UnderlineInputBorder(),
-              focusedBorder: UnderlineInputBorder(
-                  borderSide:
-                      BorderSide(color: Theme.of(context).primaryColorDark)),
-              errorText: isHealthCareError ? THIS_FIELD_IS_REQUIRED : null,
+          // TextField(
+          //   controller: healthcareController,
+          //   keyboardType: TextInputType.text,
+          //   maxLines: 3,
+          //   minLines: 1,
+          //   decoration: InputDecoration(
+          //     labelText: HEALTHCARE,
+          //     labelStyle: TextStyle(
+          //       color: Theme.of(context).primaryColorDark.withOpacity(0.4),
+          //     ),
+          //     border: UnderlineInputBorder(),
+          //     focusedBorder: UnderlineInputBorder(
+          //         borderSide:
+          //             BorderSide(color: Theme.of(context).primaryColorDark)),
+          //     errorText: isHealthCareError ? THIS_FIELD_IS_REQUIRED : null,
+          //   ),
+          //   style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+          //   onChanged: (val) {
+          //     setState(() {
+          //       healthcare = val;
+          //       isHealthCareError = false;
+          //       //isPhoneError = false;
+          //     });
+          //   },
+          // ),
+          Container(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              HEALTHCARE,
+              style: GoogleFonts.poppins(
+                  color: Theme.of(context).primaryColorDark.withOpacity(0.4),
+                  fontWeight: FontWeight.w500,
+                  fontSize: 11),
             ),
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
-            onChanged: (val) {
-              setState(() {
-                healthcare = val;
-                isHealthCareError = false;
-                //isPhoneError = false;
-              });
-            },
+          ),
+          Container(
+            height: 200,
+            child: ListView(
+              physics: NeverScrollableScrollPhysics(),
+              children: languageMap.keys.map((key) {
+                return buildCheckboxListTile(
+                    key, languageMap[key]!, selectedLanguages!);
+              }).toList(),
+            ),
           ),
           SizedBox(
             height: 3,
@@ -1465,8 +1776,9 @@ class _DoctorProfileState extends State<DoctorProfile> {
       lon: _center!.longitude.toString(),
       phoneno: phone,
       password: password,
-      services: service,
-      healthcare: healthcare,
+      services: selectedServices,
+      // healthcare: healthcare,
+      languages: selectedLanguages,
       facebookUrl: facebook,
       twitterUrl: twitter,
       consultationFees: consultationFee,
@@ -1715,11 +2027,13 @@ class _DoctorProfileState extends State<DoctorProfile> {
     await Future.delayed(Duration.zero);
     dialog();
     print("\n\n\nLoading...       ${doctorId}");
-    print(healthcare);
+    // print(healthcare);
     print(facebook);
     print(twitter);
     print(base64image);
     if (_image == null) {
+      print("from upload");
+      print(selectedServices);
       final response =
           await post(Uri.parse("$SERVER_ADDRESS/api/doctoreditprofile"), body: {
         "doctor_id": doctorId,
@@ -1733,8 +2047,13 @@ class _DoctorProfileState extends State<DoctorProfile> {
         "lat": _center!.latitude.toString(),
         "lon": _center!.longitude.toString(),
         "phoneno": phone,
-        "services": service,
-        "healthcare": healthcare,
+        // "services": services!,
+        // "languages": languages!,
+        "services":
+            selectedServices!.isNotEmpty ? selectedServices!.join(",") : "",
+        "languages":
+            selectedLanguages!.isNotEmpty ? selectedLanguages!.join(",") : "",
+
         //widget.base64image == null ? "doctor_id" : widget.doctorId : "image" : widget.base64image,
         "department_id": departmentId.toString(),
         "facebook_url": facebook,
@@ -1760,7 +2079,8 @@ class _DoctorProfileState extends State<DoctorProfile> {
       }
     } else {
       Dio d = Dio();
-
+      print("from Dio");
+      print(selectedServices);
       var formData = dio.FormData.fromMap({
         "doctor_id": doctorId,
         "name": name,
@@ -1773,8 +2093,12 @@ class _DoctorProfileState extends State<DoctorProfile> {
         "lat": _center!.latitude.toString(),
         "lon": _center!.longitude.toString(),
         "phoneno": phone,
-        "services": service,
-        "healthcare": healthcare,
+        // "services": services,
+        // "languages": languages,
+        "services":
+            selectedServices!.isNotEmpty ? selectedServices!.join(",") : "",
+        "languages":
+            selectedLanguages!.isNotEmpty ? selectedLanguages!.join(",") : "",
         "department_id": departmentId.toString(),
         "facebook_url": facebook,
         "twitter_url": twitter,
