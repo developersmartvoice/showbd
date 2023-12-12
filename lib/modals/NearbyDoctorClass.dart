@@ -106,6 +106,7 @@ class NearbyData {
   String? name;
   String? address;
   String? image;
+  List<String>? images; // Add images field as a list of strings
   double? distance;
   String? departmentName;
   String? consultationFee;
@@ -118,6 +119,7 @@ class NearbyData {
       this.name,
       this.address,
       this.image,
+      this.images, // Include images field in the constructor
       this.distance,
       this.departmentName,
       this.consultationFee,
@@ -130,6 +132,10 @@ class NearbyData {
     name = json['name'];
     address = json['address'];
     image = json['image'];
+    images = json['images'] != null
+        ? List<String>.from(json['images'])
+        : []; // Parse images as a list
+
     //distance = double.parse(json['distance'].toString()) ?? 0.0;
     departmentName = json['department_name'];
     consultationFee = json['consultation_fees'].toString();
@@ -144,6 +150,7 @@ class NearbyData {
     data['name'] = this.name;
     data['address'] = this.address;
     data['image'] = this.image;
+    data['images'] = this.images; // Include images in the JSON output
     data['distance'] = this.distance;
     data['department_name'] = this.departmentName;
     data['consultation_fees'] = this.consultationFee;

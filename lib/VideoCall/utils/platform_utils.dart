@@ -4,7 +4,7 @@ import 'package:universal_io/io.dart';
 Future<bool> initForegroundService() async {
   if (Platform.isAndroid) {
     final androidConfig = FlutterBackgroundAndroidConfig(
-      notificationTitle: 'Show BD',
+      notificationTitle: 'MeetLocal',
       notificationText: 'Screen sharing in in progress',
       notificationImportance: AndroidNotificationImportance.Default,
       // notificationIcon:
