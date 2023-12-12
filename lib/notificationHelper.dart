@@ -63,7 +63,7 @@ class NotificationHelper {
     AndroidNotificationDetails androidPlatformChannelSpecifics =
         new AndroidNotificationDetails(
       id!,
-      'Show BD',
+      'MeetLocal',
       importance: Importance.max,
       priority: Priority.high,
       showWhen: true,

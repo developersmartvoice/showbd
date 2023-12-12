@@ -9,6 +9,7 @@ import 'package:appcode3/views/DetailsPage.dart';
 import 'package:appcode3/views/MakeAppointment.dart';
 import 'package:appcode3/views/loginAsUser.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_native_admob/flutter_native_admob.dart';
 // import 'package:flutter_native_admob/native_admob_controller.dart';
@@ -226,6 +227,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
 
               print(
                   'Name is ${list2[index].name} and ratings are ${list2[index].avgrating}');
+              print(list2[index].images);
 
               // for (int i = 0; i < list2.length; i++) {
               //   fetchDoctorDetails(list2[i].id);
@@ -246,7 +248,8 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                   data.consultationFee,
                   data.aboutme,
                   data.avgrating,
-                  data.totalreview
+                  data.totalreview,
+                  data.images
 
                   // data1.aboutus,
                   // data1.totalReview,
@@ -275,8 +278,8 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
     );
   }
 
-  Widget nearByGridWidget(
-      img, name, dept, id, consultationFee, aboutMe, avgRating, totalReview) {
+  Widget nearByGridWidget(img, name, dept, id, consultationFee, aboutMe,
+      avgRating, totalReview, imgs) {
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -310,35 +313,118 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                 child: Stack(
                   alignment: Alignment.topRight,
                   children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(8),
-                        topRight: Radius.circular(8),
-                      ),
-                      child: CachedNetworkImage(
-                        imageUrl: img,
-                        fit: BoxFit.cover,
-                        width: double.infinity,
-                        placeholder: (context, url) => Container(
-                          color: Theme.of(context).primaryColorLight,
-                          child: Center(
-                            child: Image.asset(
-                              "assets/homeScreenImages/user_unactive.png",
-                              height: 50,
-                              width: 50,
+                    // ClipRRect(
+                    //   borderRadius: BorderRadius.only(
+                    //     topLeft: Radius.circular(8),
+                    //     topRight: Radius.circular(8),
+                    //   ),
+                    //   child: CachedNetworkImage(
+                    //     imageUrl: img,
+                    //     fit: BoxFit.cover,
+                    //     width: double.infinity,
+                    //     placeholder: (context, url) => Container(
+                    //       color: Theme.of(context).primaryColorLight,
+                    //       child: Center(
+                    //         child: Image.asset(
+                    //           "assets/homeScreenImages/user_unactive.png",
+                    //           height: 50,
+                    //           width: 50,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //     errorWidget: (context, url, err) => Container(
+                    //       color: Theme.of(context).primaryColorLight,
+                    //       child: Center(
+                    //         child: Image.asset(
+                    //           "assets/homeScreenImages/user_unactive.png",
+                    //           height: 50,
+                    //           width: 50,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+
+                    // -------------------------------------
+
+                    CarouselSlider(
+                      items: [
+                        // Display the fixed image first
+                        ClipRRect(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(8),
+                            topRight: Radius.circular(8),
+                          ),
+                          child: CachedNetworkImage(
+                            imageUrl: img,
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                            placeholder: (context, url) => Container(
+                              color: Theme.of(context).primaryColorLight,
+                              child: Center(
+                                child: Image.asset(
+                                  "assets/homeScreenImages/user_unactive.png",
+                                  height: 50,
+                                  width: 50,
+                                ),
+                              ),
+                            ),
+                            errorWidget: (context, url, err) => Container(
+                              color: Theme.of(context).primaryColorLight,
+                              child: Center(
+                                child: Image.asset(
+                                  "assets/homeScreenImages/user_unactive.png",
+                                  height: 50,
+                                  width: 50,
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                        errorWidget: (context, url, err) => Container(
-                          color: Theme.of(context).primaryColorLight,
-                          child: Center(
-                            child: Image.asset(
-                              "assets/homeScreenImages/user_unactive.png",
-                              height: 50,
-                              width: 50,
+                        // Display the rest of the images
+                        ...imgs.map((img) {
+                          return ClipRRect(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(8),
+                              topRight: Radius.circular(8),
                             ),
-                          ),
-                        ),
+                            child: CachedNetworkImage(
+                              imageUrl: img,
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                              placeholder: (context, url) => Container(
+                                color: Theme.of(context).primaryColorLight,
+                                child: Center(
+                                  child: Image.asset(
+                                    "assets/homeScreenImages/user_unactive.png",
+                                    height: 50,
+                                    width: 50,
+                                  ),
+                                ),
+                              ),
+                              errorWidget: (context, url, err) => Container(
+                                color: Theme.of(context).primaryColorLight,
+                                child: Center(
+                                  child: Image.asset(
+                                    "assets/homeScreenImages/user_unactive.png",
+                                    height: 50,
+                                    width: 50,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ],
+                      options: CarouselOptions(
+                        height: 200.0, // Set the height of your slider
+                        autoPlay: false, // Set to true for auto-playing
+                        autoPlayInterval: Duration(
+                            seconds: 3), // Set the interval for auto-playing
+                        enlargeCenterPage:
+                            true, // Set to true to enlarge the center image
+                        aspectRatio:
+                            16 / 9, // Set the aspect ratio of the images
                       ),
                     ),
                     Container(
@@ -777,6 +863,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
       if (response.statusCode == 200) {
         final jsonResponse = jsonDecode(response.body);
         //print([0].name);
+        // print(nearbyDoctorsClass.data.nearbyData);
         setState(() {
           nearbyDoctorsClass = NearbyDoctorsClass.fromJson(jsonResponse);
           print("Finished");
