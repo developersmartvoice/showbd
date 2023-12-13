@@ -281,130 +281,15 @@ class _SearchedScreenState extends State<SearchedScreen> {
       children: [
         Image.asset(
           "assets/homeScreenImages/header_bg.png",
-          height: MediaQuery.of(context).size.height * 0.14,
+          height: MediaQuery.of(context).size.height * 0.16,
           width: MediaQuery.of(context).size.width,
           fit: BoxFit.fill,
         ),
         SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
-            // child: Column(
-            //   // children: [
-            //   //   // Row(
-            //   //   //   //crossAxisAlignment: CrossAxisAlignment.baseline,
-            //   //   //   children: [
-            //   //   //     Text("$SEARCH, ",
-            //   //   //       style: GoogleFonts.poppins(
-            //   //   //         color: WHITE,
-            //   //   //       ),
-            //   //   //     ),
-            //   //   //     Text(HERE,
-            //   //   //       style: GoogleFonts.poppins(
-            //   //   //           color: WHITE,
-            //   //   //           fontSize: 25,
-            //   //   //           fontWeight: FontWeight.w500
-            //   //   //       ),
-            //   //   //     ),
-            //   //   //   ],
-            //   //   // ),
-            //   //   SizedBox(
-            //   //     height: 10,
-            //   //   ),
-            //   //   // Row(
-            //   //   //   children: [
-            //   //   //     Expanded(
-            //   //   //       child: Container(
-            //   //   //         height: 50,
-            //   //   //         //margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
-            //   //   //         decoration: BoxDecoration(
-            //   //   //           borderRadius: BorderRadius.circular(15),
-            //   //   //           color: WHITE,
-            //   //   //         ),
-            //   //   //         child: TextField(
-            //   //   //           controller: _textController,
-            //   //   //           textInputAction: TextInputAction.search,
-            //   //   //           decoration: InputDecoration(
-            //   //   //               contentPadding: EdgeInsets.all(10),
-            //   //   //               border: OutlineInputBorder(
-            //   //   //                 borderSide: BorderSide(color: WHITE),
-            //   //   //                 borderRadius: BorderRadius.circular(15),
-            //   //   //               ),
-            //   //   //               hintText: SEARCH_DOCTOR_BY_NAME,
-            //   //   //               hintStyle: GoogleFonts.poppins(
-            //   //   //                   color: LIGHT_GREY_TEXT, fontSize: 13),
-            //   //   //               suffixIcon: Container(
-            //   //   //                 height: 20,
-            //   //   //                 width: 20,
-            //   //   //                 child: Center(
-            //   //   //                   child: Padding(
-            //   //   //                     padding: const EdgeInsets.all(13),
-            //   //   //                     child: CircularProgressIndicator(
-            //   //   //                       strokeWidth: 1.5,
-            //   //   //                       valueColor: isLoading
-            //   //   //                           ? AlwaysStoppedAnimation(
-            //   //   //                               Theme.of(context).hintColor)
-            //   //   //                           : AlwaysStoppedAnimation(
-            //   //   //                               Colors.transparent),
-            //   //   //                     ),
-            //   //   //                   ),
-            //   //   //                 ),
-            //   //   //               ),
-            //   //   //               focusedBorder: OutlineInputBorder(
-            //   //   //                 borderSide: BorderSide(color: WHITE),
-            //   //   //                 borderRadius: BorderRadius.circular(15),
-            //   //   //               ),
-            //   //   //               disabledBorder: OutlineInputBorder(
-            //   //   //                 borderSide: BorderSide(color: WHITE),
-            //   //   //                 borderRadius: BorderRadius.circular(15),
-            //   //   //               ),
-            //   //   //               enabledBorder: OutlineInputBorder(
-            //   //   //                 borderSide: BorderSide(color: WHITE),
-            //   //   //                 borderRadius: BorderRadius.circular(15),
-            //   //   //               )),
-            //   //   //           onChanged: (val) {
-            //   //   //             // setState(() {
-            //   //   //             //   searchKeyword = val;
-            //   //   //             //   _onChanged(val);
-            //   //   //             //   print(searchKeyword);
-            //   //   //             // });
-            //   //   //           },
-            //   //   //           onSubmitted: (val) {
-            //   //   //             setState(() {
-            //   //   //               searchKeyword = val;
-            //   //   //               _onSubmit(val);
-            //   //   //             });
-            //   //   //           },
-            //   //   //         ),
-            //   //   //       ),
-            //   //   //     ),
-            //   //   //     SizedBox(
-            //   //   //       width: 5,
-            //   //   //     ),
-            //   //   //     InkWell(
-            //   //   //       onTap: () {
-            //   //   //         _onSubmit(_textController.text);
-            //   //   //         //Navigator.push(context, MaterialPageRoute(builder: (context) => SearchedScreen(_textController.text)));
-            //   //   //       },
-            //   //   //       child: Container(
-            //   //   //         width: 50,
-            //   //   //         height: 50,
-            //   //   //         decoration: BoxDecoration(
-            //   //   //           color: WHITE,
-            //   //   //           borderRadius: BorderRadius.circular(15),
-            //   //   //         ),
-            //   //   //         child: Center(
-            //   //   //           child: Image.asset(
-            //   //   //             "assets/homeScreenImages/search_icon.png",
-            //   //   //           ),
-            //   //   //         ),
-            //   //   //       ),
-            //   //   //     ),
-            //   //   //   ],
-            //   //   // )
-            //   // ],
-            // ),
-            child: Container(
-              height: 60,
+          child: Container(
+            height: 60,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

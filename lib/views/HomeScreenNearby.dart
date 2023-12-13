@@ -35,7 +35,7 @@ bool hasApiBeenCalled = false;
 NearbyDoctorsClass? nearbyDoctorsClass;
 // DoctorDetailsClass? doctorDetailsClass;
 CarouselController sliderController = CarouselController();
-bool isScrollLocked = true;
+// bool isScrollLocked = true;
 
 class HomeScreenNearby extends StatefulWidget {
   ScrollController scrollController;
@@ -352,8 +352,9 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
 
                       CarouselSlider.builder(
                         carouselController: sliderController,
-                        itemCount: imgs.length +
-                            1, // Add 1 to account for the fixed image
+                        itemCount: imgs != null
+                            ? imgs.length + 1
+                            : 1, // Add 1 to account for the fixed image
                         itemBuilder: (context, index, realIndex) {
                           if (index == 0) {
                             print("realIndex is $realIndex");
@@ -433,22 +434,9 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                           initialPage: 0,
                           reverse: false,
                           autoPlay: false, // Set to false for manual control
-                          onPageChanged: (index, reason) {
-                            print("index is $index");
-                            print("reason is $reason");
-                            if (index == 0) {
-                              setState(() {
-                                isScrollLocked = true;
-                              });
-                            } else {
-                              setState(() {
-                                isScrollLocked = false;
-                              });
-                            }
-                          },
-                          // scrollPhysics: isScrollLocked
-                          //     ? NeverScrollableScrollPhysics()
-                          //     : BouncingScrollPhysics(),
+                          enableInfiniteScroll:
+                              false, // Disable infinite scroll
+                          onPageChanged: (index, reason) {},
                         ),
                       ),
                       Container(
