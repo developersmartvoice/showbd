@@ -34,6 +34,8 @@ List<NearbyData> list2 = [];
 bool hasApiBeenCalled = false;
 NearbyDoctorsClass? nearbyDoctorsClass;
 // DoctorDetailsClass? doctorDetailsClass;
+CarouselController sliderController = CarouselController();
+bool isScrollLocked = true;
 
 class HomeScreenNearby extends StatefulWidget {
   ScrollController scrollController;
@@ -310,246 +312,269 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
             Container(
               // height: 150,
               child: Expanded(
-                child: Stack(
-                  alignment: Alignment.topRight,
-                  children: [
-                    // ClipRRect(
-                    //   borderRadius: BorderRadius.only(
-                    //     topLeft: Radius.circular(8),
-                    //     topRight: Radius.circular(8),
-                    //   ),
-                    //   child: CachedNetworkImage(
-                    //     imageUrl: img,
-                    //     fit: BoxFit.cover,
-                    //     width: double.infinity,
-                    //     placeholder: (context, url) => Container(
-                    //       color: Theme.of(context).primaryColorLight,
-                    //       child: Center(
-                    //         child: Image.asset(
-                    //           "assets/homeScreenImages/user_unactive.png",
-                    //           height: 50,
-                    //           width: 50,
-                    //         ),
-                    //       ),
-                    //     ),
-                    //     errorWidget: (context, url, err) => Container(
-                    //       color: Theme.of(context).primaryColorLight,
-                    //       child: Center(
-                    //         child: Image.asset(
-                    //           "assets/homeScreenImages/user_unactive.png",
-                    //           height: 50,
-                    //           width: 50,
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
+                child: Container(
+                  child: Stack(
+                    alignment: Alignment.topRight,
+                    children: [
+                      // ClipRRect(
+                      //   borderRadius: BorderRadius.only(
+                      //     topLeft: Radius.circular(8),
+                      //     topRight: Radius.circular(8),
+                      //   ),
+                      //   child: CachedNetworkImage(
+                      //     imageUrl: img,
+                      //     fit: BoxFit.cover,
+                      //     width: double.infinity,
+                      //     placeholder: (context, url) => Container(
+                      //       color: Theme.of(context).primaryColorLight,
+                      //       child: Center(
+                      //         child: Image.asset(
+                      //           "assets/homeScreenImages/user_unactive.png",
+                      //           height: 50,
+                      //           width: 50,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     errorWidget: (context, url, err) => Container(
+                      //       color: Theme.of(context).primaryColorLight,
+                      //       child: Center(
+                      //         child: Image.asset(
+                      //           "assets/homeScreenImages/user_unactive.png",
+                      //           height: 50,
+                      //           width: 50,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
 
-                    // -------------------------------------
+                      // -------------------------------------
 
-                    CarouselSlider(
-                      items: [
-                        // Display the fixed image first
-                        ClipRRect(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(8),
-                            topRight: Radius.circular(8),
-                          ),
-                          child: CachedNetworkImage(
-                            imageUrl: img,
-                            fit: BoxFit.cover,
-                            width: double.infinity,
-                            placeholder: (context, url) => Container(
-                              color: Theme.of(context).primaryColorLight,
-                              child: Center(
-                                child: Image.asset(
-                                  "assets/homeScreenImages/user_unactive.png",
-                                  height: 50,
-                                  width: 50,
+                      CarouselSlider.builder(
+                        carouselController: sliderController,
+                        itemCount: imgs.length +
+                            1, // Add 1 to account for the fixed image
+                        itemBuilder: (context, index, realIndex) {
+                          if (index == 0) {
+                            print("realIndex is $realIndex");
+                            // Display the fixed image at the beginning
+                            return ClipRRect(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(8),
+                                topRight: Radius.circular(8),
+                              ),
+                              child: CachedNetworkImage(
+                                imageUrl: img,
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                                placeholder: (context, url) => Container(
+                                  color: Theme.of(context).primaryColorLight,
+                                  child: Center(
+                                    child: Image.asset(
+                                      "assets/homeScreenImages/user_unactive.png",
+                                      height: 50,
+                                      width: 50,
+                                    ),
+                                  ),
+                                ),
+                                errorWidget: (context, url, err) => Container(
+                                  color: Theme.of(context).primaryColorLight,
+                                  child: Center(
+                                    child: Image.asset(
+                                      "assets/homeScreenImages/user_unactive.png",
+                                      height: 50,
+                                      width: 50,
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                            errorWidget: (context, url, err) => Container(
-                              color: Theme.of(context).primaryColorLight,
-                              child: Center(
-                                child: Image.asset(
-                                  "assets/homeScreenImages/user_unactive.png",
-                                  height: 50,
-                                  width: 50,
+                            );
+                          } else {
+                            // Display the rest of the images from imgs
+                            var imgIndex =
+                                index - 1; // Adjust the index for imgs
+                            return ClipRRect(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(8),
+                                topRight: Radius.circular(8),
+                              ),
+                              child: CachedNetworkImage(
+                                imageUrl:
+                                    imgs[imgIndex], // Use the image from imgs
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                                placeholder: (context, url) => Container(
+                                  color: Theme.of(context).primaryColorLight,
+                                  child: Center(
+                                    child: Image.asset(
+                                      "assets/homeScreenImages/user_unactive.png",
+                                      height: 50,
+                                      width: 50,
+                                    ),
+                                  ),
+                                ),
+                                errorWidget: (context, url, err) => Container(
+                                  color: Theme.of(context).primaryColorLight,
+                                  child: Center(
+                                    child: Image.asset(
+                                      "assets/homeScreenImages/user_unactive.png",
+                                      height: 50,
+                                      width: 50,
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
+                            );
+                          }
+                        },
+                        options: CarouselOptions(
+                          viewportFraction: 1,
+                          height: 200.0,
+                          initialPage: 0,
+                          reverse: false,
+                          autoPlay: false, // Set to false for manual control
+                          onPageChanged: (index, reason) {
+                            print("index is $index");
+                            print("reason is $reason");
+                            if (index == 0) {
+                              setState(() {
+                                isScrollLocked = true;
+                              });
+                            } else {
+                              setState(() {
+                                isScrollLocked = false;
+                              });
+                            }
+                          },
+                          // scrollPhysics: isScrollLocked
+                          //     ? NeverScrollableScrollPhysics()
+                          //     : BouncingScrollPhysics(),
                         ),
-                        // Display the rest of the images
-                        ...imgs.map((img) {
-                          return ClipRRect(
+                      ),
+                      Container(
+                        width: 60.0, // Fixed width
+                        height: 40.0, // Fixed height
+                        margin: EdgeInsets.only(top: 20),
+                        decoration: BoxDecoration(
+                            color: Color.fromARGB(255, 255, 94, 0)
+                                .withOpacity(0.8),
                             borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(8),
-                              topRight: Radius.circular(8),
+                              topLeft: Radius.circular(5),
+                              bottomLeft: Radius.circular(5),
+                            )),
+                        child: Center(
+                          child: Text(
+                            '\$' + consultationFee + "/h",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.bold,
                             ),
-                            child: CachedNetworkImage(
-                              imageUrl: img,
-                              fit: BoxFit.cover,
-                              width: double.infinity,
-                              placeholder: (context, url) => Container(
-                                color: Theme.of(context).primaryColorLight,
-                                child: Center(
-                                  child: Image.asset(
-                                    "assets/homeScreenImages/user_unactive.png",
-                                    height: 50,
-                                    width: 50,
-                                  ),
-                                ),
-                              ),
-                              errorWidget: (context, url, err) => Container(
-                                color: Theme.of(context).primaryColorLight,
-                                child: Center(
-                                  child: Image.asset(
-                                    "assets/homeScreenImages/user_unactive.png",
-                                    height: 50,
-                                    width: 50,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          );
-                        }).toList(),
-                      ],
-                      options: CarouselOptions(
-                        height: 200.0, // Set the height of your slider
-                        autoPlay: false, // Set to true for auto-playing
-                        autoPlayInterval: Duration(
-                            seconds: 3), // Set the interval for auto-playing
-                        enlargeCenterPage:
-                            true, // Set to true to enlarge the center image
-                        aspectRatio:
-                            16 / 9, // Set the aspect ratio of the images
-                      ),
-                    ),
-                    Container(
-                      width: 60.0, // Fixed width
-                      height: 40.0, // Fixed height
-                      margin: EdgeInsets.only(top: 20),
-                      decoration: BoxDecoration(
-                          color:
-                              Color.fromARGB(255, 255, 94, 0).withOpacity(0.8),
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(5),
-                            bottomLeft: Radius.circular(5),
-                          )),
-                      child: Center(
-                        child: Text(
-                          '\$' + consultationFee + "/h",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14.0,
-                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
-                    ),
-                    // add button
-                    Container(
-                      margin: EdgeInsets.only(top: 150),
-                      width: 120,
-                      height: 50,
-                      child: isLoggedIn
-                          ? ElevatedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => MakeAppointment(
-                                            id.toString(),
-                                            name.toString(),
-                                            consultationFee.toString())));
-                              },
-                              style: ElevatedButton.styleFrom(
-                                primary: Color.fromARGB(186, 1, 122, 21),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(5),
-                                    bottomLeft: Radius.circular(5),
-                                  ),
-                                  // Adjust the radius as needed
-                                ),
-                                minimumSize: Size(
-                                    60, 40), // Set the minimum width and height
-// Set the button color to orange
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Icon(
-                                    Icons
-                                        .calendar_today, // Add the booking icon
-                                    color: Colors
-                                        .white, // Set the icon color to white
-                                  ),
-                                  SizedBox(
-                                      width:
-                                          8), // Add some spacing between the icon and text
-                                  Text(
-                                    BOOK_NOW,
-                                    style: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors
-                                          .white, // Set the text color to white
-                                      fontSize: 10,
+                      // add button
+                      Container(
+                        margin: EdgeInsets.only(top: 150),
+                        width: 120,
+                        height: 50,
+                        child: isLoggedIn
+                            ? ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => MakeAppointment(
+                                              id.toString(),
+                                              name.toString(),
+                                              consultationFee.toString())));
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  primary: Color.fromARGB(186, 1, 122, 21),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(5),
+                                      bottomLeft: Radius.circular(5),
                                     ),
+                                    // Adjust the radius as needed
                                   ),
-                                ],
-                              ),
-                            )
-                          : ElevatedButton(
-                              onPressed: () {
-                                // Handle button click, e.g., navigate to the login screen
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => LoginAsUser()));
-                              },
-                              style: ElevatedButton.styleFrom(
-                                primary: const Color.fromARGB(255, 255, 94, 0)
-                                    .withOpacity(0.8),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(5),
-                                    bottomLeft: Radius.circular(5),
-                                  ),
-                                  // Adjust the radius as needed
+                                  minimumSize: Size(60,
+                                      40), // Set the minimum width and height
+                                  // Set the button color to orange
                                 ),
-                                minimumSize: Size(
-                                    60, 40), // Set the minimum width and height
-                                // Set the button color to orange
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons
-                                        .calendar_today, // Add the booking icon
-                                    color: Colors
-                                        .white, // Set the icon color to white
-                                  ),
-                                  SizedBox(
-                                      width:
-                                          8), // Add some spacing between the icon and text
-                                  Text(
-                                    BOOK_NOW,
-                                    style: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.w500,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Icon(
+                                      Icons
+                                          .calendar_today, // Add the booking icon
                                       color: Colors
-                                          .white, // Set the text color to white
-                                      fontSize: 10,
+                                          .white, // Set the icon color to white
                                     ),
+                                    SizedBox(
+                                        width:
+                                            8), // Add some spacing between the icon and text
+                                    Text(
+                                      BOOK_NOW,
+                                      style: GoogleFonts.poppins(
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors
+                                            .white, // Set the text color to white
+                                        fontSize: 10,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : ElevatedButton(
+                                onPressed: () {
+                                  // Handle button click, e.g., navigate to the login screen
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => LoginAsUser()));
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  primary: const Color.fromARGB(255, 255, 94, 0)
+                                      .withOpacity(0.8),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(5),
+                                      bottomLeft: Radius.circular(5),
+                                    ),
+                                    // Adjust the radius as needed
                                   ),
-                                ],
+                                  minimumSize: Size(60,
+                                      40), // Set the minimum width and height
+                                  // Set the button color to orange
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons
+                                          .calendar_today, // Add the booking icon
+                                      color: Colors
+                                          .white, // Set the icon color to white
+                                    ),
+                                    SizedBox(
+                                        width:
+                                            8), // Add some spacing between the icon and text
+                                    Text(
+                                      BOOK_NOW,
+                                      style: GoogleFonts.poppins(
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors
+                                            .white, // Set the text color to white
+                                        fontSize: 10,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
