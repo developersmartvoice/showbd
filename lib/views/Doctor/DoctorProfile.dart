@@ -94,8 +94,9 @@ class _DoctorProfileState extends State<DoctorProfile> {
           print('Doctor Get Error is $E');
         }
         print('name is : ${doctorProfileDetails!.data!.name}');
-        print('name is : ${doctorProfileDetails!.data!.image}');
-        print('name is : ${doctorProfileDetails!.data!.workingTime}');
+        // print('name is : ${doctorProfileDetails!.data!.image}');
+        // print('name is : ${doctorProfileDetails!.data!.workingTime}');
+        print('Images are : ${doctorProfileDetails!.data!.images}');
 
         nameController.text = name = doctorProfileDetails!.data!.name!;
         password = doctorProfileDetails!.data!.password ?? "";
@@ -851,86 +852,435 @@ class _DoctorProfileState extends State<DoctorProfile> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Stack(
+              // SizedBox(
+              //   height: 20,
+              // ),
+              Container(
+                height: MediaQuery.of(context).size.height * .25,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Container(
-                        height: 140,
-                        width: 140,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(70),
-                          border: Border.all(
-                            color: Theme.of(context)
-                                .primaryColorDark
-                                .withOpacity(0.4),
-                            width: 1,
+                      Stack(
+                        children: [
+                          Container(
+                            height: 160,
+                            width: 160,
+                            decoration: BoxDecoration(
+                              // borderRadius: BorderRadius.circular(90),
+                              border: Border.all(
+                                color: Theme.of(context)
+                                    .primaryColorDark
+                                    .withOpacity(0.4),
+                                width: 1,
+                              ),
+                            ),
+                            child: Center(
+                              child: ClipRRect(
+                                // borderRadius: BorderRadius.circular(75),
+                                child: _image != null
+                                    ? Image.file(
+                                        _image!,
+                                        height: 150,
+                                        width: 150,
+                                        fit: BoxFit.cover,
+                                      )
+                                    : CachedNetworkImage(
+                                        imageUrl:
+                                            doctorProfileDetails!.data!.image!,
+                                        height: 150,
+                                        width: 150,
+                                        fit: BoxFit.cover,
+                                        placeholder: (context, url) =>
+                                            Transform.scale(
+                                                scale: 3.1,
+                                                child: Icon(
+                                                  Icons.account_circle,
+                                                  color: Theme.of(context)
+                                                      .primaryColorDark
+                                                      .withOpacity(0.3),
+                                                  size: 50,
+                                                )),
+                                        errorWidget: (context, url, error) =>
+                                            Transform.scale(
+                                                scale: 3.1,
+                                                child: Icon(
+                                                  Icons.account_circle,
+                                                  color: Theme.of(context)
+                                                      .primaryColorDark
+                                                      .withOpacity(0.3),
+                                                  size: 50,
+                                                )),
+                                      ),
+                              ),
+                            ),
                           ),
-                        ),
-                        child: Center(
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(65),
-                            child: _image != null
-                                ? Image.file(
-                                    _image!,
-                                    height: 130,
-                                    width: 130,
-                                    fit: BoxFit.cover,
-                                  )
-                                : CachedNetworkImage(
-                                    imageUrl: doctorProfileDetails!.data!.image!
-                                        .toString(),
-                                    height: 130,
-                                    width: 130,
-                                    fit: BoxFit.cover,
-                                    placeholder: (context, url) =>
-                                        Transform.scale(
-                                            scale: 3.1,
-                                            child: Icon(
-                                              Icons.account_circle,
-                                              color: Theme.of(context)
-                                                  .primaryColorDark
-                                                  .withOpacity(0.3),
-                                              size: 50,
-                                            )),
-                                    errorWidget: (context, url, error) =>
-                                        Transform.scale(
-                                            scale: 3.1,
-                                            child: Icon(
-                                              Icons.account_circle,
-                                              color: Theme.of(context)
-                                                  .primaryColorDark
-                                                  .withOpacity(0.3),
-                                              size: 50,
-                                            )),
+                          Container(
+                            height: 150,
+                            width: 150,
+                            child: Align(
+                                alignment: Alignment.bottomRight,
+                                child: InkWell(
+                                  onTap: () {
+                                    getImage();
+                                  },
+                                  child: Image.asset(
+                                    "assets/homeScreenImages/edit.png",
+                                    height: 35,
+                                    width: 35,
                                   ),
+                                )),
                           ),
+                        ],
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Column(
+                          children: [
+                            Stack(
+                              children: [
+                                Container(
+                                  height: 95,
+                                  width: 95,
+                                  decoration: BoxDecoration(
+                                    // borderRadius: BorderRadius.circular(70),
+                                    border: Border.all(
+                                      color: Theme.of(context)
+                                          .primaryColorDark
+                                          .withOpacity(0.4),
+                                      width: 1,
+                                    ),
+                                  ),
+                                  child: Center(
+                                    child: ClipRRect(
+                                      // borderRadius: BorderRadius.circular(65),
+                                      child: _image != null
+                                          ? Image.file(
+                                              _image!,
+                                              height: 90,
+                                              width: 90,
+                                              fit: BoxFit.cover,
+                                            )
+                                          : CachedNetworkImage(
+                                              imageUrl: doctorProfileDetails!
+                                                          .data!
+                                                          .images!
+                                                          .isNotEmpty ==
+                                                      true
+                                                  ? doctorProfileDetails!
+                                                      .data!.images![0]
+                                                  : 'assets/default-user.png',
+                                              height: 90,
+                                              width: 90,
+                                              fit: BoxFit.cover,
+                                              placeholder: (context, url) =>
+                                                  Transform.scale(
+                                                      scale: 3.1,
+                                                      child: Icon(
+                                                        Icons.account_circle,
+                                                        color: Theme.of(context)
+                                                            .primaryColorDark
+                                                            .withOpacity(0.3),
+                                                        size: 50,
+                                                      )),
+                                              errorWidget: (context, url,
+                                                      error) =>
+                                                  Transform.scale(
+                                                      scale: 3.1,
+                                                      child: Icon(
+                                                        Icons.account_circle,
+                                                        color: Theme.of(context)
+                                                            .primaryColorDark
+                                                            .withOpacity(0.3),
+                                                        size: 50,
+                                                      )),
+                                            ),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  height: 90,
+                                  width: 90,
+                                  child: Align(
+                                      alignment: Alignment.bottomRight,
+                                      child: InkWell(
+                                        onTap: () {
+                                          getImage();
+                                        },
+                                        child: Image.asset(
+                                          "assets/homeScreenImages/edit.png",
+                                          height: 25,
+                                          width: 25,
+                                        ),
+                                      )),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Stack(
+                              children: [
+                                Container(
+                                  height: 95,
+                                  width: 95,
+                                  decoration: BoxDecoration(
+                                    // borderRadius: BorderRadius.circular(70),
+                                    border: Border.all(
+                                      color: Theme.of(context)
+                                          .primaryColorDark
+                                          .withOpacity(0.4),
+                                      width: 1,
+                                    ),
+                                  ),
+                                  child: Center(
+                                    child: ClipRRect(
+                                      // borderRadius: BorderRadius.circular(65),
+                                      child: _image != null
+                                          ? Image.file(
+                                              _image!,
+                                              height: 90,
+                                              width: 90,
+                                              fit: BoxFit.cover,
+                                            )
+                                          : CachedNetworkImage(
+                                              imageUrl: doctorProfileDetails!
+                                                          .data!
+                                                          .images!
+                                                          .isNotEmpty ==
+                                                      true
+                                                  ? doctorProfileDetails!
+                                                      .data!.images![2]
+                                                  : 'assets/default-user.png',
+                                              height: 90,
+                                              width: 90,
+                                              fit: BoxFit.cover,
+                                              placeholder: (context, url) =>
+                                                  Transform.scale(
+                                                      scale: 3.1,
+                                                      child: Icon(
+                                                        Icons.account_circle,
+                                                        color: Theme.of(context)
+                                                            .primaryColorDark
+                                                            .withOpacity(0.3),
+                                                        size: 50,
+                                                      )),
+                                              errorWidget: (context, url,
+                                                      error) =>
+                                                  Transform.scale(
+                                                      scale: 3.1,
+                                                      child: Icon(
+                                                        Icons.account_circle,
+                                                        color: Theme.of(context)
+                                                            .primaryColorDark
+                                                            .withOpacity(0.3),
+                                                        size: 50,
+                                                      )),
+                                            ),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  height: 90,
+                                  width: 90,
+                                  child: Align(
+                                      alignment: Alignment.bottomRight,
+                                      child: InkWell(
+                                        onTap: () {
+                                          getImage();
+                                        },
+                                        child: Image.asset(
+                                          "assets/homeScreenImages/edit.png",
+                                          height: 25,
+                                          width: 25,
+                                        ),
+                                      )),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
-                      Container(
-                        height: 135,
-                        width: 135,
-                        child: Align(
-                            alignment: Alignment.bottomRight,
-                            child: InkWell(
-                              onTap: () {
-                                getImage();
-                              },
-                              child: Image.asset(
-                                "assets/homeScreenImages/edit.png",
-                                height: 35,
-                                width: 35,
-                              ),
-                            )),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Column(
+                          children: [
+                            Stack(
+                              children: [
+                                Container(
+                                  height: 95,
+                                  width: 95,
+                                  decoration: BoxDecoration(
+                                    // borderRadius: BorderRadius.circular(70),
+                                    border: Border.all(
+                                      color: Theme.of(context)
+                                          .primaryColorDark
+                                          .withOpacity(0.4),
+                                      width: 1,
+                                    ),
+                                  ),
+                                  child: Center(
+                                    child: ClipRRect(
+                                      // borderRadius: BorderRadius.circular(65),
+                                      child: _image != null
+                                          ? Image.file(
+                                              _image!,
+                                              height: 90,
+                                              width: 90,
+                                              fit: BoxFit.cover,
+                                            )
+                                          : CachedNetworkImage(
+                                              imageUrl: doctorProfileDetails!
+                                                          .data!
+                                                          .images!
+                                                          .isNotEmpty ==
+                                                      true
+                                                  ? doctorProfileDetails!
+                                                      .data!.images![1]
+                                                  : 'assets/default-user.png',
+                                              height: 90,
+                                              width: 90,
+                                              fit: BoxFit.cover,
+                                              placeholder: (context, url) =>
+                                                  Transform.scale(
+                                                      scale: 3.1,
+                                                      child: Icon(
+                                                        Icons.account_circle,
+                                                        color: Theme.of(context)
+                                                            .primaryColorDark
+                                                            .withOpacity(0.3),
+                                                        size: 50,
+                                                      )),
+                                              errorWidget: (context, url,
+                                                      error) =>
+                                                  Transform.scale(
+                                                      scale: 3.1,
+                                                      child: Icon(
+                                                        Icons.account_circle,
+                                                        color: Theme.of(context)
+                                                            .primaryColorDark
+                                                            .withOpacity(0.3),
+                                                        size: 50,
+                                                      )),
+                                            ),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  height: 90,
+                                  width: 90,
+                                  child: Align(
+                                      alignment: Alignment.bottomRight,
+                                      child: InkWell(
+                                        onTap: () {
+                                          getImage();
+                                        },
+                                        child: Image.asset(
+                                          "assets/homeScreenImages/edit.png",
+                                          height: 25,
+                                          width: 25,
+                                        ),
+                                      )),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Stack(
+                              children: [
+                                Container(
+                                  height: 95,
+                                  width: 95,
+                                  decoration: BoxDecoration(
+                                    // borderRadius: BorderRadius.circular(70),
+                                    border: Border.all(
+                                      color: Theme.of(context)
+                                          .primaryColorDark
+                                          .withOpacity(0.4),
+                                      width: 1,
+                                    ),
+                                  ),
+                                  child: Center(
+                                    child: ClipRRect(
+                                      // borderRadius: BorderRadius.circular(65),
+                                      child: _image != null
+                                          ? Image.file(
+                                              _image!,
+                                              height: 90,
+                                              width: 90,
+                                              fit: BoxFit.cover,
+                                            )
+                                          : CachedNetworkImage(
+                                              imageUrl: doctorProfileDetails!
+                                                          .data!
+                                                          .images!
+                                                          .isNotEmpty ==
+                                                      true
+                                                  ? doctorProfileDetails!
+                                                      .data!.images![3]
+                                                  : 'assets/default-user.png',
+                                              height: 90,
+                                              width: 90,
+                                              fit: BoxFit.cover,
+                                              placeholder: (context, url) =>
+                                                  Transform.scale(
+                                                      scale: 3.1,
+                                                      child: Icon(
+                                                        Icons.account_circle,
+                                                        color: Theme.of(context)
+                                                            .primaryColorDark
+                                                            .withOpacity(0.3),
+                                                        size: 50,
+                                                      )),
+                                              errorWidget: (context, url,
+                                                      error) =>
+                                                  Transform.scale(
+                                                      scale: 3.1,
+                                                      child: Icon(
+                                                        Icons.account_circle,
+                                                        color: Theme.of(context)
+                                                            .primaryColorDark
+                                                            .withOpacity(0.3),
+                                                        size: 50,
+                                                      )),
+                                            ),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  height: 90,
+                                  width: 90,
+                                  child: Align(
+                                      alignment: Alignment.bottomRight,
+                                      child: InkWell(
+                                        onTap: () {
+                                          getImage();
+                                        },
+                                        child: Image.asset(
+                                          "assets/homeScreenImages/edit.png",
+                                          height: 25,
+                                          width: 25,
+                                        ),
+                                      )),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
-                ],
+                ),
               ),
+              Row(),
               formToEdit(),
             ],
           ),

@@ -38,6 +38,7 @@ class MyData {
   // String? healthcare;
   List<String>? languages;
   String? image;
+  List<String>? images; // Add images field as a list of strings
   dynamic password;
   String? facebookUrl;
   String? twitterUrl;
@@ -62,6 +63,7 @@ class MyData {
       this.services,
       this.languages,
       this.image,
+      this.images, // Include images field in the constructor
       this.password,
       this.facebookUrl,
       this.twitterUrl,
@@ -91,6 +93,9 @@ class MyData {
         .map((e) => e.trim())
         .toList();
     image = json['image'].toString();
+    images = json['images'] != null
+        ? List<String>.from(json['images'])
+        : []; // Parse images as a list
     password = json['password'].toString();
     facebookUrl = json['facebook_url'] ?? "";
     twitterUrl = json['twitter_url'] ?? "";
@@ -118,6 +123,7 @@ class MyData {
     // data['healthcare'] = this.healthcare;
     data['languages'] = languages?.join(',');
     data['image'] = this.image;
+    data['images'] = this.images; // Include images in the JSON output
     data['password'] = this.password;
     data['facebook_url'] = this.facebookUrl;
     data['twitter_url'] = this.twitterUrl;
