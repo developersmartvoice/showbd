@@ -123,7 +123,8 @@ class MyData {
     // data['healthcare'] = this.healthcare;
     data['languages'] = languages?.join(',');
     data['image'] = this.image;
-    data['images'] = this.images; // Include images in the JSON output
+    data['images'] =
+        this.images?.join(','); // Include images in the JSON output
     data['password'] = this.password;
     data['facebook_url'] = this.facebookUrl;
     data['twitter_url'] = this.twitterUrl;
