@@ -24,6 +24,7 @@ const String MAKE_AN_APPOINTMENT = "Make a booking";
 const String MAKE_AN_SUBSCRIBE = "Make a subscribe";
 const String LOGIN_TO_BOOK_APPOINTMENT = "Login to book now";
 const String DOCTOR_DASHBOARD = "Guide dashboard";
+const String TOUR = "Trips";
 const String APPOINTMENTS = "Bookings";
 const String EITHER_MOBILE_NUMBER_OR_PASSWORD_IS_INCORRECT =
     "Either mobile number or password is incorrect";
@@ -147,7 +148,7 @@ const String FIND_BEST_DOCTORS_NEAR_YOU_BY_SPECIALITY =
 const String CLICK_HERE = "click here";
 const String THIS_FIELD_IS_REQUIRED = "This field is required";
 const String ADDRESS_GOES_HERE = "Address goes here...";
-const String DOCTOR_LOGIN = "Guide login";
+const String GUIDE_LOGIN = "Guide login";
 const String HEALTH_CARE = "Languages";
 const String LOADING = "Loading...";
 const String CONTINUE_WITH_GOOGLE = "Continue with google";

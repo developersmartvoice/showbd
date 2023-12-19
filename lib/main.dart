@@ -253,7 +253,7 @@ class _TabsScreenState extends State<TabsScreen> {
                   width: 25,
                   fit: BoxFit.cover,
                 ),
-                label: DOCTOR_LOGIN,
+                label: GUIDE_LOGIN,
               ),
               BottomNavigationBarItem(
                 icon: Image.asset(

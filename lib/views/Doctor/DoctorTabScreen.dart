@@ -7,6 +7,7 @@ import 'package:appcode3/views/Doctor/DoctorChatListScreen.dart';
 import 'package:appcode3/views/Doctor/DoctorDashboard.dart';
 import 'package:appcode3/views/Doctor/DoctorPastAppointments.dart';
 import 'package:appcode3/views/Doctor/DoctorProfile.dart';
+import 'package:appcode3/views/Doctor/Tour.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -24,7 +25,8 @@ class DoctorTabsScreen extends StatefulWidget {
 class _DoctorTabsScreenState extends State<DoctorTabsScreen> {
   List<Widget> screens = [
     DoctorDashboard(),
-    DoctorPastAppointments(),
+    // DoctorPastAppointments(),
+    Tour(),
     DoctorProfile(),
     ChatListScreen(),
     MoreInfoScreen(),
@@ -105,16 +107,27 @@ class _DoctorTabsScreenState extends State<DoctorTabsScreen> {
                   ),
                   label: "Home",
                 ),
+                // BottomNavigationBarItem(
+                //   icon: Image.asset(
+                //     index == 1
+                //         ? "assets/homeScreenImages/appointment_active.png"
+                //         : "assets/homeScreenImages/appointment_unactive.png",
+                //     height: 25,
+                //     width: 25,
+                //     fit: BoxFit.cover,
+                //   ),
+                //   label: "Appointment",
+                // ),
                 BottomNavigationBarItem(
                   icon: Image.asset(
                     index == 1
-                        ? "assets/homeScreenImages/appointment_active.png"
-                        : "assets/homeScreenImages/appointment_unactive.png",
+                        ? "assets/homeScreenImages/plane_active.png"
+                        : "assets/homeScreenImages/plane_unactive.png",
                     height: 25,
                     width: 25,
                     fit: BoxFit.cover,
                   ),
-                  label: "Appointment",
+                  label: "Tour",
                 ),
                 BottomNavigationBarItem(
                   icon: Image.asset(
