@@ -1,5 +1,6 @@
 import 'package:appcode3/en.dart';
 import 'package:appcode3/main.dart';
+import 'package:appcode3/views/CreateTrip.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -65,6 +66,10 @@ class _TourState extends State<Tour> {
                       onPressed: () {
                         // Handle the create trip button click
                         // You can navigate to a new screen or perform other actions
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => CreateTrip()),
+                        );
                       },
                       icon: Icon(Icons.add),
                       label: Text(
@@ -88,6 +93,34 @@ class _TourState extends State<Tour> {
               ),
               // Add the column view for displaying trips here
               // You can use a ListView.builder or any other widget based on your data
+              SizedBox(
+                height: MediaQuery.of(context).size.height * .25,
+              ),
+              Container(
+                alignment: Alignment.center,
+                child: Column(
+                    mainAxisAlignment:
+                        MainAxisAlignment.center, // Center vertically
+                    children: [
+                      Text(
+                        "My saved Trips!",
+                        style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w500,
+                            color: BLACK,
+                            fontSize: 18),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Text(
+                        "You haven't created any Trips yet. Create your first Trip so available locals can send you offers.",
+                        style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w400,
+                            color: BLACK,
+                            fontSize: 14),
+                      )
+                    ]),
+              )
             ],
           ),
         ),
