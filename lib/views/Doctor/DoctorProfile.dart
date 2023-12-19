@@ -59,6 +59,8 @@ class _DoctorProfileState extends State<DoctorProfile> {
   List<MyData> myData = [];
   List<String>? selectedServices;
   List<String>? selectedLanguages;
+  List<String> imageFileNames = List.generate(4, (index) => '');
+  // List<String> selectedImagesEncodedPath = List.generate(4, ((index) => ''));
 
   fetchDoctorSchedule() async {
     final response = await get(
@@ -93,7 +95,20 @@ class _DoctorProfileState extends State<DoctorProfile> {
         } catch (E) {
           print('Doctor Get Error is $E');
         }
+
+        if (doctorProfileDetails!.data!.images == null ||
+            doctorProfileDetails!.data!.images!.isEmpty) {
+          imageFileNames = List.generate(4, (index) => '');
+          print("From Response: $imageFileNames");
+        } else {
+          imageFileNames = doctorProfileDetails!.data!.images!
+              .map<String>((imageUrl) => Uri.parse(imageUrl).pathSegments.last)
+              .toList();
+          print("From Response: $imageFileNames");
+        }
+
         print('name is : ${doctorProfileDetails!.data!.name}');
+        print('Raw Images names are : ${imageFileNames}');
         // print('name is : ${doctorProfileDetails!.data!.image}');
         // print('name is : ${doctorProfileDetails!.data!.workingTime}');
         print('Images are : ${doctorProfileDetails!.data!.images}');
@@ -664,6 +679,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                   break;
                 } else {
                   setState(() {
+                    handleDioMultipart();
                     index++;
                   });
                 }
@@ -807,8 +823,11 @@ class _DoctorProfileState extends State<DoctorProfile> {
   String? selectedValue;
   SpecialityClass? specialityClass;
   File? _image;
+  List<File?> _images = List<File?>.generate(4, (index) => null);
   final picker = ImagePicker();
   String? base64image;
+  List<dio.MultipartFile> imageFiles = List<dio.MultipartFile>.generate(4,
+      (index) => dio.MultipartFile.fromBytes([], filename: 'placeholder.jpg'));
 
   Future getImage() async {
     final pickedFile = await ImagePicker()
@@ -825,6 +844,36 @@ class _DoctorProfileState extends State<DoctorProfile> {
         print('No image selected.');
       }
     });
+  }
+
+  Future handleImages(int index) async {
+    final pickedFile =
+        await picker.pickImage(source: ImageSource.gallery, imageQuality: 30);
+
+    setState(() {
+      if (pickedFile != null) {
+        _images[index] = File(pickedFile.path);
+        imageFileNames[index] =
+            File(pickedFile.path).path.split('/').last.split('_')[1];
+        print("After taping imagesFileNames are: $imageFileNames");
+      }
+    });
+  }
+
+  handleDioMultipart() async {
+    print("HandleDioMultipart Called");
+    if (_images != null) {
+      for (int i = 0; i < 4; i++) {
+        print("HandleDioMultipart Called from loop!");
+        if (_images.length > i && _images[i] != null) {
+          imageFiles[i] = await dio.MultipartFile.fromFile(
+            _images[i]!.path,
+            filename: 'image_$i.jpg',
+          );
+        }
+      }
+      print("HandleDioMultipart theke : $imageFiles");
+    }
   }
 
   getSpecialities() async {
@@ -958,9 +1007,9 @@ class _DoctorProfileState extends State<DoctorProfile> {
                                   child: Center(
                                     child: ClipRRect(
                                       // borderRadius: BorderRadius.circular(65),
-                                      child: _image != null
+                                      child: _images[0] != null
                                           ? Image.file(
-                                              _image!,
+                                              _images[0]!,
                                               height: 90,
                                               width: 90,
                                               fit: BoxFit.cover,
@@ -1009,7 +1058,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                                       alignment: Alignment.bottomRight,
                                       child: InkWell(
                                         onTap: () {
-                                          getImage();
+                                          handleImages(0);
                                         },
                                         child: Image.asset(
                                           "assets/homeScreenImages/edit.png",
@@ -1040,9 +1089,9 @@ class _DoctorProfileState extends State<DoctorProfile> {
                                   child: Center(
                                     child: ClipRRect(
                                       // borderRadius: BorderRadius.circular(65),
-                                      child: _image != null
+                                      child: _images[2] != null
                                           ? Image.file(
-                                              _image!,
+                                              _images[2]!,
                                               height: 90,
                                               width: 90,
                                               fit: BoxFit.cover,
@@ -1091,7 +1140,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                                       alignment: Alignment.bottomRight,
                                       child: InkWell(
                                         onTap: () {
-                                          getImage();
+                                          handleImages(2);
                                         },
                                         child: Image.asset(
                                           "assets/homeScreenImages/edit.png",
@@ -1129,9 +1178,9 @@ class _DoctorProfileState extends State<DoctorProfile> {
                                   child: Center(
                                     child: ClipRRect(
                                       // borderRadius: BorderRadius.circular(65),
-                                      child: _image != null
+                                      child: _images[1] != null
                                           ? Image.file(
-                                              _image!,
+                                              _images[1]!,
                                               height: 90,
                                               width: 90,
                                               fit: BoxFit.cover,
@@ -1180,7 +1229,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                                       alignment: Alignment.bottomRight,
                                       child: InkWell(
                                         onTap: () {
-                                          getImage();
+                                          handleImages(1);
                                         },
                                         child: Image.asset(
                                           "assets/homeScreenImages/edit.png",
@@ -1211,9 +1260,9 @@ class _DoctorProfileState extends State<DoctorProfile> {
                                   child: Center(
                                     child: ClipRRect(
                                       // borderRadius: BorderRadius.circular(65),
-                                      child: _image != null
+                                      child: _images[3] != null
                                           ? Image.file(
-                                              _image!,
+                                              _images[3]!,
                                               height: 90,
                                               width: 90,
                                               fit: BoxFit.cover,
@@ -1262,7 +1311,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                                       alignment: Alignment.bottomRight,
                                       child: InkWell(
                                         onTap: () {
-                                          getImage();
+                                          handleImages(3);
                                         },
                                         child: Image.asset(
                                           "assets/homeScreenImages/edit.png",
@@ -2211,6 +2260,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
       }
     } else {
       Dio d = Dio();
+      // handleDioMultipart();
       print("from Dio");
       print(selectedServices);
       var formData = dio.FormData.fromMap({
@@ -2236,9 +2286,18 @@ class _DoctorProfileState extends State<DoctorProfile> {
         "twitter_url": twitter,
         'image': await dio.MultipartFile.fromFile(_image!.path,
             filename: 'image.jpg'),
+        'images': imageFiles.join(','),
       });
       var response = await d
-          .post("$SERVER_ADDRESS/api/doctoreditprofile", data: formData)
+          .post(
+        "$SERVER_ADDRESS/api/doctoreditprofile",
+        data: formData,
+        options: dio.Options(
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        ),
+      )
           .catchError((e) {
         Navigator.pop(context);
         messageDialog(ERROR, UNABLE_TO_LOAD_DATA_FORM_SERVER);
