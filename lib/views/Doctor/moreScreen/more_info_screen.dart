@@ -443,9 +443,8 @@
 // }
 //
 
-
-
 import 'dart:convert';
+import 'package:appcode3/views/Doctor/DoctorProfile.dart';
 import 'package:connectycube_sdk/connectycube_chat.dart';
 
 import 'package:appcode3/en.dart';
@@ -469,15 +468,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
-
 class MoreInfoScreen extends StatefulWidget {
   @override
   _MoreInfoScreenState createState() => _MoreInfoScreenState();
 }
 
 class _MoreInfoScreenState extends State<MoreInfoScreen> {
-
   DoctorPastAppointmentsClass? doctorAppointmentsClass;
   DoctorProfileWithRating? doctorProfileWithRating;
   Future? future;
@@ -486,18 +482,19 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
   String? doctorId;
   bool isErrorInLoading = false;
 
-  fetchDoctorAppointment() async{
-    final response = await get(Uri.parse("$SERVER_ADDRESS/api/doctoruappointment?doctor_id=$doctorId"));
+  fetchDoctorAppointment() async {
+    final response = await get(Uri.parse(
+        "$SERVER_ADDRESS/api/doctoruappointment?doctor_id=$doctorId"));
     print('dashboard api -> ${response.request}');
-    if(response.statusCode == 200){
+    if (response.statusCode == 200) {
       final jsonResponse = jsonDecode(response.body);
-      if(jsonResponse['success'].toString() == "1") {
+      if (jsonResponse['success'].toString() == "1") {
         setState(() {
           isAppointmentAvailable = true;
           doctorAppointmentsClass =
               DoctorPastAppointmentsClass.fromJson(jsonResponse);
         });
-      }else{
+      } else {
         setState(() {
           isAppointmentAvailable = false;
         });
@@ -505,9 +502,11 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
     }
   }
 
-  fetchDoctorDetails() async{
-    print('doctor detail url ->${'$SERVER_ADDRESS/api/doctordetail?doctor_id=$doctorId'}');
-    final response = await get(Uri.parse("$SERVER_ADDRESS/api/doctordetail?doctor_id=$doctorId"));
+  fetchDoctorDetails() async {
+    print(
+        'doctor detail url ->${'$SERVER_ADDRESS/api/doctordetail?doctor_id=$doctorId'}');
+    final response = await get(
+        Uri.parse("$SERVER_ADDRESS/api/doctordetail?doctor_id=$doctorId"));
     //     .catchError((e){
     //   setState(() {
     //     isErrorInLoading = true;
@@ -520,7 +519,8 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
         final jsonResponse = jsonDecode(response.body);
         setState(() {
           try {
-            doctorProfileWithRating = DoctorProfileWithRating.fromJson(jsonResponse);
+            doctorProfileWithRating =
+                DoctorProfileWithRating.fromJson(jsonResponse);
             // SharedPreferences sp = await SharedPreferences.getInstance();
             // sp.setString('profilePic', doctorProfileWithRating!.data!.image??'');
             // if(doctorProfileWithRating!.data!.isSubscription==0){
@@ -530,17 +530,14 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
             // }
             // ;
             print('doctor image is ${doctorProfileWithRating!.data!.image}');
-          }catch(E){
+          } catch (E) {
             print('Dashboard error is : ${E}');
           }
         });
       } else {
-        setState(() {
-
-        });
+        setState(() {});
       }
-    }catch(e){
-
+    } catch (e) {
       setState(() {
         isErrorInLoading = true;
       });
@@ -557,7 +554,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
     // TODO: implement initState
     super.initState();
     //getMessages();
-    SharedPreferences.getInstance().then((pref){
+    SharedPreferences.getInstance().then((pref) {
       setState(() {
         doctorId = pref.getString("userId");
         future = fetchDoctorAppointment();
@@ -570,28 +567,27 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-          backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            flexibleSpace: header(),
-          ),
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                doctorProfile(),
-                upCommingAppointments(),
-              ],
-            ),
-          ),
-        )
-    );
+      backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        flexibleSpace: header(),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            doctorProfile(),
+            upCommingAppointments(),
+          ],
+        ),
+      ),
+    ));
   }
 
-  Widget header(){
+  Widget header() {
     return Stack(
       children: [
-
-        Image.asset("assets/moreScreenImages/header_bg.png",
+        Image.asset(
+          "assets/moreScreenImages/header_bg.png",
           height: 60,
           fit: BoxFit.fill,
           width: MediaQuery.of(context).size.width,
@@ -600,13 +596,13 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
           height: 60,
           child: Row(
             children: [
-              SizedBox(width: 15,),
-              Text(
-                  MORE_INFO,
-                  style: Theme.of(context).textTheme.headline5!.apply(color: Theme.of(context).backgroundColor,
-                      fontWeightDelta: 5
-                  )
-              )
+              SizedBox(
+                width: 15,
+              ),
+              Text(MORE_INFO,
+                  style: Theme.of(context).textTheme.headline5!.apply(
+                      color: Theme.of(context).backgroundColor,
+                      fontWeightDelta: 5))
             ],
           ),
         ),
@@ -615,116 +611,170 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
   }
 
   Widget doctorProfile() {
-    return isErrorInLoading ? Container(
-      child: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.search_off_rounded,
-              size: 100,
-              color: LIGHT_GREY_TEXT,
-            ),
-            SizedBox(height: 20,),
-            Text(
-              UNABLE_TO_LOAD_DATA_FORM_SERVER,
-            )
-          ],
-        ),
-      ),
-    ) :FutureBuilder(
-        future: future2,
-        builder: (context, snapshot) {
-          if(snapshot.connectionState == ConnectionState.waiting || doctorId == null){
-            return Container(
-                height: 100,
-                child: Center(child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                )));
-          }
-          return Container(
-            //margin: EdgeInsets.all(8),
-            padding: EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              //borderRadius: BorderRadius.circular(10),
-              // color: Colors.red
-              color: Theme.of(context).backgroundColor,
-            ),
-            child: Row(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(50),
-                  child: CachedNetworkImage(
-                    imageUrl: doctorProfileWithRating!.data!.image!,
-                    height: 85,
-                    width: 85,
-                    fit: BoxFit.cover,
-                    placeholder: (context, url) => Container(color: Theme.of(context).primaryColorLight, child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Image.asset("assets/homeScreenImages/user_unactive.png",height: 20, width: 20,),
-                    ),),
-                    errorWidget: (context,url,err) => Container(color: Theme.of(context).primaryColorLight, child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Image.asset("assets/homeScreenImages/user_unactive.png",height: 20, width: 20,),
-                    )),
+    return isErrorInLoading
+        ? Container(
+            child: Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.search_off_rounded,
+                    size: 100,
+                    color: LIGHT_GREY_TEXT,
                   ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    UNABLE_TO_LOAD_DATA_FORM_SERVER,
+                  )
+                ],
+              ),
+            ),
+          )
+        : FutureBuilder(
+            future: future2,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting ||
+                  doctorId == null) {
+                return Container(
+                    height: 100,
+                    child: Center(
+                        child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                    )));
+              }
+              return Container(
+                //margin: EdgeInsets.all(8),
+                padding: EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  //borderRadius: BorderRadius.circular(10),
+                  // color: Colors.red
+                  color: Theme.of(context).backgroundColor,
                 ),
-                SizedBox(width: 10,),
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(doctorProfileWithRating!.data!.name!,
-                              style: Theme.of(context).textTheme.subtitle1!.apply(fontWeightDelta: 2),
+                child: Row(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(50),
+                      child: CachedNetworkImage(
+                        imageUrl: doctorProfileWithRating!.data!.image!,
+                        height: 85,
+                        width: 85,
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) => Container(
+                          color: Theme.of(context).primaryColorLight,
+                          child: Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Image.asset(
+                              "assets/homeScreenImages/user_unactive.png",
+                              height: 20,
+                              width: 20,
                             ),
-                            Row(
+                          ),
+                        ),
+                        errorWidget: (context, url, err) => Container(
+                            color: Theme.of(context).primaryColorLight,
+                            child: Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Image.asset(
+                                "assets/homeScreenImages/user_unactive.png",
+                                height: 20,
+                                width: 20,
+                              ),
+                            )),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(doctorProfileWithRating!.data!.departmentName!.isEmpty ? SPECIALITY : doctorProfileWithRating!.data!.departmentName!,
-                                  style: Theme.of(context).textTheme.bodyText1!.apply(color: Theme.of(context).primaryColorDark),
+                                Text(
+                                  doctorProfileWithRating!.data!.name!,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .subtitle1!
+                                      .apply(fontWeightDelta: 2),
                                 ),
-                                SizedBox(width: 10,),
-                                Image.asset(
-                                  "assets/detailScreenImages/star_fill.png",
-                                  height: 15,
-                                  width: 15,
-                                ),
-                                SizedBox(width: 5,),
-                                Text(double.parse(doctorProfileWithRating!.data!.avgratting.toString()).toString(),
-                                  style: Theme.of(context).textTheme.bodyText1!.apply(color: Theme.of(context).primaryColorDark),
+                                Row(
+                                  children: [
+                                    Text(
+                                      doctorProfileWithRating!
+                                              .data!.departmentName!.isEmpty
+                                          ? SPECIALITY
+                                          : doctorProfileWithRating!
+                                              .data!.departmentName!,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1!
+                                          .apply(
+                                              color: Theme.of(context)
+                                                  .primaryColorDark),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Image.asset(
+                                      "assets/detailScreenImages/star_fill.png",
+                                      height: 15,
+                                      width: 15,
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      double.parse(doctorProfileWithRating!
+                                              .data!.avgratting
+                                              .toString())
+                                          .toString(),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1!
+                                          .apply(
+                                              color: Theme.of(context)
+                                                  .primaryColorDark),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 10,),
-                      Container(
-                        child: Text(doctorProfileWithRating!.data!.address ?? ADDRESS_GOES_HERE,
-                          style: Theme.of(context).textTheme.caption!.apply(
-                            color: Theme.of(context).primaryColorDark.withOpacity(0.4),
-                            fontSizeDelta: 0.1,
                           ),
-                        ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            child: Text(
+                              doctorProfileWithRating!.data!.address ??
+                                  ADDRESS_GOES_HERE,
+                              style: Theme.of(context).textTheme.caption!.apply(
+                                    color: Theme.of(context)
+                                        .primaryColorDark
+                                        .withOpacity(0.4),
+                                    fontSizeDelta: 0.1,
+                                  ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                  ],
                 ),
-                SizedBox(width: 10,),
-
-              ],
-            ),
-          );
-        }
-    );
+              );
+            });
   }
 
-  Widget upCommingAppointments(){
+  Widget upCommingAppointments() {
     return Container(
       margin: EdgeInsets.only(top: 15),
 
@@ -733,61 +783,105 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          //----------- Edit Profile -------------
+
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => DoctorProfile()),
+              );
+            },
+            child: Container(
+              height: 50,
+              margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
+              decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(10)),
+              child: Container(
+                margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      EDIT_PROFILE,
+                      style: Theme.of(context).textTheme.subtitle1,
+                    ),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      size: 20,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+
+          SizedBox(
+            height: 15,
+          ),
+
           ///---------  change password ----------
           GestureDetector(
-            onTap: (){
-              Navigator.push(context,
+            onTap: () {
+              Navigator.push(
+                context,
                 MaterialPageRoute(builder: (context) => ChangePassword()),
               );
             },
             child: Container(
               height: 50,
               margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
-
               decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10)
-              ),
+                  color: Colors.white, borderRadius: BorderRadius.circular(10)),
               child: Container(
                 margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(CHANGE_PASSWORD,
+                    Text(
+                      CHANGE_PASSWORD,
                       style: Theme.of(context).textTheme.subtitle1,
                     ),
-                    Icon(Icons.arrow_forward_ios,size: 20,),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      size: 20,
+                    ),
                   ],
                 ),
               ),
             ),
           ),
 
-          SizedBox(height: 15,),
+          SizedBox(
+            height: 15,
+          ),
+
           ///--------- subscription ------------
           GestureDetector(
-            onTap: (){
-              Navigator.push(context,
+            onTap: () {
+              Navigator.push(
+                context,
                 MaterialPageRoute(builder: (context) => SubScriptionScreen()),
               );
             },
             child: Container(
               height: 50,
               margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
-
               decoration: BoxDecoration(
-                  color: Colors.white,
-                borderRadius: BorderRadius.circular(10)
-              ),
+                  color: Colors.white, borderRadius: BorderRadius.circular(10)),
               child: Container(
                 margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(SUBSCRIPTION,
+                    Text(
+                      SUBSCRIPTION,
                       style: Theme.of(context).textTheme.subtitle1,
                     ),
-                    Icon(Icons.arrow_forward_ios,size: 20,),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      size: 20,
+                    ),
                     // TextButton(onPressed: (){
                     //   Navigator.push(context,
                     //     MaterialPageRoute(builder: (context) => DoctorAllAppointments()),
@@ -804,32 +898,36 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
             ),
           ),
 
-          SizedBox(height: 15,),
+          SizedBox(
+            height: 15,
+          ),
 
           ///--------- subscription ------------
           GestureDetector(
-            onTap: (){
-              Navigator.push(context,
+            onTap: () {
+              Navigator.push(
+                context,
                 MaterialPageRoute(builder: (context) => IncomeReport()),
               );
             },
             child: Container(
               height: 50,
               margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
-
               decoration: BoxDecoration(
-                  color: Colors.white,
-                borderRadius: BorderRadius.circular(10)
-              ),
+                  color: Colors.white, borderRadius: BorderRadius.circular(10)),
               child: Container(
                 margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(INCOME_REPORT,
+                    Text(
+                      INCOME_REPORT,
                       style: Theme.of(context).textTheme.subtitle1,
                     ),
-                    Icon(Icons.arrow_forward_ios,size: 20,),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      size: 20,
+                    ),
                     // TextButton(onPressed: (){
                     //   Navigator.push(context,
                     //     MaterialPageRoute(builder: (context) => DoctorAllAppointments()),
@@ -846,10 +944,13 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
             ),
           ),
 
-          SizedBox(height: 15,),
+          SizedBox(
+            height: 15,
+          ),
+
           ///-----------logoout -------------
           GestureDetector(
-            onTap: (){
+            onTap: () {
               messageDialog(LOGOUT, ARE_YOU_SURE_TO_LOGOUT);
               // Navigator.push(context,
               //     MaterialPageRoute(builder: (context) => LogOutScreen()
@@ -858,20 +959,18 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
             child: Container(
               height: 50,
               margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
-
               decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10)
-              ),
+                  color: Colors.white, borderRadius: BorderRadius.circular(10)),
               child: Container(
                 margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(LOGOUT,
+                    Text(
+                      LOGOUT,
                       style: Theme.of(context).textTheme.subtitle1,
                     ),
-                    Icon(Icons.arrow_forward_ios,size: 20),
+                    Icon(Icons.arrow_forward_ios, size: 20),
                     // TextButton(onPressed: (){
                     //   Navigator.push(context,
                     //     MaterialPageRoute(builder: (context) => DoctorAllAppointments()),
@@ -892,31 +991,37 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
     );
   }
 
-  messageDialog(String s1, String s2){
+  messageDialog(String s1, String s2) {
     return showDialog(
         context: context,
         barrierDismissible: true,
-        builder: (context){
+        builder: (context) {
           return AlertDialog(
-            title: Text(s1,style: GoogleFonts.comfortaa(
-              fontWeight: FontWeight.bold,
-            ),),
+            title: Text(
+              s1,
+              style: GoogleFonts.comfortaa(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(s2,style: GoogleFonts.poppins(
-                  fontSize: 14,
-                ),)
+                Text(
+                  s2,
+                  style: GoogleFonts.poppins(
+                    fontSize: 14,
+                  ),
+                )
               ],
             ),
             actions: [
               TextButton(
-                onPressed: () async{
+                onPressed: () async {
                   try {
                     CubeChatConnection.instance.logout();
                   } catch (e) {}
-                  await SharedPreferences.getInstance().then((pref){
+                  await SharedPreferences.getInstance().then((pref) {
                     pref.setBool("isLoggedInAsDoctor", false);
                     pref.setBool("isLoggedIn", false);
                     pref.clear();
@@ -927,23 +1032,26 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                     // pref.setString("token", null);
                   });
                   // Navigator.of(context).popUntil((route) => route.isFirst);
-                  Navigator.pushReplacement(context, MaterialPageRoute(
-                    builder: (context) => TabsScreen(),
-                  ));
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TabsScreen(),
+                      ));
                 },
                 style: TextButton.styleFrom(
                   backgroundColor: Theme.of(context).hintColor,
                 ),
                 // color: Theme.of(context).hintColor,
-                child: Text(YES,style: GoogleFonts.poppins(
-                  fontWeight: FontWeight.w500,
-                  color: BLACK,
-                ),),
+                child: Text(
+                  YES,
+                  style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w500,
+                    color: BLACK,
+                  ),
+                ),
               ),
             ],
           );
-        }
-    );
+        });
   }
 }
-

@@ -7,6 +7,7 @@ import 'package:appcode3/views/Doctor/DoctorChatListScreen.dart';
 import 'package:appcode3/views/Doctor/DoctorDashboard.dart';
 import 'package:appcode3/views/Doctor/DoctorPastAppointments.dart';
 import 'package:appcode3/views/Doctor/DoctorProfile.dart';
+import 'package:appcode3/views/Doctor/Tour.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -24,8 +25,9 @@ class DoctorTabsScreen extends StatefulWidget {
 class _DoctorTabsScreenState extends State<DoctorTabsScreen> {
   List<Widget> screens = [
     DoctorDashboard(),
-    DoctorPastAppointments(),
-    DoctorProfile(),
+    // DoctorPastAppointments(),
+    Tour(),
+    // DoctorProfile(),
     ChatListScreen(),
     MoreInfoScreen(),
     // LogOutScreen(),
@@ -105,31 +107,42 @@ class _DoctorTabsScreenState extends State<DoctorTabsScreen> {
                   ),
                   label: "Home",
                 ),
+                // BottomNavigationBarItem(
+                //   icon: Image.asset(
+                //     index == 1
+                //         ? "assets/homeScreenImages/appointment_active.png"
+                //         : "assets/homeScreenImages/appointment_unactive.png",
+                //     height: 25,
+                //     width: 25,
+                //     fit: BoxFit.cover,
+                //   ),
+                //   label: "Appointment",
+                // ),
                 BottomNavigationBarItem(
                   icon: Image.asset(
                     index == 1
-                        ? "assets/homeScreenImages/appointment_active.png"
-                        : "assets/homeScreenImages/appointment_unactive.png",
+                        ? "assets/homeScreenImages/plane_active.png"
+                        : "assets/homeScreenImages/plane_unactive.png",
                     height: 25,
                     width: 25,
                     fit: BoxFit.cover,
                   ),
-                  label: "Appointment",
+                  label: "Tour",
                 ),
+                // BottomNavigationBarItem(
+                //   icon: Image.asset(
+                //     index == 2
+                //         ? "assets/homeScreenImages/user_active.png"
+                //         : "assets/homeScreenImages/user_unactive.png",
+                //     height: 25,
+                //     width: 25,
+                //     fit: BoxFit.cover,
+                //   ),
+                //   label: "Edit profile",
+                // ),
                 BottomNavigationBarItem(
                   icon: Image.asset(
                     index == 2
-                        ? "assets/homeScreenImages/user_active.png"
-                        : "assets/homeScreenImages/user_unactive.png",
-                    height: 25,
-                    width: 25,
-                    fit: BoxFit.cover,
-                  ),
-                  label: "Edit profile",
-                ),
-                BottomNavigationBarItem(
-                  icon: Image.asset(
-                    index == 3
                         ? "assets/homeScreenImages/chat fill.png"
                         : "assets/homeScreenImages/chat unfill.png",
                     height: 25,
@@ -140,16 +153,16 @@ class _DoctorTabsScreenState extends State<DoctorTabsScreen> {
                 ),
                 BottomNavigationBarItem(
                   icon: Image.asset(
-                    index == 4
-                        ? "assets/homeScreenImages/more_active.png"
-                        : "assets/homeScreenImages/more_unactive.png",
+                    index == 3
+                        ? "assets/homeScreenImages/profile_active.png"
+                        : "assets/homeScreenImages/profile_unactive.png",
                     // ? "assets/loginScreenImages/logout-(1).png"
                     // : "assets/loginScreenImages/logout.png",
                     height: 25,
                     width: 25,
                     fit: BoxFit.cover,
                   ),
-                  label: "More",
+                  label: "My Profile",
                 ),
               ],
               selectedLabelStyle: GoogleFonts.poppins(

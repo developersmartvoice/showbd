@@ -309,7 +309,7 @@ class _LoginAsDoctorState extends State<LoginAsDoctor> {
               // ),
               // SizedBox(width: 10,),
               Text(
-                DOCTOR_LOGIN,
+                GUIDE_LOGIN,
                 style: GoogleFonts.poppins(
                     fontWeight: FontWeight.w600, color: WHITE, fontSize: 22),
               )
