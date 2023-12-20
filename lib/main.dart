@@ -32,9 +32,9 @@ import 'package:http/http.dart' as http;
 import 'en.dart';
 
 /// old url
-// const String SERVER_ADDRESS = "https://localguide.celibritychatbd.com";
+const String SERVER_ADDRESS = "https://localguide.celibritychatbd.com";
 // const String SERVER_ADDRESS = "http://192.168.0.155/local-guide-backend";
-const String SERVER_ADDRESS = "http://192.168.0.150/local-guide-backend";
+// const String SERVER_ADDRESS = "http://192.168.0.150/local-guide-backend";
 const String IMAGE =
     "https://localguide.celibritychatbd.com/public/upload/banner/";
 
