@@ -294,7 +294,7 @@ const String AWAITING_DOCTOR_ACCEPTANCE = "Awaiting Guide Acceptance";
 const String CALL_ACCEPT = "Call Accepting";
 const String PLEASE_WAIT_CALL_ACCEPT = "Please wait your call is accepting...";
 const String APPOINTMENT_REMAINING_TIME = "Appointment Remaining Time";
-
+const String EDIT_PROFILE = "Edit Profile";
 const String RECENT_CHATS = "Recent chats";
 const String CHANGE_PASSWORD = "Change Password";
 const String SUBSCRIPTION = "Subscription";

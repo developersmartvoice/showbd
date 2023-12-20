@@ -32,7 +32,9 @@ class _CreateTripState extends State<CreateTrip> {
   }
 
   Future<void> _selectNumberOfPeople(BuildContext context) async {
-    String result = await showModalBottomSheet(
+    String result = 'Just me'; // Initialize with a default value
+
+    await showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
         return SingleChildScrollView(
@@ -42,19 +44,31 @@ class _CreateTripState extends State<CreateTrip> {
               children: [
                 ListTile(
                   title: Text('Just me'),
-                  onTap: () => Navigator.pop(context, 'Just me'),
+                  onTap: () {
+                    result = 'Just me';
+                    Navigator.pop(context);
+                  },
                 ),
                 ListTile(
                   title: Text('Two people'),
-                  onTap: () => Navigator.pop(context, 'Two people'),
+                  onTap: () {
+                    result = 'Two people';
+                    Navigator.pop(context);
+                  },
                 ),
                 ListTile(
                   title: Text('Three people'),
-                  onTap: () => Navigator.pop(context, 'Three people'),
+                  onTap: () {
+                    result = 'Three people';
+                    Navigator.pop(context);
+                  },
                 ),
                 ListTile(
                   title: Text('More than three'),
-                  onTap: () => Navigator.pop(context, 'More than three'),
+                  onTap: () {
+                    result = 'More than three';
+                    Navigator.pop(context);
+                  },
                 ),
               ],
             ),
@@ -63,11 +77,10 @@ class _CreateTripState extends State<CreateTrip> {
       },
     );
 
-    if (result != null) {
-      setState(() {
-        numberOfPeople = result;
-      });
-    }
+    setState(() {
+      numberOfPeople =
+          result; // Update the state outside the showModalBottomSheet
+    });
   }
 
   @override

@@ -27,7 +27,7 @@ class _DoctorTabsScreenState extends State<DoctorTabsScreen> {
     DoctorDashboard(),
     // DoctorPastAppointments(),
     Tour(),
-    DoctorProfile(),
+    // DoctorProfile(),
     ChatListScreen(),
     MoreInfoScreen(),
     // LogOutScreen(),
@@ -129,20 +129,20 @@ class _DoctorTabsScreenState extends State<DoctorTabsScreen> {
                   ),
                   label: "Tour",
                 ),
+                // BottomNavigationBarItem(
+                //   icon: Image.asset(
+                //     index == 2
+                //         ? "assets/homeScreenImages/user_active.png"
+                //         : "assets/homeScreenImages/user_unactive.png",
+                //     height: 25,
+                //     width: 25,
+                //     fit: BoxFit.cover,
+                //   ),
+                //   label: "Edit profile",
+                // ),
                 BottomNavigationBarItem(
                   icon: Image.asset(
                     index == 2
-                        ? "assets/homeScreenImages/user_active.png"
-                        : "assets/homeScreenImages/user_unactive.png",
-                    height: 25,
-                    width: 25,
-                    fit: BoxFit.cover,
-                  ),
-                  label: "Edit profile",
-                ),
-                BottomNavigationBarItem(
-                  icon: Image.asset(
-                    index == 3
                         ? "assets/homeScreenImages/chat fill.png"
                         : "assets/homeScreenImages/chat unfill.png",
                     height: 25,
@@ -153,16 +153,16 @@ class _DoctorTabsScreenState extends State<DoctorTabsScreen> {
                 ),
                 BottomNavigationBarItem(
                   icon: Image.asset(
-                    index == 4
-                        ? "assets/homeScreenImages/more_active.png"
-                        : "assets/homeScreenImages/more_unactive.png",
+                    index == 3
+                        ? "assets/homeScreenImages/profile_active.png"
+                        : "assets/homeScreenImages/profile_unactive.png",
                     // ? "assets/loginScreenImages/logout-(1).png"
                     // : "assets/loginScreenImages/logout.png",
                     height: 25,
                     width: 25,
                     fit: BoxFit.cover,
                   ),
-                  label: "More",
+                  label: "My Profile",
                 ),
               ],
               selectedLabelStyle: GoogleFonts.poppins(
