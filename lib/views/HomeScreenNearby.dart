@@ -98,184 +98,189 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
   Widget build(BuildContext context) {
     return isErrorInNearby
         ? Container()
-        : Stack(
-            children: [
-              Column(
-                children: [
-                  // SizedBox(
-                  //   height: 5,
-                  // ),
-                  nearByDoctors(),
-                ],
-              ),
-              // Padding(
-              //   padding: const EdgeInsets.fromLTRB(16, 0, 16, 10),
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //     children: [
-              //       Text(NEARBY_DOCTORS,
-              //           style: Theme.of(context)
-              //               .textTheme
-              //               .bodyText2!
-              //               .apply(fontWeightDelta: 3)),
-              //       TextButton(
-              //         onPressed: () {
-              //           Navigator.push(
-              //             context,
-              //             MaterialPageRoute(builder: (context) => AllNearby()),
-              //           );
-              //         },
-              //         child: Text(SEE_ALL,
-              //             style: Theme.of(context).textTheme.bodyText1!.apply(
-              //                   color: Theme.of(context).hintColor,
-              //                 )),
-              //       )
-              //     ],
-              //   ),
-              // ),
-            ],
+        : SafeArea(
+            child: Stack(
+              children: [
+                Column(
+                  children: [
+                    // SizedBox(
+                    //   height: 5,
+                    // ),
+                    nearByDoctors(),
+                  ],
+                ),
+                // Padding(
+                //   padding: const EdgeInsets.fromLTRB(16, 0, 16, 10),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     children: [
+                //       Text(NEARBY_DOCTORS,
+                //           style: Theme.of(context)
+                //               .textTheme
+                //               .bodyText2!
+                //               .apply(fontWeightDelta: 3)),
+                //       TextButton(
+                //         onPressed: () {
+                //           Navigator.push(
+                //             context,
+                //             MaterialPageRoute(builder: (context) => AllNearby()),
+                //           );
+                //         },
+                //         child: Text(SEE_ALL,
+                //             style: Theme.of(context).textTheme.bodyText1!.apply(
+                //                   color: Theme.of(context).hintColor,
+                //                 )),
+                //       )
+                //     ],
+                //   ),
+                // ),
+              ],
+            ),
           );
   }
 
   Widget nearByDoctors() {
-    return Container(
-      margin: EdgeInsets.fromLTRB(16, 0, 16, 5),
-      child: Column(
-        children: [
-          // isNearbyLoading ? Container(
-          //   height: MediaQuery.of(context).size.height,
-          //   width: MediaQuery.of(context).size.width,
-          //   child: Column(
-          //     children: [
-          //       SizedBox(height: 150,),
-          //       CircularProgressIndicator(),
-          //     ],
-          //   ),
-          // ) :
-          // list2 == null
-          //     ? isErrorInNearby ? Container(
-          //   child: Center(
-          //     child: Column(
-          //       mainAxisAlignment: MainAxisAlignment.center,
-          //       children: [
-          //         SizedBox(
-          //           height: 30,
-          //         ),
-          //         Text(TURN_ON_LOCATION_AND_RETRY,
-          //           style: GoogleFonts.poppins(
-          //               color: Colors.black,
-          //               fontWeight: FontWeight.w400,
-          //               fontSize: 12
-          //           ),
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          // ) : Center(
-          //   child: CircularProgressIndicator(
-          //     valueColor: AlwaysStoppedAnimation(Theme.of(context).hintColor),
-          //     strokeWidth: 2,
-          //   ),
-          // )
-          //     :
-          /// Old With Ads
-          // ListView.builder(
-          //   shrinkWrap: true,
-          //   physics: ClampingScrollPhysics(),
-          //   itemCount: list.length > 4 ? (list.length/4).ceil() : 1,
-          //   itemBuilder: (context, i){
-          //     print((list.length/4).floor());
-          //     print((list.length/4).ceil());
-          //     // bool isFourMultiplay = list.length
-          //     return Column(
-          //       children: [
-          //         GridView.builder(
-          //           shrinkWrap: true,
-          //           physics: ClampingScrollPhysics(),
-          //           gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-          //               maxCrossAxisExtent: 200,
-          //               childAspectRatio: 0.75,
-          //               crossAxisSpacing: 10,
-          //               mainAxisSpacing: 10),
-          //           itemCount: 4,
-          //           itemBuilder: (BuildContext ctx, index) {
-          //               return index + (i*4) > list.length - 1 ? Container(color:Colors.pink) : nearByGridWidget(
-          //                 list[index + (i*4)].image,
-          //                 list[index + (i*4)].name,
-          //                 list[index + (i*4)].departmentName,
-          //                 list[index + (i*4)].id,
-          //               );
-          //           },
-          //         ),
-          //         ENABLE_ADS ? customAds.nativeAds(id: AD_TYPE) : Container(height: 10,),
-          //       ],
-          //     );
-          //   },
-          // ),
+    return SafeArea(
+      child: Container(
+        margin: EdgeInsets.fromLTRB(16, 0, 16, 5),
+        child: Column(
+          children: [
+            // isNearbyLoading ? Container(
+            //   height: MediaQuery.of(context).size.height,
+            //   width: MediaQuery.of(context).size.width,
+            //   child: Column(
+            //     children: [
+            //       SizedBox(height: 150,),
+            //       CircularProgressIndicator(),
+            //     ],
+            //   ),
+            // ) :
+            // list2 == null
+            //     ? isErrorInNearby ? Container(
+            //   child: Center(
+            //     child: Column(
+            //       mainAxisAlignment: MainAxisAlignment.center,
+            //       children: [
+            //         SizedBox(
+            //           height: 30,
+            //         ),
+            //         Text(TURN_ON_LOCATION_AND_RETRY,
+            //           style: GoogleFonts.poppins(
+            //               color: Colors.black,
+            //               fontWeight: FontWeight.w400,
+            //               fontSize: 12
+            //           ),
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ) : Center(
+            //   child: CircularProgressIndicator(
+            //     valueColor: AlwaysStoppedAnimation(Theme.of(context).hintColor),
+            //     strokeWidth: 2,
+            //   ),
+            // )
+            //     :
+            /// Old With Ads
+            // ListView.builder(
+            //   shrinkWrap: true,
+            //   physics: ClampingScrollPhysics(),
+            //   itemCount: list.length > 4 ? (list.length/4).ceil() : 1,
+            //   itemBuilder: (context, i){
+            //     print((list.length/4).floor());
+            //     print((list.length/4).ceil());
+            //     // bool isFourMultiplay = list.length
+            //     return Column(
+            //       children: [
+            //         GridView.builder(
+            //           shrinkWrap: true,
+            //           physics: ClampingScrollPhysics(),
+            //           gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+            //               maxCrossAxisExtent: 200,
+            //               childAspectRatio: 0.75,
+            //               crossAxisSpacing: 10,
+            //               mainAxisSpacing: 10),
+            //           itemCount: 4,
+            //           itemBuilder: (BuildContext ctx, index) {
+            //               return index + (i*4) > list.length - 1 ? Container(color:Colors.pink) : nearByGridWidget(
+            //                 list[index + (i*4)].image,
+            //                 list[index + (i*4)].name,
+            //                 list[index + (i*4)].departmentName,
+            //                 list[index + (i*4)].id,
+            //               );
+            //           },
+            //         ),
+            //         ENABLE_ADS ? customAds.nativeAds(id: AD_TYPE) : Container(height: 10,),
+            //       ],
+            //     );
+            //   },
+            // ),
 
-          /// New For Spacing Issue
+            /// New For Spacing Issue
 
-          GridView.builder(
-            shrinkWrap: true,
-            physics: ClampingScrollPhysics(),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 1,
-                childAspectRatio: 1.25,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10),
-            itemCount: list2.length,
-            itemBuilder: (BuildContext ctx, index) {
-              var data = list2[index];
+            GridView.builder(
+              shrinkWrap: true,
+              // physics: ClampingScrollPhysics(),
+              physics: ScrollPhysics(),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 1,
+                  childAspectRatio: 1.25,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10),
+              itemCount: list2.length,
+              itemBuilder: (BuildContext ctx, index) {
+                var data = list2[index];
 
-              print(
-                  'Name is ${list2[index].name} and ratings are ${list2[index].avgrating}');
-              print(list2[index].images);
+                print(
+                    'Name is ${list2[index].name} and ratings are ${list2[index].avgrating}');
+                print(list2[index].images);
 
-              // for (int i = 0; i < list2.length; i++) {
-              //   fetchDoctorDetails(list2[i].id);
-              // }
+                // for (int i = 0; i < list2.length; i++) {
+                //   fetchDoctorDetails(list2[i].id);
+                // }
 
-              // var data1 = list3[index];
-              // var data1 = list3[ind2x];
-              // print("This printing from My gridbuilderview List2: $list2");
-              // print("This printing from My gridbuilderview List3: $list3");
+                // var data1 = list3[index];
+                // var data1 = list3[ind2x];
+                // print("This printing from My gridbuilderview List2: $list2");
+                // print("This printing from My gridbuilderview List3: $list3");
 
-              // print(
-              //     "wanna see the data ${data1.name} and total Reviews are: ${data1.totalReview}");
-              return nearByGridWidget(
-                  data.image,
-                  data.name,
-                  data.departmentName,
-                  data.id,
-                  data.consultationFee,
-                  data.aboutme,
-                  data.avgrating,
-                  data.totalreview,
-                  data.images
+                // print(
+                //     "wanna see the data ${data1.name} and total Reviews are: ${data1.totalReview}");
+                return nearByGridWidget(
+                    data.image,
+                    data.name,
+                    data.departmentName,
+                    data.id,
+                    data.consultationFee,
+                    data.aboutme,
+                    data.avgrating,
+                    data.totalreview,
+                    data.images
 
-                  // data1.aboutus,
-                  // data1.totalReview,
-                  // data1.avgratting
-                  );
-            },
-          ),
+                    // data1.aboutus,
+                    // data1.totalReview,
+                    // data1.avgratting
+                    );
+              },
+            ),
 
-          nextUrl == "null"
-              ? Container()
-              : Padding(
-                  padding: const EdgeInsets.only(top: 15),
-                  child: CircularProgressIndicator(),
-                ),
-          isLoadingMore
-              ? Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: LinearProgressIndicator(),
-                )
-              : Container(
-                  // height: 50,
-                  height: 10,
-                )
-        ],
+            nextUrl == "null"
+                ? Container()
+                : Padding(
+                    padding: const EdgeInsets.only(top: 15),
+                    child: CircularProgressIndicator(),
+                  ),
+            isLoadingMore
+                ? Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: LinearProgressIndicator(),
+                  )
+                : Container(
+                    // height: 50,
+                    height: 10,
+                  )
+          ],
+        ),
       ),
     );
   }

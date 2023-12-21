@@ -4,6 +4,8 @@ import 'package:appcode3/views/CreateTrip.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Tour extends StatefulWidget {
   const Tour({super.key});
@@ -13,6 +15,25 @@ class Tour extends StatefulWidget {
 }
 
 class _TourState extends State<Tour> {
+  String? doctorId;
+  Future? future1;
+
+  fetchTrips(id) async {
+    var response =
+        await get(Uri.parse("$SERVER_ADDRESS/api/gettrip?guide_id=$doctorId"));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    SharedPreferences.getInstance().then((pref) {
+      setState(() {
+        doctorId = pref.getString("userId");
+        print(doctorId);
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -93,11 +114,12 @@ class _TourState extends State<Tour> {
               ),
               // Add the column view for displaying trips here
               // You can use a ListView.builder or any other widget based on your data
-              SizedBox(
-                height: MediaQuery.of(context).size.height * .25,
+              Container(
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height * .25,
+                ),
               ),
               Container(
-                alignment: Alignment.center,
                 child: Column(
                     mainAxisAlignment:
                         MainAxisAlignment.center, // Center vertically

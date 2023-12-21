@@ -1,8 +1,13 @@
+import 'dart:convert';
+
 import 'package:appcode3/en.dart';
 import 'package:appcode3/main.dart';
+import 'package:appcode3/views/Doctor/Tour.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CreateTrip extends StatefulWidget {
   const CreateTrip({super.key});
@@ -12,11 +17,15 @@ class CreateTrip extends StatefulWidget {
 }
 
 class _CreateTripState extends State<CreateTrip> {
+  String? doctorId;
   String location = 'Where are you going?';
   DateTime startDate = DateTime.now();
   DateTime endDate = DateTime.now();
   String numberOfPeople = "Just me";
   String gender = 'Select type of local';
+  int? durationInDays;
+  bool isLoading = false;
+  int people = 0;
 
   bool locationPicked = false;
   bool datePickedStart = false;
@@ -44,6 +53,17 @@ class _CreateTripState extends State<CreateTrip> {
     }
   }
 
+  @override
+  void initState() {
+    super.initState();
+    SharedPreferences.getInstance().then((pref) {
+      setState(() {
+        doctorId = pref.getString("userId");
+        print(doctorId);
+      });
+    });
+  }
+
   Future<void> _selectNumberOfPeople(BuildContext context) async {
     String result = numberOfPeople; // Initialize with a default value
 
@@ -59,12 +79,14 @@ class _CreateTripState extends State<CreateTrip> {
                   title: Text('Just me'),
                   onTap: () {
                     result = 'Just me';
+                    people = 1;
                     Navigator.pop(context);
                   },
                 ),
                 ListTile(
                   title: Text('Two people'),
                   onTap: () {
+                    people = 2;
                     result = 'Two people';
                     Navigator.pop(context);
                   },
@@ -72,6 +94,7 @@ class _CreateTripState extends State<CreateTrip> {
                 ListTile(
                   title: Text('Three people'),
                   onTap: () {
+                    people = 3;
                     result = 'Three people';
                     Navigator.pop(context);
                   },
@@ -79,6 +102,7 @@ class _CreateTripState extends State<CreateTrip> {
                 ListTile(
                   title: Text('More than three'),
                   onTap: () {
+                    people = 4;
                     result = 'More than three';
                     Navigator.pop(context);
                   },
@@ -141,27 +165,38 @@ class _CreateTripState extends State<CreateTrip> {
                   },
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 16.0),
-                    child: Row(
+                    child: Column(
                       children: [
-                        Text(
-                          'Destination:  ',
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 16.0,
-                          ),
+                        Row(
+                          children: [
+                            Text(
+                              'Destination:  ',
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 16.0,
+                              ),
+                            ),
+                            Expanded(
+                              child: Text(
+                                location.toUpperCase(),
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.w500,
+                                    color: location == 'Where are you going?'
+                                        ? Colors.lightBlue
+                                        : Color.fromARGB(255, 255, 84, 5),
+                                    fontSize: 20),
+                              ),
+                            ),
+                            Icon(Icons.arrow_forward_ios,
+                                color: Colors.lightBlue),
+                          ],
                         ),
-                        Expanded(
-                          child: Text(
-                            location.toUpperCase(),
-                            style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w500,
-                                color: location == 'Where are you going?'
-                                    ? Colors.lightBlue
-                                    : Color.fromARGB(255, 255, 84, 5),
-                                fontSize: 20),
-                          ),
-                        ),
-                        Icon(Icons.arrow_forward_ios, color: Colors.lightBlue),
+                        Container(
+                            alignment: Alignment.topLeft,
+                            child: !locationPicked
+                                ? Text("Required!",
+                                    style: TextStyle(color: Colors.red))
+                                : Text(""))
                       ],
                     ),
                   ),
@@ -172,14 +207,14 @@ class _CreateTripState extends State<CreateTrip> {
                   onTap: () => _selectDate(context, true),
                   child: InputDecorator(
                     decoration: InputDecoration(
-                      labelText: DATE_FROM.toUpperCase(),
-                      labelStyle: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w500,
-                          color: datePickedStart
-                              ? Color.fromARGB(255, 255, 84, 5)
-                              : Colors.lightBlue,
-                          fontSize: 24),
-                    ),
+                        labelText: DATE_FROM.toUpperCase(),
+                        labelStyle: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w500,
+                            color: datePickedStart
+                                ? Color.fromARGB(255, 255, 84, 5)
+                                : Colors.lightBlue,
+                            fontSize: 24),
+                        errorText: !datePickedStart ? "Required!" : ""),
                     child: Text(
                       '${startDate.day.toString().padLeft(2, '0')} ${_getMonthAbbreviation(startDate.month)} ${startDate.year}',
                     ),
@@ -190,15 +225,15 @@ class _CreateTripState extends State<CreateTrip> {
                   onTap: () => _selectDate(context, false),
                   child: InputDecorator(
                     decoration: InputDecoration(
-                      labelText: DATE_TO.toUpperCase(),
-                      // labelStyle: TextStyle(fontSize: 18)
-                      labelStyle: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w500,
-                          color: datePickedEnd
-                              ? Color.fromARGB(255, 255, 84, 5)
-                              : Colors.lightBlue,
-                          fontSize: 24),
-                    ),
+                        labelText: DATE_TO.toUpperCase(),
+                        // labelStyle: TextStyle(fontSize: 18)
+                        labelStyle: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w500,
+                            color: datePickedEnd
+                                ? Color.fromARGB(255, 255, 84, 5)
+                                : Colors.lightBlue,
+                            fontSize: 24),
+                        errorText: !datePickedEnd ? "Required!" : ""),
                     child: Text(
                       '${endDate.day.toString().padLeft(2, '0')} ${_getMonthAbbreviation(endDate.month)} ${endDate.year}',
                     ),
@@ -209,14 +244,14 @@ class _CreateTripState extends State<CreateTrip> {
                   onTap: () => _selectNumberOfPeople(context),
                   child: InputDecorator(
                     decoration: InputDecoration(
-                      labelText: PEOPLE.toUpperCase(),
-                      labelStyle: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w500,
-                          color: !peoplePicked
-                              ? Colors.lightBlue
-                              : Color.fromARGB(255, 255, 84, 5),
-                          fontSize: 24),
-                    ),
+                        labelText: PEOPLE.toUpperCase(),
+                        labelStyle: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w500,
+                            color: !peoplePicked
+                                ? Colors.lightBlue
+                                : Color.fromARGB(255, 255, 84, 5),
+                            fontSize: 24),
+                        errorText: !peoplePicked ? "Required!" : ""),
                     child: Text(numberOfPeople),
                   ),
                 ),
@@ -244,25 +279,45 @@ class _CreateTripState extends State<CreateTrip> {
                   },
                   child: InputDecorator(
                     decoration: InputDecoration(
-                      labelText: LOOKING_LOCAL.toUpperCase(),
-                      labelStyle: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w500,
-                        color: genderPicked
-                            ? Color.fromARGB(255, 255, 84, 5)
-                            : Colors.lightBlue,
-                        fontSize: 24,
-                      ),
-                    ),
+                        labelText: LOOKING_LOCAL.toUpperCase(),
+                        labelStyle: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w500,
+                          color: genderPicked
+                              ? Color.fromARGB(255, 255, 84, 5)
+                              : Colors.lightBlue,
+                          fontSize: 24,
+                        ),
+                        errorText: !genderPicked ? "Required!" : ""),
                     child: Text(gender),
                   ),
                 ),
 
                 SizedBox(height: MediaQuery.of(context).size.height * .09),
 
+                // Update the ElevatedButton.icon widget
                 ElevatedButton.icon(
                   onPressed: () {
                     // Handle the Create Trip button click
                     // You can implement the logic to create the trip here
+                    if (locationPicked &&
+                        datePickedStart &&
+                        datePickedEnd &&
+                        peoplePicked &&
+                        genderPicked) {
+                      setState(() {
+                        isLoading = true; // Set loading state to true
+                      });
+
+                      // Calculate duration in days
+                      durationInDays =
+                          calculateDurationInDays(startDate, endDate);
+                      print(durationInDays);
+
+                      // Call the createTrip function
+                      createTrip();
+                    } else {
+                      // Handle the case where some fields are not selected
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: locationPicked &&
@@ -272,17 +327,31 @@ class _CreateTripState extends State<CreateTrip> {
                             genderPicked
                         ? Color.fromARGB(255, 255, 84, 5)
                         : Colors.lightBlue,
-                    fixedSize: Size(MediaQuery.of(context).size.width * .5,
-                        50), // Set the width and height here
+                    fixedSize: Size(
+                      MediaQuery.of(context).size.width * .5,
+                      50,
+                    ),
                   ),
-                  icon: Icon(Icons.travel_explore),
-                  label: Text(
-                    'Create Trip',
-                    style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w700,
-                        color: WHITE,
-                        fontSize: 18),
-                  ),
+                  icon: isLoading
+                      ? SizedBox(
+                          width: 24,
+                          height: 24,
+                          child: CircularProgressIndicator(
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(Colors.white),
+                          ),
+                        )
+                      : Icon(Icons.travel_explore),
+                  label: isLoading
+                      ? SizedBox.shrink() // Hide label when loading
+                      : Text(
+                          'Create Trip',
+                          style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w700,
+                            color: WHITE,
+                            fontSize: 18,
+                          ),
+                        ),
                 ),
               ],
             ),
@@ -290,6 +359,89 @@ class _CreateTripState extends State<CreateTrip> {
         ),
       ),
     );
+  }
+
+  int calculateDurationInDays(DateTime start, DateTime end) {
+    Duration duration = end.difference(start);
+    return duration.inDays;
+  }
+
+  void createTrip() async {
+    // Prepare the data
+    Map<String, dynamic> tripData = {
+      "guide_id":
+          doctorId, // Replace with the actual guide_id from your frontend
+      "location": location,
+      "startDate": startDate.toIso8601String(),
+      "endDate": endDate.toIso8601String(),
+      "duration": durationInDays.toString(),
+      "numberOfPeople": people.toString(),
+      "gender": gender,
+    };
+
+    // Make an HTTP POST request
+    // Make sure to replace 'YOUR_API_ENDPOINT' with the actual API endpoint
+    var response = await post(
+      Uri.parse("$SERVER_ADDRESS/api/createtrip"),
+      // headers: {'Content-Type': 'application/json'},
+      body: tripData,
+    );
+
+    // Check the response
+    if (response.statusCode == 201) {
+      // Trip created successfully
+      var jsonResponse = jsonDecode(response.body);
+      print('Trip created: $jsonResponse');
+      setState(() {
+        isLoading = false;
+      });
+
+      // Show success dialog
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Success'),
+            content: Text('Trip created successfully!'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Tour()),
+                  );
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      // Error handling
+      print('Failed to create trip. Status code: ${response.statusCode}');
+      print('Response body: ${response.body}');
+
+      // Show error dialog
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text(
+                'Failed to create trip. Status code: ${response.statusCode}'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 
   String _getMonthAbbreviation(int month) {
