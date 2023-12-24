@@ -82,7 +82,7 @@ class TripCard extends StatelessWidget {
               Icon(Icons.calendar_month_sharp),
               SizedBox(width: 10),
               Text(
-                '${trip.startDate ?? ''} - ${trip.endDate ?? ''}',
+                '${trip.startDate ?? ''} to ${trip.endDate ?? ''}',
                 style: TextStyle(
                   color: Colors.grey,
                 ),
