@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:appcode3/en.dart';
 import 'package:appcode3/main.dart';
+import 'package:appcode3/modals/TripsClass.dart';
 import 'package:appcode3/views/CreateTrip.dart';
+import 'package:appcode3/views/TripCard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,12 +19,33 @@ class Tour extends StatefulWidget {
 }
 
 class _TourState extends State<Tour> {
+  TripsClass? tripsClass;
   String? doctorId;
   Future? future1;
+  bool isTripsAvailable = false;
 
   fetchTrips(id) async {
-    var response =
+    final response =
         await get(Uri.parse("$SERVER_ADDRESS/api/gettrip?guide_id=$doctorId"));
+    print(Uri.parse("$SERVER_ADDRESS/api/gettrip?guide_id=$doctorId"));
+    print('Trips are -> ${response.body}');
+    // print(response.statusCode);
+    if (response.statusCode == 200) {
+      final jsonResponse = jsonDecode(response.body);
+      print(jsonResponse);
+      if (jsonResponse['status'].toString() == "1") {
+        setState(() {
+          isTripsAvailable = true;
+          tripsClass = TripsClass.fromJson(jsonResponse);
+          print("Here data after successful request!!");
+          print(tripsClass!.data!);
+        });
+      } else {
+        setState(() {
+          isTripsAvailable = false;
+        });
+      }
+    }
   }
 
   @override
@@ -30,6 +55,9 @@ class _TourState extends State<Tour> {
       setState(() {
         doctorId = pref.getString("userId");
         print(doctorId);
+        print("fetchTrips function is calling");
+        future1 = fetchTrips(doctorId);
+        print("This is future: $future1");
       });
     });
   }
@@ -114,39 +142,88 @@ class _TourState extends State<Tour> {
               ),
               // Add the column view for displaying trips here
               // You can use a ListView.builder or any other widget based on your data
-              Container(
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.height * .25,
-                ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * .02,
               ),
-              Container(
-                child: Column(
-                    mainAxisAlignment:
-                        MainAxisAlignment.center, // Center vertically
-                    children: [
-                      Text(
-                        "My saved Trips!",
-                        style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w500,
-                            color: BLACK,
-                            fontSize: 18),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                        "You haven't created any Trips yet. Create your first Trip so available locals can send you offers.",
-                        style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w400,
-                            color: BLACK,
-                            fontSize: 14),
-                      )
-                    ]),
-              )
+              // Container(
+              //   child: Column(
+              //       mainAxisAlignment:
+              //           MainAxisAlignment.center, // Center vertically
+              //       children: [
+              //         Text(
+              //           "My saved Trips!",
+              //           style: GoogleFonts.poppins(
+              //               fontWeight: FontWeight.w500,
+              //               color: BLACK,
+              //               fontSize: 18),
+              //         ),
+              //         SizedBox(
+              //           height: 15,
+              //         ),
+              //         Text(
+              //           "You haven't created any Trips yet. Create your first Trip so available locals can send you offers.",
+              //           style: GoogleFonts.poppins(
+              //               fontWeight: FontWeight.w400,
+              //               color: BLACK,
+              //               fontSize: 14),
+              //         )
+              //       ]),
+              // )
+              isTripsAvailable
+                  ? Text(
+                      "My Trips",
+                      style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w500,
+                          color: BLACK,
+                          fontSize: 18),
+                    )
+                  : Text(""),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * .01,
+              ),
+              buildTripList()
             ],
           ),
         ),
       ),
     );
+  }
+
+  Widget buildTripList() {
+    if (isTripsAvailable && tripsClass != null && tripsClass!.data != null) {
+      return Expanded(
+        child: ListView.builder(
+          itemCount: tripsClass!.data!.length,
+          itemBuilder: (context, index) {
+            Trip trip = tripsClass!.data![index];
+            return TripCard(trip: trip);
+          },
+        ),
+      );
+    } else {
+      return Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height * .25,
+            ),
+            Text(
+              "My saved Trips!",
+              style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.w500, color: BLACK, fontSize: 18),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Text(
+              "You haven't created any Trips yet. Create your first Trip so available locals can send you offers.",
+              style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.w400, color: BLACK, fontSize: 14),
+            )
+          ],
+        ),
+      );
+    }
   }
 }
