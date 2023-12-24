@@ -72,7 +72,7 @@ class _CreateTripState extends State<CreateTrip> {
       builder: (BuildContext context) {
         return SingleChildScrollView(
           child: Container(
-            height: MediaQuery.of(context).size.height * .26,
+            height: MediaQuery.of(context).size.height * .3,
             child: Column(
               children: [
                 ListTile(
@@ -406,8 +406,8 @@ class _CreateTripState extends State<CreateTrip> {
             actions: <Widget>[
               TextButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
+                  Navigator.of(context).pop(); // Close the dialog
+                  Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: (context) => Tour()),
                   );
                 },

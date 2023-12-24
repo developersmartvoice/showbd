@@ -169,7 +169,7 @@ class _TourState extends State<Tour> {
               //         )
               //       ]),
               // )
-              isTripsAvailable
+              isTripsAvailable && tripsClass!.data!.isNotEmpty
                   ? Text(
                       "My Trips",
                       style: GoogleFonts.poppins(
@@ -177,7 +177,34 @@ class _TourState extends State<Tour> {
                           color: BLACK,
                           fontSize: 18),
                     )
-                  : Text(""),
+                  : Container(
+                      alignment: Alignment.center,
+                      child: Column(
+                        // mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * .25,
+                          ),
+                          Text(
+                            "My saved Trips!",
+                            style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w500,
+                                color: BLACK,
+                                fontSize: 18),
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Text(
+                            "You haven't created any Trips yet. Create your first Trip so available locals can send you offers.",
+                            style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w400,
+                                color: BLACK,
+                                fontSize: 14),
+                          )
+                        ],
+                      ),
+                    ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * .01,
               ),
@@ -201,29 +228,30 @@ class _TourState extends State<Tour> {
         ),
       );
     } else {
-      return Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.height * .25,
-            ),
-            Text(
-              "My saved Trips!",
-              style: GoogleFonts.poppins(
-                  fontWeight: FontWeight.w500, color: BLACK, fontSize: 18),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Text(
-              "You haven't created any Trips yet. Create your first Trip so available locals can send you offers.",
-              style: GoogleFonts.poppins(
-                  fontWeight: FontWeight.w400, color: BLACK, fontSize: 14),
-            )
-          ],
-        ),
-      );
+      // return Container(
+      //   child: Column(
+      //     mainAxisAlignment: MainAxisAlignment.center,
+      //     children: [
+      //       SizedBox(
+      //         height: MediaQuery.of(context).size.height * .25,
+      //       ),
+      //       Text(
+      //         "My saved Trips!",
+      //         style: GoogleFonts.poppins(
+      //             fontWeight: FontWeight.w500, color: BLACK, fontSize: 18),
+      //       ),
+      //       SizedBox(
+      //         height: 15,
+      //       ),
+      //       Text(
+      //         "You haven't created any Trips yet. Create your first Trip so available locals can send you offers.",
+      //         style: GoogleFonts.poppins(
+      //             fontWeight: FontWeight.w400, color: BLACK, fontSize: 14),
+      //       )
+      //     ],
+      //   ),
+      // );
+      return Container();
     }
   }
 }
