@@ -5,6 +5,7 @@ import 'package:appcode3/main.dart';
 import 'package:appcode3/modals/TripsClass.dart';
 import 'package:appcode3/views/CreateTrip.dart';
 import 'package:appcode3/views/TripCard.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -120,7 +121,7 @@ class _TourState extends State<Tour> {
                           MaterialPageRoute(builder: (context) => CreateTrip()),
                         );
                       },
-                      icon: Icon(Icons.add),
+                      icon: Icon(CupertinoIcons.plus_circle_fill),
                       label: Text(
                         'Create a Trip',
                         style: GoogleFonts.poppins(
