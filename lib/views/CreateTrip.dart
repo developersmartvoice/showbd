@@ -44,6 +44,7 @@ class _CreateTripState extends State<CreateTrip> {
       setState(() {
         if (isStartDate) {
           startDate = picked;
+          endDate = picked;
           datePickedStart = true;
         } else {
           endDate = picked;

@@ -28,6 +28,7 @@ class _DetailsPageState extends State<DetailsPage> {
   bool isLoading = true;
   bool? isLoggedIn;
   bool isErrorInLoading = false;
+  int count = 0;
 
   @override
   void initState() {
@@ -37,7 +38,7 @@ class _DetailsPageState extends State<DetailsPage> {
     print(widget.id);
     SharedPreferences.getInstance().then((pref) {
       setState(() {
-        isLoggedIn = pref.getBool("isLoggedIn") ?? false;
+        isLoggedIn = pref.getBool("isLoggedInAsDoctor") ?? false;
       });
     });
   }
@@ -46,8 +47,8 @@ class _DetailsPageState extends State<DetailsPage> {
     setState(() {
       isLoading = true;
     });
-    final response = await get(
-            Uri.parse("$SERVER_ADDRESS/api/viewdoctor?doctor_id=${widget.id}"))
+    final response = await get(Uri.parse(
+            "$SERVER_ADDRESS/api/doctordetail?doctor_id=${widget.id}"))
         .catchError((e) {
       print("ERROR ${e.toString()}");
       setState(() {
@@ -64,7 +65,7 @@ class _DetailsPageState extends State<DetailsPage> {
       print(doctorDetailsClass!.data!.services);
       print(doctorDetailsClass!.data!.services![0]);
       // print(doctorDetailsClass!.data!.services![3]);
-      print(doctorDetailsClass!.data!.languages);
+      count = doctorDetailsClass!.data!.languages!.length;
       print(widget.id);
       setState(() {
         isLoading = false;
@@ -190,7 +191,7 @@ class _DetailsPageState extends State<DetailsPage> {
               imageUrl: doctorDetailsClass!.data!.image!,
               height: 80,
               width: 80,
-              fit: BoxFit.cover,
+              fit: BoxFit.fill,
               placeholder: (context, url) => Container(
                 color: Theme.of(context).primaryColorLight,
                 child: Center(
@@ -695,10 +696,17 @@ class _DetailsPageState extends State<DetailsPage> {
                         return Container(
                           // padding: EdgeInsets.zero,
                           margin: EdgeInsets.only(left: 0, right: 8.0),
-                          child: Text(
-                            displayText,
-                            style: textStyle,
-                          ),
+                          child: doctorDetailsClass!.data!.languages!
+                                      .indexOf(language) !=
+                                  count - 1
+                              ? Text(
+                                  '$displayText,',
+                                  style: textStyle,
+                                )
+                              : Text(
+                                  '$displayText',
+                                  style: textStyle,
+                                ),
                         );
                       }).toList(),
                     )
