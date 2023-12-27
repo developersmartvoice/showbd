@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:appcode3/main.dart';
 import 'package:appcode3/views/Doctor/DoctorTabScreen.dart';
+import 'package:appcode3/views/Doctor/loginAsDoctor.dart';
 import 'package:appcode3/views/HomeScreen.dart';
 import 'package:appcode3/views/loginAsUser.dart';
 import 'package:connectycube_sdk/connectycube_calls.dart';
@@ -21,61 +22,56 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   bool isTokenAvailable = false;
   String? token;
   // FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
 
-  getToken() async{
-    SharedPreferences.getInstance().then((pref){
+  getToken() async {
+    SharedPreferences.getInstance().then((pref) {
       getCC();
-      if(pref.getBool("isTokenExist") ?? false){
-        Timer(Duration(seconds: 2), (){
-
-          if(pref.getBool("isLoggedInAsDoctor") ?? false) {
+      if (pref.getBool("isTokenExist") ?? false) {
+        Timer(Duration(seconds: 2), () {
+          if (pref.getBool("isLoggedInAsDoctor") ?? false) {
             Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => DoctorTabsScreen())
-            );
+                MaterialPageRoute(builder: (context) => DoctorTabsScreen()));
           }
-          else if(pref.getBool("isLoggedIn") ?? false) {
+          // else if(pref.getBool("isLoggedIn") ?? false) {
+          //   Navigator.pushReplacement(context,
+          //       MaterialPageRoute(builder: (context) => TabsScreen())
+          //   );
+          // }
+          else {
             Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => TabsScreen())
-            );
+                MaterialPageRoute(builder: (context) => LoginAsDoctor()));
           }
-          else{
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => TabsScreen())
-            );
-          }
-
         });
-      }else{
+      } else {
         print("value is null");
-        Timer(Duration(seconds: 2),(){
+        Timer(Duration(seconds: 2), () {
           Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => TabsScreen())
-          );
+              MaterialPageRoute(builder: (context) => LoginAsDoctor()));
         });
       }
     });
-
   }
 
-
-  getCC(){
-    SharedPrefs.getUser().then((value){
-      print('${value!.fullName}');
-      print('${value.login}');
-      print('${value.password}');
-      print('${value.id}');
-      if(value.id !=null){
-        _loginToCC(context,value);
+  getCC() {
+    SharedPrefs.getUser().then((value) {
+      if (value != null) {
+        print('${value.fullName}');
+        print('${value.login}');
+        print('${value.password}');
+        print('${value.id}');
+        if (value.id != null) {
+          _loginToCC(context, value);
+        }
+      } else {
+        print("Value is null");
       }
     });
   }
 
   _loginToCC(BuildContext context, CubeUser user) async {
-
     if (CubeSessionManager.instance.isActiveSessionValid() &&
         CubeSessionManager.instance.activeSession!.user != null) {
       if (CubeChatConnection.instance.isAuthenticated()) {
@@ -105,7 +101,6 @@ class _SplashScreenState extends State<SplashScreen> {
     });
   }
 
-
   @override
   void initState() {
     // TODO: implement initState
@@ -113,42 +108,35 @@ class _SplashScreenState extends State<SplashScreen> {
     getToken();
   }
 
-  storeToken() async{
-    final response = await post(
-        Uri.parse("$SERVER_ADDRESS/api/savetoken"),
-        body: {
-          "token":token,
-          "type": "1",
-        }
-    ).catchError((e){
-      Timer(Duration(seconds: 2),(){
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => TabsScreen())
-        );
+  storeToken() async {
+    final response =
+        await post(Uri.parse("$SERVER_ADDRESS/api/savetoken"), body: {
+      "token": token,
+      "type": "1",
+    }).catchError((e) {
+      Timer(Duration(seconds: 2), () {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => TabsScreen()));
       });
     });
-    if(response.statusCode == 200){
+    if (response.statusCode == 200) {
       final jsonResponse = jsonDecode(response.body);
-      if(jsonResponse['success'] == "1"){
-        Timer(Duration(seconds: 2), (){
-          SharedPreferences.getInstance().then((pref){
+      if (jsonResponse['success'] == "1") {
+        Timer(Duration(seconds: 2), () {
+          SharedPreferences.getInstance().then((pref) {
             pref.setBool("isTokenExist", true);
             print("token stored");
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => TabsScreen())
-            );
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => TabsScreen()));
           });
         });
       }
-    }
-    else{
+    } else {
       print("token not stored");
-      Timer(Duration(seconds: 2),(){
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => TabsScreen())
-        );
+      Timer(Duration(seconds: 2), () {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => TabsScreen()));
       });
-
     }
   }
 
@@ -177,7 +165,6 @@ class _SplashScreenState extends State<SplashScreen> {
       ),
     );
   }
-
 }
 
 

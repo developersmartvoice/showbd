@@ -387,10 +387,25 @@ class _DoctorProfileState extends State<DoctorProfile> {
               SizedBox(
                 width: 10,
               ),
-              Text(PROFILE,
-                  style: Theme.of(context).textTheme.headline5!.apply(
-                      color: Theme.of(context).backgroundColor,
-                      fontWeightDelta: 5))
+              Row(
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Image.asset(
+                      "assets/moreScreenImages/back.png",
+                      height: 25,
+                      width: 22,
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  Text(PROFILE,
+                      style: Theme.of(context).textTheme.headline5!.apply(
+                          color: Theme.of(context).backgroundColor,
+                          fontWeightDelta: 5)),
+                ],
+              )
             ],
           ),
         ),

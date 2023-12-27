@@ -63,7 +63,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
     _getLocationStart();
     SharedPreferences.getInstance().then((pref) {
       setState(() {
-        isLoggedIn = pref.getBool("isLoggedIn") ?? false;
+        isLoggedIn = pref.getBool("isLoggedInAsDoctor") ?? false;
       });
     });
     widget.scrollController.addListener(() {
@@ -371,7 +371,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                               ),
                               child: CachedNetworkImage(
                                 imageUrl: img,
-                                fit: BoxFit.cover,
+                                fit: BoxFit.fill,
                                 width: double.infinity,
                                 placeholder: (context, url) => Container(
                                   color: Theme.of(context).primaryColorLight,

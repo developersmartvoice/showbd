@@ -88,19 +88,19 @@ class _HomeScreenState extends State<HomeScreen> {
 
     if (response.statusCode == 200) {
       final responseData = jsonDecode(response.body);
-      call_all_api = Call_All_Api.fromJson(responseData);
-      bannerList.addAll(call_all_api.data!.banner!);
-      list.addAll(call_all_api.data!.speciality!);
+      // call_all_api = Call_All_Api.fromJson(responseData);
+      // bannerList.addAll(call_all_api.data!.banner!);
+      // list.addAll(call_all_api.data!.speciality!);
 
-      AppointmentList.addAll(call_all_api.data!.appointment!);
-      print("AppointmentList.length : ${AppointmentList.length}");
+      // AppointmentList.addAll(call_all_api.data!.appointment!);
+      // print("AppointmentList.length : ${AppointmentList.length}");
 
       isLoad = true;
       setState(() {});
     }
   }
 
-  Call_All_Api call_all_api = Call_All_Api();
+  // Call_All_Api call_all_api = Call_All_Api();
 
   @override
   void initState() {
@@ -110,11 +110,12 @@ class _HomeScreenState extends State<HomeScreen> {
     notificationHelper.initialize();
 
     SharedPreferences.getInstance().then((pref) {
-      isLoggedIn = pref.getBool("isLoggedIn") ?? false;
+      isLoggedIn = pref.getBool("isLoggedInAsDoctor") ?? false;
       userId = pref.getString("userId") ?? "";
 
-      setState(() {});
-      call_3in1_api();
+      setState(() {
+        call_3in1_api();
+      });
     });
 
     FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler);
@@ -203,41 +204,41 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  callApi({double? latitude, double? longitude}) async {
-    final response = await get(Uri.parse(
-            "$SERVER_ADDRESS/api/nearbydoctor?lat=${latitude}&lon=${longitude}"))
-        .catchError((e) {
-      setState(() {
-        isErrorInNearby = true;
-      });
-      messageDialog(ERROR, UNABLE_TO_LOAD_DATA_FORM_SERVER);
-    });
+  // callApi({double? latitude, double? longitude}) async {
+  //   final response = await get(Uri.parse(
+  //           "$SERVER_ADDRESS/api/nearbydoctor?lat=${latitude}&lon=${longitude}"))
+  //       .catchError((e) {
+  //     setState(() {
+  //       isErrorInNearby = true;
+  //     });
+  //     messageDialog(ERROR, UNABLE_TO_LOAD_DATA_FORM_SERVER);
+  //   });
 
-    print("API : " + response.request!.url.toString());
+  //   print("API : " + response.request!.url.toString());
 
-    final jsonResponse = jsonDecode(response.body);
-    print(jsonResponse.toString());
-    if (response.statusCode == 200 && jsonResponse['status'] == 1) {
-      //print([0].name);
-      if (mounted) {
-        setState(() {
-          lat = latitude.toString();
-          lon = longitude.toString();
-          nearbyDoctorsClass = NearbyDoctorsClass.fromJson(jsonResponse);
-          print("Finished");
-          list2.addAll(nearbyDoctorsClass!.data!.nearbyData!);
-          nextUrl = nearbyDoctorsClass!.data!.nextPageUrl!;
-          print(nextUrl);
-          isNearbyLoading = false;
-        });
-      }
-    } else {
-      setState(() {
-        isErrorInNearby = true;
-      });
-      messageDialog(ERROR, UNABLE_TO_LOAD_DATA_FORM_SERVER);
-    }
-  }
+  //   final jsonResponse = jsonDecode(response.body);
+  //   print(jsonResponse.toString());
+  //   if (response.statusCode == 200 && jsonResponse['status'] == 1) {
+  //     //print([0].name);
+  //     if (mounted) {
+  //       setState(() {
+  //         lat = latitude.toString();
+  //         lon = longitude.toString();
+  //         nearbyDoctorsClass = NearbyDoctorsClass.fromJson(jsonResponse);
+  //         print("Finished");
+  //         list2.addAll(nearbyDoctorsClass!.data!.nearbyData!);
+  //         nextUrl = nearbyDoctorsClass!.data!.nextPageUrl!;
+  //         print(nextUrl);
+  //         isNearbyLoading = false;
+  //       });
+  //     }
+  //   } else {
+  //     setState(() {
+  //       isErrorInNearby = true;
+  //     });
+  //     messageDialog(ERROR, UNABLE_TO_LOAD_DATA_FORM_SERVER);
+  //   }
+  // }
 
   Future<bool> dialogPop() async {
     print('dialog cancle');
