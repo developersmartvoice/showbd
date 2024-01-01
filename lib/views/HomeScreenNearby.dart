@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:appcode3/VideoCall/utils/pref_util.dart';
 import 'package:appcode3/en.dart';
 // import 'package:appcode3/modals/DoctorDetailsClass.dart' as DetailsClass;
 // import 'package:appcode3/modals/DoctorDetailsClass.dart';
@@ -51,6 +52,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
   bool isNearbyLoading = true;
   bool isLoggedIn = false;
   bool isLoadingMore = false;
+  int? currentId;
 
   int maxPosition = 0;
   bool isLoadMoreEnable = true;
@@ -64,6 +66,10 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
     SharedPreferences.getInstance().then((pref) {
       setState(() {
         isLoggedIn = pref.getBool("isLoggedInAsDoctor") ?? false;
+        currentId = int.parse(pref.getString("userId").toString());
+        // print("this is to see the keys");
+        print("ID: ${currentId}");
+        // print("keysss: ${pref.getString("userId")}");
       });
     });
     widget.scrollController.addListener(() {
@@ -246,6 +252,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
 
                 // print(
                 //     "wanna see the data ${data1.name} and total Reviews are: ${data1.totalReview}");
+
                 return nearByGridWidget(
                     data.image,
                     data.name,
@@ -287,6 +294,9 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
 
   Widget nearByGridWidget(img, name, dept, id, consultationFee, aboutMe,
       avgRating, totalReview, imgs) {
+    // if (id == currentId) {
+    //   return Container(height: 0, width: 0);
+    // } else {
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -658,6 +668,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
         ),
       ),
     );
+    // }
   }
 
   Widget StarRating(avgRating) {
@@ -755,6 +766,8 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
           nearbyDoctorsClass = NearbyDoctorsClass.fromJson(jsonResponse);
           print("Finished");
           list2.addAll(nearbyDoctorsClass!.data!.nearbyData!);
+          list2.removeWhere((element) => element.id == currentId);
+
           // list3.clear();
           // for (int i = 0; i < list2.length; i++) {
           //   fetchDoctorDetails(list2[i].id);
@@ -888,6 +901,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
           nextUrl = nearbyDoctorsClass!.data!.nextPageUrl!;
           print(nextUrl);
           list2.addAll(nearbyDoctorsClass!.data!.nearbyData!);
+          list2.removeWhere((element) => element.id == currentId);
           // list3.clear();
           // for (int i = 0; i < list2.length; i++) {
           //   fetchDoctorDetails(list2[i].id);

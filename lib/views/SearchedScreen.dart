@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 //import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SearchedScreen extends StatefulWidget {
   // String keyword;
@@ -23,9 +24,11 @@ class SearchedScreen extends StatefulWidget {
 }
 
 class _SearchedScreenState extends State<SearchedScreen> {
+  bool isLoggedIn = false;
   bool isSearching = false;
   bool isLoading = false;
   bool isErrorInLoading = false;
+  int? currentId;
   SearchDoctorClass? searchDoctorClass;
   List<DoctorData> _newData = [];
   String nextUrl = "";
@@ -55,6 +58,15 @@ class _SearchedScreenState extends State<SearchedScreen> {
     //     _loadMoreFunc();
     //   }
     // });
+    SharedPreferences.getInstance().then((pref) {
+      setState(() {
+        isLoggedIn = pref.getBool("isLoggedInAsDoctor") ?? false;
+        currentId = int.parse(pref.getString("userId").toString());
+        // print("this is to see the keys");
+        print("ID: ${currentId}");
+        // print("keysss: ${pref.getString("userId")}");
+      });
+    });
   }
 
   @override
@@ -560,6 +572,7 @@ class _SearchedScreenState extends State<SearchedScreen> {
             _newData.clear();
             //print(searchDoctorClass.data.doctorData);
             _newData.addAll(searchDoctorClass!.data!.doctorData!);
+            _newData.removeWhere((element) => element.id == currentId);
             nextUrl = searchDoctorClass!.data!.links!.last.url!;
             print(nextUrl);
             isLoading = false;

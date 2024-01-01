@@ -47,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String userName = " ";
   TextField? textField;
   bool isAppointmentExist = false;
+  int? currentId;
 
   Future? loadAppointments;
   String userId = "";
@@ -112,6 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
     SharedPreferences.getInstance().then((pref) {
       isLoggedIn = pref.getBool("isLoggedInAsDoctor") ?? false;
       userId = pref.getString("userId") ?? "";
+      currentId = int.parse(pref.getString("userId").toString());
 
       setState(() {
         call_3in1_api();
@@ -191,7 +193,7 @@ class _HomeScreenState extends State<HomeScreen> {
         if (pref.getString('callSessionCS') != null) {
           dialog();
         }
-        isLoggedIn = pref.getBool("isLoggedIn") ?? false;
+        // isLoggedIn = pref.getBool("isLoggedIn") ?? false;
       });
     });
     _scrollController.addListener(() {
@@ -797,105 +799,105 @@ class _HomeScreenState extends State<HomeScreen> {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(UPCOMING_APPOINTMENTS,
-                  style: Theme.of(context).textTheme.bodyText2!.apply(
-                        fontWeightDelta: 3,
-                        color: Colors.orange,
-                      )),
-              AppointmentList.length != 0
-                  ? TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  AllAppointments(AppointmentList)),
-                        );
-                      },
-                      child: Text(SEE_ALL,
-                          style: Theme.of(context).textTheme.bodyText1!.apply(
-                                // color: Theme.of(context).hintColor,
-                                color: Colors.orange,
-                              )),
-                    )
-                  : Container(
-                      height: 40,
-                    )
-            ],
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          AppointmentList.length == 0
-              ? Container(
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                      color: Theme.of(context).backgroundColor,
-                      borderRadius: BorderRadius.circular(15)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(30.0),
-                    child: Column(
-                      children: [
-                        Image.asset("assets/homeScreenImages/no_appo_img.png"),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Text(
-                          YOU_DONOT_HAVE_ANY_UPCOMING_APPOINTMENT,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w900, fontSize: 11),
-                        ),
-                        SizedBox(
-                          height: 3,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              FIND_BEST_DOCTORS_NEAR_YOU_BY_SPECIALITY,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500, fontSize: 10),
-                            ),
-                            SizedBox(
-                              width: 3,
-                            ),
-                            InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => SpecialityScreen(),
-                                    ));
-                              },
-                              child: Text(
-                                CLICK_HERE,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w900,
-                                    fontSize: 10,
-                                    color: AMBER),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                )
-              : ListView.builder(
-                  itemCount:
-                      AppointmentList.length > 2 ? 2 : AppointmentList.length,
-                  shrinkWrap: true,
-                  padding: EdgeInsets.all(0),
-                  physics: ClampingScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    print(
-                        "$SERVER_ADDRESS/public/upload/doctors/${AppointmentList[index].doctorls!.image}");
-                    return appointmentListWidget(index, AppointmentList);
-                  },
-                )
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   children: [
+          //     Text(UPCOMING_APPOINTMENTS,
+          //         style: Theme.of(context).textTheme.bodyText2!.apply(
+          //               fontWeightDelta: 3,
+          //               color: Colors.orange,
+          //             )),
+          //     AppointmentList.length != 0
+          //         ? TextButton(
+          //             onPressed: () {
+          //               Navigator.push(
+          //                 context,
+          //                 MaterialPageRoute(
+          //                     builder: (context) =>
+          //                         AllAppointments(AppointmentList)),
+          //               );
+          //             },
+          //             child: Text(SEE_ALL,
+          //                 style: Theme.of(context).textTheme.bodyText1!.apply(
+          //                       // color: Theme.of(context).hintColor,
+          //                       color: Colors.orange,
+          //                     )),
+          //           )
+          //         : Container(
+          //             height: 40,
+          //           )
+          //   ],
+          // ),
+          // SizedBox(
+          //   height: 5,
+          // ),
+          // AppointmentList.length == 0
+          //     ? Container(
+          //         width: MediaQuery.of(context).size.width,
+          //         decoration: BoxDecoration(
+          //             color: Theme.of(context).backgroundColor,
+          //             borderRadius: BorderRadius.circular(15)),
+          //         child: Padding(
+          //           padding: const EdgeInsets.all(30.0),
+          //           child: Column(
+          //             children: [
+          //               Image.asset("assets/homeScreenImages/no_appo_img.png"),
+          //               SizedBox(
+          //                 height: 15,
+          //               ),
+          //               Text(
+          //                 YOU_DONOT_HAVE_ANY_UPCOMING_APPOINTMENT,
+          //                 style: TextStyle(
+          //                     fontWeight: FontWeight.w900, fontSize: 11),
+          //               ),
+          //               SizedBox(
+          //                 height: 3,
+          //               ),
+          //               Row(
+          //                 mainAxisAlignment: MainAxisAlignment.center,
+          //                 children: [
+          //                   Text(
+          //                     FIND_BEST_DOCTORS_NEAR_YOU_BY_SPECIALITY,
+          //                     style: TextStyle(
+          //                         fontWeight: FontWeight.w500, fontSize: 10),
+          //                   ),
+          //                   SizedBox(
+          //                     width: 3,
+          //                   ),
+          //                   InkWell(
+          //                     onTap: () {
+          //                       Navigator.push(
+          //                           context,
+          //                           MaterialPageRoute(
+          //                             builder: (context) => SpecialityScreen(),
+          //                           ));
+          //                     },
+          //                     child: Text(
+          //                       CLICK_HERE,
+          //                       style: TextStyle(
+          //                           fontWeight: FontWeight.w900,
+          //                           fontSize: 10,
+          //                           color: AMBER),
+          //                     ),
+          //                   ),
+          //                 ],
+          //               ),
+          //             ],
+          //           ),
+          //         ),
+          //       )
+          //     : ListView.builder(
+          //         itemCount:
+          //             AppointmentList.length > 2 ? 2 : AppointmentList.length,
+          //         shrinkWrap: true,
+          //         padding: EdgeInsets.all(0),
+          //         physics: ClampingScrollPhysics(),
+          //         itemBuilder: (context, index) {
+          //           print(
+          //               "$SERVER_ADDRESS/public/upload/doctors/${AppointmentList[index].doctorls!.image}");
+          //           return appointmentListWidget(index, AppointmentList);
+          //         },
+          //       )
         ],
       ),
     );
@@ -1069,6 +1071,7 @@ class _HomeScreenState extends State<HomeScreen> {
             _newData.clear();
             //print(searchDoctorClass.data.doctorData);
             _newData.addAll(searchDoctorClass!.data!.doctorData!);
+            _newData.removeWhere((element) => element.id == currentId);
             nextUrl = searchDoctorClass!.data!.links!.last.url!;
             print(nextUrl);
             isLoading = false;
@@ -1098,6 +1101,7 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         //print(searchDoctorClass.data.doctorData);
         _newData.addAll(searchDoctorClass!.data!.doctorData!);
+        _newData.removeWhere((element) => element.id == currentId);
         isLoadingMore = false;
         nextUrl = searchDoctorClass!.data!.links!.last.url!;
         print(nextUrl);
