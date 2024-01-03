@@ -36,6 +36,7 @@ class Data {
   List<String>? services;
   List<String>? languages;
   String? image;
+  List<String>? images; // Add images field as a list of strings
   int? departmentId;
   String? workingTime;
   String? password;
@@ -60,6 +61,7 @@ class Data {
     this.services,
     this.languages,
     this.image,
+    this.images, // Include images field in the constructor
     this.departmentId,
     this.workingTime,
     this.password,
@@ -91,6 +93,9 @@ class Data {
         .map((e) => e.trim())
         .toList();
     image = json['image'];
+    images = json['images'] != null
+        ? List<String>.from(json['images'])
+        : []; // Parse images as a list
     departmentId = json['department_id'] is String ? 0 : json['department_id'];
     workingTime = json['working_time'].toString();
     password = json['password'].toString();
@@ -121,6 +126,7 @@ class Data {
     data['services'] = services?.join(', ');
     data['languages'] = languages?.join(', ');
     data['image'] = this.image;
+    data['images'] = this.images; // Include images in the JSON output
     //data['department_id'] = this.departmentId.toString();
     data['working_time'] = this.workingTime;
     data['password'] = this.password;

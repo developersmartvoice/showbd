@@ -29,6 +29,9 @@ class _DetailsPageState extends State<DetailsPage> {
   bool? isLoggedIn;
   bool isErrorInLoading = false;
   int count = 0;
+  String? guideName;
+  String? img;
+  List<String?> imgs = List.generate(4, (index) => null);
 
   @override
   void initState() {
@@ -61,7 +64,11 @@ class _DetailsPageState extends State<DetailsPage> {
     if (response.statusCode == 200) {
       final jsonResponse = jsonDecode(response.body);
       doctorDetailsClass = DoctorDetailsClass.fromJson(jsonResponse);
+      guideName = doctorDetailsClass!.data!.name;
+      img = doctorDetailsClass!.data!.image;
+      imgs.addAll(doctorDetailsClass!.data!.images!);
       print(doctorDetailsClass!.data!.avgratting);
+      print(doctorDetailsClass!.data!.images);
       print(doctorDetailsClass!.data!.services);
       print(doctorDetailsClass!.data!.services![0]);
       // print(doctorDetailsClass!.data!.services![3]);
@@ -126,7 +133,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     : Center(
                         child: CircularProgressIndicator(),
                       ),
-            header(),
+            // header(),
           ],
         ),
       ),
@@ -162,10 +169,14 @@ class _DetailsPageState extends State<DetailsPage> {
               SizedBox(
                 width: 10,
               ),
-              Text(
-                DOCTOR_DETAILS,
-                style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w600, color: WHITE, fontSize: 22),
+              Container(
+                width: MediaQuery.sizeOf(context).width * .8,
+                alignment: Alignment.center,
+                child: Text(
+                  guideName!,
+                  style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w600, color: WHITE, fontSize: 22),
+                ),
               )
             ],
           ),
@@ -174,202 +185,202 @@ class _DetailsPageState extends State<DetailsPage> {
     );
   }
 
-  Widget appointmentListWidget() {
-    return Container(
-      //height: 110,
-      margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
-      padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: WHITE,
-      ),
-      child: Row(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(15),
-            child: CachedNetworkImage(
-              imageUrl: doctorDetailsClass!.data!.image!,
-              height: 80,
-              width: 80,
-              fit: BoxFit.fill,
-              placeholder: (context, url) => Container(
-                color: Theme.of(context).primaryColorLight,
-                child: Center(
-                  child: Image.asset(
-                    "assets/homeScreenImages/user_unactive.png",
-                    height: 40,
-                    width: 40,
-                  ),
-                ),
-              ),
-              errorWidget: (context, url, err) => Container(
-                color: Theme.of(context).primaryColorLight,
-                child: Center(
-                  child: Image.asset(
-                    "assets/homeScreenImages/user_unactive.png",
-                    height: 40,
-                    width: 40,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          SizedBox(
-            width: 10,
-          ),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  doctorDetailsClass!.data!.name!,
-                  style: GoogleFonts.poppins(
-                      color: BLACK, fontSize: 16, fontWeight: FontWeight.w500),
-                ),
-                SizedBox(
-                  height: 2,
-                ),
-                Text(
-                  doctorDetailsClass!.data!.departmentName!,
-                  style: GoogleFonts.poppins(
-                      color: LIGHT_GREY_TEXT,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400),
-                ),
-                SizedBox(
-                  height: 4,
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: Column(
-                              children: [
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Expanded(
-                                        child: Image.asset(
-                                      doctorDetailsClass!.data!.avgratting ==
-                                              null
-                                          ? "assets/detailScreenImages/star_no_fill.png"
-                                          : doctorDetailsClass!
-                                                      .data!.avgratting! >=
-                                                  1
-                                              ? "assets/detailScreenImages/star_fill.png"
-                                              : "assets/detailScreenImages/star_no_fill.png",
-                                      height: 17,
-                                      width: 17,
-                                    )),
-                                    Expanded(
-                                        child: Image.asset(
-                                      doctorDetailsClass!.data!.avgratting ==
-                                              null
-                                          ? "assets/detailScreenImages/star_no_fill.png"
-                                          : doctorDetailsClass!
-                                                      .data!.avgratting! >=
-                                                  2
-                                              ? "assets/detailScreenImages/star_fill.png"
-                                              : "assets/detailScreenImages/star_no_fill.png",
-                                      height: 17,
-                                      width: 17,
-                                    )),
-                                    Expanded(
-                                        child: Image.asset(
-                                      doctorDetailsClass!.data!.avgratting! ==
-                                              null
-                                          ? "assets/detailScreenImages/star_no_fill.png"
-                                          : doctorDetailsClass!
-                                                      .data!.avgratting! >=
-                                                  3
-                                              ? "assets/detailScreenImages/star_fill.png"
-                                              : "assets/detailScreenImages/star_no_fill.png",
-                                      height: 17,
-                                      width: 17,
-                                    )),
-                                    Expanded(
-                                        child: Image.asset(
-                                      doctorDetailsClass!.data!.avgratting ==
-                                              null
-                                          ? "assets/detailScreenImages/star_no_fill.png"
-                                          : doctorDetailsClass!
-                                                      .data!.avgratting! >=
-                                                  4
-                                              ? "assets/detailScreenImages/star_fill.png"
-                                              : "assets/detailScreenImages/star_no_fill.png",
-                                      height: 17,
-                                      width: 17,
-                                    )),
-                                    Expanded(
-                                        child: Image.asset(
-                                      doctorDetailsClass!.data!.avgratting ==
-                                              null
-                                          ? "assets/detailScreenImages/star_no_fill.png"
-                                          : doctorDetailsClass!
-                                                      .data!.avgratting! >=
-                                                  5
-                                              ? "assets/detailScreenImages/star_fill.png"
-                                              : "assets/detailScreenImages/star_no_fill.png",
-                                      height: 17,
-                                      width: 17,
-                                    )),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 1.5,
-                                )
-                              ],
-                            ),
-                          ),
-                          Text(
-                            " (${doctorDetailsClass!.data!.totalReview} $REVIEWS)",
-                            style: GoogleFonts.poppins(
-                                color: LIGHT_GREY_TEXT,
-                                fontSize: 8,
-                                fontWeight: FontWeight.w400),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ReviewsScreen(
-                                          doctorDetailsClass!.data!.id
-                                              .toString())));
-                            },
-                            child: Text(
-                              "$SEE_ALL_REVIEW",
-                              style: GoogleFonts.poppins(
-                                  color: Theme.of(context).hintColor,
-                                  fontSize: 9,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                //SizedBox(height: 5,),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget appointmentListWidget() {
+  //   return Container(
+  //     //height: 110,
+  //     margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
+  //     padding: EdgeInsets.all(10),
+  //     decoration: BoxDecoration(
+  //       borderRadius: BorderRadius.circular(10),
+  //       color: WHITE,
+  //     ),
+  //     child: Row(
+  //       children: [
+  //         ClipRRect(
+  //           borderRadius: BorderRadius.circular(15),
+  //           child: CachedNetworkImage(
+  //             imageUrl: doctorDetailsClass!.data!.image!,
+  //             height: 80,
+  //             width: 80,
+  //             fit: BoxFit.fill,
+  //             placeholder: (context, url) => Container(
+  //               color: Theme.of(context).primaryColorLight,
+  //               child: Center(
+  //                 child: Image.asset(
+  //                   "assets/homeScreenImages/user_unactive.png",
+  //                   height: 40,
+  //                   width: 40,
+  //                 ),
+  //               ),
+  //             ),
+  //             errorWidget: (context, url, err) => Container(
+  //               color: Theme.of(context).primaryColorLight,
+  //               child: Center(
+  //                 child: Image.asset(
+  //                   "assets/homeScreenImages/user_unactive.png",
+  //                   height: 40,
+  //                   width: 40,
+  //                 ),
+  //               ),
+  //             ),
+  //           ),
+  //         ),
+  //         SizedBox(
+  //           width: 10,
+  //         ),
+  //         Expanded(
+  //           child: Column(
+  //             mainAxisAlignment: MainAxisAlignment.center,
+  //             crossAxisAlignment: CrossAxisAlignment.start,
+  //             children: [
+  //               Text(
+  //                 doctorDetailsClass!.data!.name!,
+  //                 style: GoogleFonts.poppins(
+  //                     color: BLACK, fontSize: 16, fontWeight: FontWeight.w500),
+  //               ),
+  //               SizedBox(
+  //                 height: 2,
+  //               ),
+  //               Text(
+  //                 doctorDetailsClass!.data!.departmentName!,
+  //                 style: GoogleFonts.poppins(
+  //                     color: LIGHT_GREY_TEXT,
+  //                     fontSize: 14,
+  //                     fontWeight: FontWeight.w400),
+  //               ),
+  //               SizedBox(
+  //                 height: 4,
+  //               ),
+  //               Row(
+  //                 crossAxisAlignment: CrossAxisAlignment.center,
+  //                 children: [
+  //                   Expanded(
+  //                     flex: 2,
+  //                     child: Row(
+  //                       crossAxisAlignment: CrossAxisAlignment.center,
+  //                       children: [
+  //                         Expanded(
+  //                           child: Column(
+  //                             children: [
+  //                               Row(
+  //                                 crossAxisAlignment: CrossAxisAlignment.end,
+  //                                 children: [
+  //                                   Expanded(
+  //                                       child: Image.asset(
+  //                                     doctorDetailsClass!.data!.avgratting ==
+  //                                             null
+  //                                         ? "assets/detailScreenImages/star_no_fill.png"
+  //                                         : doctorDetailsClass!
+  //                                                     .data!.avgratting! >=
+  //                                                 1
+  //                                             ? "assets/detailScreenImages/star_fill.png"
+  //                                             : "assets/detailScreenImages/star_no_fill.png",
+  //                                     height: 17,
+  //                                     width: 17,
+  //                                   )),
+  //                                   Expanded(
+  //                                       child: Image.asset(
+  //                                     doctorDetailsClass!.data!.avgratting ==
+  //                                             null
+  //                                         ? "assets/detailScreenImages/star_no_fill.png"
+  //                                         : doctorDetailsClass!
+  //                                                     .data!.avgratting! >=
+  //                                                 2
+  //                                             ? "assets/detailScreenImages/star_fill.png"
+  //                                             : "assets/detailScreenImages/star_no_fill.png",
+  //                                     height: 17,
+  //                                     width: 17,
+  //                                   )),
+  //                                   Expanded(
+  //                                       child: Image.asset(
+  //                                     doctorDetailsClass!.data!.avgratting! ==
+  //                                             null
+  //                                         ? "assets/detailScreenImages/star_no_fill.png"
+  //                                         : doctorDetailsClass!
+  //                                                     .data!.avgratting! >=
+  //                                                 3
+  //                                             ? "assets/detailScreenImages/star_fill.png"
+  //                                             : "assets/detailScreenImages/star_no_fill.png",
+  //                                     height: 17,
+  //                                     width: 17,
+  //                                   )),
+  //                                   Expanded(
+  //                                       child: Image.asset(
+  //                                     doctorDetailsClass!.data!.avgratting ==
+  //                                             null
+  //                                         ? "assets/detailScreenImages/star_no_fill.png"
+  //                                         : doctorDetailsClass!
+  //                                                     .data!.avgratting! >=
+  //                                                 4
+  //                                             ? "assets/detailScreenImages/star_fill.png"
+  //                                             : "assets/detailScreenImages/star_no_fill.png",
+  //                                     height: 17,
+  //                                     width: 17,
+  //                                   )),
+  //                                   Expanded(
+  //                                       child: Image.asset(
+  //                                     doctorDetailsClass!.data!.avgratting ==
+  //                                             null
+  //                                         ? "assets/detailScreenImages/star_no_fill.png"
+  //                                         : doctorDetailsClass!
+  //                                                     .data!.avgratting! >=
+  //                                                 5
+  //                                             ? "assets/detailScreenImages/star_fill.png"
+  //                                             : "assets/detailScreenImages/star_no_fill.png",
+  //                                     height: 17,
+  //                                     width: 17,
+  //                                   )),
+  //                                 ],
+  //                               ),
+  //                               SizedBox(
+  //                                 height: 1.5,
+  //                               )
+  //                             ],
+  //                           ),
+  //                         ),
+  //                         Text(
+  //                           " (${doctorDetailsClass!.data!.totalReview} $REVIEWS)",
+  //                           style: GoogleFonts.poppins(
+  //                               color: LIGHT_GREY_TEXT,
+  //                               fontSize: 8,
+  //                               fontWeight: FontWeight.w400),
+  //                         ),
+  //                         SizedBox(
+  //                           width: 10,
+  //                         ),
+  //                         InkWell(
+  //                           onTap: () {
+  //                             Navigator.push(
+  //                                 context,
+  //                                 MaterialPageRoute(
+  //                                     builder: (context) => ReviewsScreen(
+  //                                         doctorDetailsClass!.data!.id
+  //                                             .toString())));
+  //                           },
+  //                           child: Text(
+  //                             "$SEE_ALL_REVIEW",
+  //                             style: GoogleFonts.poppins(
+  //                                 color: Theme.of(context).hintColor,
+  //                                 fontSize: 9,
+  //                                 fontWeight: FontWeight.w500),
+  //                           ),
+  //                         ),
+  //                         SizedBox(
+  //                           width: 10,
+  //                         )
+  //                       ],
+  //                     ),
+  //                   ),
+  //                 ],
+  //               ),
+  //               //SizedBox(height: 5,),
+  //             ],
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Widget doctorDetails() {
     return Container(
