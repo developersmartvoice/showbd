@@ -306,3 +306,4 @@ const String INCOME_REPORT = "Income Report";
 const String DETAILED_REPORTS = "Detailed Reports";
 const String YOU_HAVE_NOT_ANY_INCOME = "you have not any income.";
 const String PROVIDE_YOUR_MOBILE_NUMBER = "Provide your Mobile number";
+const String WHAT_BRING_YOU_HERE = "ANYTHING SPECIFIC YOU WOULD LIKE TO SEE?";

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:appcode3/en.dart';
 import 'package:appcode3/main.dart';
 import 'package:appcode3/modals/DoctorDetailsClass.dart';
+import 'package:appcode3/views/BookingScreen.dart';
 import 'package:appcode3/views/MakeAppointment.dart';
 import 'package:appcode3/views/MapWidget.dart';
 import 'package:appcode3/views/ReviewsScreen.dart';
@@ -31,7 +32,7 @@ class _DetailsPageState extends State<DetailsPage> {
   int count = 0;
   String? guideName;
   String? img;
-  List<String?> imgs = List.generate(4, (index) => null);
+  List<String>? imgs;
 
   @override
   void initState() {
@@ -66,9 +67,9 @@ class _DetailsPageState extends State<DetailsPage> {
       doctorDetailsClass = DoctorDetailsClass.fromJson(jsonResponse);
       guideName = doctorDetailsClass!.data!.name;
       img = doctorDetailsClass!.data!.image;
-      imgs.addAll(doctorDetailsClass!.data!.images!);
+      // imgs?.addAll(doctorDetailsClass!.data!.images!);
       print(doctorDetailsClass!.data!.avgratting);
-      print(doctorDetailsClass!.data!.images);
+      print(doctorDetailsClass!.data!.images!);
       print(doctorDetailsClass!.data!.services);
       print(doctorDetailsClass!.data!.services![0]);
       // print(doctorDetailsClass!.data!.services![3]);
@@ -113,21 +114,22 @@ class _DetailsPageState extends State<DetailsPage> {
                 : !isLoading
                     ? Column(
                         children: [
+                          header(),
                           Expanded(
                             child: SingleChildScrollView(
                               child: Column(
                                 children: [
-                                  header(),
-                                  appointmentListWidget(),
+                                  // header(),
+                                  // appointmentListWidget(),
                                   doctorDetails(),
-                                  SizedBox(
-                                    height: 80,
-                                  ),
+                                  // SizedBox(
+                                  //   height: 80,
+                                  // ),
+                                  // button(),
                                 ],
                               ),
                             ),
                           ),
-                          button(),
                         ],
                       )
                     : Center(
@@ -383,32 +385,184 @@ class _DetailsPageState extends State<DetailsPage> {
   // }
 
   Widget doctorDetails() {
-    return Container(
-      //height: MediaQuery.of(context).size.height - 300,
-      margin: EdgeInsets.fromLTRB(10, 5, 10, 0),
-      padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: WHITE,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    // Dummy list of images (replace this with your actual list)
+    // List<String> images = [
+    //   "image1.jpg",
+    //   "image2.jpg",
+    //   "image3.jpg",
+    //   "image4.jpg",
+    //   "image5.jpg",
+    // ];
+
+    // Page controller for handling image navigation
+    PageController _pageController = PageController();
+
+    int currentPage = 0;
+    return Column(
+      children: [
+        Container(
+          height: 300, // Adjust the height as needed
+          child: PageView.builder(
+            controller: _pageController,
+            itemCount: doctorDetailsClass!.data!.images!.isNotEmpty
+                ? (doctorDetailsClass!.data!.images!.length + 1)
+                : 1,
+            onPageChanged: (int page) {
+              currentPage = page;
+            },
+            itemBuilder: (BuildContext context, int index) {
+              if (index == 0) {
+                return CachedNetworkImage(
+                  imageUrl: doctorDetailsClass!.data!.image!,
+                  fit: BoxFit.fill,
+                  placeholder: (context, url) =>
+                      Center(child: CircularProgressIndicator()),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                );
+              } else {
+                return CachedNetworkImage(
+                  imageUrl: doctorDetailsClass!.data!.images![index],
+                  fit: BoxFit.fill,
+                  placeholder: (context, url) =>
+                      Center(child: CircularProgressIndicator()),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                );
+              }
+            },
+          ),
+        ),
+        SizedBox(height: 10),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: List.generate(
+              doctorDetailsClass!.data!.images!.isNotEmpty
+                  ? (doctorDetailsClass!.data!.images!.length + 1)
+                  : 1, (index) {
+            return Container(
+              margin: EdgeInsets.symmetric(horizontal: 5),
+              width: 10,
+              height: 10,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: currentPage == index ? Colors.blue : Colors.grey,
+              ),
+            );
+          }),
+        ),
+        SizedBox(height: 10),
+        Container(
+          //height: MediaQuery.of(context).size.height - 300,
+          margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+          padding: EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: WHITE,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     Column(
+              //       crossAxisAlignment: CrossAxisAlignment.start,
+              //       children: [
+              //         Text(
+              //           PHONE_NUMBER,
+              //           style: GoogleFonts.poppins(
+              //               fontWeight: FontWeight.w500,
+              //               color: BLACK,
+              //               fontSize: 14),
+              //         ),
+              //         //SizedBox(height: 8,),
+              //         Text(
+              //           doctorDetailsClass!.data!.phoneno!,
+              //           style: GoogleFonts.poppins(
+              //               fontWeight: FontWeight.w500,
+              //               color: LIGHT_GREY_TEXT,
+              //               fontSize: 12),
+              //         ),
+              //       ],
+              //     ),
+              //     InkWell(
+              //       onTap: () {
+              //         // launch("tel://${doctorDetailsClass!.data!.phoneno!}");
+              //       },
+              //       child: Image.asset(
+              //         "assets/detailScreenImages/phone_button.png",
+              //         height: 50,
+              //         width: 50,
+              //       ),
+              //     ),
+              //   ],
+              // ),
+              Container(
+                alignment: Alignment.center,
+                child: ElevatedButton(
+                  onPressed: () {
+                    print("This is widget id which need to send: ${widget.id}");
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              BookingScreen(widget.id, guideName!)),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.blue, // Change the background color
+                    shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.circular(10.0), // Set border radius
+                    ),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 100.0), // Customize horizontal padding
+                    elevation: 5.0, // Set elevation
+                    shadowColor: Colors.grey, // Set shadow color
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.connect_without_contact_sharp,
+                        size: 30.0, // Set icon size
+                        color: Colors.white, // Set icon color
+                        // shadows: [
+                        //   Shadow(blurRadius: 5.0, color: Colors.black)
+                        // ], // Add shadow to the icon
+                      ),
+                      SizedBox(
+                          width:
+                              10), // Add some spacing between the icon and the label
+                      Text(
+                        'Contact',
+                        style: GoogleFonts.poppins(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.w500, // Set label font size
+                          color: Colors.white, // Set label color
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              SizedBox(
+                height: 15,
+              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    PHONE_NUMBER,
+                    doctorDetailsClass!.data!.aboutus == null ? " " : ABOUT_US,
                     style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w500,
-                        color: BLACK,
-                        fontSize: 14),
+                        color: Colors.black,
+                        fontSize: 15),
                   ),
                   //SizedBox(height: 8,),
                   Text(
-                    doctorDetailsClass!.data!.phoneno!,
+                    doctorDetailsClass!.data!.aboutus == null
+                        ? " "
+                        : doctorDetailsClass!.data!.aboutus.toString(),
                     style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w500,
                         color: LIGHT_GREY_TEXT,
@@ -416,315 +570,290 @@ class _DetailsPageState extends State<DetailsPage> {
                   ),
                 ],
               ),
-              InkWell(
-                onTap: () {
-                  launch("tel://${doctorDetailsClass!.data!.phoneno!}");
-                },
-                child: Image.asset(
-                  "assets/detailScreenImages/phone_button.png",
-                  height: 50,
-                  width: 50,
-                ),
+              SizedBox(
+                height: 15,
               ),
-            ],
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                doctorDetailsClass!.data!.aboutus == null ? " " : ABOUT_US,
-                style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black,
-                    fontSize: 15),
-              ),
-              //SizedBox(height: 8,),
-              Text(
-                doctorDetailsClass!.data!.aboutus == null
-                    ? " "
-                    : doctorDetailsClass!.data!.aboutus.toString(),
-                style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w500,
-                    color: LIGHT_GREY_TEXT,
-                    fontSize: 12),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Container(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  flex: 3,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
+              Container(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      flex: 3,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          doctorDetailsClass!.data!.address == null
-                              ? Container()
-                              : Image.asset(
-                                  "assets/detailScreenImages/location_pin.png",
-                                  height: 15,
-                                  width: 15,
-                                ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            doctorDetailsClass!.data!.address == null
-                                ? " "
-                                : ADDRESS,
-                            style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w500,
-                                color: BLACK,
-                                fontSize: 15),
-                          ),
-                        ],
-                      ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                        child: Text(
-                          doctorDetailsClass!.data!.address == null
-                              ? " "
-                              : doctorDetailsClass!.data!.address.toString(),
-                          style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w500,
-                              color: LIGHT_GREY_TEXT,
-                              fontSize: 12),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          doctorDetailsClass!.data!.workingTime == null
-                              ? Container()
-                              : Image.asset(
-                                  "assets/detailScreenImages/time.png",
-                                  height: 15,
-                                  width: 15,
-                                ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            doctorDetailsClass!.data!.workingTime == null
-                                ? " "
-                                : WORKING_TIME,
-                            style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w500,
-                                color: BLACK,
-                                fontSize: 15),
-                          ),
-                        ],
-                      ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                        child: Text(
-                          doctorDetailsClass!.data!.workingTime == null
-                              ? " "
-                              : doctorDetailsClass!.data!.workingTime
-                                  .toString(),
-                          style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w500,
-                              color: LIGHT_GREY_TEXT,
-                              fontSize: 12),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  width: 50,
-                ),
-                Expanded(
-                    flex: 2,
-                    child: InkWell(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Container(
-                            //width: 100,
-                            child: InkWell(
-                              onTap: () {
-                                openMap(
-                                    double.parse(
-                                        doctorDetailsClass!.data!.lat!),
-                                    double.parse(
-                                        doctorDetailsClass!.data!.lon!));
-                              },
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(15),
-                                child: Stack(
-                                  children: [
-                                    doctorDetailsClass!.data!.address == null
-                                        ? Container()
-                                        : Image.asset(
-                                            "assets/detailScreenImages/map_icon.png",
-                                            height: 110,
-                                          ),
-                                  ],
-                                ),
+                          Row(
+                            children: [
+                              doctorDetailsClass!.data!.address == null
+                                  ? Container()
+                                  : Image.asset(
+                                      "assets/detailScreenImages/location_pin.png",
+                                      height: 15,
+                                      width: 15,
+                                    ),
+                              SizedBox(
+                                width: 5,
                               ),
+                              Text(
+                                doctorDetailsClass!.data!.address == null
+                                    ? " "
+                                    : ADDRESS,
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.w500,
+                                    color: BLACK,
+                                    fontSize: 15),
+                              ),
+                            ],
+                          ),
+                          Container(
+                            margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                            child: Text(
+                              doctorDetailsClass!.data!.address == null
+                                  ? " "
+                                  : doctorDetailsClass!.data!.address
+                                      .toString(),
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w500,
+                                  color: LIGHT_GREY_TEXT,
+                                  fontSize: 12),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            children: [
+                              doctorDetailsClass!.data!.workingTime == null
+                                  ? Container()
+                                  : Image.asset(
+                                      "assets/detailScreenImages/time.png",
+                                      height: 15,
+                                      width: 15,
+                                    ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                doctorDetailsClass!.data!.workingTime == null
+                                    ? " "
+                                    : WORKING_TIME,
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.w500,
+                                    color: BLACK,
+                                    fontSize: 15),
+                              ),
+                            ],
+                          ),
+                          Container(
+                            margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                            child: Text(
+                              doctorDetailsClass!.data!.workingTime == null
+                                  ? " "
+                                  : doctorDetailsClass!.data!.workingTime
+                                      .toString(),
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w500,
+                                  color: LIGHT_GREY_TEXT,
+                                  fontSize: 12),
                             ),
                           ),
                         ],
                       ),
-                    )),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                doctorDetailsClass!.data!.services == null ? " " : SERVICES,
-                style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w500, color: BLACK, fontSize: 15),
+                    ),
+                    SizedBox(
+                      width: 50,
+                    ),
+                    Expanded(
+                        flex: 2,
+                        child: InkWell(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Container(
+                                //width: 100,
+                                child: InkWell(
+                                  onTap: () {
+                                    openMap(
+                                        double.parse(
+                                            doctorDetailsClass!.data!.lat!),
+                                        double.parse(
+                                            doctorDetailsClass!.data!.lon!));
+                                  },
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(15),
+                                    child: Stack(
+                                      children: [
+                                        doctorDetailsClass!.data!.address ==
+                                                null
+                                            ? Container()
+                                            : Image.asset(
+                                                "assets/detailScreenImages/map_icon.png",
+                                                height: 110,
+                                              ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )),
+                  ],
+                ),
               ),
-              //SizedBox(height: 8,),
-              // Text(
-              //   doctorDetailsClass!.data!.services == null
-              //       ? ""
-              //       : doctorDetailsClass!.data!.services.toString(),
-              //   style: GoogleFonts.poppins(
-              //       fontWeight: FontWeight.w500,
-              //       color: LIGHT_GREY_TEXT,
-              //       fontSize: 10),
-              // ),
               SizedBox(
-                height: 0,
+                height: 15,
               ),
-              doctorDetailsClass!.data!.services == null
-                  ? Text("No Activities")
-                  : Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ListView.builder(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap:
-                              true, // This ensures that the ListView takes up as much space as needed within the Column
-                          itemCount: doctorDetailsClass!.data!.services!.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            // Use the index to access each service in the list
-                            String service =
-                                doctorDetailsClass!.data!.services![index];
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    doctorDetailsClass!.data!.services == null ? " " : SERVICES,
+                    style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w500,
+                        color: BLACK,
+                        fontSize: 15),
+                  ),
+                  //SizedBox(height: 8,),
+                  // Text(
+                  //   doctorDetailsClass!.data!.services == null
+                  //       ? ""
+                  //       : doctorDetailsClass!.data!.services.toString(),
+                  //   style: GoogleFonts.poppins(
+                  //       fontWeight: FontWeight.w500,
+                  //       color: LIGHT_GREY_TEXT,
+                  //       fontSize: 10),
+                  // ),
+                  SizedBox(
+                    height: 0,
+                  ),
+                  doctorDetailsClass!.data!.services == null
+                      ? Text("No Activities")
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ListView.builder(
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap:
+                                  true, // This ensures that the ListView takes up as much space as needed within the Column
+                              itemCount:
+                                  doctorDetailsClass!.data!.services!.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                // Use the index to access each service in the list
+                                String service =
+                                    doctorDetailsClass!.data!.services![index];
 
-                            // Map service names to text and icons
-                            Map<String, dynamic> serviceData =
-                                getServiceData(service);
+                                // Map service names to text and icons
+                                Map<String, dynamic> serviceData =
+                                    getServiceData(service);
 
+                                // Customize text size
+                                TextStyle textStyle = TextStyle(
+                                    fontSize: 12.0,
+                                    color: LIGHT_GREY_TEXT,
+                                    fontWeight: FontWeight
+                                        .w500); // Adjust the font size as needed
+                                // Customize ListTile height
+                                // double customListTileHeight = 0.0;
+                                // Create a widget to represent each service with an icon
+                                return Container(
+                                  // padding: EdgeInsets.only(left: 0),
+                                  height: 25,
+                                  child: ListTile(
+                                    // contentPadding: EdgeInsets.symmetric(
+                                    //     vertical: customListTileHeight),
+                                    dense: true,
+                                    contentPadding: EdgeInsets
+                                        .zero, // Set contentPadding to zero
+                                    visualDensity: VisualDensity(
+                                        horizontal: 0,
+                                        vertical:
+                                            -4), // Adjust values as needed
+
+                                    title: Row(
+                                      children: [
+                                        // Add an icon before the text
+
+                                        Icon(serviceData['icon'],
+                                            size:
+                                                12.0), // Replace with the desired icon
+
+                                        // Add some spacing between the icon and text
+                                        SizedBox(width: 8.0),
+
+                                        // Display the text with customized style
+
+                                        Text(
+                                          serviceData['text'],
+                                          style: textStyle,
+                                        ),
+                                      ],
+                                    ),
+                                    // You can customize the ListTile further if needed
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
+                        )
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    doctorDetailsClass!.data!.languages == null
+                        ? " "
+                        : HEALTH_CARE,
+                    style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w500,
+                        color: BLACK,
+                        fontSize: 15),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  doctorDetailsClass!.data!.languages == null
+                      ? Text("No Languages Selected")
+                      : Row(
+                          children: doctorDetailsClass!.data!.languages!
+                              .map((language) {
                             // Customize text size
                             TextStyle textStyle = TextStyle(
                                 fontSize: 12.0,
                                 color: LIGHT_GREY_TEXT,
-                                fontWeight: FontWeight
-                                    .w500); // Adjust the font size as needed
-                            // Customize ListTile height
-                            // double customListTileHeight = 0.0;
-                            // Create a widget to represent each service with an icon
+                                fontWeight: FontWeight.w500);
+
+                            // Map language to display text
+                            String displayText =
+                                getDisplayTextForLanguage(language);
+
                             return Container(
-                              // padding: EdgeInsets.only(left: 0),
-                              height: 25,
-                              child: ListTile(
-                                // contentPadding: EdgeInsets.symmetric(
-                                //     vertical: customListTileHeight),
-                                dense: true,
-                                contentPadding: EdgeInsets
-                                    .zero, // Set contentPadding to zero
-                                visualDensity: VisualDensity(
-                                    horizontal: 0,
-                                    vertical: -4), // Adjust values as needed
-
-                                title: Row(
-                                  children: [
-                                    // Add an icon before the text
-
-                                    Icon(serviceData['icon'],
-                                        size:
-                                            12.0), // Replace with the desired icon
-
-                                    // Add some spacing between the icon and text
-                                    SizedBox(width: 8.0),
-
-                                    // Display the text with customized style
-
-                                    Text(
-                                      serviceData['text'],
+                              // padding: EdgeInsets.zero,
+                              margin: EdgeInsets.only(left: 0, right: 8.0),
+                              child: doctorDetailsClass!.data!.languages!
+                                          .indexOf(language) !=
+                                      count - 1
+                                  ? Text(
+                                      '$displayText,',
+                                      style: textStyle,
+                                    )
+                                  : Text(
+                                      '$displayText',
                                       style: textStyle,
                                     ),
-                                  ],
-                                ),
-                                // You can customize the ListTile further if needed
-                              ),
                             );
-                          },
-                        ),
-                      ],
-                    )
+                          }).toList(),
+                        )
+                ],
+              )
             ],
           ),
-          SizedBox(
-            height: 10,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                doctorDetailsClass!.data!.languages == null ? " " : HEALTH_CARE,
-                style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w500, color: BLACK, fontSize: 15),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              doctorDetailsClass!.data!.languages == null
-                  ? Text("No Languages Selected")
-                  : Row(
-                      children:
-                          doctorDetailsClass!.data!.languages!.map((language) {
-                        // Customize text size
-                        TextStyle textStyle = TextStyle(
-                            fontSize: 12.0,
-                            color: LIGHT_GREY_TEXT,
-                            fontWeight: FontWeight.w500);
-
-                        // Map language to display text
-                        String displayText =
-                            getDisplayTextForLanguage(language);
-
-                        return Container(
-                          // padding: EdgeInsets.zero,
-                          margin: EdgeInsets.only(left: 0, right: 8.0),
-                          child: doctorDetailsClass!.data!.languages!
-                                      .indexOf(language) !=
-                                  count - 1
-                              ? Text(
-                                  '$displayText,',
-                                  style: textStyle,
-                                )
-                              : Text(
-                                  '$displayText',
-                                  style: textStyle,
-                                ),
-                        );
-                      }).toList(),
-                    )
-            ],
-          )
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -786,158 +915,158 @@ class _DetailsPageState extends State<DetailsPage> {
     }
   }
 
-  Widget button() {
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: Container(
-        height: 55,
-        margin: EdgeInsets.fromLTRB(12, 10, 12, 10),
-        //width: MediaQuery.of(context).size.width,
-        child: InkWell(
-          onTap: () {
-            processPayment();
-          },
-          child: Stack(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(30),
-                child: isLoggedIn!
-                    ? Image.asset(
-                        "assets/moreScreenImages/green.png",
-                        height: 60,
-                        fit: BoxFit.fill,
-                        width: MediaQuery.of(context).size.width,
-                      )
-                    : Image.asset(
-                        "assets/moreScreenImages/header_bg.png",
-                        height: 60,
-                        fit: BoxFit.fill,
-                        width: MediaQuery.of(context).size.width,
-                      ),
-              ),
-              Center(
-                child: isLoggedIn!
-                    ? Row(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            padding: EdgeInsets.fromLTRB(20, 5, 0, 5),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  "${CURRENCY.trim()}${doctorDetailsClass!.data!.consultationFee ?? NOT_SPECIFIED}",
-                                  style: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.w500,
-                                      color: WHITE,
-                                      fontSize: 18),
-                                ),
-                                Text(
-                                  BOOK_NOW,
-                                  style: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.w500,
-                                      color: WHITE,
-                                      fontSize: 9),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Container(
-                            height: 70,
-                            child: VerticalDivider(
-                              color: WHITE,
-                              indent: 5,
-                              thickness: 0.5,
-                              endIndent: 5,
-                            ),
-                          ),
-                          Expanded(child: SizedBox()),
-                          Text(
-                            BOOK_NOW,
-                            style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w500,
-                                color: WHITE,
-                                fontSize: 16),
-                          ),
-                          SizedBox(
-                            width: 3,
-                          ),
-                          Icon(
-                            Icons.arrow_forward_ios_rounded,
-                            color: WHITE,
-                            size: 16,
-                          ),
-                          SizedBox(
-                            width: 12,
-                          ),
-                        ],
-                      )
-                    : Row(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            padding: EdgeInsets.fromLTRB(20, 5, 0, 5),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  "${CURRENCY.trim()}${doctorDetailsClass!.data!.consultationFee ?? NOT_SPECIFIED}",
-                                  style: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.w500,
-                                      color: WHITE,
-                                      fontSize: 18),
-                                ),
-                                Text(
-                                  APPOINTMENT_FEE,
-                                  style: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.w500,
-                                      color: WHITE,
-                                      fontSize: 9),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Container(
-                            height: 70,
-                            child: VerticalDivider(
-                              color: WHITE,
-                              indent: 5,
-                              thickness: 0.5,
-                              endIndent: 5,
-                            ),
-                          ),
-                          Expanded(child: SizedBox()),
-                          Text(
-                            LOGIN_TO_BOOK_APPOINTMENT,
-                            style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w500,
-                                color: WHITE,
-                                fontSize: 14),
-                          ),
-                          SizedBox(
-                            width: 12,
-                          ),
-                        ],
-                      ),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+  // Widget button() {
+  //   return Align(
+  //     alignment: Alignment.bottomCenter,
+  //     child: Container(
+  //       height: 55,
+  //       margin: EdgeInsets.fromLTRB(12, 10, 12, 10),
+  //       //width: MediaQuery.of(context).size.width,
+  //       child: InkWell(
+  //         onTap: () {
+  //           processPayment();
+  //         },
+  //         child: Stack(
+  //           children: [
+  //             ClipRRect(
+  //               borderRadius: BorderRadius.circular(30),
+  //               child: isLoggedIn!
+  //                   ? Image.asset(
+  //                       "assets/moreScreenImages/green.png",
+  //                       height: 60,
+  //                       fit: BoxFit.fill,
+  //                       width: MediaQuery.of(context).size.width,
+  //                     )
+  //                   : Image.asset(
+  //                       "assets/moreScreenImages/header_bg.png",
+  //                       height: 60,
+  //                       fit: BoxFit.fill,
+  //                       width: MediaQuery.of(context).size.width,
+  //                     ),
+  //             ),
+  //             // Center(
+  //             //   child: isLoggedIn!
+  //             //       ? Row(
+  //             //           children: [
+  //             //             Container(
+  //             //               decoration: BoxDecoration(
+  //             //                 borderRadius: BorderRadius.circular(20),
+  //             //               ),
+  //             //               padding: EdgeInsets.fromLTRB(20, 5, 0, 5),
+  //             //               child: Column(
+  //             //                 crossAxisAlignment: CrossAxisAlignment.start,
+  //             //                 mainAxisSize: MainAxisSize.min,
+  //             //                 children: [
+  //             //                   Text(
+  //             //                     "${CURRENCY.trim()}${doctorDetailsClass!.data!.consultationFee ?? NOT_SPECIFIED}",
+  //             //                     style: GoogleFonts.poppins(
+  //             //                         fontWeight: FontWeight.w500,
+  //             //                         color: WHITE,
+  //             //                         fontSize: 18),
+  //             //                   ),
+  //             //                   Text(
+  //             //                     BOOK_NOW,
+  //             //                     style: GoogleFonts.poppins(
+  //             //                         fontWeight: FontWeight.w500,
+  //             //                         color: WHITE,
+  //             //                         fontSize: 9),
+  //             //                   ),
+  //             //                 ],
+  //             //               ),
+  //             //             ),
+  //             //             SizedBox(
+  //             //               width: 5,
+  //             //             ),
+  //             //             Container(
+  //             //               height: 70,
+  //             //               child: VerticalDivider(
+  //             //                 color: WHITE,
+  //             //                 indent: 5,
+  //             //                 thickness: 0.5,
+  //             //                 endIndent: 5,
+  //             //               ),
+  //             //             ),
+  //             //             Expanded(child: SizedBox()),
+  //             //             Text(
+  //             //               BOOK_NOW,
+  //             //               style: GoogleFonts.poppins(
+  //             //                   fontWeight: FontWeight.w500,
+  //             //                   color: WHITE,
+  //             //                   fontSize: 16),
+  //             //             ),
+  //             //             SizedBox(
+  //             //               width: 3,
+  //             //             ),
+  //             //             Icon(
+  //             //               Icons.arrow_forward_ios_rounded,
+  //             //               color: WHITE,
+  //             //               size: 16,
+  //             //             ),
+  //             //             SizedBox(
+  //             //               width: 12,
+  //             //             ),
+  //             //           ],
+  //             //         )
+  //             //       : Row(
+  //             //           children: [
+  //             //             Container(
+  //             //               decoration: BoxDecoration(
+  //             //                 borderRadius: BorderRadius.circular(20),
+  //             //               ),
+  //             //               padding: EdgeInsets.fromLTRB(20, 5, 0, 5),
+  //             //               child: Column(
+  //             //                 crossAxisAlignment: CrossAxisAlignment.start,
+  //             //                 mainAxisSize: MainAxisSize.min,
+  //             //                 children: [
+  //             //                   Text(
+  //             //                     "${CURRENCY.trim()}${doctorDetailsClass!.data!.consultationFee ?? NOT_SPECIFIED}",
+  //             //                     style: GoogleFonts.poppins(
+  //             //                         fontWeight: FontWeight.w500,
+  //             //                         color: WHITE,
+  //             //                         fontSize: 18),
+  //             //                   ),
+  //             //                   Text(
+  //             //                     APPOINTMENT_FEE,
+  //             //                     style: GoogleFonts.poppins(
+  //             //                         fontWeight: FontWeight.w500,
+  //             //                         color: WHITE,
+  //             //                         fontSize: 9),
+  //             //                   ),
+  //             //                 ],
+  //             //               ),
+  //             //             ),
+  //             //             SizedBox(
+  //             //               width: 5,
+  //             //             ),
+  //             //             Container(
+  //             //               height: 70,
+  //             //               child: VerticalDivider(
+  //             //                 color: WHITE,
+  //             //                 indent: 5,
+  //             //                 thickness: 0.5,
+  //             //                 endIndent: 5,
+  //             //               ),
+  //             //             ),
+  //             //             Expanded(child: SizedBox()),
+  //             //             Text(
+  //             //               LOGIN_TO_BOOK_APPOINTMENT,
+  //             //               style: GoogleFonts.poppins(
+  //             //                   fontWeight: FontWeight.w500,
+  //             //                   color: WHITE,
+  //             //                   fontSize: 14),
+  //             //             ),
+  //             //             SizedBox(
+  //             //               width: 12,
+  //             //             ),
+  //             //           ],
+  //             //         ),
+  //             // )
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Future<void> openMap(double latitude, double longitude) async {
     print("opening map");
