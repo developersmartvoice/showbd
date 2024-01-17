@@ -42,7 +42,7 @@ android {
         abortOnError false
     }
 
-    compileSdkVersion 33
+    compileSdkVersion 34
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -74,7 +74,7 @@ android {
             // keyPassword keystoreProperties['showbd@@##']
             keyPassword 'showbd@@##'
             // storeFile keystoreProperties['showbd.jks'] ? file(keystoreProperties['D:\\Flutter Projects\\showbd\\showbd.jks']) : null
-            storeFile file('D:\\Flutter Projects\\showbd\\showbd.jks')
+            storeFile file('D:\\showbd\\showbd.jks')
             storePassword 'showbd@@##'
         }
     }
