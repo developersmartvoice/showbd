@@ -49,7 +49,7 @@ class TripCard extends StatelessWidget {
   Widget tripImage() {
     // Placeholder image, replace with your own or use a network image
     return Image.asset(
-      'assets/trip_image_placeholder.jpg',
+      'assets/waterfalls-thailand-nature-wallpaper-its-finest_1000348-2530.jpg',
       height: 150.0,
       width: double.infinity,
       fit: BoxFit.fill,
@@ -110,7 +110,7 @@ class TripCard extends StatelessWidget {
   String getNumberString(n) {
     switch (n) {
       case 1:
-        return "Just me";
+        return "Only Me";
       case 2:
         return "Two People";
       case 3:

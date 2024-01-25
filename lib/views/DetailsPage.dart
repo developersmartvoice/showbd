@@ -3,13 +3,17 @@ import 'dart:convert';
 import 'package:appcode3/en.dart';
 import 'package:appcode3/main.dart';
 import 'package:appcode3/modals/DoctorDetailsClass.dart';
+import 'package:appcode3/views/AboutScreen.dart';
 import 'package:appcode3/views/BookingScreen.dart';
+import 'package:appcode3/views/CreateTrip.dart';
+import 'package:appcode3/views/HelpCenter.dart';
 import 'package:appcode3/views/MakeAppointment.dart';
 import 'package:appcode3/views/MapWidget.dart';
 import 'package:appcode3/views/ReviewsScreen.dart';
 import 'package:appcode3/views/loginAsUser.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -497,81 +501,254 @@ class _DetailsPageState extends State<DetailsPage> {
               // ),
               Container(
                 alignment: Alignment.center,
-                child: ElevatedButton(
-                  onPressed: () {
-                    print("This is widget id which need to send: ${widget.id}");
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              BookingScreen(widget.id, guideName!)),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.blue, // Change the background color
-                    shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(10.0), // Set border radius
-                    ),
-                    padding: EdgeInsets.symmetric(
-                        horizontal: 100.0), // Customize horizontal padding
-                    elevation: 5.0, // Set elevation
-                    shadowColor: Colors.grey, // Set shadow color
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        Icons.connect_without_contact_sharp,
-                        size: 30.0, // Set icon size
-                        color: Colors.white, // Set icon color
-                        // shadows: [
-                        //   Shadow(blurRadius: 5.0, color: Colors.black)
-                        // ], // Add shadow to the icon
-                      ),
-                      SizedBox(
-                          width:
-                              10), // Add some spacing between the icon and the label
-                      Text(
-                        'Contact',
-                        style: GoogleFonts.poppins(
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.w500, // Set label font size
-                          color: Colors.white, // Set label color
+                // child: ElevatedButton(
+                //   onPressed: () {
+                //     print("This is widget id which need to send: ${widget.id}");
+                //     Navigator.push(
+                //       context,
+                //       MaterialPageRoute(
+                //           builder: (context) =>
+                //               BookingScreen(widget.id, guideName!)),
+                //     );
+                //   },
+                //   style: ElevatedButton.styleFrom(
+                //     primary: Colors.blue, // Change the background color
+                //     shape: RoundedRectangleBorder(
+                //       borderRadius:
+                //           BorderRadius.circular(10.0), // Set border radius
+                //     ),
+                //     padding:
+                //         EdgeInsets.all(10.0), // Customize horizontal padding
+                //     elevation: 5.0, // Set elevation
+                //     shadowColor: Colors.grey, // Set shadow color
+                //   ),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //     mainAxisSize: MainAxisSize.min,
+                //     children: <Widget>[
+                //       Icon(
+                //         Icons.connect_without_contact_sharp,
+                //         size: 30.0, // Set icon size
+                //         color: Colors.white, // Set icon color
+                //         shadows: [
+                //           Shadow(blurRadius: 5.0, color: Colors.black)
+                //         ], // Add shadow to the icon
+                //       ),
+                //       SizedBox(
+                //         width: 5.0,
+                //       ),
+                //       Expanded(
+                //         flex: 3,
+                //         child: SizedBox(
+                //           width: 10,
+                //           child: Text(
+                //             'Contact',
+                //             style: GoogleFonts.poppins(
+                //               fontSize: 18.0,
+                //               fontWeight:
+                //                   FontWeight.w500, // Set label font size
+                //               color: Colors.white,
+                //             ),
+                //           ), // Set label color
+                //         ),
+                //       ),
+
+                //       SizedBox(
+                //         width: 5.0,
+                //       ),
+
+                //       Icon(
+                //         Icons.airplane_ticket_sharp,
+                //         size: 30.0, // Set icon size
+                //         color: Colors.white, // Set icon color
+                //         // shadows: [
+                //         //   Shadow(blurRadius: 5.0, color: Colors.black)
+                //         // ], // Add shadow to the icon
+                //       ),
+                //       SizedBox(
+                //         width: 5.0,
+                //       ),
+                //       // Set the desired space between SizedBox widgets
+                //       Expanded(
+                //         flex: 3,
+                //         child: SizedBox(
+                //           width: 10,
+                //           child: Text(
+                //             //crossAxisAlignment: CrossAxisAlignment.center,
+                //             'Create A Trip',
+                //             style: GoogleFonts.poppins(
+                //               fontSize: 18.0,
+                //               fontWeight: FontWeight.w500,
+                //               color: Colors.white,
+                //             ),
+                //           ),
+                //         ),
+                //       )
+                //     ],
+                //   ),
+                // ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Expanded(
+                      child: ElevatedButton.icon(
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  BookingScreen(widget.id, guideName!),
+                            ),
+                          );
+                        },
+                        icon: Icon(Icons.connect_without_contact_sharp),
+                        label: Text("Contact"),
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor:
+                              const Color.fromARGB(255, 3, 142, 255),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          padding: EdgeInsets.all(10.0),
+                          elevation: 5.0,
+                          shadowColor: Colors.grey,
+                          textStyle: GoogleFonts.poppins(
+                            fontSize: 19.0,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white, // Set text color to white
+                          ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                    //textStyle: GoogleFonts.poppins(
+                    //backgroundColor: Colors.white,
+                    //fontSize: 18.0,
+                    //fontWeight: FontWeight.w500,
+                    //color: Colors.white,
+                    //),
+                    //primary: Colors.blue,
+                    //backgroundColor: Colors.blue,
+                    //shape: RoundedRectangleBorder(
+                    //borderRadius: BorderRadius.circular(
+                    // 10.0), // Set border radius
+                    //),
+                    //padding: EdgeInsets.all(
+                    //10.0), // Customize horizontal padding
+                    //elevation: 5.0, // Set elevation
+                    //shadowColor: Colors.grey, // Set shadow color
+                    //),
+                    //),
+                    //),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: ElevatedButton.icon(
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => CreateTrip(),
+                            ),
+                          );
+                        },
+                        icon: Icon(Icons.airplane_ticket_sharp),
+                        label: Text("Create A Trip"),
+                        style: ElevatedButton.styleFrom(
+                          textStyle: GoogleFonts.poppins(
+                            fontSize: 19.0,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.blueAccent,
+                          ),
+                          backgroundColor: Colors.white,
+                          foregroundColor:
+                              const Color.fromARGB(255, 3, 142, 255),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            side: BorderSide(
+                              color: Colors.blue,
+                            ), // Set border radius
+                          ),
+                          padding: EdgeInsets.all(
+                              10.0), // Customize horizontal padding
+                          elevation: 5.0, // Set elevation
+                          shadowColor: Colors.grey, // Set shadow color
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
 
               SizedBox(
-                height: 15,
+                height: 10,
               ),
+
+              Divider(
+                height: 12.0,
+                color: Colors.grey[500],
+              ),
+
               Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Text(
-                    doctorDetailsClass!.data!.aboutus == null ? " " : ABOUT_US,
-                    style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black,
-                        fontSize: 15),
-                  ),
+                  //Text(
+                  //doctorDetailsClass!.data!.aboutus == null ? " " : ABOUT_US,
+                  //style: GoogleFonts.poppins(
+                  //fontWeight: FontWeight.w500,
+                  //color: Colors.black,
+                  //fontSize: 30),
+                  //),
                   //SizedBox(height: 8,),
                   Text(
                     doctorDetailsClass!.data!.aboutus == null
                         ? " "
                         : doctorDetailsClass!.data!.aboutus.toString(),
+
                     style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w500,
                         color: LIGHT_GREY_TEXT,
-                        fontSize: 12),
+                        fontSize: 33),
+                    textAlign: TextAlign.center,
+                    //textAlignVertical: TextAlignVertical.center,
                   ),
                 ],
               ),
+
               SizedBox(
-                height: 15,
+                height: 5,
+              ),
+
+              Divider(
+                height: 10.0,
+                color: Colors.grey[500],
+              ),
+
+              //Column(
+              //crossAxisAlignment: CrossAxisAlignment.start,
+              //children: [
+              //Text(
+              //doctorDetailsClass!.data!.aboutus == null ? " " : ABOUT_US,
+              //style: GoogleFonts.poppins(
+              //  fontWeight: FontWeight.w500,
+              //color: Colors.black,
+              //fontSize: 15),
+              //),
+              //SizedBox(height: 8,),
+              //Text(
+              //doctorDetailsClass!.data!.aboutus == null
+              //  ? " "
+              //: doctorDetailsClass!.data!.aboutus.toString(),
+              //style: GoogleFonts.poppins(
+              // fontWeight: FontWeight.w500,
+              // color: LIGHT_GREY_TEXT,
+              //fontSize: 12),
+              //),
+              //],
+              //),
+              SizedBox(
+                height: 5,
               ),
               Container(
                 child: Row(
@@ -702,7 +879,11 @@ class _DetailsPageState extends State<DetailsPage> {
                 ),
               ),
               SizedBox(
-                height: 15,
+                height: 5,
+              ),
+              Divider(
+                height: 10.0,
+                color: Colors.grey[500],
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -725,7 +906,7 @@ class _DetailsPageState extends State<DetailsPage> {
                   //       fontSize: 10),
                   // ),
                   SizedBox(
-                    height: 0,
+                    width: 0,
                   ),
                   doctorDetailsClass!.data!.services == null
                       ? Text("No Activities")
@@ -800,6 +981,10 @@ class _DetailsPageState extends State<DetailsPage> {
               ),
               SizedBox(
                 height: 10,
+              ),
+              Divider(
+                height: 20.0,
+                color: Colors.grey[500],
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
