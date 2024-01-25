@@ -463,6 +463,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 //import 'package:facebook_audience_network/ad/ad_native.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/style.dart';
 //import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
@@ -646,18 +647,29 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                     )));
               }
               return Container(
+                width: MediaQuery.sizeOf(context).width * 1,
                 //margin: EdgeInsets.all(8),
                 padding: EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  //borderRadius: BorderRadius.circular(10),
-                  // color: Colors.red
-                  color: Theme.of(context).backgroundColor,
-                ),
-                child: Row(
+                //child: Column(
+                //crossAxisAlignment: CrossAxisAlignment.center,
+                //children: <Widget>[
+                //child: CircleAvatar(
+                //backgroundImage: AssetImage('assets/homeScreenImages/user_unactive.png'),
+                //),
+                //],
+                //),
+                //decoration: BoxDecoration(
+                //borderRadius: BorderRadius.circular(10),
+                // color: Colors.red
+                //color: Theme.of(context).backgroundColor,
+                //),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(50),
                       child: CachedNetworkImage(
+                        //alignment: Alignment.topCenter,
                         imageUrl: doctorProfileWithRating!.data!.image!,
                         height: 85,
                         width: 85,
@@ -686,87 +698,121 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                       ),
                     ),
                     SizedBox(
-                      width: 10,
+                      height: 15,
                     ),
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  doctorProfileWithRating!.data!.name!,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .subtitle1!
-                                      .apply(fontWeightDelta: 2),
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      doctorProfileWithRating!
-                                              .data!.departmentName!.isEmpty
-                                          ? SPECIALITY
-                                          : doctorProfileWithRating!
-                                              .data!.departmentName!,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1!
-                                          .apply(
-                                              color: Theme.of(context)
-                                                  .primaryColorDark),
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Image.asset(
-                                      "assets/detailScreenImages/star_fill.png",
-                                      height: 15,
-                                      width: 15,
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                      double.parse(doctorProfileWithRating!
-                                              .data!.avgratting
-                                              .toString())
-                                          .toString(),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1!
-                                          .apply(
-                                              color: Theme.of(context)
-                                                  .primaryColorDark),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            child: Text(
-                              doctorProfileWithRating!.data!.address ??
-                                  ADDRESS_GOES_HERE,
-                              style: Theme.of(context).textTheme.caption!.apply(
-                                    color: Theme.of(context)
-                                        .primaryColorDark
-                                        .withOpacity(0.4),
-                                    fontSizeDelta: 0.1,
-                                  ),
-                            ),
-                          ),
-                        ],
-                      ),
+                    // Expanded(
+                    //   child: Column(
+                    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     children: [
+                    //       Container(
+                    //         child: Column(
+                    //           crossAxisAlignment: CrossAxisAlignment.center,
+                    //           children: [
+                    //             Text(
+                    //               doctorProfileWithRating!.data!.name!,
+                    //               style: Theme.of(context)
+                    //                   .textTheme
+                    //                   .subtitle1!
+                    //                   .apply(fontWeightDelta: 2),
+                    //             ),
+                    //             Row(
+                    //               children: [
+                    //                 //Text(
+                    //                 //doctorProfileWithRating!
+                    //                 //     .data!.departmentName!.isEmpty
+                    //                 // ? SPECIALITY
+                    //                 // : doctorProfileWithRating!
+                    //                 //   .data!.departmentName!,
+                    //                 //style: Theme.of(context)
+                    //                 //  .textTheme
+                    //                 //.bodyText1!
+                    //                 //.apply(
+                    //                 //  color: Theme.of(context)
+                    //                 //    .primaryColorDark),
+                    //                 //),
+                    //                 SizedBox(
+                    //                   width: 10,
+                    //                 ),
+                    //                 //Image.asset(
+                    //                 //"assets/detailScreenImages/star_fill.png",
+                    //                 //height: 15,
+                    //                 //width: 15,
+                    //                 //),
+                    //                 SizedBox(
+                    //                   width: 5,
+                    //                 ),
+                    //                 //Text(
+                    //                 //double.parse(doctorProfileWithRating!
+                    //                 //      .data!.avgratting
+                    //                 //    .toString())
+                    //                 //.toString(),
+                    //                 //style: Theme.of(context)
+                    //                 //  .textTheme
+                    //                 //.bodyText1!
+                    //                 //.apply(
+                    //                 //  color: Theme.of(context)
+                    //                 //    .primaryColorDark),
+                    //                 //),
+                    //               ],
+                    //             ),
+                    //           ],
+                    //         ),
+                    //       ),
+                    //       SizedBox(
+                    //         height: 10,
+                    //       ),
+                    //       //Container(
+                    //       //child: Text(
+                    //       //doctorProfileWithRating!.data!.address ??
+                    //       //  ADDRESS_GOES_HERE,
+                    //       //style: Theme.of(context).textTheme.caption!.apply(
+                    //       //    color: Theme.of(context)
+                    //       //      .primaryColorDark
+                    //       //    .withOpacity(0.4),
+                    //       //fontSizeDelta: 0.1,
+                    //       //),
+                    //       //),
+                    //       //),
+                    //     ],
+                    //   ),
+                    // ),
+                    // SizedBox(
+                    //   width: 10,
+                    // ),
+                    Text(
+                      doctorProfileWithRating!.data!.name!,
+                      style: Theme.of(context)
+                          .textTheme
+                          .subtitle1!
+                          .apply(fontWeightDelta: 2),
                     ),
                     SizedBox(
-                      width: 10,
+                      height: 10,
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => DoctorProfile(),
+                          ),
+                        );
+                      },
+                      child: Text('View Profile'),
+                      style: ElevatedButton.styleFrom(
+                        textStyle: GoogleFonts.poppins(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        foregroundColor: Colors.white,
+                        backgroundColor: const Color.fromARGB(255, 3, 142, 255),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          side: BorderSide(
+                            color: Colors.white,
+                          ), // Set border radius
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -778,12 +824,71 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
     return Container(
       margin: EdgeInsets.only(top: 15),
 
-      // margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
+      //margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           //----------- Edit Profile -------------
+
+          //Expanded(
+          //SizedBox(
+          //ElevatedButton(onPressed: () {
+          //Navigator.of(context).push(
+          //MaterialPageRoute(
+          // builder: (context) => DoctorProfile(),
+          //),
+          //);
+          //},
+          //icon: Icon(Icons.airplane_ticket_sharp),
+          //label: Text("View Profile"),
+          //style: ElevatedButton.styleFrom(
+          //textStyle: GoogleFonts.poppins(
+          // fontSize: 19.0,
+          //fontWeight: FontWeight.w500,
+          //color: Colors.blueAccent,
+          //),
+          //backgroundColor: Colors.white,
+          //foregroundColor: const Color.fromARGB(255, 3, 142, 255),
+          //shape: RoundedRectangleBorder(
+          //borderRadius: BorderRadius.circular(10.0),
+          //side: BorderSide(
+          //color: Colors.blue,
+          //), // Set border radius
+          //),
+          //padding: EdgeInsets.all(10.0), // Customize horizontal padding
+          //elevation: 5.0, // Set elevation
+          //shadowColor: Colors.grey, // Set shadow color
+          //),
+          //),
+          //),
+
+          //SizedBox(
+          //height: 60,
+          //),
+
+          Divider(
+            height: 15,
+            color: Colors.grey,
+          ),
+
+          Padding(
+            padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 35,
+                  child: Text(
+                    'PROFILE SETTINGS',
+                    style: TextStyle(
+                      fontSize: 18.0,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
 
           GestureDetector(
             onTap: () {
@@ -803,7 +908,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      EDIT_PROFILE,
+                      GENERAL_INFORMATION,
                       style: Theme.of(context).textTheme.subtitle1,
                     ),
                     Icon(
@@ -817,7 +922,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
           ),
 
           SizedBox(
-            height: 15,
+            height: 5,
           ),
 
           ///---------  change password ----------
@@ -839,7 +944,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      CHANGE_PASSWORD,
+                      CONTACT_AND_IDENTIFICATION,
                       style: Theme.of(context).textTheme.subtitle1,
                     ),
                     Icon(
@@ -853,7 +958,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
           ),
 
           SizedBox(
-            height: 15,
+            height: 5,
           ),
 
           ///--------- subscription ------------
@@ -875,7 +980,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      SUBSCRIPTION,
+                      MEMBERSHIP,
                       style: Theme.of(context).textTheme.subtitle1,
                     ),
                     Icon(
@@ -900,6 +1005,24 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
 
           SizedBox(
             height: 15,
+          ),
+
+          Padding(
+            padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 40,
+                  child: Text(
+                    'LOCAL HOST',
+                    style: TextStyle(
+                      fontSize: 18.0,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
 
           ///--------- subscription ------------
@@ -921,7 +1044,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      INCOME_REPORT,
+                      ABOUT_HOST,
                       style: Theme.of(context).textTheme.subtitle1,
                     ),
                     Icon(
@@ -945,7 +1068,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
           ),
 
           SizedBox(
-            height: 15,
+            height: 5,
           ),
 
           ///-----------logoout -------------
@@ -967,7 +1090,75 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      LOGOUT,
+                      CURRENCY_EXCHANGE,
+                      style: Theme.of(context).textTheme.subtitle1,
+                    ),
+                    Icon(Icons.arrow_forward_ios, size: 20),
+                    // TextButton(onPressed: (){
+                    //   Navigator.push(context,
+                    //     MaterialPageRoute(builder: (context) => DoctorAllAppointments()),
+                    //   );
+                    // }, child: Text(SEE_ALL,
+                    //     style: Theme.of(context).textTheme.bodyText2!.apply(
+                    //       color: Theme.of(context).hintColor,
+                    //       fontWeightDelta: 5,
+                    //     )
+                    // ),)
+                  ],
+                ),
+              ),
+            ),
+          ),
+
+          SizedBox(
+            height: 15,
+          ),
+
+          //Divider(
+          //height: 40,
+          //color: Colors.grey,
+          //),
+
+          Padding(
+            padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 40,
+                  child: Text(
+                    'NOTIFICATIONS',
+                    style: TextStyle(fontSize: 18.0),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          //SizedBox(
+          //height: 15,
+          //),
+
+          ///-----------logoout -------------
+          GestureDetector(
+            onTap: () {
+              messageDialog(LOGOUT, ARE_YOU_SURE_TO_LOGOUT);
+              // Navigator.push(context,
+              //     MaterialPageRoute(builder: (context) => LogOutScreen()
+              // ));
+            },
+            child: Container(
+              height: 50,
+              margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
+              decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(10)),
+              child: Container(
+                margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      NOTIFICATION_SETTINGS,
                       style: Theme.of(context).textTheme.subtitle1,
                     ),
                     Icon(Icons.arrow_forward_ios, size: 20),
