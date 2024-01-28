@@ -454,6 +454,26 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                           onPageChanged: (index, reason) {},
                         ),
                       ),
+
+                      Container(
+                        width: MediaQuery.sizeOf(context).width * 1,
+                        margin: EdgeInsets.only(top: 160),
+                        child: Text(
+                          name.toString().toUpperCase(),
+                          maxLines: 2,
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.ellipsis,
+                          style: GoogleFonts.poppins(
+                            // color: Color.fromARGB(255, 255, 94, 0)
+                            //     .withOpacity(0.8),
+                            color: Colors.white,
+                            backgroundColor: Color.fromARGB(94, 194, 191, 191),
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+
                       Container(
                         width: 60.0, // Fixed width
                         height: 40.0, // Fixed height
@@ -474,12 +494,28 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
+
+                          //child: SizedBox(child:
+                          //Text(
+                          //name,
+                          //maxLines: 2,
+                          //textAlign: TextAlign.center,
+                          //overflow: TextOverflow.ellipsis,
+                          //style: GoogleFonts.poppins(
+                          //color: Color.fromARGB(255, 255, 94, 0).withOpacity(0.8),
+                          //fontSize: 16,
+                          //fontWeight: FontWeight.w500,
+                          //),
+                          //),
+
+                          //)
                         ),
                       ),
+
                       // add button
                       Container(
-                        margin: EdgeInsets.only(top: 150),
-                        width: 120,
+                        margin: EdgeInsets.only(top: 135),
+                        width: 160,
                         height: 50,
                         child: isLoggedIn
                             ? ElevatedButton(
@@ -501,12 +537,14 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                                     ),
                                     // Adjust the radius as needed
                                   ),
-                                  minimumSize: Size(60,
-                                      40), // Set the minimum width and height
+                                  minimumSize: Size(10,
+                                      35), // Set the minimum width and height
                                   // Set the button color to orange
                                 ),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Icon(
                                       Icons
@@ -552,7 +590,8 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                                   // Set the button color to orange
                                 ),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Icon(
                                       Icons
@@ -572,6 +611,19 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                                         fontSize: 10,
                                       ),
                                     ),
+
+                                    Text(
+                                      name,
+                                      maxLines: 2,
+                                      textAlign: TextAlign.center,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: GoogleFonts.poppins(
+                                        color: Color.fromARGB(255, 255, 94, 0)
+                                            .withOpacity(0.8),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -584,32 +636,36 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
             SizedBox(
               height: 10,
             ),
-            Text(
-              name,
-              maxLines: 2,
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.ellipsis,
-              style: GoogleFonts.poppins(
-                color: Color.fromARGB(255, 255, 94, 0).withOpacity(0.8),
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
             // Text(
-            //   dept,
+            //   name,
+            //   maxLines: 2,
+            //   textAlign: TextAlign.center,
+            //   overflow: TextOverflow.ellipsis,
             //   style: GoogleFonts.poppins(
-            //     color: LIGHT_GREY_TEXT,
-            //     fontSize: 9.5,
+            //     color: Color.fromARGB(255, 255, 94, 0).withOpacity(0.8),
+            //     fontSize: 16,
             //     fontWeight: FontWeight.w500,
             //   ),
             // ),
+            //Text(
+            //dept,
+            //style: GoogleFonts.poppins(
+            //color: LIGHT_GREY_TEXT,
+            //fontSize: 9.5,
+            //fontWeight: FontWeight.w500,
+            //),
+            //),
             Text(
               aboutMe,
               style: GoogleFonts.poppins(
                 color: LIGHT_GREY_TEXT,
-                fontSize: 13.5,
+                fontSize: 20.0,
                 fontWeight: FontWeight.w500,
               ),
+            ),
+            Divider(
+              height: 30,
+              color: Colors.grey,
             ),
             Container(
               height: 40,

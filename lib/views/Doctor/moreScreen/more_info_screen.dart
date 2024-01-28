@@ -445,6 +445,8 @@
 
 import 'dart:convert';
 import 'package:appcode3/views/Doctor/DoctorProfile.dart';
+import 'package:appcode3/views/SendOfferScreen.dart';
+import 'package:appcode3/views/SendOffersScreen.dart';
 import 'package:connectycube_sdk/connectycube_chat.dart';
 
 import 'package:appcode3/en.dart';
@@ -966,7 +968,8 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SubScriptionScreen()),
+                // MaterialPageRoute(builder: (context) => SubScriptionScreen()),
+                MaterialPageRoute(builder: (context) => SendOfferScreen()),
               );
             },
             child: Container(
@@ -1142,11 +1145,19 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
           ///-----------logoout -------------
           GestureDetector(
             onTap: () {
-              messageDialog(LOGOUT, ARE_YOU_SURE_TO_LOGOUT);
-              // Navigator.push(context,
-              //     MaterialPageRoute(builder: (context) => LogOutScreen()
-              // ));
+              Navigator.push(
+                context,
+                // MaterialPageRoute(builder: (context) => SubScriptionScreen()),
+                MaterialPageRoute(builder: (context) => SendOffersScreen()),
+              );
             },
+            // GestureDetector(
+            //   onTap: () {
+            //     messageDialog(LOGOUT, ARE_YOU_SURE_TO_LOGOUT);
+            //     // Navigator.push(context,
+            //     //     MaterialPageRoute(builder: (context) => LogOutScreen()
+            //     // ));
+            //   },
             child: Container(
               height: 50,
               margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
