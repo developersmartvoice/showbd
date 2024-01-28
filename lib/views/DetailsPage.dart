@@ -660,9 +660,8 @@ class _DetailsPageState extends State<DetailsPage> {
                             fontWeight: FontWeight.w500,
                             color: Colors.blueAccent,
                           ),
-                          backgroundColor: Colors.white,
-                          foregroundColor:
-                              const Color.fromARGB(255, 3, 142, 255),
+                          backgroundColor: Colors.blue,
+                          foregroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
                             side: BorderSide(
