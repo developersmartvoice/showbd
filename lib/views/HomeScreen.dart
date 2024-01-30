@@ -378,12 +378,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.13,
                       ),
-                      isLoad
-                          ? slider()
-                          : Container(
-                              height: Get.height * 0.35,
-                              alignment: Alignment.center,
-                              child: CircularProgressIndicator()),
+                      // isLoad
+                      //     ? slider()
+                      //     : Container(
+                      //         height: Get.height * 0.07,
+                      //         alignment: Alignment.center,
+                      //         child: CircularProgressIndicator()),
                       isLoad
                           ? isLoggedIn
                               ? upCommingAppointments()

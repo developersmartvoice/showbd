@@ -445,6 +445,7 @@
 
 import 'dart:convert';
 import 'package:appcode3/views/Doctor/DoctorProfile.dart';
+import 'package:appcode3/views/Doctor/loginAsDoctor.dart';
 import 'package:appcode3/views/SendOfferScreen.dart';
 import 'package:appcode3/views/SendOffersScreen.dart';
 import 'package:connectycube_sdk/connectycube_chat.dart';
@@ -1237,7 +1238,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => TabsScreen(),
+                        builder: (context) => LoginAsDoctor(),
                       ));
                 },
                 style: TextButton.styleFrom(

@@ -119,6 +119,7 @@ class _LoginAsDoctorState extends State<LoginAsDoctor> {
         print(response.statusCode);
         print(response.body);
         print('print response success');
+
         var jsonResponse = await jsonDecode(response.body);
         if (jsonResponse['success'].toString() == "0") {
           setState(() {
@@ -184,6 +185,10 @@ class _LoginAsDoctorState extends State<LoginAsDoctor> {
             print('firebasse db error $onError');
           });
         }
+        setState(() {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => DoctorTabsScreen()));
+        });
       } catch (e) {
         Navigator.pop(context);
         messageDialog(ERROR, UNABLE_TO_LOAD_DATA_FORM_SERVER);
