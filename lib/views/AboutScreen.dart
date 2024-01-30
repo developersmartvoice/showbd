@@ -12,14 +12,12 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../main.dart';
 
-
 class AboutScreen extends StatefulWidget {
   @override
   _AboutScreenState createState() => _AboutScreenState();
 }
 
 class _AboutScreenState extends State<AboutScreen> {
-
   //WebViewController _controller;
   String fileText = "";
   bool isLoading = true;
@@ -38,9 +36,8 @@ class _AboutScreenState extends State<AboutScreen> {
   }
 
   AboutUs() async {
-    final response = await get(
-        Uri.parse("$SERVER_ADDRESS/api/about"))
-        .catchError((e) {
+    final response =
+        await get(Uri.parse("$SERVER_ADDRESS/api/about")).catchError((e) {
       setState(() {
         isLoading = true;
       });
@@ -72,9 +69,13 @@ class _AboutScreenState extends State<AboutScreen> {
           body: SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(10.0),
-              child: isLoading? Center(child: CircularProgressIndicator(),):Html(
-                data: """$fileText""",
-              ),
+              child: isLoading
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : Html(
+                      data: """$fileText""",
+                    ),
               // child: isLoading? Center(child: CircularProgressIndicator(),):InAppWebView(
               //   key: webViewKey,
               //   // contextMenu: contextMenu,
@@ -134,15 +135,15 @@ class _AboutScreenState extends State<AboutScreen> {
               //   },
               // )
             ),
-          )
-      ),
+          )),
     );
   }
 
-  Widget header(){
+  Widget header() {
     return Stack(
       children: [
-        Image.asset("assets/moreScreenImages/header_bg.png",
+        Image.asset(
+          "assets/moreScreenImages/header_bg.png",
           height: 60,
           fit: BoxFit.fill,
           width: MediaQuery.of(context).size.width,
@@ -151,24 +152,26 @@ class _AboutScreenState extends State<AboutScreen> {
           height: 60,
           child: Row(
             children: [
-              SizedBox(width: 15,),
+              SizedBox(
+                width: 15,
+              ),
               InkWell(
-                onTap: (){
+                onTap: () {
                   Navigator.pop(context);
                 },
-                child: Image.asset("assets/moreScreenImages/back.png",
+                child: Image.asset(
+                  "assets/moreScreenImages/back.png",
                   height: 25,
                   width: 22,
                 ),
               ),
-              SizedBox(width: 10,),
+              SizedBox(
+                width: 10,
+              ),
               Text(
                 ABOUT_US,
                 style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w600,
-                    color: WHITE,
-                    fontSize: 22
-                ),
+                    fontWeight: FontWeight.w600, color: WHITE, fontSize: 22),
               )
             ],
           ),
@@ -192,4 +195,3 @@ class _AboutScreenState extends State<AboutScreen> {
     // ).toString());
   }
 }
-

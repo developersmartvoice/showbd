@@ -32,7 +32,39 @@ class SendOffersScreen extends StatefulWidget {
   State<SendOffersScreen> createState() => _SendOffersScreenState();
 }
 
+// class _selectDate {
+//   _selectDate(BuildContext context);
+// }
+
 class _SendOffersScreenState extends State<SendOffersScreen> {
+  DateTime startDate = DateTime.now();
+  DateTime endDate = DateTime.now();
+
+  bool datePickedStart = false;
+  bool datePickedEnd = false;
+  bool isLoading = false;
+
+  Future<void> _selectDate(BuildContext context, bool isStartDate) async {
+    DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: isStartDate ? startDate : endDate,
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null && picked != (isStartDate ? startDate : endDate)) {
+      setState(() {
+        if (isStartDate) {
+          startDate = picked;
+          endDate = picked;
+          datePickedStart = true;
+        } else {
+          endDate = picked;
+          datePickedEnd = true;
+        }
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,20 +112,32 @@ class _SendOffersScreenState extends State<SendOffersScreen> {
                     fontSize: 18,
                   ),
                 ),
-                Text('Winterfell, The North'),
+                Text(
+                  'Winterfell, The North',
+                  style: TextStyle(
+                    fontSize: 15,
+                  ),
+                ),
               ],
             ),
 
-            Divider(
-              height: 20,
-              color: Colors.grey,
+            // Divider(
+            //   height: 20,
+            //   color: Colors.grey,
+            // ),
+
+            SizedBox(
+              height: 10,
             ),
 
             Align(
               alignment: Alignment(-0.9, -0.7),
-              child: Text(
-                'Looking for a local between',
-                style: TextStyle(fontSize: 15.0),
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  'Looking for a local between',
+                  style: TextStyle(fontSize: 16.0),
+                ),
               ),
             ),
 
@@ -131,16 +175,71 @@ class _SendOffersScreenState extends State<SendOffersScreen> {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
-                    padding: EdgeInsets.all(8.0), // Adjust padding as needed
+                    padding: EdgeInsets.fromLTRB(
+                        16, 0, 5, 0), // Adjust padding as needed
                     child: Icon(
                       Icons.calendar_today, // Choose your calendar icon
                       color: Colors.blue, // Change color as needed
                     ),
                   ),
                 ),
-                SizedBox(
-                    width:
-                        8), // Adjust the width as needed for spacing // Adjust padding as needed
+                SizedBox(width: 8),
+
+                // InkWell(
+                //   onTap: () => _selectDate(context, true),
+                //   child: InputDecorator(
+                //     decoration: InputDecoration(
+                //         labelText: DATE_FROM.toUpperCase(),
+                //         labelStyle: GoogleFonts.poppins(
+                //             fontWeight: FontWeight.w500,
+                //             color: datePickedStart
+                //                 ? Color.fromARGB(255, 255, 84, 5)
+                //                 : Colors.lightBlue,
+                //             fontSize: 24),
+                //         errorText: !datePickedStart ? "Required!" : ""),
+                //     child: Text(
+                //       '${startDate.day.toString().padLeft(2, '0')} ${_getMonthAbbreviation(startDate.month)} ${startDate.year}',
+                //     ),
+                //   ),
+                // ),
+
+                // SizedBox(height: 10),
+                // InkWell(
+                //   onTap: () => _selectDate(context, false),
+                //   child: InputDecorator(
+                //     decoration: InputDecoration(
+                //         labelText: DATE_TO.toUpperCase(),
+                //         // labelStyle: TextStyle(fontSize: 18)
+                //         labelStyle: GoogleFonts.poppins(
+                //             fontWeight: FontWeight.w500,
+                //             color: datePickedEnd
+                //                 ? Color.fromARGB(255, 255, 84, 5)
+                //                 : Colors.lightBlue,
+                //             fontSize: 24),
+                //         errorText: !datePickedEnd ? "Required!" : ""),
+                //     child: Text(
+                //       '${endDate.day.toString().padLeft(2, '0')} ${_getMonthAbbreviation(endDate.month)} ${endDate.year}',
+                //     ),
+                //   ),
+                // ),
+
+                // GestureDetector(
+                //   onTap: () {
+                //     _selectDate(context);
+                //   },
+
+                // Adjust the width as needed for spacing // Adjust padding as needed
+                //           child: Text(
+                //             selectedDate == null
+                //       ? 'Select a Date'
+                //       : '${DateFormat('dd MMM yyyy').format(selectedDate)}',
+                //   style: TextStyle(
+                //     color: Colors.black,
+                //     fontWeight: FontWeight.bold,
+                //     fontSize: 18,
+                //   ),
+                // ),
+
                 Text(
                   '15 DEC 2024 - 20 DEC 2030', // Replace with the actual date or a variable
                   style: TextStyle(
@@ -149,13 +248,69 @@ class _SendOffersScreenState extends State<SendOffersScreen> {
                     fontSize: 18, // Change font size as needed
                   ),
                 ),
+                //               Future<void> _selectDate(BuildContext context) async {
+                //   final DateTime? picked = await showDatePicker(
+                //     context: context,
+                //     initialDate: selectedDate ?? DateTime.now(),
+                //     firstDate: DateTime(2024, 12, 15),
+                //     lastDate: DateTime(2030, 12, 20),
+                //   );
+
+                //   if (picked != null && picked != selectedDate) {
+                //     setState(() {
+                //       selectedDate = picked;
+                //     });
+                //   }
+                // }
               ],
             ),
+
+            //       String _getMonthAbbreviation(int month) {
+            //         switch (month) {
+            //           case 1:
+            //             return 'Jan';
+            //           case 2:
+            //             return 'Feb';
+            //           case 3:
+            //             return 'Mar';
+            //           case 4:
+            //             return 'Apr';
+            //           case 5:
+            //             return 'May';
+            //           case 6:
+            //             return 'Jun';
+            //           case 7:
+            //             return 'Jul';
+            //           case 8:
+            //             return 'Aug';
+            //           case 9:
+            //             return 'Sep';
+            //           case 10:
+            //             return 'Oct';
+            //           case 11:
+            //             return 'Nov';
+            //           case 12:
+            //             return 'Dec';
+            //           default:
+            //             return '';
+            //         }
+            //       }
+            //     ],
+            //     ),
+            // ));
+            //     }
 
             SizedBox(height: 5),
             Flexible(
               child: ElevatedButton(
                 onPressed: () {
+                  if (datePickedStart && datePickedEnd) {
+                    setState(() {
+                      isLoading = true;
+                    });
+                  }
+                  ;
+
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => SendOfferScreen(),
@@ -178,14 +333,26 @@ class _SendOffersScreenState extends State<SendOffersScreen> {
                       color: Colors.blue,
                     ), // Set border radius
                   ),
-                  padding: EdgeInsets.all(15.0), // Customize horizontal padding
+                  padding: EdgeInsets.fromLTRB(
+                      135.0, 0, 135.0, 0), // Customize horizontal padding
                   elevation: 5.0, // Set elevation
                   shadowColor: Colors.grey,
                 ),
               ),
             ),
+            //
 
-            SizedBox(height: 20),
+            // Divider(
+            //   height: 10,
+            //   color: Colors.grey,
+            // ),
+
+            SizedBox(height: 5),
+
+            Divider(
+              height: 20,
+              color: Colors.grey,
+            ),
             Container(
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
@@ -210,22 +377,34 @@ class _SendOffersScreenState extends State<SendOffersScreen> {
                     fontSize: 18,
                   ),
                 ),
-                Text('Starfall, Dorne, The South'),
+                Text(
+                  'Starfall, Dorne, The South',
+                  style: TextStyle(
+                    fontSize: 15,
+                  ),
+                ),
               ],
             ),
 
-            Divider(
-              height: 20,
-              color: Colors.grey,
-            ),
+            // Divider(
+            //   height: 20,
+            //   color: Colors.grey,
+            // ),
 
             //Text('Looking for a local between'),
 
+            SizedBox(
+              height: 10,
+            ),
+
             Align(
               alignment: Alignment(-0.9, -0.7),
-              child: Text(
-                'Looking for a local between',
-                style: TextStyle(fontSize: 15.0),
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  'Looking for a local between',
+                  style: TextStyle(fontSize: 16.0),
+                ),
               ),
             ),
 
@@ -261,7 +440,8 @@ class _SendOffersScreenState extends State<SendOffersScreen> {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
-                    padding: EdgeInsets.all(8.0), // Adjust padding as needed
+                    padding: EdgeInsets.fromLTRB(
+                        16, 0, 0, 0), // Adjust padding as needed
                     child: Icon(
                       Icons.calendar_today, // Choose your calendar icon
                       color: Colors.blue, // Change color as needed
@@ -325,7 +505,8 @@ class _SendOffersScreenState extends State<SendOffersScreen> {
                     color: Colors.blue,
                   ), // Set border radius
                 ),
-                padding: EdgeInsets.all(15.0), // Customize horizontal padding
+                padding: EdgeInsets.fromLTRB(
+                    135.0, 0, 135.0, 0), // Customize horizontal padding
                 elevation: 5.0, // Set elevation
                 shadowColor: Colors.grey,
               ),
@@ -343,3 +524,9 @@ class _SendOffersScreenState extends State<SendOffersScreen> {
     );
   }
 }
+
+class DateFormat {}
+
+// class _selectDate {
+//   _selectDate(BuildContext context);
+// }

@@ -125,14 +125,17 @@ class _TourState extends State<Tour> {
                       label: Text(
                         'Create a Trip',
                         style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w700,
-                            color: WHITE,
-                            fontSize: 18),
+                          fontWeight: FontWeight.w700,
+                          //color: Colors.blue,
+                          fontSize: 18,
+                        ),
                       ),
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.symmetric(
                             horizontal: MediaQuery.of(context).size.width * .2,
                             vertical: MediaQuery.of(context).size.height * .02),
+                        backgroundColor: Colors.blue,
+                        foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0),
                         ),
