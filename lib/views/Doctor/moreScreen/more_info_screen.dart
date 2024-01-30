@@ -784,7 +784,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                     //   width: 10,
                     // ),
                     Text(
-                      doctorProfileWithRating!.data!.name!,
+                      doctorProfileWithRating!.data!.name!.toUpperCase(),
                       style: Theme.of(context)
                           .textTheme
                           .subtitle1!
@@ -808,7 +808,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                           fontWeight: FontWeight.w500,
                         ),
                         foregroundColor: Colors.white,
-                        backgroundColor: const Color.fromARGB(255, 3, 142, 255),
+                        backgroundColor: Color.fromARGB(255, 243, 103, 9),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
                           side: BorderSide(
@@ -886,6 +886,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                     'PROFILE SETTINGS',
                     style: TextStyle(
                       fontSize: 18.0,
+                      color: Color.fromARGB(255, 243, 103, 9),
                     ),
                   ),
                 ),
@@ -904,7 +905,8 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
               height: 50,
               margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
               decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(10)),
+                  color: Color.fromARGB(255, 243, 103, 9),
+                  borderRadius: BorderRadius.circular(10)),
               child: Container(
                 margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
                 child: Row(
@@ -912,11 +914,16 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                   children: [
                     Text(
                       GENERAL_INFORMATION,
-                      style: Theme.of(context).textTheme.subtitle1,
+                      //style: Theme.of(context).textTheme.subtitle1,
+                      style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                            color:
+                                Colors.white, // Replace with your desired color
+                          ),
                     ),
                     Icon(
                       Icons.arrow_forward_ios,
                       size: 20,
+                      color: Colors.white,
                     ),
                   ],
                 ),
@@ -940,7 +947,8 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
               height: 50,
               margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
               decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(10)),
+                  color: Color.fromARGB(255, 243, 103, 9),
+                  borderRadius: BorderRadius.circular(10)),
               child: Container(
                 margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
                 child: Row(
@@ -948,11 +956,14 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                   children: [
                     Text(
                       CONTACT_AND_IDENTIFICATION,
-                      style: Theme.of(context).textTheme.subtitle1,
+                      style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                            color: Colors.white,
+                          ),
                     ),
                     Icon(
                       Icons.arrow_forward_ios,
                       size: 20,
+                      color: Colors.white,
                     ),
                   ],
                 ),
@@ -977,7 +988,8 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
               height: 50,
               margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
               decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(10)),
+                  color: Color.fromARGB(255, 243, 103, 9),
+                  borderRadius: BorderRadius.circular(10)),
               child: Container(
                 margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
                 child: Row(
@@ -985,11 +997,14 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                   children: [
                     Text(
                       MEMBERSHIP,
-                      style: Theme.of(context).textTheme.subtitle1,
+                      style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                            color: Colors.white,
+                          ),
                     ),
                     Icon(
                       Icons.arrow_forward_ios,
                       size: 20,
+                      color: Colors.white,
                     ),
                     // TextButton(onPressed: (){
                     //   Navigator.push(context,
@@ -1022,6 +1037,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                     'LOCAL HOST',
                     style: TextStyle(
                       fontSize: 18.0,
+                      color: Color.fromARGB(255, 243, 103, 9),
                     ),
                   ),
                 ),
@@ -1041,7 +1057,8 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
               height: 50,
               margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
               decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(10)),
+                  color: Color.fromARGB(255, 243, 103, 9),
+                  borderRadius: BorderRadius.circular(10)),
               child: Container(
                 margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
                 child: Row(
@@ -1049,11 +1066,14 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                   children: [
                     Text(
                       ABOUT_HOST,
-                      style: Theme.of(context).textTheme.subtitle1,
+                      style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                            color: Colors.white,
+                          ),
                     ),
                     Icon(
                       Icons.arrow_forward_ios,
                       size: 20,
+                      color: Colors.white,
                     ),
                     // TextButton(onPressed: (){
                     //   Navigator.push(context,
@@ -1087,7 +1107,8 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
               height: 50,
               margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
               decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(10)),
+                  color: Color.fromARGB(255, 243, 103, 9),
+                  borderRadius: BorderRadius.circular(10)),
               child: Container(
                 margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
                 child: Row(
@@ -1095,9 +1116,15 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                   children: [
                     Text(
                       CURRENCY_EXCHANGE,
-                      style: Theme.of(context).textTheme.subtitle1,
+                      style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                            color: Colors.white,
+                          ),
                     ),
-                    Icon(Icons.arrow_forward_ios, size: 20),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      size: 20,
+                      color: Colors.white,
+                    ),
                     // TextButton(onPressed: (){
                     //   Navigator.push(context,
                     //     MaterialPageRoute(builder: (context) => DoctorAllAppointments()),
@@ -1132,7 +1159,10 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                   height: 40,
                   child: Text(
                     'NOTIFICATIONS',
-                    style: TextStyle(fontSize: 18.0),
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      color: Color.fromARGB(255, 243, 103, 9),
+                    ),
                   ),
                 ),
               ],
@@ -1163,7 +1193,8 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
               height: 50,
               margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
               decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(10)),
+                  color: Color.fromARGB(255, 243, 103, 9),
+                  borderRadius: BorderRadius.circular(10)),
               child: Container(
                 margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
                 child: Row(
@@ -1171,9 +1202,15 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                   children: [
                     Text(
                       NOTIFICATION_SETTINGS,
-                      style: Theme.of(context).textTheme.subtitle1,
+                      style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                            color: Colors.white,
+                          ),
                     ),
-                    Icon(Icons.arrow_forward_ios, size: 20),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      size: 20,
+                      color: Colors.white,
+                    ),
                     // TextButton(onPressed: (){
                     //   Navigator.push(context,
                     //     MaterialPageRoute(builder: (context) => DoctorAllAppointments()),
