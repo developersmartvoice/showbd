@@ -43,6 +43,14 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
             fontWeight: FontWeight.bold,
           ),
         ),
+
+        // ElevatedButton(
+        //   onPressed: () {
+
+        //               // Add your button functionality here
+        //   },
+        //   child: Text('Button'),
+        // ),
         centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
@@ -70,6 +78,7 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
               // Round image, name, and address
               ListTile(
                 leading: CircleAvatar(
+                  radius: 35,
                   backgroundImage: AssetImage(
                       'assets/images.jpg'), // Replace with your image asset
                 ),
@@ -109,7 +118,8 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
                     foregroundColor:
                         MaterialStateProperty.all<Color>(Colors.blue),
                     padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                      EdgeInsets.all(5.0), // Adjust padding as needed
+                      EdgeInsets.fromLTRB(
+                          5, 0, 20, 0), // Adjust padding as needed
                     ),
                   ),
                   child: Text('View Profile'),

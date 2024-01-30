@@ -457,7 +457,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
 
                       Container(
                         width: MediaQuery.sizeOf(context).width * 1,
-                        margin: EdgeInsets.only(top: 160),
+                        margin: EdgeInsets.only(top: 150),
                         child: Text(
                           name.toString().toUpperCase(),
                           maxLines: 2,
@@ -513,121 +513,121 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                       ),
 
                       // add button
-                      Container(
-                        margin: EdgeInsets.only(top: 135),
-                        width: 160,
-                        height: 50,
-                        child: isLoggedIn
-                            ? ElevatedButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => MakeAppointment(
-                                              id.toString(),
-                                              name.toString(),
-                                              consultationFee.toString())));
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  primary: Color.fromARGB(186, 1, 122, 21),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(5),
-                                      bottomLeft: Radius.circular(5),
-                                    ),
-                                    // Adjust the radius as needed
-                                  ),
-                                  minimumSize: Size(10,
-                                      35), // Set the minimum width and height
-                                  // Set the button color to orange
-                                ),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Icon(
-                                      Icons
-                                          .calendar_today, // Add the booking icon
-                                      color: Colors
-                                          .white, // Set the icon color to white
-                                    ),
-                                    SizedBox(
-                                        width:
-                                            8), // Add some spacing between the icon and text
-                                    Text(
-                                      BOOK_NOW,
-                                      style: GoogleFonts.poppins(
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors
-                                            .white, // Set the text color to white
-                                        fontSize: 10,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            : ElevatedButton(
-                                onPressed: () {
-                                  // Handle button click, e.g., navigate to the login screen
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => LoginAsUser()));
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  primary: const Color.fromARGB(255, 255, 94, 0)
-                                      .withOpacity(0.8),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(5),
-                                      bottomLeft: Radius.circular(5),
-                                    ),
-                                    // Adjust the radius as needed
-                                  ),
-                                  minimumSize: Size(60,
-                                      40), // Set the minimum width and height
-                                  // Set the button color to orange
-                                ),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Icon(
-                                      Icons
-                                          .calendar_today, // Add the booking icon
-                                      color: Colors
-                                          .white, // Set the icon color to white
-                                    ),
-                                    SizedBox(
-                                        width:
-                                            8), // Add some spacing between the icon and text
-                                    Text(
-                                      BOOK_NOW,
-                                      style: GoogleFonts.poppins(
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors
-                                            .white, // Set the text color to white
-                                        fontSize: 10,
-                                      ),
-                                    ),
+                      // Container(
+                      //   margin: EdgeInsets.only(top: 135),
+                      //   width: 160,
+                      //   height: 50,
+                      //   child: isLoggedIn
+                      //       ? ElevatedButton(
+                      //           onPressed: () {
+                      //             Navigator.push(
+                      //                 context,
+                      //                 MaterialPageRoute(
+                      //                     builder: (context) => MakeAppointment(
+                      //                         id.toString(),
+                      //                         name.toString(),
+                      //                         consultationFee.toString())));
+                      //           },
+                      //           style: ElevatedButton.styleFrom(
+                      //             primary: Color.fromARGB(186, 1, 122, 21),
+                      //             shape: RoundedRectangleBorder(
+                      //               borderRadius: BorderRadius.only(
+                      //                 topLeft: Radius.circular(5),
+                      //                 bottomLeft: Radius.circular(5),
+                      //               ),
+                      //               // Adjust the radius as needed
+                      //             ),
+                      //             minimumSize: Size(10,
+                      //                 35), // Set the minimum width and height
+                      //             // Set the button color to orange
+                      //           ),
+                      //           child: Row(
+                      //             mainAxisSize: MainAxisSize.min,
+                      //             crossAxisAlignment: CrossAxisAlignment.center,
+                      //             mainAxisAlignment: MainAxisAlignment.start,
+                      //             children: [
+                      //               Icon(
+                      //                 Icons
+                      //                     .calendar_today, // Add the booking icon
+                      //                 color: Colors
+                      //                     .white, // Set the icon color to white
+                      //               ),
+                      //               SizedBox(
+                      //                   width:
+                      //                       8), // Add some spacing between the icon and text
+                      //               Text(
+                      //                 BOOK_NOW,
+                      //                 style: GoogleFonts.poppins(
+                      //                   fontWeight: FontWeight.w500,
+                      //                   color: Colors
+                      //                       .white, // Set the text color to white
+                      //                   fontSize: 10,
+                      //                 ),
+                      //               ),
+                      //             ],
+                      //           ),
+                      //         )
+                      //       : ElevatedButton(
+                      //           onPressed: () {
+                      //             // Handle button click, e.g., navigate to the login screen
+                      //             Navigator.push(
+                      //                 context,
+                      //                 MaterialPageRoute(
+                      //                     builder: (context) => LoginAsUser()));
+                      //           },
+                      //           style: ElevatedButton.styleFrom(
+                      //             primary: const Color.fromARGB(255, 255, 94, 0)
+                      //                 .withOpacity(0.8),
+                      //             shape: RoundedRectangleBorder(
+                      //               borderRadius: BorderRadius.only(
+                      //                 topLeft: Radius.circular(5),
+                      //                 bottomLeft: Radius.circular(5),
+                      //               ),
+                      //               // Adjust the radius as needed
+                      //             ),
+                      //             minimumSize: Size(60,
+                      //                 40), // Set the minimum width and height
+                      //             // Set the button color to orange
+                      //           ),
+                      //           child: Row(
+                      //             crossAxisAlignment: CrossAxisAlignment.center,
+                      //             mainAxisAlignment: MainAxisAlignment.start,
+                      //             children: [
+                      //               Icon(
+                      //                 Icons
+                      //                     .calendar_today, // Add the booking icon
+                      //                 color: Colors
+                      //                     .white, // Set the icon color to white
+                      //               ),
+                      //               SizedBox(
+                      //                   width:
+                      //                       8), // Add some spacing between the icon and text
+                      //               Text(
+                      //                 BOOK_NOW,
+                      //                 style: GoogleFonts.poppins(
+                      //                   fontWeight: FontWeight.w500,
+                      //                   color: Colors
+                      //                       .white, // Set the text color to white
+                      //                   fontSize: 10,
+                      //                 ),
+                      //               ),
 
-                                    Text(
-                                      name,
-                                      maxLines: 2,
-                                      textAlign: TextAlign.center,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: GoogleFonts.poppins(
-                                        color: Color.fromARGB(255, 255, 94, 0)
-                                            .withOpacity(0.8),
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                      )
+                      //               Text(
+                      //                 name,
+                      //                 maxLines: 2,
+                      //                 textAlign: TextAlign.center,
+                      //                 overflow: TextOverflow.ellipsis,
+                      //                 style: GoogleFonts.poppins(
+                      //                   color: Color.fromARGB(255, 255, 94, 0)
+                      //                       .withOpacity(0.8),
+                      //                   fontSize: 16,
+                      //                   fontWeight: FontWeight.w500,
+                      //                 ),
+                      //               ),
+                      //             ],
+                      //           ),
+                      //         ),
+                      // )
                     ],
                   ),
                 ),
@@ -657,6 +657,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
             //),
             Text(
               aboutMe,
+              textAlign: TextAlign.center,
               style: GoogleFonts.poppins(
                 color: LIGHT_GREY_TEXT,
                 fontSize: 20.0,

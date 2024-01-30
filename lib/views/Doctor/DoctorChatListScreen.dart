@@ -126,12 +126,29 @@ class _ChatListScreenState extends State<ChatListScreen> {
                 child: st
                     ? chatListDetails.length == 0
                         ? Container(
-                            alignment: Alignment.center,
-                            child: Text("No recent chats",
-                                style: GoogleFonts.poppins(
-                                  fontSize: 22,
-                                )),
-                          )
+                            child: SizedBox(
+                            width:
+                                10, // Adjust the width according to your needs
+                            child: Card(
+                              // Your card content goes here
+                              child: Container(
+                                padding: EdgeInsets.all(16),
+                                // Add your card content here, e.g., Text, Image, etc.
+                                child: Text(
+                                  'Jon Snow',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            //alignment: Alignment.center,
+                            //child: Text("No recent chats",
+                            //  style: GoogleFonts.poppins(
+                            //  fontSize: 22,
+                            //)),
+                          ))
                         : MediaQuery.removePadding(
                             removeTop: true,
                             context: context,
@@ -482,6 +499,8 @@ class _ChatListScreenState extends State<ChatListScreen> {
         Container(
           height: 60,
           child: Row(
+            //mainAxisAlignment: MainAxisAlignment.center,
+            //crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
                 width: 15,
@@ -500,13 +519,16 @@ class _ChatListScreenState extends State<ChatListScreen> {
                 width: 10,
               ),
               Text(
-                'Recent chats',
+                'Inbox',
                 style: GoogleFonts.poppins(
                     fontWeight: FontWeight.w600, color: WHITE, fontSize: 22),
-              )
+              ),
             ],
           ),
         ),
+        Container(
+          height: 100,
+        )
       ],
     );
   }
