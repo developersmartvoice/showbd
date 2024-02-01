@@ -444,7 +444,9 @@
 //
 
 import 'dart:convert';
+import 'package:appcode3/views/ChoosePlan.dart';
 import 'package:appcode3/views/Doctor/DoctorProfile.dart';
+import 'package:appcode3/views/Doctor/LogoutScreen.dart';
 import 'package:appcode3/views/Doctor/loginAsDoctor.dart';
 import 'package:appcode3/views/SendOfferScreen.dart';
 import 'package:appcode3/views/SendOffersScreen.dart';
@@ -825,7 +827,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
 
   Widget upCommingAppointments() {
     return Container(
-      margin: EdgeInsets.only(top: 15),
+      margin: EdgeInsets.only(top: 5),
 
       //margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
       child: Column(
@@ -871,7 +873,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
           //),
 
           Divider(
-            height: 15,
+            height: 25,
             color: Colors.grey,
           ),
 
@@ -886,6 +888,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                     'PROFILE SETTINGS',
                     style: TextStyle(
                       fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
                       color: Color.fromARGB(255, 243, 103, 9),
                     ),
                   ),
@@ -1037,6 +1040,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                     'LOCAL HOST',
                     style: TextStyle(
                       fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
                       color: Color.fromARGB(255, 243, 103, 9),
                     ),
                   ),
@@ -1050,7 +1054,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => IncomeReport()),
+                MaterialPageRoute(builder: (context) => ChoosePlan()),
               );
             },
             child: Container(
@@ -1096,50 +1100,50 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
           ),
 
           ///-----------logoout -------------
-          GestureDetector(
-            onTap: () {
-              messageDialog(LOGOUT, ARE_YOU_SURE_TO_LOGOUT);
-              // Navigator.push(context,
-              //     MaterialPageRoute(builder: (context) => LogOutScreen()
-              // ));
-            },
-            child: Container(
-              height: 50,
-              margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
-              decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 243, 103, 9),
-                  borderRadius: BorderRadius.circular(10)),
-              child: Container(
-                margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      CURRENCY_EXCHANGE,
-                      style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                            color: Colors.white,
-                          ),
-                    ),
-                    Icon(
-                      Icons.arrow_forward_ios,
-                      size: 20,
-                      color: Colors.white,
-                    ),
-                    // TextButton(onPressed: (){
-                    //   Navigator.push(context,
-                    //     MaterialPageRoute(builder: (context) => DoctorAllAppointments()),
-                    //   );
-                    // }, child: Text(SEE_ALL,
-                    //     style: Theme.of(context).textTheme.bodyText2!.apply(
-                    //       color: Theme.of(context).hintColor,
-                    //       fontWeightDelta: 5,
-                    //     )
-                    // ),)
-                  ],
-                ),
-              ),
-            ),
-          ),
+          // GestureDetector(
+          //   onTap: () {
+          //     messageDialog(LOGOUT, ARE_YOU_SURE_TO_LOGOUT);
+          //     // Navigator.push(context,
+          //     //     MaterialPageRoute(builder: (context) => LogOutScreen()
+          //     // ));
+          //   },
+          //   child: Container(
+          //     height: 50,
+          //     margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
+          //     decoration: BoxDecoration(
+          //         color: Color.fromARGB(255, 243, 103, 9),
+          //         borderRadius: BorderRadius.circular(10)),
+          //     child: Container(
+          //       margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
+          //       child: Row(
+          //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //         children: [
+          //           Text(
+          //             CURRENCY_EXCHANGE,
+          //             style: Theme.of(context).textTheme.subtitle1?.copyWith(
+          //                   color: Colors.white,
+          //                 ),
+          //           ),
+          //           Icon(
+          //             Icons.arrow_forward_ios,
+          //             size: 20,
+          //             color: Colors.white,
+          //           ),
+          //           // TextButton(onPressed: (){
+          //           //   Navigator.push(context,
+          //           //     MaterialPageRoute(builder: (context) => DoctorAllAppointments()),
+          //           //   );
+          //           // }, child: Text(SEE_ALL,
+          //           //     style: Theme.of(context).textTheme.bodyText2!.apply(
+          //           //       color: Theme.of(context).hintColor,
+          //           //       fontWeightDelta: 5,
+          //           //     )
+          //           // ),)
+          //         ],
+          //       ),
+          //     ),
+          //   ),
+          // ),
 
           SizedBox(
             height: 15,
@@ -1161,6 +1165,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                     'NOTIFICATIONS',
                     style: TextStyle(
                       fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
                       color: Color.fromARGB(255, 243, 103, 9),
                     ),
                   ),
@@ -1222,6 +1227,45 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                     //     )
                     // ),)
                   ],
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+            child: ElevatedButton.icon(
+              // onPressed: () {
+              //   Navigator.of(context).push(
+              //     MaterialPageRoute(
+              //       // builder: (context) => LogOutScreen(),
+              //     ),
+              //   );
+              // },
+              onPressed: () {
+                messageDialog(LOGOUT, ARE_YOU_SURE_TO_LOGOUT);
+                // Navigator.push(context,
+                //     MaterialPageRoute(builder: (context) => LogOutScreen()));
+              },
+              icon: Icon(Icons.logout),
+              label: Text('Logout'),
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: Color.fromARGB(255, 243, 103, 9),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                  side: BorderSide(
+                    color: Colors.white,
+                  ),
+                ),
+                padding: EdgeInsets.all(10.0),
+                elevation: 5.0,
+                //shadowColor: Colors.grey,
+                textStyle: GoogleFonts.poppins(
+                  fontSize: 15.0,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white, // Set text color to white
                 ),
               ),
             ),

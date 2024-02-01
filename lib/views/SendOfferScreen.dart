@@ -38,8 +38,8 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
       appBar: AppBar(
         title: Text(
           'Send offer',
-          style: TextStyle(
-            fontSize: 22,
+          style: GoogleFonts.robotoCondensed(
+            fontSize: 25,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -241,14 +241,16 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
                 color: Colors.grey,
               ),
 
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'PREFERRED MEETING TIME',
-                  style: TextStyle(
-                    fontSize: 18,
-                    //fontWeight: FontWeight.bold,
-                    // Add any additional styling here
+              Container(
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'PREFERRED MEETING TIME',
+                    style: TextStyle(
+                      fontSize: 18,
+                      //fontWeight: FontWeight.bold,
+                      // Add any additional styling here
+                    ),
                   ),
                 ),
               ),
@@ -334,12 +336,15 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
 
               Align(
                 alignment: Alignment.centerLeft,
-                child: Text(
-                  'You know nothing, Jon Snow',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    // Add any additional styling here
+                child: Padding(
+                  padding: EdgeInsets.all(5),
+                  child: Text(
+                    'You know nothing, Jon Snow',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      // Add any additional styling here
+                    ),
                   ),
                 ),
               ),

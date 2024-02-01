@@ -77,8 +77,8 @@ class _SendOffersScreenState extends State<SendOffersScreen> {
         ),
         title: Text(
           'Send offers',
-          style: TextStyle(
-            fontSize: 22,
+          style: GoogleFonts.robotoCondensed(
+            fontSize: 25,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -86,39 +86,34 @@ class _SendOffersScreenState extends State<SendOffersScreen> {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          //alignment: Alignment.center,
           children: [
             Container(
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: Colors.red,
+                  color: Colors.green,
                   width: 4.0,
                 ),
               ),
               child: CircleAvatar(
                 radius: 80,
-                backgroundImage: AssetImage(
-                    'assets/jon--snow.jpg'), // Replace with your avatar image
+                backgroundImage: AssetImage('assets/jon--snow.jpg'),
               ),
             ),
             SizedBox(height: 10),
-            Column(
-              children: [
-                Text(
-                  'Jon Snow',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                  ),
-                ),
-                Text(
-                  'Winterfell, The North',
-                  style: TextStyle(
-                    fontSize: 15,
-                  ),
-                ),
-              ],
+            Text(
+              'Jon Snow',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+            Text(
+              'Winterfell, The North',
+              style: TextStyle(
+                fontSize: 15,
+              ),
             ),
 
             // Divider(
@@ -334,7 +329,7 @@ class _SendOffersScreenState extends State<SendOffersScreen> {
                     ), // Set border radius
                   ),
                   padding: EdgeInsets.fromLTRB(
-                      135.0, 0, 135.0, 0), // Customize horizontal padding
+                      135.0, 13, 135.0, 13), // Customize horizontal padding
                   elevation: 5.0, // Set elevation
                   shadowColor: Colors.grey,
                 ),
@@ -506,7 +501,7 @@ class _SendOffersScreenState extends State<SendOffersScreen> {
                   ), // Set border radius
                 ),
                 padding: EdgeInsets.fromLTRB(
-                    135.0, 0, 135.0, 0), // Customize horizontal padding
+                    135.0, 13, 135.0, 13), // Customize horizontal padding
                 elevation: 5.0, // Set elevation
                 shadowColor: Colors.grey,
               ),
@@ -522,6 +517,10 @@ class _SendOffersScreenState extends State<SendOffersScreen> {
         ),
       ),
     );
+    //],
+    //  ),
+    //),
+    //);
   }
 }
 
