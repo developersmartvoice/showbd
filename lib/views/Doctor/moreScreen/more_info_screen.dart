@@ -448,6 +448,7 @@ import 'package:appcode3/views/ChoosePlan.dart';
 import 'package:appcode3/views/Doctor/DoctorProfile.dart';
 import 'package:appcode3/views/Doctor/LogoutScreen.dart';
 import 'package:appcode3/views/Doctor/loginAsDoctor.dart';
+import 'package:appcode3/views/ProfilePage.dart';
 import 'package:appcode3/views/SendOfferScreen.dart';
 import 'package:appcode3/views/SendOffersScreen.dart';
 import 'package:connectycube_sdk/connectycube_chat.dart';
@@ -1054,7 +1055,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ChoosePlan()),
+                MaterialPageRoute(builder: (context) => ProfilePage()),
               );
             },
             child: Container(

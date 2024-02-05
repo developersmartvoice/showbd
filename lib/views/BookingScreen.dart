@@ -1,6 +1,7 @@
 import 'package:appcode3/en.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 class BookingScreen extends StatefulWidget {
@@ -26,7 +27,15 @@ class _BookingScreenState extends State<BookingScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Booking ${widget.guideName}'),
+          title: Text(
+            'Booking ${widget.guideName}',
+            //centerTitle: true,
+            style: GoogleFonts.robotoCondensed(
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          centerTitle: true,
           actions: [
             IconButton(
               icon: Icon(Icons.send_rounded),
@@ -42,7 +51,13 @@ class _BookingScreenState extends State<BookingScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Select Date'),
+                Text(
+                  'Select Date',
+                  style: GoogleFonts.robotoCondensed(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
                 GestureDetector(
                   onTap: () => _selectDate(context),
                   child: Container(
@@ -78,25 +93,35 @@ class _BookingScreenState extends State<BookingScreen> {
                   padding: const EdgeInsets.all(8.0), // Add padding here
                   child: Row(
                     children: [
-                      Text('Tour Duration'),
-                      SizedBox(
-                          width:
-                              8), // Add spacing between text and DropdownSearch
-                      Expanded(
-                        child: DropdownSearch<String>(
-                          items: ['1h', '2h', '3h'],
-                          onChanged: (value) {
-                            setState(() {
-                              selectedDuration = value!;
-                            });
-                          },
-                          selectedItem: selectedDuration,
+                      Text(
+                        'Tour Duration',
+                        style: GoogleFonts.robotoCondensed(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
                         ),
+                      ),
+                      SizedBox(
+                          height:
+                              20), // Add spacing between text and DropdownSearch
+                      Column(
+                        children: [
+                          Expanded(
+                            child: DropdownSearch<String>(
+                              items: ['1h', '2h', '3h'],
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedDuration = value!;
+                                });
+                              },
+                              selectedItem: selectedDuration,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: 16),
+                SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.all(8.0), // Add padding here
                   child: Row(
