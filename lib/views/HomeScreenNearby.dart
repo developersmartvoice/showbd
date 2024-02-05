@@ -148,7 +148,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
   Widget nearByDoctors() {
     return SafeArea(
       child: Container(
-        margin: EdgeInsets.fromLTRB(16, 0, 16, 5),
+        margin: EdgeInsets.fromLTRB(13, 0, 13, 0),
         child: Column(
           children: [
             // isNearbyLoading ? Container(

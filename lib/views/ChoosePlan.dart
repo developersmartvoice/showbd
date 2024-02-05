@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:ui';
+import 'package:appcode3/views/BookingScreen.dart';
 import 'package:appcode3/views/Doctor/DoctorProfile.dart';
 import 'package:appcode3/views/Doctor/LogoutScreen.dart';
 import 'package:appcode3/views/Doctor/loginAsDoctor.dart';
@@ -29,7 +31,12 @@ import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ChoosePlan extends StatefulWidget {
-  const ChoosePlan({super.key});
+  //const ChoosePlan({super.key});
+  final String id;
+  final String guideName;
+
+  ChoosePlan(this.id, this.guideName);
+  //ChoosePlan(this.id, String s);
 
   @override
   State<ChoosePlan> createState() => _ChoosePlanState();
@@ -38,7 +45,11 @@ class ChoosePlan extends StatefulWidget {
 class _ChoosePlanState extends State<ChoosePlan> {
   //PageController _pageController = PageController(initialPage: 0);
   // List<bool> isSelected = [false, true];
-  bool isLimitedSelected = true;
+  bool isLimitedSelected = false;
+  // bool isExtendedSelected = true;
+  // String? guideName;
+
+  get isFadeOut => true;
 
   @override
   Widget build(BuildContext context) {
@@ -169,18 +180,22 @@ class _ChoosePlanState extends State<ChoosePlan> {
                         });
                       },
                       style: ElevatedButton.styleFrom(
+                        textStyle: GoogleFonts.robotoCondensed(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                        ),
                         primary: isLimitedSelected
-                            ? Colors.orange
+                            ? Color.fromARGB(255, 243, 103, 9)
                             : Colors.white, // Background color
                         onPrimary: isLimitedSelected
                             ? Colors.white
                             : Colors.black, // Text color
                         // elevation: 5, // Elevation
-                        // shape: RoundedRectangleBorder(
-                        //   borderRadius:
-                        //       BorderRadius.circular(10), // Border radius
-                        // ),
-                        minimumSize: Size(120, 50), // Set width and height
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(15), // Border radius
+                        ),
+                        minimumSize: Size(180, 50), // Set width and height
                       ),
                       child: Text("Limited")),
                   SizedBox(
@@ -193,18 +208,23 @@ class _ChoosePlanState extends State<ChoosePlan> {
                         });
                       },
                       style: ElevatedButton.styleFrom(
+                        textStyle: GoogleFonts.robotoCondensed(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                        ),
                         primary: isLimitedSelected
                             ? Colors.white
-                            : Colors.orange, // Background color
+                            : const Color.fromARGB(
+                                255, 243, 103, 9), // Background color
                         onPrimary: isLimitedSelected
                             ? Colors.black
                             : Colors.white, // Text color
                         // elevation: 5, // Elevation
-                        // shape: RoundedRectangleBorder(
-                        //   borderRadius:
-                        //       BorderRadius.circular(10), // Border radius
-                        // ),
-                        minimumSize: Size(120, 50), // Set width and height
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(15), // Border radius
+                        ),
+                        minimumSize: Size(180, 50), // Set width and height
                       ),
                       child: Text("Extended"))
                 ],
@@ -252,18 +272,38 @@ class _ChoosePlanState extends State<ChoosePlan> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
+                      // BackdropFilter(
+                      //   filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                      //   child: Container(
+                      //     color: Colors.grey.withOpacity(
+                      //         0.5), // Adjust the opacity for the desired faded effect
+                      //     child:
+
                       Row(
                         //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Container(
-                            child: CircleAvatar(
-                              radius: 40,
-                              backgroundImage:
-                                  AssetImage('assets/search icon.jpg'),
+                            child: Stack(
+                              children: [
+                                CircleAvatar(
+                                  radius: 40,
+                                  backgroundImage:
+                                      AssetImage('assets/people 1.png'),
+                                ),
+                                Positioned(
+                                  bottom: -10,
+                                  right: -10,
+                                  child: CircleAvatar(
+                                    radius: 20, // Adjust the radius as needed
+                                    backgroundImage:
+                                        AssetImage('assets/srch.png'),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                           SizedBox(
-                            width: 13,
+                            width: 15,
                           ),
                           Container(
                             child: Column(
@@ -297,21 +337,42 @@ class _ChoosePlanState extends State<ChoosePlan> {
                           ),
                         ],
                       ),
+                      // ),
+                      //),
                       SizedBox(
                         height: 30,
                       ),
+                      // BackdropFilter(
+                      //   filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                      //   child: Container(
+                      //     color: Colors.grey.withOpacity(
+                      //         0.5), // Adjust the opacity for the desired faded effect
+                      //     child:
                       Row(
                         //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Container(
-                            child: CircleAvatar(
-                              radius: 40,
-                              backgroundImage:
-                                  AssetImage('assets/map icon.jpg'),
+                            child: Stack(
+                              children: [
+                                CircleAvatar(
+                                  radius: 40,
+                                  backgroundImage:
+                                      AssetImage('assets/people 2.png'),
+                                ),
+                                Positioned(
+                                  bottom: -3,
+                                  right: -8,
+                                  child: CircleAvatar(
+                                    radius: 20, // Adjust the radius as needed
+                                    backgroundImage:
+                                        AssetImage('assets/map 3.png'),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                           SizedBox(
-                            width: 13,
+                            width: 15,
                           ),
                           Container(
                             child: Column(
@@ -345,94 +406,270 @@ class _ChoosePlanState extends State<ChoosePlan> {
                           ),
                         ],
                       ),
+                      //),
+                      //),
                       SizedBox(
                         height: 30,
                       ),
-                      Row(
-                        // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Container(
-                            child: CircleAvatar(
-                              radius: 40,
-                              backgroundImage:
-                                  AssetImage('assets/telegram icon.png'),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 13,
-                          ),
-                          Container(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Send Offers',
-                                  style: GoogleFonts.robotoCondensed(
-                                    fontSize: 27,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+
+                      // BackdropFilter(
+                      //   filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                      //   child: Container(
+                      //     color: Colors.grey.withOpacity(
+                      //         0.5), // Adjust the opacity for the desired faded effect
+                      //     child:
+
+                      Container(
+                        //color: Color.fromARGB(100, 236, 231, 231),
+                        child: isLimitedSelected
+                            ? AnimatedOpacity(
+                                duration: Duration(seconds: 1),
+                                opacity: isFadeOut ? 0.25 : 1.0,
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      child: Stack(
+                                        children: [
+                                          CircleAvatar(
+                                            radius: 40,
+                                            backgroundImage: AssetImage(
+                                                'assets/people 3.png'),
+                                          ),
+                                          Positioned(
+                                            bottom: 0,
+                                            right: 0,
+                                            child: CircleAvatar(
+                                              radius:
+                                                  15, // Adjust the radius as needed
+                                              backgroundImage: AssetImage(
+                                                  'assets/telegram icon.png'),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 15,
+                                    ),
+                                    Container(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Send Offers',
+                                            style: GoogleFonts.robotoCondensed(
+                                              fontSize: 27,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          Text(
+                                            'Connect with travellers',
+                                            style: GoogleFonts.robotoCondensed(
+                                              fontSize: 18,
+                                              color: Colors
+                                                  .black, // You can customize the style as needed
+                                            ),
+                                          ),
+                                          Text(
+                                            'who visit your city',
+                                            style: GoogleFonts.robotoCondensed(
+                                              fontSize: 18,
+                                              color: Colors
+                                                  .black, // You can customize the style as needed
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                Text(
-                                  'Connect with travellers',
-                                  style: GoogleFonts.robotoCondensed(
-                                    fontSize: 18,
-                                    color: Colors
-                                        .black, // You can customize the style as needed
+                              )
+                            : Row(
+                                children: [
+                                  Container(
+                                    child: Stack(
+                                      children: [
+                                        CircleAvatar(
+                                          radius: 40,
+                                          backgroundImage:
+                                              AssetImage('assets/people 3.png'),
+                                        ),
+                                        Positioned(
+                                          bottom: 0,
+                                          right: 0,
+                                          child: CircleAvatar(
+                                            radius:
+                                                15, // Adjust the radius as needed
+                                            backgroundImage: AssetImage(
+                                                'assets/telegram icon.png'),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  'who visit your city',
-                                  style: GoogleFonts.robotoCondensed(
-                                    fontSize: 18,
-                                    color: Colors
-                                        .black, // You can customize the style as needed
+                                  SizedBox(
+                                    width: 15,
                                   ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                                  Container(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Send Offers',
+                                          style: GoogleFonts.robotoCondensed(
+                                            fontSize: 27,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text(
+                                          'Connect with travellers',
+                                          style: GoogleFonts.robotoCondensed(
+                                            fontSize: 18,
+                                            color: Colors
+                                                .black, // You can customize the style as needed
+                                          ),
+                                        ),
+                                        Text(
+                                          'who visit your city',
+                                          style: GoogleFonts.robotoCondensed(
+                                            fontSize: 18,
+                                            color: Colors
+                                                .black, // You can customize the style as needed
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                       ),
+
                       SizedBox(
                         height: 30,
                       ),
-                      Row(
-                        //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Container(
-                            child: CircleAvatar(
-                              radius: 40,
-                              backgroundImage:
-                                  AssetImage('assets/message icon.jpg'),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 13,
-                          ),
-                          Container(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Pick a Local',
-                                  style: GoogleFonts.robotoCondensed(
-                                    fontSize: 27,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+
+                      // BackdropFilter(
+                      //   filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                      //   child: Container(
+                      //     color: Colors.grey.withOpacity(
+                      //         0.5), // Adjust the opacity for the desired faded effect
+                      //     child:
+
+                      Container(
+                        child: isLimitedSelected
+                            ? AnimatedOpacity(
+                                duration: Duration(seconds: 1),
+                                opacity: isFadeOut ? 0.25 : 1.0,
+                                child: Row(
+                                  //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Container(
+                                      child: Stack(
+                                        children: [
+                                          CircleAvatar(
+                                            radius: 40,
+                                            backgroundImage: AssetImage(
+                                                'assets/people 5.png'),
+                                          ),
+                                          Positioned(
+                                            bottom: -3,
+                                            right: -5,
+                                            child: CircleAvatar(
+                                              radius:
+                                                  20, // Adjust the radius as needed
+                                              backgroundImage: AssetImage(
+                                                  'assets/whatsapp icon.png'),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 15,
+                                    ),
+                                    Container(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Pick a Local',
+                                            style: GoogleFonts.robotoCondensed(
+                                              fontSize: 27,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          Text(
+                                            'Contact those you like',
+                                            style: GoogleFonts.robotoCondensed(
+                                              fontSize: 18,
+                                              color: Colors
+                                                  .black, // You can customize the style as needed
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                Text(
-                                  'Contact those you like',
-                                  style: GoogleFonts.robotoCondensed(
-                                    fontSize: 18,
-                                    color: Colors
-                                        .black, // You can customize the style as needed
+                              )
+                            : Row(
+                                //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Container(
+                                    child: Stack(
+                                      children: [
+                                        CircleAvatar(
+                                          radius: 40,
+                                          backgroundImage:
+                                              AssetImage('assets/people 5.png'),
+                                        ),
+                                        Positioned(
+                                          bottom: -3,
+                                          right: -5,
+                                          child: CircleAvatar(
+                                            radius:
+                                                20, // Adjust the radius as needed
+                                            backgroundImage: AssetImage(
+                                                'assets/whatsapp icon.png'),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                                  SizedBox(
+                                    width: 15,
+                                  ),
+                                  Container(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Pick a Local',
+                                          style: GoogleFonts.robotoCondensed(
+                                            fontSize: 27,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text(
+                                          'Contact those you like',
+                                          style: GoogleFonts.robotoCondensed(
+                                            fontSize: 18,
+                                            color: Colors
+                                                .black, // You can customize the style as needed
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                       ),
+                      // ),
+                      // ),
                       //SizedBox(height: 8),
                       // Column(
                       //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -480,7 +717,8 @@ class _ChoosePlanState extends State<ChoosePlan> {
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => DoctorProfile(),
+                    builder: (context) =>
+                        BookingScreen(widget.id, widget.guideName!),
                   ),
                 );
               },

@@ -5,6 +5,7 @@ import 'package:appcode3/main.dart';
 import 'package:appcode3/modals/DoctorDetailsClass.dart';
 import 'package:appcode3/views/AboutScreen.dart';
 import 'package:appcode3/views/BookingScreen.dart';
+import 'package:appcode3/views/ChoosePlan.dart';
 import 'package:appcode3/views/CreateTrip.dart';
 import 'package:appcode3/views/HelpCenter.dart';
 import 'package:appcode3/views/MakeAppointment.dart';
@@ -597,9 +598,10 @@ class _DetailsPageState extends State<DetailsPage> {
                         onPressed: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  BookingScreen(widget.id, guideName!),
-                            ),
+                                builder: (context) =>
+                                    ChoosePlan(widget.id, guideName!)
+                                //BookingScreen(widget.id, guideName!),
+                                ),
                           );
                         },
                         icon: Icon(Icons.connect_without_contact_sharp),
