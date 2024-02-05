@@ -718,7 +718,7 @@ class _ChoosePlanState extends State<ChoosePlan> {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) =>
-                        BookingScreen(widget.id, widget.guideName!),
+                        BookingScreen(widget.id, widget.guideName),
                   ),
                 );
               },

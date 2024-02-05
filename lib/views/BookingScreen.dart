@@ -79,7 +79,8 @@ class _BookingScreenState extends State<BookingScreen> {
                                 padding: const EdgeInsets.all(
                                     8.0), // Add padding here
                                 child: Text(
-                                  DateFormat('MMM d, y').format(selectedDate!),
+                                  DateFormat('MM, dd, yyyy')
+                                      .format(selectedDate!),
                                   style: TextStyle(fontSize: 16),
                                 ),
                               )
@@ -89,38 +90,69 @@ class _BookingScreenState extends State<BookingScreen> {
                   ),
                 ),
                 SizedBox(height: 16),
+                // Padding(
+                //   padding: const EdgeInsets.all(8.0), // Add padding here
+                //   child: Row(
+                //     children: [
+                //       Text(
+                //         'Tour Duration',
+                //         style: GoogleFonts.robotoCondensed(
+                //           fontSize: 20,
+                //           fontWeight: FontWeight.w500,
+                //         ),
+                //       ),
+                //       SizedBox(
+                //           width:
+                //               8), // Add spacing between text and DropdownSearch
+                //       Column(
+                //         children: [
+                //           Expanded(
+                //             child: DropdownSearch<String>(
+                //               items: ['1h', '2h', '3h'],
+                //               onChanged: (value) {
+                //                 setState(() {
+                //                   selectedDuration = value!;
+                //                 });
+                //               },
+                //               selectedItem: selectedDuration,
+                //             ),
+                //           ),
+                //         ],
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0), // Add padding here
-                  child: Row(
-                    children: [
-                      Text(
-                        'Tour Duration',
-                        style: GoogleFonts.robotoCondensed(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      SizedBox(
-                          height:
-                              20), // Add spacing between text and DropdownSearch
-                      Column(
-                        children: [
-                          Expanded(
-                            child: DropdownSearch<String>(
-                              items: ['1h', '2h', '3h'],
-                              onChanged: (value) {
-                                setState(() {
-                                  selectedDuration = value!;
-                                });
-                              },
-                              selectedItem: selectedDuration,
-                            ),
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    height:
+                        50, // Set a fixed height or adjust according to your design
+                    child: Row(
+                      children: [
+                        Text(
+                          'Tour Duration',
+                          style: GoogleFonts.robotoCondensed(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
                           ),
-                        ],
-                      ),
-                    ],
+                        ),
+                        SizedBox(width: 8),
+                        Expanded(
+                          child: DropdownSearch<String>(
+                            items: ['1h', '2h', '3h'],
+                            onChanged: (value) {
+                              setState(() {
+                                selectedDuration = value!;
+                              });
+                            },
+                            selectedItem: selectedDuration,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
+
                 SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.all(8.0), // Add padding here

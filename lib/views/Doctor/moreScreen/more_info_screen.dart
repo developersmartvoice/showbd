@@ -445,6 +445,7 @@
 
 import 'dart:convert';
 import 'package:appcode3/views/ChoosePlan.dart';
+import 'package:appcode3/views/DetailsPage.dart';
 import 'package:appcode3/views/Doctor/DoctorProfile.dart';
 import 'package:appcode3/views/Doctor/LogoutScreen.dart';
 import 'package:appcode3/views/Doctor/loginAsDoctor.dart';
@@ -798,10 +799,16 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.of(context).push(
+                        // Navigator.of(context).push(
+                        //   MaterialPageRoute(
+                        //     builder: (context) => DoctorProfile(),
+                        //   ),
+                        // );
+                        Navigator.push(
+                          context,
                           MaterialPageRoute(
-                            builder: (context) => DoctorProfile(),
-                          ),
+                              builder: (context) =>
+                                  DetailsPage(doctorId.toString())),
                         );
                       },
                       child: Text('View Profile'),
@@ -1055,7 +1062,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ProfilePage()),
+                MaterialPageRoute(builder: (context) => DoctorProfile()),
               );
             },
             child: Container(
