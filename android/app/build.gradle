@@ -59,7 +59,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "doctor.finder.videocalling"
+        applicationId "smart.lab.meetlocal"
         minSdkVersion 21
         targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
@@ -74,8 +74,8 @@ android {
             // keyPassword keystoreProperties['showbd@@##']
             keyPassword 'showbd@@##'
             // storeFile keystoreProperties['showbd.jks'] ? file(keystoreProperties['D:\\Flutter Projects\\showbd\\showbd.jks']) : null
-            // storeFile file('D:\\Flutter Projects\\showbd\\showbd.jks')
-            storeFile file('D:\\showbd\\showbd.jks')
+            storeFile file('D:\\Flutter Projects\\showbd\\showbd.jks')
+            // storeFile file('D:\\showbd\\showbd.jks')
             storePassword 'showbd@@##'
         }
     }
