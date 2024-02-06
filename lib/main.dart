@@ -45,7 +45,7 @@ const String IMAGE =
 // const String IMAGE = "https://hairitgestione.eu/public/upload/banner/";
 //
 const String serverToken =
-    'AAAAPwd2Odk:APA91bHOAgCVVag8SlmMQLA_xX1mONxeNKcEK0TYOAxHfAp3CvbJ_tewOoIh7MSPK0bMy9H8A9cCJqQYZH71W_SC0nZlfR57i2lDuIGKPtS3HcUB17GpbS1QDrz-08XAXkzjqyClSgtM';
+    'AAAA9hXj6Qw:APA91bHtG2L1LIXHPItom2mAngQhh7AKXASQj2AXGJl1GzHeSll_3EuwOk9iMIrJpZcNBrGULAP1uMaVHY2g517dEwtFQHbriJ87d9_X_RojVl5BjJEi-yuaiqEii2H5J3RQuElc5YJE';
 // 'AAAAdqUYLrU:APA91bGWUUQSVAUdLy15fhb8qQYVnX1ag7BKLzd0bQgGNI3kNBL7IUzFwa67e1ZwXgqe6K23SmvZyhnTdRmAx_QlJyn7MCpPD8awskrRjxeBLm7EAONDQwk2Pf1pfNXYrhP7xwagFuNa';
 
 const LANGUAGE = "en";

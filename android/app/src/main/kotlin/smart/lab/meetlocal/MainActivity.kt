@@ -1,4 +1,4 @@
-package doctor.finder.videocalling
+package smart.lab.meetlocal
 
 import io.flutter.embedding.android.FlutterActivity
 

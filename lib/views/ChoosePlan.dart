@@ -195,7 +195,7 @@ class _ChoosePlanState extends State<ChoosePlan> {
                           borderRadius:
                               BorderRadius.circular(15), // Border radius
                         ),
-                        minimumSize: Size(180, 50), // Set width and height
+                        minimumSize: Size(160, 50), // Set width and height
                       ),
                       child: Text("Limited")),
                   SizedBox(
@@ -224,7 +224,7 @@ class _ChoosePlanState extends State<ChoosePlan> {
                           borderRadius:
                               BorderRadius.circular(15), // Border radius
                         ),
-                        minimumSize: Size(180, 50), // Set width and height
+                        minimumSize: Size(160, 50), // Set width and height
                       ),
                       child: Text("Extended"))
                 ],
