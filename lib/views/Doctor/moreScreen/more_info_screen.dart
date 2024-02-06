@@ -886,12 +886,12 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
           ),
 
           Padding(
-            padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+            padding: const EdgeInsets.fromLTRB(16, 0, 30, 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: 35,
+                  height: 40,
                   child: Text(
                     'PROFILE SETTINGS',
                     style: TextStyle(
@@ -943,7 +943,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
           ),
 
           SizedBox(
-            height: 5,
+            height: 10,
           ),
 
           ///---------  change password ----------
@@ -983,7 +983,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
           ),
 
           SizedBox(
-            height: 5,
+            height: 10,
           ),
 
           ///--------- subscription ------------
@@ -1038,7 +1038,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
           ),
 
           Padding(
-            padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+            padding: const EdgeInsets.fromLTRB(16, 0, 30, 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -1163,7 +1163,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
           //),
 
           Padding(
-            padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+            padding: const EdgeInsets.fromLTRB(16, 0, 30, 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -1240,7 +1240,82 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
             ),
           ),
           SizedBox(
-            height: 10,
+            height: 15,
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 30, 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 40,
+                  child: Text(
+                    'OTHERS',
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 243, 103, 9),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              // Navigator.push(
+              //   context,
+              //   // MaterialPageRoute(builder: (context) => SubScriptionScreen()),
+              //   MaterialPageRoute(builder: (context) => SendOffersScreen()),
+              // );
+              deleteAccount(DELETE_ACCOUNT, DELETE_MESSAGE);
+            },
+            // GestureDetector(
+            //   onTap: () {
+            //     messageDialog(LOGOUT, ARE_YOU_SURE_TO_LOGOUT);
+            //     // Navigator.push(context,
+            //     //     MaterialPageRoute(builder: (context) => LogOutScreen()
+            //     // ));
+            //   },
+            child: Container(
+              height: 50,
+              margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
+              decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 243, 103, 9),
+                  borderRadius: BorderRadius.circular(10)),
+              child: Container(
+                margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      DELETE_ACCOUNT,
+                      style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                            color: Colors.white,
+                          ),
+                    ),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      size: 20,
+                      color: Colors.white,
+                    ),
+                    // TextButton(onPressed: (){
+                    //   Navigator.push(context,
+                    //     MaterialPageRoute(builder: (context) => DoctorAllAppointments()),
+                    //   );
+                    // }, child: Text(SEE_ALL,
+                    //     style: Theme.of(context).textTheme.bodyText2!.apply(
+                    //       color: Theme.of(context).hintColor,
+                    //       fontWeightDelta: 5,
+                    //     )
+                    // ),)
+                  ],
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 15,
           ),
           Container(
             child: ElevatedButton.icon(
@@ -1324,11 +1399,11 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                     // pref.setString("token", null);
                   });
                   // Navigator.of(context).popUntil((route) => route.isFirst);
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => LoginAsDoctor(),
-                      ));
+                  // Navigator.pushReplacement(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //       builder: (context) => LoginAsDoctor(),
+                  //     ));
                 },
                 style: TextButton.styleFrom(
                   backgroundColor: Theme.of(context).hintColor,
@@ -1345,5 +1420,75 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
             ],
           );
         });
+  }
+
+  deleteAccount(String msg1, String msg2) async {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(
+            msg1,
+            style: GoogleFonts.comfortaa(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                msg2,
+                style: GoogleFonts.poppins(
+                  fontSize: 14,
+                ),
+              )
+            ],
+          ),
+          actions: [
+            TextButton(
+                onPressed: () async {
+                  int id = int.parse(doctorId!);
+                  final response = await get(
+                      Uri.parse("$SERVER_ADDRESS/api/deletedoctor?id=$id"));
+                  if (response.statusCode == 200) {
+                    final jsonResponse = jsonDecode(response.body);
+                    if (jsonResponse['delete'].toString() ==
+                        "User deleted successfully") {
+                      setState(() {});
+                    }
+                  }
+                },
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.red,
+                ),
+                child: Text(
+                  YES,
+                  style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w500,
+                    color: BLACK,
+                  ),
+                )),
+            SizedBox(
+              width: 5,
+            ),
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.green,
+                ),
+                child: Text(
+                  NO,
+                  style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w500,
+                    color: BLACK,
+                  ),
+                ))
+          ],
+        );
+      },
+    );
   }
 }
