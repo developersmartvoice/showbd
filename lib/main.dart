@@ -32,15 +32,15 @@ import 'package:http/http.dart' as http;
 import 'en.dart';
 
 /// old url
-const String SERVER_ADDRESS = "https://localguide.celibritychatbd.com";
+// const String SERVER_ADDRESS = "https://localguide.celibritychatbd.com";
 // const String SERVER_ADDRESS = "http://192.168.0.155/local-guide-backend";
 // const String SERVER_ADDRESS = "http://192.168.0.150/local-guide-backend";
 // const String SERVER_ADDRESS = "http://192.168.68.105/local-guide-backend";
-// const String SERVER_ADDRESS = "http://192.168.68.26/local-guide-backend";
-const String IMAGE =
-    "https://localguide.celibritychatbd.com/public/upload/banner/";
+const String SERVER_ADDRESS = "http://192.168.68.26/local-guide-backend";
 // const String IMAGE =
-//     "http://192.168.68.26/local-guide-backend/public/upload/banner/";
+//     "https://localguide.celibritychatbd.com/public/upload/banner/";
+const String IMAGE =
+    "http://192.168.68.26/local-guide-backend/public/upload/banner/";
 
 /// new url
 // const String SERVER_ADDRESS = "https://hairitgestione.eu";
