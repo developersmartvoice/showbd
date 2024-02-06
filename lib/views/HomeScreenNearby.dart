@@ -307,6 +307,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
       child: Container(
         // height: 900,
         decoration: BoxDecoration(
+            // shape: BoxShape.rectangle,
             color: WHITE,
             borderRadius: BorderRadius.circular(5),
             boxShadow: [
@@ -321,11 +322,11 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
         //   minHeight: 500.0, // Set the minimum height
         //   maxHeight: 500.0, // Set the maximum height
         // ),
-        padding: EdgeInsets.fromLTRB(0, 0, 0, 2),
+        // padding: EdgeInsets.fromLTRB(0, 0, 0, 2),
         child: Column(
           children: [
             Container(
-              // height: 150,
+              // height: 200,
               child: Expanded(
                 child: Container(
                   child: Stack(
@@ -374,32 +375,34 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                           if (index == 0) {
                             print("realIndex is $realIndex");
                             // Display the fixed image at the beginning
-                            return ClipRRect(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(8),
-                                topRight: Radius.circular(8),
-                              ),
-                              child: CachedNetworkImage(
-                                imageUrl: img,
-                                fit: BoxFit.fill,
-                                width: double.infinity,
-                                placeholder: (context, url) => Container(
-                                  color: Theme.of(context).primaryColorLight,
-                                  child: Center(
-                                    child: Image.asset(
-                                      "assets/homeScreenImages/user_unactive.png",
-                                      height: 50,
-                                      width: 50,
+                            return Container(
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(8),
+                                  topRight: Radius.circular(8),
+                                ),
+                                child: CachedNetworkImage(
+                                  imageUrl: img,
+                                  fit: BoxFit.fill,
+                                  width: double.infinity,
+                                  placeholder: (context, url) => Container(
+                                    color: Theme.of(context).primaryColorLight,
+                                    child: Center(
+                                      child: Image.asset(
+                                        "assets/homeScreenImages/user_unactive.png",
+                                        height: 50,
+                                        width: 50,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                errorWidget: (context, url, err) => Container(
-                                  color: Theme.of(context).primaryColorLight,
-                                  child: Center(
-                                    child: Image.asset(
-                                      "assets/homeScreenImages/user_unactive.png",
-                                      height: 50,
-                                      width: 50,
+                                  errorWidget: (context, url, err) => Container(
+                                    color: Theme.of(context).primaryColorLight,
+                                    child: Center(
+                                      child: Image.asset(
+                                        "assets/homeScreenImages/user_unactive.png",
+                                        height: 50,
+                                        width: 50,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -656,7 +659,9 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
             //),
             //),
             Text(
-              aboutMe,
+              aboutMe.toString().length >= 30
+                  ? aboutMe.toString().substring(0, 30) + "..."
+                  : aboutMe.toString(),
               textAlign: TextAlign.center,
               style: GoogleFonts.poppins(
                 color: LIGHT_GREY_TEXT,

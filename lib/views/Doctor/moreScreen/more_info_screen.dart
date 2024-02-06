@@ -886,12 +886,12 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
           ),
 
           Padding(
-            padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+            padding: const EdgeInsets.fromLTRB(16, 0, 30, 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: 35,
+                  height: 40,
                   child: Text(
                     'PROFILE SETTINGS',
                     style: TextStyle(
@@ -943,7 +943,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
           ),
 
           SizedBox(
-            height: 5,
+            height: 10,
           ),
 
           ///---------  change password ----------
@@ -983,7 +983,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
           ),
 
           SizedBox(
-            height: 5,
+            height: 10,
           ),
 
           ///--------- subscription ------------
@@ -1038,7 +1038,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
           ),
 
           Padding(
-            padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+            padding: const EdgeInsets.fromLTRB(16, 0, 30, 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -1163,7 +1163,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
           //),
 
           Padding(
-            padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+            padding: const EdgeInsets.fromLTRB(16, 0, 30, 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -1240,7 +1240,81 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
             ),
           ),
           SizedBox(
-            height: 10,
+            height: 15,
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 30, 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 40,
+                  child: Text(
+                    'OTHERS',
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 243, 103, 9),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                // MaterialPageRoute(builder: (context) => SubScriptionScreen()),
+                MaterialPageRoute(builder: (context) => SendOffersScreen()),
+              );
+            },
+            // GestureDetector(
+            //   onTap: () {
+            //     messageDialog(LOGOUT, ARE_YOU_SURE_TO_LOGOUT);
+            //     // Navigator.push(context,
+            //     //     MaterialPageRoute(builder: (context) => LogOutScreen()
+            //     // ));
+            //   },
+            child: Container(
+              height: 50,
+              margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
+              decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 243, 103, 9),
+                  borderRadius: BorderRadius.circular(10)),
+              child: Container(
+                margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      DELETE_ACCOUNT,
+                      style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                            color: Colors.white,
+                          ),
+                    ),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      size: 20,
+                      color: Colors.white,
+                    ),
+                    // TextButton(onPressed: (){
+                    //   Navigator.push(context,
+                    //     MaterialPageRoute(builder: (context) => DoctorAllAppointments()),
+                    //   );
+                    // }, child: Text(SEE_ALL,
+                    //     style: Theme.of(context).textTheme.bodyText2!.apply(
+                    //       color: Theme.of(context).hintColor,
+                    //       fontWeightDelta: 5,
+                    //     )
+                    // ),)
+                  ],
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 15,
           ),
           Container(
             child: ElevatedButton.icon(
