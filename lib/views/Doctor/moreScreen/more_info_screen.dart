@@ -1399,11 +1399,11 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                     // pref.setString("token", null);
                   });
                   // Navigator.of(context).popUntil((route) => route.isFirst);
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => LoginAsDoctor(),
-                      ));
+                  // Navigator.pushReplacement(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //       builder: (context) => LoginAsDoctor(),
+                  //     ));
                 },
                 style: TextButton.styleFrom(
                   backgroundColor: Theme.of(context).hintColor,
@@ -1447,7 +1447,18 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
           ),
           actions: [
             TextButton(
-                onPressed: () {},
+                onPressed: () async {
+                  int id = int.parse(doctorId!);
+                  final response = await get(
+                      Uri.parse("$SERVER_ADDRESS/api/deletedoctor?id=$id"));
+                  if (response.statusCode == 200) {
+                    final jsonResponse = jsonDecode(response.body);
+                    if (jsonResponse['delete'].toString() ==
+                        "User deleted successfully") {
+                      setState(() {});
+                    }
+                  }
+                },
                 style: TextButton.styleFrom(
                   backgroundColor: Colors.red,
                 ),
