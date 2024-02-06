@@ -126,6 +126,7 @@ const String SIGN_IN = "Sign In";
 const String SIGN_IN_TO_CONTINUE = "Sign in to continue";
 const String REPORT = "Report";
 const String YES = "Yes";
+const String NO = "No";
 const String COMPLETE = "Complete";
 const String ABSENT = "Absent";
 const String DENTIST = "Dentist";
@@ -308,6 +309,8 @@ const String PEOPLE = 'Number of people';
 const String LOOKING_LOCAL = 'Looking for a local';
 const String RECENT_CHATS = "Recent chats";
 const String CHANGE_PASSWORD = "Change Password";
+const String DELETE_MESSAGE =
+    "After deleting account you can not able to login untill you resgister again!";
 const String SUBSCRIPTION = "Subscription";
 const String INCOME_REPORT = "Income Report";
 const String DETAILED_REPORTS = "Detailed Reports";

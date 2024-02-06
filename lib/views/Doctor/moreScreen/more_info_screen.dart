@@ -1263,11 +1263,12 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
           ),
           GestureDetector(
             onTap: () {
-              Navigator.push(
-                context,
-                // MaterialPageRoute(builder: (context) => SubScriptionScreen()),
-                MaterialPageRoute(builder: (context) => SendOffersScreen()),
-              );
+              // Navigator.push(
+              //   context,
+              //   // MaterialPageRoute(builder: (context) => SubScriptionScreen()),
+              //   MaterialPageRoute(builder: (context) => SendOffersScreen()),
+              // );
+              deleteAccount(DELETE_ACCOUNT, DELETE_MESSAGE);
             },
             // GestureDetector(
             //   onTap: () {
@@ -1419,5 +1420,64 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
             ],
           );
         });
+  }
+
+  deleteAccount(String msg1, String msg2) async {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(
+            msg1,
+            style: GoogleFonts.comfortaa(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                msg2,
+                style: GoogleFonts.poppins(
+                  fontSize: 14,
+                ),
+              )
+            ],
+          ),
+          actions: [
+            TextButton(
+                onPressed: () {},
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.red,
+                ),
+                child: Text(
+                  YES,
+                  style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w500,
+                    color: BLACK,
+                  ),
+                )),
+            SizedBox(
+              width: 5,
+            ),
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.green,
+                ),
+                child: Text(
+                  NO,
+                  style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w500,
+                    color: BLACK,
+                  ),
+                ))
+          ],
+        );
+      },
+    );
   }
 }
