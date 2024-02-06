@@ -1399,11 +1399,18 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                     // pref.setString("token", null);
                   });
                   // Navigator.of(context).popUntil((route) => route.isFirst);
-                  // Navigator.pushReplacement(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //       builder: (context) => LoginAsDoctor(),
-                  //     ));
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LoginAsDoctor(),
+                      ));
+                  // Navigator.of(context)
+                  //     .pushReplacement(MaterialPageRoute(
+                  //         builder: (context) => LoginAsDoctor()))
+                  //     .then((_) {
+                  //   // After pushing the new route, remove the previous route from the stack
+                  //   Navigator.of(context).popUntil((route) => route.isFirst);
+                  // });
                 },
                 style: TextButton.styleFrom(
                   backgroundColor: Theme.of(context).hintColor,
@@ -1451,12 +1458,80 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                   int id = int.parse(doctorId!);
                   final response = await get(
                       Uri.parse("$SERVER_ADDRESS/api/deletedoctor?id=$id"));
-                  if (response.statusCode == 200) {
-                    final jsonResponse = jsonDecode(response.body);
-                    if (jsonResponse['delete'].toString() ==
-                        "User deleted successfully") {
-                      setState(() {});
+                  try {
+                    if (response.statusCode == 200) {
+                      final jsonResponse = jsonDecode(response.body);
+                      if (jsonResponse['delete'].toString() ==
+                          "User deleted successfully") {
+                        setState(() async {
+                          isErrorInLoading = false;
+                          await SharedPreferences.getInstance().then((pref) {
+                            pref.setBool("isLoggedInAsDoctor", false);
+                            pref.setBool("isLoggedIn", false);
+                            pref.clear();
+                            // pref.setString("userId", null);
+                            // pref.setString("name", null);
+                            // pref.setString("phone", null);
+                            // pref.setString("email", null);
+                            // pref.setString("token", null);
+                          });
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title:
+                                      Text("User Account deleted successfully"),
+                                  actions: [
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      LoginAsDoctor()));
+                                        },
+                                        child: Text(
+                                          "OK",
+                                          style: GoogleFonts.poppins(
+                                            fontSize: 14,
+                                          ),
+                                        ))
+                                  ],
+                                );
+                              });
+                        });
+                      } else {
+                        setState(() {
+                          isErrorInLoading = false;
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: Text("Error arise!, Try again Later"),
+                                  actions: [
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        style: TextButton.styleFrom(
+                                          backgroundColor: Colors.green,
+                                        ),
+                                        child: Text(
+                                          "OK",
+                                          style: GoogleFonts.poppins(
+                                            fontSize: 14,
+                                          ),
+                                        ))
+                                  ],
+                                );
+                              });
+                        });
+                      }
+                    } else {
+                      isErrorInLoading = true;
                     }
+                  } catch (e) {
+                    isErrorInLoading = true;
                   }
                 },
                 style: TextButton.styleFrom(
