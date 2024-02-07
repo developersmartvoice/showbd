@@ -1315,7 +1315,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
             ),
           ),
           SizedBox(
-            height: 15,
+            height: 8,
           ),
           Container(
             child: ElevatedButton.icon(

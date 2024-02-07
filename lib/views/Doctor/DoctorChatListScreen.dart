@@ -1,6 +1,9 @@
+import 'package:appcode3/en.dart';
 import 'package:appcode3/main.dart';
 import 'package:appcode3/views/ChatScreen.dart';
 import 'package:appcode3/views/Doctor/loginAsDoctor.dart';
+import 'package:appcode3/views/SendOfferScreen.dart';
+import 'package:appcode3/views/SendOffersScreen.dart';
 import 'package:appcode3/views/loginAsUser.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -194,6 +197,12 @@ class _ChatListScreenState extends State<ChatListScreen> {
                                     IconButton(
                                       icon: Icon(Icons.arrow_forward_ios_sharp),
                                       onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  SendOffersScreen()),
+                                        );
                                         // Handle forward button press
                                       },
                                     ),
@@ -546,7 +555,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
         Container(
           height: 60,
           child: Row(
-            //mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             //crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
@@ -565,11 +574,16 @@ class _ChatListScreenState extends State<ChatListScreen> {
               SizedBox(
                 width: 10,
               ),
-              Text(
-                'Inbox',
-                style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w600, color: WHITE, fontSize: 22),
-                textAlign: TextAlign.center,
+              Title(
+                color: BLACK,
+                child: Text(
+                  INBOX,
+                  style: GoogleFonts.poppins(
+                    fontSize: 25,
+                    fontWeight: FontWeight.w700,
+                    color: WHITE,
+                  ),
+                ),
               ),
             ],
           ),
