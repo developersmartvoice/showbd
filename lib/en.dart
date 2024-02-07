@@ -25,6 +25,7 @@ const String MAKE_AN_SUBSCRIBE = "Make a subscribe";
 const String LOGIN_TO_BOOK_APPOINTMENT = "Login to book now";
 const String DOCTOR_DASHBOARD = "Guide dashboard";
 const String TOUR = "Trips";
+const String INBOX = "Inbox";
 const String APPOINTMENTS = "Bookings";
 const String EITHER_MOBILE_NUMBER_OR_PASSWORD_IS_INCORRECT =
     "Either mobile number or password is incorrect";

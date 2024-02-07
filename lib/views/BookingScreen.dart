@@ -47,7 +47,7 @@ class _BookingScreenState extends State<BookingScreen> {
         ),
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(14.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -61,7 +61,7 @@ class _BookingScreenState extends State<BookingScreen> {
                 GestureDetector(
                   onTap: () => _selectDate(context),
                   child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 16),
+                    padding: EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey),
                       borderRadius: BorderRadius.circular(8),

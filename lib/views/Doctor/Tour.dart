@@ -72,6 +72,7 @@ class _TourState extends State<Tour> {
               style: Theme.of(context).textTheme.headline5!.apply(
                   color: Theme.of(context).backgroundColor,
                   fontWeightDelta: 5)),
+          centerTitle: true,
           flexibleSpace: Container(
             decoration: BoxDecoration(
               image: DecorationImage(

@@ -351,7 +351,7 @@ class _SearchedScreenState extends State<SearchedScreen> {
   Widget body() {
     return Container(
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(0),
         child: Column(
           children: [
             _buildSlider('Price Range', priceRange, (value) {
@@ -416,25 +416,119 @@ class _SearchedScreenState extends State<SearchedScreen> {
   }
 
   Widget _buildSlider(String label, double value, ValueChanged<int> onChanged) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: GoogleFonts.poppins(
-              fontWeight: FontWeight.w600, color: BLACK, fontSize: 18),
-        ),
-        Slider(
-          value: value,
-          min: 0,
-          max: 100,
-          onChanged: (double newValue) {
-            onChanged(newValue.round()); // Round the double value to an integer
-          },
-          activeColor: Color.fromARGB(190, 255, 115, 0),
-        ),
-        Text('Selected Fees: ${value.round()}'),
-      ],
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(
+                left: 18.0), // Adjust the left padding as needed
+            child: Text(
+              label,
+              style: GoogleFonts.robotoCondensed(
+                  fontWeight: FontWeight.w600,
+                  color: Colors.grey,
+                  fontSize: 25),
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+            color: Colors.white,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: 17.0), // Adjust the left padding as needed
+                      child: Text(
+                        'Free',
+                        style: GoogleFonts.robotoCondensed(
+                            fontSize: 20, fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 295,
+                    ),
+                    Text(
+                      '100',
+                      style: GoogleFonts.robotoCondensed(
+                          fontSize: 20, fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+                // SliderTheme(
+                //   data: SliderThemeData(
+                //     //trackHeight: 5, // Change the height of the track
+                //     thumbShape: RoundSliderThumbShape(
+                //       enabledThumbRadius: 10, // Change the size of the thumb
+                //     ),
+                //   ),
+                //   child: Slider(
+                //     value: value,
+                //     min: 0,
+                //     max: 100,
+                //     onChanged: (double newValue) {
+                //       onChanged(
+                //           newValue.round()); // Round the double value to an integer
+                //     },
+                //     activeColor: Color.fromARGB(190, 255, 115, 0),
+                //   ),
+                // ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.end,
+                //   children: [
+                //     Text(
+                //       '100',
+                //       style: GoogleFonts.robotoCondensed(
+                //           fontSize: 20, fontWeight: FontWeight.w500),
+                //     ),
+                //   ],
+                // ),
+                Column(
+                  children: [
+                    SliderTheme(
+                      data: SliderThemeData(
+                        //trackHeight: 5, // Change the height of the track
+                        thumbShape: RoundSliderThumbShape(
+                          enabledThumbRadius:
+                              10, // Change the size of the thumb
+                        ),
+                      ),
+                      child: Slider(
+                        value: value,
+                        min: 0,
+                        max: 100,
+                        onChanged: (double newValue) {
+                          onChanged(newValue
+                              .round()); // Round the double value to an integer
+                        },
+                        activeColor: Color.fromARGB(190, 255, 115, 0),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          Container(
+            color: Colors.white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Selected Fees: ${value.round()}',
+                  style: GoogleFonts.robotoCondensed(
+                      fontSize: 18, fontWeight: FontWeight.w500),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -443,15 +537,30 @@ class _SearchedScreenState extends State<SearchedScreen> {
     return Container(
       child: Column(
         // crossAxisAlignment: CrossAxisAlignment.start,
+        //mainAxisAlignment: MainAxisAlignment.start,
 
         children: [
-          Text(
-            label,
-            style: GoogleFonts.poppins(
-                fontWeight: FontWeight.w600, color: BLACK, fontSize: 18),
+          Container(
+            color: LIGHT_GREY_SCREEN_BACKGROUND,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                      left: 18.0), // Adjust the left padding as needed
+                  child: Text(
+                    label,
+                    style: GoogleFonts.robotoCondensed(
+                        fontWeight: FontWeight.w600,
+                        color: Colors.grey,
+                        fontSize: 25),
+                  ),
+                ),
+              ],
+            ),
           ),
           SizedBox(
-            height: 10,
+            height: 5,
           ),
           Wrap(
             spacing: 12.0,
@@ -484,34 +593,46 @@ class _SearchedScreenState extends State<SearchedScreen> {
 
   Widget _buildRadioButtons(String label, int selectedValue,
       List<String> options, ValueChanged<int> onChanged) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: GoogleFonts.poppins(
-              fontWeight: FontWeight.w600, color: BLACK, fontSize: 18),
-        ),
-        Column(
-          children: options.asMap().entries.map((entry) {
-            int index = entry.key;
-            String option = entry.value;
-            return Row(
-              children: [
-                Radio(
-                  value: index,
-                  groupValue: selectedValue,
-                  onChanged: (value) {
-                    onChanged(value as int);
-                  },
-                  activeColor: Color.fromARGB(190, 255, 115, 0),
-                ),
-                Text(option),
-              ],
-            );
-          }).toList(),
-        ),
-      ],
+    return Container(
+      color: LIGHT_GREY_SCREEN_BACKGROUND,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(
+                left: 18.0), // Adjust the left padding as needed
+            child: Text(
+              label,
+              style: GoogleFonts.robotoCondensed(
+                  fontWeight: FontWeight.w600,
+                  color: Colors.grey,
+                  fontSize: 25),
+            ),
+          ),
+          Container(
+            color: WHITE,
+            child: Column(
+              children: options.asMap().entries.map((entry) {
+                int index = entry.key;
+                String option = entry.value;
+                return Row(
+                  children: [
+                    Radio(
+                      value: index,
+                      groupValue: selectedValue,
+                      onChanged: (value) {
+                        onChanged(value as int);
+                      },
+                      activeColor: Color.fromARGB(190, 255, 115, 0),
+                    ),
+                    Text(option),
+                  ],
+                );
+              }).toList(),
+            ),
+          ),
+        ],
+      ),
     );
   }
 

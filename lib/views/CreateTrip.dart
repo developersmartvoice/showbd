@@ -131,6 +131,7 @@ class _CreateTripState extends State<CreateTrip> {
               style: Theme.of(context).textTheme.headline5!.apply(
                   color: Theme.of(context).backgroundColor,
                   fontWeightDelta: 5)),
+          centerTitle: true,
           flexibleSpace: Container(
             decoration: BoxDecoration(
               image: DecorationImage(
@@ -170,77 +171,115 @@ class _CreateTripState extends State<CreateTrip> {
                       children: [
                         Row(
                           children: [
-                            Text(
-                              'Destination:  ',
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 16.0,
-                              ),
-                            ),
+                            // Text(
+                            //   'Destination:  ',
+                            //   style: TextStyle(
+                            //     color: Colors.grey,
+                            //     fontSize: 16.0,
+                            //   ),
+                            // ),
                             Expanded(
                               child: Text(
                                 location.toUpperCase(),
                                 style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.w500,
                                     color: location == 'Where are you going?'
-                                        ? Colors.lightBlue
+                                        ? Colors.grey
                                         : Color.fromARGB(255, 255, 84, 5),
                                     fontSize: 20),
                               ),
                             ),
-                            Icon(Icons.arrow_forward_ios,
-                                color: Colors.lightBlue),
+                            // Icon(Icons.location_searching_sharp,
+                            //     color: Colors.lightBlue),
                           ],
                         ),
-                        Container(
-                            alignment: Alignment.topLeft,
-                            child: !locationPicked
-                                ? Text("Required!",
-                                    style: TextStyle(color: Colors.red))
-                                : Text(""))
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Row(
+                          children: [
+                            Icon(Icons.search_sharp, color: Colors.lightBlue),
+                            SizedBox(
+                                width:
+                                    5), // Adjust the space between icon and text as needed
+                            Expanded(
+                                child: Container(
+                                    alignment: Alignment.centerLeft,
+                                    child: !locationPicked
+                                        ? Text("Enter location",
+                                            style: GoogleFonts.robotoCondensed(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w500,
+                                            ))
+                                        : Text(""))),
+                          ],
+                        ),
                       ],
                     ),
                   ),
                 ),
 
-                SizedBox(height: 16.0),
-                InkWell(
-                  onTap: () => _selectDate(context, true),
-                  child: InputDecorator(
-                    decoration: InputDecoration(
-                        labelText: DATE_FROM.toUpperCase(),
-                        labelStyle: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w500,
-                            color: datePickedStart
-                                ? Color.fromARGB(255, 255, 84, 5)
-                                : Colors.lightBlue,
-                            fontSize: 24),
-                        errorText: !datePickedStart ? "Required!" : ""),
-                    child: Text(
-                      '${startDate.day.toString().padLeft(2, '0')} ${_getMonthAbbreviation(startDate.month)} ${startDate.year}',
+                Divider(
+                  height: 5,
+                  color: Colors.grey,
+                ),
+
+                SizedBox(height: 30.0),
+                Container(
+                  child: InkWell(
+                    onTap: () => _selectDate(context, true),
+                    child: InputDecorator(
+                      decoration: InputDecoration(
+                          labelText: DATE_FROM.toUpperCase(),
+                          labelStyle: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w500,
+                              color: datePickedStart
+                                  ? Color.fromARGB(255, 255, 84, 5)
+                                  : Colors.grey,
+                              fontSize: 24),
+                          //),
+                          errorText:
+                              !datePickedStart ? "Field cannot be empty!" : ""),
+                      child: Text(
+                        '${startDate.day.toString().padLeft(2, '0')} ${_getMonthAbbreviation(startDate.month)} ${startDate.year}',
+                      ),
                     ),
                   ),
                 ),
-                SizedBox(height: 16.0),
-                InkWell(
-                  onTap: () => _selectDate(context, false),
-                  child: InputDecorator(
-                    decoration: InputDecoration(
-                        labelText: DATE_TO.toUpperCase(),
-                        // labelStyle: TextStyle(fontSize: 18)
-                        labelStyle: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w500,
-                            color: datePickedEnd
-                                ? Color.fromARGB(255, 255, 84, 5)
-                                : Colors.lightBlue,
-                            fontSize: 24),
-                        errorText: !datePickedEnd ? "Required!" : ""),
-                    child: Text(
-                      '${endDate.day.toString().padLeft(2, '0')} ${_getMonthAbbreviation(endDate.month)} ${endDate.year}',
+
+                // Divider(
+                //   height: 50,
+                //   color: Colors.grey,
+                // ),
+                SizedBox(height: 30.0),
+                Container(
+                  child: InkWell(
+                    onTap: () => _selectDate(context, false),
+                    child: InputDecorator(
+                      decoration: InputDecoration(
+                          labelText: DATE_TO.toUpperCase(),
+                          // labelStyle: TextStyle(fontSize: 18)
+                          labelStyle: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w500,
+                              color: datePickedEnd
+                                  ? Color.fromARGB(255, 255, 84, 5)
+                                  : Colors.grey,
+                              fontSize: 24),
+                          //),
+                          errorText:
+                              !datePickedEnd ? "Field cannot be empty!" : ""),
+                      child: Text(
+                        '${endDate.day.toString().padLeft(2, '0')} ${_getMonthAbbreviation(endDate.month)} ${endDate.year}',
+                      ),
                     ),
                   ),
                 ),
-                SizedBox(height: 16.0),
+
+                // Divider(
+                //   height: 20,
+                //   color: Colors.grey,
+                // ),
+                SizedBox(height: 30.0),
                 InkWell(
                   onTap: () => _selectNumberOfPeople(context),
                   child: InputDecorator(
@@ -249,14 +288,22 @@ class _CreateTripState extends State<CreateTrip> {
                         labelStyle: GoogleFonts.poppins(
                             fontWeight: FontWeight.w500,
                             color: !peoplePicked
-                                ? Colors.lightBlue
+                                ? Colors.grey
                                 : Color.fromARGB(255, 255, 84, 5),
                             fontSize: 24),
-                        errorText: !peoplePicked ? "Required!" : ""),
+                        //),
+                        errorText:
+                            !peoplePicked ? "Field cannot be empty!" : ""),
                     child: Text(numberOfPeople),
                   ),
                 ),
-                SizedBox(height: 16.0),
+
+                // Divider(
+                //   height: 20,
+                //   color: Colors.grey,
+                // ),
+
+                SizedBox(height: 30.0),
                 // Add the last input field and button here
 
                 InkWell(
@@ -285,15 +332,52 @@ class _CreateTripState extends State<CreateTrip> {
                           fontWeight: FontWeight.w500,
                           color: genderPicked
                               ? Color.fromARGB(255, 255, 84, 5)
-                              : Colors.lightBlue,
+                              : Colors.grey,
                           fontSize: 24,
                         ),
-                        errorText: !genderPicked ? "Required!" : ""),
-                    child: Text(gender),
+                        //),
+                        errorText:
+                            !genderPicked ? "Field cannot be empty!" : ""),
+                    child: Row(
+                      //mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        SizedBox(
+                          height: 30,
+                          child: Text(
+                            gender,
+                            style: GoogleFonts.robotoCondensed(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            IconButton(
+                              icon: Icon(Icons.arrow_forward_ios_sharp),
+                              onPressed: () {
+                                //     Navigator.push(
+                                //       context,
+                                //  MaterialPageRoute(
+                                //           builder: (context) =>
+                                //          SendOffersScreen()),
+                                //    );
+                                // Handle forward button press
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
 
-                SizedBox(height: MediaQuery.of(context).size.height * .09),
+                //SizedBox(height: MediaQuery.of(context).size.height * .09),
+
+                SizedBox(
+                  height: 50,
+                ),
 
                 // Update the ElevatedButton.icon widget
                 ElevatedButton.icon(
@@ -321,6 +405,7 @@ class _CreateTripState extends State<CreateTrip> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                     backgroundColor: locationPicked &&
                             datePickedStart &&
                             datePickedEnd &&
@@ -331,6 +416,9 @@ class _CreateTripState extends State<CreateTrip> {
                     fixedSize: Size(
                       MediaQuery.of(context).size.width * .5,
                       50,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
                     ),
                   ),
                   icon: isLoading
