@@ -1047,7 +1047,66 @@ class _DetailsPageState extends State<DetailsPage> {
                           }).toList(),
                         )
                 ],
-              )
+              ),
+
+              SizedBox(
+                height: 10,
+              ),
+              Divider(
+                height: 35.0,
+                color: Colors.grey[500],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    doctorDetailsClass!.data!.aboutme == null
+                        ? " "
+                        : HEALTH_CARE,
+                    style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w600,
+                        color: BLACK,
+                        fontSize: 20),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  doctorDetailsClass!.data!.languages == null
+                      ? Text("No Languages Selected")
+                      : Row(
+                          children: doctorDetailsClass!.data!.languages!
+                              .map((language) {
+                            // Customize text size
+                            TextStyle textStyle = TextStyle(
+                                fontSize: 12.0,
+                                //color: LIGHT_GREY_TEXT,
+                                fontWeight: FontWeight.w500);
+
+                            // Map language to display text
+                            String displayText =
+                                getDisplayTextForLanguage(language);
+
+                            return Container(
+                              // padding: EdgeInsets.zero,
+                              margin: EdgeInsets.only(left: 0, right: 8.0),
+                              child: doctorDetailsClass!.data!.languages!
+                                          .indexOf(language) !=
+                                      count - 1
+                                  ? Text(
+                                      '$displayText,',
+                                      style: textStyle,
+                                    )
+                                  : Text('I am Groot',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black,
+                                      )),
+                            );
+                          }).toList(),
+                        )
+                ],
+              ),
             ],
           ),
         ),
@@ -1110,6 +1169,26 @@ class _DetailsPageState extends State<DetailsPage> {
       // Add more cases for other languages
       default:
         return language;
+    }
+  }
+
+  String getDisplayTextForAboutMe(String aboutme) {
+    switch (aboutme.toLowerCase()) {
+      case 'english':
+        return 'English';
+      case 'hindi':
+        return 'Hindi';
+      case 'bengali':
+        return 'Bengali';
+      case 'urdu':
+        return 'Urdu';
+      case 'french':
+        return 'French';
+      case 'spanish':
+        return 'Spanish';
+      // Add more cases for other languages
+      default:
+        return aboutme;
     }
   }
 

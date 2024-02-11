@@ -444,6 +444,7 @@
 //
 
 import 'dart:convert';
+import 'package:appcode3/views/AboutHost.dart';
 import 'package:appcode3/views/ChoosePlan.dart';
 import 'package:appcode3/views/DetailsPage.dart';
 import 'package:appcode3/views/Doctor/DoctorProfile.dart';
@@ -1062,7 +1063,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => DoctorProfile()),
+                MaterialPageRoute(builder: (context) => AboutHost()),
               );
             },
             child: Container(
@@ -1499,7 +1500,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                                   ],
                                 );
                               });
-                        });
+                        } as Null Function());
                       } else {
                         setState(() {
                           isErrorInLoading = false;

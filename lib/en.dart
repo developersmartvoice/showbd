@@ -304,6 +304,7 @@ const String ABOUT_HOST = 'About host';
 const String CURRENCY_EXCHANGE = 'Currency';
 const String NOTIFICATION_SETTINGS = 'Notification settings';
 const String DELETE_ACCOUNT = 'Delete Account';
+const String CURRENT_DATE = 'Select a date';
 const String DATE_FROM = "Select a date from";
 const String DATE_TO = "Select a date to";
 const String PEOPLE = 'Number of people';
