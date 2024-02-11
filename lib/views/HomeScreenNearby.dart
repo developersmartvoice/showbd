@@ -35,7 +35,7 @@ List<NearbyData> list2 = [];
 bool hasApiBeenCalled = false;
 NearbyDoctorsClass? nearbyDoctorsClass;
 // DoctorDetailsClass? doctorDetailsClass;
-CarouselController sliderController = CarouselController();
+
 // bool isScrollLocked = true;
 
 class HomeScreenNearby extends StatefulWidget {
@@ -53,6 +53,8 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
   bool isLoggedIn = false;
   bool isLoadingMore = false;
   int? currentId;
+  int currentPage = 0;
+  CarouselController sliderController = CarouselController();
 
   int maxPosition = 0;
   bool isLoadMoreEnable = true;
@@ -374,6 +376,8 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                         itemBuilder: (context, index, realIndex) {
                           if (index == 0) {
                             print("realIndex is $realIndex");
+                            // int individualPage = 0;
+                            // currentPage = 0;
                             // Display the fixed image at the beginning
                             return Container(
                               child: ClipRRect(
@@ -412,6 +416,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                             // Display the rest of the images from imgs
                             var imgIndex =
                                 index - 1; // Adjust the index for imgs
+                            // currentPage = imgIndex;
                             return ClipRRect(
                               borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(8),
@@ -454,7 +459,37 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                           autoPlay: false, // Set to false for manual control
                           enableInfiniteScroll:
                               false, // Disable infinite scroll
-                          onPageChanged: (index, reason) {},
+                          onPageChanged: (index, reason) {
+                            setState(() {
+                              currentPage = index;
+                            });
+                          },
+                        ),
+                      ),
+
+                      Container(
+                        margin: EdgeInsets.only(top: 10),
+                        // color: Colors.black,
+                        width: MediaQuery.sizeOf(context).width * 1,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: List.generate(
+                              imgs!.isNotEmpty ? (imgs!.length + 1) : (1),
+                              (index) {
+                            // index < 0 ? currentPage = 0 : {};
+                            print(currentPage);
+                            return Container(
+                              margin: EdgeInsets.symmetric(horizontal: 5),
+                              width: 8,
+                              height: 8,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: currentPage == index
+                                    ? Colors.orange
+                                    : Colors.grey,
+                              ),
+                            );
+                          }),
                         ),
                       ),
 
