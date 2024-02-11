@@ -131,82 +131,93 @@ class _ChatListScreenState extends State<ChatListScreen> {
                       ? Container(
                           child: Column(
                             children: [
-                              Card(
-                                child: Row(
-                                  children: [
-                                    CircleAvatar(
-                                      // Add your avatar properties, e.g., backgroundImage, radius, etc.
-                                      radius: 35,
-                                      backgroundImage:
-                                          AssetImage('assets/people 6.png'),
-                                      backgroundColor: Colors
-                                          .blue, // Example color, you can customize
-                                      // Add any other properties for the avatar
-                                    ),
-                                    //SizedBox(width: 5),
-                                    // Your card content goes here
-                                    Expanded(
-                                      child: Container(
-                                        padding: EdgeInsets.all(16),
-                                        child: Column(
-                                          //padding: EdgeInsets.all(40),
-                                          // Add your card content here, e.g., Text, Image, etc.
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'MeetLocal',
-                                              style:
-                                                  GoogleFonts.robotoCondensed(
-                                                fontSize: 25,
-                                                fontWeight: FontWeight.bold,
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            SendOffersScreen()),
+                                  );
+                                },
+                                child: Card(
+                                  child: Row(
+                                    children: [
+                                      CircleAvatar(
+                                        // Add your avatar properties, e.g., backgroundImage, radius, etc.
+                                        radius: 35,
+                                        backgroundImage:
+                                            AssetImage('assets/people 6.png'),
+                                        backgroundColor: Colors
+                                            .blue, // Example color, you can customize
+                                        // Add any other properties for the avatar
+                                      ),
+                                      //SizedBox(width: 5),
+                                      // Your card content goes here
+                                      Expanded(
+                                        child: Container(
+                                          padding: EdgeInsets.all(16),
+                                          child: Column(
+                                            //padding: EdgeInsets.all(40),
+                                            // Add your card content here, e.g., Text, Image, etc.
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                'MeetLocal',
+                                                style:
+                                                    GoogleFonts.robotoCondensed(
+                                                  fontSize: 25,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
                                               ),
-                                            ),
-                                            Text(
-                                              '1 person is looking for a local',
-                                              style:
-                                                  GoogleFonts.robotoCondensed(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.w500,
+                                              Text(
+                                                '1 person is looking for a local',
+                                                style:
+                                                    GoogleFonts.robotoCondensed(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
                                               ),
-                                            ),
-                                            Text(
-                                              'in Dhaka, Bangladesh',
-                                              style:
-                                                  GoogleFonts.robotoCondensed(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.w500,
+                                              Text(
+                                                'in Dhaka, Bangladesh',
+                                                style:
+                                                    GoogleFonts.robotoCondensed(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
                                               ),
-                                            ),
-                                            // Row(
-                                            //   mainAxisAlignment:
-                                            //       MainAxisAlignment.spaceEvenly,
-                                            //   children: [
-                                            // IconButton(
-                                            //   icon: Icon(Icons
-                                            //       .arrow_forward_ios_sharp),
-                                            //   onPressed: () {
-                                            //     // Handle forward button press
-                                            //   },
-                                            // ),
-                                          ],
+                                              // Row(
+                                              //   mainAxisAlignment:
+                                              //       MainAxisAlignment.spaceEvenly,
+                                              //   children: [
+                                              // IconButton(
+                                              //   icon: Icon(Icons
+                                              //       .arrow_forward_ios_sharp),
+                                              //   onPressed: () {
+                                              //     // Handle forward button press
+                                              //   },
+                                              // ),
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ),
 
-                                    IconButton(
-                                      icon: Icon(Icons.arrow_forward_ios_sharp),
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  SendOffersScreen()),
-                                        );
-                                        // Handle forward button press
-                                      },
-                                    ),
-                                  ],
+                                      IconButton(
+                                        icon:
+                                            Icon(Icons.arrow_forward_ios_sharp),
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    SendOffersScreen()),
+                                          );
+                                          // Handle forward button press
+                                        },
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],

@@ -32,6 +32,64 @@ class SendOfferScreen extends StatefulWidget {
 }
 
 class _SendOfferScreenState extends State<SendOfferScreen> {
+  DateTime startDate = DateTime.now();
+  DateTime endDate = DateTime.now();
+
+  bool datePickedStart = false;
+  bool datePickedEnd = false;
+
+  String _getMonthAbbreviation(int month) {
+    switch (month) {
+      case 1:
+        return 'Jan';
+      case 2:
+        return 'Feb';
+      case 3:
+        return 'Mar';
+      case 4:
+        return 'Apr';
+      case 5:
+        return 'May';
+      case 6:
+        return 'Jun';
+      case 7:
+        return 'Jul';
+      case 8:
+        return 'Aug';
+      case 9:
+        return 'Sep';
+      case 10:
+        return 'Oct';
+      case 11:
+        return 'Nov';
+      case 12:
+        return 'Dec';
+      default:
+        return '';
+    }
+  }
+
+  Future<void> _selectDate(BuildContext context, bool isStartDate) async {
+    DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: isStartDate ? startDate : endDate,
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null && picked != (isStartDate ? startDate : endDate)) {
+      setState(() {
+        if (isStartDate) {
+          startDate = picked;
+          endDate = picked;
+          datePickedStart = true;
+        } else {
+          endDate = picked;
+          datePickedEnd = true;
+        }
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,9 +116,31 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
             Navigator.pop(context);
           },
         ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              // Navigator.of(context).push(
+              //           MaterialPageRoute(
+              //             builder: (context) => DoctorChatListScreen(),
+              //           ),
+              //         );
+              // Add your button functionality here
+            },
+            child: Text(
+              'Apply', // Text for the button
+              style: GoogleFonts.robotoCondensed(
+                fontSize: 23,
+                fontWeight: FontWeight.w500,
+                color: Colors.blue, // Text color
+              ),
+            ),
+          ),
+        ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      body:
+          //padding: const EdgeInsets.all(16.0),
+          Container(
+        color: Colors.grey,
         child: Card(
           child: Column(
             children: [
@@ -99,90 +179,122 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
 
               Align(
                 alignment: Alignment(-0.5, -0.7),
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => DoctorProfile(),
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(35, 0, 10, 0),
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => DoctorProfile(),
+                        ),
+                      );
+                    },
+                    // Add button functionality here
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all<OutlinedBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                              10.0), // Set border radius to 0 for a rectangle
+                        ),
                       ),
-                    );
-                  },
-                  // Add button functionality here
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all<OutlinedBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                            10.0), // Set border radius to 0 for a rectangle
+                      foregroundColor:
+                          MaterialStateProperty.all<Color>(Colors.blue),
+                      padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                        EdgeInsets.fromLTRB(
+                            5, 0, 20, 0), // Adjust padding as needed
                       ),
                     ),
-                    foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.blue),
-                    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                      EdgeInsets.fromLTRB(
-                          5, 0, 20, 0), // Adjust padding as needed
-                    ),
+                    child: Text('View Profile'),
                   ),
-                  child: Text('View Profile'),
                 ),
               ),
 
-              Divider(
-                height: 10,
-                color: Colors.grey,
-              ),
+              // Divider(
+              //   height: 10,
+              //   color: Colors.grey,
+              // ),
 
               SizedBox(
                 height: 5,
               ),
 
-              Row(
-                children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding: EdgeInsets.all(8.0), // Adjust padding as needed
-                      child: Icon(
-                        Icons.calendar_today, // Choose your calendar icon
-                        color: Colors.blue, // Change color as needed
+              Container(
+                padding: EdgeInsets.all(10),
+                child: Row(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding:
+                            EdgeInsets.all(8.0), // Adjust padding as needed
+                        child: Icon(
+                          Icons.calendar_today, // Choose your calendar icon
+                          color: Colors.blue, // Change color as needed
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                      width:
-                          8), // Adjust the width as needed for spacing // Adjust padding as needed
-                  Text(
-                    'Your Date Here', // Replace with the actual date or a variable
-                    style: TextStyle(
-                      color: Colors.black, // Change color as needed
-                      fontSize: 16, // Change font size as needed
+                    SizedBox(width: 8),
+
+                    // Container(
+                    //   child: InkWell(
+                    //     onTap: () => _selectDate(context, true),
+                    //     child: InputDecorator(
+                    //       decoration: InputDecoration(
+                    //           labelText: DATE_FROM.toUpperCase(),
+                    //           labelStyle: GoogleFonts.poppins(
+                    //               fontWeight: FontWeight.w500,
+                    //               color: datePickedStart
+                    //                   ? Color.fromARGB(255, 255, 84, 5)
+                    //                   : Colors.grey,
+                    //               fontSize: 24),
+                    //           //),
+                    //           errorText: !datePickedStart
+                    //               ? "Field cannot be empty!"
+                    //               : ""),
+                    //       child: Text(
+                    //         '${startDate.day.toString().padLeft(2, '0')} ${_getMonthAbbreviation(startDate.month)} ${startDate.year}',
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                    // Adjust the width as needed for spacing // Adjust padding as needed
+                    Text(
+                      'Your Date Here', // Replace with the actual date or a variable
+                      style: TextStyle(
+                        color: Colors.black, // Change color as needed
+                        fontSize: 16, // Change font size as needed
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
 
-              Divider(
-                height: 20,
-                color: Colors.grey,
-              ),
+              // Divider(
+              //   height: 20,
+              //   color: Colors.grey,
+              // ),
 
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    'Number of People :',
-                    style: TextStyle(
-                      fontSize: 18,
-                      // Add any additional styling here
+              Container(
+                padding: EdgeInsets.all(10),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      'Number of People :',
+                      style: TextStyle(
+                        fontSize: 18,
+                        // Add any additional styling here
+                      ),
                     ),
                   ),
                 ),
               ),
 
-              Divider(
-                height: 20,
-                color: Colors.grey,
-              ),
+              // Divider(
+              //   height: 20,
+              //   color: Colors.grey,
+              // ),
 
               // Align(
               //   alignment: Alignment.centerLeft,
@@ -201,47 +313,55 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
               //child: Column(
               //crossAxisAlignment: CrossAxisAlignment.start,
               //children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'TOUR DURATION',
-                  style: TextStyle(
-                    fontSize: 18,
-                    //fontWeight: FontWeight.bold,
-                    // Add any additional styling here
-                  ),
-                ),
-              ),
-              SizedBox(height: 10),
-
-              Divider(
-                height: 15,
-                color: Colors.grey,
-              ),
-
-              // Replace with your data view
-
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: EdgeInsets.all(5.0),
+              Container(
+                padding: EdgeInsets.all(15),
+                child: Align(
+                  alignment: Alignment.centerLeft,
                   child: Text(
-                    'Forever',
+                    'TOUR DURATION',
                     style: TextStyle(
                       fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                      //fontWeight: FontWeight.bold,
                       // Add any additional styling here
                     ),
                   ),
                 ),
               ),
+              SizedBox(height: 10),
 
-              Divider(
-                height: 10,
-                color: Colors.grey,
-              ),
+              // Divider(
+              //   height: 15,
+              //   color: Colors.grey,
+              // ),
+
+              // Replace with your data view
 
               Container(
+                padding: EdgeInsets.all(10),
+                color: Colors.white,
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: EdgeInsets.all(5.0),
+                    child: Text(
+                      'Forever',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        // Add any additional styling here
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
+              // Divider(
+              //   height: 10,
+              //   color: Colors.grey,
+              // ),
+
+              Container(
+                padding: EdgeInsets.all(20),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -255,95 +375,113 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
                 ),
               ),
 
-              Divider(
-                height: 30,
-                color: Colors.grey,
+              // Divider(
+              //   height: 30,
+              //   color: Colors.grey,
+              // ),
+
+              Container(
+                padding: EdgeInsets.all(10),
+                color: Colors.white,
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: EdgeInsets.all(5.0),
+                    child: Text(
+                      'Anytime',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        // Add any additional styling here
+                      ),
+                    ),
+                  ),
+                ),
               ),
 
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: EdgeInsets.all(5.0),
+              // Divider(
+              //   height: 10,
+              //   color: Colors.grey,
+              // ),
+
+              Container(
+                padding: EdgeInsets.all(20),
+                child: Align(
+                  alignment: Alignment.centerLeft,
                   child: Text(
-                    'Anytime',
+                    'AVAILABLE DATE FOR THE TOUR',
                     style: TextStyle(
                       fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                      //fontWeight: FontWeight.bold,
                       // Add any additional styling here
                     ),
                   ),
                 ),
               ),
 
-              Divider(
-                height: 10,
-                color: Colors.grey,
-              ),
+              // Divider(
+              //   height: 30,
+              //   color: Colors.grey,
+              // ),
 
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'AVAILABLE DATE FOR THE TOUR',
-                  style: TextStyle(
-                    fontSize: 18,
-                    //fontWeight: FontWeight.bold,
-                    // Add any additional styling here
+              Container(
+                padding: EdgeInsets.all(10),
+                color: Colors.white,
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: EdgeInsets.all(5.0),
+                    child: Text(
+                      '12 DEC 2024',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        // Add any additional styling here
+                      ),
+                    ),
                   ),
                 ),
               ),
 
-              Divider(
-                height: 30,
-                color: Colors.grey,
-              ),
+              // Divider(
+              //   height: 10,
+              //   color: Colors.grey,
+              // ),
 
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: EdgeInsets.all(5.0),
+              Container(
+                padding: EdgeInsets.all(20),
+                child: Align(
+                  alignment: Alignment.centerLeft,
                   child: Text(
-                    '12 DEC 2024',
+                    'TEXT THE GUIDE',
                     style: TextStyle(
                       fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                      //fontWeight: FontWeight.bold,
                       // Add any additional styling here
                     ),
                   ),
                 ),
               ),
 
-              Divider(
-                height: 10,
-                color: Colors.grey,
-              ),
+              // Divider(
+              //   height: 20,
+              //   color: Colors.grey,
+              // ),
 
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'TEXT THE GUIDE',
-                  style: TextStyle(
-                    fontSize: 18,
-                    //fontWeight: FontWeight.bold,
-                    // Add any additional styling here
-                  ),
-                ),
-              ),
-
-              Divider(
-                height: 30,
-                color: Colors.grey,
-              ),
-
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: EdgeInsets.all(5),
-                  child: Text(
-                    'You know nothing, Jon Snow',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      // Add any additional styling here
+              Container(
+                padding: EdgeInsets.all(10),
+                color: Colors.white,
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: EdgeInsets.all(5),
+                    child: Text(
+                      'You know nothing, Jon Snow',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        // Add any additional styling here
+                      ),
                     ),
                   ),
                 ),

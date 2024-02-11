@@ -35,6 +35,7 @@ class Data {
   // dynamic healthcare;
   List<String>? services;
   List<String>? languages;
+  List<String>? aboutme;
   String? image;
   List<String>? images; // Add images field as a list of strings
   int? departmentId;
@@ -58,6 +59,7 @@ class Data {
     this.lat,
     this.lon,
     this.phoneno,
+    this.aboutme,
     this.services,
     this.languages,
     this.image,
@@ -92,6 +94,8 @@ class Data {
         ?.split(',')
         .map((e) => e.trim())
         .toList();
+    aboutme =
+        (json['about me'] as String?)?.split(',').map((e) => e.trim()).toList();
     image = json['image'];
     images = json['images'] != null
         ? List<String>.from(json['images'])
@@ -125,6 +129,7 @@ class Data {
     // data['healthcare'] = this.healthcare;
     data['services'] = services?.join(', ');
     data['languages'] = languages?.join(', ');
+    data['about me'] = aboutme?.join(', ');
     data['image'] = this.image;
     data['images'] = this.images; // Include images in the JSON output
     //data['department_id'] = this.departmentId.toString();

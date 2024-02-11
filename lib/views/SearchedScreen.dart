@@ -397,7 +397,7 @@ class _SearchedScreenState extends State<SearchedScreen> {
                 saveFilterSettings = value;
               });
             }),
-            SizedBox(height: 32),
+            SizedBox(height: 20),
             Center(
               child: ElevatedButton(
                 onPressed: _clearFilters,
@@ -451,7 +451,7 @@ class _SearchedScreenState extends State<SearchedScreen> {
                       ),
                     ),
                     SizedBox(
-                      width: 295,
+                      width: 312,
                     ),
                     Text(
                       '100',
