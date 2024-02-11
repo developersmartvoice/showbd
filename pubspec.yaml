@@ -3,7 +3,7 @@ description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -15,7 +15,8 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 16.0.0+16
+# version: 17.0.0
+version: 18.0.0
 
 environment:
   sdk: ">=2.19.0 <3.0.0"
@@ -37,7 +38,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
 
-# for image
+  # for image
   video_player: ^2.4.2
   video_thumbnail: 0.5.2
   file_picker:
@@ -47,28 +48,28 @@ dependencies:
   image_cropper:
   photo_view:
 
-# for google map
+  # for google map
   geocode: ^1.0.1
   google_maps_flutter: ^2.4.0
   geolocator:
   geocoding: ^2.0.1
 
-# for video calling
+  # for video calling
   connectycube_sdk: 2.0.13
   connectycube_flutter_call_kit: ^2.0.1
 
-# firebase
+  # firebase
   firebase_core: ^2.15.0
   firebase_auth:
   firebase_database: ^10.2.5
   firebase_messaging: ^14.6.5
   cloud_firestore:
 
-# for social login
+  # for social login
   google_sign_in:
   flutter_login_facebook: 1.2.0
 
-# design package
+  # design package
   dotted_border: ^2.0.0+1
   syncfusion_flutter_datepicker: ^19.3.53
   sn_progress_dialog:
@@ -77,14 +78,14 @@ dependencies:
   toast:
   table_calendar: ^3.0.3
 
-# api call
+  # api call
   dio: ^4.0.6
   http: ^0.13.4
 
-# state management
+  # state management
   get:
 
-# for webview
+  # for webview
   flutter_inappwebview: ^5.4.3+7
   webview_flutter:
   url_launcher: 6.0.17
@@ -108,6 +109,8 @@ dependencies:
   flutter_staggered_animations: ^1.1.1
   dropdown_search: ^5.0.6
   flutter_bloc: ^8.1.3
+  flutter_webrtc: ^0.8.5
+  # dart_webrtc: ^1.2.1
 
 #  unnecessary package
 #  flutter_svg:
@@ -131,7 +134,7 @@ dev_dependencies:
   flutter_launcher_icons:
 
 flutter_icons:
-  android: 'launcher_icon'
+  android: "launcher_icon"
   ios: true
   remove_alpha_ios: true
   image_path: "assets/icon.png"
@@ -141,7 +144,6 @@ flutter_icons:
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

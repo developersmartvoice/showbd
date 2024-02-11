@@ -38,6 +38,7 @@ class _DetailsPageState extends State<DetailsPage> {
   String? guideName;
   String? img;
   List<String>? imgs;
+  int currentPage = 0;
 
   @override
   void initState() {
@@ -402,7 +403,6 @@ class _DetailsPageState extends State<DetailsPage> {
     // Page controller for handling image navigation
     PageController _pageController = PageController();
 
-    int currentPage = 0;
     return Column(
       children: [
         Container(
@@ -413,7 +413,10 @@ class _DetailsPageState extends State<DetailsPage> {
                 ? (doctorDetailsClass!.data!.images!.length + 1)
                 : 1,
             onPageChanged: (int page) {
-              currentPage = page;
+              print("Current Page is: $page");
+              setState(() {
+                currentPage = page;
+              });
             },
             itemBuilder: (BuildContext context, int index) {
               if (index == 0) {
@@ -426,7 +429,7 @@ class _DetailsPageState extends State<DetailsPage> {
                 );
               } else {
                 return CachedNetworkImage(
-                  imageUrl: doctorDetailsClass!.data!.images![index],
+                  imageUrl: doctorDetailsClass!.data!.images![index - 1],
                   fit: BoxFit.fill,
                   placeholder: (context, url) =>
                       Center(child: CircularProgressIndicator()),
@@ -436,17 +439,18 @@ class _DetailsPageState extends State<DetailsPage> {
             },
           ),
         ),
-        SizedBox(height: 10),
+        SizedBox(height: 5),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: List.generate(
               doctorDetailsClass!.data!.images!.isNotEmpty
                   ? (doctorDetailsClass!.data!.images!.length + 1)
                   : 1, (index) {
+            print(currentPage);
             return Container(
               margin: EdgeInsets.symmetric(horizontal: 5),
-              width: 10,
-              height: 10,
+              width: 5,
+              height: 5,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: currentPage == index ? Colors.blue : Colors.grey,
