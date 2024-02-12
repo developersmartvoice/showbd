@@ -36,7 +36,9 @@ class Data {
   List<String>? services;
   List<String>? languages;
   List<String>? aboutme;
-  List<String>? iwillshowyou;
+  String?
+      motto; /////////////////////////////////////////////////////////////////
+  String? iwillshowyou;
   String? image;
   List<String>? images; // Add images field as a list of strings
   int? departmentId;
@@ -56,6 +58,7 @@ class Data {
     this.name,
     this.email,
     this.aboutus,
+    this.motto,
     this.address,
     this.lat,
     this.lon,
@@ -84,6 +87,8 @@ class Data {
     name = json['name'];
     email = json['email'];
     aboutus = json['aboutus'];
+    motto = json['motto'];
+    iwillshowyou = json['iwillshowyou'];
     address = json['address'];
     lat = json['lat'].toString();
     lon = json['lon'].toString();
@@ -93,10 +98,6 @@ class Data {
     services =
         (json['services'] as String?)?.split(',').map((e) => e.trim()).toList();
     languages = (json['languages'] as String?)
-        ?.split(',')
-        .map((e) => e.trim())
-        .toList();
-    iwillshowyou = (json['i will show you'] as String?)
         ?.split(',')
         .map((e) => e.trim())
         .toList();
@@ -127,6 +128,8 @@ class Data {
     data['name'] = this.name;
     data['email'] = this.email;
     data['aboutus'] = this.aboutus;
+    data['motto'] = this.motto;
+    data['iwillshowyou'] = this.iwillshowyou;
     data['address'] = this.address;
     data['lat'] = this.lat;
     data['lon'] = this.lon;
@@ -136,7 +139,7 @@ class Data {
     data['services'] = services?.join(', ');
     data['languages'] = languages?.join(', ');
     data['about me'] = aboutme?.join(', ');
-    data['i will show you'] = iwillshowyou?.join(', ');
+    //data['i will show you'] = iwillshowyou?.join(', ');
     data['image'] = this.image;
     data['images'] = this.images; // Include images in the JSON output
     //data['department_id'] = this.departmentId.toString();
