@@ -336,7 +336,7 @@ class _SearchedScreenState extends State<SearchedScreen> {
                         "Apply",
                         style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w600,
-                            color: BLACK,
+                            color: const Color.fromARGB(255, 12, 88, 150),
                             fontSize: 20),
                       )),
                 ],
@@ -397,7 +397,7 @@ class _SearchedScreenState extends State<SearchedScreen> {
                 saveFilterSettings = value;
               });
             }),
-            SizedBox(height: 20),
+            SizedBox(height: 15),
             Center(
               child: ElevatedButton(
                 onPressed: _clearFilters,
@@ -434,6 +434,10 @@ class _SearchedScreenState extends State<SearchedScreen> {
           SizedBox(
             height: 10,
           ),
+          // Divider(
+          //   height: 10,
+          //   color: Colors.grey,
+          // ),
           Container(
             color: Colors.white,
             child: Column(
@@ -527,6 +531,10 @@ class _SearchedScreenState extends State<SearchedScreen> {
               ],
             ),
           ),
+          // Divider(
+          //   height: 10,
+          //   color: Colors.grey,
+          // ),
         ],
       ),
     );
@@ -535,60 +543,67 @@ class _SearchedScreenState extends State<SearchedScreen> {
   Widget _buildMultiSelect(String label, List<String> selectedValues,
       List<String> options, ValueChanged<List<String>> onChanged) {
     return Container(
-      child: Column(
-        // crossAxisAlignment: CrossAxisAlignment.start,
-        //mainAxisAlignment: MainAxisAlignment.start,
+        child: Column(
+            // crossAxisAlignment: CrossAxisAlignment.start,
+            //mainAxisAlignment: MainAxisAlignment.start,
 
-        children: [
-          Container(
-            color: LIGHT_GREY_SCREEN_BACKGROUND,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(
-                      left: 18.0), // Adjust the left padding as needed
-                  child: Text(
-                    label,
-                    style: GoogleFonts.robotoCondensed(
-                        fontWeight: FontWeight.w600,
-                        color: Colors.grey,
-                        fontSize: 25),
-                  ),
+            children: [
+          Column(
+            children: [
+              Container(
+                color: LIGHT_GREY_SCREEN_BACKGROUND,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: 18.0), // Adjust the left padding as needed
+                      child: Text(
+                        label,
+                        style: GoogleFonts.robotoCondensed(
+                            fontWeight: FontWeight.w600,
+                            color: Colors.grey,
+                            fontSize: 25),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Wrap(
-            spacing: 12.0,
-            children: options.map((option) {
-              return FilterChip(
-                label: Text(option),
-                selected: selectedValues.contains(option),
-                onSelected: (selected) {
-                  List<String> newSelectedValues = List.from(selectedValues);
-                  if (selected) {
-                    newSelectedValues.add(option);
-                  } else {
-                    newSelectedValues.remove(option);
-                  }
-                  onChanged(newSelectedValues);
-                },
-                selectedColor: Color.fromARGB(190, 255, 115, 0),
-                labelStyle: TextStyle(
-                  color: selectedValues.contains(option)
-                      ? Colors.white
-                      : Colors.black, // Set font color based on selection
-                ),
-              );
-            }).toList(),
-          ),
-        ],
-      ),
-    );
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Wrap(
+                spacing: 12.0,
+                children: options.map((option) {
+                  return FilterChip(
+                    label: Text(option),
+                    selected: selectedValues.contains(option),
+                    onSelected: (selected) {
+                      List<String> newSelectedValues =
+                          List.from(selectedValues);
+                      if (selected) {
+                        newSelectedValues.add(option);
+                      } else {
+                        newSelectedValues.remove(option);
+                      }
+                      onChanged(newSelectedValues);
+                    },
+                    selectedColor: Color.fromARGB(190, 255, 115, 0),
+                    labelStyle: TextStyle(
+                      color: selectedValues.contains(option)
+                          ? Colors.white
+                          : Colors.black, // Set font color based on selection
+                    ),
+                  );
+                }).toList(),
+              ),
+              Divider(
+                height: 20,
+                color: Colors.grey,
+              ),
+            ],
+          )
+        ]));
   }
 
   Widget _buildRadioButtons(String label, int selectedValue,

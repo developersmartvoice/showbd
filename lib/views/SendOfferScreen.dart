@@ -32,11 +32,12 @@ class SendOfferScreen extends StatefulWidget {
 }
 
 class _SendOfferScreenState extends State<SendOfferScreen> {
-  DateTime startDate = DateTime.now();
-  DateTime endDate = DateTime.now();
+  //DateTime startDate = DateTime.now();
+  //DateTime endDate = DateTime.now();
+  DateTime selectedDate = DateTime.now(); // Initialize with current date
 
-  bool datePickedStart = false;
-  bool datePickedEnd = false;
+  //bool datePickedStart = false;
+  //bool datePickedEnd = false;
 
   String _getMonthAbbreviation(int month) {
     switch (month) {
@@ -69,29 +70,33 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
     }
   }
 
-  Future<void> _selectDate(BuildContext context, bool isStartDate) async {
-    DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: isStartDate ? startDate : endDate,
-      firstDate: DateTime.now(),
-      lastDate: DateTime(2101),
-    );
-    if (picked != null && picked != (isStartDate ? startDate : endDate)) {
-      setState(() {
-        if (isStartDate) {
-          startDate = picked;
-          endDate = picked;
-          datePickedStart = true;
-        } else {
-          endDate = picked;
-          datePickedEnd = true;
-        }
-      });
-    }
-  }
+  // Future<void> _selectDate(BuildContext context, bool isStartDate) async {
+  //   DateTime? picked = await showDatePicker(
+  //     context: context,
+  //     initialDate: isStartDate ? startDate : endDate,
+  //     firstDate: DateTime.now(),
+  //     lastDate: DateTime(2101),
+  //   );
+  //   if (picked != null && picked != (isStartDate ? startDate : endDate)) {
+  //     setState(() {
+  //       if (isStartDate) {
+  //         startDate = picked;
+  //         endDate = picked;
+  //         datePickedStart = true;
+  //       } else {
+  //         endDate = picked;
+  //         datePickedEnd = true;
+  //       }
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
+    var numberOfPeople;
+    String dynamicText1 = 'Forever';
+    String dynamicText2 = 'Anytime';
+    String dynamicText3 = 'I am Groot';
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -130,7 +135,7 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
               'Apply', // Text for the button
               style: GoogleFonts.robotoCondensed(
                 fontSize: 23,
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.bold,
                 color: Colors.blue, // Text color
               ),
             ),
@@ -140,21 +145,21 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
       body:
           //padding: const EdgeInsets.all(16.0),
           Container(
-        color: Colors.grey,
+        color: Colors.white,
         child: Card(
           child: Column(
             children: [
               // Thumbnail
-              Container(
-                height: 10,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(
-                        'assets/splash_bg.png'), // Replace with your image asset
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
+              // Container(
+              //   height: 10,
+              //   decoration: BoxDecoration(
+              //     image: DecorationImage(
+              //       image: AssetImage(
+              //           'assets/splash_bg.png'), // Replace with your image asset
+              //       fit: BoxFit.cover,
+              //     ),
+              //   ),
+              // ),
               // Round image, name, and address
               ListTile(
                 leading: CircleAvatar(
@@ -204,7 +209,13 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
                             5, 0, 20, 0), // Adjust padding as needed
                       ),
                     ),
-                    child: Text('View Profile'),
+                    child: Text(
+                      'View Profile',
+                      style: GoogleFonts.robotoCondensed(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -233,7 +244,51 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(width: 8),
+
+                    SizedBox(width: 0),
+
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+
+                        // TextButton(
+                        //   onPressed: () async {
+                        //     final DateTime? pickedDate = await showDatePicker(
+                        //       context: context,
+                        //       initialDate: selectedDate,
+                        //       firstDate: DateTime.now(),
+                        //       lastDate: DateTime(2101),
+                        //     );
+
+                        //     if (pickedDate != null &&
+                        //         pickedDate != selectedDate) {
+                        //       setState(() {
+                        //         selectedDate = pickedDate;
+                        //       });
+                        //     }
+                        //   },
+                        //   child: Text(
+                        //     '${selectedDate.day.toString().padLeft(2, '0')} ${_getMonthAbbreviation(selectedDate.month)} ${selectedDate.year}', // Display selected date
+                        //     style: TextStyle(
+                        //       color: Colors.black, // Change color as needed
+                        //       fontSize: 16,
+                        //       fontWeight:
+                        //           FontWeight.bold, // Change font size as needed
+                        //     ),
+                        //   ),
+
+                        // onPressed: () => _selectDate(
+                        //     context, true), // Function to open date picker
+                        child: Text(
+                          'Your Date Here', // Replace with the actual date or a variable
+                          style: TextStyle(
+                            color: Colors.black, // Change color as needed
+                            fontSize: 16, // Change font size as needed
+                          ),
+                        ),
+                        //),
+                      ),
+                    ),
 
                     // Container(
                     //   child: InkWell(
@@ -258,13 +313,13 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
                     //   ),
                     // ),
                     // Adjust the width as needed for spacing // Adjust padding as needed
-                    Text(
-                      'Your Date Here', // Replace with the actual date or a variable
-                      style: TextStyle(
-                        color: Colors.black, // Change color as needed
-                        fontSize: 16, // Change font size as needed
-                      ),
-                    ),
+                    // Text(
+                    //   'Your Date Here', // Replace with the actual date or a variable
+                    //   style: TextStyle(
+                    //     color: Colors.black, // Change color as needed
+                    //     fontSize: 16, // Change font size as needed
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
@@ -281,7 +336,7 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
                   child: Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Text(
-                      'Number of People :',
+                      'Number of People : $numberOfPeople',
                       style: TextStyle(
                         fontSize: 18,
                         // Add any additional styling here
@@ -337,14 +392,15 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
               // Replace with your data view
 
               Container(
-                padding: EdgeInsets.all(10),
+                padding: EdgeInsets.all(15),
                 color: Colors.white,
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
                     padding: EdgeInsets.all(5.0),
                     child: Text(
-                      'Forever',
+                      dynamicText1,
+                      //'Forever',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -361,7 +417,7 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
               // ),
 
               Container(
-                padding: EdgeInsets.all(20),
+                padding: EdgeInsets.all(15),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -381,14 +437,15 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
               // ),
 
               Container(
-                padding: EdgeInsets.all(10),
+                padding: EdgeInsets.all(15),
                 color: Colors.white,
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
                     padding: EdgeInsets.all(5.0),
                     child: Text(
-                      'Anytime',
+                      dynamicText2,
+                      //'Anytime',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -405,7 +462,7 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
               // ),
 
               Container(
-                padding: EdgeInsets.all(20),
+                padding: EdgeInsets.all(15),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -425,20 +482,56 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
               // ),
 
               Container(
-                padding: EdgeInsets.all(10),
+                padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                //padding: EdgeInsets.all(10),
                 color: Colors.white,
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
                     padding: EdgeInsets.all(5.0),
-                    child: Text(
-                      '12 DEC 2024',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        // Add any additional styling here
+                    child: TextButton(
+                      onPressed: () async {
+                        final DateTime? pickedDate = await showDatePicker(
+                          context: context,
+                          initialDate: selectedDate,
+                          firstDate: DateTime.now(),
+                          lastDate: DateTime(2101),
+                        );
+
+                        if (pickedDate != null && pickedDate != selectedDate) {
+                          setState(() {
+                            selectedDate = pickedDate;
+                          });
+                        }
+                      },
+                      child: Text(
+                        '${selectedDate.day.toString().padLeft(2, '0')} ${_getMonthAbbreviation(selectedDate.month)} ${selectedDate.year}', // Display selected date
+                        style: TextStyle(
+                          color: Colors.black, // Change color as needed
+                          fontSize: 16,
+                          fontWeight:
+                              FontWeight.bold, // Change font size as needed
+                        ),
                       ),
+
+                      // onPressed: () => _selectDate(
+                      //     context, true), // Function to open date picker
+                      // child: Text(
+                      //   'Your Date Here', // Replace with the actual date or a variable
+                      //   style: TextStyle(
+                      //     color: Colors.black, // Change color as needed
+                      //     fontSize: 16, // Change font size as needed
+                      //   ),
+                      // ),
                     ),
+                    // Text(
+                    //   '12 DEC 2024',
+                    //   style: TextStyle(
+                    //     fontSize: 18,
+                    //     fontWeight: FontWeight.bold,
+                    //     // Add any additional styling here
+                    //   ),
+                    // ),
                   ),
                 ),
               ),
@@ -449,7 +542,7 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
               // ),
 
               Container(
-                padding: EdgeInsets.all(20),
+                padding: EdgeInsets.all(15),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -469,14 +562,15 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
               // ),
 
               Container(
-                padding: EdgeInsets.all(10),
+                padding: EdgeInsets.all(15),
                 color: Colors.white,
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
                     padding: EdgeInsets.all(5),
                     child: Text(
-                      'You know nothing, Jon Snow',
+                      dynamicText3,
+                      //'You know nothing, Jon Snow',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -487,7 +581,7 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
                 ),
               ),
 
-              SizedBox(height: 20),
+              //SizedBox(height: 10),
               // Replace with your button
               //ElevatedButton(
               //onPressed: () {
