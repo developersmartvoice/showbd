@@ -101,7 +101,7 @@ class Data {
   }
 }
 
-class NearbyData {
+class   NearbyData {
   int? id;
   String? name;
   String? address;
