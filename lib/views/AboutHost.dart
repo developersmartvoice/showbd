@@ -101,17 +101,17 @@ class ContainerPage extends StatelessWidget {
                   children: [
                     Positioned(
                       left: 10, // Adjust the position of the button as needed
-                      top: 15, // Adjust the position of the button as needed
+                      top: 20, // Adjust the position of the button as needed
                       child: InkWell(
                         //onTap: _changeColor,
                         // Add your logic for the selection button onTap event here
 
                         child: Container(
-                          width: 40,
-                          height: 40,
+                          width: 30,
+                          height: 30,
                           decoration: BoxDecoration(
                             //color: _boxColor, // Color of the button
-                            color: Colors.white,
+                            color: Colors.green,
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: Colors.black, // Color of the border
@@ -130,12 +130,12 @@ class ContainerPage extends StatelessWidget {
                     Row(children: [
                       Expanded(
                         child: Padding(
-                          padding: const EdgeInsets.only(right: 170.0),
+                          padding: const EdgeInsets.only(right: 205.0),
                           child: Text(
                             'Motto',
                             textAlign: TextAlign.center,
                             style: GoogleFonts.robotoCondensed(
-                              fontSize: 25.0,
+                              fontSize: 20.0,
                               color: Colors.black,
                               fontWeight: FontWeight.w500,
                             ),
@@ -170,16 +170,16 @@ class ContainerPage extends StatelessWidget {
                   children: [
                     Positioned(
                       left: 10, // Adjust the position of the button as needed
-                      top: 15, // Adjust the position of the button as needed
+                      top: 20, // Adjust the position of the button as needed
                       child: InkWell(
                         onTap: () {
                           // Add your logic for the selection button onTap event here
                         },
                         child: Container(
-                          width: 40,
-                          height: 40,
+                          width: 30,
+                          height: 30,
                           decoration: BoxDecoration(
-                            color: Colors.white, // Color of the button
+                            color: Colors.green, // Color of the button
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: Colors.black, // Color of the border
@@ -198,12 +198,12 @@ class ContainerPage extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: const EdgeInsets.only(right: 80.0),
+                            padding: const EdgeInsets.only(right: 130.0),
                             child: Text(
                               'I will show you',
                               textAlign: TextAlign.center,
                               style: GoogleFonts.robotoCondensed(
-                                fontSize: 25.0,
+                                fontSize: 20.0,
                                 color: Colors.black,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -239,16 +239,16 @@ class ContainerPage extends StatelessWidget {
                   children: [
                     Positioned(
                       left: 10, // Adjust the position of the button as needed
-                      top: 15, // Adjust the position of the button as needed
+                      top: 20, // Adjust the position of the button as needed
                       child: InkWell(
                         onTap: () {
                           // Add your logic for the selection button onTap event here
                         },
                         child: Container(
-                          width: 40,
-                          height: 40,
+                          width: 30,
+                          height: 30,
                           decoration: BoxDecoration(
-                            color: Colors.white, // Color of the button
+                            color: Colors.green, // Color of the button
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: Colors.black, // Color of the border
@@ -267,12 +267,12 @@ class ContainerPage extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: const EdgeInsets.only(right: 138.0),
+                            padding: const EdgeInsets.only(right: 175.0),
                             child: Text(
                               'Activities',
                               textAlign: TextAlign.center,
                               style: GoogleFonts.robotoCondensed(
-                                fontSize: 25.0,
+                                fontSize: 20.0,
                                 color: Colors.black,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -308,16 +308,16 @@ class ContainerPage extends StatelessWidget {
                   children: [
                     Positioned(
                       left: 10, // Adjust the position of the button as needed
-                      top: 15, // Adjust the position of the button as needed
+                      top: 20, // Adjust the position of the button as needed
                       child: InkWell(
                         onTap: () {
                           // Add your logic for the selection button onTap event here
                         },
                         child: Container(
-                          width: 40,
-                          height: 40,
+                          width: 30,
+                          height: 30,
                           decoration: BoxDecoration(
-                            color: Colors.white, // Color of the button
+                            color: Colors.green, // Color of the button
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: Colors.black, // Color of the border
@@ -336,12 +336,12 @@ class ContainerPage extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: const EdgeInsets.only(right: 120.0),
+                            padding: const EdgeInsets.only(right: 160.0),
                             child: Text(
                               'Hourly rate',
                               textAlign: TextAlign.center,
                               style: GoogleFonts.robotoCondensed(
-                                fontSize: 25.0,
+                                fontSize: 20.0,
                                 color: Colors.black,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -377,16 +377,16 @@ class ContainerPage extends StatelessWidget {
                   children: [
                     Positioned(
                       left: 10, // Adjust the position of the button as needed
-                      top: 15, // Adjust the position of the button as needed
+                      top: 20, // Adjust the position of the button as needed
                       child: InkWell(
                         onTap: () {
                           // Add your logic for the selection button onTap event here
                         },
                         child: Container(
-                          width: 40,
-                          height: 40,
+                          width: 30,
+                          height: 30,
                           decoration: BoxDecoration(
-                            color: Colors.white, // Color of the button
+                            color: Colors.green, // Color of the button
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: Colors.black, // Color of the border
@@ -405,12 +405,12 @@ class ContainerPage extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: const EdgeInsets.only(right: 155.0),
+                            padding: const EdgeInsets.only(right: 190.0),
                             child: Text(
                               'Photos',
                               textAlign: TextAlign.center,
                               style: GoogleFonts.robotoCondensed(
-                                fontSize: 25.0,
+                                fontSize: 20.0,
                                 color: Colors.black,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -446,16 +446,16 @@ class ContainerPage extends StatelessWidget {
                   children: [
                     Positioned(
                       left: 10, // Adjust the position of the button as needed
-                      top: 15, // Adjust the position of the button as needed
+                      top: 20, // Adjust the position of the button as needed
                       child: InkWell(
                         onTap: () {
                           // Add your logic for the selection button onTap event here
                         },
                         child: Container(
-                          width: 40,
-                          height: 40,
+                          width: 30,
+                          height: 30,
                           decoration: BoxDecoration(
-                            color: Colors.white, // Color of the button
+                            color: Colors.green, // Color of the button
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: Colors.black, // Color of the border
@@ -474,12 +474,12 @@ class ContainerPage extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: const EdgeInsets.only(right: 135.0),
+                            padding: const EdgeInsets.only(right: 175.0),
                             child: Text(
                               'Location',
                               textAlign: TextAlign.center,
                               style: GoogleFonts.robotoCondensed(
-                                fontSize: 25.0,
+                                fontSize: 20.0,
                                 color: Colors.black,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -515,16 +515,16 @@ class ContainerPage extends StatelessWidget {
                   children: [
                     Positioned(
                       left: 10, // Adjust the position of the button as needed
-                      top: 15, // Adjust the position of the button as needed
+                      top: 20, // Adjust the position of the button as needed
                       child: InkWell(
                         onTap: () {
                           // Add your logic for the selection button onTap event here
                         },
                         child: Container(
-                          width: 40,
-                          height: 40,
+                          width: 30,
+                          height: 30,
                           decoration: BoxDecoration(
-                            color: Colors.white, // Color of the button
+                            color: Colors.green, // Color of the button
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: Colors.black, // Color of the border
@@ -543,12 +543,12 @@ class ContainerPage extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: const EdgeInsets.only(right: 130.0),
+                            padding: const EdgeInsets.only(right: 170.0),
                             child: Text(
                               'About me',
                               textAlign: TextAlign.center,
                               style: GoogleFonts.robotoCondensed(
-                                fontSize: 25.0,
+                                fontSize: 20.0,
                                 color: Colors.black,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -584,16 +584,16 @@ class ContainerPage extends StatelessWidget {
                   children: [
                     Positioned(
                       left: 10, // Adjust the position of the button as needed
-                      top: 15, // Adjust the position of the button as needed
+                      top: 20, // Adjust the position of the button as needed
                       child: InkWell(
                         onTap: () {
                           // Add your logic for the selection button onTap event here
                         },
                         child: Container(
-                          width: 40,
-                          height: 40,
+                          width: 30,
+                          height: 30,
                           decoration: BoxDecoration(
-                            color: Colors.white, // Color of the button
+                            color: Colors.green, // Color of the button
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: Colors.black, // Color of the border
@@ -612,12 +612,12 @@ class ContainerPage extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: const EdgeInsets.only(right: 155.0),
+                            padding: const EdgeInsets.only(right: 190.0),
                             child: Text(
                               'Gender',
                               textAlign: TextAlign.center,
                               style: GoogleFonts.robotoCondensed(
-                                fontSize: 25.0,
+                                fontSize: 20.0,
                                 color: Colors.black,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -653,7 +653,7 @@ class ContainerPage extends StatelessWidget {
                   children: [
                     Positioned(
                       left: 10, // Adjust the position of the button as needed
-                      top: 15, // Adjust the position of the button as needed
+                      top: 20, // Adjust the position of the button as needed
                       child: GestureDetector(
                         onTap: () {
                           setState(() {
@@ -665,8 +665,8 @@ class ContainerPage extends StatelessWidget {
                           // Add your logic for the selection button onTap event here
                         },
                         child: Container(
-                          width: 40,
-                          height: 40,
+                          width: 30,
+                          height: 30,
 
                           // primary: isButtonSelected
                           //     ? Color.fromARGB(255, 243, 103, 9)
@@ -674,7 +674,7 @@ class ContainerPage extends StatelessWidget {
                           // onPrimary:
                           //     isButtonSelected ? Colors.white : Colors.black,
                           decoration: BoxDecoration(
-                            color: Colors.white, // Color of the button
+                            color: Colors.green, // Color of the button
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: Colors.black, // Color of the border
@@ -713,12 +713,12 @@ class ContainerPage extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: const EdgeInsets.only(right: 115.0),
+                            padding: const EdgeInsets.only(right: 155.0),
                             child: Text(
                               'Languages',
                               textAlign: TextAlign.center,
                               style: GoogleFonts.robotoCondensed(
-                                fontSize: 25.0,
+                                fontSize: 20.0,
                                 color: Colors.black,
                                 fontWeight: FontWeight.w500,
                               ),

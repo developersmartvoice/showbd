@@ -446,10 +446,12 @@
 import 'dart:convert';
 import 'package:appcode3/views/AboutHost.dart';
 import 'package:appcode3/views/ChoosePlan.dart';
+import 'package:appcode3/views/ContactAndIdentification.dart';
 import 'package:appcode3/views/DetailsPage.dart';
 import 'package:appcode3/views/Doctor/DoctorProfile.dart';
 import 'package:appcode3/views/Doctor/LogoutScreen.dart';
 import 'package:appcode3/views/Doctor/loginAsDoctor.dart';
+import 'package:appcode3/views/GeneraLInfo.dart';
 import 'package:appcode3/views/ProfilePage.dart';
 import 'package:appcode3/views/SendOfferScreen.dart';
 import 'package:appcode3/views/SendOffersScreen.dart';
@@ -910,7 +912,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => DoctorProfile()),
+                MaterialPageRoute(builder: (context) => GeneraLInfo()),
               );
             },
             child: Container(
@@ -952,7 +954,8 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ChangePassword()),
+                MaterialPageRoute(
+                    builder: (context) => ContactAndIdentification()),
               );
             },
             child: Container(
@@ -988,51 +991,51 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
           ),
 
           ///--------- subscription ------------
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                // MaterialPageRoute(builder: (context) => SubScriptionScreen()),
-                MaterialPageRoute(builder: (context) => SendOfferScreen()),
-              );
-            },
-            child: Container(
-              height: 50,
-              margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
-              decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 243, 103, 9),
-                  borderRadius: BorderRadius.circular(10)),
-              child: Container(
-                margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      MEMBERSHIP,
-                      style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                            color: Colors.white,
-                          ),
-                    ),
-                    Icon(
-                      Icons.arrow_forward_ios,
-                      size: 20,
-                      color: Colors.white,
-                    ),
-                    // TextButton(onPressed: (){
-                    //   Navigator.push(context,
-                    //     MaterialPageRoute(builder: (context) => DoctorAllAppointments()),
-                    //   );
-                    // }, child: Text(SEE_ALL,
-                    //     style: Theme.of(context).textTheme.bodyText2!.apply(
-                    //       color: Theme.of(context).hintColor,
-                    //       fontWeightDelta: 5,
-                    //     )
-                    // ),)
-                  ],
-                ),
-              ),
-            ),
-          ),
+          // GestureDetector(
+          //   onTap: () {
+          //     Navigator.push(
+          //       context,
+          //       // MaterialPageRoute(builder: (context) => SubScriptionScreen()),
+          //       MaterialPageRoute(builder: (context) => SendOfferScreen()),
+          //     );
+          //   },
+          //   child: Container(
+          //     height: 50,
+          //     margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
+          //     decoration: BoxDecoration(
+          //         color: Color.fromARGB(255, 243, 103, 9),
+          //         borderRadius: BorderRadius.circular(10)),
+          //     child: Container(
+          //       margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
+          //       child: Row(
+          //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //         children: [
+          //           Text(
+          //             MEMBERSHIP,
+          //             style: Theme.of(context).textTheme.subtitle1?.copyWith(
+          //                   color: Colors.white,
+          //                 ),
+          //           ),
+          //           Icon(
+          //             Icons.arrow_forward_ios,
+          //             size: 20,
+          //             color: Colors.white,
+          //           ),
+          //           // TextButton(onPressed: (){
+          //           //   Navigator.push(context,
+          //           //     MaterialPageRoute(builder: (context) => DoctorAllAppointments()),
+          //           //   );
+          //           // }, child: Text(SEE_ALL,
+          //           //     style: Theme.of(context).textTheme.bodyText2!.apply(
+          //           //       color: Theme.of(context).hintColor,
+          //           //       fontWeightDelta: 5,
+          //           //     )
+          //           // ),)
+          //         ],
+          //       ),
+          //     ),
+          //   ),
+          // ),
 
           SizedBox(
             height: 15,
@@ -1163,83 +1166,83 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
           //color: Colors.grey,
           //),
 
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 0, 30, 0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 40,
-                  child: Text(
-                    'NOTIFICATIONS',
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 243, 103, 9),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.fromLTRB(16, 0, 30, 0),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.start,
+          //     children: [
+          //       SizedBox(
+          //         height: 40,
+          //         child: Text(
+          //           'NOTIFICATIONS',
+          //           style: TextStyle(
+          //             fontSize: 18.0,
+          //             fontWeight: FontWeight.bold,
+          //             color: Color.fromARGB(255, 243, 103, 9),
+          //           ),
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
 
           //SizedBox(
           //height: 15,
           //),
 
           ///-----------logoout -------------
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                // MaterialPageRoute(builder: (context) => SubScriptionScreen()),
-                MaterialPageRoute(builder: (context) => SendOffersScreen()),
-              );
-            },
-            // GestureDetector(
-            //   onTap: () {
-            //     messageDialog(LOGOUT, ARE_YOU_SURE_TO_LOGOUT);
-            //     // Navigator.push(context,
-            //     //     MaterialPageRoute(builder: (context) => LogOutScreen()
-            //     // ));
-            //   },
-            child: Container(
-              height: 50,
-              margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
-              decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 243, 103, 9),
-                  borderRadius: BorderRadius.circular(10)),
-              child: Container(
-                margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      NOTIFICATION_SETTINGS,
-                      style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                            color: Colors.white,
-                          ),
-                    ),
-                    Icon(
-                      Icons.arrow_forward_ios,
-                      size: 20,
-                      color: Colors.white,
-                    ),
-                    // TextButton(onPressed: (){
-                    //   Navigator.push(context,
-                    //     MaterialPageRoute(builder: (context) => DoctorAllAppointments()),
-                    //   );
-                    // }, child: Text(SEE_ALL,
-                    //     style: Theme.of(context).textTheme.bodyText2!.apply(
-                    //       color: Theme.of(context).hintColor,
-                    //       fontWeightDelta: 5,
-                    //     )
-                    // ),)
-                  ],
-                ),
-              ),
-            ),
-          ),
+          // GestureDetector(
+          //   onTap: () {
+          //     Navigator.push(
+          //       context,
+          //       // MaterialPageRoute(builder: (context) => SubScriptionScreen()),
+          //       MaterialPageRoute(builder: (context) => SendOffersScreen()),
+          //     );
+          //   },
+          //   // GestureDetector(
+          //   //   onTap: () {
+          //   //     messageDialog(LOGOUT, ARE_YOU_SURE_TO_LOGOUT);
+          //   //     // Navigator.push(context,
+          //   //     //     MaterialPageRoute(builder: (context) => LogOutScreen()
+          //   //     // ));
+          //   //   },
+          //   child: Container(
+          //     height: 50,
+          //     margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
+          //     decoration: BoxDecoration(
+          //         color: Color.fromARGB(255, 243, 103, 9),
+          //         borderRadius: BorderRadius.circular(10)),
+          //     child: Container(
+          //       margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
+          //       child: Row(
+          //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //         children: [
+          //           Text(
+          //             NOTIFICATION_SETTINGS,
+          //             style: Theme.of(context).textTheme.subtitle1?.copyWith(
+          //                   color: Colors.white,
+          //                 ),
+          //           ),
+          //           Icon(
+          //             Icons.arrow_forward_ios,
+          //             size: 20,
+          //             color: Colors.white,
+          //           ),
+          //           // TextButton(onPressed: (){
+          //           //   Navigator.push(context,
+          //           //     MaterialPageRoute(builder: (context) => DoctorAllAppointments()),
+          //           //   );
+          //           // }, child: Text(SEE_ALL,
+          //           //     style: Theme.of(context).textTheme.bodyText2!.apply(
+          //           //       color: Theme.of(context).hintColor,
+          //           //       fontWeightDelta: 5,
+          //           //     )
+          //           // ),)
+          //         ],
+          //       ),
+          //     ),
+          //   ),
+          // ),
           SizedBox(
             height: 15,
           ),
