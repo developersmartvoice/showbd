@@ -764,6 +764,7 @@ class _DetailsPageState extends State<DetailsPage> {
                 height: 5,
               ),
               Container(
+                color: Colors.grey,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -898,6 +899,129 @@ class _DetailsPageState extends State<DetailsPage> {
               //   height: 10.0,
               //   color: Colors.grey[500],
               // ),
+
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    // doctorDetailsClass!.data!.aboutme == null
+                    //     ? " "
+                    //     :
+                    I_WILL_SHOW_YOU,
+                    style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w600,
+                        color: BLACK,
+                        fontSize: 20),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  doctorDetailsClass!.data!.iwillshowyou == null
+                      ? Text("Everything you wish for!")
+                      : Row(
+                          children: doctorDetailsClass!.data!.iwillshowyou!
+                              .map((iwllshowyou) {
+                            // Customize text size
+                            TextStyle textStyle = TextStyle(
+                                fontSize: 12.0,
+                                //color: LIGHT_GREY_TEXT,
+                                fontWeight: FontWeight.w500);
+
+                            // Map language to display text
+                            String displayText =
+                                getDisplayTextForIWillShowYou(iwllshowyou);
+
+                            return Container(
+                              // padding: EdgeInsets.zero,
+                              margin: EdgeInsets.only(left: 0, right: 8.0),
+                              child: doctorDetailsClass!.data!.iwillshowyou!
+                                          .indexOf(iwllshowyou) !=
+                                      count - 1
+                                  ? Text(
+                                      '$displayText,',
+                                      style: textStyle,
+                                    )
+                                  : Text('$displayText',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black,
+                                      )),
+                            );
+                          }).toList(),
+                        )
+                ],
+              ),
+
+              SizedBox(
+                height: 10,
+              ),
+              Divider(
+                height: 35.0,
+                color: Colors.grey[500],
+              ),
+
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    // doctorDetailsClass!.data!.aboutme == null
+                    //     ? " "
+                    //     :
+                    ABOUT_GUIDE,
+                    style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w600,
+                        color: BLACK,
+                        fontSize: 20),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  doctorDetailsClass!.data!.aboutme == null
+                      ? Text("No Data Found")
+                      : Row(
+                          children:
+                              doctorDetailsClass!.data!.aboutme!.map((aboutme) {
+                            // Customize text size
+                            TextStyle textStyle = TextStyle(
+                                fontSize: 12.0,
+                                //color: LIGHT_GREY_TEXT,
+                                fontWeight: FontWeight.w500);
+
+                            // Map language to display text
+                            String displayText =
+                                getDisplayTextForAboutMe(aboutme);
+
+                            return Container(
+                              // padding: EdgeInsets.zero,
+                              margin: EdgeInsets.only(left: 0, right: 8.0),
+                              child: doctorDetailsClass!.data!.aboutme!
+                                          .indexOf(aboutme) !=
+                                      count - 1
+                                  ? Text(
+                                      '$displayText,',
+                                      style: textStyle,
+                                    )
+                                  : Text('$displayText',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black,
+                                      )),
+                            );
+                          }).toList(),
+                        )
+                ],
+              ),
+
+              SizedBox(
+                height: 10,
+              ),
+              Divider(
+                height: 35.0,
+                color: Colors.grey[500],
+              ),
+
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -1060,57 +1184,58 @@ class _DetailsPageState extends State<DetailsPage> {
                 height: 35.0,
                 color: Colors.grey[500],
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    doctorDetailsClass!.data!.aboutme == null
-                        ? " "
-                        : HEALTH_CARE,
-                    style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w600,
-                        color: BLACK,
-                        fontSize: 20),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  doctorDetailsClass!.data!.languages == null
-                      ? Text("No Languages Selected")
-                      : Row(
-                          children: doctorDetailsClass!.data!.languages!
-                              .map((language) {
-                            // Customize text size
-                            TextStyle textStyle = TextStyle(
-                                fontSize: 12.0,
-                                //color: LIGHT_GREY_TEXT,
-                                fontWeight: FontWeight.w500);
+              // Column(
+              //   crossAxisAlignment: CrossAxisAlignment.start,
+              //   children: [
+              //     Text(
+              //       // doctorDetailsClass!.data!.aboutme == null
+              //       //     ? " "
+              //       //     :
+              //       ABOUT_GUIDE,
+              //       style: GoogleFonts.poppins(
+              //           fontWeight: FontWeight.w600,
+              //           color: BLACK,
+              //           fontSize: 20),
+              //     ),
+              //     SizedBox(
+              //       height: 5,
+              //     ),
+              //     doctorDetailsClass!.data!.aboutme == null
+              //         ? Text("No Data Found")
+              //         : Row(
+              //             children:
+              //                 doctorDetailsClass!.data!.aboutme!.map((aboutme) {
+              //               // Customize text size
+              //               TextStyle textStyle = TextStyle(
+              //                   fontSize: 12.0,
+              //                   //color: LIGHT_GREY_TEXT,
+              //                   fontWeight: FontWeight.w500);
 
-                            // Map language to display text
-                            String displayText =
-                                getDisplayTextForLanguage(language);
+              //               // Map language to display text
+              //               String displayText =
+              //                   getDisplayTextForAboutMe(aboutme);
 
-                            return Container(
-                              // padding: EdgeInsets.zero,
-                              margin: EdgeInsets.only(left: 0, right: 8.0),
-                              child: doctorDetailsClass!.data!.languages!
-                                          .indexOf(language) !=
-                                      count - 1
-                                  ? Text(
-                                      '$displayText,',
-                                      style: textStyle,
-                                    )
-                                  : Text('I am Groot',
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.black,
-                                      )),
-                            );
-                          }).toList(),
-                        )
-                ],
-              ),
+              //               return Container(
+              //                 // padding: EdgeInsets.zero,
+              //                 margin: EdgeInsets.only(left: 0, right: 8.0),
+              //                 child: doctorDetailsClass!.data!.aboutme!
+              //                             .indexOf(aboutme) !=
+              //                         count - 1
+              //                     ? Text(
+              //                         '$displayText,',
+              //                         style: textStyle,
+              //                       )
+              //                     : Text('$displayText',
+              //                         style: TextStyle(
+              //                           fontSize: 15,
+              //                           fontWeight: FontWeight.w500,
+              //                           color: Colors.black,
+              //                         )),
+              //               );
+              //             }).toList(),
+              //           )
+              //   ],
+              // ),
             ],
           ),
         ),
@@ -1193,6 +1318,26 @@ class _DetailsPageState extends State<DetailsPage> {
       // Add more cases for other languages
       default:
         return aboutme;
+    }
+  }
+
+  String getDisplayTextForIWillShowYou(String iwillshowyou) {
+    switch (iwillshowyou.toLowerCase()) {
+      case 'english':
+        return 'English';
+      case 'hindi':
+        return 'Hindi';
+      case 'bengali':
+        return 'Bengali';
+      case 'urdu':
+        return 'Urdu';
+      case 'french':
+        return 'French';
+      case 'spanish':
+        return 'Spanish';
+      // Add more cases for other languages
+      default:
+        return iwillshowyou;
     }
   }
 

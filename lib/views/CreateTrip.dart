@@ -122,6 +122,54 @@ class _CreateTripState extends State<CreateTrip> {
     });
   }
 
+  Future<void> _lookingForLocals(BuildContext context) async {
+    String result = gender; // Initialize with a default value
+
+    await showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return SingleChildScrollView(
+          child: Container(
+            height: MediaQuery.of(context).size.height * .3,
+            child: Column(
+              children: [
+                ListTile(
+                  title: Text('Male'),
+                  onTap: () {
+                    result = 'Male';
+                    //people = 1;
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  title: Text('Female'),
+                  onTap: () {
+                    //people = 2;
+                    result = 'Female';
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  title: Text('Other'),
+                  onTap: () {
+                    //people = 4;
+                    result = 'Other';
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+
+    setState(() {
+      gender = result; // Update the state outside the showModalBottomSheet
+      genderPicked = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -171,13 +219,41 @@ class _CreateTripState extends State<CreateTrip> {
                       children: [
                         Row(
                           children: [
-                            // Text(
-                            //   'Destination:  ',
-                            //   style: TextStyle(
-                            //     color: Colors.grey,
-                            //     fontSize: 16.0,
+                            Text(
+                              'Destination :  ',
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            // Expanded(
+                            //   child: Text(
+                            //     location.toUpperCase(),
+                            //     style: GoogleFonts.poppins(
+                            //         fontWeight: FontWeight.w500,
+                            //         color: location == 'Where are you going?'
+                            //             ? Colors.grey
+                            //             : Color.fromARGB(255, 255, 84, 5),
+                            //         fontSize: 20),
                             //   ),
                             // ),
+                            // Icon(Icons.location_searching_sharp,
+                            //     color: Colors.lightBlue),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Row(
+                          children: [
+                            Icon(Icons.search_sharp,
+                                color: location == 'Where are you going?'
+                                    ? Colors.lightBlue
+                                    : Color.fromARGB(255, 255, 84, 5)),
+                            SizedBox(
+                              width: 10,
+                            ),
                             Expanded(
                               child: Text(
                                 location.toUpperCase(),
@@ -189,29 +265,19 @@ class _CreateTripState extends State<CreateTrip> {
                                     fontSize: 20),
                               ),
                             ),
-                            // Icon(Icons.location_searching_sharp,
-                            //     color: Colors.lightBlue),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Row(
-                          children: [
-                            Icon(Icons.search_sharp, color: Colors.lightBlue),
                             SizedBox(
                                 width:
                                     5), // Adjust the space between icon and text as needed
-                            Expanded(
-                                child: Container(
-                                    alignment: Alignment.centerLeft,
-                                    child: !locationPicked
-                                        ? Text("Enter location",
-                                            style: GoogleFonts.robotoCondensed(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w500,
-                                            ))
-                                        : Text(""))),
+                            // Expanded(
+                            //     child: Container(
+                            //         alignment: Alignment.centerLeft,
+                            //         child: !locationPicked
+                            //             ? Text("Enter location",
+                            //                 style: GoogleFonts.robotoCondensed(
+                            //                   fontSize: 18,
+                            //                   fontWeight: FontWeight.w500,
+                            //                 ))
+                            //             : Text(""))),
                           ],
                         ),
                       ],
@@ -220,7 +286,7 @@ class _CreateTripState extends State<CreateTrip> {
                 ),
 
                 Divider(
-                  height: 5,
+                  height: 2,
                   color: Colors.grey,
                 ),
 
@@ -307,26 +373,30 @@ class _CreateTripState extends State<CreateTrip> {
                 // Add the last input field and button here
 
                 InkWell(
-                  onTap: () {
-                    // Implement the logic for the last input field
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => TypeSelectionPage(
-                          onGenderSelected: (selectedGender) {
-                            if (selectedGender != null) {
-                              setState(() {
-                                gender = selectedGender;
-                                genderPicked = true;
-                              });
-                            }
-                          },
-                        ),
-                      ),
-                    );
-                  },
+                  onTap: ()
+                      //() {
+                      //   // Implement the logic for the last input field
+                      //   Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //       builder: (context)
+                      =>
+                      _lookingForLocals(context),
+
+                  //onTap: () => _selectNumberOfPeople(context),
+                  // onTap: () => TypeSelectionPage(
+                  //   onGenderSelected: (selectedGender) {
+                  //     if (selectedGender != null) {
+                  //       setState(() {
+                  //         gender = selectedGender;
+                  //         genderPicked = true;
+                  //       });
+                  //     }
+                  //   },
+                  // ),
                   child: InputDecorator(
                     decoration: InputDecoration(
+                        //labelText: PEOPLE.toUpperCase(),
                         labelText: LOOKING_LOCAL.toUpperCase(),
                         labelStyle: GoogleFonts.poppins(
                           fontWeight: FontWeight.w500,
@@ -335,42 +405,83 @@ class _CreateTripState extends State<CreateTrip> {
                               : Colors.grey,
                           fontSize: 24,
                         ),
+
+                        // labelStyle: GoogleFonts.poppins(
+                        //     fontWeight: FontWeight.w500,
+                        //     color: !peoplePicked
+                        //         ? Colors.grey
+                        //         : Color.fromARGB(255, 255, 84, 5),
+                        //     fontSize: 24),
                         //),
                         errorText:
                             !genderPicked ? "Field cannot be empty!" : ""),
-                    child: Row(
-                      //mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        SizedBox(
-                          height: 30,
-                          child: Text(
-                            gender,
-                            style: GoogleFonts.robotoCondensed(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            IconButton(
-                              icon: Icon(Icons.arrow_forward_ios_sharp),
-                              onPressed: () {
-                                //     Navigator.push(
-                                //       context,
-                                //  MaterialPageRoute(
-                                //           builder: (context) =>
-                                //          SendOffersScreen()),
-                                //    );
-                                // Handle forward button press
-                              },
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                    child: Text(gender),
                   ),
+
+                  // onTap: () {
+                  //   // Implement the logic for the last input field
+                  //   Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //     builder: (context) => TypeSelectionPage(
+                  //         onGenderSelected: (selectedGender) {
+                  //           if (selectedGender != null) {
+                  //             setState(() {
+                  //               gender = selectedGender;
+                  //               genderPicked = true;
+                  //             });
+                  //           }
+                  //         },
+                  //       ),
+                  //     ),
+                  //   );
+                  // },
+                  // child: InputDecorator(
+                  //   decoration: InputDecoration(
+                  //       labelText: LOOKING_LOCAL.toUpperCase(),
+                  //       labelStyle: GoogleFonts.poppins(
+                  //         fontWeight: FontWeight.w500,
+                  //         color: genderPicked
+                  //             ? Color.fromARGB(255, 255, 84, 5)
+                  //             : Colors.grey,
+                  //         fontSize: 24,
+                  //       ),
+                  //       //),
+                  //       errorText:
+                  //           !genderPicked ? "Field cannot be empty!" : ""),
+                  //   child: Row(
+                  //     //mainAxisAlignment: MainAxisAlignment.end,
+                  //     children: [
+                  //       SizedBox(
+                  //         height: 30,
+                  //         child: Text(
+                  //           gender,
+                  //           style: GoogleFonts.robotoCondensed(
+                  //             fontSize: 18,
+                  //             fontWeight: FontWeight.w500,
+                  //           ),
+                  //         ),
+                  //       ),
+                  //       Column(
+                  //         mainAxisAlignment: MainAxisAlignment.end,
+                  //         children: [
+                  //           IconButton(
+                  //             icon: Icon(Icons.arrow_forward_ios_sharp),
+                  //             onPressed: () {
+                  //               //     Navigator.push(
+                  //               //       context,
+                  //               //  MaterialPageRoute(
+                  //               //           builder: (context) =>
+                  //               //          SendOffersScreen()),
+                  //               //    );
+                  //               // Handle forward button press
+                  //             },
+                  //           ),
+                  //         ],
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                 ),
 
                 //SizedBox(height: MediaQuery.of(context).size.height * .09),
