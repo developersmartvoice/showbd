@@ -320,16 +320,28 @@ class _HomeScreenState extends State<HomeScreen> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Container(
-                                            child: CachedNetworkImage(
-                                              imageUrl: _newData[index]
-                                                  .image
-                                                  .toString(),
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  .05,
-                                              width: 40,
-                                            ),
+                                            child: _newData[index]?.image !=
+                                                    null
+                                                ? CachedNetworkImage(
+                                                    imageUrl: _newData[index]
+                                                        .image
+                                                        .toString(),
+                                                    height:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height *
+                                                            .05,
+                                                    width: 40,
+                                                  )
+                                                : Image.asset(
+                                                    "assets/homeScreenImages/user_unactive.png",
+                                                    height:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height *
+                                                            .05,
+                                                    width: 40,
+                                                  ),
                                           ),
                                           Text(
                                             _newData[index].name,
