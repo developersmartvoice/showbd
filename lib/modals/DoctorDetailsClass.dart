@@ -35,7 +35,7 @@ class Data {
   // dynamic healthcare;
   List<String>? services;
   List<String>? languages;
-  List<String>? aboutme;
+  // List<String>? aboutme;
   String?
       motto; /////////////////////////////////////////////////////////////////
   String? iwillshowyou;
@@ -64,7 +64,7 @@ class Data {
     this.lon,
     this.phoneno,
     this.iwillshowyou,
-    this.aboutme,
+    // this.aboutme,
     this.services,
     this.languages,
     this.image,
@@ -101,8 +101,8 @@ class Data {
         ?.split(',')
         .map((e) => e.trim())
         .toList();
-    aboutme =
-        (json['about me'] as String?)?.split(',').map((e) => e.trim()).toList();
+    // aboutme =
+    //     (json['about me'] as String?)?.split(',').map((e) => e.trim()).toList();
     image = json['image'];
     images = json['images'] != null
         ? List<String>.from(json['images'])
@@ -138,7 +138,7 @@ class Data {
     // data['healthcare'] = this.healthcare;
     data['services'] = services?.join(', ');
     data['languages'] = languages?.join(', ');
-    data['about me'] = aboutme?.join(', ');
+    // data['about me'] = aboutme?.join(', ');
     //data['i will show you'] = iwillshowyou?.join(', ');
     data['image'] = this.image;
     data['images'] = this.images; // Include images in the JSON output
