@@ -1,3 +1,7 @@
+import 'package:appcode3/views/AboutMeDetailsPage.dart';
+import 'package:appcode3/views/CreateTrip.dart';
+import 'package:appcode3/views/EmailDetailsPage.dart';
+import 'package:appcode3/views/NameSettingsPage.dart';
 import 'package:flutter/material.dart';
 
 import 'dart:convert';
@@ -153,6 +157,11 @@ class ContainerPage extends StatelessWidget {
                         alignment: Alignment.centerRight,
                         child: IconButton(
                           onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => NameSettingsPage(),
+                              ),
+                            );
                             // Add your logic for the onPressed event here
                             // Typically, this would involve navigating to the next screen or performing some action
                           },
@@ -222,6 +231,11 @@ class ContainerPage extends StatelessWidget {
                         alignment: Alignment.centerRight,
                         child: IconButton(
                           onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => AboutMeDetailsPage(),
+                              ),
+                            );
                             // Add your logic for the onPressed event here
                             // Typically, this would involve navigating to the next screen or performing some action
                           },
@@ -360,6 +374,11 @@ class ContainerPage extends StatelessWidget {
                         alignment: Alignment.centerRight,
                         child: IconButton(
                           onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => LocationSearchPage(),
+                              ),
+                            );
                             // Add your logic for the onPressed event here
                             // Typically, this would involve navigating to the next screen or performing some action
                           },

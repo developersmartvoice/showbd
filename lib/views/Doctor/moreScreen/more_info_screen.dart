@@ -955,7 +955,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => ContactAndIdentification()),
+                    builder: (context) => ContactAndIdentification(doctorId!)),
               );
             },
             child: Container(

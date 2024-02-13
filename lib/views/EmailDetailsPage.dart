@@ -112,19 +112,19 @@ class _EmailDetailsPageState extends State<EmailDetailsPage> {
                   height: 70,
                   child: Row(children: [
                     Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 15),
-                        child: Text(
-                          "Your email address will be used to send you booking confirmations. It won't be displayed on your profile.",
-                          textAlign: TextAlign.start,
-                          style: GoogleFonts.robotoCondensed(
-                            fontSize: 15.0,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500,
-                          ),
+                      //child: Padding(
+                      //padding: const EdgeInsets.only(left: 15),
+                      child: Text(
+                        "Your email address will be used to send you booking confirmations. It won't be displayed on your profile.",
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.robotoCondensed(
+                          fontSize: 15.0,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                     ),
+                    //),
                     // Align(
                     //   alignment: Alignment.centerRight,
                     //   child: IconButton(
@@ -153,26 +153,26 @@ class _EmailDetailsPageState extends State<EmailDetailsPage> {
             child: Row(
               children: [
                 Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 190.0),
-                    child: TextField(
-                      textAlign: TextAlign.start,
-                      controller: TextEditingController(),
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                      ), // Use a TextEditingController
-                      decoration: InputDecoration(
-                        hintText: 'Your email',
-                        border: OutlineInputBorder(),
-                        hintStyle: TextStyle(
-                            color:
-                                Colors.grey), // Border around the input field
-                      ),
+                  //child:
+                  //Padding(
+                  //padding: const EdgeInsets.only(right: 190.0),
+                  child: TextField(
+                    textAlign: TextAlign.center,
+                    controller: TextEditingController(),
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                    ), // Use a TextEditingController
+                    decoration: InputDecoration(
+                      hintText: 'Your email',
+                      border: OutlineInputBorder(),
+                      hintStyle: TextStyle(
+                          color: Colors.grey), // Border around the input field
                     ),
                   ),
                 ),
+                //),
               ],
             ),
           ),
