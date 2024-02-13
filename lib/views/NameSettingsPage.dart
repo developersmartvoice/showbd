@@ -34,20 +34,20 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:flutter/material.dart';
 
-class PhoneNumberPage extends StatefulWidget {
-  const PhoneNumberPage({super.key});
+class NameSettingsPage extends StatefulWidget {
+  const NameSettingsPage({super.key});
 
   @override
-  State<PhoneNumberPage> createState() => _PhoneNumberPageState();
+  State<NameSettingsPage> createState() => _NameSettingsPageState();
 }
 
-class _PhoneNumberPageState extends State<PhoneNumberPage> {
+class _NameSettingsPageState extends State<NameSettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Phone',
+          'Name',
           style: GoogleFonts.robotoCondensed(
             color: Colors.white,
             fontSize: 25,
@@ -109,22 +109,22 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
                 ),
                 Container(
                   color: LIGHT_GREY_SCREEN_BACKGROUND,
-                  height: 180,
+                  height: 70,
                   child: Row(children: [
                     Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                        child: Text(
-                          "Your phone number will be used to send you booking confirmations. It won't be displayed on your profile. Be sure to use a cell number you can easily be reached at!",
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.robotoCondensed(
-                            fontSize: 15.0,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500,
-                          ),
+                      //child: Padding(
+                      //padding: const EdgeInsets.only(left: 15),
+                      child: Text(
+                        "Use your real first name",
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.robotoCondensed(
+                          fontSize: 15.0,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                     ),
+                    //),
                     // Align(
                     //   alignment: Alignment.centerRight,
                     //   child: IconButton(
@@ -153,7 +153,8 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
             child: Row(
               children: [
                 Expanded(
-                  //child: Padding(
+                  //child:
+                  //Padding(
                   //padding: const EdgeInsets.only(right: 190.0),
                   child: TextField(
                     textAlign: TextAlign.center,
@@ -164,7 +165,7 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
                       fontWeight: FontWeight.w500,
                     ), // Use a TextEditingController
                     decoration: InputDecoration(
-                      hintText: 'Your phone number',
+                      hintText: 'Name...',
                       border: OutlineInputBorder(),
                       hintStyle: TextStyle(
                           color: Colors.grey), // Border around the input field

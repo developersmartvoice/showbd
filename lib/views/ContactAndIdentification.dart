@@ -37,7 +37,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
 class ContactAndIdentification extends StatefulWidget {
-  const ContactAndIdentification({super.key});
+  // const ContactAndIdentification({super.key});
+  final String id;
+
+  ContactAndIdentification(this.id);
 
   @override
   State<ContactAndIdentification> createState() => _GeneraLInfoState();
@@ -46,6 +49,9 @@ class ContactAndIdentification extends StatefulWidget {
 class _GeneraLInfoState extends State<ContactAndIdentification> {
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      print("This is form Contact page: ${widget.id}");
+    });
     return Scaffold(
       backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
       appBar: AppBar(

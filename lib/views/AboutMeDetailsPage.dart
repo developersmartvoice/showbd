@@ -34,20 +34,20 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:flutter/material.dart';
 
-class PhoneNumberPage extends StatefulWidget {
-  const PhoneNumberPage({super.key});
+class AboutMeDetailsPage extends StatefulWidget {
+  const AboutMeDetailsPage({super.key});
 
   @override
-  State<PhoneNumberPage> createState() => _PhoneNumberPageState();
+  State<AboutMeDetailsPage> createState() => _AboutMeDetailsPageState();
 }
 
-class _PhoneNumberPageState extends State<PhoneNumberPage> {
+class _AboutMeDetailsPageState extends State<AboutMeDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Phone',
+          'About me',
           style: GoogleFonts.robotoCondensed(
             color: Colors.white,
             fontSize: 25,
@@ -109,42 +109,52 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
                 ),
                 Container(
                   color: LIGHT_GREY_SCREEN_BACKGROUND,
-                  height: 180,
-                  child: Row(children: [
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                        child: Text(
-                          "Your phone number will be used to send you booking confirmations. It won't be displayed on your profile. Be sure to use a cell number you can easily be reached at!",
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.robotoCondensed(
-                            fontSize: 15.0,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500,
+                  height: 200,
+                  child: Container(
+                    height: 200,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          //child: Padding(
+                          //padding: const EdgeInsets.only(left: 15),
+                          child: Container(
+                            height: 200,
+                            child: Column(
+                              children: [
+                                Text(
+                                  "Feel free to share your hobbies, interests, or anything else you'd like!",
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.robotoCondensed(
+                                    fontSize: 15.0,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 1,
+                                ),
+                                Text(
+                                  "Note: All languages preferable, but kindly fill out in English now",
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.robotoCondensed(
+                                    fontSize: 15.0,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
-                    // Align(
-                    //   alignment: Alignment.centerRight,
-                    //   child: IconButton(
-                    //     onPressed: () {
-                    //       // Add your logic for the onPressed event here
-                    //       // Typically, this would involve navigating to the next screen or performing some action
-                    //     },
-                    //     //alignment: Alignment.centerRight,
-                    //     icon: Icon(Icons.arrow_forward_ios_sharp),
-                    //     color: Colors.black, // Color of the icon
-                    //     iconSize: 24.0, // Size of the icon
-                    //   ),
-                    // ),
-                  ]),
+                  ),
                 ),
               ],
             ),
           ),
           Divider(
-            height: 2,
+            height: 5,
             color: Colors.grey,
           ),
           Container(
@@ -153,7 +163,8 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
             child: Row(
               children: [
                 Expanded(
-                  //child: Padding(
+                  //child:
+                  //Padding(
                   //padding: const EdgeInsets.only(right: 190.0),
                   child: TextField(
                     textAlign: TextAlign.center,
@@ -164,7 +175,7 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
                       fontWeight: FontWeight.w500,
                     ), // Use a TextEditingController
                     decoration: InputDecoration(
-                      hintText: 'Your phone number',
+                      hintText: 'More about you',
                       border: OutlineInputBorder(),
                       hintStyle: TextStyle(
                           color: Colors.grey), // Border around the input field
