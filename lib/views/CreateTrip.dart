@@ -757,7 +757,10 @@ class _LocationSearchPageState extends State<LocationSearchPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Search Location'),
+          title: Text('Search Location',
+              style: Theme.of(context).textTheme.headline5!.apply(
+                  color: Theme.of(context).backgroundColor,
+                  fontWeightDelta: 5)),
           flexibleSpace: Container(
             decoration: BoxDecoration(
               image: DecorationImage(

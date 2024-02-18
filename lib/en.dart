@@ -116,7 +116,8 @@ const String TWITTER = "Twitter Url";
 const String SELECT_DEPARTMENT = "Select department";
 
 //Morescreen
-const String ABOUT = "About";
+const String NAME_PAGE = "Use your real first name";
+const String ABOUT = "About Me";
 const String ABOUT_ME_COL1 =
     "Let others know what you do in life and how you spending your free time.";
 const String ABOUT_ME_COL2 =
@@ -282,7 +283,7 @@ String Dummy1 = 'Lorem ipsum simply dummy text';
 String Dummy2 = 'Long established fact';
 String CHOOSE_BTN = 'Choose plan >';
 String UPLOAD_RECIPES = 'Upload Recipes';
-const String MORE_INFO = "More Info";
+const String MORE_INFO = "Account Information";
 // String UPLOAD_RECIPES_DES = 'Upload Payment Recipe';
 String RECIPES_UPLOADING = 'Recipes Uploading...';
 String SOMETHING_WRONG = 'Something Wrong';
