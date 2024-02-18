@@ -117,6 +117,10 @@ const String SELECT_DEPARTMENT = "Select department";
 
 //Morescreen
 const String ABOUT = "About";
+const String ABOUT_ME_COL1 =
+    "Let others know what you do in life and how you spending your free time.";
+const String ABOUT_ME_COL2 =
+    "Important: We love all languages, but kindly ask to fill out this section in English. Please avoid writing brands, company names and links to other sites in your description.";
 const String SPECIALIST = "Specialist";
 const String TERM_AND_CONDITIONS = "Term & Conditions";
 const String HELP_CENTER = "Help Center";
