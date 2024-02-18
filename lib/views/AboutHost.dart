@@ -48,14 +48,14 @@ class _AboutHostState extends State<AboutHost> {
       backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 243, 103, 9),
-        title: Text(
-          'About host',
-          style: GoogleFonts.robotoCondensed(
-            fontSize: 25,
-            fontWeight: FontWeight.bold,
-            color: WHITE,
-          ),
-        ),
+        title: Text('About host',
+            // style: GoogleFonts.robotoCondensed(
+            //   fontSize: 25,
+            //   fontWeight: FontWeight.bold,
+            //   color: WHITE,
+            // ),
+            style: Theme.of(context).textTheme.headline5!.apply(
+                color: Theme.of(context).backgroundColor, fontWeightDelta: 5)),
         centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),

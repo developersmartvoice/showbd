@@ -606,10 +606,11 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
         Container(
           height: 60,
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                width: 15,
-              ),
+              // SizedBox(
+              //   width: 15,
+              // ),
               Text(MORE_INFO,
                   style: Theme.of(context).textTheme.headline5!.apply(
                       color: Theme.of(context).backgroundColor,
@@ -912,7 +913,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => GeneraLInfo()),
+                MaterialPageRoute(builder: (context) => GeneraLInfo(doctorId!)),
               );
             },
             child: Container(
