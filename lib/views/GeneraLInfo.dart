@@ -221,7 +221,7 @@ class _ContainerPageState extends State<ContainerPage> {
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => NameSettingsPage(),
+                        builder: (context) => NameSettingsPage(widget.name),
                       ),
                     );
                   },
@@ -257,16 +257,17 @@ class _ContainerPageState extends State<ContainerPage> {
                       //   width: MediaQuery.sizeOf(context).width * .01,
                       // ),
                       Container(
-                          alignment: Alignment.center,
-                          width: MediaQuery.sizeOf(context).width * .2,
-                          child: Text(
-                            NAME,
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.bold,
-                              // color: Color.fromARGB(255, 243, 103, 9),
-                            ),
-                          )),
+                        alignment: Alignment.center,
+                        width: MediaQuery.sizeOf(context).width * .2,
+                        child: Text(
+                          NAME,
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold,
+                            // color: Color.fromARGB(255, 243, 103, 9),
+                          ),
+                        ),
+                      ),
                       SizedBox(
                         width: MediaQuery.sizeOf(context).width * .1,
                       ),
@@ -294,7 +295,7 @@ class _ContainerPageState extends State<ContainerPage> {
                         //     onPressed: () {},
                         //     icon: Icon(Icons.arrow_forward_ios)),
                         child: Icon(Icons.arrow_forward_ios),
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -381,7 +382,8 @@ class _ContainerPageState extends State<ContainerPage> {
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => NameSettingsPage(),
+                        builder: (context) =>
+                            AboutMeDetailsPage(widget.aboutMe),
                       ),
                     );
                   },
@@ -534,76 +536,168 @@ class _ContainerPageState extends State<ContainerPage> {
                 height: 2,
                 color: Colors.white10,
               ),
+              // Container(
+              //   height: 70,
+              //   color: Colors.white,
+              //   child: Stack(
+              //     children: [
+              //       Positioned(
+              //         left: 10, // Adjust the position of the button as needed
+              //         top: 20, // Adjust the position of the button as needed
+              //         child: InkWell(
+              //           //onTap: _changeColor,
+              //           // Add your logic for the selection button onTap event here
+
+              //           child: Container(
+              //             width: 30,
+              //             height: 30,
+              //             decoration: BoxDecoration(
+              //               //color: _boxColor, // Color of the button
+              //               color: Colors.green,
+              //               shape: BoxShape.circle,
+              //               border: Border.all(
+              //                 color: Colors.black, // Color of the border
+              //                 width: 1.0, // Width of the border
+              //               ), // Circular shape
+              //             ),
+              //             child: Icon(
+              //               Icons.check,
+              //               //color: _isSelected ? Colors.green : Colors.white,
+              //               color: Colors.white, // Color of the icon
+              //               size: 25.0, // Size of the icon
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //       Row(children: [
+              //         Expanded(
+              //           child: Padding(
+              //             padding: const EdgeInsets.only(right: 165.0),
+              //             child: Text(
+              //               'Location',
+              //               textAlign: TextAlign.center,
+              //               style: GoogleFonts.robotoCondensed(
+              //                 fontSize: 20.0,
+              //                 color: Colors.black,
+              //                 fontWeight: FontWeight.w500,
+              //               ),
+              //             ),
+              //           ),
+              //         ),
+              //         Align(
+              //           alignment: Alignment.centerRight,
+              //           child: IconButton(
+              //             onPressed: () {
+              //               Navigator.of(context).push(
+              //                 MaterialPageRoute(
+              //                   builder: (context) => LocationSearchPage(),
+              //                 ),
+              //               );
+              //               // Add your logic for the onPressed event here
+              //               // Typically, this would involve navigating to the next screen or performing some action
+              //             },
+              //             //alignment: Alignment.centerRight,
+              //             icon: Icon(Icons.arrow_forward_ios_sharp),
+              //             color: Colors.black, // Color of the icon
+              //             iconSize: 24.0, // Size of the icon
+              //           ),
+              //         ),
+              //       ]),
+              //     ],
+              //   ),
+              // ),
+
               Container(
+                padding: EdgeInsets.all(10),
                 height: 70,
                 color: Colors.white,
-                child: Stack(
-                  children: [
-                    Positioned(
-                      left: 10, // Adjust the position of the button as needed
-                      top: 20, // Adjust the position of the button as needed
-                      child: InkWell(
-                        //onTap: _changeColor,
-                        // Add your logic for the selection button onTap event here
-
-                        child: Container(
-                          width: 30,
-                          height: 30,
-                          decoration: BoxDecoration(
-                            //color: _boxColor, // Color of the button
-                            color: Colors.green,
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: Colors.black, // Color of the border
-                              width: 1.0, // Width of the border
-                            ), // Circular shape
-                          ),
-                          child: Icon(
-                            Icons.check,
-                            //color: _isSelected ? Colors.green : Colors.white,
-                            color: Colors.white, // Color of the icon
-                            size: 25.0, // Size of the icon
-                          ),
-                        ),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => LocationSearchPage(),
                       ),
-                    ),
-                    Row(children: [
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 165.0),
-                          child: Text(
-                            'Location',
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.robotoCondensed(
-                              fontSize: 20.0,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w500,
+                    );
+                  },
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    // crossAxisAlignment: CrossAxisAlignment.stretch,
+                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Stack(
+                        children: [
+                          Container(
+                            width: MediaQuery.sizeOf(context).width * .1,
+                            height: 30,
+                            decoration: BoxDecoration(
+                              //color: _boxColor, // Color of the button
+                              color: !isLocationStored
+                                  ? Colors.green
+                                  : Colors.grey,
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: Colors.black, // Color of the border
+                                width: 1.0, // Width of the border
+                              ), // Circular shape
                             ),
+                            child: Icon(
+                              Icons.check,
+                              color: isLocationStored
+                                  ? Colors.green
+                                  : Colors.white,
+                              // color: Colors.white, // Color of the icon
+                              size: 25.0, // Size of the icon
+                            ),
+                          )
+                        ],
+                      ),
+                      // SizedBox(
+                      //   width: MediaQuery.sizeOf(context).width * .01,
+                      // ),
+                      Container(
+                          alignment: Alignment.center,
+                          width: MediaQuery.sizeOf(context).width * .2,
+                          child: Text(
+                            LOCATION,
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold,
+                              // color: Color.fromARGB(255, 243, 103, 9),
+                            ),
+                          )),
+                      SizedBox(
+                        width: MediaQuery.sizeOf(context).width * .1,
+                      ),
+                      Container(
+                        alignment: Alignment.centerRight,
+                        width: MediaQuery.sizeOf(context).width * .4,
+                        child: Text(
+                          widget.city,
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey,
                           ),
                         ),
                       ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: IconButton(
-                          onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => LocationSearchPage(),
-                              ),
-                            );
-                            // Add your logic for the onPressed event here
-                            // Typically, this would involve navigating to the next screen or performing some action
-                          },
-                          //alignment: Alignment.centerRight,
-                          icon: Icon(Icons.arrow_forward_ios_sharp),
-                          color: Colors.black, // Color of the icon
-                          iconSize: 24.0, // Size of the icon
-                        ),
+                      // SizedBox(
+                      //   width: 10,
+                      // ),
+                      SizedBox(
+                        width: MediaQuery.sizeOf(context).width * .05,
                       ),
-                    ]),
-                  ],
+                      Container(
+                        width: MediaQuery.sizeOf(context).width * .1,
+                        // child: IconButton(
+                        //     onPressed: () {},
+                        //     icon: Icon(Icons.arrow_forward_ios)),
+                        child: Icon(Icons.arrow_forward_ios),
+                      )
+                    ],
+                  ),
                 ),
               ),
+
               Divider(
                 height: 2,
                 color: Colors.white10,

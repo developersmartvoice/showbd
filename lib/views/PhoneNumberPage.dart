@@ -35,7 +35,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
 class PhoneNumberPage extends StatefulWidget {
-  const PhoneNumberPage({super.key});
+  const PhoneNumberPage(String phone, {super.key});
 
   @override
   State<PhoneNumberPage> createState() => _PhoneNumberPageState();
