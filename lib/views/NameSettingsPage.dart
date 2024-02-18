@@ -35,10 +35,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
 class NameSettingsPage extends StatefulWidget {
-  const NameSettingsPage({super.key});
+  //const NameSettingsPage({super.key});
 
   @override
   State<NameSettingsPage> createState() => _NameSettingsPageState();
+  late final String name;
+  //late final String aboutMe;
+  //late final String city;
+
+  NameSettingsPage(this.name);
 }
 
 class _NameSettingsPageState extends State<NameSettingsPage> {
@@ -200,6 +205,7 @@ class _NameSettingsPageState extends State<NameSettingsPage> {
                 height: 10,
               ),
               Container(
+                color: Colors.white,
                 child: TextField(
                   controller: TextEditingController(),
                   style: TextStyle(
@@ -209,8 +215,9 @@ class _NameSettingsPageState extends State<NameSettingsPage> {
                   ),
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      hintText: "Name",
-                      hintStyle: TextStyle(color: Colors.grey)),
+                      //hintText: "Name",
+                      hintText: widget.name,
+                      hintStyle: TextStyle(color: Colors.black)),
                 ),
               )
             ],

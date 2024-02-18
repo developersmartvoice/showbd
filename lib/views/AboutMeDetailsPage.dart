@@ -35,10 +35,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
 class AboutMeDetailsPage extends StatefulWidget {
-  const AboutMeDetailsPage({super.key});
+  //const AboutMeDetailsPage({super.key});
 
   @override
   State<AboutMeDetailsPage> createState() => _AboutMeDetailsPageState();
+
+  late final String aboutMe;
+  AboutMeDetailsPage(this.aboutMe);
 }
 
 class _AboutMeDetailsPageState extends State<AboutMeDetailsPage> {
@@ -233,7 +236,8 @@ class _AboutMeDetailsPageState extends State<AboutMeDetailsPage> {
                   ),
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      hintText: "More About You",
+                      //hintText: "More About You",
+                      hintText: widget.aboutMe,
                       hintStyle: TextStyle(color: Colors.grey)),
                 ),
               )

@@ -566,11 +566,11 @@ class ContainerPage extends StatelessWidget {
                           alignment: Alignment.centerRight,
                           child: IconButton(
                             onPressed: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => AboutMeDetailsPage(),
-                                ),
-                              );
+                              // Navigator.of(context).push(
+                              //   MaterialPageRoute(
+                              //     builder: (context) => AboutMeDetailsPage(),
+                              //   ),
+                              // );
                               // Add your logic for the onPressed event here
                               // Typically, this would involve navigating to the next screen or performing some action
                             },

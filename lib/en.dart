@@ -14,6 +14,7 @@ const String ALL_APPOINTMENTS = "All Bookings";
 const String DOCTOR_DETAILS = "Guide detail";
 const String SEE_ALL_REVIEW = "See all reviews";
 const String PHONE_NUMBER = "Phone number";
+const String PHONE = "Phone";
 const String ABOUT_US = "'About me'";
 const String ADDRESS = "Address";
 const String WORKING_TIME = "Working time";
@@ -118,6 +119,9 @@ const String SELECT_DEPARTMENT = "Select department";
 //Morescreen
 const String NAME_PAGE = "Use your real first name";
 const String ABOUT = "About Me";
+const String LOCATION = "Location";
+const String EMAIL_PAGE =
+    "Your email address will be used to send you booking confirmations. It won't be displayed on your profile.";
 const String ABOUT_ME_COL1 =
     "Let others know what you do in life and how you spending your free time.";
 const String ABOUT_ME_COL2 =
