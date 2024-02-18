@@ -48,50 +48,52 @@ class GeneraLInfo extends StatefulWidget {
 class _GeneraLInfoState extends State<GeneraLInfo> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 243, 103, 9),
-        centerTitle: true,
-        title: Text(
-          'General information',
-          style: GoogleFonts.robotoCondensed(
-            color: Colors.white,
-            fontSize: 25,
-            fontWeight: FontWeight.w700, // Title text color
-          ),
-        ),
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.black, // Back button color
-          ),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              // Navigator.of(context).push(
-              //           MaterialPageRoute(
-              //             builder: (context) => DoctorChatListScreen(),
-              //           ),
-              //         );
-              // Add your button functionality here
-            },
-            child: Text(
-              'Save', // Text for the button
-              style: GoogleFonts.robotoCondensed(
-                fontSize: 23,
-                fontWeight: FontWeight.bold,
-                color: Colors.black, // Text color
-              ),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
+        appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 243, 103, 9),
+          centerTitle: true,
+          title: Text(
+            'General information',
+            style: GoogleFonts.robotoCondensed(
+              color: Colors.white,
+              fontSize: 25,
+              fontWeight: FontWeight.w700, // Title text color
             ),
           ),
-        ],
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+              color: Colors.black, // Back button color
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                // Navigator.of(context).push(
+                //           MaterialPageRoute(
+                //             builder: (context) => DoctorChatListScreen(),
+                //           ),
+                //         );
+                // Add your button functionality here
+              },
+              child: Text(
+                'Save', // Text for the button
+                style: GoogleFonts.robotoCondensed(
+                  fontSize: 23,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black, // Text color
+                ),
+              ),
+            ),
+          ],
+        ),
+        body: ContainerPage(),
       ),
-      body: ContainerPage(),
     );
   }
 }
