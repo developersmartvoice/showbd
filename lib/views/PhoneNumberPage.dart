@@ -115,7 +115,7 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
                 padding: EdgeInsets.all(16),
                 alignment: Alignment.topLeft,
                 child: Text(
-                  PHONE_PAGE,
+                  "Phone Page",
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 12,

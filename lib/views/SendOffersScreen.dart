@@ -181,7 +181,11 @@ class _SendOffersScreenState extends State<SendOffersScreen> {
                   ),
                   // You can add more fields from NotifiedGuides here as needed
                   onTap: () {
-                    // Add onTap functionality if needed
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: ((context) => SendOfferScreen(
+                                notifyGuide: widget.notifyGuides![index]))));
                   },
                 ),
               );

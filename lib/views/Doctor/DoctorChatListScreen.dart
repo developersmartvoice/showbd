@@ -11,6 +11,7 @@ import 'package:appcode3/views/loginAsUser.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -261,14 +262,49 @@ class _ChatListScreenState extends State<ChatListScreen> {
                                         icon:
                                             Icon(Icons.arrow_forward_ios_sharp),
                                         onPressed: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    SendOffersScreen(
-                                                        notifyGuides:
-                                                            notifyGds)),
-                                          );
+                                          tripCount > 0
+                                              ? Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          SendOffersScreen(
+                                                              notifyGuides:
+                                                                  notifyGds)),
+                                                )
+                                              : showDialog(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return AlertDialog(
+                                                      title: Text(
+                                                          'Alert Dialog Title'),
+                                                      content: Text(
+                                                          'No person is looking for a local in your place!'),
+                                                      actions: [
+                                                        TextButton(
+                                                          style: ButtonStyle(
+                                                              backgroundColor:
+                                                                  MaterialStatePropertyAll<
+                                                                          Color>(
+                                                                      Colors
+                                                                          .red)),
+                                                          onPressed: () {
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop(); // Close the dialog
+                                                          },
+                                                          child: Text(
+                                                            'Close',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .white),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
+                                                );
+
                                           // Handle forward button press
                                         },
                                       ),
