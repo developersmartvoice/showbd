@@ -983,6 +983,7 @@ class _DetailsPageState extends State<DetailsPage> {
                   : Divider(
                       height: 35.0,
                       color: Colors.grey[500],
+                      
                     ),
 
               Column(

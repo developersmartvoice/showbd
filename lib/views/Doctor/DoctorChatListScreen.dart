@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:appcode3/en.dart';
 import 'package:appcode3/main.dart';
+import 'package:appcode3/modals/SendOfferClass.dart';
 import 'package:appcode3/views/ChatScreen.dart';
 import 'package:appcode3/views/Doctor/loginAsDoctor.dart';
 import 'package:appcode3/views/SendOfferScreen.dart';
@@ -9,6 +12,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatListScreen extends StatefulWidget {
@@ -20,7 +24,11 @@ class ChatListScreen extends StatefulWidget {
 
 class _ChatListScreenState extends State<ChatListScreen> {
   var ds;
+  SendOfferClass? _sendOfferClass;
+  List<NotifiedGuides>? notifyGds;
   String? myUid;
+  String? id;
+  int tripCount = 0;
 
   @override
   void initState() {
@@ -28,17 +36,52 @@ class _ChatListScreenState extends State<ChatListScreen> {
     super.initState();
     SharedPreferences.getInstance().then((value) {
       myUid = value.getString("userIdWithAscii");
+      id = value.getString("userId");
 
-      setState(() {});
+      setState(() {
+        print(id);
+      });
 
       print('myUid ---> ${myUid}');
-
+      getTripCount();
       getChatListData();
+      getSendOfferData();
     });
   }
 
   List<ChatListDetails> chatListDetails = [];
   List<ChatListDetails> chatListDetailsPA = [];
+
+  getSendOfferData() {
+    FirebaseDatabase.instance
+        .ref()
+        .child(myUid!)
+        .child('sendOffers')
+        .onValue
+        .listen((event) {
+      print('print send offer value :- ${event.snapshot.value}');
+    });
+  }
+
+  getTripCount() async {
+    final response = await get(
+        Uri.parse("$SERVER_ADDRESS/api/notifyGuidesAboutTrip?id=$id"));
+
+    try {
+      if (response.statusCode == 200) {
+        final jsonResponse = jsonDecode(response.body);
+        print(jsonResponse);
+        setState(() {
+          _sendOfferClass = SendOfferClass.fromJson(jsonResponse);
+          tripCount = _sendOfferClass!.tripCount!.toInt();
+          notifyGds = _sendOfferClass!.notifiedGuides;
+          print(tripCount);
+        });
+      }
+    } catch (e) {
+      print("Getting Error: $e");
+    }
+  }
 
   getChatListData() {
     ds = FirebaseDatabase.instance.ref().child(myUid!).onValue.listen((event) {
@@ -133,12 +176,12 @@ class _ChatListScreenState extends State<ChatListScreen> {
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            SendOffersScreen()),
-                                  );
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //       builder: (context) => SendOffersScreen(
+                                  //           _sendOfferClass!.notifiedGuides!)),
+                                  // );
                                 },
                                 child: Card(
                                   child: Row(
@@ -171,14 +214,25 @@ class _ChatListScreenState extends State<ChatListScreen> {
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
-                                              Text(
-                                                '1 person is looking for a local',
-                                                style:
-                                                    GoogleFonts.robotoCondensed(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ),
+                                              tripCount > 1
+                                                  ? Text(
+                                                      '$tripCount persons is looking for a local',
+                                                      style: GoogleFonts
+                                                          .robotoCondensed(
+                                                        fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                    )
+                                                  : Text(
+                                                      '$tripCount person is looking for a local',
+                                                      style: GoogleFonts
+                                                          .robotoCondensed(
+                                                        fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                    ),
                                               Text(
                                                 'in Dhaka, Bangladesh',
                                                 style:
@@ -211,7 +265,9 @@ class _ChatListScreenState extends State<ChatListScreen> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    SendOffersScreen()),
+                                                    SendOffersScreen(
+                                                        notifyGuides:
+                                                            notifyGds)),
                                           );
                                           // Handle forward button press
                                         },
