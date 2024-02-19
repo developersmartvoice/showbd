@@ -161,73 +161,79 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
               //   ),
               // ),
               // Round image, name, and address
-              ListTile(
-                leading: CircleAvatar(
-                  radius: 35,
-                  backgroundImage: AssetImage(
-                      'assets/images.jpg'), // Replace with your image asset
-                ),
-                title: Text(
-                  'Jon Snow',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+              Container(
+                //padding: EdgeInsets.only(left: 10),
+                child: ListTile(
+                  leading: CircleAvatar(
+                    radius: 35,
+                    backgroundImage: AssetImage(
+                        'assets/images.jpg'), // Replace with your image asset
                   ),
-                ),
-                subtitle: Text(
-                  'Winterfell, The North',
-                  style: TextStyle(
-                    fontSize: 15,
-                  ),
-                ),
-              ),
-
-              Align(
-                alignment: Alignment(-0.5, -0.7),
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(35, 0, 10, 0),
-                  child: TextButton(
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => DoctorProfile(),
-                        ),
-                      );
-                    },
-                    // Add button functionality here
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all<OutlinedBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              10.0), // Set border radius to 0 for a rectangle
-                        ),
-                      ),
-                      foregroundColor:
-                          MaterialStateProperty.all<Color>(Colors.blue),
-                      padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                        EdgeInsets.fromLTRB(
-                            5, 0, 20, 0), // Adjust padding as needed
-                      ),
+                  title: Text(
+                    'Jon Snow',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
                     ),
-                    child: Text(
-                      'View Profile',
-                      style: GoogleFonts.robotoCondensed(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                      ),
+                  ),
+                  subtitle: Text(
+                    'Winterfell, The North',
+                    style: TextStyle(
+                      fontSize: 15,
                     ),
                   ),
                 ),
               ),
 
-              // Divider(
-              //   height: 10,
-              //   color: Colors.grey,
+              Container(
+                padding: EdgeInsets.fromLTRB(5, 0, 10, 0),
+                child: Align(
+                  alignment: Alignment(-0.5, -0.7),
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(35, 0, 10, 0),
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => DoctorProfile(),
+                          ),
+                        );
+                      },
+                      // Add button functionality here
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all<OutlinedBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                10.0), // Set border radius to 0 for a rectangle
+                          ),
+                        ),
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(Colors.blue),
+                        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                          EdgeInsets.fromLTRB(
+                              5, 0, 20, 0), // Adjust padding as needed
+                        ),
+                      ),
+                      child: Text(
+                        'View Profile',
+                        style: GoogleFonts.robotoCondensed(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
+              Divider(
+                height: 2,
+                color: Colors.grey,
+              ),
+
+              // SizedBox(
+              //   height: 5,
               // ),
-
-              SizedBox(
-                height: 5,
-              ),
 
               Container(
                 padding: EdgeInsets.all(10),
@@ -324,10 +330,10 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
                 ),
               ),
 
-              // Divider(
-              //   height: 20,
-              //   color: Colors.grey,
-              // ),
+              Divider(
+                height: 2,
+                color: Colors.grey,
+              ),
 
               Container(
                 padding: EdgeInsets.all(10),
@@ -346,10 +352,10 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
                 ),
               ),
 
-              // Divider(
-              //   height: 20,
-              //   color: Colors.grey,
-              // ),
+              Divider(
+                height: 2,
+                color: Colors.grey,
+              ),
 
               // Align(
               //   alignment: Alignment.centerLeft,
@@ -382,39 +388,47 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 10),
+              //SizedBox(height: 10),
 
-              // Divider(
-              //   height: 15,
-              //   color: Colors.grey,
-              // ),
+              Divider(
+                height: 2,
+                color: Colors.grey,
+              ),
 
               // Replace with your data view
 
               Container(
-                padding: EdgeInsets.all(15),
+                padding: EdgeInsets.fromLTRB(20, 5, 5, 5),
                 color: Colors.white,
                 child: Align(
                   alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: EdgeInsets.all(5.0),
-                    child: Text(
-                      dynamicText1,
-                      //'Forever',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        // Add any additional styling here
-                      ),
+                  //child: Padding(
+                  //padding: EdgeInsets.all(5.0),
+                  child: TextField(
+                    controller: TextEditingController(text: " "),
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      // Add any additional styling here
                     ),
                   ),
+                  // Text(
+                  //   dynamicText1,
+                  //   //'Forever',
+                  //   style: TextStyle(
+                  //     fontSize: 18,
+                  //     fontWeight: FontWeight.bold,
+                  //     // Add any additional styling here
+                  //   ),
+                  // ),
                 ),
               ),
+              //),
 
-              // Divider(
-              //   height: 10,
-              //   color: Colors.grey,
-              // ),
+              Divider(
+                height: 2,
+                color: Colors.grey,
+              ),
 
               Container(
                 padding: EdgeInsets.all(15),
@@ -431,35 +445,44 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
                 ),
               ),
 
-              // Divider(
-              //   height: 30,
-              //   color: Colors.grey,
-              // ),
+              Divider(
+                height: 2,
+                color: Colors.grey,
+              ),
 
               Container(
-                padding: EdgeInsets.all(15),
+                padding: EdgeInsets.fromLTRB(20, 5, 5, 5),
                 color: Colors.white,
                 child: Align(
                   alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: EdgeInsets.all(5.0),
-                    child: Text(
-                      dynamicText2,
-                      //'Anytime',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        // Add any additional styling here
-                      ),
+                  //child: Padding(
+                  //padding: EdgeInsets.all(5.0),
+
+                  child: TextField(
+                    controller: TextEditingController(text: " "),
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      // Add any additional styling here
                     ),
                   ),
+                  // child: Text(
+                  //   dynamicText2,
+                  //   //'Anytime',
+                  //   style: TextStyle(
+                  //     fontSize: 18,
+                  //     fontWeight: FontWeight.bold,
+                  //     // Add any additional styling here
+                  //   ),
+                  // ),
                 ),
               ),
+              //),
 
-              // Divider(
-              //   height: 10,
-              //   color: Colors.grey,
-              // ),
+              Divider(
+                height: 2,
+                color: Colors.grey,
+              ),
 
               Container(
                 padding: EdgeInsets.all(15),
@@ -476,10 +499,10 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
                 ),
               ),
 
-              // Divider(
-              //   height: 30,
-              //   color: Colors.grey,
-              // ),
+              Divider(
+                height: 2,
+                color: Colors.grey,
+              ),
 
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
@@ -536,10 +559,10 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
                 ),
               ),
 
-              // Divider(
-              //   height: 10,
-              //   color: Colors.grey,
-              // ),
+              Divider(
+                height: 2,
+                color: Colors.grey,
+              ),
 
               Container(
                 padding: EdgeInsets.all(15),
@@ -556,29 +579,42 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
                 ),
               ),
 
-              // Divider(
-              //   height: 20,
-              //   color: Colors.grey,
-              // ),
+              Divider(
+                height: 2,
+                color: Colors.grey,
+              ),
 
               Container(
-                padding: EdgeInsets.all(15),
+                padding: EdgeInsets.fromLTRB(20, 5, 5, 5),
                 color: Colors.white,
                 child: Align(
                   alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: EdgeInsets.all(5),
-                    child: Text(
-                      dynamicText3,
-                      //'You know nothing, Jon Snow',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        // Add any additional styling here
-                      ),
+                  child: TextField(
+                    controller: TextEditingController(text: " "),
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      // Add any additional styling here
                     ),
                   ),
+                  // child: Padding(
+                  //   padding: EdgeInsets.all(5),
+                  //   child: Text(
+                  //     dynamicText3,
+                  //     //'You know nothing, Jon Snow',
+                  //     style: TextStyle(
+                  //       fontSize: 18,
+                  //       fontWeight: FontWeight.bold,
+                  //       // Add any additional styling here
+                  //     ),
+                  //   ),
+                  // ),
                 ),
+              ),
+
+              Divider(
+                height: 2,
+                color: Colors.grey,
               ),
 
               //SizedBox(height: 10),

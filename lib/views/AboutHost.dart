@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:ui';
+import 'package:appcode3/views/AboutMeDetailsPage.dart';
 import 'package:appcode3/views/BookingScreen.dart';
+import 'package:appcode3/views/CreateTrip.dart';
 import 'package:appcode3/views/Doctor/DoctorProfile.dart';
 import 'package:appcode3/views/Doctor/LogoutScreen.dart';
 import 'package:appcode3/views/Doctor/loginAsDoctor.dart';
@@ -46,14 +48,14 @@ class _AboutHostState extends State<AboutHost> {
       backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 243, 103, 9),
-        title: Text(
-          'About host',
-          style: GoogleFonts.robotoCondensed(
-            fontSize: 25,
-            fontWeight: FontWeight.bold,
-            color: WHITE,
-          ),
-        ),
+        title: Text('About host',
+            // style: GoogleFonts.robotoCondensed(
+            //   fontSize: 25,
+            //   fontWeight: FontWeight.bold,
+            //   color: WHITE,
+            // ),
+            style: Theme.of(context).textTheme.headline5!.apply(
+                color: Theme.of(context).backgroundColor, fontWeightDelta: 5)),
         centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
@@ -490,6 +492,11 @@ class ContainerPage extends StatelessWidget {
                           alignment: Alignment.centerRight,
                           child: IconButton(
                             onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => LocationSearchPage(),
+                                ),
+                              );
                               // Add your logic for the onPressed event here
                               // Typically, this would involve navigating to the next screen or performing some action
                             },
@@ -559,6 +566,11 @@ class ContainerPage extends StatelessWidget {
                           alignment: Alignment.centerRight,
                           child: IconButton(
                             onPressed: () {
+                              // Navigator.of(context).push(
+                              //   MaterialPageRoute(
+                              //     builder: (context) => AboutMeDetailsPage(),
+                              //   ),
+                              // );
                               // Add your logic for the onPressed event here
                               // Typically, this would involve navigating to the next screen or performing some action
                             },
@@ -750,35 +762,38 @@ class ContainerPage extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(
-          height: 120, // Adjust the height as needed
-          child: ElevatedButton(
-            onPressed: () {
-              // Navigator.of(context).push(
-              //   MaterialPageRoute(
-              //     builder: (context) =>
-              //         BookingScreen(widget.id, widget.guideName),
-              //   ),
-              // );
-            },
-            //child: Text('SUBMIT PROFILE'),
-            child: Padding(
-              padding: EdgeInsets.all(10), // Adjust padding as needed
-              child: Text('SUBMIT PROFILE'),
-            ),
-            style: ElevatedButton.styleFrom(
-              textStyle: GoogleFonts.robotoCondensed(
-                fontSize: 25.0,
-                fontWeight: FontWeight.w500,
+        Container(
+          padding: EdgeInsets.all(30),
+          child: SizedBox(
+            height: 70, // Adjust the height as needed
+            child: ElevatedButton(
+              onPressed: () {
+                // Navigator.of(context).push(
+                //   MaterialPageRoute(
+                //     builder: (context) =>
+                //         BookingScreen(widget.id, widget.guideName),
+                //   ),
+                // );
+              },
+              //child: Text('SUBMIT PROFILE'),
+              child: Padding(
+                padding: EdgeInsets.all(10), // Adjust padding as needed
+                child: Text('SUBMIT PROFILE'),
               ),
-              padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-              foregroundColor: Colors.white,
-              backgroundColor: Color.fromARGB(255, 243, 103, 9),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15.0),
-                side: BorderSide(
-                  color: Colors.white,
-                ), // Set border radius
+              style: ElevatedButton.styleFrom(
+                textStyle: GoogleFonts.robotoCondensed(
+                  fontSize: 25.0,
+                  fontWeight: FontWeight.w500,
+                ),
+                padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                foregroundColor: Colors.white,
+                backgroundColor: Color.fromARGB(255, 243, 103, 9),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0),
+                  side: BorderSide(
+                    color: Colors.white,
+                  ), // Set border radius
+                ),
               ),
             ),
           ),

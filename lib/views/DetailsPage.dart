@@ -947,7 +947,7 @@ class _DetailsPageState extends State<DetailsPage> {
                       color: Colors.grey[500],
                     ),
 
-              doctorDetailsClass!.data!.aboutme == null
+              doctorDetailsClass!.data!.aboutus == null
                   ? Container()
                   : Container(
                       child: Column(
@@ -966,11 +966,11 @@ class _DetailsPageState extends State<DetailsPage> {
                           SizedBox(
                             height: 5,
                           ),
-                          doctorDetailsClass!.data!.aboutme == null
-                              ? Text(
-                                  doctorDetailsClass!.data!.aboutme.toString(),
+                          doctorDetailsClass!.data!.aboutus == null
+                              ? Text("")
+                              : Text(
+                                  doctorDetailsClass!.data!.aboutus.toString(),
                                 )
-                              : Text("")
                         ],
                       ),
                     ),
@@ -978,7 +978,7 @@ class _DetailsPageState extends State<DetailsPage> {
               SizedBox(
                 height: 10,
               ),
-              doctorDetailsClass!.data!.aboutme == null
+              doctorDetailsClass!.data!.aboutus == null
                   ? Container()
                   : Divider(
                       height: 35.0,

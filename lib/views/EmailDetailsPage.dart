@@ -35,10 +35,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
 class EmailDetailsPage extends StatefulWidget {
-  const EmailDetailsPage({super.key});
+  //const EmailDetailsPage({super.key});
 
   @override
   State<EmailDetailsPage> createState() => _EmailDetailsPageState();
+  late final String email;
+  EmailDetailsPage(this.email);
 }
 
 class _EmailDetailsPageState extends State<EmailDetailsPage> {
@@ -77,71 +79,73 @@ class _EmailDetailsPageState extends State<EmailDetailsPage> {
           Container(
             height: 70,
             color: Colors.white,
-            child: Stack(
-              children: [
-                Positioned(
-                  left: 10, // Adjust the position of the button as needed
-                  top: 20, // Adjust the position of the button as needed
-                  child: InkWell(
-                      //onTap: _changeColor,
-                      // Add your logic for the selection button onTap event here
+            child: Stack(children: [
+              Positioned(
+                left: 10, // Adjust the position of the button as needed
+                top: 20, // Adjust the position of the button as needed
+                child: InkWell(
+                    //onTap: _changeColor,
+                    // Add your logic for the selection button onTap event here
 
-                      // child: Container(
-                      //   width: 30,
-                      //   height: 30,
-                      //   decoration: BoxDecoration(
-                      //     //color: _boxColor, // Color of the button
-                      //     color: Colors.green,
-                      //     shape: BoxShape.circle,
-                      //     border: Border.all(
-                      //       color: Colors.black, // Color of the border
-                      //       width: 1.0, // Width of the border
-                      //     ), // Circular shape
-                      //   ),
-                      //   child: Icon(
-                      //     Icons.check,
-                      //     //color: _isSelected ? Colors.green : Colors.white,
-                      //     color: Colors.white, // Color of the icon
-                      //     size: 25.0, // Size of the icon
-                      //   ),
-                      // ),
-                      ),
-                ),
-                Container(
-                  color: LIGHT_GREY_SCREEN_BACKGROUND,
-                  height: 70,
-                  child: Row(children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 15),
-                        child: Text(
-                          "Your email address will be used to send you booking confirmations. It won't be displayed on your profile.",
-                          textAlign: TextAlign.start,
-                          style: GoogleFonts.robotoCondensed(
-                            fontSize: 15.0,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ),
-                    // Align(
-                    //   alignment: Alignment.centerRight,
-                    //   child: IconButton(
-                    //     onPressed: () {
-                    //       // Add your logic for the onPressed event here
-                    //       // Typically, this would involve navigating to the next screen or performing some action
-                    //     },
-                    //     //alignment: Alignment.centerRight,
-                    //     icon: Icon(Icons.arrow_forward_ios_sharp),
-                    //     color: Colors.black, // Color of the icon
-                    //     iconSize: 24.0, // Size of the icon
+                    // child: Container(
+                    //   width: 30,
+                    //   height: 30,
+                    //   decoration: BoxDecoration(
+                    //     //color: _boxColor, // Color of the button
+                    //     color: Colors.green,
+                    //     shape: BoxShape.circle,
+                    //     border: Border.all(
+                    //       color: Colors.black, // Color of the border
+                    //       width: 1.0, // Width of the border
+                    //     ), // Circular shape
+                    //   ),
+                    //   child: Icon(
+                    //     Icons.check,
+                    //     //color: _isSelected ? Colors.green : Colors.white,
+                    //     color: Colors.white, // Color of the icon
+                    //     size: 25.0, // Size of the icon
                     //   ),
                     // ),
-                  ]),
+                    ),
+              ),
+              Container(
+                padding: EdgeInsets.all(16),
+                alignment: Alignment.topLeft,
+                child: Text(
+                  EMAIL_PAGE,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w200,
+                  ),
                 ),
-              ],
-            ),
+                //child: Padding(
+                //padding: const EdgeInsets.only(left: 15),
+                // child: Text(
+                //   "Your email address will be used to send you booking confirmations. It won't be displayed on your profile.",
+                //   textAlign: TextAlign.center,
+                //   style: GoogleFonts.robotoCondensed(
+                //     fontSize: 15.0,
+                //     color: Colors.black,
+                //     fontWeight: FontWeight.w500,
+                //   ),
+                // ),
+              ),
+              //),
+              // Align(
+              //   alignment: Alignment.centerRight,
+              //   child: IconButton(
+              //     onPressed: () {
+              //       // Add your logic for the onPressed event here
+              //       // Typically, this would involve navigating to the next screen or performing some action
+              //     },
+              //     //alignment: Alignment.centerRight,
+              //     icon: Icon(Icons.arrow_forward_ios_sharp),
+              //     color: Colors.black, // Color of the icon
+              //     iconSize: 24.0, // Size of the icon
+              //   ),
+              // ),
+            ]),
           ),
           Divider(
             height: 2,
@@ -153,26 +157,26 @@ class _EmailDetailsPageState extends State<EmailDetailsPage> {
             child: Row(
               children: [
                 Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 190.0),
-                    child: TextField(
-                      textAlign: TextAlign.start,
-                      controller: TextEditingController(),
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                      ), // Use a TextEditingController
-                      decoration: InputDecoration(
-                        hintText: 'Your email',
-                        border: OutlineInputBorder(),
-                        hintStyle: TextStyle(
-                            color:
-                                Colors.grey), // Border around the input field
-                      ),
+                  //child:
+                  //Padding(
+                  //padding: const EdgeInsets.only(right: 190.0),
+                  child: TextField(
+                    textAlign: TextAlign.center,
+                    controller: TextEditingController(),
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                    ), // Use a TextEditingController
+                    decoration: InputDecoration(
+                      hintText: 'Your email',
+                      border: OutlineInputBorder(),
+                      hintStyle: TextStyle(
+                          color: Colors.grey), // Border around the input field
                     ),
                   ),
                 ),
+                //),
               ],
             ),
           ),

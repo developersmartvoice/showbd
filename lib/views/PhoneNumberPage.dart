@@ -35,7 +35,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
 class PhoneNumberPage extends StatefulWidget {
-  const PhoneNumberPage({super.key});
+  const PhoneNumberPage(String phone, {super.key});
 
   @override
   State<PhoneNumberPage> createState() => _PhoneNumberPageState();
@@ -109,14 +109,14 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
                 ),
                 Container(
                   color: LIGHT_GREY_SCREEN_BACKGROUND,
-                  height: 120,
+                  height: 180,
                   child: Row(children: [
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 15),
+                        padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
                         child: Text(
                           "Your phone number will be used to send you booking confirmations. It won't be displayed on your profile. Be sure to use a cell number you can easily be reached at!",
-                          textAlign: TextAlign.start,
+                          textAlign: TextAlign.center,
                           style: GoogleFonts.robotoCondensed(
                             fontSize: 15.0,
                             color: Colors.black,
@@ -153,26 +153,25 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
             child: Row(
               children: [
                 Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 190.0),
-                    child: TextField(
-                      textAlign: TextAlign.start,
-                      controller: TextEditingController(),
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                      ), // Use a TextEditingController
-                      decoration: InputDecoration(
-                        hintText: 'Your phone number',
-                        border: OutlineInputBorder(),
-                        hintStyle: TextStyle(
-                            color:
-                                Colors.grey), // Border around the input field
-                      ),
+                  //child: Padding(
+                  //padding: const EdgeInsets.only(right: 190.0),
+                  child: TextField(
+                    textAlign: TextAlign.center,
+                    controller: TextEditingController(),
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                    ), // Use a TextEditingController
+                    decoration: InputDecoration(
+                      hintText: 'Your phone number',
+                      border: OutlineInputBorder(),
+                      hintStyle: TextStyle(
+                          color: Colors.grey), // Border around the input field
                     ),
                   ),
                 ),
+                //),
               ],
             ),
           ),

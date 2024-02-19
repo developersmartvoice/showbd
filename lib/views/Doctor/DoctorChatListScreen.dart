@@ -599,14 +599,15 @@ class _ChatListScreenState extends State<ChatListScreen> {
               ),
               Title(
                 color: BLACK,
-                child: Text(
-                  INBOX,
-                  style: GoogleFonts.poppins(
-                    fontSize: 25,
-                    fontWeight: FontWeight.w700,
-                    color: WHITE,
-                  ),
-                ),
+                child: Text(INBOX,
+                    // style: GoogleFonts.poppins(
+                    //   fontSize: 25,
+                    //   fontWeight: FontWeight.w700,
+                    //   color: WHITE,
+                    // ),
+                    style: Theme.of(context).textTheme.headline5!.apply(
+                        color: Theme.of(context).backgroundColor,
+                        fontWeightDelta: 5)),
               ),
             ],
           ),

@@ -14,6 +14,7 @@ const String ALL_APPOINTMENTS = "All Bookings";
 const String DOCTOR_DETAILS = "Guide detail";
 const String SEE_ALL_REVIEW = "See all reviews";
 const String PHONE_NUMBER = "Phone number";
+const String PHONE = "Phone";
 const String ABOUT_US = "'About me'";
 const String ADDRESS = "Address";
 const String WORKING_TIME = "Working time";
@@ -116,7 +117,15 @@ const String TWITTER = "Twitter Url";
 const String SELECT_DEPARTMENT = "Select department";
 
 //Morescreen
-const String ABOUT = "About";
+const String NAME_PAGE = "Use your real first name";
+const String ABOUT = "About Me";
+const String LOCATION = "Location";
+const String EMAIL_PAGE =
+    "Your email address will be used to send you booking confirmations. It won't be displayed on your profile.";
+const String ABOUT_ME_COL1 =
+    "Let others know what you do in life and how you spending your free time.";
+const String ABOUT_ME_COL2 =
+    "Important: We love all languages, but kindly ask to fill out this section in English. Please avoid writing brands, company names and links to other sites in your description.";
 const String SPECIALIST = "Specialist";
 const String TERM_AND_CONDITIONS = "Term & Conditions";
 const String HELP_CENTER = "Help Center";
@@ -278,7 +287,7 @@ String Dummy1 = 'Lorem ipsum simply dummy text';
 String Dummy2 = 'Long established fact';
 String CHOOSE_BTN = 'Choose plan >';
 String UPLOAD_RECIPES = 'Upload Recipes';
-const String MORE_INFO = "More Info";
+const String MORE_INFO = "Account Information";
 // String UPLOAD_RECIPES_DES = 'Upload Payment Recipe';
 String RECIPES_UPLOADING = 'Recipes Uploading...';
 String SOMETHING_WRONG = 'Something Wrong';
