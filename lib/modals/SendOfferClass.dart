@@ -77,29 +77,13 @@
 //   }
 // }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 class SendOfferClass {
   int? status;
   String? msg;
   List<NotifiedGuides>? notifiedGuides;
+  int? tripCount;
 
-  SendOfferClass({this.status, this.msg, this.notifiedGuides});
+  SendOfferClass({this.status, this.msg, this.notifiedGuides, this.tripCount});
 
   SendOfferClass.fromJson(Map<String, dynamic> json) {
     status = json['status'];
@@ -110,6 +94,7 @@ class SendOfferClass {
         notifiedGuides!.add(NotifiedGuides.fromJson(v));
       });
     }
+    tripCount = json['trip_count'];
   }
 
   Map<String, dynamic> toJson() {
@@ -119,12 +104,14 @@ class SendOfferClass {
     if (notifiedGuides != null) {
       data['notified_guides'] = notifiedGuides!.map((e) => e.toJson()).toList();
     }
+    data['trip_count'] = tripCount;
     return data;
   }
 }
 
 class NotifiedGuides {
   final String? imageURL;
+  final String? name;
   final String? destination;
   final String? start_date;
   final String? end_date;
@@ -136,6 +123,7 @@ class NotifiedGuides {
 
   NotifiedGuides({
     this.imageURL,
+    this.name,
     this.destination,
     this.start_date,
     this.end_date,
@@ -148,7 +136,8 @@ class NotifiedGuides {
 
   factory NotifiedGuides.fromJson(Map<String, dynamic> json) {
     return NotifiedGuides(
-      imageURL: json['imageURL'],
+      imageURL: json['image'],
+      name: json['name'],
       destination: json['destination'],
       id: json['id'] != null ? int.tryParse(json['id'].toString()) : null,
       guide_id: json['guide_id'] != null
@@ -165,6 +154,7 @@ class NotifiedGuides {
   Map<String, dynamic> toJson() {
     return {
       'imageURL': imageURL,
+      'name': name,
       'destination': destination,
       'start_date': start_date,
       'end_date': end_date,

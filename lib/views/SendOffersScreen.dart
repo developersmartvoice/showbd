@@ -28,36 +28,39 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SendOffersScreen extends StatefulWidget {
-  const SendOffersScreen({Key? key}) : super(key: key);
+  // const SendOffersScreen({Key? key}) : super(key: key);
+  final List<NotifiedGuides>? notifyGuides;
 
+  SendOffersScreen({this.notifyGuides});
   @override
   State<SendOffersScreen> createState() => _SendOffersScreenState();
 }
 
 class _SendOffersScreenState extends State<SendOffersScreen> {
-  late Future<SendOfferClass> futureSendOffer;
-
   @override
   void initState() {
     super.initState();
-    futureSendOffer = fetchSendOffer();
+    // futureSendOffer = fetchSendOffer();
+    setState(() {
+      print(widget.notifyGuides);
+    });
   }
 
-  Future<SendOfferClass> fetchSendOffer() async {
-    final response = await http.get(
-      Uri.parse(
-          'https://localguide.celibritychatbd.com/api/notifyGuidesAboutTrip?id=72'),
-      // 'http://127.0.0.1:8000/api/notifyGuidesAboutTrip?id=72'),
-    );
+  // Future<SendOfferClass> fetchSendOffer() async {
+  //   final response = await http.get(
+  //     Uri.parse(
+  //         'https://localguide.celibritychatbd.com/api/notifyGuidesAboutTrip?id=72'),
+  //     // 'http://127.0.0.1:8000/api/notifyGuidesAboutTrip?id=72'),
+  //   );
 
-    print(response.body); // Add this line to print response body
+  //   print(response.body); // Add this line to print response body
 
-    if (response.statusCode == 200) {
-      return SendOfferClass.fromJson(jsonDecode(response.body));
-    } else {
-      throw Exception('Failed to load send offer');
-    }
-  }
+  //   if (response.statusCode == 200) {
+  //     return SendOfferClass.fromJson(jsonDecode(response.body));
+  //   } else {
+  //     throw Exception('Failed to load send offer');
+  //   }
+  // }
 
   // @override
   // Widget build(BuildContext context) {
@@ -112,146 +115,172 @@ class _SendOffersScreenState extends State<SendOffersScreen> {
   //   );
   // }
 
+  // @override
+  // Widget build(BuildContext context) {
+  //   return SafeArea(
+  //     child: Scaffold(
+  //         appBar: AppBar(
+  //           backgroundColor: Color.fromARGB(255, 255, 94, 0).withOpacity(0.8),
+  //           title: Text(
+  //             'Send Offers',
+  //             style: Theme.of(context).textTheme.headline5!.apply(
+  //                 color: Theme.of(context).backgroundColor, fontWeightDelta: 5),
+  //           ),
+  //           centerTitle: true,
+  //         ),
+  //         body: Container(
+  //           child: ListView.builder(
+  //             itemCount: widget.notifyGuides!.length,
+  //             itemBuilder: (context, index) {},
+  //           ),
+  //         )),
+  //   );
+  // }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Send Offers',
-          style: GoogleFonts.robotoCondensed(
-            fontSize: 25,
-            fontWeight: FontWeight.bold,
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Color.fromARGB(255, 255, 94, 0).withOpacity(0.8),
+          title: Text(
+            'Send Offers',
+            style: Theme.of(context).textTheme.headline5!.apply(
+                color: Theme.of(context).backgroundColor, fontWeightDelta: 5),
           ),
+          centerTitle: true,
         ),
-        centerTitle: true,
-      ),
-      body: Center(
-        child: FutureBuilder<SendOfferClass>(
-          future: futureSendOffer,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator();
-            } else if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
-            } else if (snapshot.hasData) {
-              final sendOffers = snapshot.data!.notifiedGuides;
-              // final status = snapshot.data!.status;
-              // final message = snapshot.data!.msg;
-              return Column(
-                children: [
-                  // Text('Status: $status'),
-                  // Text('Message: $message'),
-                  Text('Total Trips: ${sendOffers!.length}'),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: sendOffers
-                            .map((offer) => buildSendOfferCard(offer))
-                            .toList(),
-                      ),
-                    ),
+        body: Container(
+          child: ListView.builder(
+            itemCount: widget.notifyGuides!.length,
+            itemBuilder: (context, index) {
+              NotifiedGuides guide = widget.notifyGuides![index];
+              return Card(
+                elevation: 3,
+                margin: EdgeInsets.all(8),
+                child: ListTile(
+                  leading: guide.imageURL != null
+                      ? CachedNetworkImage(
+                          imageUrl: guide.imageURL!,
+                          placeholder: (context, url) =>
+                              CircularProgressIndicator(),
+                          errorWidget: (context, url, error) =>
+                              Icon(Icons.error),
+                        )
+                      : Placeholder(), // Placeholder if no image available
+                  title: Text(guide.name ?? '',
+                      style: TextStyle(color: Colors.black)),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Destination: ${guide.destination ?? ''}'),
+                      Text('Start Date: ${guide.start_date ?? ''}'),
+                      Text('End Date: ${guide.end_date ?? ''}'),
+                      Text('People Quantity: ${guide.people_quantity ?? ''}'),
+                    ],
                   ),
-                ],
+                  // You can add more fields from NotifiedGuides here as needed
+                  onTap: () {
+                    // Add onTap functionality if needed
+                  },
+                ),
               );
-            } else {
-              return Text('No data available');
-            }
-          },
+            },
+          ),
         ),
       ),
     );
   }
 
-  Widget buildSendOfferCard(NotifiedGuides offer) {
-    return Column(
-      children: [
-        SizedBox(height: 20),
-        CircleAvatar(
-          radius: 80,
-          // backgroundImage: NetworkImage(offer.imageURL ?? ''),
-          backgroundImage: NetworkImage(''),
-        ),
-        // SizedBox(height: 20),
-        // Text(
-        //   offer.name ?? 'Destination not available',
-        //   style: TextStyle(
-        //     fontWeight: FontWeight.bold,
-        //     fontSize: 18,
-        //   ),
-        // ),
-        SizedBox(height: 10),
-        Text(
-          offer.destination ?? 'Destination not available',
-          style: TextStyle(fontSize: 15),
-        ),
-        SizedBox(height: 20),
-        Text(
-          'Looking for a local between',
-          style: TextStyle(fontSize: 16),
-        ),
-        SizedBox(height: 10),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.calendar_today, color: Colors.blue),
-            SizedBox(width: 5),
-            Text(
-              '${offer.start_date ?? ''} - ${offer.end_date ?? ''}',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-            ),
-          ],
-        ),
-        SizedBox(height: 20),
-        ElevatedButton(
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => SendOfferScreen(),
-              ),
-            );
-            // Handle button press
-          },
-          child: Text('SEND OFFER'),
-          style: ElevatedButton.styleFrom(
-            textStyle: GoogleFonts.poppins(
-              fontSize: 19.0,
-              fontWeight: FontWeight.w500,
-              color: Colors.blue,
-            ),
-            backgroundColor: Colors.blue,
-            foregroundColor: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-              side: BorderSide(
-                color: Colors.blue,
-              ), // Set border radius
-            ),
-            padding: EdgeInsets.fromLTRB(
-                135.0, 13, 135.0, 13), // Customize horizontal padding
-            elevation: 5.0, // Set elevation
-            shadowColor: Colors.grey,
-          ),
-        ),
-      ],
-    );
-  }
+  // Widget buildSendOfferCard() {
+  //   return Column(
+  //     children: [
+  //       SizedBox(height: 20),
+  //       CircleAvatar(
+  //         radius: 80,
+  //         // backgroundImage: NetworkImage(offer.imageURL ?? ''),
+  //         backgroundImage: NetworkImage(''),
+  //       ),
+  //       // SizedBox(height: 20),
+  //       // Text(
+  //       //   offer.name ?? 'Destination not available',
+  //       //   style: TextStyle(
+  //       //     fontWeight: FontWeight.bold,
+  //       //     fontSize: 18,
+  //       //   ),
+  //       // ),
+  //       SizedBox(height: 10),
+  //       Text(
+  //         offer.destination ?? 'Destination not available',
+  //         style: TextStyle(fontSize: 15),
+  //       ),
+  //       SizedBox(height: 20),
+  //       Text(
+  //         'Looking for a local between',
+  //         style: TextStyle(fontSize: 16),
+  //       ),
+  //       SizedBox(height: 10),
+  //       Row(
+  //         mainAxisAlignment: MainAxisAlignment.center,
+  //         children: [
+  //           Icon(Icons.calendar_today, color: Colors.blue),
+  //           SizedBox(width: 5),
+  //           Text(
+  //             '${offer.start_date ?? ''} - ${offer.end_date ?? ''}',
+  //             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+  //           ),
+  //         ],
+  //       ),
+  //       SizedBox(height: 20),
+  //       ElevatedButton(
+  //         onPressed: () {
+  //           Navigator.of(context).push(
+  //             MaterialPageRoute(
+  //               builder: (context) => SendOfferScreen(),
+  //             ),
+  //           );
+  //           // Handle button press
+  //         },
+  //         child: Text('SEND OFFER'),
+  //         style: ElevatedButton.styleFrom(
+  //           textStyle: GoogleFonts.poppins(
+  //             fontSize: 19.0,
+  //             fontWeight: FontWeight.w500,
+  //             color: Colors.blue,
+  //           ),
+  //           backgroundColor: Colors.blue,
+  //           foregroundColor: Colors.white,
+  //           shape: RoundedRectangleBorder(
+  //             borderRadius: BorderRadius.circular(10.0),
+  //             side: BorderSide(
+  //               color: Colors.blue,
+  //             ), // Set border radius
+  //           ),
+  //           padding: EdgeInsets.fromLTRB(
+  //               135.0, 13, 135.0, 13), // Customize horizontal padding
+  //           elevation: 5.0, // Set elevation
+  //           shadowColor: Colors.grey,
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 }
 
-class SendOfferClass {
-  final List<NotifiedGuides> notifiedGuides;
+// class SendOfferClass {
+//   final List<NotifiedGuides> notifiedGuides;
 
-  SendOfferClass({required this.notifiedGuides});
+//   SendOfferClass({required this.notifiedGuides});
 
-  factory SendOfferClass.fromJson(Map<String, dynamic> json) {
-    final List<dynamic> notifiedGuides = json['notified_guides'] ?? [];
-    return SendOfferClass(
-      notifiedGuides: notifiedGuides
-          .map((guide) => NotifiedGuides.fromJson(guide))
-          .toList(),
-    );
-  }
-}
+//   factory SendOfferClass.fromJson(Map<String, dynamic> json) {
+//     final List<dynamic> notifiedGuides = json['notified_guides'] ?? [];
+//     return SendOfferClass(
+//       notifiedGuides: notifiedGuides
+//           .map((guide) => NotifiedGuides.fromJson(guide))
+//           .toList(),
+//     );
+//   }
+// }
 
 
 
