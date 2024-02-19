@@ -151,35 +151,51 @@ class _EmailDetailsPageState extends State<EmailDetailsPage> {
             height: 2,
             color: Colors.grey,
           ),
+
           Container(
-            color: Colors.white,
-            height: 50,
-            child: Row(
-              children: [
-                Expanded(
-                  //child:
-                  //Padding(
-                  //padding: const EdgeInsets.only(right: 190.0),
-                  child: TextField(
-                    textAlign: TextAlign.center,
-                    controller: TextEditingController(),
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                    ), // Use a TextEditingController
-                    decoration: InputDecoration(
-                      hintText: 'Your email',
-                      border: OutlineInputBorder(),
-                      hintStyle: TextStyle(
-                          color: Colors.grey), // Border around the input field
-                    ),
-                  ),
-                ),
-                //),
-              ],
+            child: TextField(
+              controller: TextEditingController(),
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 16,
+                fontWeight: FontWeight.w200,
+              ),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  //hintText: "More About You",
+                  hintText: widget.email,
+                  hintStyle: TextStyle(color: Colors.grey)),
             ),
           ),
+          // Container(
+          //   color: Colors.white,
+          //   height: 50,
+          //   child: Row(
+          //     children: [
+          //       Expanded(
+          //         //child:
+          //         //Padding(
+          //         //padding: const EdgeInsets.only(right: 190.0),
+          //         child: TextField(
+          //           textAlign: TextAlign.start,
+          //           controller: TextEditingController(),
+          //           style: TextStyle(
+          //             color: Colors.black,
+          //             fontSize: 18,
+          //             fontWeight: FontWeight.w500,
+          //           ), // Use a TextEditingController
+          //           decoration: InputDecoration(
+          //             hintText: 'Your email',
+          //             border: OutlineInputBorder(),
+          //             hintStyle: TextStyle(
+          //                 color: Colors.grey), // Border around the input field
+          //           ),
+          //         ),
+          //       ),
+          //       //),
+          //     ],
+          //   ),
+          // ),
           Divider(
             height: 2,
             color: Colors.grey,

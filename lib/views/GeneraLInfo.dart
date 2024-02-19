@@ -473,7 +473,7 @@ class _ContainerPageState extends State<ContainerPage> {
                 child: Stack(
                   children: [
                     Positioned(
-                      left: 10, // Adjust the position of the button as needed
+                      left: 15, // Adjust the position of the button as needed
                       top: 20, // Adjust the position of the button as needed
                       child: InkWell(
                         //onTap: _changeColor,
@@ -503,7 +503,7 @@ class _ContainerPageState extends State<ContainerPage> {
                     Row(children: [
                       Expanded(
                         child: Padding(
-                          padding: const EdgeInsets.only(right: 180.0),
+                          padding: const EdgeInsets.only(right: 195.0),
                           child: Text(
                             'Photos',
                             textAlign: TextAlign.center,
