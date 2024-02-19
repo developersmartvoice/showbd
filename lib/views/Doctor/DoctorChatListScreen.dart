@@ -34,11 +34,23 @@ class _ChatListScreenState extends State<ChatListScreen> {
       print('myUid ---> ${myUid}');
 
       getChatListData();
+      getSendOfferData();
     });
   }
 
   List<ChatListDetails> chatListDetails = [];
   List<ChatListDetails> chatListDetailsPA = [];
+
+  getSendOfferData() {
+    FirebaseDatabase.instance
+        .ref()
+        .child(myUid!)
+        .child('sendOffers')
+        .onValue
+        .listen((event) {
+      print('print send offer value :- ${event.snapshot.value}');
+    });
+  }
 
   getChatListData() {
     ds = FirebaseDatabase.instance.ref().child(myUid!).onValue.listen((event) {
