@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:appcode3/modals/SendOfferClass.dart';
+import 'package:appcode3/views/DetailsPage.dart';
 import 'package:appcode3/views/Doctor/DoctorProfile.dart';
 import 'package:connectycube_sdk/connectycube_chat.dart';
 
@@ -42,6 +43,7 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
 
   //bool datePickedStart = false;
   //bool datePickedEnd = false;
+  String? id;
   String? name;
   String? image;
   String? destination;
@@ -54,6 +56,8 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
     super.initState();
     setState(() {
       print(widget.notifyGuide.name);
+      id = widget.notifyGuide.guide_id.toString();
+      print(id);
       name = widget.notifyGuide.name;
       image = widget.notifyGuide.imageURL;
       destination = widget.notifyGuide.destination;
@@ -160,7 +164,7 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
                 style: GoogleFonts.robotoCondensed(
                   fontSize: 23,
                   fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 165, 210, 247), // Text color
+                  color: Colors.black, // Text color
                 ),
               ),
             ),
@@ -219,7 +223,7 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
                         onPressed: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => DoctorProfile(),
+                              builder: (context) => DetailsPage(id!),
                             ),
                           );
                         },

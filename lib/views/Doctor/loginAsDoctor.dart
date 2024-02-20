@@ -41,18 +41,23 @@ class _LoginAsDoctorState extends State<LoginAsDoctor> {
         setState(() {
           print("1-> token retrieved");
           token = tokenLocal!;
+          print("Is token created?: $token");
         });
       }
     });
   }
 
   storeToken() async {
+    setState(() {
+      print("Stored token is called this mean no token fetched!");
+    });
     dialog();
     await FirebaseMessaging.instance.getToken().then((value) async {
       //Toast.show(value, context, duration: 2);
-      print(value);
+      print("This is value from FirebaseMessaging instance!: $value");
       setState(() {
         token = value!;
+        print("Seeing the token which is same as value: $token");
       });
 
       final response =
@@ -98,6 +103,9 @@ class _LoginAsDoctorState extends State<LoginAsDoctor> {
   }
 
   loginInto() async {
+    setState(() {
+      print("LoginInto is called that means no need to store any token!");
+    });
     if (EmailValidator.validate(emailAddress) == false) {
       setState(() {
         isPhoneNumberError = true;
@@ -252,6 +260,7 @@ class _LoginAsDoctorState extends State<LoginAsDoctor> {
     SharedPreferences.getInstance().then((pref) {
       setState(() {
         isTokenPresent = pref.getBool("isTokenExist") ?? false;
+        print("See what this printing true or false? $isTokenPresent");
       });
     });
   }
