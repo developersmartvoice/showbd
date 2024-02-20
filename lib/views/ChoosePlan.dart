@@ -180,16 +180,14 @@ class _ChoosePlanState extends State<ChoosePlan> {
                         });
                       },
                       style: ElevatedButton.styleFrom(
-                        textStyle: GoogleFonts.robotoCondensed(
+                        foregroundColor: isLimitedSelected
+                            ? Colors.white
+                            : Colors.black, textStyle: GoogleFonts.robotoCondensed(
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
-                        ),
-                        primary: isLimitedSelected
+                        ), backgroundColor: isLimitedSelected
                             ? Color.fromARGB(255, 243, 103, 9)
-                            : Colors.white, // Background color
-                        onPrimary: isLimitedSelected
-                            ? Colors.white
-                            : Colors.black, // Text color
+                            : Colors.white, // Text color
                         // elevation: 5, // Elevation
                         shape: RoundedRectangleBorder(
                           borderRadius:
@@ -208,17 +206,15 @@ class _ChoosePlanState extends State<ChoosePlan> {
                         });
                       },
                       style: ElevatedButton.styleFrom(
-                        textStyle: GoogleFonts.robotoCondensed(
+                        foregroundColor: isLimitedSelected
+                            ? Colors.black
+                            : Colors.white, textStyle: GoogleFonts.robotoCondensed(
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
-                        ),
-                        primary: isLimitedSelected
+                        ), backgroundColor: isLimitedSelected
                             ? Colors.white
                             : const Color.fromARGB(
-                                255, 243, 103, 9), // Background color
-                        onPrimary: isLimitedSelected
-                            ? Colors.black
-                            : Colors.white, // Text color
+                                255, 243, 103, 9), // Text color
                         // elevation: 5, // Elevation
                         shape: RoundedRectangleBorder(
                           borderRadius:

@@ -155,38 +155,78 @@ class _SendOffersScreenState extends State<SendOffersScreen> {
             itemCount: widget.notifyGuides!.length,
             itemBuilder: (context, index) {
               NotifiedGuides guide = widget.notifyGuides![index];
-              return Card(
-                elevation: 3,
-                margin: EdgeInsets.all(8),
-                child: ListTile(
-                  leading: guide.imageURL != null
-                      ? CachedNetworkImage(
-                          imageUrl: guide.imageURL!,
-                          placeholder: (context, url) =>
-                              CircularProgressIndicator(),
-                          errorWidget: (context, url, error) =>
-                              Icon(Icons.error),
-                        )
-                      : Placeholder(), // Placeholder if no image available
-                  title: Text(guide.name ?? '',
-                      style: TextStyle(color: Colors.black)),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Destination: ${guide.destination ?? ''}'),
-                      Text('Start Date: ${guide.start_date ?? ''}'),
-                      Text('End Date: ${guide.end_date ?? ''}'),
-                      Text('People Quantity: ${guide.people_quantity ?? ''}'),
-                    ],
+              return SizedBox(
+                height: 400,
+                child: Card(
+                  elevation: 3,
+                  margin: EdgeInsets.all(8),
+                  child: Center(
+                    child: ListTile(
+                      leading: Container(
+                        width: 80,
+                        height: 80,
+                        alignment: Alignment.center,
+                        child:
+                        Column(
+  crossAxisAlignment: CrossAxisAlignment.center,
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: [
+                        guide.imageURL != null
+                          ? CachedNetworkImage(
+                              imageUrl: guide.imageURL!,
+                              placeholder: (context, url) =>
+                                  CircularProgressIndicator(),
+                              errorWidget: (context, url, error) =>
+                                  Icon(Icons.error),
+                                  imageBuilder: (context, imageProvider) => Container(
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                        color: Colors.white, // Customize border color
+                                        width: 2.0, // Customize border width
+                                      ),
+                                      image: DecorationImage(
+                                        image: imageProvider,
+                                        fit: BoxFit.cover,
+                                        alignment: Alignment.center,
+                                      ),
+                                    ),
+                      ),
+                            )
+                          : Placeholder(), 
+                        // Placeholder if no image available
+                      Container(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(guide.name ?? '',
+                                style: TextStyle(color: Colors.black)),
+                          //],
+                        // ),
+                        // subtitle: Column(
+                        //   crossAxisAlignment: CrossAxisAlignment.center,
+                        //   children: [
+                            Text('Destination: ${guide.destination ?? ''}'),
+                            Text('Start Date: ${guide.start_date ?? ''}'),
+                            Text('End Date: ${guide.end_date ?? ''}'),
+                            Text('People Quantity: ${guide.people_quantity ?? ''}'),
+                        ],
+                        ),
+                      ),
+  ],
+  ),
+  ),
+                      // You can add more fields from NotifiedGuides here as needed
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: ((context) => SendOfferScreen(
+                                    notifyGuide: widget.notifyGuides![index]))));
+                      },
+                    ),
                   ),
-                  // You can add more fields from NotifiedGuides here as needed
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: ((context) => SendOfferScreen(
-                                notifyGuide: widget.notifyGuides![index]))));
-                  },
                 ),
               );
             },

@@ -177,12 +177,12 @@ class _ChatListScreenState extends State<ChatListScreen> {
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  // Navigator.push(
-                                  //   context,
-                                  //   MaterialPageRoute(
-                                  //       builder: (context) => SendOffersScreen(
-                                  //           _sendOfferClass!.notifiedGuides!)),
-                                  // );
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => SendOffersScreen(
+                                            notifyGuides: _sendOfferClass!.notifiedGuides!)),
+                                  );
                                 },
                                 child: Card(
                                   child: Row(
@@ -269,8 +269,10 @@ class _ChatListScreenState extends State<ChatListScreen> {
                                                       builder: (context) =>
                                                           SendOffersScreen(
                                                               notifyGuides:
-                                                                  notifyGds)),
-                                                )
+                                                                  notifyGds)
+                                                          ),
+            
+                                              )
                                               : showDialog(
                                                   context: context,
                                                   builder:
