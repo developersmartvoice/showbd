@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:appcode3/modals/SendOfferClass.dart';
+import 'package:appcode3/views/DetailsPage.dart';
 import 'package:appcode3/views/Doctor/DoctorProfile.dart';
 import 'package:connectycube_sdk/connectycube_chat.dart';
 
@@ -48,6 +49,7 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
 
   //bool datePickedStart = false;
   //bool datePickedEnd = false;
+  String? id;
   String? name;
   String? image;
   String? destination;
@@ -60,6 +62,8 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
     super.initState();
     setState(() {
       print(widget.notifyGuide.name);
+      id = widget.notifyGuide.guide_id.toString();
+      print(id);
       name = widget.notifyGuide.name;
       image = widget.notifyGuide.imageURL;
       destination = widget.notifyGuide.destination;
@@ -279,7 +283,7 @@ void _showOptions2(BuildContext context) {
                 style: GoogleFonts.robotoCondensed(
                   fontSize: 23,
                   fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 165, 210, 247), // Text color
+                  color: Colors.black, // Text color
                 ),
               ),
             ),
@@ -287,6 +291,7 @@ void _showOptions2(BuildContext context) {
         ),
         body:
             //padding: const EdgeInsets.all(16.0),
+<<<<<<< HEAD
             SingleChildScrollView(
               child: Container(
                         color: Colors.white,
@@ -312,6 +317,70 @@ void _showOptions2(BuildContext context) {
                           radius: 35,
                           backgroundImage: CachedNetworkImageProvider(
                               image!) // Replace with your image asset
+=======
+            Container(
+          color: Colors.white,
+          child: Card(
+            child: Column(
+              children: [
+                // Thumbnail
+                // Container(
+                //   height: 10,
+                //   decoration: BoxDecoration(
+                //     image: DecorationImage(
+                //       image: AssetImage(
+                //           'assets/splash_bg.png'), // Replace with your image asset
+                //       fit: BoxFit.cover,
+                //     ),
+                //   ),
+                // ),
+                // Round image, name, and address
+                Container(
+                  //padding: EdgeInsets.only(left: 10),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                        radius: 35,
+                        backgroundImage: CachedNetworkImageProvider(
+                            image!) // Replace with your image asset
+                        ),
+                    title: Text(
+                      name!,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    subtitle: Text(
+                      destination!,
+                      style: TextStyle(
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                ),
+
+                Container(
+                  padding: EdgeInsets.fromLTRB(5, 0, 10, 0),
+                  child: Align(
+                    alignment: Alignment(-0.5, -0.7),
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(35, 0, 10, 0),
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => DetailsPage(id!),
+                            ),
+                          );
+                        },
+                        // Add button functionality here
+                        style: ButtonStyle(
+                          shape: MaterialStateProperty.all<OutlinedBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                  10.0), // Set border radius to 0 for a rectangle
+                            ),
+>>>>>>> 6fcff1b1cd40347f535555856e0b8dc9c9c264c2
                           ),
                       title: Text(
                         name!,

@@ -91,69 +91,71 @@ class _SearchedScreenState extends State<SearchedScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
-      body: Stack(
-        children: [
-          isErrorInLoading
-              ? Container(
-                  child: Center(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.search_off_rounded,
-                          size: 100,
-                          color: LIGHT_GREY_TEXT,
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Text(
-                          UNABLE_TO_LOAD_DATA_FORM_SERVER,
-                        )
-                      ],
-                    ),
-                  ),
-                )
-              : SingleChildScrollView(
-                  controller: _scrollController,
-                  child: isLoading
-                      ? Center(
-                          child: CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation(
-                                Theme.of(context).hintColor),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
+        body: Stack(
+          children: [
+            isErrorInLoading
+                ? Container(
+                    child: Center(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.search_off_rounded,
+                            size: 100,
+                            color: LIGHT_GREY_TEXT,
                           ),
-                        )
-                      : Column(
-                          children: [
-                            header(),
-                            // upCommingAppointments(),
-                            body(),
-                            isLoadingMore
-                                ? Padding(
-                                    padding: const EdgeInsets.all(20.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        CircularProgressIndicator(
-                                          strokeWidth: 2,
-                                        ),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Text("Loading..."),
-                                      ],
-                                    ),
-                                  )
-                                : Container()
-                          ],
-                        ),
-                ),
-          header(),
-        ],
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            UNABLE_TO_LOAD_DATA_FORM_SERVER,
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+                : SingleChildScrollView(
+                    controller: _scrollController,
+                    child: isLoading
+                        ? Center(
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation(
+                                  Theme.of(context).hintColor),
+                            ),
+                          )
+                        : Column(
+                            children: [
+                              header(),
+                              // upCommingAppointments(),
+                              body(),
+                              isLoadingMore
+                                  ? Padding(
+                                      padding: const EdgeInsets.all(20.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          CircularProgressIndicator(
+                                            strokeWidth: 2,
+                                          ),
+                                          SizedBox(
+                                            width: 5,
+                                          ),
+                                          Text("Loading..."),
+                                        ],
+                                      ),
+                                    )
+                                  : Container()
+                            ],
+                          ),
+                  ),
+            header(),
+          ],
+        ),
       ),
     );
   }
@@ -293,7 +295,7 @@ class _SearchedScreenState extends State<SearchedScreen> {
       children: [
         Image.asset(
           "assets/homeScreenImages/header_bg.png",
-          height: MediaQuery.of(context).size.height * 0.16,
+          height: MediaQuery.of(context).size.height * 0.08,
           width: MediaQuery.of(context).size.width,
           fit: BoxFit.fill,
         ),

@@ -235,7 +235,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                                                       ),
                                                     ),
                                               Text(
-                                                'in Dhaka, Bangladesh',
+                                                'in your place.',
                                                 style:
                                                     GoogleFonts.robotoCondensed(
                                                   fontSize: 18,
@@ -279,7 +279,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                                                       (BuildContext context) {
                                                     return AlertDialog(
                                                       title: Text(
-                                                          'Alert Dialog Title'),
+                                                          'No person found!'),
                                                       content: Text(
                                                           'No person is looking for a local in your place!'),
                                                       actions: [
@@ -663,9 +663,9 @@ class _ChatListScreenState extends State<ChatListScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             //crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
-                width: 15,
-              ),
+              // SizedBox(
+              //   width: 15,
+              // ),
               // InkWell(
               //   onTap: () {
               //     Navigator.pop(context);
