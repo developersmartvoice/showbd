@@ -152,6 +152,7 @@ class _SendOffersScreenState extends State<SendOffersScreen> {
         ),
         body: Container(
           child: ListView.builder(
+<<<<<<< HEAD
               itemCount: widget.notifyGuides!.length,
               itemBuilder: (context, index) {
                 NotifiedGuides guide = widget.notifyGuides![index];
@@ -179,6 +180,23 @@ class _SendOffersScreenState extends State<SendOffersScreen> {
                             //alignment: Alignment.center,
                             //child:
                             Column(
+=======
+            itemCount: widget.notifyGuides!.length,
+            itemBuilder: (context, index) {
+              NotifiedGuides guide = widget.notifyGuides![index];
+              return SizedBox(
+                height: 400,
+                child: Card(
+                  elevation: 3,
+                  margin: EdgeInsets.all(8),
+                  child: Center(
+                    child: ListTile(
+                      leading: Container(
+                        width: 80,
+                        height: 80,
+                        alignment: Alignment.center,
+                        child: Column(
+>>>>>>> ba748ad5d02df6e6fa479fe71c99a341bb93a0bd
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -201,12 +219,17 @@ class _SendOffersScreenState extends State<SendOffersScreen> {
                                         image: DecorationImage(
                                           image: imageProvider,
                                           fit: BoxFit.cover,
+<<<<<<< HEAD
                                           // alignment: Alignment.center,
+=======
+                                          alignment: Alignment.center,
+>>>>>>> ba748ad5d02df6e6fa479fe71c99a341bb93a0bd
                                         ),
                                       ),
                                     ),
                                   )
                                 : Placeholder(),
+<<<<<<< HEAD
 
                             SizedBox(
                               height: 180,
@@ -353,11 +376,45 @@ class _SendOffersScreenState extends State<SendOffersScreen> {
                                     13), // Customize horizontal padding
                                 elevation: 5.0, // Set elevation
                                 shadowColor: Colors.grey,
+=======
+                            // Placeholder if no image available
+                            Container(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(guide.name ?? '',
+                                      style: TextStyle(color: Colors.black)),
+                                  //],
+                                  // ),
+                                  // subtitle: Column(
+                                  //   crossAxisAlignment: CrossAxisAlignment.center,
+                                  //   children: [
+                                  Text(
+                                      'Destination: ${guide.destination ?? ''}'),
+                                  Text('Start Date: ${guide.start_date ?? ''}'),
+                                  Text('End Date: ${guide.end_date ?? ''}'),
+                                  Text(
+                                      'People Quantity: ${guide.people_quantity ?? ''}'),
+                                ],
+>>>>>>> ba748ad5d02df6e6fa479fe71c99a341bb93a0bd
                               ),
                             ),
                           ],
                         ),
                       ),
+<<<<<<< HEAD
+=======
+                      // You can add more fields from NotifiedGuides here as needed
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: ((context) => SendOfferScreen(
+                                    notifyGuide:
+                                        widget.notifyGuides![index]))));
+                      },
+>>>>>>> ba748ad5d02df6e6fa479fe71c99a341bb93a0bd
                     ),
                   ),
                 );
