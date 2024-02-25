@@ -166,64 +166,68 @@ class _SendOffersScreenState extends State<SendOffersScreen> {
                         width: 80,
                         height: 80,
                         alignment: Alignment.center,
-                        child:
-                        Column(
-  crossAxisAlignment: CrossAxisAlignment.center,
-  mainAxisAlignment: MainAxisAlignment.center,
-  children: [
-                        guide.imageURL != null
-                          ? CachedNetworkImage(
-                              imageUrl: guide.imageURL!,
-                              placeholder: (context, url) =>
-                                  CircularProgressIndicator(),
-                              errorWidget: (context, url, error) =>
-                                  Icon(Icons.error),
-                                  imageBuilder: (context, imageProvider) => Container(
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      border: Border.all(
-                                        color: Colors.white, // Customize border color
-                                        width: 2.0, // Customize border width
-                                      ),
-                                      image: DecorationImage(
-                                        image: imageProvider,
-                                        fit: BoxFit.cover,
-                                        alignment: Alignment.center,
-                                      ),
-                                    ),
-                      ),
-                            )
-                          : Placeholder(), 
-                        // Placeholder if no image available
-                      Container(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(guide.name ?? '',
-                                style: TextStyle(color: Colors.black)),
-                          //],
-                        // ),
-                        // subtitle: Column(
-                        //   crossAxisAlignment: CrossAxisAlignment.center,
-                        //   children: [
-                            Text('Destination: ${guide.destination ?? ''}'),
-                            Text('Start Date: ${guide.start_date ?? ''}'),
-                            Text('End Date: ${guide.end_date ?? ''}'),
-                            Text('People Quantity: ${guide.people_quantity ?? ''}'),
-                        ],
+                            guide.imageURL != null
+                                ? CachedNetworkImage(
+                                    imageUrl: guide.imageURL!,
+                                    placeholder: (context, url) =>
+                                        CircularProgressIndicator(),
+                                    errorWidget: (context, url, error) =>
+                                        Icon(Icons.error),
+                                    imageBuilder: (context, imageProvider) =>
+                                        Container(
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                          color: Colors
+                                              .white, // Customize border color
+                                          width: 2.0, // Customize border width
+                                        ),
+                                        image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.cover,
+                                          alignment: Alignment.center,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                : Placeholder(),
+                            // Placeholder if no image available
+                            Container(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(guide.name ?? '',
+                                      style: TextStyle(color: Colors.black)),
+                                  //],
+                                  // ),
+                                  // subtitle: Column(
+                                  //   crossAxisAlignment: CrossAxisAlignment.center,
+                                  //   children: [
+                                  Text(
+                                      'Destination: ${guide.destination ?? ''}'),
+                                  Text('Start Date: ${guide.start_date ?? ''}'),
+                                  Text('End Date: ${guide.end_date ?? ''}'),
+                                  Text(
+                                      'People Quantity: ${guide.people_quantity ?? ''}'),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-  ],
-  ),
-  ),
                       // You can add more fields from NotifiedGuides here as needed
                       onTap: () {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: ((context) => SendOfferScreen(
-                                    notifyGuide: widget.notifyGuides![index]))));
+                                    notifyGuide:
+                                        widget.notifyGuides![index]))));
                       },
                     ),
                   ),

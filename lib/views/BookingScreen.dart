@@ -311,12 +311,12 @@ class _BookingScreenState extends State<BookingScreen> {
                       SizedBox(height: 50),
                       ElevatedButton(
                         onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  BookingScreen(widget.id, widget.guideName),
-                            ),
-                          );
+                          // Navigator.of(context).push(
+                          //   MaterialPageRoute(
+                          //     builder: (context) =>
+                          //         BookingScreen(widget.id, widget.guideName),
+                          //   ),
+                          // );
                         },
                         child: Text('REQUEST TO BOOK'),
                         style: ElevatedButton.styleFrom(
