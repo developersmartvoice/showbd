@@ -152,85 +152,216 @@ class _SendOffersScreenState extends State<SendOffersScreen> {
         ),
         body: Container(
           child: ListView.builder(
-            itemCount: widget.notifyGuides!.length,
-            itemBuilder: (context, index) {
-              NotifiedGuides guide = widget.notifyGuides![index];
-              return SizedBox(
-                height: 400,
-                child: Card(
-                  elevation: 3,
-                  margin: EdgeInsets.all(8),
-                  child: Center(
-                    child: ListTile(
-                      leading: Container(
-                        width: 80,
-                        height: 80,
-                        alignment: Alignment.center,
+              itemCount: widget.notifyGuides!.length,
+              itemBuilder: (context, index) {
+                NotifiedGuides guide = widget.notifyGuides![index];
+                return SizedBox(
+                  height: 450,
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) => SendOfferScreen(
+                                  notifyGuide: widget.notifyGuides![index]))));
+                    },
+                    child: Card(
+                      elevation: 3,
+                      margin: EdgeInsets.all(8),
+                      child: Center(
                         child:
-                        Column(
-  crossAxisAlignment: CrossAxisAlignment.center,
-  mainAxisAlignment: MainAxisAlignment.center,
-  children: [
-                        guide.imageURL != null
-                          ? CachedNetworkImage(
-                              imageUrl: guide.imageURL!,
-                              placeholder: (context, url) =>
-                                  CircularProgressIndicator(),
-                              errorWidget: (context, url, error) =>
-                                  Icon(Icons.error),
-                                  imageBuilder: (context, imageProvider) => Container(
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      border: Border.all(
-                                        color: Colors.white, // Customize border color
-                                        width: 2.0, // Customize border width
-                                      ),
-                                      image: DecorationImage(
-                                        image: imageProvider,
-                                        fit: BoxFit.cover,
-                                        alignment: Alignment.center,
-                                      ),
-                                    ),
-                      ),
-                            )
-                          : Placeholder(), 
-                        // Placeholder if no image available
-                      Container(
-                        child: Column(
+                            //ListTile(
+                            //Column(
+                            //leading:
+                            //Container(
+                            //width: 80,
+                            //height: 80,
+                            //alignment: Alignment.center,
+                            //child:
+                            Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(guide.name ?? '',
-                                style: TextStyle(color: Colors.black)),
-                          //],
-                        // ),
-                        // subtitle: Column(
-                        //   crossAxisAlignment: CrossAxisAlignment.center,
-                        //   children: [
-                            Text('Destination: ${guide.destination ?? ''}'),
-                            Text('Start Date: ${guide.start_date ?? ''}'),
-                            Text('End Date: ${guide.end_date ?? ''}'),
-                            Text('People Quantity: ${guide.people_quantity ?? ''}'),
-                        ],
+                            guide.imageURL != null
+                                ? CachedNetworkImage(
+                                    imageUrl: guide.imageURL!,
+                                    placeholder: (context, url) =>
+                                        CircularProgressIndicator(),
+                                    errorWidget: (context, url, error) =>
+                                        Icon(Icons.error),
+                                    imageBuilder: (context, imageProvider) =>
+                                        Container(
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                          color: Colors
+                                              .white, // Customize border color
+                                          width: 2.0, // Customize border width
+                                        ),
+                                        image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.cover,
+                                          // alignment: Alignment.center,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                : Placeholder(),
+
+                            SizedBox(
+                              height: 180,
+                            ),
+                            // Placeholder if no image available
+                            //Container(
+                            //child:
+                            // Column(
+                            //   crossAxisAlignment: CrossAxisAlignment.center,
+                            //   mainAxisAlignment: MainAxisAlignment.center,
+                            //   children: [
+
+                            //title:
+                            Text(
+                              guide.name ?? '',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                //textAlign: TextAlign.center,
+                              ),
+                            ),
+
+                            //],
+
+                            //subtitle:
+                            // Column(
+                            //  crossAxisAlignment: CrossAxisAlignment.start,
+                            //  children: [
+
+                            Text(
+                                //'Destination: $
+                                //{
+                                (guide.destination ?? '')),
+
+                            //}'),
+                            //Text('Start Date: ${guide.start_date ?? ''}'),
+                            //Text('End Date: ${guide.end_date ?? ''}'),
+                            Text(
+                                'People Quantity: ${guide.people_quantity ?? ''}'),
+                            //),
+                            //),
+                            //),
+                            Divider(
+                              height: 15,
+                            ),
+                            //Text('Looking for a local between'),
+
+                            Align(
+                              alignment: Alignment(-0.9, -0.7),
+                              child: Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  'Looking for a local between',
+                                  style: TextStyle(fontSize: 14.0),
+                                ),
+                              ),
+                            ),
+
+                            // Column(
+                            //   crossAxisAlignment: CrossAxisAlignment.start,
+                            //   children: [
+                            //     Padding(
+                            //       padding: const EdgeInsets.all(
+                            //           8.0), // Adjust the padding as needed
+                            //       child: Row(
+                            //         mainAxisAlignment: MainAxisAlignment.start,
+                            //         children: [
+                            //           Icon(
+                            //             Icons.calendar_today,
+                            //             color: Colors.blue,
+                            //           ),
+                            //         ],
+                            //       ),
+                            //),
+
+                            Row(
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                    padding: EdgeInsets.fromLTRB(16, 0, 5,
+                                        0), // Adjust padding as needed
+                                    child: Icon(
+                                      Icons
+                                          .calendar_today, // Choose your calendar icon
+                                      color:
+                                          Colors.blue, // Change color as needed
+                                    ),
+                                  ),
+                                ),
+
+                                SizedBox(
+                                  width: 5,
+                                ),
+
+                                // Icon(
+                                //   Icons.calendar_today,
+                                //   color: Colors.blue,
+                                // ),
+
+                                Text('${guide.start_date ?? ''}' +
+                                    ' ' +
+                                    'to' +
+                                    ' ' +
+                                    ('${guide.end_date ?? ''}')),
+                                //Text('End Date: ${guide.end_date ?? ''}'),
+                              ],
+                              // You can add more fields from NotifiedGuides here as needed
+                            ),
+                            //],
+
+                            SizedBox(
+                              height: 15,
+                            ),
+
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => SendOfferScreen(
+                                      notifyGuide: widget.notifyGuides![index],
+                                    ),
+                                  ),
+                                );
+                                // Add functionality for the first button
+                              },
+                              child: Text('SEND OFFER'),
+                              style: ElevatedButton.styleFrom(
+                                textStyle: GoogleFonts.poppins(
+                                  fontSize: 19.0,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.blue,
+                                ),
+                                backgroundColor: Colors.blue,
+                                foregroundColor: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  side: BorderSide(
+                                    color: Colors.blue,
+                                  ), // Set border radius
+                                ),
+                                padding: EdgeInsets.fromLTRB(135.0, 13, 135.0,
+                                    13), // Customize horizontal padding
+                                elevation: 5.0, // Set elevation
+                                shadowColor: Colors.grey,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-  ],
-  ),
-  ),
-                      // You can add more fields from NotifiedGuides here as needed
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: ((context) => SendOfferScreen(
-                                    notifyGuide: widget.notifyGuides![index]))));
-                      },
                     ),
                   ),
-                ),
-              );
-            },
-          ),
+                );
+              }),
         ),
       ),
     );
@@ -325,13 +456,6 @@ class _SendOffersScreenState extends State<SendOffersScreen> {
 //     );
 //   }
 // }
-
-
-
-
-
-
-
 
 // class SendOffersScreen extends StatefulWidget {
 //   const SendOffersScreen({super.key});

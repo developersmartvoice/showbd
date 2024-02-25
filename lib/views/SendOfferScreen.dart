@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:appcode3/modals/SendOfferClass.dart';
-import 'package:appcode3/views/DetailsPage.dart';
 import 'package:appcode3/views/Doctor/DoctorProfile.dart';
 import 'package:connectycube_sdk/connectycube_chat.dart';
 
@@ -49,7 +48,6 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
 
   //bool datePickedStart = false;
   //bool datePickedEnd = false;
-  String? id;
   String? name;
   String? image;
   String? destination;
@@ -62,8 +60,6 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
     super.initState();
     setState(() {
       print(widget.notifyGuide.name);
-      id = widget.notifyGuide.guide_id.toString();
-      print(id);
       name = widget.notifyGuide.name;
       image = widget.notifyGuide.imageURL;
       destination = widget.notifyGuide.destination;
@@ -239,7 +235,7 @@ void _showOptions2(BuildContext context) {
 
   @override
   Widget build(BuildContext context) {
-    String hintText = 'Any suggestions';
+    //String hintText = 'Any suggestions?';
     // var numberOfPeople;
     // String dynamicText1 = 'Forever';
     // String dynamicText2 = 'Anytime';
@@ -283,7 +279,7 @@ void _showOptions2(BuildContext context) {
                 style: GoogleFonts.robotoCondensed(
                   fontSize: 23,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black, // Text color
+                  color: Color.fromARGB(255, 165, 210, 247), // Text color
                 ),
               ),
             ),
@@ -291,7 +287,6 @@ void _showOptions2(BuildContext context) {
         ),
         body:
             //padding: const EdgeInsets.all(16.0),
-<<<<<<< HEAD
             SingleChildScrollView(
               child: Container(
                         color: Colors.white,
@@ -317,70 +312,6 @@ void _showOptions2(BuildContext context) {
                           radius: 35,
                           backgroundImage: CachedNetworkImageProvider(
                               image!) // Replace with your image asset
-=======
-            Container(
-          color: Colors.white,
-          child: Card(
-            child: Column(
-              children: [
-                // Thumbnail
-                // Container(
-                //   height: 10,
-                //   decoration: BoxDecoration(
-                //     image: DecorationImage(
-                //       image: AssetImage(
-                //           'assets/splash_bg.png'), // Replace with your image asset
-                //       fit: BoxFit.cover,
-                //     ),
-                //   ),
-                // ),
-                // Round image, name, and address
-                Container(
-                  //padding: EdgeInsets.only(left: 10),
-                  child: ListTile(
-                    leading: CircleAvatar(
-                        radius: 35,
-                        backgroundImage: CachedNetworkImageProvider(
-                            image!) // Replace with your image asset
-                        ),
-                    title: Text(
-                      name!,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    subtitle: Text(
-                      destination!,
-                      style: TextStyle(
-                        fontSize: 15,
-                      ),
-                    ),
-                  ),
-                ),
-
-                Container(
-                  padding: EdgeInsets.fromLTRB(5, 0, 10, 0),
-                  child: Align(
-                    alignment: Alignment(-0.5, -0.7),
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(35, 0, 10, 0),
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => DetailsPage(id!),
-                            ),
-                          );
-                        },
-                        // Add button functionality here
-                        style: ButtonStyle(
-                          shape: MaterialStateProperty.all<OutlinedBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  10.0), // Set border radius to 0 for a rectangle
-                            ),
->>>>>>> 6fcff1b1cd40347f535555856e0b8dc9c9c264c2
                           ),
                       title: Text(
                         name!,
@@ -876,118 +807,122 @@ void _showOptions2(BuildContext context) {
                   //         ),
                   //       ),
               
-                  Center(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 16),
-                        Text(
-                          SUGGESTION,
-                          style: GoogleFonts.robotoCondensed(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
+                  Container(
+                    padding: EdgeInsets.all(15),
+                    child: Center(
+                      child: Column(
+                        
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          //SizedBox(height: 16),
+                          Text(
+                            SUGGESTION,
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
-                        ),
-                        TextField(
-                          onChanged: (value) {
-                            setState(() {
-                              specificInterest = value;
-                            });
-                          },
-                          decoration: InputDecoration(
-                            prefixText: hintText,
-                            hintStyle:
-                                TextStyle(color: Colors.black38, fontSize: 15),
+                          TextField(
+                            onChanged: (value) {
+                              setState(() {
+                                specificInterest = value;
+                              });
+                            },
+                            decoration: InputDecoration(
+                              //prefixText: hintText,
+                              hintStyle:
+                                  TextStyle(color: Colors.black38, fontSize: 15),
+                            ),
                           ),
-                        ),
-                      ],
-                        ),
-              
-                  
-              
-                //               GestureDetector(
-                // onTap: () {
-                  
-                //   // Implement action here, e.g., show options or a modal bottom sheet
-                // },
-                // child: Container(
-                //   color: Colors.white,
-                //   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                  // decoration: BoxDecoration(
-                  //   border: Border.all(color: Colors.grey),
-                  //   borderRadius: BorderRadius.circular(5),
-                  // ),
-              
-                  
-              
-                  // Container(
-                  //   padding: EdgeInsets.fromLTRB(20, 5, 5, 5),
-                  //   color: Colors.white,
-                  //   child: Align(
-                  //     alignment: Alignment.centerLeft,
-                    //               child: Row(
-                    // children: [
-                    //   Expanded(
-                    //      child: TextField(
-                    //       controller: TextEditingController(text: " "),
-                    //                   onChanged: (value) {
-                    //                     setState(() {
-                    //                       //specificInterest = value;
-                    //                     });
-                    //                   },
-                    //                   decoration: InputDecoration(
-                    //                     prefixText: hintText,
-                    //                     hintStyle:
-                    //                         TextStyle(color: Colors.black38, fontSize: 15),
-                    //                   ),
-                    //                 ),
-                        // TextFormField(
-                        //   initialValue: textFieldValue,
-                        //   onChanged: (value) {
-                        //     // Update the value entered by the user
-                        //     setState(() {
-                        //       textFieldValue = value;
-                        //     });
-                        //   },
-                        //   style: TextStyle(
-                        //     fontSize: 18,
-                        //     fontWeight: FontWeight.w500,
-                        //     color: Colors.black,
-                        //   ),
-                        //   decoration: InputDecoration(
-                        //     hintText: 'Any suggestions?',
-                        //     border: InputBorder.none,
-                        //   ),
-                        // ),
-                        //           child: Text(
-                        //   textFieldValue.isNotEmpty ? textFieldValue : 'What do you have in mind?',
+                        ],
+                          ),
+                                  
+                    
+                                  
+                                    //               GestureDetector(
+                                    // onTap: () {
+                    
+                                    //   // Implement action here, e.g., show options or a modal bottom sheet
+                                    // },
+                                    // child: Container(
+                                    //   color: Colors.white,
+                                    //   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                    // decoration: BoxDecoration(
+                    //   border: Border.all(color: Colors.grey),
+                    //   borderRadius: BorderRadius.circular(5),
+                    // ),
+                                  
+                    
+                                  
+                    // Container(
+                    //   padding: EdgeInsets.fromLTRB(20, 5, 5, 5),
+                    //   color: Colors.white,
+                    //   child: Align(
+                    //     alignment: Alignment.centerLeft,
+                      //               child: Row(
+                      // children: [
+                      //   Expanded(
+                      //      child: TextField(
+                      //       controller: TextEditingController(text: " "),
+                      //                   onChanged: (value) {
+                      //                     setState(() {
+                      //                       //specificInterest = value;
+                      //                     });
+                      //                   },
+                      //                   decoration: InputDecoration(
+                      //                     prefixText: hintText,
+                      //                     hintStyle:
+                      //                         TextStyle(color: Colors.black38, fontSize: 15),
+                      //                   ),
+                      //                 ),
+                          // TextFormField(
+                          //   initialValue: textFieldValue,
+                          //   onChanged: (value) {
+                          //     // Update the value entered by the user
+                          //     setState(() {
+                          //       textFieldValue = value;
+                          //     });
+                          //   },
+                          //   style: TextStyle(
+                          //     fontSize: 18,
+                          //     fontWeight: FontWeight.w500,
+                          //     color: Colors.black,
+                          //   ),
+                          //   decoration: InputDecoration(
+                          //     hintText: 'Any suggestions?',
+                          //     border: InputBorder.none,
+                          //   ),
+                          // ),
+                          //           child: Text(
+                          //   textFieldValue.isNotEmpty ? textFieldValue : 'What do you have in mind?',
+                          //   style: TextStyle(
+                          //     fontSize: 18,
+                          //     fontWeight: FontWeight.bold,
+                          //   ),
+                          // ),
+                        // TextField(
+                        //   controller: TextEditingController(text: " "),
+                        
                         //   style: TextStyle(
                         //     fontSize: 18,
                         //     fontWeight: FontWeight.bold,
+                        //     // Add any additional styling here
                         //   ),
                         // ),
-                      // TextField(
-                      //   controller: TextEditingController(text: " "),
-                      
-                      //   style: TextStyle(
-                      //     fontSize: 18,
-                      //     fontWeight: FontWeight.bold,
-                      //     // Add any additional styling here
-                      //   ),
-                      // ),
-                      // child: Padding(
-                      //   padding: EdgeInsets.all(5),
-                      //   child: Text(
-                      //     dynamicText3,
-                      //     //'You know nothing, Jon Snow',
-                      //     style: TextStyle(
-                      //       fontSize: 18,
-                      //       fontWeight: FontWeight.bold,
-                      //       // Add any additional styling here
-                      //     ),
-                      //   ),
-                      // ),
-                      ),
+                        // child: Padding(
+                        //   padding: EdgeInsets.all(5),
+                        //   child: Text(
+                        //     dynamicText3,
+                        //     //'You know nothing, Jon Snow',
+                        //     style: TextStyle(
+                        //       fontSize: 18,
+                        //       fontWeight: FontWeight.bold,
+                        //       // Add any additional styling here
+                        //     ),
+                        //   ),
+                        // ),
+                        ),
+                  ),
                 ],
                     ),
                     ),
