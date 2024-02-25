@@ -91,33 +91,90 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
   }
 
   void postingSendOffer() async {
-    Map<String, dynamic> postData = {
-      'trip_id': int.parse(tripId!),
-      'sender_id': int.parse(senderId!),
-      'recipient_id': int.parse(guideId!),
-      'date': selectedDate.toString().split(' ')[0],
-      'duration': selectedDurationValue,
-      'message': specificInterest,
-    };
+    try {
+      Map<String, dynamic> postData = {
+        "trip_id": int.tryParse(tripId ?? '') ?? 0,
+        "sender_id": int.tryParse(senderId ?? '') ?? 0,
+        "recipient_id": int.tryParse(guideId ?? '') ?? 0,
+        "date": selectedDate.toString().split(' ')[0],
+        "duration": selectedDurationValue,
+        "timing": selectedMeetingTime,
+        "message": specificInterest,
+      };
 
-    var response = await post(Uri.parse("$SERVER_ADDRESS/api/updateSendOffer"),
-        body: postData);
+      var response = await post(
+        Uri.parse("$SERVER_ADDRESS/api/updateSendOffer"),
+        body: jsonEncode(postData),
+        headers: {'Content-Type': 'application/json'},
+      );
 
-    if (response.statusCode == 201) {
-      // Success
-      final responseData = jsonDecode(response.body);
-      setState(() {
-        isErrorLoading = false;
-        print(responseData);
-      });
-    } else {
-      // Failure
-      setState(() {
-        isErrorLoading = false;
+      if (response.statusCode == 201) {
+        // Success
+        final responseData = jsonDecode(response.body);
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Success'),
+              content: Text('Offer sent successfully!'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    print(responseData);
+                    Navigator.of(context).pop(); // Close the dialog
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => ChatListScreen()),
+                    );
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      } else {
+        // Failure
         print(
             'Failed to create send offer. Status code: ${response.statusCode}');
         print('Response body: ${response.body}');
-      });
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Error'),
+              content: Text('Failed to send offer. Please try again later.'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Close the dialog
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      }
+    } catch (e) {
+      print('Exception while sending offer: $e');
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content:
+                Text('An unexpected error occurred. Please try again later.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the dialog
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
     }
   }
 
@@ -335,7 +392,26 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
                 // Add your button functionality here
                 if (isDateSelected &&
                     isDurationSelected &&
-                    isMeetingTimeSelected) {}
+                    isMeetingTimeSelected &&
+                    isMessageGiven) {
+                  setState(() {
+                    isErrorLoading = true;
+                    // Container(
+                    //   child: CircularProgressIndicator(),
+                    // );
+
+                    isErrorLoading ? CircularProgressIndicator() : Container();
+                  });
+                  postingSendOffer();
+                } else {
+                  !isDateSelected ? alertDialog("date") : Container();
+                  !isDurationSelected ? alertDialog("Duration") : Container();
+                  !isMeetingTimeSelected
+                      ? alertDialog("Meeting Time")
+                      : Container();
+                  !isMessageGiven ? alertDialog("Message") : Container();
+                }
+
                 setState(() {
                   print(
                       "Is duration selected $isDurationSelected and what duration? $selectedDurationValue");
@@ -1136,5 +1212,25 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
     //     ),
     //   ),
     // );
+  }
+
+  void alertDialog(String msg) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Missing Information"),
+          content: Text("Please Select $msg!"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Close the dialog
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
