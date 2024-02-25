@@ -48,8 +48,6 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
 
   //bool datePickedStart = false;
   //bool datePickedEnd = false;
-<<<<<<< HEAD
-=======
   bool isDurationSelected = false;
   bool isMeetingTimeSelected = false;
   bool isDateSelected = false;
@@ -59,7 +57,6 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
   String? senderId;
   String? tripId;
   String? guideId;
->>>>>>> ba748ad5d02df6e6fa479fe71c99a341bb93a0bd
   String? name;
   String? image;
   String? destination;
@@ -79,13 +76,10 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
     });
     setState(() {
       print(widget.notifyGuide.name);
-<<<<<<< HEAD
-=======
       tripId = widget.notifyGuide.id.toString();
       print("Trip Id is: $tripId");
       guideId = widget.notifyGuide.guide_id.toString();
       print("Recipent Id is: $guideId");
->>>>>>> ba748ad5d02df6e6fa479fe71c99a341bb93a0bd
       name = widget.notifyGuide.name;
       image = widget.notifyGuide.imageURL;
       destination = widget.notifyGuide.destination;
@@ -357,11 +351,7 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
-    //String hintText = 'Any suggestions?';
-=======
     String hintText = 'Hello $name, ';
->>>>>>> ba748ad5d02df6e6fa479fe71c99a341bb93a0bd
     // var numberOfPeople;
     // String dynamicText1 = 'Forever';
     // String dynamicText2 = 'Anytime';
@@ -1072,60 +1062,20 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
                   //               TextStyle(color: Colors.black38, fontSize: 15),
                   //         ),
                   //       ),
-<<<<<<< HEAD
-              
-                  Container(
-                    padding: EdgeInsets.all(15),
-                    child: Center(
-                      child: Column(
-                        
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          //SizedBox(height: 16),
-                          Text(
-                            SUGGESTION,
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          TextField(
-                            onChanged: (value) {
-                              setState(() {
-                                specificInterest = value;
-                              });
-                            },
-                            decoration: InputDecoration(
-                              //prefixText: hintText,
-                              hintStyle:
-                                  TextStyle(color: Colors.black38, fontSize: 15),
-                            ),
-                          ),
-                        ],
-                          ),
-                                  
-                    
-                                  
-                                    //               GestureDetector(
-                                    // onTap: () {
-                    
-                                    //   // Implement action here, e.g., show options or a modal bottom sheet
-                                    // },
-                                    // child: Container(
-                                    //   color: Colors.white,
-                                    //   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-=======
 
                   Center(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: 16),
-                        Text(
-                          SUGGESTION.toUpperCase(),
-                          style: GoogleFonts.robotoCondensed(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
+                        //SizedBox(height: 16),
+                        Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Text(
+                            SUGGESTION.toUpperCase(),
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
                         TextField(
@@ -1160,94 +1110,15 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
                     // child: Container(
                     //   color: Colors.white,
                     //   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
->>>>>>> ba748ad5d02df6e6fa479fe71c99a341bb93a0bd
                     // decoration: BoxDecoration(
                     //   border: Border.all(color: Colors.grey),
                     //   borderRadius: BorderRadius.circular(5),
                     // ),
-<<<<<<< HEAD
-                                  
-                    
-                                  
-=======
-
->>>>>>> ba748ad5d02df6e6fa479fe71c99a341bb93a0bd
                     // Container(
                     //   padding: EdgeInsets.fromLTRB(20, 5, 5, 5),
                     //   color: Colors.white,
                     //   child: Align(
                     //     alignment: Alignment.centerLeft,
-<<<<<<< HEAD
-                      //               child: Row(
-                      // children: [
-                      //   Expanded(
-                      //      child: TextField(
-                      //       controller: TextEditingController(text: " "),
-                      //                   onChanged: (value) {
-                      //                     setState(() {
-                      //                       //specificInterest = value;
-                      //                     });
-                      //                   },
-                      //                   decoration: InputDecoration(
-                      //                     prefixText: hintText,
-                      //                     hintStyle:
-                      //                         TextStyle(color: Colors.black38, fontSize: 15),
-                      //                   ),
-                      //                 ),
-                          // TextFormField(
-                          //   initialValue: textFieldValue,
-                          //   onChanged: (value) {
-                          //     // Update the value entered by the user
-                          //     setState(() {
-                          //       textFieldValue = value;
-                          //     });
-                          //   },
-                          //   style: TextStyle(
-                          //     fontSize: 18,
-                          //     fontWeight: FontWeight.w500,
-                          //     color: Colors.black,
-                          //   ),
-                          //   decoration: InputDecoration(
-                          //     hintText: 'Any suggestions?',
-                          //     border: InputBorder.none,
-                          //   ),
-                          // ),
-                          //           child: Text(
-                          //   textFieldValue.isNotEmpty ? textFieldValue : 'What do you have in mind?',
-                          //   style: TextStyle(
-                          //     fontSize: 18,
-                          //     fontWeight: FontWeight.bold,
-                          //   ),
-                          // ),
-                        // TextField(
-                        //   controller: TextEditingController(text: " "),
-                        
-                        //   style: TextStyle(
-                        //     fontSize: 18,
-                        //     fontWeight: FontWeight.bold,
-                        //     // Add any additional styling here
-                        //   ),
-                        // ),
-                        // child: Padding(
-                        //   padding: EdgeInsets.all(5),
-                        //   child: Text(
-                        //     dynamicText3,
-                        //     //'You know nothing, Jon Snow',
-                        //     style: TextStyle(
-                        //       fontSize: 18,
-                        //       fontWeight: FontWeight.bold,
-                        //       // Add any additional styling here
-                        //     ),
-                        //   ),
-                        // ),
-                        ),
-                  ),
-                ],
-                    ),
-                    ),
-                    ),
-            ),
-=======
                     //               child: Row(
                     // children: [
                     //   Expanded(
@@ -1310,7 +1181,6 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
                     //     ),
                     //   ),
                     // ),
->>>>>>> ba748ad5d02df6e6fa479fe71c99a341bb93a0bd
                   ),
                 ],
               ),
