@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:intl/intl.dart';
 import 'package:appcode3/modals/SendOfferClass.dart';
 import 'package:appcode3/views/Doctor/DoctorProfile.dart';
 import 'package:appcode3/views/SendOfferScreen.dart';
@@ -37,6 +38,45 @@ class SendOffersScreen extends StatefulWidget {
 }
 
 class _SendOffersScreenState extends State<SendOffersScreen> {
+  String formatDate(DateTime date) {
+    // Define your desired date format
+    final DateFormat formatter = DateFormat('dd MM yyyy');
+
+    // Format the date using the formatter
+    return formatter.format(date);
+  }
+
+  String _getMonthAbbreviation(int month) {
+    switch (month) {
+      case 1:
+        return 'Jan';
+      case 2:
+        return 'Feb';
+      case 3:
+        return 'Mar';
+      case 4:
+        return 'Apr';
+      case 5:
+        return 'May';
+      case 6:
+        return 'Jun';
+      case 7:
+        return 'Jul';
+      case 8:
+        return 'Aug';
+      case 9:
+        return 'Sep';
+      case 10:
+        return 'Oct';
+      case 11:
+        return 'Nov';
+      case 12:
+        return 'Dec';
+      default:
+        return '';
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -174,7 +214,7 @@ class _SendOffersScreenState extends State<SendOffersScreen> {
                         children: [
                           Container(
                             height: 150,
-                            width: 150,
+                            width: 175,
                             child: guide.imageURL != null
                                 ? CachedNetworkImage(
                                     imageUrl: guide.imageURL!,
@@ -214,6 +254,11 @@ class _SendOffersScreenState extends State<SendOffersScreen> {
                           //   children: [
 
                           //title:
+
+                          SizedBox(
+                            height: 5,
+                          ),
+
                           Text(
                             guide.name ?? '',
                             style: TextStyle(
@@ -232,9 +277,14 @@ class _SendOffersScreenState extends State<SendOffersScreen> {
                           //  children: [
 
                           Text(
-                              //'Destination: $
-                              //{
-                              (guide.destination ?? '')),
+                            //'Destination: $
+                            //{
+                            (guide.destination ?? ''),
+                            style: TextStyle(
+                              color: Colors
+                                  .grey, // Change the color to the desired color
+                            ),
+                          ),
 
                           //}'),
                           //Text('Start Date: ${guide.start_date ?? ''}'),
@@ -255,7 +305,10 @@ class _SendOffersScreenState extends State<SendOffersScreen> {
                               padding: EdgeInsets.all(8.0),
                               child: Text(
                                 'Looking for a local between',
-                                style: TextStyle(fontSize: 14.0),
+                                style: TextStyle(
+                                  fontSize: 14.0,
+                                  color: Colors.grey,
+                                ),
                               ),
                             ),
                           ),
@@ -286,7 +339,7 @@ class _SendOffersScreenState extends State<SendOffersScreen> {
                                       16, 0, 5, 0), // Adjust padding as needed
                                   child: Icon(
                                     Icons
-                                        .calendar_today, // Choose your calendar icon
+                                        .calendar_month_sharp, // Choose your calendar icon
                                     color:
                                         Colors.blue, // Change color as needed
                                   ),
@@ -302,12 +355,51 @@ class _SendOffersScreenState extends State<SendOffersScreen> {
                               //   color: Colors.blue,
                               // ),
 
-                              Text('${guide.start_date ?? ''}' +
-                                  ' ' +
-                                  'to' +
-                                  ' ' +
-                                  ('${guide.end_date ?? ''}')),
+                              //child:
+                              //     Text(
+                              //   selectedDate != null
+                              //       ? '${selectedDate!.day.toString().padLeft(2, '0')} ${_getMonthAbbreviation(selectedDate!.month)} ${selectedDate!.year}'
+                              //       : 'Select a date', // Display selected date if available, otherwise show default text
+                              //   style: TextStyle(
+                              //     color: selectedDate != null
+                              //         ? Colors.black
+                              //         : Colors
+                              //             .grey, // Change color based on selectedDate presence
+                              //     fontSize: 16,
+                              //     fontWeight: FontWeight.bold,
+                              //   ),
+                              // ),
+
+                              // Text('${guide.start_date ?? DateFormat('dd MM yyyy')}' +
+                              //     ' ' +
+                              //     'to' +
+                              //     ' ' +
+                              //     ('${guide.end_date ?? DateFormat.DAY_MONTH_YEAR_ABBR}')),
+
+                              // Text('${guide.start_date ?? DateFormat.DAY_MONTH_YEAR_ABBR}' +
+                              //     ' ' +
+                              //     'to' +
+                              //     ' ' +
+                              //     ('${guide.end_date ?? DateFormat.DAY_MONTH_YEAR_ABBR}')),
                               //Text('End Date: ${guide.end_date ?? ''}'),
+
+                              Text(
+                                '${guide.start_date ?? ''}' +
+                                    ' ' +
+                                    'to' +
+                                    ' ' +
+                                    ('${guide.end_date ?? ''}'),
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+
+                              // child: Text(
+                              //     DateFormat('MM, dd, yyyy')
+                              //         .format('${guide.start_date!),
+                              //     style: TextStyle(fontSize: 16),
+                              //   ),
                             ],
                             // You can add more fields from NotifiedGuides here as needed
                           ),
@@ -361,79 +453,79 @@ class _SendOffersScreenState extends State<SendOffersScreen> {
   }
 }
 
-  // Widget buildSendOfferCard() {
-  //   return Column(
-  //     children: [
-  //       SizedBox(height: 20),
-  //       CircleAvatar(
-  //         radius: 80,
-  //         // backgroundImage: NetworkImage(offer.imageURL ?? ''),
-  //         backgroundImage: NetworkImage(''),
-  //       ),
-  //       // SizedBox(height: 20),
-  //       // Text(
-  //       //   offer.name ?? 'Destination not available',
-  //       //   style: TextStyle(
-  //       //     fontWeight: FontWeight.bold,
-  //       //     fontSize: 18,
-  //       //   ),
-  //       // ),
-  //       SizedBox(height: 10),
-  //       Text(
-  //         offer.destination ?? 'Destination not available',
-  //         style: TextStyle(fontSize: 15),
-  //       ),
-  //       SizedBox(height: 20),
-  //       Text(
-  //         'Looking for a local between',
-  //         style: TextStyle(fontSize: 16),
-  //       ),
-  //       SizedBox(height: 10),
-  //       Row(
-  //         mainAxisAlignment: MainAxisAlignment.center,
-  //         children: [
-  //           Icon(Icons.calendar_today, color: Colors.blue),
-  //           SizedBox(width: 5),
-  //           Text(
-  //             '${offer.start_date ?? ''} - ${offer.end_date ?? ''}',
-  //             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-  //           ),
-  //         ],
-  //       ),
-  //       SizedBox(height: 20),
-  //       ElevatedButton(
-  //         onPressed: () {
-  //           Navigator.of(context).push(
-  //             MaterialPageRoute(
-  //               builder: (context) => SendOfferScreen(),
-  //             ),
-  //           );
-  //           // Handle button press
-  //         },
-  //         child: Text('SEND OFFER'),
-  //         style: ElevatedButton.styleFrom(
-  //           textStyle: GoogleFonts.poppins(
-  //             fontSize: 19.0,
-  //             fontWeight: FontWeight.w500,
-  //             color: Colors.blue,
-  //           ),
-  //           backgroundColor: Colors.blue,
-  //           foregroundColor: Colors.white,
-  //           shape: RoundedRectangleBorder(
-  //             borderRadius: BorderRadius.circular(10.0),
-  //             side: BorderSide(
-  //               color: Colors.blue,
-  //             ), // Set border radius
-  //           ),
-  //           padding: EdgeInsets.fromLTRB(
-  //               135.0, 13, 135.0, 13), // Customize horizontal padding
-  //           elevation: 5.0, // Set elevation
-  //           shadowColor: Colors.grey,
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
+// Widget buildSendOfferCard() {
+//   return Column(
+//     children: [
+//       SizedBox(height: 20),
+//       CircleAvatar(
+//         radius: 80,
+//         // backgroundImage: NetworkImage(offer.imageURL ?? ''),
+//         backgroundImage: NetworkImage(''),
+//       ),
+//       // SizedBox(height: 20),
+//       // Text(
+//       //   offer.name ?? 'Destination not available',
+//       //   style: TextStyle(
+//       //     fontWeight: FontWeight.bold,
+//       //     fontSize: 18,
+//       //   ),
+//       // ),
+//       SizedBox(height: 10),
+//       Text(
+//         offer.destination ?? 'Destination not available',
+//         style: TextStyle(fontSize: 15),
+//       ),
+//       SizedBox(height: 20),
+//       Text(
+//         'Looking for a local between',
+//         style: TextStyle(fontSize: 16),
+//       ),
+//       SizedBox(height: 10),
+//       Row(
+//         mainAxisAlignment: MainAxisAlignment.center,
+//         children: [
+//           Icon(Icons.calendar_today, color: Colors.blue),
+//           SizedBox(width: 5),
+//           Text(
+//             '${offer.start_date ?? ''} - ${offer.end_date ?? ''}',
+//             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+//           ),
+//         ],
+//       ),
+//       SizedBox(height: 20),
+//       ElevatedButton(
+//         onPressed: () {
+//           Navigator.of(context).push(
+//             MaterialPageRoute(
+//               builder: (context) => SendOfferScreen(),
+//             ),
+//           );
+//           // Handle button press
+//         },
+//         child: Text('SEND OFFER'),
+//         style: ElevatedButton.styleFrom(
+//           textStyle: GoogleFonts.poppins(
+//             fontSize: 19.0,
+//             fontWeight: FontWeight.w500,
+//             color: Colors.blue,
+//           ),
+//           backgroundColor: Colors.blue,
+//           foregroundColor: Colors.white,
+//           shape: RoundedRectangleBorder(
+//             borderRadius: BorderRadius.circular(10.0),
+//             side: BorderSide(
+//               color: Colors.blue,
+//             ), // Set border radius
+//           ),
+//           padding: EdgeInsets.fromLTRB(
+//               135.0, 13, 135.0, 13), // Customize horizontal padding
+//           elevation: 5.0, // Set elevation
+//           shadowColor: Colors.grey,
+//         ),
+//       ),
+//     ],
+//   );
+// }
 //}
 
 // class SendOfferClass {

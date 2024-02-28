@@ -1,3 +1,5 @@
+import 'package:appcode3/modals/SendOfferClass.dart';
+
 class AllAppointmentsClass {
   String? success;
   String? register;
@@ -70,4 +72,8 @@ class Data {
     data['status'] = this.status;
     return data;
   }
+
+  map(Function(dynamic e) param0) {}
+
+  void add(SendOfferClass sendOfferClass) {}
 }

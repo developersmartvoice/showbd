@@ -472,6 +472,7 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
                         destination!,
                         style: TextStyle(
                           fontSize: 15,
+                          color: Colors.grey,
                         ),
                       ),
                     ),
@@ -538,7 +539,7 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
                             padding:
                                 EdgeInsets.all(8.0), // Adjust padding as needed
                             child: Icon(
-                              Icons.calendar_today, // Choose your calendar icon
+                              Icons.calendar_month, // Choose your calendar icon
                               color: Colors.blue, // Change color as needed
                             ),
                           ),
@@ -583,6 +584,7 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
                               style: TextStyle(
                                 color: Colors.black, // Change color as needed
                                 fontSize: 16, // Change font size as needed
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                             //),
@@ -637,6 +639,7 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
                         child: Text(
                           'Number of People : $people_quantity',
                           style: TextStyle(
+                            color: Colors.grey,
                             fontSize: 18,
                             // Add any additional styling here
                           ),
