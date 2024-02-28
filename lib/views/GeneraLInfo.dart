@@ -1,6 +1,7 @@
 import 'package:appcode3/views/AboutMeDetailsPage.dart';
 import 'package:appcode3/views/CreateTrip.dart';
 import 'package:appcode3/views/EmailDetailsPage.dart';
+import 'package:appcode3/views/LocationSearchPageInfo.dart';
 import 'package:appcode3/views/NameSettingsPage.dart';
 import 'package:flutter/material.dart';
 
@@ -158,7 +159,7 @@ class _GeneraLInfoState extends State<GeneraLInfo> {
           //   ),
           // ],
         ),
-        body: ContainerPage(name, about_me, location),
+        body: ContainerPage(widget.doctorId, name, about_me, location),
       ),
     );
   }
@@ -167,11 +168,12 @@ class _GeneraLInfoState extends State<GeneraLInfo> {
 class ContainerPage extends StatefulWidget {
   @override
   _ContainerPageState createState() => _ContainerPageState();
+  final String id;
   final String name;
   final String aboutMe;
   final String city;
 
-  ContainerPage(this.name, this.aboutMe, this.city);
+  ContainerPage(this.id, this.name, this.aboutMe, this.city);
 }
 
 class _ContainerPageState extends State<ContainerPage> {
@@ -221,7 +223,8 @@ class _ContainerPageState extends State<ContainerPage> {
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => NameSettingsPage(widget.name),
+                        builder: (context) =>
+                            NameSettingsPage(widget.id, widget.name),
                       ),
                     );
                   },
@@ -383,7 +386,7 @@ class _ContainerPageState extends State<ContainerPage> {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) =>
-                            AboutMeDetailsPage(widget.aboutMe),
+                            AboutMeDetailsPage(widget.id, widget.aboutMe),
                       ),
                     );
                   },
@@ -615,7 +618,8 @@ class _ContainerPageState extends State<ContainerPage> {
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => LocationSearchPage(),
+                        builder: (context) =>
+                            LocationSearchPageInfo(widget.id, widget.city),
                       ),
                     );
                   },

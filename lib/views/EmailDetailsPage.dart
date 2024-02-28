@@ -39,11 +39,39 @@ class EmailDetailsPage extends StatefulWidget {
 
   @override
   State<EmailDetailsPage> createState() => _EmailDetailsPageState();
+  late final String id;
   late final String email;
-  EmailDetailsPage(this.email);
+  EmailDetailsPage(this.id, this.email);
 }
 
 class _EmailDetailsPageState extends State<EmailDetailsPage> {
+  late TextEditingController _controller;
+  String enteredValue = '';
+  bool isValueChanged = false;
+  void updatingEmail() async {
+    final response =
+        await post(Uri.parse("$SERVER_ADDRESS/api/updateEmail"), body: {
+      "id": widget.id,
+      "email": enteredValue,
+    });
+    print("$SERVER_ADDRESS/api/updateEmail");
+    // print(response.body);
+    if (response.statusCode == 200) {
+      print("Email Updated");
+      setState(() {
+        Navigator.pop(context);
+      });
+    } else {
+      print("Email Not Updated");
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(text: widget.email);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,7 +89,11 @@ class _EmailDetailsPageState extends State<EmailDetailsPage> {
         actions: [
           TextButton(
             onPressed: () {
-              // Handle button tap
+              if (isValueChanged) {
+                updatingEmail();
+              } else {
+                // Navigator.pop(context);
+              }
             },
             child: Text(
               'Save',
@@ -153,20 +185,47 @@ class _EmailDetailsPageState extends State<EmailDetailsPage> {
           ),
 
           Container(
+            color: Colors.white,
             child: TextField(
-              controller: TextEditingController(),
+              controller: _controller,
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 16,
                 fontWeight: FontWeight.w200,
               ),
+              onChanged: (value) {
+                setState(() {
+                  enteredValue = value;
+                  if (enteredValue != widget.email) {
+                    isValueChanged = true;
+                  } else {
+                    isValueChanged = false;
+                  }
+                });
+              },
               decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  //hintText: "More About You",
-                  hintText: widget.email,
-                  hintStyle: TextStyle(color: Colors.grey)),
+                border: OutlineInputBorder(),
+                hintText: widget.email,
+                hintStyle: TextStyle(color: Colors.black),
+              ),
             ),
           ),
+
+          // Container(
+          //   child: TextField(
+          //     controller: TextEditingController(),
+          //     style: TextStyle(
+          //       color: Colors.black,
+          //       fontSize: 16,
+          //       fontWeight: FontWeight.w200,
+          //     ),
+          //     decoration: InputDecoration(
+          //         border: OutlineInputBorder(),
+          //         //hintText: "More About You",
+          //         hintText: widget.email,
+          //         hintStyle: TextStyle(color: Colors.grey)),
+          //   ),
+          // ),
           // Container(
           //   color: Colors.white,
           //   height: 50,
