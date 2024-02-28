@@ -35,13 +35,47 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
 class PhoneNumberPage extends StatefulWidget {
-  const PhoneNumberPage(String phone, {super.key});
+  // const PhoneNumberPage(String phone, {super.key});
 
   @override
   State<PhoneNumberPage> createState() => _PhoneNumberPageState();
+
+  late final String id;
+  late final String phone;
+  //late final String aboutMe;
+  //late final String city;
+
+  PhoneNumberPage(this.id, this.phone);
 }
 
 class _PhoneNumberPageState extends State<PhoneNumberPage> {
+  late TextEditingController _controller;
+  String enteredValue = '';
+  bool isValueChanged = false;
+  void updatingPhone() async {
+    final response =
+        await post(Uri.parse("$SERVER_ADDRESS/api/updatePhoneNo"), body: {
+      "id": widget.id,
+      "phoneno": enteredValue,
+    });
+    print("$SERVER_ADDRESS/api/updatePhoneNo");
+    // print(response.body);
+    if (response.statusCode == 200) {
+      print("Phone No. Updated");
+      setState(() {
+        Navigator.pop(context);
+      });
+    } else {
+      print("Phone No. Not Updated");
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(text: widget.phone);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +93,11 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
         actions: [
           TextButton(
             onPressed: () {
-              // Handle button tap
+              if (isValueChanged) {
+                updatingPhone();
+              } else {
+                // Navigator.pop(context);
+              }
             },
             child: Text(
               'Save',
@@ -152,21 +190,75 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
             height: 2,
             color: Colors.grey,
           ),
+
           Container(
+            color: Colors.white,
             child: TextField(
-              controller: TextEditingController(),
+              controller: _controller,
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 16,
                 fontWeight: FontWeight.w200,
               ),
+              onChanged: (value) {
+                setState(() {
+                  enteredValue = value;
+                  if (enteredValue != widget.phone) {
+                    isValueChanged = true;
+                  } else {
+                    isValueChanged = false;
+                  }
+                });
+              },
               decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  //hintText: "More About You",
-                  //hintText: widget.,
-                  hintStyle: TextStyle(color: Colors.grey)),
+                border: OutlineInputBorder(),
+                hintText: widget.phone,
+                hintStyle: TextStyle(color: Colors.black),
+              ),
             ),
           ),
+
+          // Container(
+          //   color: Colors.white,
+          //   child: TextField(
+          //     controller: _controller,
+          //     style: TextStyle(
+          //       color: Colors.black,
+          //       fontSize: 16,
+          //       fontWeight: FontWeight.w200,
+          //     ),
+          //     onChanged: (value) {
+          //       setState(() {
+          //         enteredValue = value;
+          //         if (enteredValue != widget.phone) {
+          //           isValueChanged = true;
+          //         } else {
+          //           isValueChanged = false;
+          //         }
+          //       });
+          //     },
+          //     decoration: InputDecoration(
+          //       border: OutlineInputBorder(),
+          //       hintText: widget.phone,
+          //       hintStyle: TextStyle(color: Colors.black),
+          //     ),
+          //   ),
+          // ),
+          // Container(
+          //   child: TextField(
+          //     controller: TextEditingController(),
+          //     style: TextStyle(
+          //       color: Colors.black,
+          //       fontSize: 16,
+          //       fontWeight: FontWeight.w200,
+          //     ),
+          //     decoration: InputDecoration(
+          //         border: OutlineInputBorder(),
+          //         //hintText: "More About You",
+          //         //hintText: widget.,
+          //         hintStyle: TextStyle(color: Colors.grey)),
+          //   ),
+          // ),
           // Container(
           //   color: Colors.white,
           //   height: 50,
