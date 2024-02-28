@@ -32,13 +32,49 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:flutter/material.dart';
 
-class LocationSearchPage extends StatefulWidget {
+class LocationSearchPageInfo extends StatefulWidget {
   @override
-  _LocationSearchPageState createState() => _LocationSearchPageState();
+  _LocationSearchPageInfoState createState() => _LocationSearchPageInfoState();
+
+  late final String id;
+  late final String city;
+
+  LocationSearchPageInfo(this.id, this.city);
 }
 
-class _LocationSearchPageState extends State<LocationSearchPage> {
+class _LocationSearchPageInfoState extends State<LocationSearchPageInfo> {
   TextEditingController _searchController = TextEditingController();
+
+  String? selectedCity;
+
+  late TextEditingController _controller;
+  String enteredValue = '';
+  bool isValueChanged = false;
+  void updatingCity() async {
+    print('Entered value before updating city: $enteredValue');
+    final response =
+        await post(Uri.parse("$SERVER_ADDRESS/api/updateCity"), body: {
+      "id": widget.id,
+      "city": enteredValue,
+    });
+    print("$SERVER_ADDRESS/api/updateCity");
+    // print(response.body);
+    if (response.statusCode == 200) {
+      print("Location Updated");
+      setState(() {
+        Navigator.pop(context);
+      });
+    } else {
+      print("Location Not Updated");
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(text: widget.city);
+  }
+
   List<String> suggestedCities = [
     'Bagerhat',
     'Bandarban',
@@ -113,7 +149,10 @@ class _LocationSearchPageState extends State<LocationSearchPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Search Location'),
+          title: Text(
+            'Search Location',
+            style: TextStyle(color: Colors.black),
+          ),
           flexibleSpace: Container(
             decoration: BoxDecoration(
               image: DecorationImage(
@@ -122,6 +161,31 @@ class _LocationSearchPageState extends State<LocationSearchPage> {
               ),
             ),
           ),
+          centerTitle: true,
+          actions: [
+            TextButton(
+              onPressed: () {
+                if (isValueChanged) {
+                  setState(() {
+                    enteredValue = _searchController
+                        .text; // Update enteredValue with the text from the search controller
+                  });
+                  updatingCity(); // Call updatingCity to update the city
+                } else {
+                  // If there's no value change, you might want to handle this case
+                  Navigator.pop(context);
+                }
+              },
+              child: Text(
+                'Save',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+          ],
         ),
         body: Padding(
           padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
@@ -151,7 +215,28 @@ class _LocationSearchPageState extends State<LocationSearchPage> {
                     return ListTile(
                       title: Text(filteredCities[index]),
                       onTap: () {
-                        Navigator.pop(context, filteredCities[index]);
+                        // Store the selected value
+                        String selectedCity = filteredCities[index];
+
+                        // Update enteredValue with the selected city and clear suggestions
+                        setState(() {
+                          // Update enteredValue with the selected city
+                          enteredValue = selectedCity;
+
+                          isValueChanged = true;
+
+                          // Update text controller's text with the selected city
+                          _searchController.text = selectedCity;
+
+                          // Close the keyboard
+                          FocusScope.of(context).unfocus();
+                        });
+
+                        // Clear the suggestions list outside of setState
+                        filteredCities.clear();
+
+                        print(
+                            'Entered value after tapping city: $enteredValue');
                       },
                     );
                   },

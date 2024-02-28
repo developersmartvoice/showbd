@@ -38,7 +38,7 @@ import 'package:flutter/material.dart';
 
 class ContactAndIdentification extends StatefulWidget {
   // const ContactAndIdentification({super.key});
-  final String id;
+  late final String id;
 
   ContactAndIdentification(this.id);
 
@@ -142,18 +142,21 @@ class _GeneraLInfoState extends State<ContactAndIdentification> {
         //   ),
         // ],
       ),
-      body: ContainerPage(email, phone),
+      body: ContainerPage(widget.id, email, phone),
     );
   }
 }
 
 class ContainerPage extends StatefulWidget {
+  // String? get id => null;
+
   @override
   _ContainerPageState createState() => _ContainerPageState();
+  final String id;
   final String email;
   final String phone;
 
-  ContainerPage(this.email, this.phone);
+  ContainerPage(this.id, this.email, this.phone);
 }
 
 class _ContainerPageState extends State<ContainerPage> {
@@ -200,7 +203,8 @@ class _ContainerPageState extends State<ContainerPage> {
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => EmailDetailsPage(widget.email),
+                        builder: (context) =>
+                            EmailDetailsPage(widget.id, widget.email),
                       ),
                     );
                   },
@@ -315,7 +319,8 @@ class _ContainerPageState extends State<ContainerPage> {
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => PhoneNumberPage(widget.phone),
+                        builder: (context) =>
+                            PhoneNumberPage(widget.id, widget.phone),
                       ),
                     );
                   },

@@ -40,17 +40,45 @@ class AboutMeDetailsPage extends StatefulWidget {
   @override
   State<AboutMeDetailsPage> createState() => _AboutMeDetailsPageState();
 
+  late final String id;
   late final String aboutMe;
-  AboutMeDetailsPage(this.aboutMe);
+  AboutMeDetailsPage(this.id, this.aboutMe);
 }
 
 class _AboutMeDetailsPageState extends State<AboutMeDetailsPage> {
+  late TextEditingController _controller;
+  String enteredValue = '';
+  bool isValueChanged = false;
+  void updatingAboutMe() async {
+    final response =
+        await post(Uri.parse("$SERVER_ADDRESS/api/updateAboutUs"), body: {
+      "id": widget.id,
+      "aboutus": enteredValue,
+    });
+    print("$SERVER_ADDRESS/api/updateAboutUs");
+    // print(response.body);
+    if (response.statusCode == 200) {
+      print("About Me Updated");
+      setState(() {
+        Navigator.pop(context);
+      });
+    } else {
+      print("About Me Not Updated");
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(text: widget.aboutMe);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('About me',
+          title: Text('About Me',
               // style: GoogleFonts.robotoCondensed(
               //   color: Colors.white,
               //   fontSize: 25,
@@ -64,7 +92,11 @@ class _AboutMeDetailsPageState extends State<AboutMeDetailsPage> {
           actions: [
             TextButton(
               onPressed: () {
-                // Handle button tap
+                if (isValueChanged) {
+                  updatingAboutMe();
+                } else {
+                  // Navigator.pop(context);
+                }
               },
               child: Text(
                 'Save',
@@ -227,18 +259,29 @@ class _AboutMeDetailsPageState extends State<AboutMeDetailsPage> {
                 height: 10,
               ),
               Container(
+                color: Colors.white,
                 child: TextField(
-                  controller: TextEditingController(),
+                  controller: _controller,
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 16,
                     fontWeight: FontWeight.w200,
                   ),
+                  onChanged: (value) {
+                    setState(() {
+                      enteredValue = value;
+                      if (enteredValue != widget.aboutMe) {
+                        isValueChanged = true;
+                      } else {
+                        isValueChanged = false;
+                      }
+                    });
+                  },
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      //hintText: "More About You",
-                      hintText: widget.aboutMe,
-                      hintStyle: TextStyle(color: Colors.grey)),
+                    border: OutlineInputBorder(),
+                    hintText: widget.aboutMe,
+                    hintStyle: TextStyle(color: Colors.black),
+                  ),
                 ),
               )
             ],
