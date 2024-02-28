@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:ui';
 import 'package:appcode3/views/AboutMeDetailsPage.dart';
 import 'package:appcode3/views/BookingScreen.dart';
+import 'package:appcode3/views/ChatScreen.dart';
 import 'package:appcode3/views/CreateTrip.dart';
 import 'package:appcode3/views/Doctor/DoctorProfile.dart';
 import 'package:appcode3/views/Doctor/LogoutScreen.dart';
@@ -148,7 +149,6 @@ class ContainerPage extends StatelessWidget {
                         alignment: Alignment.centerRight,
                         child: IconButton(
                           onPressed: () {
-                            
                             // Add your logic for the onPressed event here
                             // Typically, this would involve navigating to the next screen or performing some action
                           },
@@ -217,6 +217,11 @@ class ContainerPage extends StatelessWidget {
                           alignment: Alignment.centerRight,
                           child: IconButton(
                             onPressed: () {
+                              // Navigator.of(context).push(
+                              //   MaterialPageRoute(
+                              //     builder: (context) => ChatScreen(widget.userName, widget.),
+                              //   ),
+                              // );
                               // Add your logic for the onPressed event here
                               // Typically, this would involve navigating to the next screen or performing some action
                             },

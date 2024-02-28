@@ -181,7 +181,8 @@ class _ChatListScreenState extends State<ChatListScreen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => SendOffersScreen(
-                                            notifyGuides: _sendOfferClass!.notifiedGuides!)),
+                                            notifyGuides: _sendOfferClass!
+                                                .notifiedGuides!)),
                                   );
                                 },
                                 child: Card(
@@ -217,7 +218,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                                               ),
                                               tripCount > 1
                                                   ? Text(
-                                                      '$tripCount persons is looking for a local',
+                                                      '$tripCount persons are looking for a local',
                                                       style: GoogleFonts
                                                           .robotoCondensed(
                                                         fontSize: 18,
@@ -269,10 +270,8 @@ class _ChatListScreenState extends State<ChatListScreen> {
                                                       builder: (context) =>
                                                           SendOffersScreen(
                                                               notifyGuides:
-                                                                  notifyGds)
-                                                          ),
-            
-                                              )
+                                                                  notifyGds)),
+                                                )
                                               : showDialog(
                                                   context: context,
                                                   builder:
