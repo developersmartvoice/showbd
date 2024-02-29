@@ -352,20 +352,67 @@ class _ChatListScreenState extends State<ChatListScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                isSenderSelected = true;
-                              });
-                            },
-                            child: Text('Sender')),
+                          onPressed: () {
+                            setState(() {
+                              isSenderSelected = true;
+                            });
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                isSenderSelected != null && isSenderSelected!
+                                    ? Colors.orange
+                                    : Color.fromARGB(255, 242, 235,
+                                        235), // Change the colors as needed
+                          ),
+                          child: Text(
+                            'Sender',
+                            style: TextStyle(color: Colors.black),
+                            textAlign: TextAlign.center,
+                            textScaleFactor: 1.5,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ),
+                        ),
+
+                        // ElevatedButton(
+                        //   onPressed: () {
+                        //     setState(
+                        //       () {
+                        //         isSenderSelected = true;
+                        //       },
+                        //     );
+                        //   },
+                        //   child: Text(
+                        //     'Sender',
+                        //     style: TextStyle(color: Colors.black),
+                        //     textAlign: TextAlign.center,
+                        //     textScaleFactor: 1.5,
+                        //     overflow: TextOverflow.ellipsis,
+                        //     maxLines: 1,
+                        //   ),
+                        // ),
                         SizedBox(width: 10),
                         ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                isSenderSelected = false;
-                              });
-                            },
-                            child: Text('Recipient')),
+                          onPressed: () {
+                            setState(() {
+                              isSenderSelected = false;
+                            });
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: isSenderSelected != null &&
+                                    isSenderSelected!
+                                ? Color.fromARGB(255, 242, 235, 235)
+                                : Colors.orange, // Change the colors as needed
+                          ),
+                          child: Text(
+                            'Recipient',
+                            style: TextStyle(color: Colors.black),
+                            textAlign: TextAlign.center,
+                            textScaleFactor: 1.5,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -374,15 +421,15 @@ class _ChatListScreenState extends State<ChatListScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                'Sender',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                                textAlign: TextAlign.center,
-                                textScaleFactor: 1.5,
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                              ),
-                              SizedBox(height: 10),
+                              // Text(
+                              //   '',
+                              //   style: TextStyle(fontWeight: FontWeight.bold),
+                              //   textAlign: TextAlign.center,
+                              //   textScaleFactor: 1.5,
+                              //   overflow: TextOverflow.ellipsis,
+                              //   maxLines: 1,
+                              // ),
+                              // SizedBox(height: 10),
                               Expanded(
                                 child: ListView.builder(
                                   shrinkWrap: true,
@@ -420,15 +467,15 @@ class _ChatListScreenState extends State<ChatListScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                'Recipient',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                                textAlign: TextAlign.center,
-                                textScaleFactor: 1.5,
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                              ),
-                              SizedBox(height: 10),
+                              // Text(
+                              //   'Recipient',
+                              //   style: TextStyle(fontWeight: FontWeight.bold),
+                              //   textAlign: TextAlign.center,
+                              //   textScaleFactor: 1.5,
+                              //   overflow: TextOverflow.ellipsis,
+                              //   maxLines: 1,
+                              // ),
+                              // SizedBox(height: 10),
                               Expanded(
                                 child: ListView.builder(
                                   shrinkWrap: true,
