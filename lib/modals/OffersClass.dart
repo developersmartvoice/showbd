@@ -1,142 +1,3 @@
-// This class is for getSendOffers API response
-
-class ChatResponse {
-  bool? success;
-  String? message;
-  List<ChatData>? dataForChat;
-  List<Details>? dataForShow;
-
-  ChatResponse({
-    this.success,
-    this.message,
-    this.dataForChat,
-    this.dataForShow,
-  });
-
-  factory ChatResponse.fromJson(Map<String, dynamic> json) {
-    return ChatResponse(
-      success: json['success'] as bool?,
-      message: json['message'] as String?,
-      dataForChat: (json['data_for_chat'] as List<dynamic>?)
-          ?.map((e) => ChatData.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      dataForShow: (json['data_for_show'] as List<dynamic>?)
-          ?.map((e) => Details.fromJson(e as Map<String, dynamic>))
-          .toList(),
-    );
-  }
-}
-
-class ChatData {
-  String? name;
-  int? uid;
-  String? connectycubeUserId;
-  List<DeviceToken>? deviceToken;
-  String? recipientImage;
-  String? senderImage;
-
-  ChatData({
-    this.name,
-    this.uid,
-    this.connectycubeUserId,
-    this.deviceToken,
-    this.recipientImage,
-    this.senderImage,
-  });
-
-  factory ChatData.fromJson(Map<String, dynamic> json) {
-    return ChatData(
-      name: json['name'] as String?,
-      uid: json['uid'] as int?,
-      connectycubeUserId: json['connectycube_user_id'] as String?,
-      deviceToken: (json['device_token'] as List<dynamic>?)
-          ?.map((e) => DeviceToken.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      recipientImage: json['recipient_image'] as String?,
-      senderImage: json['sender_image'] as String?,
-    );
-  }
-
-  get role => null;
-}
-
-class DeviceToken {
-  String? token;
-  String? type;
-
-  DeviceToken({
-    this.token,
-    this.type,
-  });
-
-  factory DeviceToken.fromJson(Map<String, dynamic> json) {
-    return DeviceToken(
-      token: json['token'] as String?,
-      type: json['type'] as String?,
-    );
-  }
-}
-
-class Details {
-  String? senderName;
-  int? id;
-  int? tripId;
-  int? senderId;
-  int? recipientId;
-  String? date;
-  int? duration;
-  String? timing;
-  String? message;
-  String? createdAt;
-  String? updatedAt;
-  int? isRecipientApproved;
-  // String? senderName;
-
-  Details({
-    this.senderName,
-    this.id,
-    this.tripId,
-    this.senderId,
-    this.recipientId,
-    this.date,
-    this.duration,
-    this.timing,
-    this.message,
-    this.createdAt,
-    this.updatedAt,
-    this.isRecipientApproved,
-    // this.senderName,
-  });
-
-  factory Details.fromJson(Map<String, dynamic> json) {
-    return Details(
-      senderName: json['sender_name'] as String?,
-      id: json['id'] as int?,
-      tripId: json['trip_id'] as int?,
-      senderId: json['sender_id'] as int?,
-      recipientId: json['recipient_id'] as int?,
-      date: json['date'] as String?,
-      duration: json['duration'] as int?,
-      timing: json['timing'] as String?,
-      message: json['message'] as String?,
-      createdAt: json['created_at'] as String?,
-      updatedAt: json['updated_at'] as String?,
-      isRecipientApproved: json['is_recipient_approved'] as int?,
-      // senderName: json['sender_name'] as String?,
-    );
-  }
-}
-
-
-
-
-
-
-
-
-
-
-
 // class ChatData {
 //   bool? success;
 //   String? message;
@@ -251,134 +112,134 @@ class Details {
 //   }
 // }
 
-// class ChatResponse {
-//   bool? success;
-//   String? message;
-//   List<ChatResult>? results;
+class ChatResponse {
+  bool? success;
+  String? message;
+  List<ChatResult>? results;
 
-//   ChatResponse({
-//     this.success,
-//     this.message,
-//     this.results,
-//   });
+  ChatResponse({
+    this.success,
+    this.message,
+    this.results,
+  });
 
-//   factory ChatResponse.fromJson(Map<String, dynamic> json) {
-//     return ChatResponse(
-//       success: json['success'] as bool?,
-//       message: json['message'] as String?,
-//       results: (json['results'] as List<dynamic>?)
-//           ?.map((e) => ChatResult.fromJson(e as Map<String, dynamic>))
-//           .toList(),
-//     );
-//   }
-// }
+  factory ChatResponse.fromJson(Map<String, dynamic> json) {
+    return ChatResponse(
+      success: json['success'] as bool?,
+      message: json['message'] as String?,
+      results: (json['results'] as List<dynamic>?)
+          ?.map((e) => ChatResult.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+  }
+}
 
-// class ChatResult {
-//   ChatData? data;
+class ChatResult {
+  ChatData? data;
 
-//   ChatResult({this.data});
+  ChatResult({this.data});
 
-//   factory ChatResult.fromJson(Map<String, dynamic> json) {
-//     return ChatResult(
-//       data: ChatData.fromJson(json['data'] as Map<String, dynamic>),
-//     );
-//   }
-// }
+  factory ChatResult.fromJson(Map<String, dynamic> json) {
+    return ChatResult(
+      data: ChatData.fromJson(json['data'] as Map<String, dynamic>),
+    );
+  }
+}
 
-// class ChatData {
-//   String? role;
-//   String? name;
-//   String? uid;
-//   String? connectycubeUserId;
-//   List<DeviceToken>? deviceToken;
-//   String? recipientImage;
-//   String? senderImage;
-//   Details? details;
+class ChatData {
+  String? role;
+  String? name;
+  String? uid;
+  String? connectycubeUserId;
+  List<DeviceToken>? deviceToken;
+  String? recipientImage;
+  String? senderImage;
+  Details? details;
 
-//   ChatData({
-//     this.role,
-//     this.name,
-//     this.uid,
-//     this.connectycubeUserId,
-//     this.deviceToken,
-//     this.recipientImage,
-//     this.senderImage,
-//     this.details,
-//   });
+  ChatData({
+    this.role,
+    this.name,
+    this.uid,
+    this.connectycubeUserId,
+    this.deviceToken,
+    this.recipientImage,
+    this.senderImage,
+    this.details,
+  });
 
-//   factory ChatData.fromJson(Map<String, dynamic> json) {
-//     return ChatData(
-//       role: json['role'] as String?,
-//       name: json['name'] as String?,
-//       uid: json['uid'] as String?,
-//       connectycubeUserId: json['connectycube_user_id'] as String?,
-//       deviceToken: (json['device_token'] as List<dynamic>?)
-//           ?.map((e) => DeviceToken.fromJson(e as Map<String, dynamic>))
-//           .toList(),
-//       recipientImage: json['recipient_image'] as String?,
-//       senderImage: json['sender_image'] as String?,
-//       details: Details.fromJson(json['details'] as Map<String, dynamic>),
-//     );
-//   }
-// }
+  factory ChatData.fromJson(Map<String, dynamic> json) {
+    return ChatData(
+      role: json['role'] as String?,
+      name: json['name'] as String?,
+      uid: json['uid'] as String?,
+      connectycubeUserId: json['connectycube_user_id'] as String?,
+      deviceToken: (json['device_token'] as List<dynamic>?)
+          ?.map((e) => DeviceToken.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      recipientImage: json['recipient_image'] as String?,
+      senderImage: json['sender_image'] as String?,
+      details: Details.fromJson(json['details'] as Map<String, dynamic>),
+    );
+  }
+}
 
-// class DeviceToken {
-//   String? token;
-//   String? type;
+class DeviceToken {
+  String? token;
+  String? type;
 
-//   DeviceToken({
-//     this.token,
-//     this.type,
-//   });
+  DeviceToken({
+    this.token,
+    this.type,
+  });
 
-//   factory DeviceToken.fromJson(Map<String, dynamic> json) {
-//     return DeviceToken(
-//       token: json['token'] as String?,
-//       type: json['type'] as String?,
-//     );
-//   }
-// }
+  factory DeviceToken.fromJson(Map<String, dynamic> json) {
+    return DeviceToken(
+      token: json['token'] as String?,
+      type: json['type'] as String?,
+    );
+  }
+}
 
-// class Details {
-//   int? id;
-//   int? tripId;
-//   int? senderId;
-//   int? recipientId;
-//   String? date;
-//   int? duration;
-//   String? timing;
-//   String? message;
-//   String? createdAt;
-//   String? updatedAt;
-//   int? isRecipientApproved;
+class Details {
+  int? id;
+  int? tripId;
+  int? senderId;
+  int? recipientId;
+  String? date;
+  int? duration;
+  String? timing;
+  String? message;
+  String? createdAt;
+  String? updatedAt;
+  int? isRecipientApproved;
 
-//   Details({
-//     this.id,
-//     this.tripId,
-//     this.senderId,
-//     this.recipientId,
-//     this.date,
-//     this.duration,
-//     this.timing,
-//     this.message,
-//     this.createdAt,
-//     this.updatedAt,
-//     this.isRecipientApproved,
-//   });
+  Details({
+    this.id,
+    this.tripId,
+    this.senderId,
+    this.recipientId,
+    this.date,
+    this.duration,
+    this.timing,
+    this.message,
+    this.createdAt,
+    this.updatedAt,
+    this.isRecipientApproved,
+  });
 
-//   factory Details.fromJson(Map<String, dynamic> json) {
-//     return Details(
-//       id: json['id'] as int?,
-//       tripId: json['trip_id'] as int?,
-//       senderId: json['sender_id'] as int?,
-//       recipientId: json['recipient_id'] as int?,
-//       date: json['date'] as String?,
-//       duration: json['duration'] as int?,
-//       timing: json['timing'] as String?,
-//       message: json['message'] as String?,
-//       createdAt: json['created_at'] as String?,
-//       updatedAt: json['updated_at'] as String?,
-//       isRecipientApproved: json['is_recipient_approved'] as int?,
-//     );
-//   }
-// }
+  factory Details.fromJson(Map<String, dynamic> json) {
+    return Details(
+      id: json['id'] as int?,
+      tripId: json['trip_id'] as int?,
+      senderId: json['sender_id'] as int?,
+      recipientId: json['recipient_id'] as int?,
+      date: json['date'] as String?,
+      duration: json['duration'] as int?,
+      timing: json['timing'] as String?,
+      message: json['message'] as String?,
+      createdAt: json['created_at'] as String?,
+      updatedAt: json['updated_at'] as String?,
+      isRecipientApproved: json['is_recipient_approved'] as int?,
+    );
+  }
+}
