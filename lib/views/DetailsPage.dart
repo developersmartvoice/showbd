@@ -1161,7 +1161,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                     )
                                   : Text('$displayText',
                                       style: TextStyle(
-                                        fontSize: 15,
+                                        fontSize: 12,
                                         fontWeight: FontWeight.w500,
                                         color: Colors.black,
                                       )),

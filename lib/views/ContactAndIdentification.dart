@@ -242,6 +242,7 @@ class _ContainerPageState extends State<ContainerPage> {
                       ),
 
                       Container(
+                        padding: EdgeInsets.only(right: 20),
                         alignment: Alignment.center,
                         width: MediaQuery.sizeOf(context).width * .2,
                         child: Text(
@@ -258,12 +259,13 @@ class _ContainerPageState extends State<ContainerPage> {
                         width: MediaQuery.sizeOf(context).width * .1,
                       ),
                       Container(
+                        padding: EdgeInsets.only(left: 10),
                         alignment: Alignment.centerRight,
                         width: MediaQuery.sizeOf(context).width * .4,
                         child: Text(
                           widget.email,
                           style: TextStyle(
-                            fontSize: 16.0,
+                            fontSize: 15.0,
                             fontWeight: FontWeight.bold,
                             color: Colors.grey,
                           ),
@@ -358,6 +360,7 @@ class _ContainerPageState extends State<ContainerPage> {
                       //   width: MediaQuery.sizeOf(context).width * .01,
                       // ),
                       Container(
+                          padding: EdgeInsets.only(right: 13),
                           alignment: Alignment.center,
                           width: MediaQuery.sizeOf(context).width * .2,
                           child: Text(
@@ -377,7 +380,7 @@ class _ContainerPageState extends State<ContainerPage> {
                         child: Text(
                           widget.phone,
                           style: TextStyle(
-                            fontSize: 18.0,
+                            fontSize: 15.0,
                             fontWeight: FontWeight.bold,
                             color: Colors.grey,
                           ),

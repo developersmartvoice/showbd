@@ -180,12 +180,13 @@ class _ChoosePlanState extends State<ChoosePlan> {
                         });
                       },
                       style: ElevatedButton.styleFrom(
-                        foregroundColor: isLimitedSelected
-                            ? Colors.white
-                            : Colors.black, textStyle: GoogleFonts.robotoCondensed(
+                        foregroundColor:
+                            isLimitedSelected ? Colors.white : Colors.black,
+                        textStyle: GoogleFonts.robotoCondensed(
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
-                        ), backgroundColor: isLimitedSelected
+                        ),
+                        backgroundColor: isLimitedSelected
                             ? Color.fromARGB(255, 243, 103, 9)
                             : Colors.white, // Text color
                         // elevation: 5, // Elevation
@@ -206,12 +207,13 @@ class _ChoosePlanState extends State<ChoosePlan> {
                         });
                       },
                       style: ElevatedButton.styleFrom(
-                        foregroundColor: isLimitedSelected
-                            ? Colors.black
-                            : Colors.white, textStyle: GoogleFonts.robotoCondensed(
+                        foregroundColor:
+                            isLimitedSelected ? Colors.black : Colors.white,
+                        textStyle: GoogleFonts.robotoCondensed(
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
-                        ), backgroundColor: isLimitedSelected
+                        ),
+                        backgroundColor: isLimitedSelected
                             ? Colors.white
                             : const Color.fromARGB(
                                 255, 243, 103, 9), // Text color
@@ -257,9 +259,9 @@ class _ChoosePlanState extends State<ChoosePlan> {
             // Container with 4 Avatars and Text in Rows
             SizedBox(height: 16),
             Container(
-              padding: EdgeInsets.all(16),
+              //padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
+                //border: Border.all(color: Colors.grey),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Column(
@@ -316,16 +318,16 @@ class _ChoosePlanState extends State<ChoosePlan> {
                                   'See available guides',
                                   style: GoogleFonts.robotoCondensed(
                                     fontSize: 18,
-                                    color: Colors
-                                        .black, // You can customize the style as needed
+                                    color: Color.fromARGB(131, 0, 0,
+                                        0), // You can customize the style as needed
                                   ),
                                 ),
                                 Text(
                                   'for all locations',
                                   style: GoogleFonts.robotoCondensed(
                                     fontSize: 18,
-                                    color: Colors
-                                        .black, // You can customize the style as needed
+                                    color: Color.fromARGB(131, 0, 0,
+                                        0), // You can customize the style as needed
                                   ),
                                 ),
                               ],
@@ -385,16 +387,16 @@ class _ChoosePlanState extends State<ChoosePlan> {
                                   'Get "MeetLocal" offers',
                                   style: GoogleFonts.robotoCondensed(
                                     fontSize: 18,
-                                    color: Colors
-                                        .black, // You can customize the style as needed
+                                    color: Color.fromARGB(131, 0, 0,
+                                        0), // You can customize the style as needed
                                   ),
                                 ),
                                 Text(
                                   'from locals',
                                   style: GoogleFonts.robotoCondensed(
                                     fontSize: 18,
-                                    color: Colors
-                                        .black, // You can customize the style as needed
+                                    color: Color.fromARGB(131, 0, 0,
+                                        0), // You can customize the style as needed
                                   ),
                                 ),
                               ],
@@ -463,16 +465,16 @@ class _ChoosePlanState extends State<ChoosePlan> {
                                             'Connect with travellers',
                                             style: GoogleFonts.robotoCondensed(
                                               fontSize: 18,
-                                              color: Colors
-                                                  .black, // You can customize the style as needed
+                                              color: Color.fromARGB(131, 0, 0,
+                                                  0), // You can customize the style as needed
                                             ),
                                           ),
                                           Text(
                                             'who visit your city',
                                             style: GoogleFonts.robotoCondensed(
                                               fontSize: 18,
-                                              color: Colors
-                                                  .black, // You can customize the style as needed
+                                              color: Color.fromARGB(131, 0, 0,
+                                                  0), // You can customize the style as needed
                                             ),
                                           ),
                                         ],
@@ -523,16 +525,16 @@ class _ChoosePlanState extends State<ChoosePlan> {
                                           'Connect with travellers',
                                           style: GoogleFonts.robotoCondensed(
                                             fontSize: 18,
-                                            color: Colors
-                                                .black, // You can customize the style as needed
+                                            color: Color.fromARGB(131, 0, 0,
+                                                0), // You can customize the style as needed
                                           ),
                                         ),
                                         Text(
                                           'who visit your city',
                                           style: GoogleFonts.robotoCondensed(
                                             fontSize: 18,
-                                            color: Colors
-                                                .black, // You can customize the style as needed
+                                            color: Color.fromARGB(131, 0, 0,
+                                                0), // You can customize the style as needed
                                           ),
                                         ),
                                       ],
@@ -601,8 +603,8 @@ class _ChoosePlanState extends State<ChoosePlan> {
                                             'Contact those you like',
                                             style: GoogleFonts.robotoCondensed(
                                               fontSize: 18,
-                                              color: Colors
-                                                  .black, // You can customize the style as needed
+                                              color: Color.fromARGB(131, 0, 0,
+                                                  0), // You can customize the style as needed
                                             ),
                                           ),
                                         ],
@@ -654,8 +656,8 @@ class _ChoosePlanState extends State<ChoosePlan> {
                                           'Contact those you like',
                                           style: GoogleFonts.robotoCondensed(
                                             fontSize: 18,
-                                            color: Colors
-                                                .black, // You can customize the style as needed
+                                            color: Color.fromARGB(131, 0, 0,
+                                                0), // You can customize the style as needed
                                           ),
                                         ),
                                       ],
@@ -706,7 +708,59 @@ class _ChoosePlanState extends State<ChoosePlan> {
             ),
 
             SizedBox(
-              height: 35,
+              height: 30,
+            ),
+
+            Container(
+              child: isLimitedSelected
+                  ? AnimatedOpacity(
+                      duration: Duration(seconds: 1),
+                      opacity: isFadeOut ? 0.25 : 1.0,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Member Subscription for',
+                            style: GoogleFonts.robotoCondensed(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          Text(
+                            '৳1.00',
+                            style: GoogleFonts.robotoCondensed(
+                              fontSize: 16,
+                              color: Colors
+                                  .black, // You can customize the style as needed
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Member Subscription for',
+                          style: GoogleFonts.robotoCondensed(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        Text(
+                          '৳1.00',
+                          style: GoogleFonts.robotoCondensed(
+                            fontSize: 16,
+                            color: Colors
+                                .black, // You can customize the style as needed
+                          ),
+                        ),
+                      ],
+                    ),
+            ),
+
+            SizedBox(
+              height: 15,
             ),
 
             ElevatedButton(

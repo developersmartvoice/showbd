@@ -1067,7 +1067,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => AboutHost()),
+                MaterialPageRoute(builder: (context) => AboutHost(doctorId!)),
               );
             },
             child: Container(

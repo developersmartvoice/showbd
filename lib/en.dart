@@ -119,6 +119,24 @@ const String SELECT_DEPARTMENT = "Select department";
 
 //Morescreen
 const String NAME_PAGE = "Use your real first name";
+const String MOTTO_PAGE_1 =
+    "Your motto is the first thing others will read about you. Write a catchy line that best describes you as a host.";
+const String MOTTO_PAGE_2 =
+    "Important: We love all languages, but we kindly ask to fill this section out in English. Also please avoid using brand and company names or links to other websites.";
+const String GENDER_PAGE = "Input your gender";
+const String SERVICES_PAGE_1 = "Translation & Interpretation";
+const String SERVICES_PAGE_2 = "Pick up & Driving Tours";
+const String SERVICES_PAGE_3 = "Shopping";
+const String SERVICES_PAGE_4 = "Nightlife & Bars";
+const String SERVICES_PAGE_5 = "Food & Restaurants";
+const String SERVICES_PAGE_6 = "Art & Museums";
+const String SERVICES_PAGE_7 = "Sports & Recreation";
+const String SERVICES_PAGE_8 = "History & Culture";
+const String SERVICES_PAGE_9 = "Exploration & Sightseeing";
+const String LANGUAGES_PAGE = "Select your preferred language";
+const String IWILLSHOWYOU_PAGE_1 =
+    "How would you describe the ideal tour around you? Be specific.";
+const String LANGUAGES = "Languages";
 const String ABOUT = "About Me";
 const String LOCATION = "Location";
 const String EMAIL_PAGE =
