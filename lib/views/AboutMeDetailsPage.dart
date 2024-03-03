@@ -110,6 +110,7 @@ class _AboutMeDetailsPageState extends State<AboutMeDetailsPage> {
           ],
         ),
         body: Container(
+          color: LIGHT_GREY_SCREEN_BACKGROUND,
           // height: MediaQuery.sizeOf(context).height * 1,
           child: Column(
             children: [

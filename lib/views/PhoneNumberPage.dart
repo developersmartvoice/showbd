@@ -110,188 +110,191 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Container(
-            height: 70,
-            color: Colors.white,
-            child: Stack(children: [
-              Positioned(
-                left: 10, // Adjust the position of the button as needed
-                top: 20, // Adjust the position of the button as needed
-                child: InkWell(
-                    //onTap: _changeColor,
-                    // Add your logic for the selection button onTap event here
+      body: Container(
+        color: LIGHT_GREY_SCREEN_BACKGROUND,
+        child: Column(
+          children: [
+            Container(
+              height: 70,
+              //color: Colors.white,
+              child: Stack(children: [
+                Positioned(
+                  left: 10, // Adjust the position of the button as needed
+                  top: 20, // Adjust the position of the button as needed
+                  child: InkWell(
+                      //onTap: _changeColor,
+                      // Add your logic for the selection button onTap event here
 
-                    // child: Container(
-                    //   width: 30,
-                    //   height: 30,
-                    //   decoration: BoxDecoration(
-                    //     //color: _boxColor, // Color of the button
-                    //     color: Colors.green,
-                    //     shape: BoxShape.circle,
-                    //     border: Border.all(
-                    //       color: Colors.black, // Color of the border
-                    //       width: 1.0, // Width of the border
-                    //     ), // Circular shape
-                    //   ),
-                    //   child: Icon(
-                    //     Icons.check,
-                    //     //color: _isSelected ? Colors.green : Colors.white,
-                    //     color: Colors.white, // Color of the icon
-                    //     size: 25.0, // Size of the icon
-                    //   ),
-                    // ),
-                    ),
-              ),
-              Container(
-                // color: LIGHT_GREY_SCREEN_BACKGROUND,
-                // height: 180,
-                // child: Row(children: [
-                //   Expanded(
-                //     child: Padding(
-                padding: EdgeInsets.all(16),
-                alignment: Alignment.topLeft,
-                child: Text(
-                  "Phone Page",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w200,
-                  ),
+                      // child: Container(
+                      //   width: 30,
+                      //   height: 30,
+                      //   decoration: BoxDecoration(
+                      //     //color: _boxColor, // Color of the button
+                      //     color: Colors.green,
+                      //     shape: BoxShape.circle,
+                      //     border: Border.all(
+                      //       color: Colors.black, // Color of the border
+                      //       width: 1.0, // Width of the border
+                      //     ), // Circular shape
+                      //   ),
+                      //   child: Icon(
+                      //     Icons.check,
+                      //     //color: _isSelected ? Colors.green : Colors.white,
+                      //     color: Colors.white, // Color of the icon
+                      //     size: 25.0, // Size of the icon
+                      //   ),
+                      // ),
+                      ),
                 ),
-                // Text(
-                //   "Your phone number will be used to send you booking confirmations. It won't be displayed on your profile. Be sure to use a cell number you can easily be reached at!",
-                //   textAlign: TextAlign.center,
-                //   style: GoogleFonts.robotoCondensed(
-                //     fontSize: 15.0,
-                //     color: Colors.black,
-                //     fontWeight: FontWeight.w500,
+                Container(
+                  // color: LIGHT_GREY_SCREEN_BACKGROUND,
+                  // height: 180,
+                  // child: Row(children: [
+                  //   Expanded(
+                  //     child: Padding(
+                  padding: EdgeInsets.all(16),
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    "Phone Page",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w200,
+                    ),
+                  ),
+                  // Text(
+                  //   "Your phone number will be used to send you booking confirmations. It won't be displayed on your profile. Be sure to use a cell number you can easily be reached at!",
+                  //   textAlign: TextAlign.center,
+                  //   style: GoogleFonts.robotoCondensed(
+                  //     fontSize: 15.0,
+                  //     color: Colors.black,
+                  //     fontWeight: FontWeight.w500,
+                  //   ),
+                  // ),
+                ),
+
+                // Align(
+                //   alignment: Alignment.centerRight,
+                //   child: IconButton(
+                //     onPressed: () {
+                //       // Add your logic for the onPressed event here
+                //       // Typically, this would involve navigating to the next screen or performing some action
+                //     },
+                //     //alignment: Alignment.centerRight,
+                //     icon: Icon(Icons.arrow_forward_ios_sharp),
+                //     color: Colors.black, // Color of the icon
+                //     iconSize: 24.0, // Size of the icon
                 //   ),
                 // ),
-              ),
+              ]),
+            ),
+            Divider(
+              height: 2,
+              color: Colors.grey,
+            ),
 
-              // Align(
-              //   alignment: Alignment.centerRight,
-              //   child: IconButton(
-              //     onPressed: () {
-              //       // Add your logic for the onPressed event here
-              //       // Typically, this would involve navigating to the next screen or performing some action
-              //     },
-              //     //alignment: Alignment.centerRight,
-              //     icon: Icon(Icons.arrow_forward_ios_sharp),
-              //     color: Colors.black, // Color of the icon
-              //     iconSize: 24.0, // Size of the icon
-              //   ),
-              // ),
-            ]),
-          ),
-          Divider(
-            height: 2,
-            color: Colors.grey,
-          ),
-
-          Container(
-            color: Colors.white,
-            child: TextField(
-              controller: _controller,
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 16,
-                fontWeight: FontWeight.w200,
-              ),
-              onChanged: (value) {
-                setState(() {
-                  enteredValue = value;
-                  if (enteredValue != widget.phone) {
-                    isValueChanged = true;
-                  } else {
-                    isValueChanged = false;
-                  }
-                });
-              },
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: widget.phone,
-                hintStyle: TextStyle(color: Colors.black),
+            Container(
+              color: Colors.white,
+              child: TextField(
+                controller: _controller,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w200,
+                ),
+                onChanged: (value) {
+                  setState(() {
+                    enteredValue = value;
+                    if (enteredValue != widget.phone) {
+                      isValueChanged = true;
+                    } else {
+                      isValueChanged = false;
+                    }
+                  });
+                },
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: widget.phone,
+                  hintStyle: TextStyle(color: Colors.black),
+                ),
               ),
             ),
-          ),
 
-          // Container(
-          //   color: Colors.white,
-          //   child: TextField(
-          //     controller: _controller,
-          //     style: TextStyle(
-          //       color: Colors.black,
-          //       fontSize: 16,
-          //       fontWeight: FontWeight.w200,
-          //     ),
-          //     onChanged: (value) {
-          //       setState(() {
-          //         enteredValue = value;
-          //         if (enteredValue != widget.phone) {
-          //           isValueChanged = true;
-          //         } else {
-          //           isValueChanged = false;
-          //         }
-          //       });
-          //     },
-          //     decoration: InputDecoration(
-          //       border: OutlineInputBorder(),
-          //       hintText: widget.phone,
-          //       hintStyle: TextStyle(color: Colors.black),
-          //     ),
-          //   ),
-          // ),
-          // Container(
-          //   child: TextField(
-          //     controller: TextEditingController(),
-          //     style: TextStyle(
-          //       color: Colors.black,
-          //       fontSize: 16,
-          //       fontWeight: FontWeight.w200,
-          //     ),
-          //     decoration: InputDecoration(
-          //         border: OutlineInputBorder(),
-          //         //hintText: "More About You",
-          //         //hintText: widget.,
-          //         hintStyle: TextStyle(color: Colors.grey)),
-          //   ),
-          // ),
-          // Container(
-          //   color: Colors.white,
-          //   height: 50,
-          //   child: Row(
-          //     children: [
-          //       Expanded(
-          //         //child: Padding(
-          //         //padding: const EdgeInsets.only(right: 190.0),
-          //         child: TextField(
-          //           textAlign: TextAlign.start,
-          //           controller: TextEditingController(),
-          //           style: TextStyle(
-          //             color: Colors.black,
-          //             fontSize: 18,
-          //             fontWeight: FontWeight.w500,
-          //           ), // Use a TextEditingController
-          //           decoration: InputDecoration(
-          //             hintText: 'Your phone number',
-          //             border: OutlineInputBorder(),
-          //             hintStyle: TextStyle(
-          //                 color: Colors.grey), // Border around the input field
-          //           ),
-          //         ),
-          //       ),
-          //       //),
-          //     ],
-          //   ),
-          // ),
-          Divider(
-            height: 2,
-            color: Colors.grey,
-          ),
-        ],
+            // Container(
+            //   color: Colors.white,
+            //   child: TextField(
+            //     controller: _controller,
+            //     style: TextStyle(
+            //       color: Colors.black,
+            //       fontSize: 16,
+            //       fontWeight: FontWeight.w200,
+            //     ),
+            //     onChanged: (value) {
+            //       setState(() {
+            //         enteredValue = value;
+            //         if (enteredValue != widget.phone) {
+            //           isValueChanged = true;
+            //         } else {
+            //           isValueChanged = false;
+            //         }
+            //       });
+            //     },
+            //     decoration: InputDecoration(
+            //       border: OutlineInputBorder(),
+            //       hintText: widget.phone,
+            //       hintStyle: TextStyle(color: Colors.black),
+            //     ),
+            //   ),
+            // ),
+            // Container(
+            //   child: TextField(
+            //     controller: TextEditingController(),
+            //     style: TextStyle(
+            //       color: Colors.black,
+            //       fontSize: 16,
+            //       fontWeight: FontWeight.w200,
+            //     ),
+            //     decoration: InputDecoration(
+            //         border: OutlineInputBorder(),
+            //         //hintText: "More About You",
+            //         //hintText: widget.,
+            //         hintStyle: TextStyle(color: Colors.grey)),
+            //   ),
+            // ),
+            // Container(
+            //   color: Colors.white,
+            //   height: 50,
+            //   child: Row(
+            //     children: [
+            //       Expanded(
+            //         //child: Padding(
+            //         //padding: const EdgeInsets.only(right: 190.0),
+            //         child: TextField(
+            //           textAlign: TextAlign.start,
+            //           controller: TextEditingController(),
+            //           style: TextStyle(
+            //             color: Colors.black,
+            //             fontSize: 18,
+            //             fontWeight: FontWeight.w500,
+            //           ), // Use a TextEditingController
+            //           decoration: InputDecoration(
+            //             hintText: 'Your phone number',
+            //             border: OutlineInputBorder(),
+            //             hintStyle: TextStyle(
+            //                 color: Colors.grey), // Border around the input field
+            //           ),
+            //         ),
+            //       ),
+            //       //),
+            //     ],
+            //   ),
+            // ),
+            Divider(
+              height: 2,
+              color: Colors.grey,
+            ),
+          ],
+        ),
       ),
     );
   }

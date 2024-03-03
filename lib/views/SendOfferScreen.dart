@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:appcode3/modals/SendOfferClass.dart';
+import 'package:appcode3/views/DetailsPage.dart';
 import 'package:appcode3/views/Doctor/DoctorProfile.dart';
 import 'package:connectycube_sdk/connectycube_chat.dart';
 
@@ -54,6 +55,7 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
   bool isMessageGiven = false;
   bool isErrorLoading = false;
 
+  String? doctorId;
   String? senderId;
   String? tripId;
   String? guideId;
@@ -488,7 +490,8 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
                           onPressed: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (context) => DoctorProfile(),
+                                builder: (context) =>
+                                    DetailsPage(doctorId.toString()),
                               ),
                             );
                           },

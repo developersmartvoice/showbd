@@ -34,45 +34,45 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:flutter/material.dart';
 
-class NameSettingsPage extends StatefulWidget {
+class GenderSettingsPage extends StatefulWidget {
   //const NameSettingsPage({super.key});
 
   @override
-  State<NameSettingsPage> createState() => _NameSettingsPageState();
+  State<GenderSettingsPage> createState() => _GenderSettingsPageState();
   late final String id;
-  late final String name;
+  late final String gender;
   //late final String aboutMe;
   //late final String city;
 
-  NameSettingsPage(this.id, this.name);
+  GenderSettingsPage(this.id, this.gender);
 }
 
-class _NameSettingsPageState extends State<NameSettingsPage> {
+class _GenderSettingsPageState extends State<GenderSettingsPage> {
   late TextEditingController _controller;
   String enteredValue = '';
   bool isValueChanged = false;
-  void updatingName() async {
+  void updatingGender() async {
     final response =
-        await post(Uri.parse("$SERVER_ADDRESS/api/updateName"), body: {
+        await post(Uri.parse("$SERVER_ADDRESS/api/updateGender"), body: {
       "id": widget.id,
-      "name": enteredValue,
+      "gender": enteredValue,
     });
-    print("$SERVER_ADDRESS/api/updateName");
+    print("$SERVER_ADDRESS/api/updateGender");
     // print(response.body);
     if (response.statusCode == 200) {
-      print("Name Updated");
+      print("Gender Updated");
       setState(() {
         Navigator.pop(context);
       });
     } else {
-      print("Name Not Updated");
+      print("Gender Not Updated");
     }
   }
 
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController(text: widget.name);
+    _controller = TextEditingController(text: widget.gender);
   }
 
   @override
@@ -80,7 +80,7 @@ class _NameSettingsPageState extends State<NameSettingsPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Name',
+          title: Text('Gender',
               // style: GoogleFonts.robotoCondensed(
               //   color: Colors.white,
               //   fontSize: 25,
@@ -95,7 +95,7 @@ class _NameSettingsPageState extends State<NameSettingsPage> {
             TextButton(
               onPressed: () {
                 if (isValueChanged) {
-                  updatingName();
+                  updatingGender();
                 } else {
                   // Navigator.pop(context);
                 }
@@ -119,7 +119,7 @@ class _NameSettingsPageState extends State<NameSettingsPage> {
                 padding: EdgeInsets.all(16),
                 alignment: Alignment.topLeft,
                 child: Text(
-                  NAME_PAGE,
+                  GENDER_PAGE,
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 12,
@@ -143,7 +143,7 @@ class _NameSettingsPageState extends State<NameSettingsPage> {
                     setState(
                       () {
                         enteredValue = value;
-                        if (enteredValue != widget.name) {
+                        if (enteredValue != widget.gender) {
                           isValueChanged = true;
                         } else {
                           isValueChanged = false;
@@ -153,7 +153,7 @@ class _NameSettingsPageState extends State<NameSettingsPage> {
                   },
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: widget.name,
+                    hintText: widget.gender,
                     hintStyle: TextStyle(color: Colors.black),
                   ),
                 ),

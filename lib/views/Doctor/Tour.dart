@@ -107,10 +107,11 @@ class _TourState extends State<Tour> {
                   children: [
                     Text(
                       'Save time by planning your trip and get offers from locals',
+                      textAlign: TextAlign.center,
                       style: GoogleFonts.poppins(
                           fontWeight: FontWeight.w500,
                           color: BLACK,
-                          fontSize: 16),
+                          fontSize: 15),
                     ),
                     SizedBox(height: 16.0),
                     ElevatedButton.icon(
@@ -132,9 +133,10 @@ class _TourState extends State<Tour> {
                         ),
                       ),
                       style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: MediaQuery.of(context).size.width * .2,
-                            vertical: MediaQuery.of(context).size.height * .02),
+                        padding: EdgeInsets.fromLTRB(95, 13, 95, 13),
+                        // padding: EdgeInsets.symmetric(
+                        //     horizontal: MediaQuery.of(context).size.width * .2,
+                        //     vertical: MediaQuery.of(context).size.height * .02),
                         backgroundColor: Colors.blue,
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
