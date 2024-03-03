@@ -6,6 +6,7 @@ import 'package:appcode3/modals/OffersClass.dart';
 import 'package:appcode3/modals/SendOfferClass.dart';
 import 'package:appcode3/views/ChatScreen.dart';
 import 'package:appcode3/views/Doctor/loginAsDoctor.dart';
+import 'package:appcode3/views/SeeAllOffersScreen.dart';
 import 'package:appcode3/views/SendOfferScreen.dart';
 import 'package:appcode3/views/SendOffersScreen.dart';
 import 'package:appcode3/views/loginAsUser.dart';
@@ -58,55 +59,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
       getTripCount();
       getChatListData();
       getSendOfferData();
-      // getSendOfferData1();
-      fetchChatData();
     });
-  }
-
-  Future<void> fetchChatData() async {
-    setState(() {
-      isLoading = true; // Move this here to properly indicate loading state.
-    });
-
-    try {
-      print('Fetching chat data...');
-      final response = await http.get(
-        Uri.parse("$SERVER_ADDRESS/api/getRecipients?id=$id"),
-        headers: {'Content-Type': 'application/json'},
-      );
-
-      if (response.statusCode == 200) {
-        print('Chat data fetched successfully');
-        final jsonResponse = jsonDecode(response.body);
-
-        // Check for null safety
-        final chatResponse = ChatResponse.fromJson(jsonResponse);
-        if (chatResponse.success == true && chatResponse.results != null) {
-          setState(() {
-            chatDataList =
-                chatResponse.results!.map((result) => result.data!).toList();
-          });
-          print('Chat data parsed and updated in chatDataList');
-        } else {
-          // Handle the case where success is false or results is null
-          print("Failed to get data: ${chatResponse.message}");
-          // You might want to display an error message to the user here.
-        }
-      } else {
-        // Handle server errors
-        print('Failed to fetch chat data. Status code: ${response.statusCode}');
-        throw Exception('Failed to load data: ${response.statusCode}');
-      }
-    } catch (e) {
-      // Handle general errors
-      print('Error: $e');
-      // You might want to display an error message to the user here.
-    } finally {
-      setState(() {
-        isLoading = false;
-      });
-      print('Chat data fetching process completed.');
-    }
   }
 
   List<ChatListDetails> chatListDetails = [];
@@ -338,6 +291,24 @@ class _ChatListScreenState extends State<ChatListScreen> {
                                     ),
                                   ),
                                 ),
+                                Container(
+                                  child: InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  SeeAllOffers()),
+                                        );
+                                      });
+                                    },
+                                    child: Card(
+                                      child: Text(
+                                          "Click to View Your Sent and Received Offers!"),
+                                    ),
+                                  ),
+                                )
                               ],
                             ),
                           )
@@ -346,170 +317,170 @@ class _ChatListScreenState extends State<ChatListScreen> {
                   SizedBox(
                     height: 10,
                   ),
-                  Container(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              isSenderSelected = true;
-                            });
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                isSenderSelected != null && isSenderSelected!
-                                    ? Colors.orange
-                                    : Color.fromARGB(255, 242, 235,
-                                        235), // Change the colors as needed
-                          ),
-                          child: Text(
-                            'Sender',
-                            style: TextStyle(color: Colors.black),
-                            textAlign: TextAlign.center,
-                            textScaleFactor: 1.5,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                          ),
-                        ),
+                  // Container(
+                  //   child: Row(
+                  //     crossAxisAlignment: CrossAxisAlignment.center,
+                  //     mainAxisAlignment: MainAxisAlignment.center,
+                  //     children: [
+                  //       ElevatedButton(
+                  //         onPressed: () {
+                  //           setState(() {
+                  //             isSenderSelected = true;
+                  //           });
+                  //         },
+                  //         style: ElevatedButton.styleFrom(
+                  //           backgroundColor:
+                  //               isSenderSelected != null && isSenderSelected!
+                  //                   ? Colors.orange
+                  //                   : Color.fromARGB(255, 242, 235,
+                  //                       235), // Change the colors as needed
+                  //         ),
+                  //         child: Text(
+                  //           'Sender',
+                  //           style: TextStyle(color: Colors.black),
+                  //           textAlign: TextAlign.center,
+                  //           textScaleFactor: 1.5,
+                  //           overflow: TextOverflow.ellipsis,
+                  //           maxLines: 1,
+                  //         ),
+                  //       ),
 
-                        // ElevatedButton(
-                        //   onPressed: () {
-                        //     setState(
-                        //       () {
-                        //         isSenderSelected = true;
-                        //       },
-                        //     );
-                        //   },
-                        //   child: Text(
-                        //     'Sender',
-                        //     style: TextStyle(color: Colors.black),
-                        //     textAlign: TextAlign.center,
-                        //     textScaleFactor: 1.5,
-                        //     overflow: TextOverflow.ellipsis,
-                        //     maxLines: 1,
-                        //   ),
-                        // ),
-                        SizedBox(width: 10),
-                        ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              isSenderSelected = false;
-                            });
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: isSenderSelected != null &&
-                                    isSenderSelected!
-                                ? Color.fromARGB(255, 242, 235, 235)
-                                : Colors.orange, // Change the colors as needed
-                          ),
-                          child: Text(
-                            'Recipient',
-                            style: TextStyle(color: Colors.black),
-                            textAlign: TextAlign.center,
-                            textScaleFactor: 1.5,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  isSenderSelected!
-                      ? Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // Text(
-                              //   '',
-                              //   style: TextStyle(fontWeight: FontWeight.bold),
-                              //   textAlign: TextAlign.center,
-                              //   textScaleFactor: 1.5,
-                              //   overflow: TextOverflow.ellipsis,
-                              //   maxLines: 1,
-                              // ),
-                              // SizedBox(height: 10),
-                              Expanded(
-                                child: ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: chatDataList
-                                      .where((chatData) =>
-                                          chatData.role == 'Sender')
-                                      .length,
-                                  itemBuilder: (context, index) {
-                                    final senderMessages = chatDataList
-                                        .where((chatData) =>
-                                            chatData.role == 'Sender')
-                                        .toList();
-                                    final chatData = senderMessages[index];
-                                    return ListTile(
-                                      title: Text(chatData.name!),
-                                      subtitle:
-                                          Text(chatData.details!.message!),
-                                      leading: CircleAvatar(
-                                        backgroundImage: chatData.senderImage !=
-                                                null
-                                            ? NetworkImage(
-                                                chatData.senderImage!)
-                                            : AssetImage(
-                                                    'assets/default_avatar.png')
-                                                as ImageProvider<Object>,
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
-                      : Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // Text(
-                              //   'Recipient',
-                              //   style: TextStyle(fontWeight: FontWeight.bold),
-                              //   textAlign: TextAlign.center,
-                              //   textScaleFactor: 1.5,
-                              //   overflow: TextOverflow.ellipsis,
-                              //   maxLines: 1,
-                              // ),
-                              // SizedBox(height: 10),
-                              Expanded(
-                                child: ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: chatDataList
-                                      .where((chatData) =>
-                                          chatData.role == 'Recipient')
-                                      .length,
-                                  itemBuilder: (context, index) {
-                                    final recipientMessages = chatDataList
-                                        .where((chatData) =>
-                                            chatData.role == 'Recipient')
-                                        .toList();
-                                    final chatData = recipientMessages[index];
-                                    return ListTile(
-                                      title: Text(chatData.name!),
-                                      subtitle:
-                                          Text(chatData.details!.message!),
-                                      leading: CircleAvatar(
-                                        backgroundImage: chatData
-                                                    .recipientImage !=
-                                                null
-                                            ? NetworkImage(
-                                                chatData.recipientImage!)
-                                            : AssetImage(
-                                                    'assets/default_avatar.png')
-                                                as ImageProvider<Object>,
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                  //       // ElevatedButton(
+                  //       //   onPressed: () {
+                  //       //     setState(
+                  //       //       () {
+                  //       //         isSenderSelected = true;
+                  //       //       },
+                  //       //     );
+                  //       //   },
+                  //       //   child: Text(
+                  //       //     'Sender',
+                  //       //     style: TextStyle(color: Colors.black),
+                  //       //     textAlign: TextAlign.center,
+                  //       //     textScaleFactor: 1.5,
+                  //       //     overflow: TextOverflow.ellipsis,
+                  //       //     maxLines: 1,
+                  //       //   ),
+                  //       // ),
+                  //       SizedBox(width: 10),
+                  //       ElevatedButton(
+                  //         onPressed: () {
+                  //           setState(() {
+                  //             isSenderSelected = false;
+                  //           });
+                  //         },
+                  //         style: ElevatedButton.styleFrom(
+                  //           backgroundColor: isSenderSelected != null &&
+                  //                   isSenderSelected!
+                  //               ? Color.fromARGB(255, 242, 235, 235)
+                  //               : Colors.orange, // Change the colors as needed
+                  //         ),
+                  //         child: Text(
+                  //           'Recipient',
+                  //           style: TextStyle(color: Colors.black),
+                  //           textAlign: TextAlign.center,
+                  //           textScaleFactor: 1.5,
+                  //           overflow: TextOverflow.ellipsis,
+                  //           maxLines: 1,
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                  // isSenderSelected!
+                  //     ? Expanded(
+                  //         child: Column(
+                  //           crossAxisAlignment: CrossAxisAlignment.start,
+                  //           children: [
+                  //             // Text(
+                  //             //   '',
+                  //             //   style: TextStyle(fontWeight: FontWeight.bold),
+                  //             //   textAlign: TextAlign.center,
+                  //             //   textScaleFactor: 1.5,
+                  //             //   overflow: TextOverflow.ellipsis,
+                  //             //   maxLines: 1,
+                  //             // ),
+                  //             // SizedBox(height: 10),
+                  //             Expanded(
+                  //               child: ListView.builder(
+                  //                 shrinkWrap: true,
+                  //                 itemCount: chatDataList
+                  //                     .where((chatData) =>
+                  //                         chatData.role == 'Sender')
+                  //                     .length,
+                  //                 itemBuilder: (context, index) {
+                  //                   final senderMessages = chatDataList
+                  //                       .where((chatData) =>
+                  //                           chatData.role == 'Sender')
+                  //                       .toList();
+                  //                   final chatData = senderMessages[index];
+                  //                   return ListTile(
+                  //                     title: Text(chatData.name!),
+                  //                     subtitle:
+                  //                         Text(chatData.details!.message!),
+                  //                     leading: CircleAvatar(
+                  //                       backgroundImage: chatData.senderImage !=
+                  //                               null
+                  //                           ? NetworkImage(
+                  //                               chatData.senderImage!)
+                  //                           : AssetImage(
+                  //                                   'assets/default_avatar.png')
+                  //                               as ImageProvider<Object>,
+                  //                     ),
+                  //                   );
+                  //                 },
+                  //               ),
+                  //             ),
+                  //           ],
+                  //         ),
+                  //       )
+                  //     : Expanded(
+                  //         child: Column(
+                  //           crossAxisAlignment: CrossAxisAlignment.start,
+                  //           children: [
+                  //             // Text(
+                  //             //   'Recipient',
+                  //             //   style: TextStyle(fontWeight: FontWeight.bold),
+                  //             //   textAlign: TextAlign.center,
+                  //             //   textScaleFactor: 1.5,
+                  //             //   overflow: TextOverflow.ellipsis,
+                  //             //   maxLines: 1,
+                  //             // ),
+                  //             // SizedBox(height: 10),
+                  //             Expanded(
+                  //               child: ListView.builder(
+                  //                 shrinkWrap: true,
+                  //                 itemCount: chatDataList
+                  //                     .where((chatData) =>
+                  //                         chatData.role == 'Recipient')
+                  //                     .length,
+                  //                 itemBuilder: (context, index) {
+                  //                   final recipientMessages = chatDataList
+                  //                       .where((chatData) =>
+                  //                           chatData.role == 'Recipient')
+                  //                       .toList();
+                  //                   final chatData = recipientMessages[index];
+                  //                   return ListTile(
+                  //                     title: Text(chatData.name!),
+                  //                     subtitle:
+                  //                         Text(chatData.details!.message!),
+                  //                     leading: CircleAvatar(
+                  //                       backgroundImage: chatData
+                  //                                   .recipientImage !=
+                  //                               null
+                  //                           ? NetworkImage(
+                  //                               chatData.recipientImage!)
+                  //                           : AssetImage(
+                  //                                   'assets/default_avatar.png')
+                  //                               as ImageProvider<Object>,
+                  //                     ),
+                  //                   );
+                  //                 },
+                  //               ),
+                  //             ),
+                  //           ],
+                  //         ),
+                  //       ),
                 ],
               ),
             ),
