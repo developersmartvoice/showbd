@@ -160,162 +160,150 @@ class _ChatListScreenState extends State<ChatListScreen> {
                 children: [
                   header(),
                   Container(
-                    child: chatListDetails.length == 0
-                        ? Container(
-                            child: Column(
+                      child: Container(
+                    child: Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SendOffersScreen(
+                                  notifyGuides:
+                                      _sendOfferClass!.notifiedGuides!,
+                                ),
+                              ),
+                            );
+                          },
+                          child: Card(
+                            child: Row(
                               children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => SendOffersScreen(
-                                          notifyGuides:
-                                              _sendOfferClass!.notifiedGuides!,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  child: Card(
-                                    child: Row(
+                                CircleAvatar(
+                                  // Add your avatar properties, e.g., backgroundImage, radius, etc.
+                                  radius: 35,
+                                  backgroundImage:
+                                      AssetImage('assets/people 6.png'),
+                                  backgroundColor: Colors
+                                      .blue, // Example color, you can customize
+                                  // Add any other properties for the avatar
+                                ),
+                                // Your card content goes here
+                                Expanded(
+                                  child: Container(
+                                    padding: EdgeInsets.all(16),
+                                    child: Column(
+                                      // Add your card content here, e.g., Text, Image, etc.
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        CircleAvatar(
-                                          // Add your avatar properties, e.g., backgroundImage, radius, etc.
-                                          radius: 35,
-                                          backgroundImage:
-                                              AssetImage('assets/people 6.png'),
-                                          backgroundColor: Colors
-                                              .blue, // Example color, you can customize
-                                          // Add any other properties for the avatar
-                                        ),
-                                        // Your card content goes here
-                                        Expanded(
-                                          child: Container(
-                                            padding: EdgeInsets.all(16),
-                                            child: Column(
-                                              // Add your card content here, e.g., Text, Image, etc.
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  'MeetLocal',
-                                                  style: GoogleFonts
-                                                      .robotoCondensed(
-                                                    fontSize: 25,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                                tripCount > 1
-                                                    ? Text(
-                                                        '$tripCount persons are looking for a local',
-                                                        style: GoogleFonts
-                                                            .robotoCondensed(
-                                                          fontSize: 18,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                        ),
-                                                      )
-                                                    : Text(
-                                                        '$tripCount person is looking for a local',
-                                                        style: GoogleFonts
-                                                            .robotoCondensed(
-                                                          fontSize: 18,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                        ),
-                                                      ),
-                                                Text(
-                                                  'in your place.',
-                                                  style: GoogleFonts
-                                                      .robotoCondensed(
-                                                    fontSize: 18,
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
+                                        Text(
+                                          'MeetLocal',
+                                          style: GoogleFonts.robotoCondensed(
+                                            fontSize: 25,
+                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
-
-                                        IconButton(
-                                          icon: Icon(
-                                              Icons.arrow_forward_ios_sharp),
-                                          onPressed: () {
-                                            tripCount > 0
-                                                ? Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          SendOffersScreen(
-                                                        notifyGuides: notifyGds,
-                                                      ),
-                                                    ),
-                                                  )
-                                                : showDialog(
-                                                    context: context,
-                                                    builder:
-                                                        (BuildContext context) {
-                                                      return AlertDialog(
-                                                        title: Text(
-                                                            'No person found!'),
-                                                        content: Text(
-                                                            'No person is looking for a local in your place!'),
-                                                        actions: [
-                                                          TextButton(
-                                                            style: ButtonStyle(
-                                                              backgroundColor:
-                                                                  MaterialStatePropertyAll<
-                                                                          Color>(
-                                                                      Colors
-                                                                          .red),
-                                                            ),
-                                                            onPressed: () {
-                                                              Navigator.of(
-                                                                      context)
-                                                                  .pop();
-                                                            },
-                                                            child: Text(
-                                                              'Close',
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      );
-                                                    },
-                                                  );
-                                          },
+                                        tripCount > 1
+                                            ? Text(
+                                                '$tripCount persons are looking for a local',
+                                                style:
+                                                    GoogleFonts.robotoCondensed(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              )
+                                            : Text(
+                                                '$tripCount person is looking for a local',
+                                                style:
+                                                    GoogleFonts.robotoCondensed(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                        Text(
+                                          'in your place.',
+                                          style: GoogleFonts.robotoCondensed(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w500,
+                                          ),
                                         ),
                                       ],
                                     ),
                                   ),
                                 ),
-                                Container(
-                                  child: InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
+
+                                IconButton(
+                                  icon: Icon(Icons.arrow_forward_ios_sharp),
+                                  onPressed: () {
+                                    tripCount > 0
+                                        ? Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
                                               builder: (context) =>
-                                                  SeeAllOffers(
-                                                    id: id!,
-                                                  )),
-                                        );
-                                      });
-                                    },
-                                    child: Card(
-                                      child: Text(
-                                          "Click to View Your Sent and Received Offers!"),
-                                    ),
-                                  ),
-                                )
+                                                  SendOffersScreen(
+                                                notifyGuides: notifyGds,
+                                              ),
+                                            ),
+                                          )
+                                        : showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                title: Text('No person found!'),
+                                                content: Text(
+                                                    'No person is looking for a local in your place!'),
+                                                actions: [
+                                                  TextButton(
+                                                    style: ButtonStyle(
+                                                      backgroundColor:
+                                                          MaterialStatePropertyAll<
+                                                                  Color>(
+                                                              Colors.red),
+                                                    ),
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                    child: Text(
+                                                      'Close',
+                                                      style: TextStyle(
+                                                          color: Colors.white),
+                                                    ),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                  },
+                                ),
                               ],
                             ),
-                          )
-                        : Container(),
-                  ),
+                          ),
+                        ),
+                        Container(
+                          height: MediaQuery.sizeOf(context).height * .1,
+                          width: MediaQuery.sizeOf(context).width * 1,
+                          child: InkWell(
+                            onTap: () {
+                              setState(() {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SeeAllOffers(
+                                            id: id!,
+                                          )),
+                                );
+                              });
+                            },
+                            child: Card(
+                              child: Text(
+                                  "Click to View Your Sent and Received Offers!"),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  )),
                   SizedBox(
                     height: 10,
                   ),
