@@ -40,6 +40,8 @@ class _DetailsPageState extends State<DetailsPage> {
   List<String>? imgs;
   int currentPage = 0;
 
+  // String? get consultationFee => null;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -407,36 +409,47 @@ class _DetailsPageState extends State<DetailsPage> {
       children: [
         Container(
           height: 300, // Adjust the height as needed
-          child: PageView.builder(
-            controller: _pageController,
-            itemCount: doctorDetailsClass!.data!.images!.isNotEmpty
-                ? (doctorDetailsClass!.data!.images!.length + 1)
-                : 1,
-            onPageChanged: (int page) {
-              print("Current Page is: $page");
-              setState(() {
-                currentPage = page;
-              });
-            },
-            itemBuilder: (BuildContext context, int index) {
-              if (index == 0) {
-                return CachedNetworkImage(
-                  imageUrl: doctorDetailsClass!.data!.image!,
-                  fit: BoxFit.fill,
-                  placeholder: (context, url) =>
-                      Center(child: CircularProgressIndicator()),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
-                );
-              } else {
-                return CachedNetworkImage(
-                  imageUrl: doctorDetailsClass!.data!.images![index - 1],
-                  fit: BoxFit.fill,
-                  placeholder: (context, url) =>
-                      Center(child: CircularProgressIndicator()),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
-                );
-              }
-            },
+          child: Stack(
+            children: [
+              Container(
+                child: PageView.builder(
+                  controller: _pageController,
+                  itemCount: doctorDetailsClass!.data!.images!.isNotEmpty
+                      ? (doctorDetailsClass!.data!.images!.length + 1)
+                      : 1,
+                  onPageChanged: (int page) {
+                    print("Current Page is: $page");
+                    setState(() {
+                      currentPage = page;
+                    });
+                  },
+                  itemBuilder: (BuildContext context, int index) {
+                    if (index == 0) {
+                      return CachedNetworkImage(
+                        imageUrl: doctorDetailsClass!.data!.image!,
+                        fit: BoxFit.fill,
+                        placeholder: (context, url) =>
+                            Center(child: CircularProgressIndicator()),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                      );
+                    } else {
+                      return CachedNetworkImage(
+                        imageUrl: doctorDetailsClass!.data!.images![index - 1],
+                        fit: BoxFit.fill,
+                        placeholder: (context, url) =>
+                            Center(child: CircularProgressIndicator()),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                      );
+                    }
+                  },
+                ),
+              ),
+              Positioned(
+                  top: 55,
+                  right: 15,
+                  child: consultationFee(
+                      doctorDetailsClass!.data!.consultationFee!)),
+            ],
           ),
         ),
         SizedBox(height: 5),
@@ -1566,4 +1579,28 @@ class _DetailsPageState extends State<DetailsPage> {
           );
         });
   }
+}
+
+Widget consultationFee(String consultationFee) {
+  return Container(
+    width: 60.0, // Fixed width
+    height: 40.0, // Fixed height
+    margin: EdgeInsets.only(top: 20),
+    decoration: BoxDecoration(
+        color: Color.fromARGB(255, 255, 94, 0).withOpacity(0.8),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(5),
+          bottomLeft: Radius.circular(5),
+        )),
+    child: Center(
+      child: Text(
+        "${CURRENCY.trim()}${consultationFee ?? NOT_SPECIFIED}",
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 14.0,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    ),
+  );
 }
