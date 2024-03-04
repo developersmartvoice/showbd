@@ -1,8 +1,8 @@
 class OffersClassReceiver {
   final bool success;
   final String message;
-  final List<ChatDataReceiver> dataForChat;
-  final List<ChatShowDataReceiver> dataForShow;
+  final List<ChatData> dataForChat;
+  final List<ChatShowData> dataForShow;
 
   OffersClassReceiver({
     required this.success,
@@ -12,23 +12,20 @@ class OffersClassReceiver {
   });
 
   factory OffersClassReceiver.fromJson(Map<String, dynamic> json) {
-    List<dynamic> chatDataReceiverList = json['data_for_chat'];
-    List<dynamic> chatShowDataReceiverList = json['data_for_show'];
+    List<dynamic> chatDataList = json['data_for_chat'];
+    List<dynamic> chatShowDataList = json['data_for_show'];
 
     return OffersClassReceiver(
       success: json['success'],
       message: json['message'],
-      dataForChat: chatDataReceiverList
-          .map((data) => ChatDataReceiver.fromJson(data))
-          .toList(),
-      dataForShow: chatShowDataReceiverList
-          .map((data) => ChatShowDataReceiver.fromJson(data))
-          .toList(),
+      dataForChat: chatDataList.map((data) => ChatData.fromJson(data)).toList(),
+      dataForShow:
+          chatShowDataList.map((data) => ChatShowData.fromJson(data)).toList(),
     );
   }
 }
 
-class ChatDataReceiver {
+class ChatData {
   final String name;
   final int uid;
   final String connectycubeUserId;
@@ -36,7 +33,7 @@ class ChatDataReceiver {
   final String recipientImage;
   final String senderImage;
 
-  ChatDataReceiver({
+  ChatData({
     required this.name,
     required this.uid,
     required this.connectycubeUserId,
@@ -45,10 +42,10 @@ class ChatDataReceiver {
     required this.senderImage,
   });
 
-  factory ChatDataReceiver.fromJson(Map<String, dynamic> json) {
+  factory ChatData.fromJson(Map<String, dynamic> json) {
     List<dynamic> deviceTokenList = json['device_token'];
 
-    return ChatDataReceiver(
+    return ChatData(
       name: json['name'],
       uid: json['uid'],
       connectycubeUserId: json['connectycube_user_id'],
@@ -77,7 +74,7 @@ class DeviceToken {
   }
 }
 
-class ChatShowDataReceiver {
+class ChatShowData {
   final int id;
   final int tripId;
   final int senderId;
@@ -91,7 +88,7 @@ class ChatShowDataReceiver {
   final int isRecipientApproved;
   final String senderName;
 
-  ChatShowDataReceiver({
+  ChatShowData({
     required this.id,
     required this.tripId,
     required this.senderId,
@@ -106,8 +103,8 @@ class ChatShowDataReceiver {
     required this.senderName,
   });
 
-  factory ChatShowDataReceiver.fromJson(Map<String, dynamic> json) {
-    return ChatShowDataReceiver(
+  factory ChatShowData.fromJson(Map<String, dynamic> json) {
+    return ChatShowData(
       id: json['id'],
       tripId: json['trip_id'],
       senderId: json['sender_id'],
