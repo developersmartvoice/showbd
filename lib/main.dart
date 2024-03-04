@@ -33,11 +33,7 @@ import 'en.dart';
 
 /// old url
 // const String SERVER_ADDRESS = "https://localguide.celibritychatbd.com";
-<<<<<<< HEAD
-const String SERVER_ADDRESS = "http://192.168.68.104/local-guide-backend";
-=======
 const String SERVER_ADDRESS = "http://192.168.0.165/local-guide-backend";
->>>>>>> 70f3552123032fbe5e87478804cc7c5db2ea166b
 // const String SERVER_ADDRESS = "http://192.168.0.150/local-guide-backend";
 // const String SERVER_ADDRESS = "http://192.168.68.105/local-guide-backend";
 // const String SERVER_ADDRESS = "http://192.168.68.26/local-guide-backend";
