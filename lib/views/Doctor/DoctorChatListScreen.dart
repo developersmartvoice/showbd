@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:appcode3/en.dart';
 import 'package:appcode3/main.dart';
-import 'package:appcode3/modals/OffersClass.dart';
+import 'package:appcode3/modals/OffersClassSender.dart';
 import 'package:appcode3/modals/SendOfferClass.dart';
 import 'package:appcode3/views/ChatScreen.dart';
 import 'package:appcode3/views/Doctor/loginAsDoctor.dart';
@@ -31,7 +31,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
   var ds;
   SendOfferClass? _sendOfferClass;
   List<NotifiedGuides>? notifyGds;
-  ChatResponse? chatResponse;
+
   bool? isSenderSelected = true;
   // ChatData? chatData;
   // String? message;
@@ -40,7 +40,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
   String? myUid;
   String? id;
   int tripCount = 0;
-  List<ChatData> chatDataList = [];
+  // List<ChatData> chatDataList = [];
   bool isLoading = false;
 
   @override
@@ -299,7 +299,9 @@ class _ChatListScreenState extends State<ChatListScreen> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  SeeAllOffers()),
+                                                  SeeAllOffers(
+                                                    id: id!,
+                                                  )),
                                         );
                                       });
                                     },
