@@ -299,7 +299,9 @@ class _ChatListScreenState extends State<ChatListScreen> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  SeeAllOffers()),
+                                                  SeeAllOffers(
+                                                    id: id!,
+                                                  )),
                                         );
                                       });
                                     },
