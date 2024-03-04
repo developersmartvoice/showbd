@@ -319,170 +319,278 @@ class _ChatListScreenState extends State<ChatListScreen> {
                   SizedBox(
                     height: 10,
                   ),
-                  // Container(
-                  //   child: Row(
-                  //     crossAxisAlignment: CrossAxisAlignment.center,
-                  //     mainAxisAlignment: MainAxisAlignment.center,
-                  //     children: [
-                  //       ElevatedButton(
-                  //         onPressed: () {
-                  //           setState(() {
-                  //             isSenderSelected = true;
-                  //           });
-                  //         },
-                  //         style: ElevatedButton.styleFrom(
-                  //           backgroundColor:
-                  //               isSenderSelected != null && isSenderSelected!
-                  //                   ? Colors.orange
-                  //                   : Color.fromARGB(255, 242, 235,
-                  //                       235), // Change the colors as needed
-                  //         ),
-                  //         child: Text(
-                  //           'Sender',
-                  //           style: TextStyle(color: Colors.black),
-                  //           textAlign: TextAlign.center,
-                  //           textScaleFactor: 1.5,
-                  //           overflow: TextOverflow.ellipsis,
-                  //           maxLines: 1,
-                  //         ),
-                  //       ),
-
-                  //       // ElevatedButton(
-                  //       //   onPressed: () {
-                  //       //     setState(
-                  //       //       () {
-                  //       //         isSenderSelected = true;
-                  //       //       },
-                  //       //     );
-                  //       //   },
-                  //       //   child: Text(
-                  //       //     'Sender',
-                  //       //     style: TextStyle(color: Colors.black),
-                  //       //     textAlign: TextAlign.center,
-                  //       //     textScaleFactor: 1.5,
-                  //       //     overflow: TextOverflow.ellipsis,
-                  //       //     maxLines: 1,
-                  //       //   ),
-                  //       // ),
-                  //       SizedBox(width: 10),
-                  //       ElevatedButton(
-                  //         onPressed: () {
-                  //           setState(() {
-                  //             isSenderSelected = false;
-                  //           });
-                  //         },
-                  //         style: ElevatedButton.styleFrom(
-                  //           backgroundColor: isSenderSelected != null &&
-                  //                   isSenderSelected!
-                  //               ? Color.fromARGB(255, 242, 235, 235)
-                  //               : Colors.orange, // Change the colors as needed
-                  //         ),
-                  //         child: Text(
-                  //           'Recipient',
-                  //           style: TextStyle(color: Colors.black),
-                  //           textAlign: TextAlign.center,
-                  //           textScaleFactor: 1.5,
-                  //           overflow: TextOverflow.ellipsis,
-                  //           maxLines: 1,
-                  //         ),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
-                  // isSenderSelected!
-                  //     ? Expanded(
-                  //         child: Column(
-                  //           crossAxisAlignment: CrossAxisAlignment.start,
-                  //           children: [
-                  //             // Text(
-                  //             //   '',
-                  //             //   style: TextStyle(fontWeight: FontWeight.bold),
-                  //             //   textAlign: TextAlign.center,
-                  //             //   textScaleFactor: 1.5,
-                  //             //   overflow: TextOverflow.ellipsis,
-                  //             //   maxLines: 1,
-                  //             // ),
-                  //             // SizedBox(height: 10),
-                  //             Expanded(
-                  //               child: ListView.builder(
-                  //                 shrinkWrap: true,
-                  //                 itemCount: chatDataList
-                  //                     .where((chatData) =>
-                  //                         chatData.role == 'Sender')
-                  //                     .length,
-                  //                 itemBuilder: (context, index) {
-                  //                   final senderMessages = chatDataList
-                  //                       .where((chatData) =>
-                  //                           chatData.role == 'Sender')
-                  //                       .toList();
-                  //                   final chatData = senderMessages[index];
-                  //                   return ListTile(
-                  //                     title: Text(chatData.name!),
-                  //                     subtitle:
-                  //                         Text(chatData.details!.message!),
-                  //                     leading: CircleAvatar(
-                  //                       backgroundImage: chatData.senderImage !=
-                  //                               null
-                  //                           ? NetworkImage(
-                  //                               chatData.senderImage!)
-                  //                           : AssetImage(
-                  //                                   'assets/default_avatar.png')
-                  //                               as ImageProvider<Object>,
-                  //                     ),
-                  //                   );
-                  //                 },
-                  //               ),
-                  //             ),
-                  //           ],
-                  //         ),
-                  //       )
-                  //     : Expanded(
-                  //         child: Column(
-                  //           crossAxisAlignment: CrossAxisAlignment.start,
-                  //           children: [
-                  //             // Text(
-                  //             //   'Recipient',
-                  //             //   style: TextStyle(fontWeight: FontWeight.bold),
-                  //             //   textAlign: TextAlign.center,
-                  //             //   textScaleFactor: 1.5,
-                  //             //   overflow: TextOverflow.ellipsis,
-                  //             //   maxLines: 1,
-                  //             // ),
-                  //             // SizedBox(height: 10),
-                  //             Expanded(
-                  //               child: ListView.builder(
-                  //                 shrinkWrap: true,
-                  //                 itemCount: chatDataList
-                  //                     .where((chatData) =>
-                  //                         chatData.role == 'Recipient')
-                  //                     .length,
-                  //                 itemBuilder: (context, index) {
-                  //                   final recipientMessages = chatDataList
-                  //                       .where((chatData) =>
-                  //                           chatData.role == 'Recipient')
-                  //                       .toList();
-                  //                   final chatData = recipientMessages[index];
-                  //                   return ListTile(
-                  //                     title: Text(chatData.name!),
-                  //                     subtitle:
-                  //                         Text(chatData.details!.message!),
-                  //                     leading: CircleAvatar(
-                  //                       backgroundImage: chatData
-                  //                                   .recipientImage !=
-                  //                               null
-                  //                           ? NetworkImage(
-                  //                               chatData.recipientImage!)
-                  //                           : AssetImage(
-                  //                                   'assets/default_avatar.png')
-                  //                               as ImageProvider<Object>,
-                  //                     ),
-                  //                   );
-                  //                 },
-                  //               ),
-                  //             ),
-                  //           ],
-                  //         ),
-                  //       ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                      child: st
+                          ? chatListDetails.length == 0
+                              ? Container(
+                                  alignment: Alignment.center,
+                                  child: Text("No recent chats",
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 22,
+                                      )),
+                                )
+                              : MediaQuery.removePadding(
+                                  removeTop: true,
+                                  context: context,
+                                  child: ListView.builder(
+                                    itemCount: chatListDetails.length,
+                                    itemBuilder: (context, index) {
+                                      return StreamBuilder(
+                                        stream: FirebaseDatabase.instance
+                                            .reference()
+                                            .child(
+                                                chatListDetails[index].userUid)
+                                            .onValue,
+                                        builder:
+                                            (context, AsyncSnapshot snapshot) {
+                                          if (snapshot.hasData) {
+                                            return Card(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(15),
+                                              ),
+                                              child: Container(
+                                                margin: EdgeInsets.all(1),
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                  gradient: chatListDetails[
+                                                                  index]
+                                                              .messageCount >
+                                                          0
+                                                      ? LinearGradient(
+                                                          colors: [
+                                                              Colors
+                                                                  .lightBlueAccent
+                                                                  .withOpacity(
+                                                                      0.2),
+                                                              Colors
+                                                                  .lightBlueAccent
+                                                                  .withOpacity(
+                                                                      0.05)
+                                                            ],
+                                                          stops: [
+                                                              0.1,
+                                                              0.6
+                                                            ],
+                                                          begin: Alignment
+                                                              .centerLeft,
+                                                          end: Alignment
+                                                              .centerRight)
+                                                      : null,
+                                                ),
+                                                child: ListTile(
+                                                  title: Text(
+                                                    snapshot.data!.snapshot
+                                                        .value['name'],
+                                                    style: GoogleFonts.poppins(
+                                                        fontWeight: chatListDetails[
+                                                                        index]
+                                                                    .messageCount >
+                                                                0
+                                                            ? FontWeight.bold
+                                                            : FontWeight.normal,
+                                                        fontSize: 20),
+                                                  ),
+                                                  leading: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            30),
+                                                    child: InkWell(
+                                                      onTap: () {
+                                                        // Navigator.push(context,
+                                                        // MaterialPageRoute(
+                                                        //   builder: (context) => MyPhotoViewer(SERVER_ADDRESS + '/public/upload/profile/'+snapshot.data.snapshot.value['profile']),
+                                                        // )
+                                                        // );
+                                                      },
+                                                      child: Container(
+                                                        height: 55,
+                                                        width: 55,
+                                                        color: Colors
+                                                            .grey.shade300,
+                                                        child:
+                                                            CachedNetworkImage(
+                                                          imageUrl: snapshot
+                                                                          .data!
+                                                                          .snapshot
+                                                                          .value[
+                                                                      'profile'] ==
+                                                                  null
+                                                              ? " "
+                                                              : SERVER_ADDRESS +
+                                                                  '/public/upload/profile/' +
+                                                                  snapshot
+                                                                          .data!
+                                                                          .snapshot
+                                                                          .value[
+                                                                      'profile'],
+                                                          //imageUrl: snapshot.data.get('profile'),
+                                                          fit: BoxFit.cover,
+                                                          placeholder: (context,
+                                                                  string) =>
+                                                              Container(
+                                                            height: 55,
+                                                            width: 55,
+                                                          ),
+                                                          errorWidget: (context,
+                                                                  err, f) =>
+                                                              Icon(
+                                                            Icons
+                                                                .account_circle,
+                                                            size: 50,
+                                                            color: Colors
+                                                                .grey.shade400,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  trailing: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceEvenly,
+                                                    children: [
+                                                      chatListDetails[index]
+                                                                  .messageCount ==
+                                                              0
+                                                          ? SizedBox()
+                                                          : Container(
+                                                              child: Center(
+                                                                child: Text(
+                                                                  chatListDetails[
+                                                                          index]
+                                                                      .messageCount
+                                                                      .toString(),
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                gradient: LinearGradient(
+                                                                    colors: [
+                                                                      Colors
+                                                                          .greenAccent
+                                                                          .withOpacity(
+                                                                              0.6),
+                                                                      Colors
+                                                                          .lightBlueAccent
+                                                                    ],
+                                                                    stops: [
+                                                                      0.3,
+                                                                      1
+                                                                    ],
+                                                                    begin: Alignment
+                                                                        .topCenter,
+                                                                    end: Alignment
+                                                                        .bottomCenter),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            12),
+                                                              ),
+                                                              height: 23,
+                                                              width: 23,
+                                                            ),
+                                                      Text(
+                                                        messageTiming(DateTime.parse(
+                                                                chatListDetails[
+                                                                        index]
+                                                                    .time)
+                                                            .toLocal()),
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            fontSize: 10),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  subtitle: typeToWidget(
+                                                      chatListDetails[index]
+                                                          .type,
+                                                      chatListDetails[index]
+                                                          .message,
+                                                      chatListDetails[index]
+                                                          .messageCount),
+                                                  tileColor: Colors.transparent,
+                                                  //tileColor: chatListDetails[index].messageCount > 0 ? Colors.grey.withOpacity(0.2) : Colors.white,
+                                                  onTap: () {
+                                                    // print(snapshot.data!.snapshot.value['name']);
+                                                    // {userName: mahesh, uid: 10040, connectCubId: 8025792, isUser: false, deviceToken: null, callerImage: , reciverImage: }
+                                                    // Map mm = {
+                                                    //   'userName':snapshot.data!.snapshot.value['name'],
+                                                    //   'uid':chatListDetails[index].userUid,
+                                                    //   'connectCubId':2165201,
+                                                    //   'isUser':false,
+                                                    //   'deviceToken':null,
+                                                    //   'callerImage':"",
+                                                    //   'reciverImage':""
+                                                    // };
+                                                    //
+                                                    // print(mm);
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) => ChatScreen(
+                                                                snapshot
+                                                                        .data!
+                                                                        .snapshot
+                                                                        .value[
+                                                                    'name'],
+                                                                chatListDetails[
+                                                                        index]
+                                                                    .userUid,
+                                                                2165201,
+                                                                true,
+                                                                null,
+                                                                "",
+                                                                "")));
+                                                    // if(loginCheckdoctor){
+                                                    //
+                                                    // }else{
+                                                    //   Navigator.push(
+                                                    //       context,
+                                                    //       MaterialPageRoute(
+                                                    //           builder: (context) =>
+                                                    //               ChatScreen(
+                                                    //                   snapshot
+                                                    //                       .data!
+                                                    //                       .snapshot
+                                                    //                       .value[
+                                                    //                   'name'],
+                                                    //                   chatListDetails[
+                                                    //                   index]
+                                                    //                       .userUid,
+                                                    //                   2165201,
+                                                    //                   false,
+                                                    //                   null,
+                                                    //                   "",
+                                                    //                   "")));
+                                                    // }
+                                                  },
+                                                ),
+                                              ),
+                                            );
+                                          } else {
+                                            return Container();
+                                          }
+                                        },
+                                      );
+                                    },
+                                  ),
+                                )
+                          : Center(child: CircularProgressIndicator()),
+                    ),
+                  ),
                 ],
               ),
             ),

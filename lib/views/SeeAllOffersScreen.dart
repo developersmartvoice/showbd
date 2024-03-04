@@ -32,8 +32,8 @@ class _SeeAllOffersState extends State<SeeAllOffers> {
   void initState() {
     super.initState();
     setState(() {
-      getSenderOffers();
-      getReceiverOffers();
+      // getSenderOffers();
+      // getReceiverOffers();
     });
   }
 
@@ -45,10 +45,14 @@ class _SeeAllOffersState extends State<SeeAllOffers> {
       final jsonResponse = jsonDecode(response.body);
       print(jsonResponse);
       setState(() {
-        isDataFetch = true;
         offersClassSender = OffersClassSender.fromJson(jsonResponse);
         chatDataSender = offersClassSender!.dataForChat;
         chatShowDataSender = offersClassSender!.dataForShow;
+        if (chatShowDataSender != null) {
+          isDataFetch = true;
+        } else {
+          isDataFetch = false;
+        }
       });
     }
   }
@@ -62,10 +66,14 @@ class _SeeAllOffersState extends State<SeeAllOffers> {
       final jsonResponse = jsonDecode(response.body);
       print(jsonResponse);
       setState(() {
-        isDataFetch = true;
         offersClassReceiver = OffersClassReceiver.fromJson(jsonResponse);
         chatDataReceiver = offersClassReceiver!.dataForChat;
         chatShowDataReceiver = offersClassReceiver!.dataForShow;
+        if (chatShowDataReceiver != null) {
+          isDataFetch = true;
+        } else {
+          isDataFetch = false;
+        }
       });
     }
   }
@@ -78,69 +86,64 @@ class _SeeAllOffersState extends State<SeeAllOffers> {
           child: Column(
             children: [
               header(),
-              !isDataFetch
-                  ? Container(
-                      child: CircularProgressIndicator(),
-                    )
-                  : Container(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Container(
-                            alignment: Alignment.center,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                setState(() {
-                                  isSenderSelected = true;
-                                  getSenderOffers();
-                                });
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: isSenderSelected
-                                    ? Colors.orange
-                                    : Color.fromARGB(255, 242, 235,
-                                        235), // Change the colors as needed
-                              ),
-                              child: Text(
-                                'Sender',
-                                style: TextStyle(color: Colors.black),
-                                textAlign: TextAlign.center,
-                                textScaleFactor: 1.5,
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          Container(
-                            child: ElevatedButton(
-                              onPressed: () {
-                                setState(() {
-                                  isSenderSelected = false;
-                                  getReceiverOffers();
-                                });
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: isSenderSelected
-                                    ? Color.fromARGB(255, 242, 235, 235)
-                                    : Colors
-                                        .orange, // Change the colors as needed
-                              ),
-                              child: Text(
-                                'Recipient',
-                                style: TextStyle(color: Colors.black),
-                                textAlign: TextAlign.center,
-                                textScaleFactor: 1.5,
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                              ),
-                            ),
-                          ),
-                        ],
+              Container(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      alignment: Alignment.center,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            isSenderSelected = true;
+                            getSenderOffers();
+                          });
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: isSenderSelected
+                              ? Colors.orange
+                              : Color.fromARGB(255, 242, 235,
+                                  235), // Change the colors as needed
+                        ),
+                        child: Text(
+                          'Sender',
+                          style: TextStyle(color: Colors.black),
+                          textAlign: TextAlign.center,
+                          textScaleFactor: 1.5,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
                       ),
                     ),
-              isSenderSelected && chatShowDataSender!.length > 0
+                    SizedBox(width: 10),
+                    Container(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            isSenderSelected = false;
+                            getReceiverOffers();
+                          });
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: isSenderSelected
+                              ? Color.fromARGB(255, 242, 235, 235)
+                              : Colors.orange, // Change the colors as needed
+                        ),
+                        child: Text(
+                          'Recipient',
+                          style: TextStyle(color: Colors.black),
+                          textAlign: TextAlign.center,
+                          textScaleFactor: 1.5,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              isDataFetch && isSenderSelected && chatShowDataSender != null
                   ? Expanded(
                       child: ListView.builder(
                       itemCount: chatShowDataSender!.length,
@@ -185,8 +188,10 @@ class _SeeAllOffersState extends State<SeeAllOffers> {
                         );
                       },
                     ))
-                  : Container(),
-              !isSenderSelected && chatShowDataReceiver!.length > 0
+                  : Container(
+                      child: Text("No Data Found!"),
+                    ),
+              isDataFetch && !isSenderSelected && chatShowDataReceiver != null
                   ? Expanded(
                       child: ListView.builder(
                       itemCount: chatShowDataReceiver!.length,
@@ -232,7 +237,9 @@ class _SeeAllOffersState extends State<SeeAllOffers> {
                         );
                       },
                     ))
-                  : Container()
+                  : Container(
+                      child: Text("No Data Found!"),
+                    ),
             ],
           ),
         ));
