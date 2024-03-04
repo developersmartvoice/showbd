@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:appcode3/en.dart';
 import 'package:appcode3/main.dart';
+<<<<<<< HEAD
 import 'package:appcode3/modals/OffersClassReceiver.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -9,6 +12,16 @@ class SeeAllOffers extends StatefulWidget {
   // const SeeAllOffers({super.key});
 
   final String? id;
+=======
+import 'package:appcode3/modals/OffersClassSender.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+
+class SeeAllOffers extends StatefulWidget {
+  // const SeeAllOffers({super.key});
+  final String id;
+
+>>>>>>> 70f3552123032fbe5e87478804cc7c5db2ea166b
   SeeAllOffers({required this.id});
 
   @override
@@ -16,6 +29,7 @@ class SeeAllOffers extends StatefulWidget {
 }
 
 class _SeeAllOffersState extends State<SeeAllOffers> {
+<<<<<<< HEAD
   OffersClassReceiver? offersClassReceiver;
 
   bool isSenderSelected = true;
@@ -30,6 +44,29 @@ class _SeeAllOffersState extends State<SeeAllOffers> {
       setState(() {
         offersClassReceiver = OffersClassReceiver.fromJson(data);
         print("");
+=======
+  OffersClassSender? offersClassSender;
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      getSenderOffers();
+    });
+  }
+
+  getSenderOffers() async {
+    final response = await get(
+        Uri.parse("$SERVER_ADDRESS/api/getSendOffers?id=${widget.id}"));
+    print("$SERVER_ADDRESS/api/getSendOffers?id=${widget.id}");
+    if (response.statusCode == 200) {
+      final jsonResponse = jsonDecode(response.body);
+      print(jsonResponse);
+      setState(() {
+        offersClassSender = OffersClassSender.fromJson(jsonResponse);
+        print(offersClassSender!.dataForChat);
+        print(offersClassSender!.dataForShow);
+>>>>>>> 70f3552123032fbe5e87478804cc7c5db2ea166b
       });
     }
   }
