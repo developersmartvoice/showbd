@@ -189,8 +189,8 @@ class _SeeAllOffersState extends State<SeeAllOffers> {
                       },
                     ))
                   : Container(
-                      child: Text("No Data Found!"),
-                    ),
+                      // child: Text("No Data Found!"),
+                      ),
               isDataFetch && !isSenderSelected && chatShowDataReceiver != null
                   ? Expanded(
                       child: ListView.builder(
@@ -273,9 +273,9 @@ class _SeeAllOffersState extends State<SeeAllOffers> {
             ],
           ),
         ),
-        Container(
-          height: 60,
-        )
+        // Container(
+        //   height: 60,
+        // )
       ],
     );
   }
