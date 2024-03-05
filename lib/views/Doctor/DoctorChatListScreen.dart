@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:appcode3/en.dart';
 import 'package:appcode3/main.dart';
-import 'package:appcode3/modals/OffersClass.dart';
+import 'package:appcode3/modals/OffersClassSender.dart';
 import 'package:appcode3/modals/SendOfferClass.dart';
 import 'package:appcode3/views/ChatScreen.dart';
 import 'package:appcode3/views/Doctor/loginAsDoctor.dart';
@@ -31,7 +31,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
   var ds;
   SendOfferClass? _sendOfferClass;
   List<NotifiedGuides>? notifyGds;
-  ChatResponse? chatResponse;
+
   bool? isSenderSelected = true;
   // ChatData? chatData;
   // String? message;
@@ -40,7 +40,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
   String? myUid;
   String? id;
   int tripCount = 0;
-  List<ChatData> chatDataList = [];
+  // List<ChatData> chatDataList = [];
   bool isLoading = false;
 
   @override
@@ -160,327 +160,464 @@ class _ChatListScreenState extends State<ChatListScreen> {
                 children: [
                   header(),
                   Container(
-                    child: chatListDetails.length == 0
-                        ? Container(
-                            child: Column(
+                      child: Container(
+                    child: Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SendOffersScreen(
+                                  notifyGuides:
+                                      _sendOfferClass!.notifiedGuides!,
+                                ),
+                              ),
+                            );
+                          },
+                          child: Card(
+                            child: Row(
                               children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => SendOffersScreen(
-                                          notifyGuides:
-                                              _sendOfferClass!.notifiedGuides!,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  child: Card(
-                                    child: Row(
+                                CircleAvatar(
+                                  // Add your avatar properties, e.g., backgroundImage, radius, etc.
+                                  radius: 35,
+                                  backgroundImage:
+                                      AssetImage('assets/people 6.png'),
+                                  backgroundColor: Colors
+                                      .blue, // Example color, you can customize
+                                  // Add any other properties for the avatar
+                                ),
+                                // Your card content goes here
+                                Expanded(
+                                  child: Container(
+                                    padding: EdgeInsets.all(16),
+                                    child: Column(
+                                      // Add your card content here, e.g., Text, Image, etc.
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        CircleAvatar(
-                                          // Add your avatar properties, e.g., backgroundImage, radius, etc.
-                                          radius: 35,
-                                          backgroundImage:
-                                              AssetImage('assets/people 6.png'),
-                                          backgroundColor: Colors
-                                              .blue, // Example color, you can customize
-                                          // Add any other properties for the avatar
-                                        ),
-                                        // Your card content goes here
-                                        Expanded(
-                                          child: Container(
-                                            padding: EdgeInsets.all(16),
-                                            child: Column(
-                                              // Add your card content here, e.g., Text, Image, etc.
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  'MeetLocal',
-                                                  style: GoogleFonts
-                                                      .robotoCondensed(
-                                                    fontSize: 25,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                                tripCount > 1
-                                                    ? Text(
-                                                        '$tripCount persons are looking for a local',
-                                                        style: GoogleFonts
-                                                            .robotoCondensed(
-                                                          fontSize: 18,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                        ),
-                                                      )
-                                                    : Text(
-                                                        '$tripCount person is looking for a local',
-                                                        style: GoogleFonts
-                                                            .robotoCondensed(
-                                                          fontSize: 18,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                        ),
-                                                      ),
-                                                Text(
-                                                  'in your place.',
-                                                  style: GoogleFonts
-                                                      .robotoCondensed(
-                                                    fontSize: 18,
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
+                                        Text(
+                                          'MeetLocal',
+                                          style: GoogleFonts.robotoCondensed(
+                                            fontSize: 25,
+                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
-
-                                        IconButton(
-                                          icon: Icon(
-                                              Icons.arrow_forward_ios_sharp),
-                                          onPressed: () {
-                                            tripCount > 0
-                                                ? Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          SendOffersScreen(
-                                                        notifyGuides: notifyGds,
-                                                      ),
-                                                    ),
-                                                  )
-                                                : showDialog(
-                                                    context: context,
-                                                    builder:
-                                                        (BuildContext context) {
-                                                      return AlertDialog(
-                                                        title: Text(
-                                                            'No person found!'),
-                                                        content: Text(
-                                                            'No person is looking for a local in your place!'),
-                                                        actions: [
-                                                          TextButton(
-                                                            style: ButtonStyle(
-                                                              backgroundColor:
-                                                                  MaterialStatePropertyAll<
-                                                                          Color>(
-                                                                      Colors
-                                                                          .red),
-                                                            ),
-                                                            onPressed: () {
-                                                              Navigator.of(
-                                                                      context)
-                                                                  .pop();
-                                                            },
-                                                            child: Text(
-                                                              'Close',
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      );
-                                                    },
-                                                  );
-                                          },
+                                        tripCount > 1
+                                            ? Text(
+                                                '$tripCount persons are looking for a local',
+                                                style:
+                                                    GoogleFonts.robotoCondensed(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              )
+                                            : Text(
+                                                '$tripCount person is looking for a local',
+                                                style:
+                                                    GoogleFonts.robotoCondensed(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                        Text(
+                                          'in your place.',
+                                          style: GoogleFonts.robotoCondensed(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w500,
+                                          ),
                                         ),
                                       ],
                                     ),
                                   ),
                                 ),
-                                Container(
-                                  child: InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
+
+                                IconButton(
+                                  icon: Icon(Icons.arrow_forward_ios_sharp),
+                                  onPressed: () {
+                                    tripCount > 0
+                                        ? Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
                                               builder: (context) =>
-                                                  SeeAllOffers()),
-                                        );
-                                      });
-                                    },
-                                    child: Card(
-                                      child: Text(
-                                          "Click to View Your Sent and Received Offers!"),
-                                    ),
-                                  ),
-                                )
+                                                  SendOffersScreen(
+                                                notifyGuides: notifyGds,
+                                              ),
+                                            ),
+                                          )
+                                        : showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                title: Text('No person found!'),
+                                                content: Text(
+                                                    'No person is looking for a local in your place!'),
+                                                actions: [
+                                                  TextButton(
+                                                    style: ButtonStyle(
+                                                      backgroundColor:
+                                                          MaterialStatePropertyAll<
+                                                                  Color>(
+                                                              Colors.red),
+                                                    ),
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                    child: Text(
+                                                      'Close',
+                                                      style: TextStyle(
+                                                          color: Colors.white),
+                                                    ),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                  },
+                                ),
                               ],
                             ),
-                          )
-                        : Container(),
-                  ),
+                          ),
+                        ),
+                        Container(
+                          height: MediaQuery.of(context).size.height * 0.1,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Colors.orange,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                offset:
+                                    Offset(0, 3), // changes position of shadow
+                              ),
+                            ],
+                          ),
+                          alignment: Alignment.center,
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: () {
+                                setState(() {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => SeeAllOffers(
+                                        id: id!,
+                                      ),
+                                    ),
+                                  );
+                                });
+                              },
+                              borderRadius: BorderRadius.circular(10),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons
+                                          .touch_app, // You can choose a different icon here
+                                      color: Colors.white,
+                                      size: 24,
+                                    ),
+                                    SizedBox(width: 8),
+                                    Text(
+                                      "Click to View Your Sent and Received Offers!",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  )),
                   SizedBox(
                     height: 10,
                   ),
-                  // Container(
-                  //   child: Row(
-                  //     crossAxisAlignment: CrossAxisAlignment.center,
-                  //     mainAxisAlignment: MainAxisAlignment.center,
-                  //     children: [
-                  //       ElevatedButton(
-                  //         onPressed: () {
-                  //           setState(() {
-                  //             isSenderSelected = true;
-                  //           });
-                  //         },
-                  //         style: ElevatedButton.styleFrom(
-                  //           backgroundColor:
-                  //               isSenderSelected != null && isSenderSelected!
-                  //                   ? Colors.orange
-                  //                   : Color.fromARGB(255, 242, 235,
-                  //                       235), // Change the colors as needed
-                  //         ),
-                  //         child: Text(
-                  //           'Sender',
-                  //           style: TextStyle(color: Colors.black),
-                  //           textAlign: TextAlign.center,
-                  //           textScaleFactor: 1.5,
-                  //           overflow: TextOverflow.ellipsis,
-                  //           maxLines: 1,
-                  //         ),
-                  //       ),
-
-                  //       // ElevatedButton(
-                  //       //   onPressed: () {
-                  //       //     setState(
-                  //       //       () {
-                  //       //         isSenderSelected = true;
-                  //       //       },
-                  //       //     );
-                  //       //   },
-                  //       //   child: Text(
-                  //       //     'Sender',
-                  //       //     style: TextStyle(color: Colors.black),
-                  //       //     textAlign: TextAlign.center,
-                  //       //     textScaleFactor: 1.5,
-                  //       //     overflow: TextOverflow.ellipsis,
-                  //       //     maxLines: 1,
-                  //       //   ),
-                  //       // ),
-                  //       SizedBox(width: 10),
-                  //       ElevatedButton(
-                  //         onPressed: () {
-                  //           setState(() {
-                  //             isSenderSelected = false;
-                  //           });
-                  //         },
-                  //         style: ElevatedButton.styleFrom(
-                  //           backgroundColor: isSenderSelected != null &&
-                  //                   isSenderSelected!
-                  //               ? Color.fromARGB(255, 242, 235, 235)
-                  //               : Colors.orange, // Change the colors as needed
-                  //         ),
-                  //         child: Text(
-                  //           'Recipient',
-                  //           style: TextStyle(color: Colors.black),
-                  //           textAlign: TextAlign.center,
-                  //           textScaleFactor: 1.5,
-                  //           overflow: TextOverflow.ellipsis,
-                  //           maxLines: 1,
-                  //         ),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
-                  // isSenderSelected!
-                  //     ? Expanded(
-                  //         child: Column(
-                  //           crossAxisAlignment: CrossAxisAlignment.start,
-                  //           children: [
-                  //             // Text(
-                  //             //   '',
-                  //             //   style: TextStyle(fontWeight: FontWeight.bold),
-                  //             //   textAlign: TextAlign.center,
-                  //             //   textScaleFactor: 1.5,
-                  //             //   overflow: TextOverflow.ellipsis,
-                  //             //   maxLines: 1,
-                  //             // ),
-                  //             // SizedBox(height: 10),
-                  //             Expanded(
-                  //               child: ListView.builder(
-                  //                 shrinkWrap: true,
-                  //                 itemCount: chatDataList
-                  //                     .where((chatData) =>
-                  //                         chatData.role == 'Sender')
-                  //                     .length,
-                  //                 itemBuilder: (context, index) {
-                  //                   final senderMessages = chatDataList
-                  //                       .where((chatData) =>
-                  //                           chatData.role == 'Sender')
-                  //                       .toList();
-                  //                   final chatData = senderMessages[index];
-                  //                   return ListTile(
-                  //                     title: Text(chatData.name!),
-                  //                     subtitle:
-                  //                         Text(chatData.details!.message!),
-                  //                     leading: CircleAvatar(
-                  //                       backgroundImage: chatData.senderImage !=
-                  //                               null
-                  //                           ? NetworkImage(
-                  //                               chatData.senderImage!)
-                  //                           : AssetImage(
-                  //                                   'assets/default_avatar.png')
-                  //                               as ImageProvider<Object>,
-                  //                     ),
-                  //                   );
-                  //                 },
-                  //               ),
-                  //             ),
-                  //           ],
-                  //         ),
-                  //       )
-                  //     : Expanded(
-                  //         child: Column(
-                  //           crossAxisAlignment: CrossAxisAlignment.start,
-                  //           children: [
-                  //             // Text(
-                  //             //   'Recipient',
-                  //             //   style: TextStyle(fontWeight: FontWeight.bold),
-                  //             //   textAlign: TextAlign.center,
-                  //             //   textScaleFactor: 1.5,
-                  //             //   overflow: TextOverflow.ellipsis,
-                  //             //   maxLines: 1,
-                  //             // ),
-                  //             // SizedBox(height: 10),
-                  //             Expanded(
-                  //               child: ListView.builder(
-                  //                 shrinkWrap: true,
-                  //                 itemCount: chatDataList
-                  //                     .where((chatData) =>
-                  //                         chatData.role == 'Recipient')
-                  //                     .length,
-                  //                 itemBuilder: (context, index) {
-                  //                   final recipientMessages = chatDataList
-                  //                       .where((chatData) =>
-                  //                           chatData.role == 'Recipient')
-                  //                       .toList();
-                  //                   final chatData = recipientMessages[index];
-                  //                   return ListTile(
-                  //                     title: Text(chatData.name!),
-                  //                     subtitle:
-                  //                         Text(chatData.details!.message!),
-                  //                     leading: CircleAvatar(
-                  //                       backgroundImage: chatData
-                  //                                   .recipientImage !=
-                  //                               null
-                  //                           ? NetworkImage(
-                  //                               chatData.recipientImage!)
-                  //                           : AssetImage(
-                  //                                   'assets/default_avatar.png')
-                  //                               as ImageProvider<Object>,
-                  //                     ),
-                  //                   );
-                  //                 },
-                  //               ),
-                  //             ),
-                  //           ],
-                  //         ),
-                  //       ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                      child: st
+                          ? chatListDetails.length == 0
+                              ? Container(
+                                  alignment: Alignment.center,
+                                  child: Text("No recent chats",
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 22,
+                                      )),
+                                )
+                              : MediaQuery.removePadding(
+                                  removeTop: true,
+                                  context: context,
+                                  child: ListView.builder(
+                                    itemCount: chatListDetails.length,
+                                    itemBuilder: (context, index) {
+                                      return StreamBuilder(
+                                        stream: FirebaseDatabase.instance
+                                            .reference()
+                                            .child(
+                                                chatListDetails[index].userUid)
+                                            .onValue,
+                                        builder:
+                                            (context, AsyncSnapshot snapshot) {
+                                          if (snapshot.hasData) {
+                                            return Card(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(15),
+                                              ),
+                                              child: Container(
+                                                margin: EdgeInsets.all(1),
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                  gradient: chatListDetails[
+                                                                  index]
+                                                              .messageCount >
+                                                          0
+                                                      ? LinearGradient(
+                                                          colors: [
+                                                              Colors
+                                                                  .lightBlueAccent
+                                                                  .withOpacity(
+                                                                      0.2),
+                                                              Colors
+                                                                  .lightBlueAccent
+                                                                  .withOpacity(
+                                                                      0.05)
+                                                            ],
+                                                          stops: [
+                                                              0.1,
+                                                              0.6
+                                                            ],
+                                                          begin: Alignment
+                                                              .centerLeft,
+                                                          end: Alignment
+                                                              .centerRight)
+                                                      : null,
+                                                ),
+                                                child: ListTile(
+                                                  title: Text(
+                                                    snapshot.data!.snapshot
+                                                        .value['name'],
+                                                    style: GoogleFonts.poppins(
+                                                        fontWeight: chatListDetails[
+                                                                        index]
+                                                                    .messageCount >
+                                                                0
+                                                            ? FontWeight.bold
+                                                            : FontWeight.normal,
+                                                        fontSize: 20),
+                                                  ),
+                                                  leading: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            30),
+                                                    child: InkWell(
+                                                      onTap: () {
+                                                        // Navigator.push(context,
+                                                        // MaterialPageRoute(
+                                                        //   builder: (context) => MyPhotoViewer(SERVER_ADDRESS + '/public/upload/profile/'+snapshot.data.snapshot.value['profile']),
+                                                        // )
+                                                        // );
+                                                      },
+                                                      child: Container(
+                                                        height: 55,
+                                                        width: 55,
+                                                        color: Colors
+                                                            .grey.shade300,
+                                                        child:
+                                                            CachedNetworkImage(
+                                                          imageUrl: snapshot
+                                                                          .data!
+                                                                          .snapshot
+                                                                          .value[
+                                                                      'profile'] ==
+                                                                  null
+                                                              ? " "
+                                                              : SERVER_ADDRESS +
+                                                                  '/public/upload/profile/' +
+                                                                  snapshot
+                                                                          .data!
+                                                                          .snapshot
+                                                                          .value[
+                                                                      'profile'],
+                                                          //imageUrl: snapshot.data.get('profile'),
+                                                          fit: BoxFit.cover,
+                                                          placeholder: (context,
+                                                                  string) =>
+                                                              Container(
+                                                            height: 55,
+                                                            width: 55,
+                                                          ),
+                                                          errorWidget: (context,
+                                                                  err, f) =>
+                                                              Icon(
+                                                            Icons
+                                                                .account_circle,
+                                                            size: 50,
+                                                            color: Colors
+                                                                .grey.shade400,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  trailing: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceEvenly,
+                                                    children: [
+                                                      chatListDetails[index]
+                                                                  .messageCount ==
+                                                              0
+                                                          ? SizedBox()
+                                                          : Container(
+                                                              child: Center(
+                                                                child: Text(
+                                                                  chatListDetails[
+                                                                          index]
+                                                                      .messageCount
+                                                                      .toString(),
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                gradient: LinearGradient(
+                                                                    colors: [
+                                                                      Colors
+                                                                          .greenAccent
+                                                                          .withOpacity(
+                                                                              0.6),
+                                                                      Colors
+                                                                          .lightBlueAccent
+                                                                    ],
+                                                                    stops: [
+                                                                      0.3,
+                                                                      1
+                                                                    ],
+                                                                    begin: Alignment
+                                                                        .topCenter,
+                                                                    end: Alignment
+                                                                        .bottomCenter),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            12),
+                                                              ),
+                                                              height: 23,
+                                                              width: 23,
+                                                            ),
+                                                      Text(
+                                                        messageTiming(DateTime.parse(
+                                                                chatListDetails[
+                                                                        index]
+                                                                    .time)
+                                                            .toLocal()),
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            fontSize: 10),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  subtitle: typeToWidget(
+                                                      chatListDetails[index]
+                                                          .type,
+                                                      chatListDetails[index]
+                                                          .message,
+                                                      chatListDetails[index]
+                                                          .messageCount),
+                                                  tileColor: Colors.transparent,
+                                                  //tileColor: chatListDetails[index].messageCount > 0 ? Colors.grey.withOpacity(0.2) : Colors.white,
+                                                  onTap: () {
+                                                    // print(snapshot.data!.snapshot.value['name']);
+                                                    // {userName: mahesh, uid: 10040, connectCubId: 8025792, isUser: false, deviceToken: null, callerImage: , reciverImage: }
+                                                    // Map mm = {
+                                                    //   'userName':snapshot.data!.snapshot.value['name'],
+                                                    //   'uid':chatListDetails[index].userUid,
+                                                    //   'connectCubId':2165201,
+                                                    //   'isUser':false,
+                                                    //   'deviceToken':null,
+                                                    //   'callerImage':"",
+                                                    //   'reciverImage':""
+                                                    // };
+                                                    //
+                                                    // print(mm);
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) => ChatScreen(
+                                                                snapshot
+                                                                        .data!
+                                                                        .snapshot
+                                                                        .value[
+                                                                    'name'],
+                                                                chatListDetails[
+                                                                        index]
+                                                                    .userUid,
+                                                                2165201,
+                                                                true,
+                                                                null,
+                                                                "",
+                                                                "")));
+                                                    // if(loginCheckdoctor){
+                                                    //
+                                                    // }else{
+                                                    //   Navigator.push(
+                                                    //       context,
+                                                    //       MaterialPageRoute(
+                                                    //           builder: (context) =>
+                                                    //               ChatScreen(
+                                                    //                   snapshot
+                                                    //                       .data!
+                                                    //                       .snapshot
+                                                    //                       .value[
+                                                    //                   'name'],
+                                                    //                   chatListDetails[
+                                                    //                   index]
+                                                    //                       .userUid,
+                                                    //                   2165201,
+                                                    //                   false,
+                                                    //                   null,
+                                                    //                   "",
+                                                    //                   "")));
+                                                    // }
+                                                  },
+                                                ),
+                                              ),
+                                            );
+                                          } else {
+                                            return Container();
+                                          }
+                                        },
+                                      );
+                                    },
+                                  ),
+                                )
+                          : Center(child: CircularProgressIndicator()),
+                    ),
+                  ),
                 ],
               ),
             ),
