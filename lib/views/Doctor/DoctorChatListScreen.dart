@@ -281,23 +281,62 @@ class _ChatListScreenState extends State<ChatListScreen> {
                           ),
                         ),
                         Container(
-                          height: MediaQuery.sizeOf(context).height * .1,
-                          width: MediaQuery.sizeOf(context).width * 1,
-                          child: InkWell(
-                            onTap: () {
-                              setState(() {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
+                          height: MediaQuery.of(context).size.height * 0.1,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Colors.orange,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                offset:
+                                    Offset(0, 3), // changes position of shadow
+                              ),
+                            ],
+                          ),
+                          alignment: Alignment.center,
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: () {
+                                setState(() {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
                                       builder: (context) => SeeAllOffers(
-                                            id: id!,
-                                          )),
-                                );
-                              });
-                            },
-                            child: Card(
-                              child: Text(
-                                  "Click to View Your Sent and Received Offers!"),
+                                        id: id!,
+                                      ),
+                                    ),
+                                  );
+                                });
+                              },
+                              borderRadius: BorderRadius.circular(10),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons
+                                          .touch_app, // You can choose a different icon here
+                                      color: Colors.white,
+                                      size: 24,
+                                    ),
+                                    SizedBox(width: 8),
+                                    Text(
+                                      "Click to View Your Sent and Received Offers!",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
                         )
