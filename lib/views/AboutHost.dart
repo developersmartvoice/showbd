@@ -8,6 +8,7 @@ import 'package:appcode3/views/Doctor/DoctorProfile.dart';
 import 'package:appcode3/views/Doctor/LogoutScreen.dart';
 import 'package:appcode3/views/Doctor/loginAsDoctor.dart';
 import 'package:appcode3/views/GenderSettingsPage.dart';
+import 'package:appcode3/views/HourlyRate.dart';
 import 'package:appcode3/views/IwillShowYouSettingsPage.dart';
 import 'package:appcode3/views/LanguagesSettingsPage.dart';
 import 'package:appcode3/views/LocationSearchPageInfo.dart';
@@ -56,7 +57,7 @@ class _AboutHostState extends State<AboutHost> {
   String motto = '';
   String iwillshowyou = '';
   String services = '';
-  //String hourly_rate = '';
+  String consultationfees = '';
   //String photos = '';
   String location = '';
   String about_me = '';
@@ -65,14 +66,31 @@ class _AboutHostState extends State<AboutHost> {
 
   getMotto() async {
     final response = await get(
-        Uri.parse("$SERVER_ADDRESS/api/get_Motto?id=${widget.doctorId}"));
-    print("$SERVER_ADDRESS/api/get_Motto?id=${widget.doctorId}");
+        Uri.parse("$SERVER_ADDRESS/api/get_motto?id=${widget.doctorId}"));
+    print("$SERVER_ADDRESS/api/get_motto?id=${widget.doctorId}");
     try {
       if (response.statusCode == 200) {
         final jsonResponse = jsonDecode(response.body);
         setState(() {
           motto = jsonResponse['motto'].toString();
           print(motto);
+        });
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  getConsultationFees() async {
+    final response = await get(Uri.parse(
+        "$SERVER_ADDRESS/api/getConsultationFees?id=${widget.doctorId}"));
+    print("$SERVER_ADDRESS/api/getConsultationFees?id=${widget.doctorId}");
+    try {
+      if (response.statusCode == 200) {
+        final jsonResponse = jsonDecode(response.body);
+        setState(() {
+          consultationfees = jsonResponse['consultation_fees'].toString();
+          print("this is consultation fees: $consultationfees");
         });
       }
     } catch (e) {
@@ -121,7 +139,7 @@ class _AboutHostState extends State<AboutHost> {
         final jsonResponse = jsonDecode(response.body);
         print(jsonResponse);
         setState(() {
-          iwillshowyou = jsonResponse['iwillshowyou'].toString();
+          iwillshowyou = jsonResponse['I_will_show_you'].toString();
           print(iwillshowyou);
         });
       } else {
@@ -188,6 +206,7 @@ class _AboutHostState extends State<AboutHost> {
     // TODO: implement initState
     super.initState();
     getMotto();
+    getConsultationFees();
     getAboutMe();
     getCity();
     getIWillShowYou();
@@ -219,7 +238,7 @@ class _AboutHostState extends State<AboutHost> {
         ),
       ),
       body: ContainerPage(widget.doctorId, motto, iwillshowyou, services,
-          gender, languages, about_me, location),
+          consultationfees, location, about_me, gender, languages),
     );
   }
 }
@@ -231,20 +250,22 @@ class ContainerPage extends StatefulWidget {
   final String motto;
   final String iwillshowyou;
   final String services;
+  final String consultationfees;
+  final String city;
+  final String aboutMe;
   final String gender;
   final String languages;
-  final String aboutMe;
-  final String city;
 
   ContainerPage(
     this.id,
     this.motto,
     this.iwillshowyou,
     this.services,
+    this.consultationfees,
+    this.city,
+    this.aboutMe,
     this.gender,
     this.languages,
-    this.aboutMe,
-    this.city,
   );
 }
 
@@ -252,6 +273,7 @@ class _ContainerPageState extends State<ContainerPage> {
   bool isMottoStored = false;
   bool isAboutMeStored = false;
   bool isLocationStored = false;
+  bool isConsultationFeesStored = false;
   bool isIWillShowYouStored = false;
   bool isServicesStored = false;
   bool isGenderStored = false;
@@ -266,6 +288,13 @@ class _ContainerPageState extends State<ContainerPage> {
     } else {
       print("motto is not empty");
       isMottoStored = true;
+    }
+
+    if (widget.consultationfees.isEmpty) {
+      isConsultationFeesStored = false;
+    } else {
+      print("hourly_rate is not empty");
+      isConsultationFeesStored = true;
     }
 
     if (widget.aboutMe.isEmpty) {
@@ -360,21 +389,21 @@ class _ContainerPageState extends State<ContainerPage> {
                       children: [
                         Container(
                           width: MediaQuery.sizeOf(context).width * .1,
-                          height: 30,
+                          height: 25,
                           decoration: BoxDecoration(
                             //color: _boxColor, // Color of the button
                             color: !isMottoStored ? Colors.green : Colors.grey,
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color: Colors.black, // Color of the border
-                              width: 1.0, // Width of the border
+                              color: Colors.grey, // Color of the border
+                              width: 0.5, // Width of the border
                             ), // Circular shape
                           ),
                           child: Icon(
                             Icons.check,
                             color: isMottoStored ? Colors.green : Colors.white,
                             // color: Colors.white, // Color of the icon
-                            size: 25.0, // Size of the icon
+                            size: 20.0, // Size of the icon
                           ),
                         )
                       ],
@@ -405,7 +434,7 @@ class _ContainerPageState extends State<ContainerPage> {
                       child: Text(
                         widget.motto,
                         style: TextStyle(
-                          fontSize: 18.0,
+                          fontSize: 15.0,
                           fontWeight: FontWeight.bold,
                           color: Colors.grey,
                         ),
@@ -422,7 +451,10 @@ class _ContainerPageState extends State<ContainerPage> {
                       // child: IconButton(
                       //     onPressed: () {},
                       //     icon: Icon(Icons.arrow_forward_ios)),
-                      child: Icon(Icons.arrow_forward_ios),
+                      child: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 20,
+                      ),
                     ),
                   ],
                 ),
@@ -603,7 +635,7 @@ class _ContainerPageState extends State<ContainerPage> {
             //   ),
             // ),
             Divider(
-              height: 2,
+              height: 1,
               color: Colors.white10,
             ),
 
@@ -629,7 +661,7 @@ class _ContainerPageState extends State<ContainerPage> {
                       children: [
                         Container(
                           width: MediaQuery.sizeOf(context).width * .1,
-                          height: 30,
+                          height: 25,
                           decoration: BoxDecoration(
                             //color: _boxColor, // Color of the button
                             color: !isIWillShowYouStored
@@ -637,8 +669,8 @@ class _ContainerPageState extends State<ContainerPage> {
                                 : Colors.grey,
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color: Colors.black, // Color of the border
-                              width: 1.0, // Width of the border
+                              color: Colors.grey, // Color of the border
+                              width: 0.5, // Width of the border
                             ), // Circular shape
                           ),
                           child: Icon(
@@ -647,7 +679,7 @@ class _ContainerPageState extends State<ContainerPage> {
                                 ? Colors.green
                                 : Colors.white,
                             // color: Colors.white, // Color of the icon
-                            size: 25.0, // Size of the icon
+                            size: 20.0, // Size of the icon
                           ),
                         )
                       ],
@@ -689,14 +721,17 @@ class _ContainerPageState extends State<ContainerPage> {
                     // SizedBox(
                     //   width: 5,
                     // ),
-                    SizedBox(
-                      width: 1,
-                      //width: MediaQuery.sizeOf(context).width * .05,
-                    ),
+                    // SizedBox(
+                    //   width: 1,
+                    //   //width: MediaQuery.sizeOf(context).width * .05,
+                    // ),
 
                     Padding(
                       padding: EdgeInsets.only(right: 8),
-                      child: Icon(Icons.arrow_forward_ios),
+                      child: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 20,
+                      ),
                     ),
                     // Container(
                     //   //padding: EdgeInsets.only(right: 15),
@@ -713,7 +748,7 @@ class _ContainerPageState extends State<ContainerPage> {
             ),
 
             Divider(
-              height: 2,
+              height: 1,
               color: Colors.white10,
             ),
 
@@ -739,15 +774,15 @@ class _ContainerPageState extends State<ContainerPage> {
                       children: [
                         Container(
                           width: MediaQuery.sizeOf(context).width * .1,
-                          height: 30,
+                          height: 25,
                           decoration: BoxDecoration(
                             //color: _boxColor, // Color of the button
                             color:
                                 !isServicesStored ? Colors.green : Colors.grey,
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color: Colors.black, // Color of the border
-                              width: 1.0, // Width of the border
+                              color: Colors.grey, // Color of the border
+                              width: 0.5, // Width of the border
                             ), // Circular shape
                           ),
                           child: Icon(
@@ -755,7 +790,7 @@ class _ContainerPageState extends State<ContainerPage> {
                             color:
                                 isServicesStored ? Colors.green : Colors.white,
                             // color: Colors.white, // Color of the icon
-                            size: 25.0, // Size of the icon
+                            size: 20.0, // Size of the icon
                           ),
                         )
                       ],
@@ -803,7 +838,7 @@ class _ContainerPageState extends State<ContainerPage> {
                       // child: IconButton(
                       //     onPressed: () {},
                       //     icon: Icon(Icons.arrow_forward_ios)),
-                      child: Icon(Icons.arrow_forward_ios),
+                      child: Icon(Icons.arrow_forward_ios, size: 20),
                     ),
                   ],
                 ),
@@ -950,167 +985,288 @@ class _ContainerPageState extends State<ContainerPage> {
             // ),
 
             Divider(
-              height: 2,
+              height: 1,
               color: Colors.white10,
             ),
+
             Container(
+              padding: EdgeInsets.only(left: 4),
               height: 60,
               color: Colors.white,
-              child: Stack(
-                children: [
-                  Positioned(
-                    left: 10, // Adjust the position of the button as needed
-                    top: 20, // Adjust the position of the button as needed
-                    child: InkWell(
-                      onTap: () {
-                        // Add your logic for the selection button onTap event here
-                      },
-                      child: Container(
-                        width: 30,
-                        height: 30,
-                        decoration: BoxDecoration(
-                          color: Colors.white, // Color of the button
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: Colors.black, // Color of the border
-                            width: 1.0, // Width of the border
-                          ), // Circular shape
-                        ),
-                        child: Icon(
-                          Icons.check,
-                          color: Colors.white, // Color of the icon
-                          size: 30.0, // Size of the icon
-                        ),
-                      ),
+              child: InkWell(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => HourlyRateSettingsPage(
+                          widget.id, widget.consultationfees),
                     ),
-                  ),
-                  Container(
-                    child: Row(
+                  );
+                },
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  // crossAxisAlignment: CrossAxisAlignment.stretch,
+                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Stack(
                       children: [
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(right: 167.0),
-                            child: Text(
-                              'Hourly rate',
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.robotoCondensed(
-                                fontSize: 20.0,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                        ),
                         Container(
-                          height: 70,
-                          child: Padding(
-                            padding: const EdgeInsets.only(right: 15),
-                            child: IconButton(
-                              onPressed: () {
-                                // Add your logic for the onPressed event here
-                                // Typically, this would involve navigating to the next screen or performing some action
-                              },
-                              alignment: Alignment.centerRight,
-                              icon: Icon(Icons.arrow_forward_ios_sharp),
-                              color: Colors.black, // Color of the icon
-                              iconSize: 24.0, // Size of the icon
-                            ),
+                          width: MediaQuery.sizeOf(context).width * .1,
+                          height: 25,
+                          decoration: BoxDecoration(
+                            //color: Colors.white,
+                            color: !isLocationStored
+                                ? Colors.green
+                                : Colors.grey, // Color of the button
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: Colors.grey, // Color of the border
+                              width: 0.5, // Width of the border
+                            ), // Circular shape
+                          ),
+                          child: Icon(
+                            Icons.check,
+                            color: isConsultationFeesStored
+                                ? Colors.green
+                                : Colors.white,
+                            //color: Colors.white, // Color of the icon
+                            size: 20.0, // Size of the icon
                           ),
                         ),
                       ],
                     ),
-                  ),
-                ],
-              ),
-            ),
-            Divider(
-              height: 2,
-              color: Colors.white10,
-            ),
-            Container(
-              height: 60,
-              color: Colors.white,
-              child: Stack(
-                children: [
-                  Positioned(
-                    left: 10, // Adjust the position of the button as needed
-                    top: 20, // Adjust the position of the button as needed
-                    child: InkWell(
-                      onTap: () {
-                        // Add your logic for the selection button onTap event here
-                      },
-                      child: Container(
-                        width: 30,
-                        height: 30,
-                        decoration: BoxDecoration(
-                          color: Colors.white, // Color of the button
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: Colors.black, // Color of the border
-                            width: 1.0, // Width of the border
-                          ), // Circular shape
-                        ),
-                        child: Icon(
-                          Icons.check,
-                          color: Colors.white, // Color of the icon
-                          size: 30.0, // Size of the icon
+                    Container(
+                      padding: EdgeInsets.only(left: 5),
+                      alignment: Alignment.center,
+                      //width: MediaQuery.sizeOf(context).width * .2,
+                      child: Text(
+                        'Hourly rate',
+                        style: GoogleFonts.robotoCondensed(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.w500,
+                          // color: Color.fromARGB(255, 243, 103, 9),
                         ),
                       ),
                     ),
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 200.0),
-                          child: Text(
-                            'Photos',
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.robotoCondensed(
-                              fontSize: 20.0,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
+                    SizedBox(
+                      //width: MediaQuery.sizeOf(context).width * .1,
+                      width: 50,
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(right: 15),
+                      alignment: Alignment.centerRight,
+                      width: MediaQuery.sizeOf(context).width * .4,
+                      child: Text(
+                        widget.consultationfees,
+                        style: TextStyle(
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey,
                         ),
                       ),
-
-                      Container(
-                        height: 70,
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 15),
-                          child: IconButton(
-                            onPressed: () {
-                              // Add your logic for the onPressed event here
-                              // Typically, this would involve navigating to the next screen or performing some action
-                            },
-                            alignment: Alignment.centerRight,
-                            icon: Icon(Icons.arrow_forward_ios_sharp),
-                            color: Colors.black, // Color of the icon
-                            iconSize: 24.0, // Size of the icon
-                          ),
+                    ),
+                    // SizedBox(
+                    //   width: MediaQuery.sizeOf(context).width * .05,
+                    // ),
+                    Container(
+                      height: 70,
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 5),
+                        child: IconButton(
+                          onPressed: () {
+                            // Add your logic for the onPressed event here
+                            // Typically, this would involve navigating to the next screen or performing some action
+                          },
+                          alignment: Alignment.centerRight,
+                          icon: Icon(Icons.arrow_forward_ios_sharp),
+                          color: Colors.black, // Color of the icon
+                          iconSize: 20.0, // Size of the icon
                         ),
                       ),
-                      // Align(
-                      //   alignment: Alignment.centerRight,
-                      //   child: IconButton(
-                      //     onPressed: () {
-                      //       // Add your logic for the onPressed event here
-                      //       // Typically, this would involve navigating to the next screen or performing some action
-                      //     },
-                      //     alignment: Alignment.centerRight,
-                      //     icon: Icon(Icons.arrow_forward_ios_sharp),
-                      //     color: Colors.black, // Color of the icon
-                      //     iconSize: 24.0, // Size of the icon
-                      //   ),
-                      // ),
-                    ],
-                  ),
-                ],
+                    ),
+                  ],
+                ),
               ),
             ),
             Divider(
-              height: 2,
+              height: 1,
+              color: Colors.white10,
+            ),
+
+            Container(
+              padding: EdgeInsets.only(left: 4),
+              height: 60,
+              color: Colors.white,
+              child: InkWell(
+                onTap: () {
+                  // Navigator.of(context).push(
+                  //   MaterialPageRoute(
+                  //     builder: (context) =>
+                  //         HourlyRateSettingsPage(widget.id, widget.hourly_rate),
+                  //   ),
+                  // );
+                },
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  // crossAxisAlignment: CrossAxisAlignment.stretch,
+                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Stack(
+                      children: [
+                        Container(
+                          width: MediaQuery.sizeOf(context).width * .1,
+                          height: 25,
+                          decoration: BoxDecoration(
+                            color: Colors.white, // Color of the button
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: Colors.grey, // Color of the border
+                              width: 0.5, // Width of the border
+                            ), // Circular shape
+                          ),
+                          child: Icon(
+                            Icons.check,
+                            color: Colors.white, // Color of the icon
+                            size: 20.0, // Size of the icon
+                          ),
+                        ),
+                      ],
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(left: 5),
+                      alignment: Alignment.center,
+                      //width: MediaQuery.sizeOf(context).width * .2,
+                      child: Text(
+                        'Photos',
+                        style: GoogleFonts.robotoCondensed(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.w500,
+                          // color: Color.fromARGB(255, 243, 103, 9),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      //width: MediaQuery.sizeOf(context).width * .1,
+                      width: 253,
+                    ),
+                    // Container(
+                    //   alignment: Alignment.centerRight,
+                    //   width: MediaQuery.sizeOf(context).width * .4,
+                    //   child: Text(
+                    //     '',
+                    //     style: TextStyle(
+                    //       fontSize: 15.0,
+                    //       fontWeight: FontWeight.bold,
+                    //       color: Colors.grey,
+                    //     ),
+                    //   ),
+                    // ),
+                    // SizedBox(
+                    //   width: MediaQuery.sizeOf(context).width * .05,
+                    // ),
+                    Container(
+                      height: 70,
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 5),
+                        child: IconButton(
+                          onPressed: () {
+                            // Add your logic for the onPressed event here
+                            // Typically, this would involve navigating to the next screen or performing some action
+                          },
+                          alignment: Alignment.centerRight,
+                          icon: Icon(Icons.arrow_forward_ios_sharp),
+                          color: Colors.black, // Color of the icon
+                          iconSize: 20.0, // Size of the icon
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            // Container(
+            //   height: 60,
+            //   color: Colors.white,
+            //   child: Stack(
+            //     children: [
+            //       Positioned(
+            //         left: 10, // Adjust the position of the button as needed
+            //         top: 20, // Adjust the position of the button as needed
+            //         child: InkWell(
+            //           onTap: () {
+            //             // Add your logic for the selection button onTap event here
+            //           },
+            //           child: Container(
+            //             width: 30,
+            //             height: 30,
+            //             decoration: BoxDecoration(
+            //               color: Colors.white, // Color of the button
+            //               shape: BoxShape.circle,
+            //               border: Border.all(
+            //                 color: Colors.black, // Color of the border
+            //                 width: 1.0, // Width of the border
+            //               ), // Circular shape
+            //             ),
+            //             child: Icon(
+            //               Icons.check,
+            //               color: Colors.white, // Color of the icon
+            //               size: 20.0, // Size of the icon
+            //             ),
+            //           ),
+            //         ),
+            //       ),
+            //       Row(
+            //         children: [
+            //           Expanded(
+            //             child: Padding(
+            //               padding: const EdgeInsets.only(right: 200.0),
+            //               child: Text(
+            //                 'Photos',
+            //                 textAlign: TextAlign.center,
+            //                 style: GoogleFonts.robotoCondensed(
+            //                   fontSize: 20.0,
+            //                   color: Colors.black,
+            //                   fontWeight: FontWeight.w500,
+            //                 ),
+            //               ),
+            //             ),
+            //           ),
+
+            //           Container(
+            //             height: 70,
+            //             child: Padding(
+            //               padding: const EdgeInsets.only(right: 15),
+            //               child: IconButton(
+            //                 onPressed: () {
+            //                   // Add your logic for the onPressed event here
+            //                   // Typically, this would involve navigating to the next screen or performing some action
+            //                 },
+            //                 alignment: Alignment.centerRight,
+            //                 icon: Icon(Icons.arrow_forward_ios_sharp),
+            //                 color: Colors.black, // Color of the icon
+            //                 iconSize: 24.0, // Size of the icon
+            //               ),
+            //             ),
+            //           ),
+            //           // Align(
+            //           //   alignment: Alignment.centerRight,
+            //           //   child: IconButton(
+            //           //     onPressed: () {
+            //           //       // Add your logic for the onPressed event here
+            //           //       // Typically, this would involve navigating to the next screen or performing some action
+            //           //     },
+            //           //     alignment: Alignment.centerRight,
+            //           //     icon: Icon(Icons.arrow_forward_ios_sharp),
+            //           //     color: Colors.black, // Color of the icon
+            //           //     iconSize: 24.0, // Size of the icon
+            //           //   ),
+            //           // ),
+            //         ],
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            Divider(
+              height: 1,
               color: Colors.white10,
             ),
 
@@ -1136,15 +1292,15 @@ class _ContainerPageState extends State<ContainerPage> {
                       children: [
                         Container(
                           width: MediaQuery.sizeOf(context).width * .1,
-                          height: 30,
+                          height: 25,
                           decoration: BoxDecoration(
                             //color: _boxColor, // Color of the button
                             color:
                                 !isLocationStored ? Colors.green : Colors.grey,
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color: Colors.black, // Color of the border
-                              width: 1.0, // Width of the border
+                              color: Colors.grey, // Color of the border
+                              width: 0.5, // Width of the border
                             ), // Circular shape
                           ),
                           child: Icon(
@@ -1152,7 +1308,7 @@ class _ContainerPageState extends State<ContainerPage> {
                             color:
                                 isLocationStored ? Colors.green : Colors.white,
                             // color: Colors.white, // Color of the icon
-                            size: 25.0, // Size of the icon
+                            size: 20.0, // Size of the icon
                           ),
                         )
                       ],
@@ -1198,7 +1354,7 @@ class _ContainerPageState extends State<ContainerPage> {
                       // child: IconButton(
                       //     onPressed: () {},
                       //     icon: Icon(Icons.arrow_forward_ios)),
-                      child: Icon(Icons.arrow_forward_ios),
+                      child: Icon(Icons.arrow_forward_ios, size: 20),
                     )
                   ],
                 ),
@@ -1399,7 +1555,7 @@ class _ContainerPageState extends State<ContainerPage> {
             //   ),
             // ),
             Divider(
-              height: 2,
+              height: 1,
               color: Colors.white10,
             ),
 
@@ -1425,15 +1581,15 @@ class _ContainerPageState extends State<ContainerPage> {
                       children: [
                         Container(
                           width: MediaQuery.sizeOf(context).width * .1,
-                          height: 30,
+                          height: 25,
                           decoration: BoxDecoration(
                             //color: _boxColor, // Color of the button
                             color:
                                 !isAboutMeStored ? Colors.green : Colors.grey,
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color: Colors.black, // Color of the border
-                              width: 1.0, // Width of the border
+                              color: Colors.grey, // Color of the border
+                              width: 0.5, // Width of the border
                             ), // Circular shape
                           ),
                           child: Icon(
@@ -1441,7 +1597,7 @@ class _ContainerPageState extends State<ContainerPage> {
                             color:
                                 isAboutMeStored ? Colors.green : Colors.white,
                             // color: Colors.white, // Color of the icon
-                            size: 25.0, // Size of the icon
+                            size: 20.0, // Size of the icon
                           ),
                         )
                       ],
@@ -1487,7 +1643,7 @@ class _ContainerPageState extends State<ContainerPage> {
                       // child: IconButton(
                       //     onPressed: () {},
                       //     icon: Icon(Icons.arrow_forward_ios)),
-                      child: Icon(Icons.arrow_forward_ios),
+                      child: Icon(Icons.arrow_forward_ios, size: 20),
                     )
                   ],
                 ),
@@ -1564,7 +1720,7 @@ class _ContainerPageState extends State<ContainerPage> {
             //   ),
             // ),
             Divider(
-              height: 2,
+              height: 1,
               color: Colors.white10,
             ),
             // Container(
@@ -1655,21 +1811,21 @@ class _ContainerPageState extends State<ContainerPage> {
                       children: [
                         Container(
                           width: MediaQuery.sizeOf(context).width * .1,
-                          height: 30,
+                          height: 25,
                           decoration: BoxDecoration(
                             //color: _boxColor, // Color of the button
                             color: !isGenderStored ? Colors.green : Colors.grey,
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color: Colors.black, // Color of the border
-                              width: 1.0, // Width of the border
+                              color: Colors.grey, // Color of the border
+                              width: 0.5, // Width of the border
                             ), // Circular shape
                           ),
                           child: Icon(
                             Icons.check,
                             color: isGenderStored ? Colors.green : Colors.white,
                             // color: Colors.white, // Color of the icon
-                            size: 25.0, // Size of the icon
+                            size: 20.0, // Size of the icon
                           ),
                         )
                       ],
@@ -1717,14 +1873,14 @@ class _ContainerPageState extends State<ContainerPage> {
                       // child: IconButton(
                       //     onPressed: () {},
                       //     icon: Icon(Icons.arrow_forward_ios)),
-                      child: Icon(Icons.arrow_forward_ios),
+                      child: Icon(Icons.arrow_forward_ios, size: 20),
                     ),
                   ],
                 ),
               ),
             ),
             Divider(
-              height: 2,
+              height: 1,
               color: Colors.white10,
             ),
 
@@ -1750,15 +1906,15 @@ class _ContainerPageState extends State<ContainerPage> {
                       children: [
                         Container(
                           width: MediaQuery.sizeOf(context).width * .1,
-                          height: 30,
+                          height: 25,
                           decoration: BoxDecoration(
                             //color: _boxColor, // Color of the button
                             color:
                                 !isLanguagesStored ? Colors.green : Colors.grey,
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color: Colors.black, // Color of the border
-                              width: 1.0, // Width of the border
+                              color: Colors.grey, // Color of the border
+                              width: 0.5, // Width of the border
                             ), // Circular shape
                           ),
                           child: Icon(
@@ -1766,7 +1922,7 @@ class _ContainerPageState extends State<ContainerPage> {
                             color:
                                 isLanguagesStored ? Colors.green : Colors.white,
                             // color: Colors.white, // Color of the icon
-                            size: 25.0, // Size of the icon
+                            size: 20.0, // Size of the icon
                           ),
                         )
                       ],
@@ -1815,7 +1971,7 @@ class _ContainerPageState extends State<ContainerPage> {
                       // child: IconButton(
                       //     onPressed: () {},
                       //     icon: Icon(Icons.arrow_forward_ios)),
-                      child: Icon(Icons.arrow_forward_ios),
+                      child: Icon(Icons.arrow_forward_ios, size: 20),
                     ),
                   ],
                 ),
@@ -1919,7 +2075,7 @@ class _ContainerPageState extends State<ContainerPage> {
             //   ),
             // ),
             Divider(
-              height: 2,
+              height: 1,
               color: Colors.white10,
             ),
           ],

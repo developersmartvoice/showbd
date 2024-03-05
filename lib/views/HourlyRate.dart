@@ -34,46 +34,46 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:flutter/material.dart';
 
-class IwillShowYouSettingsPage extends StatefulWidget {
+class HourlyRateSettingsPage extends StatefulWidget {
   //const NameSettingsPage({super.key});
 
   @override
-  State<IwillShowYouSettingsPage> createState() =>
-      _IwillShowYouSettingsPageState();
+  State<HourlyRateSettingsPage> createState() => _HourlyRateSettingsPageState();
   late final String id;
-  late final String iwillshowyou;
+  late final String consultationfees;
   //late final String aboutMe;
   //late final String city;
 
-  IwillShowYouSettingsPage(this.id, this.iwillshowyou);
+  HourlyRateSettingsPage(this.id, this.consultationfees);
 }
 
-class _IwillShowYouSettingsPageState extends State<IwillShowYouSettingsPage> {
+class _HourlyRateSettingsPageState extends State<HourlyRateSettingsPage> {
   late TextEditingController _controller;
   String enteredValue = '';
   bool isValueChanged = false;
-  void updatingIWillShowYou() async {
-    final response =
-        await post(Uri.parse("$SERVER_ADDRESS/api/updateIWillShowYou"), body: {
-      "id": widget.id,
-      "iwillshowyou": enteredValue,
-    });
-    print("$SERVER_ADDRESS/api/updateIWillShowYou");
+  void updatingConsultationFees() async {
+    final response = await post(
+        Uri.parse("$SERVER_ADDRESS/api/updateConsultationFees"),
+        body: {
+          "id": widget.id,
+          "ConsultationFees": enteredValue,
+        });
+    print("$SERVER_ADDRESS/api/updateConsultationFees");
     // print(response.body);
     if (response.statusCode == 200) {
-      print("IWillShowYou Updated");
+      print("Hourly Rate Updated");
       setState(() {
         Navigator.pop(context);
       });
     } else {
-      print("IWillShowYou Not Updated");
+      print("Hourly Rate Not Updated");
     }
   }
 
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController(text: widget.iwillshowyou);
+    _controller = TextEditingController(text: widget.consultationfees);
   }
 
   @override
@@ -81,7 +81,7 @@ class _IwillShowYouSettingsPageState extends State<IwillShowYouSettingsPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('I will show you',
+          title: Text('Hourly Rate',
               // style: GoogleFonts.robotoCondensed(
               //   color: Colors.white,
               //   fontSize: 25,
@@ -96,7 +96,7 @@ class _IwillShowYouSettingsPageState extends State<IwillShowYouSettingsPage> {
             TextButton(
               onPressed: () {
                 if (isValueChanged) {
-                  updatingIWillShowYou();
+                  updatingConsultationFees();
                 } else {
                   // Navigator.pop(context);
                 }
@@ -119,13 +119,28 @@ class _IwillShowYouSettingsPageState extends State<IwillShowYouSettingsPage> {
               Container(
                 padding: EdgeInsets.all(16),
                 alignment: Alignment.topLeft,
-                child: Text(
-                  IWILLSHOWYOU_PAGE_1,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w200,
-                  ),
+                child: Column(
+                  children: [
+                    Text(
+                      HOURLY_RATE_PAGE,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w200,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    // Text(
+                    //   MOTTO_PAGE_2,
+                    //   style: TextStyle(
+                    //     color: Colors.black,
+                    //     fontSize: 12,
+                    //     fontWeight: FontWeight.w200,
+                    //   ),
+                    // ),
+                  ],
                 ),
               ),
               SizedBox(
@@ -144,7 +159,7 @@ class _IwillShowYouSettingsPageState extends State<IwillShowYouSettingsPage> {
                     setState(
                       () {
                         enteredValue = value;
-                        if (enteredValue != widget.iwillshowyou) {
+                        if (enteredValue != widget.consultationfees) {
                           isValueChanged = true;
                         } else {
                           isValueChanged = false;
@@ -154,7 +169,7 @@ class _IwillShowYouSettingsPageState extends State<IwillShowYouSettingsPage> {
                   },
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: widget.iwillshowyou,
+                    hintText: widget.consultationfees,
                     hintStyle: TextStyle(color: Colors.black),
                   ),
                 ),

@@ -217,7 +217,7 @@ class _ContainerPageState extends State<ContainerPage> {
             children: [
               Container(
                 padding: EdgeInsets.all(10),
-                height: 70,
+                height: 60,
                 color: Colors.white,
                 child: InkWell(
                   onTap: () {
@@ -237,21 +237,21 @@ class _ContainerPageState extends State<ContainerPage> {
                         children: [
                           Container(
                             width: MediaQuery.sizeOf(context).width * .1,
-                            height: 30,
+                            height: 25,
                             decoration: BoxDecoration(
                               //color: _boxColor, // Color of the button
                               color: !isNameStored ? Colors.green : Colors.grey,
                               shape: BoxShape.circle,
                               border: Border.all(
-                                color: Colors.black, // Color of the border
-                                width: 1.0, // Width of the border
+                                color: Colors.grey, // Color of the border
+                                width: 0.5, // Width of the border
                               ), // Circular shape
                             ),
                             child: Icon(
                               Icons.check,
                               color: isNameStored ? Colors.green : Colors.white,
                               // color: Colors.white, // Color of the icon
-                              size: 25.0, // Size of the icon
+                              size: 20.0, // Size of the icon
                             ),
                           )
                         ],
@@ -260,13 +260,13 @@ class _ContainerPageState extends State<ContainerPage> {
                       //   width: MediaQuery.sizeOf(context).width * .01,
                       // ),
                       Container(
-                        padding: EdgeInsets.only(right: 15),
+                        padding: EdgeInsets.only(right: 22),
                         alignment: Alignment.center,
                         width: MediaQuery.sizeOf(context).width * .2,
                         child: Text(
                           NAME,
                           style: TextStyle(
-                            fontSize: 18.0,
+                            fontSize: 16.0,
                             fontWeight: FontWeight.bold,
                             // color: Color.fromARGB(255, 243, 103, 9),
                           ),
@@ -298,14 +298,14 @@ class _ContainerPageState extends State<ContainerPage> {
                         // child: IconButton(
                         //     onPressed: () {},
                         //     icon: Icon(Icons.arrow_forward_ios)),
-                        child: Icon(Icons.arrow_forward_ios),
+                        child: Icon(Icons.arrow_forward_ios, size: 20),
                       ),
                     ],
                   ),
                 ),
               ),
               Divider(
-                height: 2,
+                height: 1,
                 color: Colors.white10,
               ),
               // Container(
@@ -380,7 +380,7 @@ class _ContainerPageState extends State<ContainerPage> {
               // ),
               Container(
                 padding: EdgeInsets.all(10),
-                height: 70,
+                height: 60,
                 color: Colors.white,
                 child: InkWell(
                   onTap: () {
@@ -400,15 +400,15 @@ class _ContainerPageState extends State<ContainerPage> {
                         children: [
                           Container(
                             width: MediaQuery.sizeOf(context).width * .1,
-                            height: 30,
+                            height: 25,
                             decoration: BoxDecoration(
                               //color: _boxColor, // Color of the button
                               color:
                                   !isAboutMeStored ? Colors.green : Colors.grey,
                               shape: BoxShape.circle,
                               border: Border.all(
-                                color: Colors.black, // Color of the border
-                                width: 1.0, // Width of the border
+                                color: Colors.grey, // Color of the border
+                                width: 0.5, // Width of the border
                               ), // Circular shape
                             ),
                             child: Icon(
@@ -416,7 +416,7 @@ class _ContainerPageState extends State<ContainerPage> {
                               color:
                                   isAboutMeStored ? Colors.green : Colors.white,
                               // color: Colors.white, // Color of the icon
-                              size: 25.0, // Size of the icon
+                              size: 20.0, // Size of the icon
                             ),
                           )
                         ],
@@ -462,20 +462,20 @@ class _ContainerPageState extends State<ContainerPage> {
                         // child: IconButton(
                         //     onPressed: () {},
                         //     icon: Icon(Icons.arrow_forward_ios)),
-                        child: Icon(Icons.arrow_forward_ios),
+                        child: Icon(Icons.arrow_forward_ios, size: 20),
                       )
                     ],
                   ),
                 ),
               ),
               Divider(
-                height: 2,
+                height: 1,
                 color: Colors.white10,
               ),
 
               Container(
                 padding: EdgeInsets.all(10),
-                height: 70,
+                height: 60,
                 color: Colors.white,
                 child: InkWell(
                   onTap: () {
@@ -495,21 +495,21 @@ class _ContainerPageState extends State<ContainerPage> {
                         children: [
                           Container(
                             width: MediaQuery.sizeOf(context).width * .1,
-                            height: 30,
+                            height: 25,
                             decoration: BoxDecoration(
                               //color: _boxColor, // Color of the button
                               color: !isNameStored ? Colors.green : Colors.grey,
                               shape: BoxShape.circle,
                               border: Border.all(
-                                color: Colors.black, // Color of the border
-                                width: 1.0, // Width of the border
+                                color: Colors.grey, // Color of the border
+                                width: 0.5, // Width of the border
                               ), // Circular shape
                             ),
                             child: Icon(
                               Icons.check,
                               color: isNameStored ? Colors.green : Colors.white,
                               // color: Colors.white, // Color of the icon
-                              size: 25.0, // Size of the icon
+                              size: 20.0, // Size of the icon
                             ),
                           )
                         ],
@@ -518,13 +518,13 @@ class _ContainerPageState extends State<ContainerPage> {
                       //   width: MediaQuery.sizeOf(context).width * .01,
                       // ),
                       Container(
-                        padding: EdgeInsets.only(right: 10),
+                        padding: EdgeInsets.only(right: 15),
                         alignment: Alignment.center,
                         width: MediaQuery.sizeOf(context).width * .2,
                         child: Text(
                           'Photos',
                           style: TextStyle(
-                            fontSize: 18.0,
+                            fontSize: 16.0,
                             fontWeight: FontWeight.bold,
                             // color: Color.fromARGB(255, 243, 103, 9),
                           ),
@@ -557,7 +557,7 @@ class _ContainerPageState extends State<ContainerPage> {
                         // child: IconButton(
                         //     onPressed: () {},
                         //     icon: Icon(Icons.arrow_forward_ios)),
-                        child: Icon(Icons.arrow_forward_ios),
+                        child: Icon(Icons.arrow_forward_ios, size: 20),
                       ),
                     ],
                   ),
@@ -636,7 +636,7 @@ class _ContainerPageState extends State<ContainerPage> {
               //   ),
               // ),
               Divider(
-                height: 2,
+                height: 1,
                 color: Colors.white10,
               ),
               // Container(
@@ -712,7 +712,7 @@ class _ContainerPageState extends State<ContainerPage> {
 
               Container(
                 padding: EdgeInsets.all(10),
-                height: 70,
+                height: 60,
                 color: Colors.white,
                 child: InkWell(
                   onTap: () {
@@ -732,7 +732,7 @@ class _ContainerPageState extends State<ContainerPage> {
                         children: [
                           Container(
                             width: MediaQuery.sizeOf(context).width * .1,
-                            height: 30,
+                            height: 25,
                             decoration: BoxDecoration(
                               //color: _boxColor, // Color of the button
                               color: !isLocationStored
@@ -740,8 +740,8 @@ class _ContainerPageState extends State<ContainerPage> {
                                   : Colors.grey,
                               shape: BoxShape.circle,
                               border: Border.all(
-                                color: Colors.black, // Color of the border
-                                width: 1.0, // Width of the border
+                                color: Colors.grey, // Color of the border
+                                width: 0.5, // Width of the border
                               ), // Circular shape
                             ),
                             child: Icon(
@@ -750,7 +750,7 @@ class _ContainerPageState extends State<ContainerPage> {
                                   ? Colors.green
                                   : Colors.white,
                               // color: Colors.white, // Color of the icon
-                              size: 25.0, // Size of the icon
+                              size: 20.0, // Size of the icon
                             ),
                           )
                         ],
@@ -795,7 +795,7 @@ class _ContainerPageState extends State<ContainerPage> {
                         // child: IconButton(
                         //     onPressed: () {},
                         //     icon: Icon(Icons.arrow_forward_ios)),
-                        child: Icon(Icons.arrow_forward_ios),
+                        child: Icon(Icons.arrow_forward_ios, size: 20),
                       )
                     ],
                   ),

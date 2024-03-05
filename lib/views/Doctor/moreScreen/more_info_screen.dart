@@ -493,6 +493,34 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
   String? doctorId;
   bool isErrorInLoading = false;
 
+  List<String> currencies = ['USD', 'EUR', 'GBP', 'JPY', 'CAD'];
+  String selectedCurrency = '';
+
+  // Future<void> _showCurrencySelectionDialog(BuildContext context) async {
+  //   final selectedCurrency = await showDialog<String>(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         title: Text('Choose Currency'),
+  //         content: Container(
+  //           width: double.minPositive,
+  //           child: ListView.builder(
+  //             shrinkWrap: true,
+  //             itemCount: currencies.length,
+  //             itemBuilder: (BuildContext context, int index) {
+  //               return ListTile(
+  //                 title: Text(currencies[index]),
+  //                 onTap: () {
+  //                   Navigator.of(context).pop(currencies[index]);
+  //                 },
+  //               );
+  //             },
+  //           ),
+  //         ),
+  //       );
+  //     },
+  //   ); // Example currencies
+
   fetchDoctorAppointment() async {
     final response = await get(Uri.parse(
         "$SERVER_ADDRESS/api/doctoruappointment?doctor_id=$doctorId"));
@@ -839,6 +867,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
 
   Widget upCommingAppointments() {
     return Container(
+      color: Colors.white,
       margin: EdgeInsets.only(top: 5),
 
       //margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
@@ -880,14 +909,14 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
           //),
           //),
 
-          //SizedBox(
-          //height: 60,
-          //),
-
-          Divider(
-            height: 25,
-            color: Colors.grey,
+          SizedBox(
+            height: 20,
           ),
+
+          // Divider(
+          //   height: 25,
+          //   color: Colors.grey,
+          // ),
 
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 0, 30, 0),
@@ -947,7 +976,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
           ),
 
           SizedBox(
-            height: 10,
+            height: 5,
           ),
 
           ///---------  change password ----------
@@ -1112,13 +1141,305 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
             height: 5,
           ),
 
+          GestureDetector(
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return SimpleDialog(
+                    title: Text("Select Currency"),
+                    children: <Widget>[
+                      SimpleDialogOption(
+                        onPressed: () {
+                          // Perform actions upon selecting USD
+                          setState(() {
+                            selectedCurrency = 'USD';
+                          });
+                          Navigator.of(context).pop();
+                        },
+                        child: Text('USD'),
+                      ),
+                      SimpleDialogOption(
+                        onPressed: () {
+                          // Perform actions upon selecting BDT
+                          setState(() {
+                            selectedCurrency = 'BDT';
+                          });
+                          Navigator.of(context).pop();
+                        },
+                        child: Text('BDT'),
+                      ),
+                      // SimpleDialogOption(
+                      //   onPressed: () {
+                      //     // Perform actions upon selecting EUR
+                      //     setState(() {
+                      //       selectedCurrency = 'EUR';
+                      //     });
+                      //     Navigator.of(context).pop();
+                      //   },
+                      //   child: Text('EUR'),
+                      // ),
+                      // SimpleDialogOption(
+                      //   onPressed: () {
+                      //     // Perform actions upon selecting GBP
+                      //     setState(() {
+                      //       selectedCurrency = 'GBP';
+                      //     });
+                      //     Navigator.of(context).pop();
+                      //   },
+                      //   child: Text('GBP'),
+                      // ),
+                    ],
+                  );
+                },
+              );
+            },
+            child: Container(
+              height: 50,
+              margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 243, 103, 9),
+                borderRadius: BorderRadius.circular(10),
+              ),
+
+              child: Container(
+                margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      CURRENCY_EXCHANGE,
+                      style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                            color: Colors.white,
+                          ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 200),
+                      child: Text(
+                        selectedCurrency,
+                        style: GoogleFonts.robotoCondensed(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        // Theme.of(context).textTheme.subtitle1?.copyWith(
+                        //       color: Colors.black,
+                        //     ),
+                      ),
+                    ),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      size: 20,
+                      color: Colors.white,
+                    ),
+                  ],
+                ),
+              ),
+              // child: Container(
+              //   margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     children: [
+              //       Text(
+              //         selectedCurrency,
+              //         style: Theme.of(context).textTheme.subtitle1?.copyWith(
+              //               color: Colors.white,
+              //             ),
+              //       ),
+              //       Icon(
+              //         Icons.arrow_drop_down,
+              //         size: 20,
+              //         color: Colors.white,
+              //       ),
+              //     ],
+              //   ),
+              // ),
+            ),
+          ),
+
+          // PopupMenuButton<String>(
+          //   onSelected: (String value) {
+          //     setState(() {
+          //       selectedCurrency = value;
+          //     });
+          //   },
+          //   itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+          //     PopupMenuItem<String>(
+          //       value: 'USD',
+          //       child: Text('USD'),
+          //     ),
+          //     PopupMenuItem<String>(
+          //       value: 'BDT',
+          //       child: Text('BDT'),
+          //     ),
+          //     PopupMenuItem<String>(
+          //       value: 'EUR',
+          //       child: Text('EUR'),
+          //     ),
+          //     PopupMenuItem<String>(
+          //       value: 'GBP',
+          //       child: Text('GBP'),
+          //     ),
+          //   ],
+          //   child: Container(
+          //     height: 50,
+          //     margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
+          //     decoration: BoxDecoration(
+          //       color: Color.fromARGB(255, 243, 103, 9),
+          //       borderRadius: BorderRadius.circular(10),
+          //     ),
+          //     child: Container(
+          //       margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
+          //       child: Row(
+          //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //         children: [
+          //           Text(
+          //             selectedCurrency,
+          //             style: Theme.of(context).textTheme.subtitle1?.copyWith(
+          //                   color: Colors.white,
+          //                 ),
+          //           ),
+          //           Icon(
+          //             Icons.arrow_drop_down,
+          //             size: 20,
+          //             color: Colors.white,
+          //           ),
+          //         ],
+          //       ),
+          //     ),
+          //   ),
+          // ),
+
+          // GestureDetector(
+          //   onTap: () {
+          //     showDialog(
+          //       context: context,
+          //       builder: (BuildContext context) {
+          //         return SimpleDialog(
+          //           title: Text("Select Currency"),
+          //           children: <Widget>[
+          //             SimpleDialogOption(
+          //               onPressed: () {
+          //                 // Perform actions upon selecting USD
+          //                 Navigator.of(context).pop('USD');
+          //               },
+          //               child: Text('USD'),
+          //             ),
+          //             SimpleDialogOption(
+          //               onPressed: () {
+          //                 // Perform actions upon selecting BDT
+          //                 Navigator.of(context).pop('BDT');
+          //               },
+          //               child: Text('BDT'),
+          //             ),
+          //             SimpleDialogOption(
+          //               onPressed: () {
+          //                 // Perform actions upon selecting EUR
+          //                 Navigator.of(context).pop('EUR');
+          //               },
+          //               child: Text('EUR'),
+          //             ),
+          //             SimpleDialogOption(
+          //               onPressed: () {
+          //                 // Perform actions upon selecting GBP
+          //                 Navigator.of(context).pop('GBP');
+          //               },
+          //               child: Text('GBP'),
+          //             ),
+          //           ],
+          //         );
+          //         // AlertDialog(
+          //         //   title: Text("Select Currency"),
+          //         //   content: SingleChildScrollView(
+          //         //     child: ListBody(
+          //         //       children: <Widget>[
+          //         //         ListTile(
+          //         //           title: Text('USD'),
+          //         //           onTap: () {
+          //         //             // Perform actions upon selecting USD
+          //         //             Navigator.of(context).pop('USD');
+          //         //           },
+          //         //         ),
+          //         //         ListTile(
+          //         //           title: Text('BDT'),
+          //         //           onTap: () {
+          //         //             // Perform actions upon selecting USD
+          //         //             Navigator.of(context).pop('BDT');
+          //         //           },
+          //         //         ),
+          //         //         ListTile(
+          //         //           title: Text('EUR'),
+          //         //           onTap: () {
+          //         //             // Perform actions upon selecting EUR
+          //         //             Navigator.of(context).pop('EUR');
+          //         //           },
+          //         //         ),
+          //         //         ListTile(
+          //         //           title: Text('GBP'),
+          //         //           onTap: () {
+          //         //             // Perform actions upon selecting GBP
+          //         //             Navigator.of(context).pop('GBP');
+          //         //           },
+          //         //         ),
+          //         //         // Place your currency selection widgets here
+          //         //       ],
+          //         //     ),
+          //         //   ),
+          //         //   actions: <Widget>[
+          //         //     TextButton(
+          //         //       child: Text('Cancel'),
+          //         //       onPressed: () {
+          //         //         Navigator.of(context).pop();
+          //         //       },
+          //         //     ),
+          //         //     TextButton(
+          //         //       child: Text('OK'),
+          //         //       onPressed: () {
+
+          //         //         // Perform actions upon selecting currency
+          //         //         Navigator.of(context).pop();
+          //         //       },
+          //         //     ),
+          //         //   ],
+          //         // );
+          //       },
+          //     );
+          //   },
+          //   child: Container(
+          //     height: 50,
+          //     margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
+          //     decoration: BoxDecoration(
+          //       color: Color.fromARGB(255, 243, 103, 9),
+          //       borderRadius: BorderRadius.circular(10),
+          //     ),
+          //     child: Container(
+          //       margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
+          //       child: Row(
+          //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //         children: [
+          //           Text(
+          //             CURRENCY_EXCHANGE,
+          //             style: Theme.of(context).textTheme.subtitle1?.copyWith(
+          //                   color: Colors.white,
+          //                 ),
+          //           ),
+          //           Icon(
+          //             Icons.arrow_forward_ios,
+          //             size: 20,
+          //             color: Colors.white,
+          //           ),
+          //         ],
+          //       ),
+          //     ),
+          //   ),
+          // ),
+
           ///-----------logoout -------------
           // GestureDetector(
           //   onTap: () {
-          //     messageDialog(LOGOUT, ARE_YOU_SURE_TO_LOGOUT);
+          //     //_showCurrencySelectionDialog(context);
+          //     //messageDialog(LOGOUT, ARE_YOU_SURE_TO_LOGOUT);
           //     // Navigator.push(context,
-          //     //     MaterialPageRoute(builder: (context) => LogOutScreen()
-          //     // ));
+          //     //     MaterialPageRoute(builder: (context) => LogOutScreen()));
           //   },
           //   child: Container(
           //     height: 50,
@@ -1137,6 +1458,12 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
           //                   color: Colors.white,
           //                 ),
           //           ),
+          //           // Text(
+          //           //   selectedCurrency.isEmpty
+          //           //       ? 'Select Currency'
+          //           //       : 'Selected Currency: $selectedCurrency',
+          //           //   style: TextStyle(fontSize: 18),
+          //           // ),
           //           Icon(
           //             Icons.arrow_forward_ios,
           //             size: 20,
@@ -1575,3 +1902,30 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
     );
   }
 }
+
+// Future<void> _showCurrencySelectionDialog(BuildContext context) async {
+//     final selectedCurrency = await showDialog<String>(
+//       context: context,
+//       builder: (BuildContext context) {
+//         return AlertDialog(
+//           title: Text('Choose Currency'),
+//           content: Container(
+//             width: double.minPositive,
+//             child: ListView.builder(
+//               shrinkWrap: true,
+//               itemCount: currencies.length,
+//               itemBuilder: (BuildContext context, int index) {
+//                 return ListTile(
+//                   title: Text(currencies[index]),
+//                   onTap: () {
+//                     Navigator.of(context).pop(currencies[index]);
+//                   },
+//                 );
+//               },
+//             ),
+//           ),
+//         );
+//       },
+//     );
+// }
+
