@@ -83,6 +83,7 @@ class ChatShowDataSender {
   String updatedAt;
   int isRecipientApproved;
   String recipientName;
+  String? Destination;
 
   ChatShowDataSender({
     required this.id,
@@ -97,6 +98,7 @@ class ChatShowDataSender {
     required this.updatedAt,
     required this.isRecipientApproved,
     required this.recipientName,
+    required this.Destination,
   });
 
   factory ChatShowDataSender.fromJson(Map<String, dynamic> json) {
@@ -113,6 +115,7 @@ class ChatShowDataSender {
       updatedAt: json['updated_at'],
       isRecipientApproved: json['is_recipient_approved'],
       recipientName: json['recipient_name'],
+      Destination: json['destination'],
     );
   }
 }

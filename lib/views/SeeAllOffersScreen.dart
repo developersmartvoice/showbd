@@ -162,96 +162,327 @@ class _SeeAllOffersState extends State<SeeAllOffers> {
                       itemBuilder: (context, index) {
                         final item = chatShowDataSender![index];
                         return Card(
-                          elevation: 2.0,
+                          elevation: 10.0,
                           margin: EdgeInsets.symmetric(vertical: 8.0),
+                          color: getColorForTiming(
+                              chatShowDataSender![index].timing),
                           child: ListTile(
-                            contentPadding: EdgeInsets.all(0),
-                            // title: tripsTitle(),
+                            contentPadding: EdgeInsets.all(25),
                             title: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Title(
-                                    color: Colors.black,
-                                    child: Text(item.recipientName))
+                                  color: Colors.black,
+                                  child: Text(
+                                    item.recipientName,
+                                    style: TextStyle(
+                                      fontFamily: 'Roboto',
+                                      fontSize: 20,
+                                      color: const Color.fromARGB(255, 0, 0, 0),
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ), // Adding some space between the title and details
+                                Container(
+                                  width: MediaQuery.of(context).size.width - 32,
+                                  height: 110, // Adjust the height as needed
+                                  child: SingleChildScrollView(
+                                    child: RichText(
+                                      text: TextSpan(
+                                        children: [
+                                          TextSpan(
+                                            text: 'Date: ',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors
+                                                  .black, // Adjust color as needed
+                                            ),
+                                          ),
+                                          TextSpan(
+                                            text:
+                                                '${chatShowDataSender![index].date},\n',
+                                            style: TextStyle(
+                                              fontFamily: 'Roboto',
+                                              fontSize: 15,
+                                              color: Colors.grey[800],
+                                            ),
+                                          ),
+                                          // Bold text for Duration
+                                          TextSpan(
+                                            text: 'Duration: ',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors
+                                                  .black, // Adjust color as needed
+                                            ),
+                                          ),
+                                          TextSpan(
+                                            text:
+                                                '${chatShowDataSender![index].duration},\n',
+                                            style: TextStyle(
+                                              fontFamily: 'Roboto',
+                                              fontSize: 15,
+                                              color: Colors.grey[800],
+                                            ),
+                                          ),
+                                          // Bold text for Timing
+                                          TextSpan(
+                                            text: 'Timing: ',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors
+                                                  .black, // Adjust color as needed
+                                            ),
+                                          ),
+                                          TextSpan(
+                                            text:
+                                                '${chatShowDataSender![index].timing},\n',
+                                            style: TextStyle(
+                                              fontFamily: 'Roboto',
+                                              fontSize: 15,
+                                              color: Colors.grey[800],
+                                            ),
+                                          ),
+                                          // Bold text for Message
+                                          TextSpan(
+                                            text: 'Message: ',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors
+                                                  .black, // Adjust color as needed
+                                            ),
+                                          ),
+                                          TextSpan(
+                                            text:
+                                                '${chatShowDataSender![index].message},\n',
+                                            style: TextStyle(
+                                              fontFamily: 'Roboto',
+                                              fontSize: 15,
+                                              color: Colors.grey[800],
+                                            ),
+                                          ),
+                                          // Bold text for Destination
+                                          TextSpan(
+                                            text: 'Destination: ',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors
+                                                  .black, // Adjust color as needed
+                                            ),
+                                          ),
+                                          TextSpan(
+                                            text:
+                                                '${chatShowDataSender![index].Destination}\n',
+                                            style: TextStyle(
+                                              fontFamily: 'Roboto',
+                                              fontSize: 15,
+                                              color: Colors.grey[800],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                             onTap: () {
                               setState(() {
                                 Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => ChatScreen(
-                                            chatDataSender![index].name,
-                                            "100" +
-                                                chatDataSender![index]
-                                                    .uid
-                                                    .toString(),
-                                            chatDataSender![index]
-                                                .connectycubeUserId,
-                                            false,
-                                            chatDataSender![index].deviceToken,
-                                            chatDataSender![index]
-                                                .recipientImage,
-                                            chatDataSender![index]
-                                                .senderImage)));
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ChatScreen(
+                                      chatDataSender![index].name,
+                                      "100" +
+                                          chatDataSender![index].uid.toString(),
+                                      chatDataSender![index].connectycubeUserId,
+                                      false,
+                                      chatDataSender![index].deviceToken,
+                                      chatDataSender![index].recipientImage,
+                                      chatDataSender![index].senderImage,
+                                    ),
+                                  ),
+                                );
                               });
                             },
                           ),
                         );
                       },
                     ))
-                  : Container(
-                      // child: Text("No Data Found!"),
-                      ),
-              isDataFetch && !isSenderSelected && chatShowDataReceiver != null
-                  ? Expanded(
-                      child: ListView.builder(
-                      itemCount: chatShowDataReceiver!.length,
-                      itemBuilder: (context, index) {
-                        final item = chatShowDataReceiver![index];
-                        return Card(
-                          elevation: 2.0,
-                          margin: EdgeInsets.symmetric(vertical: 8.0),
-                          child: ListTile(
-                            contentPadding: EdgeInsets.all(0),
-                            // title: tripsTitle(),
-                            title: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Title(
-                                    color: Colors.black,
-                                    child: Text(item.senderName))
-                              ],
-                            ),
-                            onTap: () {
-                              setState(() {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => ChatScreen(
-                                            chatDataReceiver![index].name,
-                                            "117" +
+                  : // Container(
+                  // child: Text("No Data Found!"),
+                  //),
+                  isDataFetch &&
+                          !isSenderSelected &&
+                          chatShowDataReceiver != null
+                      ? Expanded(
+                          child: ListView.builder(
+                          itemCount: chatShowDataReceiver!.length,
+                          itemBuilder: (context, index) {
+                            final item = chatShowDataReceiver![index];
+                            return Card(
+                              elevation: 10.0,
+                              margin: EdgeInsets.symmetric(vertical: 8.0),
+                              color: getColorForTiming(
+                                  chatShowDataReceiver![index].timing),
+                              child: ListTile(
+                                contentPadding: EdgeInsets.all(25),
+                                title: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Title(
+                                      color: Colors.black,
+                                      child: Text(
+                                        item.senderName,
+                                        style: TextStyle(
+                                          fontFamily: 'Roboto',
+                                          fontSize: 20,
+                                          color: const Color.fromARGB(
+                                              255, 0, 0, 0),
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 8,
+                                    ), // Adding some space between the title and details
+                                    Container(
+                                      width: MediaQuery.of(context).size.width -
+                                          32,
+                                      height:
+                                          110, // Adjust the height as needed
+                                      child: SingleChildScrollView(
+                                        child: RichText(
+                                          text: TextSpan(
+                                            children: [
+                                              TextSpan(
+                                                text: 'Date: ',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors
+                                                      .black, // Adjust color as needed
+                                                ),
+                                              ),
+                                              TextSpan(
+                                                text:
+                                                    '${chatShowDataReceiver![index].date},\n',
+                                                style: TextStyle(
+                                                  fontFamily: 'Roboto',
+                                                  fontSize: 15,
+                                                  color: Colors.grey[800],
+                                                ),
+                                              ),
+                                              // Bold text for Duration
+                                              TextSpan(
+                                                text: 'Duration: ',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors
+                                                      .black, // Adjust color as needed
+                                                ),
+                                              ),
+                                              TextSpan(
+                                                text:
+                                                    '${chatShowDataReceiver![index].duration},\n',
+                                                style: TextStyle(
+                                                  fontFamily: 'Roboto',
+                                                  fontSize: 15,
+                                                  color: Colors.grey[800],
+                                                ),
+                                              ),
+                                              // Bold text for Timing
+                                              TextSpan(
+                                                text: 'Timing: ',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors
+                                                      .black, // Adjust color as needed
+                                                ),
+                                              ),
+                                              TextSpan(
+                                                text:
+                                                    '${chatShowDataReceiver![index].timing},\n',
+                                                style: TextStyle(
+                                                  fontFamily: 'Roboto',
+                                                  fontSize: 15,
+                                                  color: Colors.grey[800],
+                                                ),
+                                              ),
+                                              // Bold text for Message
+                                              TextSpan(
+                                                text: 'Message: ',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors
+                                                      .black, // Adjust color as needed
+                                                ),
+                                              ),
+                                              TextSpan(
+                                                text:
+                                                    '${chatShowDataReceiver![index].message},\n',
+                                                style: TextStyle(
+                                                  fontFamily: 'Roboto',
+                                                  fontSize: 15,
+                                                  color: Colors.grey[800],
+                                                ),
+                                              ),
+                                              // Bold text for Destination
+                                              TextSpan(
+                                                text: 'Destination: ',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors
+                                                      .black, // Adjust color as needed
+                                                ),
+                                              ),
+                                              TextSpan(
+                                                text:
+                                                    '${chatShowDataReceiver![index].destination}\n',
+                                                style: TextStyle(
+                                                  fontFamily: 'Roboto',
+                                                  fontSize: 15,
+                                                  color: Colors.grey[800],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                onTap: () {
+                                  setState(() {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => ChatScreen(
+                                                chatDataReceiver![index].name,
+                                                "117" +
+                                                    chatDataReceiver![index]
+                                                        .uid
+                                                        .toString(),
                                                 chatDataReceiver![index]
-                                                    .uid
-                                                    .toString(),
-                                            chatDataReceiver![index]
-                                                .connectycubeUserId,
-                                            true,
-                                            chatDataReceiver![index]
-                                                .deviceToken,
-                                            chatDataReceiver![index]
-                                                .recipientImage,
-                                            chatDataReceiver![index]
-                                                .senderImage)));
-                              });
-                            },
-                          ),
-                        );
-                      },
-                    ))
-                  : Container(
-                      child: Text("No Data Found!"),
-                    ),
+                                                    .connectycubeUserId,
+                                                true,
+                                                chatDataReceiver![index]
+                                                    .deviceToken,
+                                                chatDataReceiver![index]
+                                                    .recipientImage,
+                                                chatDataReceiver![index]
+                                                    .senderImage)));
+                                  });
+                                },
+                              ),
+                            );
+                          },
+                        ))
+                      : Container(
+                          child: Text("No Data Found!"),
+                        ),
             ],
           ),
         ));
@@ -290,5 +521,27 @@ class _SeeAllOffersState extends State<SeeAllOffers> {
         ),
       ],
     );
+  }
+}
+
+Color getColorForTiming(String timing) {
+  switch (timing) {
+    case "Flexible":
+      return Color.fromARGB(
+          255, 247, 161, 112); // Or any color you want for Flexible timing
+    case "Earlier":
+      return Color.fromARGB(
+          255, 243, 184, 180); // Or any color you want for Earlier timing
+    case "Morning":
+      return Color.fromARGB(
+          255, 246, 209, 136); // Or any color you want for Morning timing
+    case "Noon":
+      return Color.fromARGB(
+          255, 248, 242, 122); // Or any color you want for Noon timing
+    case "Afternoon":
+      return Color.fromARGB(
+          255, 217, 97, 33); // Or any color you want for Afternoon timing
+    default:
+      return const Color.fromARGB(255, 255, 255, 255); // Default color
   }
 }
