@@ -87,56 +87,68 @@ class _SeeAllOffersState extends State<SeeAllOffers> {
             children: [
               header(),
               Container(
+                padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Container(
-                      alignment: Alignment.center,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            isSenderSelected = true;
-                            getSenderOffers();
-                          });
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: isSenderSelected
-                              ? Colors.orange
-                              : Color.fromARGB(255, 242, 235,
-                                  235), // Change the colors as needed
-                        ),
-                        child: Text(
-                          'Sender',
-                          style: TextStyle(color: Colors.black),
-                          textAlign: TextAlign.center,
-                          textScaleFactor: 1.5,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
+                    Expanded(
+                      child: Container(
+                        alignment: Alignment.center,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              isSenderSelected = true;
+                              getSenderOffers();
+                            });
+                          },
+                          style: ElevatedButton.styleFrom(
+                            // padding: EdgeInsets.all(16.0),
+                            backgroundColor: isSenderSelected
+                                ? Colors.orange
+                                : Color.fromARGB(255, 242, 235, 235),
+                          ),
+                          child: Text(
+                            'Sent',
+                            style: TextStyle(
+                                color: isSenderSelected
+                                    ? Colors.white
+                                    : Colors.orange),
+                            textAlign: TextAlign.center,
+                            textScaleFactor: 1.5,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ),
                         ),
                       ),
                     ),
-                    SizedBox(width: 10),
-                    Container(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            isSenderSelected = false;
-                            getReceiverOffers();
-                          });
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: isSenderSelected
-                              ? Color.fromARGB(255, 242, 235, 235)
-                              : Colors.orange, // Change the colors as needed
-                        ),
-                        child: Text(
-                          'Recipient',
-                          style: TextStyle(color: Colors.black),
-                          textAlign: TextAlign.center,
-                          textScaleFactor: 1.5,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
+                    SizedBox(width: 16.0), // Adjust the spacing between buttons
+                    Expanded(
+                      child: Container(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              isSenderSelected = false;
+                              getReceiverOffers();
+                            });
+                          },
+                          style: ElevatedButton.styleFrom(
+                            // padding: EdgeInsets.all(16.0),
+                            backgroundColor: isSenderSelected
+                                ? Color.fromARGB(255, 242, 235, 235)
+                                : Colors.orange,
+                          ),
+                          child: Text(
+                            'Received',
+                            style: TextStyle(
+                                color: !isSenderSelected
+                                    ? Colors.white
+                                    : Colors.orange),
+                            textAlign: TextAlign.center,
+                            textScaleFactor: 1.5,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ),
                         ),
                       ),
                     ),
@@ -257,11 +269,13 @@ class _SeeAllOffersState extends State<SeeAllOffers> {
         Container(
           height: 60,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            //crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SizedBox(
-                width: 10,
+              IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: Icon(Icons.arrow_back, color: Colors.white),
               ),
               Title(
                 color: BLACK,
@@ -270,12 +284,10 @@ class _SeeAllOffersState extends State<SeeAllOffers> {
                         color: Theme.of(context).backgroundColor,
                         fontWeightDelta: 5)),
               ),
+              SizedBox(width: 48), // Adjust the space for the back button
             ],
           ),
         ),
-        // Container(
-        //   height: 60,
-        // )
       ],
     );
   }
