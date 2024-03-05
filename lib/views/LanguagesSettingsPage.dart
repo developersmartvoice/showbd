@@ -49,6 +49,18 @@ class LanguagesSettingsPage extends StatefulWidget {
 }
 
 class _LanguagesSettingsPageState extends State<LanguagesSettingsPage> {
+  List<String> languages = [
+    'English',
+    'Bengali',
+    'Arabic',
+    'Spanish',
+    'French',
+    'German'
+  ];
+  Map<String, bool> selectedLanguages = {};
+  bool isValueChanged = false;
+  //String selectedLanguage = '';
+
   bool isChecked = false;
   String selectedMeetingTime = "";
 
@@ -59,12 +71,15 @@ class _LanguagesSettingsPageState extends State<LanguagesSettingsPage> {
   @override
   void initState() {
     super.initState();
-    _selectedLanguage = widget.languages; // Set default selected language
+    for (var language in languages) {
+      selectedLanguages[language] = false;
+    }
+    //_selectedLanguage = widget.languages; // Set default selected language
   }
 
   late TextEditingController _controller;
   String enteredValue = '';
-  bool isValueChanged = false;
+  //bool isValueChanged = false;
   void updatingLanguages() async {
     final response =
         await post(Uri.parse("$SERVER_ADDRESS/api/updateLanguages"), body: {
@@ -118,328 +133,416 @@ class _LanguagesSettingsPageState extends State<LanguagesSettingsPage> {
                 'Save',
                 style: GoogleFonts.robotoCondensed(
                   color: Colors.black,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ),
           ],
         ),
         body: Container(
-          color: LIGHT_GREY_SCREEN_BACKGROUND,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Container(
-              //   padding: EdgeInsets.all(16),
-              //   alignment: Alignment.topLeft,
-              //   child: Text(
-              //     LANGUAGES_PAGE,
-              //     style: TextStyle(
-              //       color: Colors.black,
-              //       fontSize: 12,
-              //       fontWeight: FontWeight.w200,
-              //     ),
-              //   ),
-              // ),
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                color: Colors.white,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(top: 15.0),
-                      child: Text(
-                        LANGUAGES_PAGE,
-                        style: GoogleFonts.robotoCondensed(fontSize: 18),
-                      ),
-                    ),
-                    SizedBox(height: 15),
-
-                    Divider(
-                      height: 2,
-                    ),
-
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          isChecked = !isChecked;
-                        });
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(16),
-                        alignment: Alignment.topLeft,
-                        child: Row(
-                          children: [
-                            SizedBox(width: 8),
-                            Text(
-                              "ENGLISH",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 12,
-                                fontWeight: isChecked
-                                    ? FontWeight.bold
-                                    : FontWeight.w200,
-                              ),
-                            ),
-                            Spacer(),
-                            isChecked
-                                ? Icon(
-                                    Icons.check,
-                                    color: Colors.black,
-                                    size: 20,
-                                  ) // Check icon
-                                : SizedBox(), // Invisible placeholder if not checked
-                          ],
-                        ),
-                      ),
-                    ),
-
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          isChecked = !isChecked;
-                        });
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(16),
-                        alignment: Alignment.topLeft,
-                        child: Row(
-                          children: [
-                            SizedBox(width: 8),
-                            Text(
-                              "BENGALI",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 12,
-                                fontWeight: isChecked
-                                    ? FontWeight.bold
-                                    : FontWeight.w200,
-                              ),
-                            ),
-                            Spacer(),
-                            isChecked
-                                ? Icon(
-                                    Icons.check,
-                                    color: Colors.black,
-                                    size: 20,
-                                  ) // Check icon
-                                : SizedBox(), // Invisible placeholder if not checked
-                          ],
-                        ),
-                      ),
-                    ),
-
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          isChecked = !isChecked;
-                        });
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(16),
-                        alignment: Alignment.topLeft,
-                        child: Row(
-                          children: [
-                            SizedBox(width: 8),
-                            Text(
-                              "ARABIC",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 12,
-                                fontWeight: isChecked
-                                    ? FontWeight.bold
-                                    : FontWeight.w200,
-                              ),
-                            ),
-                            Spacer(),
-                            isChecked
-                                ? Icon(
-                                    Icons.check,
-                                    color: Colors.black,
-                                    size: 20,
-                                  ) // Check icon
-                                : SizedBox(), // Invisible placeholder if not checked
-                          ],
-                        ),
-                      ),
-                    ),
-
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          isChecked = !isChecked;
-                        });
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(16),
-                        alignment: Alignment.topLeft,
-                        child: Row(
-                          children: [
-                            SizedBox(width: 8),
-                            Text(
-                              "HINDI",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 12,
-                                fontWeight: isChecked
-                                    ? FontWeight.bold
-                                    : FontWeight.w200,
-                              ),
-                            ),
-                            Spacer(),
-                            isChecked
-                                ? Icon(
-                                    Icons.check,
-                                    color: Colors.black,
-                                    size: 20,
-                                  ) // Check icon
-                                : SizedBox(), // Invisible placeholder if not checked
-                          ],
-                        ),
-                      ),
-                    ),
-
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          isChecked = !isChecked;
-                        });
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(16),
-                        alignment: Alignment.topLeft,
-                        child: Row(
-                          children: [
-                            SizedBox(width: 8),
-                            Text(
-                              "GERMAN",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 12,
-                                fontWeight: isChecked
-                                    ? FontWeight.bold
-                                    : FontWeight.w200,
-                              ),
-                            ),
-                            Spacer(),
-                            isChecked
-                                ? Icon(
-                                    Icons.check,
-                                    color: Colors.black,
-                                    size: 20,
-                                  ) // Check icon
-                                : SizedBox(), // Invisible placeholder if not checked
-                          ],
-                        ),
-                      ),
-                    ),
-
-                    //       Container(
-                    //         //padding: EdgeInsets.fromLTRB(20, 5, 5, 5),
-                    //         color: Colors.white,
-                    //         child: Align(
-                    //           alignment: Alignment.centerLeft,
-                    //           child: DropdownSearch<String>(
-                    //             items: [
-                    //               'English',
-                    //               'Bengali',
-                    //               'Arabic',
-                    //               'Spanish',
-                    //               'Japanese',
-                    //               'Korean',
-                    //               'Chinese'
-                    //             ],
-                    //             onChanged: (value) {
-                    //               setState(() {
-                    //                 selectedMeetingTime = value!;
-                    //                 if (selectedMeetingTime.isNotEmpty) {
-                    //                   isMeetingTimeSelected = true;
-                    //                 } else {
-                    //                   isMeetingTimeSelected = false;
-                    //                 }
-                    //               });
-                    //             },
-                    //             selectedItem: selectedMeetingTime,
-                    //           ),
-                    //         ),
-                    //       ),
-                    //       // DropdownButton<String>(
-                    //       //   value: _selectedLanguage,
-                    //       //   // onChanged: (String newValue) {
-                    //       //   //   setState(() {
-                    //       //   //     _selectedLanguage = newValue;
-                    //       //   //   });
-                    //       //   // },
-                    //       //   items: <String>['English', 'French', 'Spanish', 'German']
-                    //       //       .map<DropdownMenuItem<String>>((String value) {
-                    //       //     return DropdownMenuItem<String>(
-                    //       //       value: value,
-                    //       //       child: Text(value),
-                    //       //     );
-                    //       //   }).toList(),
-                    //       // ),
-                    //       SizedBox(height: 15),
-                    //       ElevatedButton(
-                    //         onPressed: () {
-                    //           // Handle selection here, e.g., save selected language
-                    //           print('Selected language: $_selectedLanguage');
-                    //         },
-                    //         child: Text('Continue'),
-                    //         style: ElevatedButton.styleFrom(
-                    //           textStyle: GoogleFonts.robotoCondensed(
-                    //             fontSize: 15.0,
-                    //             fontWeight: FontWeight.bold,
-                    //           ),
-                    //           //padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
-                    //           foregroundColor: Colors.white,
-                    //           backgroundColor: Color.fromARGB(255, 243, 103, 9),
-                    //           shape: RoundedRectangleBorder(
-                    //             borderRadius: BorderRadius.circular(10.0),
-                    //             side: BorderSide(
-                    //               color: Colors.white,
-                    //             ), // Set border radius
-                    //           ),
-                    //         ),
-                    //       ),
-
-                    //       // TextField(
-                    //       //   controller: _controller,
-                    //       //   style: TextStyle(
-                    //       //     color: Colors.black,
-                    //       //     fontSize: 16,
-                    //       //     fontWeight: FontWeight.w200,
-                    //       //   ),
-                    //       //   onChanged: (value) {
-                    //       //     setState(
-                    //       //       () {
-                    //       //         enteredValue = value;
-                    //       //         if (enteredValue != widget.languages) {
-                    //       //           isValueChanged = true;
-                    //       //         } else {
-                    //       //           isValueChanged = false;
-                    //       //         }
-                    //       //       },
-                    //       //     );
-                    //       //   },
-                    //       //   decoration: InputDecoration(
-                    //       //     border: OutlineInputBorder(),
-                    //       //     hintText: widget.languages,
-                    //       //     hintStyle: TextStyle(color: Colors.black),
-                    //       //   ),
-                    //       // ),
-                    //     ],
-                    //   ),
-                    // ),
-                  ],
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                child: Text(
+                  'Select Your Preferred Language',
+                  style: GoogleFonts.robotoCondensed(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
+              Divider(
+                height: 2,
+              ),
+
+              Expanded(
+                child: ListView.builder(
+                  itemCount: languages.length,
+                  itemBuilder: (context, index) {
+                    final language = languages[index];
+                    return CheckboxListTile(
+                      title: Text(language),
+                      value: selectedLanguages[language],
+                      onChanged: (value) {
+                        setState(() {
+                          selectedLanguages[language] = value!;
+                          isValueChanged = true;
+                        });
+                      },
+                      controlAffinity: ListTileControlAffinity.trailing,
+                    );
+                  },
+                ),
+              ),
+
+              // Expanded(
+              //   child: ListView.builder(
+              //     itemCount: languages.length,
+              //     itemBuilder: (context, index) {
+              //       return ListTile(
+              //         title: Text(languages[index]),
+              //         onTap: () {
+              //           setState(() {
+              //             selectedLanguage = languages[index];
+              //           });
+              //         },
+              //         selected: selectedLanguage == languages[index],
+              //         selectedTileColor: Colors.orange.withOpacity(0.5),
+              //       );
+              //     },
+              //   ),
+              // ),
             ],
           ),
         ),
+
+        // bottomNavigationBar: BottomAppBar(
+        //   child: Padding(
+        //     padding: EdgeInsets.all(16.0),
+        //     child: Text(
+        //       'Selected Languages: ${selectedLanguages.entries.where((entry) => entry.value).map((entry) => entry.key).toList()}',
+        //       style: TextStyle(fontSize: 18.0),
+        //     ),
+        //   ),
+        // ),
+        // bottomNavigationBar: BottomAppBar(
+        //   child: Padding(
+        //     padding: EdgeInsets.all(16.0),
+        //     child: Text(
+        //       'Selected Language: $selectedLanguage',
+        //       style: TextStyle(fontSize: 18.0),
+        //     ),
+        //   ),
+        // ),
       ),
     );
   }
+  // void updatingLanguages() {
+  //   // Perform the update operation
+  //   print('Updating languages...');
+  //   setState(() {
+  //     isValueChanged = false; // Reset the value changed flag
+  //   });
+  // }
 }
+//         Container(
+//           color: LIGHT_GREY_SCREEN_BACKGROUND,
+//           child: Column(
+//             children: [
+//               // Container(
+//               //   padding: EdgeInsets.all(16),
+//               //   alignment: Alignment.topLeft,
+//               //   child: Text(
+//               //     LANGUAGES_PAGE,
+//               //     style: TextStyle(
+//               //       color: Colors.black,
+//               //       fontSize: 12,
+//               //       fontWeight: FontWeight.w200,
+//               //     ),
+//               //   ),
+//               // ),
+//               SizedBox(
+//                 height: 10,
+//               ),
+//               Container(
+//                 color: Colors.white,
+//                 child: Column(
+//                   mainAxisAlignment: MainAxisAlignment.center,
+//                   children: [
+//                     Padding(
+//                       padding: EdgeInsets.only(top: 15.0),
+//                       child: Text(
+//                         LANGUAGES_PAGE,
+//                         style: GoogleFonts.robotoCondensed(fontSize: 18),
+//                       ),
+//                     ),
+//                     SizedBox(height: 15),
+
+//                     Divider(
+//                       height: 2,
+//                     ),
+
+//                     GestureDetector(
+//                       onTap: () {
+//                         setState(() {
+//                           isChecked = !isChecked;
+//                         });
+//                       },
+//                       child: Container(
+//                         padding: EdgeInsets.all(16),
+//                         alignment: Alignment.topLeft,
+//                         child: Row(
+//                           children: [
+//                             SizedBox(width: 8),
+//                             Text(
+//                               "ENGLISH",
+//                               style: TextStyle(
+//                                 color: Colors.black,
+//                                 fontSize: 12,
+//                                 fontWeight: isChecked
+//                                     ? FontWeight.bold
+//                                     : FontWeight.w200,
+//                               ),
+//                             ),
+//                             Spacer(),
+//                             isChecked
+//                                 ? Icon(
+//                                     Icons.check,
+//                                     color: Colors.black,
+//                                     size: 20,
+//                                   ) // Check icon
+//                                 : SizedBox(), // Invisible placeholder if not checked
+//                           ],
+//                         ),
+//                       ),
+//                     ),
+
+//                     GestureDetector(
+//                       onTap: () {
+//                         setState(() {
+//                           isChecked = !isChecked;
+//                         });
+//                       },
+//                       child: Container(
+//                         padding: EdgeInsets.all(16),
+//                         alignment: Alignment.topLeft,
+//                         child: Row(
+//                           children: [
+//                             SizedBox(width: 8),
+//                             Text(
+//                               "BENGALI",
+//                               style: TextStyle(
+//                                 color: Colors.black,
+//                                 fontSize: 12,
+//                                 fontWeight: isChecked
+//                                     ? FontWeight.bold
+//                                     : FontWeight.w200,
+//                               ),
+//                             ),
+//                             Spacer(),
+//                             isChecked
+//                                 ? Icon(
+//                                     Icons.check,
+//                                     color: Colors.black,
+//                                     size: 20,
+//                                   ) // Check icon
+//                                 : SizedBox(), // Invisible placeholder if not checked
+//                           ],
+//                         ),
+//                       ),
+//                     ),
+
+//                     GestureDetector(
+//                       onTap: () {
+//                         setState(() {
+//                           isChecked = !isChecked;
+//                         });
+//                       },
+//                       child: Container(
+//                         padding: EdgeInsets.all(16),
+//                         alignment: Alignment.topLeft,
+//                         child: Row(
+//                           children: [
+//                             SizedBox(width: 8),
+//                             Text(
+//                               "ARABIC",
+//                               style: TextStyle(
+//                                 color: Colors.black,
+//                                 fontSize: 12,
+//                                 fontWeight: isChecked
+//                                     ? FontWeight.bold
+//                                     : FontWeight.w200,
+//                               ),
+//                             ),
+//                             Spacer(),
+//                             isChecked
+//                                 ? Icon(
+//                                     Icons.check,
+//                                     color: Colors.black,
+//                                     size: 20,
+//                                   ) // Check icon
+//                                 : SizedBox(), // Invisible placeholder if not checked
+//                           ],
+//                         ),
+//                       ),
+//                     ),
+
+//                     GestureDetector(
+//                       onTap: () {
+//                         setState(() {
+//                           isChecked = !isChecked;
+//                         });
+//                       },
+//                       child: Container(
+//                         padding: EdgeInsets.all(16),
+//                         alignment: Alignment.topLeft,
+//                         child: Row(
+//                           children: [
+//                             SizedBox(width: 8),
+//                             Text(
+//                               "HINDI",
+//                               style: TextStyle(
+//                                 color: Colors.black,
+//                                 fontSize: 12,
+//                                 fontWeight: isChecked
+//                                     ? FontWeight.bold
+//                                     : FontWeight.w200,
+//                               ),
+//                             ),
+//                             Spacer(),
+//                             isChecked
+//                                 ? Icon(
+//                                     Icons.check,
+//                                     color: Colors.black,
+//                                     size: 20,
+//                                   ) // Check icon
+//                                 : SizedBox(), // Invisible placeholder if not checked
+//                           ],
+//                         ),
+//                       ),
+//                     ),
+
+//                     GestureDetector(
+//                       onTap: () {
+//                         setState(() {
+//                           isChecked = !isChecked;
+//                         });
+//                       },
+//                       child: Container(
+//                         padding: EdgeInsets.all(16),
+//                         alignment: Alignment.topLeft,
+//                         child: Row(
+//                           children: [
+//                             SizedBox(width: 8),
+//                             Text(
+//                               "GERMAN",
+//                               style: TextStyle(
+//                                 color: Colors.black,
+//                                 fontSize: 12,
+//                                 fontWeight: isChecked
+//                                     ? FontWeight.bold
+//                                     : FontWeight.w200,
+//                               ),
+//                             ),
+//                             Spacer(),
+//                             isChecked
+//                                 ? Icon(
+//                                     Icons.check,
+//                                     color: Colors.black,
+//                                     size: 20,
+//                                   ) // Check icon
+//                                 : SizedBox(), // Invisible placeholder if not checked
+//                           ],
+//                         ),
+//                       ),
+//                     ),
+
+//                     //       Container(
+//                     //         //padding: EdgeInsets.fromLTRB(20, 5, 5, 5),
+//                     //         color: Colors.white,
+//                     //         child: Align(
+//                     //           alignment: Alignment.centerLeft,
+//                     //           child: DropdownSearch<String>(
+//                     //             items: [
+//                     //               'English',
+//                     //               'Bengali',
+//                     //               'Arabic',
+//                     //               'Spanish',
+//                     //               'Japanese',
+//                     //               'Korean',
+//                     //               'Chinese'
+//                     //             ],
+//                     //             onChanged: (value) {
+//                     //               setState(() {
+//                     //                 selectedMeetingTime = value!;
+//                     //                 if (selectedMeetingTime.isNotEmpty) {
+//                     //                   isMeetingTimeSelected = true;
+//                     //                 } else {
+//                     //                   isMeetingTimeSelected = false;
+//                     //                 }
+//                     //               });
+//                     //             },
+//                     //             selectedItem: selectedMeetingTime,
+//                     //           ),
+//                     //         ),
+//                     //       ),
+//                     //       // DropdownButton<String>(
+//                     //       //   value: _selectedLanguage,
+//                     //       //   // onChanged: (String newValue) {
+//                     //       //   //   setState(() {
+//                     //       //   //     _selectedLanguage = newValue;
+//                     //       //   //   });
+//                     //       //   // },
+//                     //       //   items: <String>['English', 'French', 'Spanish', 'German']
+//                     //       //       .map<DropdownMenuItem<String>>((String value) {
+//                     //       //     return DropdownMenuItem<String>(
+//                     //       //       value: value,
+//                     //       //       child: Text(value),
+//                     //       //     );
+//                     //       //   }).toList(),
+//                     //       // ),
+//                     //       SizedBox(height: 15),
+//                     //       ElevatedButton(
+//                     //         onPressed: () {
+//                     //           // Handle selection here, e.g., save selected language
+//                     //           print('Selected language: $_selectedLanguage');
+//                     //         },
+//                     //         child: Text('Continue'),
+//                     //         style: ElevatedButton.styleFrom(
+//                     //           textStyle: GoogleFonts.robotoCondensed(
+//                     //             fontSize: 15.0,
+//                     //             fontWeight: FontWeight.bold,
+//                     //           ),
+//                     //           //padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
+//                     //           foregroundColor: Colors.white,
+//                     //           backgroundColor: Color.fromARGB(255, 243, 103, 9),
+//                     //           shape: RoundedRectangleBorder(
+//                     //             borderRadius: BorderRadius.circular(10.0),
+//                     //             side: BorderSide(
+//                     //               color: Colors.white,
+//                     //             ), // Set border radius
+//                     //           ),
+//                     //         ),
+//                     //       ),
+
+//                     //       // TextField(
+//                     //       //   controller: _controller,
+//                     //       //   style: TextStyle(
+//                     //       //     color: Colors.black,
+//                     //       //     fontSize: 16,
+//                     //       //     fontWeight: FontWeight.w200,
+//                     //       //   ),
+//                     //       //   onChanged: (value) {
+//                     //       //     setState(
+//                     //       //       () {
+//                     //       //         enteredValue = value;
+//                     //       //         if (enteredValue != widget.languages) {
+//                     //       //           isValueChanged = true;
+//                     //       //         } else {
+//                     //       //           isValueChanged = false;
+//                     //       //         }
+//                     //       //       },
+//                     //       //     );
+//                     //       //   },
+//                     //       //   decoration: InputDecoration(
+//                     //       //     border: OutlineInputBorder(),
+//                     //       //     hintText: widget.languages,
+//                     //       //     hintStyle: TextStyle(color: Colors.black),
+//                     //       //   ),
+//                     //       // ),
+//                     //     ],
+//                     //   ),
+//                     // ),
+//                   ],
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }

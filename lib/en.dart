@@ -125,6 +125,8 @@ const String MOTTO_PAGE_1 =
 const String MOTTO_PAGE_2 =
     "Important: We love all languages, but we kindly ask to fill this section out in English. Also please avoid using brand and company names or links to other websites.";
 const String GENDER_PAGE = "Input your gender";
+const String HOURLY_RATE_PAGE =
+    "This is your hourly rate (you can change it later if you want.)";
 const String SERVICES_PAGE_1 = "Translation & Interpretation";
 const String SERVICES_PAGE_2 = "Pick up & Driving Tours";
 const String SERVICES_PAGE_3 = "Shopping";
@@ -344,7 +346,7 @@ const String LOOKING_LOCAL = 'Looking for a local';
 const String RECENT_CHATS = "Recent chats";
 const String CHANGE_PASSWORD = "Change Password";
 const String DELETE_MESSAGE =
-    "After deleting account you can not able to login untill you resgister again!";
+    "After deleting account you will not be able to login until you register again!";
 const String SUBSCRIPTION = "Subscription";
 const String INCOME_REPORT = "Income Report";
 const String DETAILED_REPORTS = "Detailed Reports";
