@@ -17,7 +17,7 @@ class SearchedScreen extends StatefulWidget {
   // String keyword;
 
   // SearchedScreen(this.keyword);
-  SearchedScreen();
+  // SearchedScreen();
 
   @override
   _SearchedScreenState createState() => _SearchedScreenState();
@@ -42,6 +42,12 @@ class _SearchedScreenState extends State<SearchedScreen> {
   List<String> selectedLanguages = [];
   List<String> selectedActivities = [];
   int selectedGender = 0; // 0: None, 1: Male, 2: Female
+  int? filterFees;
+  String? filterGender;
+  bool isFeesSelected = false;
+  bool isLanguageSelected = false;
+  bool isActivitiesSelected = false;
+  bool isGenderSelected = false;
   bool saveFilterSettings = false;
 
   @override
@@ -67,6 +73,115 @@ class _SearchedScreenState extends State<SearchedScreen> {
         // print("keysss: ${pref.getString("userId")}");
       });
     });
+  }
+
+  getFiltersDoctors() async {
+    final response = await post(Uri.parse("$SERVER_ADDRESS/api/filterdoctor"),
+        body: getBodyParameter());
+    print(getBodyParameter());
+    print(response.body);
+  }
+
+  String getBodyParameter() {
+    if (isFeesSelected &&
+        isActivitiesSelected &&
+        isLanguageSelected &&
+        isGenderSelected) {
+      Map<String, dynamic> requestBody = {
+        'consultation_fees': filterFees,
+        'gender': filterGender,
+        'languages': selectedLanguages,
+        'services': selectedActivities,
+      };
+      return jsonEncode(requestBody);
+    } else if (isFeesSelected && isLanguageSelected && isActivitiesSelected) {
+      Map<String, dynamic> requestBody = {
+        'consultation_fees': filterFees,
+        'languages': selectedLanguages,
+        'services': selectedActivities,
+      };
+      return jsonEncode(requestBody);
+    } else if (isFeesSelected && isLanguageSelected && isGenderSelected) {
+      Map<String, dynamic> requestBody = {
+        'consultation_fees': filterFees,
+        'gender': filterGender,
+        'languages': selectedLanguages,
+      };
+      return jsonEncode(requestBody);
+    } else if (isFeesSelected && isActivitiesSelected && isGenderSelected) {
+      Map<String, dynamic> requestBody = {
+        'consultation_fees': filterFees,
+        'gender': filterGender,
+        'services': selectedActivities,
+      };
+      return jsonEncode(requestBody);
+    } else if (isLanguageSelected && isActivitiesSelected && isGenderSelected) {
+      Map<String, dynamic> requestBody = {
+        'gender': filterGender,
+        'languages': selectedLanguages,
+        'services': selectedActivities,
+      };
+      return jsonEncode(requestBody);
+    } else if (isFeesSelected && isLanguageSelected) {
+      Map<String, dynamic> requestBody = {
+        'consultation_fees': filterFees,
+        'languages': selectedLanguages,
+      };
+      return jsonEncode(requestBody);
+    } else if (isFeesSelected && isActivitiesSelected) {
+      Map<String, dynamic> requestBody = {
+        'consultation_fees': filterFees,
+        'services': selectedActivities,
+      };
+      return jsonEncode(requestBody);
+    } else if (isFeesSelected && isGenderSelected) {
+      Map<String, dynamic> requestBody = {
+        'consultation_fees': filterFees,
+        'gender': filterGender,
+      };
+      return jsonEncode(requestBody);
+    } else if (isLanguageSelected && isActivitiesSelected) {
+      Map<String, dynamic> requestBody = {
+        'languages': selectedLanguages,
+        'services': selectedActivities,
+      };
+      return jsonEncode(requestBody);
+    } else if (isLanguageSelected && isGenderSelected) {
+      Map<String, dynamic> requestBody = {
+        'consultation_fees': filterFees,
+        'gender': filterGender,
+        'languages': selectedLanguages,
+        'services': selectedActivities,
+      };
+      return jsonEncode(requestBody);
+    } else if (isActivitiesSelected && isGenderSelected) {
+      Map<String, dynamic> requestBody = {
+        'gender': filterGender,
+        'services': selectedActivities,
+      };
+      return jsonEncode(requestBody);
+    } else if (isFeesSelected) {
+      Map<String, dynamic> requestBody = {
+        'consultation_fees': filterFees,
+      };
+      return jsonEncode(requestBody);
+    } else if (isLanguageSelected) {
+      Map<String, dynamic> requestBody = {
+        'languages': selectedLanguages,
+      };
+      return jsonEncode(requestBody);
+    } else if (isActivitiesSelected) {
+      Map<String, dynamic> requestBody = {
+        'services': selectedActivities,
+      };
+      return jsonEncode(requestBody);
+    } else if (isGenderSelected) {
+      Map<String, dynamic> requestBody = {
+        'gender': filterGender,
+      };
+      return jsonEncode(requestBody);
+    }
+    return '';
   }
 
   @override
@@ -332,7 +447,21 @@ class _SearchedScreenState extends State<SearchedScreen> {
                   ),
                   InkWell(
                       onTap: () {
-                        Navigator.pop(context);
+                        // Navigator.pop(context);
+                        setState(() {
+                          print("Filter Fees: $filterFees");
+                          print("Languages Selected: $selectedLanguages");
+                          print("Activities Selected: $selectedActivities");
+                          print("Gender: $filterGender");
+                          if (isFeesSelected ||
+                              isLanguageSelected ||
+                              isActivitiesSelected ||
+                              isGenderSelected) {
+                            getFiltersDoctors();
+                          } else {
+                            print("No Value Selected");
+                          }
+                        });
                       },
                       child: Text(
                         "Apply",
@@ -402,13 +531,20 @@ class _SearchedScreenState extends State<SearchedScreen> {
             SizedBox(height: 15),
             Center(
               child: ElevatedButton(
-                onPressed: _clearFilters,
+                onPressed: () {
+                  _clearFilters();
+                  filterGender = null;
+                  filterFees = null;
+                },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
                       const Color.fromARGB(190, 255, 115,
                           0)), // Set the background color to orange
                 ),
-                child: Text('Clear Filters'),
+                child: Text(
+                  'Clear Filters',
+                  style: TextStyle(color: WHITE),
+                ),
               ),
             ),
           ],
@@ -511,6 +647,15 @@ class _SearchedScreenState extends State<SearchedScreen> {
                         onChanged: (double newValue) {
                           onChanged(newValue
                               .round()); // Round the double value to an integer
+                          setState(() {
+                            filterFees = newValue.round();
+                            print("filter Fees are: $filterFees");
+                            if (filterFees != null) {
+                              isFeesSelected = true;
+                            } else {
+                              isFeesSelected = false;
+                            }
+                          });
                         },
                         activeColor: Color.fromARGB(190, 255, 115, 0),
                       ),
@@ -542,6 +687,76 @@ class _SearchedScreenState extends State<SearchedScreen> {
     );
   }
 
+  // Widget _buildMultiSelect(String label, List<String> selectedValues,
+  //     List<String> options, ValueChanged<List<String>> onChanged) {
+  //   return Container(
+  //       child: Column(
+  //           // crossAxisAlignment: CrossAxisAlignment.start,
+  //           //mainAxisAlignment: MainAxisAlignment.start,
+
+  //           children: [
+  //         Column(
+  //           children: [
+  //             Container(
+  //               color: LIGHT_GREY_SCREEN_BACKGROUND,
+  //               child: Row(
+  //                 crossAxisAlignment: CrossAxisAlignment.start,
+  //                 children: [
+  //                   Padding(
+  //                     padding: EdgeInsets.only(
+  //                         left: 18.0), // Adjust the left padding as needed
+  //                     child: Text(
+  //                       label,
+  //                       style: GoogleFonts.robotoCondensed(
+  //                           fontWeight: FontWeight.w600,
+  //                           color: Colors.grey,
+  //                           fontSize: 25),
+  //                     ),
+  //                   ),
+  //                 ],
+  //               ),
+  //             ),
+  //             SizedBox(
+  //               height: 5,
+  //             ),
+  //             Wrap(
+  //               spacing: 12.0,
+  //               children: options.map((option) {
+  //                 return FilterChip(
+  //                   label: Text(option),
+  //                   selected: selectedValues.contains(option),
+  //                   onSelected: (selected) {
+  //                     List<String> newSelectedValues =
+  //                         List.from(selectedValues);
+  //                     if (selected) {
+  //                       newSelectedValues.add(option);
+  //                     } else {
+  //                       newSelectedValues.remove(option);
+  //                     }
+  //                     onChanged(newSelectedValues);
+  //                     if (selectedLanguages.isNotEmpty) {
+  //                       isActivitiesSelected = true;
+  //                     } else {
+  //                       isActivitiesSelected = false;
+  //                     }
+  //                   },
+  //                   selectedColor: Color.fromARGB(190, 255, 115, 0),
+  //                   labelStyle: TextStyle(
+  //                     color: selectedValues.contains(option)
+  //                         ? Colors.white
+  //                         : Colors.black, // Set font color based on selection
+  //                   ),
+  //                 );
+  //               }).toList(),
+  //             ),
+  //             Divider(
+  //               height: 20,
+  //               color: Colors.grey,
+  //             ),
+  //           ],
+  //         )
+  //       ]));
+  // }
   Widget _buildMultiSelect(String label, List<String> selectedValues,
       List<String> options, ValueChanged<List<String>> onChanged) {
     return Container(
@@ -577,22 +792,29 @@ class _SearchedScreenState extends State<SearchedScreen> {
               Wrap(
                 spacing: 12.0,
                 children: options.map((option) {
+                  String mappedOption = mapOption(option);
                   return FilterChip(
                     label: Text(option),
-                    selected: selectedValues.contains(option),
+                    selected: selectedValues.contains(mappedOption),
                     onSelected: (selected) {
                       List<String> newSelectedValues =
                           List.from(selectedValues);
+                      String mappedOption = mapOption(option);
                       if (selected) {
-                        newSelectedValues.add(option);
+                        newSelectedValues.add(mappedOption);
                       } else {
-                        newSelectedValues.remove(option);
+                        newSelectedValues.remove(mappedOption);
                       }
                       onChanged(newSelectedValues);
+                      if (selectedLanguages.isNotEmpty) {
+                        isActivitiesSelected = true;
+                      } else {
+                        isActivitiesSelected = false;
+                      }
                     },
                     selectedColor: Color.fromARGB(190, 255, 115, 0),
                     labelStyle: TextStyle(
-                      color: selectedValues.contains(option)
+                      color: selectedValues.contains(mappedOption)
                           ? Colors.white
                           : Colors.black, // Set font color based on selection
                     ),
@@ -606,6 +828,39 @@ class _SearchedScreenState extends State<SearchedScreen> {
             ],
           )
         ]));
+  }
+
+  String mapOption(String option) {
+    switch (option) {
+      case 'Translation & Interpretation':
+        return 'translation';
+      case 'Pick Up & Driving Tours':
+        return 'pick';
+      case 'Shopping':
+        return 'shopping';
+      case 'Nightlife & Bars':
+        return 'nightlife';
+      case 'Food & Resturants':
+        return 'food';
+      case 'Arts & Museums':
+        return 'art';
+      case 'Sports & Recreation':
+        return 'sports';
+      case 'History & Culture':
+        return 'history';
+      case 'Exploration & Sightseeing':
+        return 'exploration';
+      case 'English':
+        return 'english';
+      case 'Bengali':
+        return 'bengali';
+      case 'Hindi':
+        return 'hindi';
+      case 'Urdu':
+        return 'urdu';
+      default:
+        return option;
+    }
   }
 
   Widget _buildRadioButtons(String label, int selectedValue,
@@ -639,6 +894,26 @@ class _SearchedScreenState extends State<SearchedScreen> {
                       groupValue: selectedValue,
                       onChanged: (value) {
                         onChanged(value as int);
+                        setState(() {
+                          switch (value) {
+                            case 0:
+                              filterGender = "none";
+                              break;
+                            case 1:
+                              filterGender = "male";
+                              break;
+                            case 2:
+                              filterGender = "female";
+                              break;
+                            default:
+                              filterGender = "none";
+                          }
+                          if (filterGender != null) {
+                            isGenderSelected = true;
+                          } else {
+                            isGenderSelected = false;
+                          }
+                        });
                       },
                       activeColor: Color.fromARGB(190, 255, 115, 0),
                     ),

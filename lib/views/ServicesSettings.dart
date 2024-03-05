@@ -1,3 +1,4 @@
+import 'package:appcode3/modals/DoctorDetailsClass.dart';
 import 'package:flutter/material.dart';
 
 import 'dart:convert';
@@ -26,6 +27,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 //import 'package:facebook_audience_network/ad/ad_native.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_html/style.dart';
 //import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -48,6 +50,57 @@ class ServicesSettingsPage extends StatefulWidget {
 }
 
 class _ServicesSettingsPageState extends State<ServicesSettingsPage> {
+  //DoctorDetailsClass? doctorDetailsClass;
+  List<String> services = [
+    'Translation & Interpretation',
+    'Pick up & Driving tours',
+    'Shopping',
+    'Nightlife & Bars',
+    'Food & Restaurants',
+    'Art & Museums',
+    'Sports & Recreation',
+    'History & Culture',
+    'Exploration & Sightseeing',
+  ];
+
+  Map<String, dynamic> getServiceData(String serviceName) {
+    switch (serviceName) {
+      case 'translation':
+        return {
+          'text': 'Translation & Interpretation',
+          'icon': Icons.translate
+        };
+      case 'shopping':
+        return {'text': 'Shopping', 'icon': Icons.shopping_cart};
+      case 'food':
+        return {'text': 'Food & Restaurants', 'icon': Icons.food_bank_rounded};
+      case 'art':
+        return {'text': 'Art & Museums', 'icon': Icons.museum_rounded};
+      case 'history':
+        return {'text': 'History & Culture', 'icon': Icons.history_edu_rounded};
+      case 'exploration':
+        return {
+          'text': 'Exploration & Sightseeing',
+          'icon': Icons.data_exploration_sharp
+        };
+      case 'pick':
+        return {
+          'text': 'Pick up & Driving Tours',
+          'icon': Icons.drive_eta_rounded
+        };
+      case 'nightlife':
+        return {'text': 'Nightlife & Bars', 'icon': Icons.nightlife_rounded};
+      // Add more cases as needed for other services
+      // Default to a generic icon and the service name
+      default:
+        return {
+          'text': 'Sports & Recreation',
+          'icon': Icons.sports_soccer_rounded
+        };
+    }
+  }
+
+  List<bool> isSelectedList = [false];
   bool isChecked = false;
   late TextEditingController _controller;
   String enteredValue = '';
@@ -115,411 +168,557 @@ class _ServicesSettingsPageState extends State<ServicesSettingsPage> {
         body: Container(
           child: Column(
             children: [
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    isChecked = !isChecked;
-                  });
-                },
-                child: Container(
-                  padding: EdgeInsets.all(16),
-                  alignment: Alignment.topLeft,
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.sign_language, // Language icon (as an example)
-                        color: Colors.black,
-                      ),
-                      SizedBox(width: 8),
-                      Text(
-                        SERVICES_PAGE_1,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 12,
-                          fontWeight:
-                              isChecked ? FontWeight.bold : FontWeight.w200,
-                        ),
-                      ),
-                      Spacer(),
-                      isChecked
-                          ? Icon(
-                              Icons.check,
+              Expanded(
+                child: ListView.builder(
+                  itemCount: services.length,
+                  itemBuilder: (context, index) {
+                    String serviceName = services[index];
+                    Map<String, dynamic> serviceData =
+                        getServiceData(serviceName);
+
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          isSelectedList[index] = !isSelectedList[index];
+                        });
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(16),
+                        alignment: Alignment.topLeft,
+                        child: Row(
+                          children: [
+                            Icon(
+                              isSelectedList[index]
+                                  ? Icons.check_circle
+                                  : serviceData['icon'],
                               color: Colors.black,
                               size: 20,
-                            ) // Check icon
-                          : SizedBox(), // Invisible placeholder if not checked
-                    ],
-                  ),
-                ),
-              ),
-              Divider(
-                height: 10,
-                color: Colors.grey,
-              ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    isChecked = !isChecked;
-                  });
-                },
-                child: Container(
-                  padding: EdgeInsets.all(16),
-                  alignment: Alignment.topLeft,
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.directions_car, // Pickup car icon
-                        color: Colors.black,
-                      ),
-                      SizedBox(width: 8),
-                      Text(
-                        SERVICES_PAGE_2,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 12,
-                          fontWeight:
-                              isChecked ? FontWeight.bold : FontWeight.w200,
+                            ),
+                            SizedBox(width: 8),
+                            Text(
+                              isSelectedList[index]
+                                  ? 'Selected'
+                                  : serviceData['text'],
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 12,
+                                fontWeight: isSelectedList[index]
+                                    ? FontWeight.bold
+                                    : FontWeight.w200,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      Spacer(),
-                      isChecked
-                          ? Icon(
-                              Icons.check,
-                              color: Colors.black,
-                              size: 20,
-                            ) // Check icon
-                          : SizedBox(),
-                    ],
-                  ),
+                    );
+                  },
                 ),
               ),
-              Divider(
-                height: 10,
-                color: Colors.grey,
-              ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    isChecked = !isChecked;
-                  });
-                },
-                child: Container(
-                  padding: EdgeInsets.all(16),
-                  alignment: Alignment.topLeft,
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.shopping_bag, // Choose the appropriate icon
-                        color: Colors.black,
-                      ),
-                      SizedBox(width: 8),
-                      Text(
-                        SERVICES_PAGE_3,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 12,
-                          fontWeight:
-                              isChecked ? FontWeight.bold : FontWeight.w200,
-                        ),
-                      ),
-                      Spacer(),
-                      isChecked
-                          ? Icon(
-                              Icons.check,
-                              color: Colors.black,
-                              size: 20,
-                            ) // Check icon
-                          : SizedBox(),
-                    ],
-                  ),
-                ),
-              ),
-              Divider(
-                height: 10,
-                color: Colors.grey,
-              ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    isChecked = !isChecked;
-                  });
-                },
-                child: Container(
-                  padding: EdgeInsets.all(16),
-                  alignment: Alignment.topLeft,
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons
-                            .local_bar, // Nightlife and bars icon (as an example)
-                        color: Colors.black,
-                      ),
-                      SizedBox(width: 8),
-                      Text(
-                        SERVICES_PAGE_4,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 12,
-                          fontWeight:
-                              isChecked ? FontWeight.bold : FontWeight.w200,
-                        ),
-                      ),
-                      Spacer(),
-                      isChecked
-                          ? Icon(
-                              Icons.check,
-                              color: Colors.black,
-                              size: 20,
-                            ) // Check icon
-                          : SizedBox(),
-                    ],
-                  ),
-                ),
-              ),
-              Divider(
-                height: 10,
-                color: Colors.grey,
-              ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    isChecked = !isChecked;
-                  });
-                },
-                child: Container(
-                  padding: EdgeInsets.all(16),
-                  alignment: Alignment.topLeft,
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons
-                            .restaurant, // Food and restaurants icon (as an example)
-                        color: Colors.black,
-                      ),
-                      SizedBox(width: 8),
-                      Text(
-                        SERVICES_PAGE_5,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 12,
-                          fontWeight:
-                              isChecked ? FontWeight.bold : FontWeight.w200,
-                        ),
-                      ),
-                      Spacer(),
-                      isChecked
-                          ? Icon(
-                              Icons.check,
-                              color: Colors.black,
-                              size: 20,
-                            ) // Check icon
-                          : SizedBox(),
-                    ],
-                  ),
-                ),
-              ),
-              Divider(
-                height: 10,
-                color: Colors.grey,
-              ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    isChecked = !isChecked;
-                  });
-                },
-                child: Container(
-                  padding: EdgeInsets.all(16),
-                  alignment: Alignment.topLeft,
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.palette, // Arts and museums icon (as an example)
-                        color: Colors.black,
-                      ),
-                      SizedBox(width: 8),
-                      Text(
-                        SERVICES_PAGE_6,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 12,
-                          fontWeight:
-                              isChecked ? FontWeight.bold : FontWeight.w200,
-                        ),
-                      ),
-                      Spacer(),
-                      isChecked
-                          ? Icon(
-                              Icons.check,
-                              color: Colors.black,
-                              size: 20,
-                            ) // Check icon
-                          : SizedBox(),
-                    ],
-                  ),
-                ),
-              ),
-              Divider(
-                height: 10,
-                color: Colors.grey,
-              ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    isChecked = !isChecked;
-                  });
-                },
-                child: Container(
-                  padding: EdgeInsets.all(16),
-                  alignment: Alignment.topLeft,
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons
-                            .sports_tennis, // Sports and recreation icon (as an example)
-                        color: Colors.black,
-                      ),
-                      SizedBox(width: 8),
-                      Text(
-                        SERVICES_PAGE_7,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 12,
-                          fontWeight:
-                              isChecked ? FontWeight.bold : FontWeight.w200,
-                        ),
-                      ),
-                      Spacer(),
-                      isChecked
-                          ? Icon(
-                              Icons.check,
-                              color: Colors.black,
-                              size: 20,
-                            ) // Check icon
-                          : SizedBox(),
-                    ],
-                  ),
-                ),
-              ),
-              Divider(
-                height: 10,
-                color: Colors.grey,
-              ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    isChecked = !isChecked;
-                  });
-                },
-                child: Container(
-                  padding: EdgeInsets.all(16),
-                  alignment: Alignment.topLeft,
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.menu_book, // Book-reading icon
-                        color: Colors.black,
-                      ),
-                      SizedBox(width: 8),
-                      Text(
-                        SERVICES_PAGE_8,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 12,
-                          fontWeight:
-                              isChecked ? FontWeight.bold : FontWeight.w200,
-                        ),
-                      ),
-                      Spacer(),
-                      isChecked
-                          ? Icon(
-                              Icons.check,
-                              color: Colors.black,
-                              size: 20,
-                            ) // Check icon
-                          : SizedBox(),
-                    ],
-                  ),
-                ),
-              ),
-              Divider(
-                height: 10,
-                color: Colors.grey,
-              ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    isChecked = !isChecked;
-                  });
-                },
-                child: Container(
-                  padding: EdgeInsets.all(16),
-                  alignment: Alignment.topLeft,
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons
-                            .explore, // Exploration and sightseeing icon (as an example)
-                        color: Colors.black,
-                      ),
-                      SizedBox(width: 8),
-                      Text(
-                        SERVICES_PAGE_9,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 12,
-                          fontWeight:
-                              isChecked ? FontWeight.bold : FontWeight.w200,
-                        ),
-                      ),
-                      Spacer(),
-                      isChecked
-                          ? Icon(
-                              Icons.check,
-                              color: Colors.black,
-                              size: 20,
-                            ) // Check icon
-                          : SizedBox(),
-                    ],
-                  ),
-                ),
-              ),
-              Divider(
-                height: 10,
-                color: Colors.grey,
-              ),
-              // Container(
-              //   color: Colors.white,
-              //   child: TextField(
-              //     controller: _controller,
-              //     style: TextStyle(
-              //       color: Colors.black,
-              //       fontSize: 16,
-              //       fontWeight: FontWeight.w200,
-              //     ),
-              //     onChanged: (value) {
-              //       setState(
-              //         () {
-              //           enteredValue = value;
-              //           if (enteredValue != widget.services) {
-              //             isValueChanged = true;
-              //           } else {
-              //             isValueChanged = false;
-              //           }
-              //         },
-              //       );
-              //     },
-              //     decoration: InputDecoration(
-              //       border: OutlineInputBorder(),
-              //       hintText: widget.services,
-              //       hintStyle: TextStyle(color: Colors.black),
-              //     ),
-              //   ),
-              // )
             ],
           ),
         ),
       ),
     );
+
+    // ListView.builder(
+    //   itemCount: services.length,
+    //   itemBuilder: (context, index) {
+    //     //String service = doctorDetailsClass!.data!.services![index];
+
+    //     return GestureDetector(
+    //       onTap: () {
+    //         setState(() {
+    //           isSelectedList[index] = !isSelectedList[index];
+    //         });
+    //       },
+    //       child: Container(
+    //         padding: EdgeInsets.all(16),
+    //         alignment: Alignment.topLeft,
+    //         child: Row(
+    //           children: [
+    //             // Icon(
+    //             //   isSelectedList[index] ? Icons.check_circle : services['icon'], // Use check_circle icon if selected, otherwise use the icon from getServiceData
+    //             //   color: Colors.black,
+    //             //   size: 20,
+    //             // ),
+    //             SizedBox(width: 8),
+    //             // Text(
+    //             //   isSelectedList[index] ? 'Selected' : services['text'], // Use 'Selected' if selected, otherwise use the text from getServiceData
+    //             //   style: TextStyle(
+    //             //     color: Colors.black,
+    //             //     fontSize: 12,
+    //             //     fontWeight: isSelectedList[index] ? FontWeight.bold : FontWeight.w200,
+    //             //   ),
+    //             // ),
+    //           ],
+    //         ),
+    //       ),
+    //     );
+
+    //     // return GestureDetector(
+    //     //   onTap: () {
+    //     //     setState(() {
+    //     //       isSelectedList[index] = !isSelectedList[index];
+    //     //       //isSelectedList =
+    //     //       //  List.generate(services.length, (i) => i == index);
+    //     //       //Map<String, dynamic> serviceData =
+    //     //       //getServiceData(service);
+    //     //       //isSelectedList = serviceData as List<bool>;
+    //     //       //List.generate(services.length, (i) => i == index);
+    //     //     });
+    //     //   },
+    //     //   child: Container(
+    //     //     padding: EdgeInsets.all(16),
+    //     //     alignment: Alignment.topLeft,
+    //     //     child: Row(
+    //     //       children: [
+    //     //         Icon(
+    //     //           Icons
+    //     //               .sign_language, // Language icon (as an example)
+    //     //           color: Colors.black,
+    //     //         ),
+    //     //         SizedBox(width: 8),
+    //     //         Text(
+    //     //           SERVICES_PAGE_1,
+    //     //           style: TextStyle(
+    //     //             color: Colors.black,
+    //     //             fontSize: 12,
+    //     //             fontWeight: isChecked
+    //     //                 ? FontWeight.bold
+    //     //                 : FontWeight.w200,
+    //     //           ),
+    //     //         ),
+    //     //         // Icon(
+    //     //         //   services[index].icon, // Use your item's icon
+    //     //         //   color: Colors.black,
+    //     //         // ),
+    //     //         // SizedBox(width: 8),
+    //     //         // Text(
+    //     //         //   services[index].text, // Use your item's text
+    //     //         //   style: TextStyle(
+    //     //         //     color: Colors.black,
+    //     //         //     fontSize: 12,
+    //     //         //     fontWeight: isSelectedList[index]
+    //     //         //         ? FontWeight.bold
+    //     //         //         : FontWeight.w200,
+    //     //         //   ),
+    //     //         // ),
+    //     //         Spacer(),
+    //     //         isSelectedList[index]
+    //     //             ? Icon(
+    //     //                 Icons
+    //     //                     .check_circle, // Use a different icon when selected
+    //     //                 color: Colors.black,
+    //     //                 size: 20,
+    //     //               ) // Check icon
+    //     //             : SizedBox(), // Invisible placeholder if not selected
+    //     //       ],
+    //     //     ),
+    //     //   ),
+    //     // );
+    //   },
+    // ),
+
+    // GestureDetector(
+    //             onTap: () {
+    //               setState(() {
+    //                 isChecked = !isChecked;
+    //               });
+    //             },
+    //             child: Container(
+    //               padding: EdgeInsets.all(16),
+    //               alignment: Alignment.topLeft,
+    //               child: Row(
+    //                 children: [
+    //                   Icon(
+    //                     Icons.sign_language, // Language icon (as an example)
+    //                     color: Colors.black,
+    //                   ),
+    //                   SizedBox(width: 8),
+    //                   Text(
+    //                     SERVICES_PAGE_1,
+    //                     style: TextStyle(
+    //                       color: Colors.black,
+    //                       fontSize: 12,
+    //                       fontWeight:
+    //                           isChecked ? FontWeight.bold : FontWeight.w200,
+    //                     ),
+    //                   ),
+    //                   Spacer(),
+    //                   isChecked
+    //                       ? Icon(
+    //                           Icons.check,
+    //                           color: Colors.black,
+    //                           size: 20,
+    //                         ) // Check icon
+    //                       : SizedBox(), // Invisible placeholder if not checked
+    //                 ],
+    //               ),
+    //             ),
+    //           ),
+    // Divider(
+    //   height: 10,
+    //   color: Colors.grey,
+    // ),
+    // GestureDetector(
+    //   onTap: () {
+    //     setState(() {
+    //       isChecked = !isChecked;
+    //     });
+    //   },
+    //   child: Container(
+    //     padding: EdgeInsets.all(16),
+    //     alignment: Alignment.topLeft,
+    //     child: Row(
+    //       children: [
+    //         Icon(
+    //           Icons.directions_car, // Pickup car icon
+    //           color: Colors.black,
+    //         ),
+    //         SizedBox(width: 8),
+    //         Text(
+    //           SERVICES_PAGE_2,
+    //           style: TextStyle(
+    //             color: Colors.black,
+    //             fontSize: 12,
+    //             fontWeight:
+    //                 isChecked ? FontWeight.bold : FontWeight.w200,
+    //           ),
+    //         ),
+    //         Spacer(),
+    //         isChecked
+    //             ? Icon(
+    //                 Icons.check,
+    //                 color: Colors.black,
+    //                 size: 20,
+    //               ) // Check icon
+    //             : SizedBox(),
+    //       ],
+    //     ),
+    //   ),
+    // ),
+    // Divider(
+    //   height: 10,
+    //   color: Colors.grey,
+    // ),
+    // GestureDetector(
+    //   onTap: () {
+    //     setState(() {
+    //       isChecked = !isChecked;
+    //     });
+    //   },
+    //   child: Container(
+    //     padding: EdgeInsets.all(16),
+    //     alignment: Alignment.topLeft,
+    //     child: Row(
+    //       children: [
+    //         Icon(
+    //           Icons.shopping_bag, // Choose the appropriate icon
+    //           color: Colors.black,
+    //         ),
+    //         SizedBox(width: 8),
+    //         Text(
+    //           SERVICES_PAGE_3,
+    //           style: TextStyle(
+    //             color: Colors.black,
+    //             fontSize: 12,
+    //             fontWeight:
+    //                 isChecked ? FontWeight.bold : FontWeight.w200,
+    //           ),
+    //         ),
+    //         Spacer(),
+    //         isChecked
+    //             ? Icon(
+    //                 Icons.check,
+    //                 color: Colors.black,
+    //                 size: 20,
+    //               ) // Check icon
+    //             : SizedBox(),
+    //       ],
+    //     ),
+    //   ),
+    // ),
+    // Divider(
+    //   height: 10,
+    //   color: Colors.grey,
+    // ),
+    // GestureDetector(
+    //   onTap: () {
+    //     setState(() {
+    //       isChecked = !isChecked;
+    //     });
+    //   },
+    //   child: Container(
+    //     padding: EdgeInsets.all(16),
+    //     alignment: Alignment.topLeft,
+    //     child: Row(
+    //       children: [
+    //         Icon(
+    //           Icons
+    //               .local_bar, // Nightlife and bars icon (as an example)
+    //           color: Colors.black,
+    //         ),
+    //         SizedBox(width: 8),
+    //         Text(
+    //           SERVICES_PAGE_4,
+    //           style: TextStyle(
+    //             color: Colors.black,
+    //             fontSize: 12,
+    //             fontWeight:
+    //                 isChecked ? FontWeight.bold : FontWeight.w200,
+    //           ),
+    //         ),
+    //         Spacer(),
+    //         isChecked
+    //             ? Icon(
+    //                 Icons.check,
+    //                 color: Colors.black,
+    //                 size: 20,
+    //               ) // Check icon
+    //             : SizedBox(),
+    //       ],
+    //     ),
+    //   ),
+    // ),
+    // Divider(
+    //   height: 10,
+    //   color: Colors.grey,
+    // ),
+    // GestureDetector(
+    //   onTap: () {
+    //     setState(() {
+    //       isChecked = !isChecked;
+    //     });
+    //   },
+    //   child: Container(
+    //     padding: EdgeInsets.all(16),
+    //     alignment: Alignment.topLeft,
+    //     child: Row(
+    //       children: [
+    //         Icon(
+    //           Icons
+    //               .restaurant, // Food and restaurants icon (as an example)
+    //           color: Colors.black,
+    //         ),
+    //         SizedBox(width: 8),
+    //         Text(
+    //           SERVICES_PAGE_5,
+    //           style: TextStyle(
+    //             color: Colors.black,
+    //             fontSize: 12,
+    //             fontWeight:
+    //                 isChecked ? FontWeight.bold : FontWeight.w200,
+    //           ),
+    //         ),
+    //         Spacer(),
+    //         isChecked
+    //             ? Icon(
+    //                 Icons.check,
+    //                 color: Colors.black,
+    //                 size: 20,
+    //               ) // Check icon
+    //             : SizedBox(),
+    //       ],
+    //     ),
+    //   ),
+    // ),
+    // Divider(
+    //   height: 10,
+    //   color: Colors.grey,
+    // ),
+    // GestureDetector(
+    //   onTap: () {
+    //     setState(() {
+    //       isChecked = !isChecked;
+    //     });
+    //   },
+    //   child: Container(
+    //     padding: EdgeInsets.all(16),
+    //     alignment: Alignment.topLeft,
+    //     child: Row(
+    //       children: [
+    //         Icon(
+    //           Icons.palette, // Arts and museums icon (as an example)
+    //           color: Colors.black,
+    //         ),
+    //         SizedBox(width: 8),
+    //         Text(
+    //           SERVICES_PAGE_6,
+    //           style: TextStyle(
+    //             color: Colors.black,
+    //             fontSize: 12,
+    //             fontWeight:
+    //                 isChecked ? FontWeight.bold : FontWeight.w200,
+    //           ),
+    //         ),
+    //         Spacer(),
+    //         isChecked
+    //             ? Icon(
+    //                 Icons.check,
+    //                 color: Colors.black,
+    //                 size: 20,
+    //               ) // Check icon
+    //             : SizedBox(),
+    //       ],
+    //     ),
+    //   ),
+    // ),
+    // Divider(
+    //   height: 10,
+    //   color: Colors.grey,
+    // ),
+    // GestureDetector(
+    //   onTap: () {
+    //     setState(() {
+    //       isChecked = !isChecked;
+    //     });
+    //   },
+    //   child: Container(
+    //     padding: EdgeInsets.all(16),
+    //     alignment: Alignment.topLeft,
+    //     child: Row(
+    //       children: [
+    //         Icon(
+    //           Icons
+    //               .sports_tennis, // Sports and recreation icon (as an example)
+    //           color: Colors.black,
+    //         ),
+    //         SizedBox(width: 8),
+    //         Text(
+    //           SERVICES_PAGE_7,
+    //           style: TextStyle(
+    //             color: Colors.black,
+    //             fontSize: 12,
+    //             fontWeight:
+    //                 isChecked ? FontWeight.bold : FontWeight.w200,
+    //           ),
+    //         ),
+    //         Spacer(),
+    //         isChecked
+    //             ? Icon(
+    //                 Icons.check,
+    //                 color: Colors.black,
+    //                 size: 20,
+    //               ) // Check icon
+    //             : SizedBox(),
+    //       ],
+    //     ),
+    //   ),
+    // ),
+    // Divider(
+    //   height: 10,
+    //   color: Colors.grey,
+    // ),
+    // GestureDetector(
+    //   onTap: () {
+    //     setState(() {
+    //       isChecked = !isChecked;
+    //     });
+    //   },
+    //   child: Container(
+    //     padding: EdgeInsets.all(16),
+    //     alignment: Alignment.topLeft,
+    //     child: Row(
+    //       children: [
+    //         Icon(
+    //           Icons.menu_book, // Book-reading icon
+    //           color: Colors.black,
+    //         ),
+    //         SizedBox(width: 8),
+    //         Text(
+    //           SERVICES_PAGE_8,
+    //           style: TextStyle(
+    //             color: Colors.black,
+    //             fontSize: 12,
+    //             fontWeight:
+    //                 isChecked ? FontWeight.bold : FontWeight.w200,
+    //           ),
+    //         ),
+    //         Spacer(),
+    //         isChecked
+    //             ? Icon(
+    //                 Icons.check,
+    //                 color: Colors.black,
+    //                 size: 20,
+    //               ) // Check icon
+    //             : SizedBox(),
+    //       ],
+    //     ),
+    //   ),
+    // ),
+    // Divider(
+    //   height: 10,
+    //   color: Colors.grey,
+    // ),
+    // GestureDetector(
+    //   onTap: () {
+    //     setState(() {
+    //       isChecked = !isChecked;
+    //     });
+    //   },
+    //   child: Container(
+    //     padding: EdgeInsets.all(16),
+    //     alignment: Alignment.topLeft,
+    //     child: Row(
+    //       children: [
+    //         Icon(
+    //           Icons
+    //               .explore, // Exploration and sightseeing icon (as an example)
+    //           color: Colors.black,
+    //         ),
+    //         SizedBox(width: 8),
+    //         Text(
+    //           SERVICES_PAGE_9,
+    //           style: TextStyle(
+    //             color: Colors.black,
+    //             fontSize: 12,
+    //             fontWeight:
+    //                 isChecked ? FontWeight.bold : FontWeight.w200,
+    //           ),
+    //         ),
+    //         Spacer(),
+    //         isChecked
+    //             ? Icon(
+    //                 Icons.check,
+    //                 color: Colors.black,
+    //                 size: 20,
+    //               ) // Check icon
+    //             : SizedBox(),
+    //       ],
+    //     ),
+    //   ),
+    // ),
+    // Divider(
+    //   height: 10,
+    //   color: Colors.grey,
+    // ),
+    // Container(
+    //   color: Colors.white,
+    //   child: TextField(
+    //     controller: _controller,
+    //     style: TextStyle(
+    //       color: Colors.black,
+    //       fontSize: 16,
+    //       fontWeight: FontWeight.w200,
+    //     ),
+    //     onChanged: (value) {
+    //       setState(
+    //         () {
+    //           enteredValue = value;
+    //           if (enteredValue != widget.services) {
+    //             isValueChanged = true;
+    //           } else {
+    //             isValueChanged = false;
+    //           }
+    //         },
+    //       );
+    //     },
+    //     decoration: InputDecoration(
+    //       border: OutlineInputBorder(),
+    //       hintText: widget.services,
+    //       hintStyle: TextStyle(color: Colors.black),
+    //     ),
+    //   ),
+    // )
   }
 }
