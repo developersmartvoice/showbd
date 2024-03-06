@@ -799,11 +799,11 @@ class _ContainerPageState extends State<ContainerPage> {
                     //   width: MediaQuery.sizeOf(context).width * .01,
                     // ),
                     Container(
-                      padding: EdgeInsets.only(right: 5),
+                      padding: EdgeInsets.only(right: 1),
                       alignment: Alignment.center,
                       width: MediaQuery.sizeOf(context).width * .2,
                       child: Text(
-                        'Services',
+                        'Activities',
                         style: GoogleFonts.robotoCondensed(
                           fontSize: 20.0,
                           fontWeight: FontWeight.w500,

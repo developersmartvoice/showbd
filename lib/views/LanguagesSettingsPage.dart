@@ -59,14 +59,15 @@ class _LanguagesSettingsPageState extends State<LanguagesSettingsPage> {
   ];
   Map<String, bool> selectedLanguages = {};
   bool isValueChanged = false;
+  bool isLanguageSelected = false;
   //String selectedLanguage = '';
 
   bool isChecked = false;
-  String selectedMeetingTime = "";
+  String selectedLanguage = "";
 
   late String _selectedLanguage;
 
-  bool isMeetingTimeSelected = false; // Variable to store the selected language
+  //bool isMeetingTimeSelected = false; // Variable to store the selected language
 
   @override
   void initState() {
@@ -173,6 +174,8 @@ class _LanguagesSettingsPageState extends State<LanguagesSettingsPage> {
                         });
                       },
                       controlAffinity: ListTileControlAffinity.trailing,
+                      //itemAsString:
+                      //isLanguageSelected ? selectedLanguages : widget.languages,
                     );
                   },
                 ),

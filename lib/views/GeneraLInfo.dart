@@ -497,8 +497,9 @@ class _ContainerPageState extends State<ContainerPage> {
                             width: MediaQuery.sizeOf(context).width * .1,
                             height: 25,
                             decoration: BoxDecoration(
+                              color: Colors.white,
                               //color: _boxColor, // Color of the button
-                              color: !isNameStored ? Colors.green : Colors.grey,
+                              //color: !isNameStored ? Colors.green : Colors.grey,
                               shape: BoxShape.circle,
                               border: Border.all(
                                 color: Colors.grey, // Color of the border
