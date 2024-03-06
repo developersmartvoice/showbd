@@ -517,6 +517,9 @@ class _DetailsPageState extends State<DetailsPage> {
               //     ),
               //   ],
               // ),
+              SizedBox(
+                height: 5,
+              ),
               Container(
                 alignment: Alignment.center,
                 // child: ElevatedButton(
@@ -700,39 +703,39 @@ class _DetailsPageState extends State<DetailsPage> {
                       ],
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 8,
                     ),
-                    ElevatedButton.icon(
-                      onPressed: () {},
-                      icon: Icon(Icons.messenger_outlined),
-                      label: Text("Send Message"),
-                      style: ElevatedButton.styleFrom(
-                        textStyle: GoogleFonts.poppins(
-                          fontSize: 19.0,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.blueAccent,
-                        ),
-                        backgroundColor: Colors.blue,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          side: BorderSide(
-                            color: Colors.blue,
-                          ), // Set border radius
-                        ),
-                        padding: EdgeInsets.all(
-                            10.0), // Customize horizontal padding
-                        elevation: 5.0, // Set elevation
-                        shadowColor: Colors.grey, // Set shadow color
-                      ),
-                    ),
+                    // ElevatedButton.icon(
+                    //   onPressed: () {},
+                    //   icon: Icon(Icons.messenger_outlined),
+                    //   label: Text("Send Message"),
+                    //   style: ElevatedButton.styleFrom(
+                    //     textStyle: GoogleFonts.poppins(
+                    //       fontSize: 19.0,
+                    //       fontWeight: FontWeight.w500,
+                    //       color: Colors.blueAccent,
+                    //     ),
+                    //     backgroundColor: Colors.blue,
+                    //     foregroundColor: Colors.white,
+                    //     shape: RoundedRectangleBorder(
+                    //       borderRadius: BorderRadius.circular(10.0),
+                    //       side: BorderSide(
+                    //         color: Colors.blue,
+                    //       ), // Set border radius
+                    //     ),
+                    //     padding: EdgeInsets.all(
+                    //         10.0), // Customize horizontal padding
+                    //     elevation: 5.0, // Set elevation
+                    //     shadowColor: Colors.grey, // Set shadow color
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
 
-              SizedBox(
-                height: 10,
-              ),
+              // SizedBox(
+              //   height: 10,
+              // ),
 
               doctorDetailsClass!.data!.motto == null
                   ? Container()

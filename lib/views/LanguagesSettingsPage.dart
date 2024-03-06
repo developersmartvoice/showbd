@@ -52,10 +52,10 @@ class _LanguagesSettingsPageState extends State<LanguagesSettingsPage> {
   List<String> languages = [
     'English',
     'Bengali',
-    'Arabic',
+    'Urdu',
     'Spanish',
     'French',
-    'German'
+    'Hindi'
   ];
   Map<String, bool> selectedLanguages = {};
   bool isValueChanged = false;
@@ -65,7 +65,7 @@ class _LanguagesSettingsPageState extends State<LanguagesSettingsPage> {
   bool isChecked = false;
   String selectedLanguage = "";
 
-  late String _selectedLanguage;
+  //late String _selectedLanguage;
 
   //bool isMeetingTimeSelected = false; // Variable to store the selected language
 
@@ -81,7 +81,7 @@ class _LanguagesSettingsPageState extends State<LanguagesSettingsPage> {
   late TextEditingController _controller;
   String enteredValue = '';
   //bool isValueChanged = false;
-  void updatingLanguages() async {
+  void updatingLanguages(List<String> selectedLanguageList) async {
     final response =
         await post(Uri.parse("$SERVER_ADDRESS/api/updateLanguages"), body: {
       "id": widget.id,
@@ -124,8 +124,24 @@ class _LanguagesSettingsPageState extends State<LanguagesSettingsPage> {
           actions: [
             TextButton(
               onPressed: () {
-                if (isValueChanged) {
-                  updatingLanguages();
+                // if (isValueChanged) {
+                //   updatingLanguages();
+                if (selectedLanguages.isNotEmpty) {
+                  List<String> selectedLanguageList = [
+                    'English',
+                    'Bengali',
+                    'Urdu',
+                    'Spanish',
+                    'French',
+                    'Hindi',
+                  ];
+                  selectedLanguages.forEach((key, value) {
+                    if (value) {
+                      selectedLanguageList.add(key);
+                    }
+                  });
+                  print('Selected languages: $selectedLanguages');
+                  updatingLanguages(selectedLanguageList);
                 } else {
                   // Navigator.pop(context);
                 }
@@ -166,7 +182,10 @@ class _LanguagesSettingsPageState extends State<LanguagesSettingsPage> {
                     final language = languages[index];
                     return CheckboxListTile(
                       title: Text(language),
-                      value: selectedLanguages[language],
+                      value: selectedLanguages.containsKey(language)
+                          ? selectedLanguages[language]
+                          : false,
+                      //value: selectedLanguages[language],
                       onChanged: (value) {
                         setState(() {
                           selectedLanguages[language] = value!;
