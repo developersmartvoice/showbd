@@ -478,6 +478,7 @@ import 'package:flutter_html/style.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class MoreInfoScreen extends StatefulWidget {
   @override
@@ -493,7 +494,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
   String? doctorId;
   bool isErrorInLoading = false;
 
-  List<String> currencies = ['USD', 'EUR', 'GBP', 'JPY', 'CAD'];
+  // List<String> currencies = ['USD', 'EUR', 'GBP', 'JPY', 'CAD'];
   String selectedCurrency = '';
 
   // Future<void> _showCurrencySelectionDialog(BuildContext context) async {
@@ -583,6 +584,56 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
     }
   }
 
+  Future<void> getCurrency() async {
+    print("doctor id: $doctorId");
+    print("Get currency is called");
+    try {
+      final response = await http
+          .get(Uri.parse("$SERVER_ADDRESS/api/getCurrency?id=$doctorId"));
+
+      if (response.statusCode == 200) {
+        final jsonResponse = json.decode(response.body);
+        setState(() {
+          // currencies = data.cast<String>();
+          // selectedCurrency = currencies.isNotEmpty ? currencies.first : '';
+          selectedCurrency = jsonResponse['currency'] != null
+              ? jsonResponse['currency']
+              : "Select Currency";
+          print("Currency from api: $selectedCurrency");
+        });
+      } else {
+        throw Exception('Failed to load currencies');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
+  Future<void> updateCurrency(String currency) async {
+    print("doctor id: $doctorId");
+    print("Post currency is called");
+    try {
+      final response = await http.get(Uri.parse(
+          "$SERVER_ADDRESS/api/updateCurrency?id=$doctorId&currency=$currency"));
+
+      if (response.statusCode == 200) {
+        final jsonResponse = json.decode(response.body);
+        setState(() {
+          // currencies = data.cast<String>();
+          // selectedCurrency = currencies.isNotEmpty ? currencies.first : '';
+          selectedCurrency = jsonResponse['currency'] != null
+              ? "Select Currency"
+              : jsonResponse['currency'];
+          print("Currency from api: $selectedCurrency");
+        });
+      } else {
+        throw Exception('Failed to load currencies');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
   @override
   void initState() {
     // nativeAdController.setNonPersonalizedAds(true);
@@ -592,12 +643,14 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
     // });
     // TODO: implement initState
     super.initState();
+
     //getMessages();
     SharedPreferences.getInstance().then((pref) {
       setState(() {
         doctorId = pref.getString("userId");
         future = fetchDoctorAppointment();
         future2 = fetchDoctorDetails();
+        getCurrency();
       });
     });
   }
@@ -1154,6 +1207,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                           // Perform actions upon selecting USD
                           setState(() {
                             selectedCurrency = 'USD';
+                            updateCurrency(selectedCurrency);
                           });
                           Navigator.of(context).pop();
                         },
@@ -1164,6 +1218,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                           // Perform actions upon selecting BDT
                           setState(() {
                             selectedCurrency = 'BDT';
+                            updateCurrency(selectedCurrency);
                           });
                           Navigator.of(context).pop();
                         },
@@ -1214,7 +1269,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                           ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(left: 200),
+                      padding: EdgeInsets.only(left: 150),
                       child: Text(
                         selectedCurrency,
                         style: GoogleFonts.robotoCondensed(
