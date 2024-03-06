@@ -172,7 +172,7 @@ class _MottoSettingsPageState extends State<MottoSettingsPage> {
                     hintStyle: TextStyle(color: Colors.black),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),

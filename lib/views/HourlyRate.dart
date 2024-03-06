@@ -56,7 +56,7 @@ class _HourlyRateSettingsPageState extends State<HourlyRateSettingsPage> {
         Uri.parse("$SERVER_ADDRESS/api/updateConsultationFees"),
         body: {
           "id": widget.id,
-          "ConsultationFees": enteredValue,
+          "consultation fees": enteredValue,
         });
     print("$SERVER_ADDRESS/api/updateConsultationFees");
     // print(response.body);

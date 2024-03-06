@@ -1,3 +1,4 @@
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 
 import 'dart:convert';
@@ -48,17 +49,19 @@ class GenderSettingsPage extends StatefulWidget {
 }
 
 class _GenderSettingsPageState extends State<GenderSettingsPage> {
+  String selectedGender = "";
   late TextEditingController _controller;
-  String enteredValue = '';
+  // String enteredValue = '';
+  bool isGenderSelected = false;
   bool isValueChanged = false;
   void updatingGender() async {
     final response =
         await post(Uri.parse("$SERVER_ADDRESS/api/updateGender"), body: {
       "id": widget.id,
-      "gender": enteredValue,
+      "gender": selectedGender,
     });
     print("$SERVER_ADDRESS/api/updateGender");
-    // print(response.body);
+    print(response.body);
     if (response.statusCode == 200) {
       print("Gender Updated");
       setState(() {
@@ -94,7 +97,7 @@ class _GenderSettingsPageState extends State<GenderSettingsPage> {
           actions: [
             TextButton(
               onPressed: () {
-                if (isValueChanged) {
+                if (isGenderSelected) {
                   updatingGender();
                 } else {
                   // Navigator.pop(context);
@@ -132,32 +135,52 @@ class _GenderSettingsPageState extends State<GenderSettingsPage> {
               ),
               Container(
                 color: Colors.white,
-                child: TextField(
-                  controller: _controller,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w200,
-                  ),
+                child: DropdownSearch<String>(
+                  items: [
+                    'Male',
+                    'Female',
+                    'Other',
+                  ],
                   onChanged: (value) {
-                    setState(
-                      () {
-                        enteredValue = value;
-                        if (enteredValue != widget.gender) {
-                          isValueChanged = true;
-                        } else {
-                          isValueChanged = false;
-                        }
-                      },
-                    );
+                    setState(() {
+                      selectedGender = value!.toLowerCase();
+                      if (selectedGender.isNotEmpty) {
+                        isGenderSelected = true;
+                        // if (selectedGender == 'Male') {}
+                      } else {
+                        isGenderSelected = false;
+                      }
+                    });
                   },
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: widget.gender,
-                    hintStyle: TextStyle(color: Colors.black),
-                  ),
+                  selectedItem:
+                      isGenderSelected ? selectedGender : widget.gender,
                 ),
-              )
+                // TextField(
+                //   controller: _controller,
+                //   style: TextStyle(
+                //     color: Colors.black,
+                //     fontSize: 16,
+                //     fontWeight: FontWeight.w200,
+                //   ),
+                //   onChanged: (value) {
+                //     setState(
+                //       () {
+                //         enteredValue = value;
+                //         if (enteredValue != widget.gender) {
+                //           isValueChanged = true;
+                //         } else {
+                //           isValueChanged = false;
+                //         }
+                //       },
+                //     );
+                //   },
+                //   decoration: InputDecoration(
+                //     border: OutlineInputBorder(),
+                //     hintText: widget.gender,
+                //     hintStyle: TextStyle(color: Colors.black),
+                //   ),
+                // ),
+              ),
             ],
           ),
         ),
