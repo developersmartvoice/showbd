@@ -25,7 +25,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:appcode3/CustomAds.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shurjopay/utilities/functions.dart';
 import 'VideoCall/utils/consts.dart';
 import 'VideoCall/utils/configs.dart' as config;
 import 'notificationHelper.dart';
@@ -34,11 +33,7 @@ import 'en.dart';
 
 /// old url
 const String SERVER_ADDRESS = "https://localguide.celibritychatbd.com";
-<<<<<<< HEAD
 // const String SERVER_ADDRESS = "http://192.168.68.26/local-guide-backend";
-=======
-// const String SERVER_ADDRESS = "http://192.168.0.174/local-guide-backend";
->>>>>>> 179b3f3b181630656a52f0cccbe702caa6b43a8c
 // const String SERVER_ADDRESS = "http://192.168.0.150/local-guide-backend";
 // const String SERVER_ADDRESS = "http://192.168.68.105/local-guide-backend";
 // const String SERVER_ADDRESS = "http://192.168.68.26/local-guide-backend";
@@ -99,7 +94,6 @@ Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   notificationHelper.initialize();
-  initializeShurjopay(environment: "sandbox");
   PushNotificationsManager.instance.init();
   ConnectycubeFlutterCallKit.instance.init();
   ConnectycubeFlutterCallKit.onCallAcceptedWhenTerminated =

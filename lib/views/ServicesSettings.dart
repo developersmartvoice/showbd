@@ -270,12 +270,13 @@ class _ServicesSettingsPageState extends State<ServicesSettingsPage> {
   ];
   Map<String, bool> selectedServices = {};
   bool isValueChanged = false;
+  bool isServiceSelected = false;
   //String selectedLanguage = '';
 
   bool isChecked = false;
-  String selectedMeetingTime = "";
+  String selectedService = "";
 
-  late String _selectedService;
+  //late String _selectedService;
 
   //bool isMeetingTimeSelected = false; // Variable to store the selected language
 
@@ -291,7 +292,7 @@ class _ServicesSettingsPageState extends State<ServicesSettingsPage> {
   late TextEditingController _controller;
   String enteredValue = '';
   //bool isValueChanged = false;
-  void updatingServices() async {
+  void updatingServices(List<String> selectedServiceList) async {
     final response =
         await post(Uri.parse("$SERVER_ADDRESS/api/updateServices"), body: {
       "id": widget.id,
@@ -334,10 +335,30 @@ class _ServicesSettingsPageState extends State<ServicesSettingsPage> {
           actions: [
             TextButton(
               onPressed: () {
-                if (isValueChanged) {
-                  updatingServices();
+                // if (isValueChanged) {
+                //   updatingServices();
+                if (selectedServices.isNotEmpty) {
+                  // Update your logic here to handle the selected services
+                  List<String> selectedServiceList = [
+                    'Translation & Interpretation',
+                    'Pick up & Driving tours',
+                    'Shopping',
+                    'Nightlife & Bars',
+                    'Food & Restaurants',
+                    'Art & Museums',
+                    'Sports & Recreation',
+                    'History & Culture',
+                    'Exploration & Sightseeing',
+                  ];
+                  selectedServices.forEach((key, value) {
+                    if (value) {
+                      selectedServiceList.add(key);
+                    }
+                  });
+                  print('Selected services: $selectedServices');
+                  updatingServices(selectedServiceList);
                 } else {
-                  // Navigator.pop(context);
+                  //Navigator.pop(context);
                 }
               },
               child: Text(
@@ -362,7 +383,10 @@ class _ServicesSettingsPageState extends State<ServicesSettingsPage> {
                     final service = services[index];
                     return CheckboxListTile(
                       title: Text(service),
-                      value: selectedServices[service],
+                      value: selectedServices.containsKey(service)
+                          ? selectedServices[service]
+                          : false,
+                      //value: selectedServices[service],
                       onChanged: (value) {
                         setState(() {
                           selectedServices[service] = value!;

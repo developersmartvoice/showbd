@@ -71,7 +71,7 @@ class _ShurjoPayPaymentState extends State<ShurjoPayPayment> {
                   child: Column(
                     children: [
                       Text(
-                        "MEET LOCAL SUBSCRIBTION",
+                        "MEET LOCAL SUBSCRIPTION",
                         style: GoogleFonts.robotoCondensed(
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
@@ -253,7 +253,7 @@ class _ShurjoPayPaymentState extends State<ShurjoPayPayment> {
                           style: TextStyle(fontSize: 18.0, color: Colors.white),
                         ),
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.orange, // Change button color
+                          backgroundColor: Colors.orange, // Change button color
                           padding: EdgeInsets.symmetric(
                             vertical: 15.0,
                           ),
