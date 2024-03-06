@@ -25,6 +25,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:appcode3/CustomAds.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shurjopay/utilities/functions.dart';
 import 'VideoCall/utils/consts.dart';
 import 'VideoCall/utils/configs.dart' as config;
 import 'notificationHelper.dart';
@@ -94,6 +95,7 @@ Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   notificationHelper.initialize();
+  initializeShurjopay(environment: "sandbox");
   PushNotificationsManager.instance.init();
   ConnectycubeFlutterCallKit.instance.init();
   ConnectycubeFlutterCallKit.onCallAcceptedWhenTerminated =

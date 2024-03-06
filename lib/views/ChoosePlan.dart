@@ -6,6 +6,7 @@ import 'package:appcode3/views/Doctor/LogoutScreen.dart';
 import 'package:appcode3/views/Doctor/loginAsDoctor.dart';
 import 'package:appcode3/views/SendOfferScreen.dart';
 import 'package:appcode3/views/SendOffersScreen.dart';
+import 'package:appcode3/views/ShurjoPayPaymentGatewayScreen.dart';
 import 'package:connectycube_sdk/connectycube_chat.dart';
 
 import 'package:appcode3/en.dart';
@@ -767,9 +768,9 @@ class _ChoosePlanState extends State<ChoosePlan> {
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) =>
-                        BookingScreen(widget.id, widget.guideName),
-                  ),
+                      builder: (context) =>
+                          // BookingScreen(widget.id, widget.guideName),
+                          ShurjoPayPayment()),
                 );
               },
               child: Text('Continue'),
