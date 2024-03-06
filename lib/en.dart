@@ -124,7 +124,7 @@ const String MOTTO_PAGE_1 =
     "Your motto is the first thing others will read about you. Write a catchy line that best describes you as a host.";
 const String MOTTO_PAGE_2 =
     "Important: We love all languages, but we kindly ask to fill this section out in English. Also please avoid using brand and company names or links to other websites.";
-const String GENDER_PAGE = "Input your gender";
+const String GENDER_PAGE = "Select your gender";
 const String HOURLY_RATE_PAGE =
     "This is your hourly rate (you can change it later if you want.)";
 const String SERVICES_PAGE_1 = "Translation & Interpretation";
