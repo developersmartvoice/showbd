@@ -93,10 +93,10 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
         actions: [
           TextButton(
             onPressed: () {
-              if (isValueChanged) {
+              if (isValueChanged && enteredValue.length == 11) {
                 updatingPhone();
               } else {
-                // Navigator.pop(context);
+                _controller.clear();
               }
             },
             child: Text(
@@ -214,7 +214,7 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
                 },
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: widget.phone,
+                  hintText: "Enter 11 digits Phone No.",
                   hintStyle: TextStyle(color: Colors.black),
                 ),
               ),

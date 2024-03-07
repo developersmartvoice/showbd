@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ui';
 import 'package:appcode3/views/BookingScreen.dart';
 import 'package:appcode3/views/Doctor/DoctorProfile.dart';
 import 'package:appcode3/views/Doctor/LogoutScreen.dart';
@@ -28,8 +27,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/style.dart';
 //import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ChoosePlan extends StatefulWidget {
   //const ChoosePlan({super.key});
@@ -49,6 +46,7 @@ class _ChoosePlanState extends State<ChoosePlan> {
   bool isLimitedSelected = false;
   // bool isExtendedSelected = true;
   // String? guideName;
+  double amount = 1;
 
   get isFadeOut => true;
 
@@ -749,7 +747,7 @@ class _ChoosePlanState extends State<ChoosePlan> {
                           ),
                         ),
                         Text(
-                          '৳1.00',
+                          '৳${amount.toStringAsFixed(2)}',
                           style: GoogleFonts.robotoCondensed(
                             fontSize: 16,
                             color: Colors
@@ -770,7 +768,7 @@ class _ChoosePlanState extends State<ChoosePlan> {
                   MaterialPageRoute(
                       builder: (context) =>
                           // BookingScreen(widget.id, widget.guideName),
-                          ShurjoPayPayment()),
+                          ShurjoPayPayment(widget.id, amount)),
                 );
               },
               child: Text('Continue'),

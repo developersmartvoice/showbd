@@ -113,6 +113,7 @@ dependencies:
   flutter_webrtc: ^0.8.5
   fluttertoast: ^8.2.4
   shurjopay: ^2.0.4
+  random_string: ^2.3.1
   # dart_webrtc: ^1.2.1
 
 #  unnecessary package
