@@ -137,6 +137,11 @@ const String SERVICES_PAGE_7 = "Sports & Recreation";
 const String SERVICES_PAGE_8 = "History & Culture";
 const String SERVICES_PAGE_9 = "Exploration & Sightseeing";
 const String LANGUAGES_PAGE = "Select your preferred language";
+const String PHOTOS_PAGE =
+    "Add 5 photos that show others how amazing you are. This is your chance to make an awesome first impression! Remember: A friendly smile makes friends.";
+const String PHOTOS_PAGE_1 =
+    "Important: We reserve our right to change your main photo or reject photos you upload that do not comply with our profile photo guidelines.";
+const String PHOTOS_PAGE_3 = "Click on the photo to edit";
 const String IWILLSHOWYOU_PAGE_1 =
     "How would you describe the ideal tour around you? Be specific.";
 const String LANGUAGES = "Languages";
