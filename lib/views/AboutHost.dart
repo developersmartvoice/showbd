@@ -13,6 +13,7 @@ import 'package:appcode3/views/IwillShowYouSettingsPage.dart';
 import 'package:appcode3/views/LanguagesSettingsPage.dart';
 import 'package:appcode3/views/LocationSearchPageInfo.dart';
 import 'package:appcode3/views/MottoSettingsPage.dart';
+import 'package:appcode3/views/PhotoSettingsPage.dart';
 import 'package:appcode3/views/SendOfferScreen.dart';
 import 'package:appcode3/views/SendOffersScreen.dart';
 import 'package:appcode3/views/ServicesSettings.dart';
@@ -60,6 +61,7 @@ class _AboutHostState extends State<AboutHost> {
   String consultationfees = '';
   //String photos = '';
   String location = '';
+  String photos = '';
   String about_me = '';
   String gender = '';
   String languages = '';
@@ -201,11 +203,29 @@ class _AboutHostState extends State<AboutHost> {
     }
   }
 
+  getPhotos() async {
+    final response = await get(
+        Uri.parse("$SERVER_ADDRESS/api/getPhotos?id=${widget.doctorId}"));
+    print("$SERVER_ADDRESS/api/getPhotos?id=${widget.doctorId}");
+    try {
+      if (response.statusCode == 200) {
+        final jsonResponse = jsonDecode(response.body);
+        setState(() {
+          languages = jsonResponse['photos'].toString();
+          print(photos);
+        });
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getMotto();
+    getPhotos();
     getConsultationFees();
     getAboutMe();
     getCity();
@@ -238,7 +258,7 @@ class _AboutHostState extends State<AboutHost> {
         ),
       ),
       body: ContainerPage(widget.doctorId, motto, iwillshowyou, services,
-          consultationfees, location, about_me, gender, languages),
+          consultationfees, photos, location, about_me, gender, languages),
     );
   }
 }
@@ -251,6 +271,7 @@ class ContainerPage extends StatefulWidget {
   final String iwillshowyou;
   final String services;
   final String consultationfees;
+  final String photos;
   final String city;
   final String aboutMe;
   final String gender;
@@ -262,6 +283,7 @@ class ContainerPage extends StatefulWidget {
     this.iwillshowyou,
     this.services,
     this.consultationfees,
+    this.photos,
     this.city,
     this.aboutMe,
     this.gender,
@@ -278,6 +300,7 @@ class _ContainerPageState extends State<ContainerPage> {
   bool isServicesStored = false;
   bool isGenderStored = false;
   bool isLanguagesStored = false;
+  bool isPhotoStored = false;
 
   @override
   void initState() {
@@ -337,6 +360,13 @@ class _ContainerPageState extends State<ContainerPage> {
     } else {
       print("languages is not empty");
       isLanguagesStored = true;
+    }
+
+    if (widget.photos.isEmpty) {
+      isPhotoStored = false;
+    } else {
+      print("photos is not empty");
+      isPhotoStored = true;
     }
   }
 
@@ -1074,6 +1104,12 @@ class _ContainerPageState extends State<ContainerPage> {
                         padding: const EdgeInsets.only(right: 5),
                         child: IconButton(
                           onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => HourlyRateSettingsPage(
+                                    widget.id, widget.consultationfees),
+                              ),
+                            );
                             // Add your logic for the onPressed event here
                             // Typically, this would involve navigating to the next screen or performing some action
                           },
@@ -1099,12 +1135,12 @@ class _ContainerPageState extends State<ContainerPage> {
               color: Colors.white,
               child: InkWell(
                 onTap: () {
-                  // Navigator.of(context).push(
-                  //   MaterialPageRoute(
-                  //     builder: (context) =>
-                  //         HourlyRateSettingsPage(widget.id, widget.hourly_rate),
-                  //   ),
-                  // );
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          PhotoSettingsPage(widget.id, widget.photos),
+                    ),
+                  );
                 },
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
@@ -1170,6 +1206,12 @@ class _ContainerPageState extends State<ContainerPage> {
                         padding: const EdgeInsets.only(right: 5),
                         child: IconButton(
                           onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    PhotoSettingsPage(widget.id, widget.photos),
+                              ),
+                            );
                             // Add your logic for the onPressed event here
                             // Typically, this would involve navigating to the next screen or performing some action
                           },

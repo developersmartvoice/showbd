@@ -56,7 +56,7 @@ class _IwillShowYouSettingsPageState extends State<IwillShowYouSettingsPage> {
     final response =
         await post(Uri.parse("$SERVER_ADDRESS/api/updateIWillShowYou"), body: {
       "id": widget.id,
-      "iwillshowyou": enteredValue,
+      "I_will_show_you": enteredValue,
     });
     print("$SERVER_ADDRESS/api/updateIWillShowYou");
     // print(response.body);
