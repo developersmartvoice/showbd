@@ -1,14 +1,23 @@
+import 'dart:convert';
+
+import 'package:appcode3/main.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:random_string/random_string.dart';
+import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shurjopay/models/config.dart';
 import 'package:shurjopay/models/payment_verification_model.dart';
 import 'package:shurjopay/models/shurjopay_request_model.dart';
 import 'package:shurjopay/models/shurjopay_response_model.dart';
 import 'package:shurjopay/shurjopay.dart';
 
+// ignore: must_be_immutable
 class ShurjoPayPayment extends StatefulWidget {
-  const ShurjoPayPayment({Key? key}) : super(key: key);
-
+  // const ShurjoPayPayment({Key? key}) : super(key: key);
+  String id;
+  double amount;
+  ShurjoPayPayment(this.id, this.amount);
   @override
   State<ShurjoPayPayment> createState() => _ShurjoPayPaymentState();
 }
@@ -18,14 +27,85 @@ class _ShurjoPayPaymentState extends State<ShurjoPayPayment> {
 
   TextEditingController _nameController = TextEditingController();
   TextEditingController _phoneNumberController = TextEditingController();
-  TextEditingController _addressController = TextEditingController();
+  // TextEditingController _addressController = TextEditingController();
   TextEditingController _cityController = TextEditingController();
   TextEditingController _postalCodeController = TextEditingController();
-  String? name, address, city;
-  int? phoneNo, postalCode;
+  String? name, city, phoneNo;
+  String address = "Bangladesh";
+  int? postalCode;
+  String? userId;
+  String? orderId;
   ShurjoPay shurjoPay = ShurjoPay();
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    SharedPreferences.getInstance().then((value) {
+      userId = value.getString("userId");
+      setState(() {
+        // print(widget.amount);
+        // print("Guide Id is: ${widget.id}");
+        userId = value.getString("userId");
+        getName();
+        getPhoneNo();
+        getCity();
+        // do {
+        //   orderId = randomAlphaNumeric(8).toLowerCase();
+        // } while (!orderId!.contains(RegExp(r'\d')));
+        orderId = randomAlphaNumeric(8).toLowerCase();
+        print("Order Id is: $orderId");
+      });
+    });
+  }
+
+  getName() async {
+    final response =
+        await get(Uri.parse("$SERVER_ADDRESS/api/getName?id=${userId}"));
+    if (response.statusCode == 200) {
+      final jsonResponse = jsonDecode(response.body);
+      setState(() {
+        print("Name is: ${jsonResponse['name']}");
+        name = jsonResponse['name'];
+        _nameController.text = name ?? '';
+      });
+    } else {
+      print("Name can not feteched!");
+    }
+  }
+
+  getPhoneNo() async {
+    final response =
+        await get(Uri.parse("$SERVER_ADDRESS/api/getPhoneNo?id=${userId}"));
+    if (response.statusCode == 200) {
+      final jsonResponse = jsonDecode(response.body);
+      setState(() {
+        phoneNo = jsonResponse['phoneno'];
+        _phoneNumberController.text = phoneNo ?? "";
+      });
+    }
+  }
+  // getAddress() async{
+  //   final response = await get(Uri.parse("$SERVER_ADDRESS/api/"))
+  // }
+
+  getCity() async {
+    final response =
+        await get(Uri.parse("$SERVER_ADDRESS/api/getCity?id=${userId}"));
+    if (response.statusCode == 200) {
+      final jsonResponse = jsonDecode(response.body);
+      setState(() {
+        city = jsonResponse['city'];
+        _cityController.text = city ?? '';
+      });
+    }
+  }
+
   ShurjopayConfigs shurjopayConfigs = ShurjopayConfigs(
+    // prefix: "MT",
+    // userName: "smartlab",
+    // password: "smarsnfev#&#tjtw",
+    // clientIP: "127.0.0.1",
     prefix: "sp",
     userName: "sp_sandbox",
     password: "pyyk97hu&6u6",
@@ -97,6 +177,7 @@ class _ShurjoPayPaymentState extends State<ShurjoPayPayment> {
                       SizedBox(height: 20),
                       TextFormField(
                         controller: _nameController,
+                        // initialValue: name ?? "",
                         decoration: InputDecoration(
                           labelText: 'Name',
                           border: OutlineInputBorder(),
@@ -126,31 +207,31 @@ class _ShurjoPayPaymentState extends State<ShurjoPayPayment> {
                             return 'Please enter your phone number and length must be 11';
                           } else {
                             setState(() {
-                              phoneNo = int.parse(value);
+                              phoneNo = value;
                             });
                           }
                           return null;
                         },
                       ),
                       SizedBox(height: 20),
-                      TextFormField(
-                        controller: _addressController,
-                        decoration: InputDecoration(
-                          labelText: 'Address',
-                          border: OutlineInputBorder(),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your address';
-                          } else {
-                            setState(() {
-                              address = value.toString();
-                            });
-                          }
-                          return null;
-                        },
-                      ),
-                      SizedBox(height: 20),
+                      // TextFormField(
+                      //   controller: _addressController,
+                      //   decoration: InputDecoration(
+                      //     labelText: 'Address',
+                      //     border: OutlineInputBorder(),
+                      //   ),
+                      //   validator: (value) {
+                      //     if (value == null || value.isEmpty) {
+                      //       return 'Please enter your address';
+                      //     } else {
+                      //       setState(() {
+                      //         address = value.toString();
+                      //       });
+                      //     }
+                      //     return null;
+                      //   },
+                      // ),
+                      // SizedBox(height: 20),
                       TextFormField(
                         controller: _cityController,
                         decoration: InputDecoration(
@@ -198,24 +279,27 @@ class _ShurjoPayPaymentState extends State<ShurjoPayPayment> {
                               print(
                                   "Name: $name, Address: $address, Phone No: $phoneNo, City: $city, Postal Code: $postalCode");
                             });
+                            print(shurjopayConfigs.clientIP);
                             ShurjopayRequestModel shurjopayRequestModel =
                                 ShurjopayRequestModel(
                               configs: shurjopayConfigs,
                               currency: "BDT",
-                              amount: double.parse("1"),
+                              amount: widget.amount,
                               orderID: "sp1ab2c3d4",
                               discountAmount: 0,
                               discountPercentage: 0,
                               customerName: name!,
                               customerPhoneNumber: phoneNo.toString(),
-                              customerAddress: address!,
+                              customerAddress: address,
                               customerCity: city!,
                               customerPostcode: postalCode.toString(),
                               // Live: https://www.engine.shurjopayment.com/return_url
                               returnURL:
+                                  // "https://www.engine.shurjopayment.com/return_url",
                                   "https://www.sandbox.shurjopayment.com/return_url",
                               // Live: https://www.engine.shurjopayment.com/cancel_url
                               cancelURL:
+                                  // "https://www.engine.shurjopayment.com/cancel_url",
                                   "https://www.sandbox.shurjopayment.com/cancel_url",
                             );
 
@@ -224,23 +308,30 @@ class _ShurjoPayPaymentState extends State<ShurjoPayPayment> {
                               context: context,
                               shurjopayRequestModel: shurjopayRequestModel,
                             );
+                            print(
+                                "Checking status: ${shurjopayResponseModel.status}");
+                            print(shurjopayResponseModel.errorCode);
                             if (shurjopayResponseModel.status == true) {
+                              // try {} catch (e) {}
                               try {
                                 shurjopayVerificationModel =
                                     await shurjoPay.verifyPayment(
                                   orderID:
                                       shurjopayResponseModel.shurjopayOrderID!,
                                 );
+                                print(
+                                    "This is shurjopay id: ${shurjopayVerificationModel.id}");
+
                                 print(shurjopayVerificationModel.spCode);
                                 print(shurjopayVerificationModel.spMessage);
                                 if (shurjopayVerificationModel.spCode ==
                                     "1000") {
                                   print("Payment Varified");
-                                  _nameController.clear();
-                                  _addressController.clear();
-                                  _phoneNumberController.clear();
-                                  _cityController.clear();
-                                  _postalCodeController.clear();
+                                  // _nameController.clear();
+                                  // _addressController.clear();
+                                  // _phoneNumberController.clear();
+                                  // _cityController.clear();
+                                  // _postalCodeController.clear();
                                 }
                               } catch (error) {
                                 print(error.toString());
@@ -249,7 +340,7 @@ class _ShurjoPayPaymentState extends State<ShurjoPayPayment> {
                           }
                         },
                         child: Text(
-                          'Submit',
+                          'Confirm Your Subscription',
                           style: TextStyle(fontSize: 18.0, color: Colors.white),
                         ),
                         style: ElevatedButton.styleFrom(
