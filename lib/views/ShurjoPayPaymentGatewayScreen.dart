@@ -23,6 +23,7 @@ class ShurjoPayPayment extends StatefulWidget {
 }
 
 class _ShurjoPayPaymentState extends State<ShurjoPayPayment> {
+  ShurjoPay shurjoPay = ShurjoPay();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   TextEditingController _nameController = TextEditingController();
@@ -35,7 +36,6 @@ class _ShurjoPayPaymentState extends State<ShurjoPayPayment> {
   int? postalCode;
   String? userId;
   String? orderId;
-  ShurjoPay shurjoPay = ShurjoPay();
 
   @override
   void initState() {
@@ -101,15 +101,54 @@ class _ShurjoPayPaymentState extends State<ShurjoPayPayment> {
     }
   }
 
+  storeOrderId(String givenOrderId) async {
+    final response =
+        await post(Uri.parse("$SERVER_ADDRESS/api/store_order_id"), body: {
+      'order_id': givenOrderId,
+      'guide_id': userId,
+    });
+    if (response.statusCode == 200) {
+      final jsonResponse = jsonDecode(response.body);
+      if (jsonResponse['message'] == "Order ID Info created successfully") {
+        print("OrderId Stored Successfully");
+      } else {
+        print(jsonResponse['message']);
+      }
+    } else {
+      print("Api is not called properly");
+    }
+  }
+
+  storeMembershipDetails() async {
+    final response = await post(
+        Uri.parse("$SERVER_ADDRESS/api/store_member_details"),
+        body: {
+          'guide_id': userId,
+          'month': 1.toString(),
+          'amount': widget.amount.toString(),
+        });
+
+    if (response.statusCode == 200) {
+      final jsonResponse = jsonDecode(response.body);
+      if (jsonResponse['message'] == "Membership detail created successfully") {
+        print("Member Details stored successfully!");
+      } else {
+        print("Something went wrong!");
+      }
+    } else {
+      print("Api did not call properly!");
+    }
+  }
+
   ShurjopayConfigs shurjopayConfigs = ShurjopayConfigs(
-    // prefix: "MT",
-    // userName: "smartlab",
-    // password: "smarsnfev#&#tjtw",
-    // clientIP: "127.0.0.1",
-    prefix: "sp",
-    userName: "sp_sandbox",
-    password: "pyyk97hu&6u6",
+    prefix: "MT",
+    userName: "smartlab",
+    password: "smarsnfev#&#tjtw",
     clientIP: "127.0.0.1",
+    // prefix: "NOK",
+    // userName: "sp_sandbox",
+    // password: "pyyk97hu&6u6",
+    // clientIP: "127.0.0.1",
   );
 
   ShurjopayResponseModel shurjopayResponseModel = ShurjopayResponseModel();
@@ -285,22 +324,27 @@ class _ShurjoPayPaymentState extends State<ShurjoPayPayment> {
                               configs: shurjopayConfigs,
                               currency: "BDT",
                               amount: widget.amount,
-                              orderID: "sp1ab2c3d4",
+                              orderID: orderId!,
                               discountAmount: 0,
                               discountPercentage: 0,
                               customerName: name!,
+                              // customerName: "Hello",
                               customerPhoneNumber: phoneNo.toString(),
+                              // customerPhoneNumber: "01628734916",
                               customerAddress: address,
+                              // customerAddress: "customer address",
                               customerCity: city!,
+                              // customerCity: "customer city",
                               customerPostcode: postalCode.toString(),
+                              // customerPostcode: "1212",
                               // Live: https://www.engine.shurjopayment.com/return_url
                               returnURL:
-                                  // "https://www.engine.shurjopayment.com/return_url",
-                                  "https://www.sandbox.shurjopayment.com/return_url",
+                                  "https://www.engine.shurjopayment.com/return_url",
+                              // "https://www.sandbox.shurjopayment.com/return_url",
                               // Live: https://www.engine.shurjopayment.com/cancel_url
                               cancelURL:
-                                  // "https://www.engine.shurjopayment.com/cancel_url",
-                                  "https://www.sandbox.shurjopayment.com/cancel_url",
+                                  "https://www.engine.shurjopayment.com/cancel_url",
+                              // "https://www.sandbox.shurjopayment.com/cancel_url",
                             );
 
                             shurjopayResponseModel =
@@ -327,6 +371,13 @@ class _ShurjoPayPaymentState extends State<ShurjoPayPayment> {
                                 if (shurjopayVerificationModel.spCode ==
                                     "1000") {
                                   print("Payment Varified");
+                                  print(
+                                      "This is shurjopay orderId from verification Model: ${shurjopayVerificationModel.orderId}");
+                                  storeOrderId(
+                                      shurjopayVerificationModel.orderId!);
+                                  storeMembershipDetails();
+                                  print(shurjopayVerificationModel
+                                      .customerOrderId);
                                   // _nameController.clear();
                                   // _addressController.clear();
                                   // _phoneNumberController.clear();
