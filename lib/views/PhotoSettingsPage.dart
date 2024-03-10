@@ -51,7 +51,14 @@ class PhotoSettingsPage extends StatefulWidget {
 }
 
 class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
-  late File _pickedImage;
+  File _pickedImage1 = File('');
+  File _pickedImage2 = File('');
+  File _pickedImage3 = File('');
+  File _pickedImage4 = File('');
+  File _pickedImage5 = File('');
+  // Provide a default image path if needed
+
+  //late File _pickedImage;
   late TextEditingController _controller;
   String enteredValue = '';
   bool isValueChanged = false;
@@ -174,7 +181,7 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                                                 source: ImageSource.camera);
                                         if (pickedFile != null) {
                                           setState(() {
-                                            _pickedImage =
+                                            _pickedImage1 =
                                                 File(pickedFile.path);
                                           });
                                           // Handle the picked image file
@@ -196,32 +203,37 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                                             .getImage(
                                                 source: ImageSource.gallery);
                                         if (pickedFile != null) {
-                                          setState(() {
-                                            _pickedImage =
-                                                File(pickedFile.path);
-                                          });
-                                          // Handle the picked image file
                                           print(
                                               "Image selected: ${pickedFile.path}");
 
-                                          // Set the picked image file to a variable
                                           File imageFile =
                                               File(pickedFile.path);
 
+                                          setState(() {
+                                            _pickedImage1 = imageFile;
+                                          });
+                                          // Handle the picked image file
+                                          // print(
+                                          //     "Image selected: ${pickedFile.path}");
+
+                                          // Set the picked image file to a variable
+                                          // File imageFile =
+                                          //     File(pickedFile.path);
+
                                           // Show the picked image on UI using Image.file widget
                                           // Example usage within a container:
-                                          Container(
-                                            width: 90,
-                                            height: 90,
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  color: Colors.grey),
-                                            ),
-                                            child: Image.file(
-                                              imageFile,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          );
+                                          // Container(
+                                          //   width: 90,
+                                          //   height: 90,
+                                          //   decoration: BoxDecoration(
+                                          //     border: Border.all(
+                                          //         color: Colors.grey),
+                                          //   ),
+                                          //   child: Image.file(
+                                          //     _pickedImage1,
+                                          //     fit: BoxFit.cover,
+                                          //   ),
+                                          // );
                                         } // Close the dialog
                                       },
                                     ),
@@ -242,24 +254,30 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                           border: Border.all(
                               color: Colors.grey), // Optional border decoration
                         ),
-                        child: enteredValue.isNotEmpty
-                            ? Image.network(
-                                enteredValue,
+                        child: _pickedImage1 != null
+                            ? Image.file(
+                                _pickedImage1,
                                 fit: BoxFit.cover,
                               )
-                            : widget.photos.isNotEmpty
-                                ? Image.network(
-                                    widget.photos,
-                                    fit: BoxFit.cover,
-                                  )
-                                : Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(Icons.camera_alt),
-                                      Text("Add Photo"),
-                                    ],
-                                  ),
-                        // Placeholder(), // Placeholder image if no image is set
+                            //     : Placeholder(),
+                            // child: enteredValue.isNotEmpty
+                            //     ? Image.network(
+                            //         enteredValue,
+                            //         fit: BoxFit.cover,
+                            //       )
+                            // : widget.photos.isNotEmpty
+                            //     ? Image.file(
+                            //         widget.photos as File,
+                            //         fit: BoxFit.cover,
+                            //       )
+                            : Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.camera_alt),
+                                  Text("Add Photo"),
+                                ],
+                              ),
+                        //: Placeholder(), // Placeholder image if no image is set
                       ),
                     ),
                   ),
@@ -288,10 +306,19 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                                               .getImage(
                                                   source: ImageSource.camera);
                                           if (pickedFile != null) {
+                                            setState(() {
+                                              _pickedImage2 =
+                                                  File(pickedFile.path);
+                                            });
                                             // Handle the picked image file
                                             print(
                                                 "Image taken: ${pickedFile.path}");
-                                          } // Close the dialog
+                                          }
+                                          // if (pickedFile != null) {
+                                          //   // Handle the picked image file
+                                          //   print(
+                                          //       "Image taken: ${pickedFile.path}");
+                                          // } // Close the dialog
                                         },
                                       ),
                                       Padding(
@@ -306,14 +333,25 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                                           final pickedFile = await ImagePicker()
                                               .getImage(
                                                   source: ImageSource.gallery);
+
                                           if (pickedFile != null) {
-                                            // Handle the picked image file
                                             print(
                                                 "Image selected: ${pickedFile.path}");
 
-                                            // Set the picked image file to a variable
                                             File imageFile =
                                                 File(pickedFile.path);
+
+                                            setState(() {
+                                              _pickedImage2 = imageFile;
+                                            });
+                                            // if (pickedFile != null) {
+                                            //   // Handle the picked image file
+                                            //   print(
+                                            //       "Image selected: ${pickedFile.path}");
+
+                                            //   // Set the picked image file to a variable
+                                            //   File imageFile =
+                                            //       File(pickedFile.path);
 
                                             // Show the picked image on UI using Image.file widget
                                             // Example usage within a container:
@@ -325,7 +363,7 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                                                     color: Colors.grey),
                                               ),
                                               child: Image.file(
-                                                imageFile,
+                                                _pickedImage2,
                                                 fit: BoxFit.cover,
                                               ),
                                             );
@@ -350,24 +388,28 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                               color: Colors.grey,
                             ), // Optional border decoration
                           ),
-                          child: enteredValue.isNotEmpty
-                              ? Image.network(
-                                  enteredValue,
+                          child: _pickedImage2 != null
+                              ? Image.file(
+                                  _pickedImage2,
                                   fit: BoxFit.cover,
                                 )
-                              : widget.photos.isNotEmpty
-                                  ? Image.network(
-                                      widget.photos,
-                                      fit: BoxFit.cover,
-                                    )
-                                  : Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Icon(Icons.camera_alt),
-                                        Text("Add Photo"),
-                                      ],
-                                    ),
+                              // child: enteredValue.isNotEmpty
+                              //     ? Image.network(
+                              //         enteredValue,
+                              //         fit: BoxFit.cover,
+                              //       )
+                              // : widget.photos.isNotEmpty
+                              //     ? Image.file(
+                              //         widget.photos as File,
+                              //         fit: BoxFit.cover,
+                              //       )
+                              : Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.camera_alt),
+                                    Text("Add Photo"),
+                                  ],
+                                ),
                           // : Placeholder(), // Placeholder image if no image is set
                         ),
                       ),
@@ -394,10 +436,19 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                                               .getImage(
                                                   source: ImageSource.camera);
                                           if (pickedFile != null) {
+                                            setState(() {
+                                              _pickedImage3 =
+                                                  File(pickedFile.path);
+                                            });
                                             // Handle the picked image file
                                             print(
                                                 "Image taken: ${pickedFile.path}");
-                                          } // Close the dialog
+                                          }
+                                          // if (pickedFile != null) {
+                                          //   // Handle the picked image file
+                                          //   print(
+                                          //       "Image taken: ${pickedFile.path}");
+                                          // } // Close the dialog
                                         },
                                       ),
                                       Padding(
@@ -413,13 +464,23 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                                               .getImage(
                                                   source: ImageSource.gallery);
                                           if (pickedFile != null) {
-                                            // Handle the picked image file
                                             print(
                                                 "Image selected: ${pickedFile.path}");
 
-                                            // Set the picked image file to a variable
                                             File imageFile =
                                                 File(pickedFile.path);
+
+                                            setState(() {
+                                              _pickedImage3 = imageFile;
+                                            });
+                                            // if (pickedFile != null) {
+                                            //   // Handle the picked image file
+                                            //   print(
+                                            //       "Image selected: ${pickedFile.path}");
+
+                                            //   // Set the picked image file to a variable
+                                            //   File imageFile =
+                                            //       File(pickedFile.path);
 
                                             // Show the picked image on UI using Image.file widget
                                             // Example usage within a container:
@@ -431,7 +492,7 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                                                     color: Colors.grey),
                                               ),
                                               child: Image.file(
-                                                imageFile,
+                                                _pickedImage3,
                                                 fit: BoxFit.cover,
                                               ),
                                             );
@@ -456,24 +517,28 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                                 color:
                                     Colors.grey), // Optional border decoration
                           ),
-                          child: enteredValue.isNotEmpty
-                              ? Image.network(
-                                  enteredValue,
+                          child: _pickedImage3 != null
+                              ? Image.file(
+                                  _pickedImage3,
                                   fit: BoxFit.cover,
                                 )
-                              : widget.photos.isNotEmpty
-                                  ? Image.network(
-                                      widget.photos,
-                                      fit: BoxFit.cover,
-                                    )
-                                  : Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Icon(Icons.camera_alt),
-                                        Text("Add Photo"),
-                                      ],
-                                    ),
+                              // child: enteredValue.isNotEmpty
+                              //     ? Image.network(
+                              //         enteredValue,
+                              //         fit: BoxFit.cover,
+                              //       )
+                              // : widget.photos.isNotEmpty
+                              //     ? Image.file(
+                              //         widget.photos as File,
+                              //         fit: BoxFit.cover,
+                              //       )
+                              : Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.camera_alt),
+                                    Text("Add Photo"),
+                                  ],
+                                ),
                           //: Placeholder(), // Placeholder image if no image is set
                         ),
                       ),
@@ -504,10 +569,19 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                                               .getImage(
                                                   source: ImageSource.camera);
                                           if (pickedFile != null) {
+                                            setState(() {
+                                              _pickedImage4 =
+                                                  File(pickedFile.path);
+                                            });
                                             // Handle the picked image file
                                             print(
                                                 "Image taken: ${pickedFile.path}");
-                                          } // Close the dialog
+                                          }
+                                          // if (pickedFile != null) {
+                                          //   // Handle the picked image file
+                                          //   print(
+                                          //       "Image taken: ${pickedFile.path}");
+                                          // } // Close the dialog
                                         },
                                       ),
                                       Padding(
@@ -523,13 +597,23 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                                               .getImage(
                                                   source: ImageSource.gallery);
                                           if (pickedFile != null) {
-                                            // Handle the picked image file
                                             print(
                                                 "Image selected: ${pickedFile.path}");
 
-                                            // Set the picked image file to a variable
                                             File imageFile =
                                                 File(pickedFile.path);
+
+                                            setState(() {
+                                              _pickedImage4 = imageFile;
+                                            });
+                                            // if (pickedFile != null) {
+                                            //   // Handle the picked image file
+                                            //   print(
+                                            //       "Image selected: ${pickedFile.path}");
+
+                                            //   // Set the picked image file to a variable
+                                            //   File imageFile =
+                                            //       File(pickedFile.path);
 
                                             // Show the picked image on UI using Image.file widget
                                             // Example usage within a container:
@@ -541,7 +625,7 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                                                     color: Colors.grey),
                                               ),
                                               child: Image.file(
-                                                imageFile,
+                                                _pickedImage4,
                                                 fit: BoxFit.cover,
                                               ),
                                             );
@@ -566,24 +650,28 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                               color: Colors.grey,
                             ), // Optional border decoration
                           ),
-                          child: enteredValue.isNotEmpty
-                              ? Image.network(
-                                  enteredValue,
+                          child: _pickedImage4 != null
+                              ? Image.file(
+                                  _pickedImage4,
                                   fit: BoxFit.cover,
                                 )
-                              : widget.photos.isNotEmpty
-                                  ? Image.network(
-                                      widget.photos,
-                                      fit: BoxFit.cover,
-                                    )
-                                  : Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Icon(Icons.camera_alt),
-                                        Text("Add Photo"),
-                                      ],
-                                    ),
+                              // child: enteredValue.isNotEmpty
+                              //     ? Image.network(
+                              //         enteredValue,
+                              //         fit: BoxFit.cover,
+                              //       )
+                              // : widget.photos.isNotEmpty
+                              //     ? Image.file(
+                              //         widget.photos as File,
+                              //         fit: BoxFit.cover,
+                              //       )
+                              : Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.camera_alt),
+                                    Text("Add Photo"),
+                                  ],
+                                ),
                           // : Placeholder(), // Placeholder image if no image is set
                         ),
                       ),
@@ -610,10 +698,19 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                                               .getImage(
                                                   source: ImageSource.camera);
                                           if (pickedFile != null) {
+                                            setState(() {
+                                              _pickedImage5 =
+                                                  File(pickedFile.path);
+                                            });
                                             // Handle the picked image file
                                             print(
                                                 "Image taken: ${pickedFile.path}");
-                                          } // Close the dialog
+                                          }
+                                          // if (pickedFile != null) {
+                                          //   // Handle the picked image file
+                                          //   print(
+                                          //       "Image taken: ${pickedFile.path}");
+                                          // } // Close the dialog
                                         },
                                       ),
                                       Padding(
@@ -629,13 +726,23 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                                               .getImage(
                                                   source: ImageSource.gallery);
                                           if (pickedFile != null) {
-                                            // Handle the picked image file
                                             print(
                                                 "Image selected: ${pickedFile.path}");
 
-                                            // Set the picked image file to a variable
                                             File imageFile =
                                                 File(pickedFile.path);
+
+                                            setState(() {
+                                              _pickedImage5 = imageFile;
+                                            });
+                                            // if (pickedFile != null) {
+                                            //   // Handle the picked image file
+                                            //   print(
+                                            //       "Image selected: ${pickedFile.path}");
+
+                                            //   // Set the picked image file to a variable
+                                            //   File imageFile =
+                                            //       File(pickedFile.path);
 
                                             // Show the picked image on UI using Image.file widget
                                             // Example usage within a container:
@@ -647,7 +754,7 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                                                     color: Colors.grey),
                                               ),
                                               child: Image.file(
-                                                imageFile,
+                                                _pickedImage5,
                                                 fit: BoxFit.cover,
                                               ),
                                             );
@@ -672,24 +779,28 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                                 color:
                                     Colors.grey), // Optional border decoration
                           ),
-                          child: enteredValue.isNotEmpty
-                              ? Image.network(
-                                  enteredValue,
+                          child: _pickedImage5 != null
+                              ? Image.file(
+                                  _pickedImage5,
                                   fit: BoxFit.cover,
                                 )
-                              : widget.photos.isNotEmpty
-                                  ? Image.network(
-                                      widget.photos,
-                                      fit: BoxFit.cover,
-                                    )
-                                  : Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Icon(Icons.camera_alt),
-                                        Text("Add Photo"),
-                                      ],
-                                    ),
+                              // child: enteredValue.isNotEmpty
+                              //     ? Image.network(
+                              //         enteredValue,
+                              //         fit: BoxFit.cover,
+                              //       )
+                              // : widget.photos.isNotEmpty
+                              //     ? Image.file(
+                              //         widget.photos as File,
+                              //         fit: BoxFit.cover,
+                              //       )
+                              : Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.camera_alt),
+                                    Text("Add Photo"),
+                                  ],
+                                ),
                           // : Placeholder(), // Placeholder image if no image is set
                         ),
                       ),
