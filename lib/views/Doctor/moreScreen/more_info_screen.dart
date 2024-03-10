@@ -498,6 +498,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
   bool isAppointmentAvailable = false;
   String? doctorId;
   bool isErrorInLoading = false;
+  bool isMember = false;
 
   // List<String> currencies = ['USD', 'EUR', 'GBP', 'JPY', 'CAD'];
   String selectedCurrency = '';
@@ -639,6 +640,21 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
     }
   }
 
+  checkIsMember() async {
+    final response = await get(
+        Uri.parse("$SERVER_ADDRESS/api/check_membership?id=${doctorId}"));
+    if (response.statusCode == 200) {
+      final jsonResponse = jsonDecode(response.body);
+      if (jsonResponse['is_member'] == 0) {
+        isMember = false;
+      } else {
+        isMember = true;
+      }
+    } else {
+      print("Api is not call properly");
+    }
+  }
+
   @override
   void initState() {
     // nativeAdController.setNonPersonalizedAds(true);
@@ -656,6 +672,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
         future = fetchDoctorAppointment();
         future2 = fetchDoctorDetails();
         getCurrency();
+        checkIsMember();
       });
     });
   }
@@ -1075,55 +1092,74 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
           ),
 
           SizedBox(
-            height: 10,
+            height: 5,
           ),
 
-          ///--------- subscription ------------
-          // GestureDetector(
-          //   onTap: () {
-          //     Navigator.push(
-          //       context,
-          //       // MaterialPageRoute(builder: (context) => SubScriptionScreen()),
-          //       MaterialPageRoute(builder: (context) => SendOfferScreen()),
-          //     );
-          //   },
-          //   child: Container(
-          //     height: 50,
-          //     margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
-          //     decoration: BoxDecoration(
-          //         color: Color.fromARGB(255, 243, 103, 9),
-          //         borderRadius: BorderRadius.circular(10)),
-          //     child: Container(
-          //       margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
-          //       child: Row(
-          //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //         children: [
-          //           Text(
-          //             MEMBERSHIP,
-          //             style: Theme.of(context).textTheme.subtitle1?.copyWith(
-          //                   color: Colors.white,
-          //                 ),
-          //           ),
-          //           Icon(
-          //             Icons.arrow_forward_ios,
-          //             size: 20,
-          //             color: Colors.white,
-          //           ),
-          //           // TextButton(onPressed: (){
-          //           //   Navigator.push(context,
-          //           //     MaterialPageRoute(builder: (context) => DoctorAllAppointments()),
-          //           //   );
-          //           // }, child: Text(SEE_ALL,
-          //           //     style: Theme.of(context).textTheme.bodyText2!.apply(
-          //           //       color: Theme.of(context).hintColor,
-          //           //       fontWeightDelta: 5,
-          //           //     )
-          //           // ),)
-          //         ],
-          //       ),
-          //     ),
-          //   ),
-          // ),
+          // /--------- subscription ------------
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ChoosePlan()),
+              );
+            },
+            child: Container(
+              height: 50,
+              margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
+              decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 243, 103, 9),
+                  borderRadius: BorderRadius.circular(10)),
+              child: Container(
+                margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      MEMBERSHIP,
+                      style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                            color: Colors.white,
+                          ),
+                    ),
+                    Container(
+                        child: isMember
+                            ? Text(
+                                "Member",
+                                style: GoogleFonts.robotoCondensed(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              )
+                            : Text(
+                                "Waiting for payment!",
+                                style: GoogleFonts.robotoCondensed(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              )),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      size: 20,
+                      color: Colors.white,
+                    ),
+                    // TextButton(
+                    //   onPressed: () {
+                    //     Navigator.push(
+                    //       context,
+                    //       MaterialPageRoute(
+                    //           builder: (context) => DoctorAllAppointments()),
+                    //     );
+                    //   },
+                    //   child: Text(SEE_ALL,
+                    //       style: Theme.of(context).textTheme.bodyText2!.apply(
+                    //             color: Theme.of(context).hintColor,
+                    //             fontWeightDelta: 5,
+                    //           )),
+                    // )
+                  ],
+                ),
+              ),
+            ),
+          ),
 
           SizedBox(
             height: 15,

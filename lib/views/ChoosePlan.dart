@@ -1,39 +1,14 @@
-import 'dart:convert';
-import 'package:appcode3/views/BookingScreen.dart';
-import 'package:appcode3/views/Doctor/DoctorProfile.dart';
-import 'package:appcode3/views/Doctor/LogoutScreen.dart';
-import 'package:appcode3/views/Doctor/loginAsDoctor.dart';
-import 'package:appcode3/views/SendOfferScreen.dart';
-import 'package:appcode3/views/SendOffersScreen.dart';
 import 'package:appcode3/views/ShurjoPayPaymentGatewayScreen.dart';
-import 'package:connectycube_sdk/connectycube_chat.dart';
 
-import 'package:appcode3/en.dart';
-import 'package:appcode3/main.dart';
-import 'package:appcode3/modals/DoctorAppointmentClass.dart';
-import 'package:appcode3/modals/DoctorPastAppointmentsClass.dart';
-import 'package:appcode3/views/Doctor/DoctorChatListScreen.dart';
-import 'package:appcode3/views/Doctor/DoctorAllAppointments.dart';
-import 'package:appcode3/views/Doctor/DoctorAppointmentDetails.dart';
-import 'package:appcode3/views/Doctor/DoctorProfileWithRating.dart';
-import 'package:appcode3/views/Doctor/moreScreen/change_password_screen.dart';
-import 'package:appcode3/views/Doctor/moreScreen/income_report.dart';
-import 'package:appcode3/views/Doctor/moreScreen/subscription_screen.dart';
-
-import 'package:cached_network_image/cached_network_image.dart';
 //import 'package:facebook_audience_network/ad/ad_native.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/style.dart';
 //import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ChoosePlan extends StatefulWidget {
-  //const ChoosePlan({super.key});
-  final String id;
-  final String guideName;
+  const ChoosePlan({super.key});
 
-  ChoosePlan(this.id, this.guideName);
+  // ChoosePlan(this.id, this.guideName);
   //ChoosePlan(this.id, String s);
 
   @override
@@ -41,11 +16,7 @@ class ChoosePlan extends StatefulWidget {
 }
 
 class _ChoosePlanState extends State<ChoosePlan> {
-  //PageController _pageController = PageController(initialPage: 0);
-  // List<bool> isSelected = [false, true];
   bool isLimitedSelected = false;
-  // bool isExtendedSelected = true;
-  // String? guideName;
   double amount = 1;
 
   get isFadeOut => true;
@@ -78,97 +49,6 @@ class _ChoosePlanState extends State<ChoosePlan> {
             Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                // children: [
-                //   Container(
-                //     child: ToggleButtons(
-                //       children: [
-                //         Container(
-                //           constraints: BoxConstraints(minWidth: 180),
-                //           decoration: BoxDecoration(
-                //             borderRadius: BorderRadius.circular(10),
-                //             //padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20) // Adjust the radius as needed
-                //             //border:
-                //             //Border.all(color: Colors.black), // Border color
-                //           ),
-                //           alignment: Alignment.center,
-                //           child: Text(
-                //             'Limited',
-                //             style: GoogleFonts.robotoCondensed(
-                //               fontSize: 20,
-                //               fontWeight: FontWeight.bold,
-                //               //backgroundColor: Colors.white,
-                //               //color: Colors.black,
-                //               color: isSelected[0] ? Colors.grey : Colors.black,
-                //             ),
-                //           ),
-                //         ),
-                //         Container(
-                //           constraints: BoxConstraints(
-                //             minWidth: 180,
-                //           ),
-                //           decoration: BoxDecoration(
-                //             borderRadius: BorderRadius.circular(
-                //                 10), // Adjust the radius as needed
-                //             //border:
-                //             //  Border.all(color: Colors.black), // Border color
-                //           ),
-                //           alignment: Alignment.center,
-                //           child: Text(
-                //             'Extended',
-                //             style: GoogleFonts.robotoCondensed(
-                //               fontSize: 20,
-                //               fontWeight: FontWeight.bold,
-                //               //backgroundColor: Colors.white,
-                //               //color: Colors.black,
-                //               color: isSelected[1] ? Colors.grey : Colors.black,
-                //             ),
-                //           ),
-                //         ),
-                //       ],
-                //       isSelected: [false, true],
-                //       onPressed: (int index) {
-                //         setState(
-                //           () {
-                //             //isSelected = List.generate(
-                //             // isSelected.length, (i) => i == index);
-                //             //_pageController.animateToPage(
-                //             //index,
-                //             //duration: Duration(milliseconds: 300),
-                //             //curve: Curves.easeInOut,
-                //             //);
-                //             // Toggle the selected state for the pressed button
-                //             isSelected[index] = !isSelected[index];
-                //           },
-                //         );
-                //       },
-                //       hoverColor: Colors.grey[300],
-                //       // PageView(
-                //       //   controller: _pageController,
-                //       //   onPageChanged: (index) {
-                //       //     setState(() {
-                //       //       isSelected = List.generate(
-                //       //           isSelected.length, (i) => i == index);
-                //       //     });
-                //       //   },
-                //       //   children: [
-                //       //     Container(
-                //       //       color: Colors.green,
-                //       //       child: Center(
-                //       //         child: Text('Limited View'),
-                //       //       ),
-                //       //     ),
-                //       //     // View for 'Extended'
-                //       //     Container(
-                //       //       color: Colors.blue,
-                //       //       child: Center(
-                //       //         child: Text('Extended View'),
-                //       //       ),
-                //       //     ),
-                //       //   ],
-                //       // ),
-                //     ),
-                //   ),
-                // ],
                 children: [
                   ElevatedButton(
                       onPressed: () {
@@ -764,12 +644,14 @@ class _ChoosePlanState extends State<ChoosePlan> {
 
             ElevatedButton(
               onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          // BookingScreen(widget.id, widget.guideName),
-                          ShurjoPayPayment(widget.id, amount)),
-                );
+                !isLimitedSelected
+                    ? Navigator.of(context).push(
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                // BookingScreen(widget.id, widget.guideName),
+                                ShurjoPayPayment(amount)),
+                      )
+                    : Navigator.pop(context);
               },
               child: Text('Continue'),
               style: ElevatedButton.styleFrom(
