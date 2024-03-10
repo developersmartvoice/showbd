@@ -481,6 +481,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class MoreInfoScreen extends StatefulWidget {
+  //String id;
+
+  //MoreInfoScreen(this.id);
+
   @override
   _MoreInfoScreenState createState() => _MoreInfoScreenState();
 }
@@ -488,6 +492,7 @@ class MoreInfoScreen extends StatefulWidget {
 class _MoreInfoScreenState extends State<MoreInfoScreen> {
   DoctorPastAppointmentsClass? doctorAppointmentsClass;
   DoctorProfileWithRating? doctorProfileWithRating;
+  String? guideName;
   Future? future;
   Future? future2;
   bool isAppointmentAvailable = false;
@@ -1541,7 +1546,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
           // ),
 
           SizedBox(
-            height: 15,
+            height: 5,
           ),
 
           //Divider(
@@ -1621,6 +1626,43 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
           //           //       fontWeightDelta: 5,
           //           //     )
           //           // ),)
+          //         ],
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          // GestureDetector(
+          //   onTap: () {
+          //     // Navigator.push(
+          //     //   context,
+          //     //   MaterialPageRoute(
+          //     //       builder: (context) => ChoosePlan(widget.id, guideName!)),
+          //     // );
+          //   },
+          //   child: Container(
+          //     height: 50,
+          //     margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
+          //     decoration: BoxDecoration(
+          //         color: Color.fromARGB(255, 243, 103, 9),
+          //         borderRadius: BorderRadius.circular(10)),
+          //     child: Container(
+          //       margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
+          //       child: Row(
+          //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //         children: [
+          //           Text(
+          //             MEMBERSHIP,
+          //             //style: Theme.of(context).textTheme.subtitle1,
+          //             style: Theme.of(context).textTheme.subtitle1?.copyWith(
+          //                   color:
+          //                       Colors.white, // Replace with your desired color
+          //                 ),
+          //           ),
+          //           Icon(
+          //             Icons.arrow_forward_ios,
+          //             size: 20,
+          //             color: Colors.white,
+          //           ),
           //         ],
           //       ),
           //     ),
