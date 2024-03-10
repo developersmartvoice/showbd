@@ -39,6 +39,8 @@ class _DetailsPageState extends State<DetailsPage> {
   String? img;
   List<String>? imgs;
   int currentPage = 0;
+  String? guideId;
+  bool isMember = false;
 
   // String? get consultationFee => null;
 
@@ -51,8 +53,25 @@ class _DetailsPageState extends State<DetailsPage> {
     SharedPreferences.getInstance().then((pref) {
       setState(() {
         isLoggedIn = pref.getBool("isLoggedInAsDoctor") ?? false;
+        guideId = pref.getString("userId");
+        checkIsMember();
       });
     });
+  }
+
+  checkIsMember() async {
+    final response = await get(
+        Uri.parse("$SERVER_ADDRESS/api/check_membership?id=${guideId}"));
+    if (response.statusCode == 200) {
+      final jsonResponse = jsonDecode(response.body);
+      if (jsonResponse['is_member'] == 0) {
+        isMember = false;
+      } else {
+        isMember = true;
+      }
+    } else {
+      print("Api is not call properly");
+    }
   }
 
   fetchDoctorDetails() async {
@@ -618,13 +637,18 @@ class _DetailsPageState extends State<DetailsPage> {
                         Expanded(
                           child: ElevatedButton.icon(
                             onPressed: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        ChoosePlan(widget.id, guideName!)
-                                    //BookingScreen(widget.id, guideName!),
-                                    ),
-                              );
+                              !isMember
+                                  ? Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                          builder: (context) => ChoosePlan()
+                                          //BookingScreen(widget.id, guideName!),
+                                          ),
+                                    )
+                                  : Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                          builder: (context) => BookingScreen(
+                                              widget.id, guideName!)),
+                                    );
                             },
                             icon: Icon(Icons.connect_without_contact_sharp),
                             label: Text("Contact"),

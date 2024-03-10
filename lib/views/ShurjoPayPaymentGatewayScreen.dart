@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:appcode3/main.dart';
+import 'package:appcode3/views/HomeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:random_string/random_string.dart';
@@ -15,9 +16,9 @@ import 'package:shurjopay/shurjopay.dart';
 // ignore: must_be_immutable
 class ShurjoPayPayment extends StatefulWidget {
   // const ShurjoPayPayment({Key? key}) : super(key: key);
-  String id;
+
   double amount;
-  ShurjoPayPayment(this.id, this.amount);
+  ShurjoPayPayment(this.amount);
   @override
   State<ShurjoPayPayment> createState() => _ShurjoPayPaymentState();
 }
@@ -57,6 +58,14 @@ class _ShurjoPayPaymentState extends State<ShurjoPayPayment> {
         print("Order Id is: $orderId");
       });
     });
+  }
+
+  setMembershipStatus() async {
+    final response =
+        await post(Uri.parse("$SERVER_ADDRESS/api/set_membership?id=$userId"));
+    if (response.statusCode == 200) {
+      print("Membership successfully");
+    }
   }
 
   getName() async {
@@ -288,26 +297,26 @@ class _ShurjoPayPaymentState extends State<ShurjoPayPayment> {
                           return null;
                         },
                       ),
-                      SizedBox(height: 20),
-                      TextFormField(
-                        controller: _postalCodeController,
-                        decoration: InputDecoration(
-                          labelText: 'Postal Code',
-                          border: OutlineInputBorder(),
-                        ),
-                        validator: (value) {
-                          if (value == null ||
-                              value.isEmpty ||
-                              (value.length != 4 && int.parse(value) < 0)) {
-                            return 'Please enter your postal code and length must be 4';
-                          } else {
-                            setState(() {
-                              postalCode = int.parse(value);
-                            });
-                          }
-                          return null;
-                        },
-                      ),
+                      // SizedBox(height: 20),
+                      // TextFormField(
+                      //   controller: _postalCodeController,
+                      //   decoration: InputDecoration(
+                      //     labelText: 'Postal Code',
+                      //     border: OutlineInputBorder(),
+                      //   ),
+                      //   validator: (value) {
+                      //     if (value == null ||
+                      //         value.isEmpty ||
+                      //         (value.length != 4 && int.parse(value) < 0)) {
+                      //       return 'Please enter your postal code and length must be 4';
+                      //     } else {
+                      //       setState(() {
+                      //         postalCode = int.parse(value);
+                      //       });
+                      //     }
+                      //     return null;
+                      //   },
+                      // ),
                       SizedBox(height: 20),
                       ElevatedButton(
                         onPressed: () async {
@@ -335,8 +344,8 @@ class _ShurjoPayPaymentState extends State<ShurjoPayPayment> {
                               // customerAddress: "customer address",
                               customerCity: city!,
                               // customerCity: "customer city",
-                              customerPostcode: postalCode.toString(),
-                              // customerPostcode: "1212",
+                              // customerPostcode: postalCode.toString(),
+                              customerPostcode: "1212",
                               // Live: https://www.engine.shurjopayment.com/return_url
                               returnURL:
                                   "https://www.engine.shurjopayment.com/return_url",
@@ -376,6 +385,7 @@ class _ShurjoPayPaymentState extends State<ShurjoPayPayment> {
                                   storeOrderId(
                                       shurjopayVerificationModel.orderId!);
                                   storeMembershipDetails();
+                                  setMembershipStatus();
                                   print(shurjopayVerificationModel
                                       .customerOrderId);
                                   // _nameController.clear();
@@ -383,6 +393,10 @@ class _ShurjoPayPaymentState extends State<ShurjoPayPayment> {
                                   // _phoneNumberController.clear();
                                   // _cityController.clear();
                                   // _postalCodeController.clear();
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => HomeScreen()));
                                 }
                               } catch (error) {
                                 print(error.toString());
