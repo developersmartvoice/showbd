@@ -3,6 +3,7 @@ import 'package:appcode3/views/CreateTrip.dart';
 import 'package:appcode3/views/EmailDetailsPage.dart';
 import 'package:appcode3/views/LocationSearchPageInfo.dart';
 import 'package:appcode3/views/NameSettingsPage.dart';
+import 'package:appcode3/views/PhotoSettingsPage.dart';
 import 'package:flutter/material.dart';
 
 import 'dart:convert';
@@ -53,6 +54,7 @@ class _GeneraLInfoState extends State<GeneraLInfo> {
   String name = '';
   String about_me = '';
   String location = '';
+  String photos = '';
 
   getName() async {
     final response = await get(
@@ -103,6 +105,22 @@ class _GeneraLInfoState extends State<GeneraLInfo> {
     }
   }
 
+  getPhotos() async {
+    final response = await get(
+        Uri.parse("$SERVER_ADDRESS/api/getPhotos?id=${widget.doctorId}"));
+    try {
+      if (response.statusCode == 200) {
+        final jsonResponse = jsonDecode(response.body);
+        setState(() {
+          photos = jsonResponse['photos'].toString();
+          print(photos);
+        });
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -110,6 +128,7 @@ class _GeneraLInfoState extends State<GeneraLInfo> {
     getName();
     getAboutMe();
     getCity();
+    getPhotos();
   }
 
   @override
@@ -159,7 +178,7 @@ class _GeneraLInfoState extends State<GeneraLInfo> {
           //   ),
           // ],
         ),
-        body: ContainerPage(widget.doctorId, name, about_me, location),
+        body: ContainerPage(widget.doctorId, name, about_me, location, photos),
       ),
     );
   }
@@ -169,17 +188,19 @@ class ContainerPage extends StatefulWidget {
   @override
   _ContainerPageState createState() => _ContainerPageState();
   final String id;
+  final String photos;
   final String name;
   final String aboutMe;
   final String city;
 
-  ContainerPage(this.id, this.name, this.aboutMe, this.city);
+  ContainerPage(this.id, this.name, this.aboutMe, this.city, this.photos);
 }
 
 class _ContainerPageState extends State<ContainerPage> {
   bool isNameStored = false;
   bool isAboutMeStored = false;
   bool isLocationStored = false;
+  bool isPhotoStored = false;
 
   @override
   void initState() {
@@ -204,6 +225,13 @@ class _ContainerPageState extends State<ContainerPage> {
     } else {
       print("location is not empty");
       isLocationStored = true;
+    }
+
+    if (widget.photos.isEmpty) {
+      isPhotoStored = false;
+    } else {
+      print("photos is not empty");
+      isPhotoStored = true;
     }
   }
 
@@ -479,6 +507,12 @@ class _ContainerPageState extends State<ContainerPage> {
                 color: Colors.white,
                 child: InkWell(
                   onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            PhotoSettingsPage(widget.id, widget.photos),
+                      ),
+                    );
                     // Navigator.of(context).push(
                     //   MaterialPageRoute(
                     //     builder: (context) =>
@@ -508,7 +542,8 @@ class _ContainerPageState extends State<ContainerPage> {
                             ),
                             child: Icon(
                               Icons.check,
-                              color: isNameStored ? Colors.green : Colors.white,
+                              color:
+                                  isPhotoStored ? Colors.green : Colors.white,
                               // color: Colors.white, // Color of the icon
                               size: 20.0, // Size of the icon
                             ),
