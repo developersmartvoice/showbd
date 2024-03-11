@@ -97,10 +97,12 @@ class _DetailsPageState extends State<DetailsPage> {
       // imgs?.addAll(doctorDetailsClass!.data!.images!);
       print(doctorDetailsClass!.data!.avgratting);
       print(doctorDetailsClass!.data!.images!);
-      print(doctorDetailsClass!.data!.services);
-      print(doctorDetailsClass!.data!.services![0]);
+      // print(doctorDetailsClass!.data!.services!);
+      // print(doctorDetailsClass!.data!.services![0]);
       // print(doctorDetailsClass!.data!.services![3]);
-      count = doctorDetailsClass!.data!.languages!.length;
+      count = doctorDetailsClass!.data!.languages != null
+          ? doctorDetailsClass!.data!.languages!.length
+          : 0;
       print(widget.id);
       setState(() {
         isLoading = false;
@@ -429,6 +431,7 @@ class _DetailsPageState extends State<DetailsPage> {
         Container(
           height: 300, // Adjust the height as needed
           child: Stack(
+            alignment: Alignment.topRight,
             children: [
               Container(
                 child: PageView.builder(
@@ -465,7 +468,7 @@ class _DetailsPageState extends State<DetailsPage> {
               ),
               Positioned(
                   top: 55,
-                  right: 15,
+                  // right: 15,
                   child: consultationFee(
                       doctorDetailsClass!.data!.consultationFee!)),
             ],
@@ -1099,12 +1102,8 @@ class _DetailsPageState extends State<DetailsPage> {
                                 Map<String, dynamic> serviceData =
                                     getServiceData(service);
 
-                                // Customize text size
-                                TextStyle textStyle = TextStyle(
-                                    fontSize: 12.0,
-                                    color: LIGHT_GREY_TEXT,
-                                    fontWeight: FontWeight
-                                        .w500); // Adjust the font size as needed
+                                // Customize text size`
+// Adjust the font size as needed
                                 // Customize ListTile height
                                 // double customListTileHeight = 0.0;
                                 // Create a widget to represent each service with an icon
@@ -1610,7 +1609,7 @@ class _DetailsPageState extends State<DetailsPage> {
 
 Widget consultationFee(String consultationFee) {
   return Container(
-    width: 60.0, // Fixed width
+    width: 80.0, // Fixed width
     height: 40.0, // Fixed height
     margin: EdgeInsets.only(top: 20),
     decoration: BoxDecoration(
@@ -1621,7 +1620,7 @@ Widget consultationFee(String consultationFee) {
         )),
     child: Center(
       child: Text(
-        "${CURRENCY.trim()}${consultationFee ?? NOT_SPECIFIED}",
+        '\$' + consultationFee + "/h",
         style: TextStyle(
           color: Colors.white,
           fontSize: 14.0,

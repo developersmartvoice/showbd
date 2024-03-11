@@ -1,25 +1,14 @@
 import 'dart:convert';
 
-import 'package:appcode3/VideoCall/utils/pref_util.dart';
 import 'package:appcode3/en.dart';
-// import 'package:appcode3/modals/DoctorDetailsClass.dart' as DetailsClass;
-// import 'package:appcode3/modals/DoctorDetailsClass.dart';
 import 'package:appcode3/modals/NearbyDoctorClass.dart';
-import 'package:appcode3/views/AllNearby.dart';
 import 'package:appcode3/views/DetailsPage.dart';
-import 'package:appcode3/views/MakeAppointment.dart';
-import 'package:appcode3/views/loginAsUser.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_native_admob/flutter_native_admob.dart';
-// import 'package:flutter_native_admob/native_admob_controller.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
-// import 'package:loadmore/loadmore.dart';
-// import 'package:paging/paging.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -38,6 +27,7 @@ NearbyDoctorsClass? nearbyDoctorsClass;
 
 // bool isScrollLocked = true;
 
+// ignore: must_be_immutable
 class HomeScreenNearby extends StatefulWidget {
   ScrollController scrollController;
 
@@ -63,7 +53,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print("Loadmore here 62");
+    // print("Loadmore here 62");
     _getLocationStart();
     SharedPreferences.getInstance().then((pref) {
       setState(() {
@@ -111,37 +101,9 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
               children: [
                 Column(
                   children: [
-                    // SizedBox(
-                    //   height: 5,
-                    // ),
                     nearByDoctors(),
                   ],
                 ),
-                // Padding(
-                //   padding: const EdgeInsets.fromLTRB(16, 0, 16, 10),
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //     children: [
-                //       Text(NEARBY_DOCTORS,
-                //           style: Theme.of(context)
-                //               .textTheme
-                //               .bodyText2!
-                //               .apply(fontWeightDelta: 3)),
-                //       TextButton(
-                //         onPressed: () {
-                //           Navigator.push(
-                //             context,
-                //             MaterialPageRoute(builder: (context) => AllNearby()),
-                //           );
-                //         },
-                //         child: Text(SEE_ALL,
-                //             style: Theme.of(context).textTheme.bodyText1!.apply(
-                //                   color: Theme.of(context).hintColor,
-                //                 )),
-                //       )
-                //     ],
-                //   ),
-                // ),
               ],
             ),
           );
@@ -264,12 +226,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                     data.aboutme,
                     data.avgrating,
                     data.totalreview,
-                    data.images
-
-                    // data1.aboutus,
-                    // data1.totalReview,
-                    // data1.avgratting
-                    );
+                    data.images);
               },
             ),
 
@@ -334,38 +291,6 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                   child: Stack(
                     alignment: Alignment.topRight,
                     children: [
-                      // ClipRRect(
-                      //   borderRadius: BorderRadius.only(
-                      //     topLeft: Radius.circular(8),
-                      //     topRight: Radius.circular(8),
-                      //   ),
-                      //   child: CachedNetworkImage(
-                      //     imageUrl: img,
-                      //     fit: BoxFit.cover,
-                      //     width: double.infinity,
-                      //     placeholder: (context, url) => Container(
-                      //       color: Theme.of(context).primaryColorLight,
-                      //       child: Center(
-                      //         child: Image.asset(
-                      //           "assets/homeScreenImages/user_unactive.png",
-                      //           height: 50,
-                      //           width: 50,
-                      //         ),
-                      //       ),
-                      //     ),
-                      //     errorWidget: (context, url, err) => Container(
-                      //       color: Theme.of(context).primaryColorLight,
-                      //       child: Center(
-                      //         child: Image.asset(
-                      //           "assets/homeScreenImages/user_unactive.png",
-                      //           height: 50,
-                      //           width: 50,
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
-
                       // -------------------------------------
 
                       CarouselSlider.builder(
