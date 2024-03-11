@@ -55,6 +55,9 @@ class _GeneraLInfoState extends State<GeneraLInfo> {
   String about_me = '';
   String location = '';
   String photos = '';
+  String imageUrl1 = '';
+  // String imageUrls = '';
+  List<String>? imageUrls;
 
   getName() async {
     final response = await get(
@@ -105,19 +108,61 @@ class _GeneraLInfoState extends State<GeneraLInfo> {
     }
   }
 
-  getPhotos() async {
+  // getPhotos() async {
+  //   final response = await get(
+  //       Uri.parse("$SERVER_ADDRESS/api/getPhotos?id=${widget.doctorId}"));
+  //   try {
+  //     if (response.statusCode == 200) {
+  //       final jsonResponse = jsonDecode(response.body);
+  //       setState(() {
+  //         photos = jsonResponse['photos'].toString();
+  //         print(photos);
+  //       });
+  //     }
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
+
+  getImage() async {
     final response = await get(
-        Uri.parse("$SERVER_ADDRESS/api/getPhotos?id=${widget.doctorId}"));
+        Uri.parse("$SERVER_ADDRESS/api/getImage?doctor_id=${widget.doctorId}"));
+
     try {
       if (response.statusCode == 200) {
         final jsonResponse = jsonDecode(response.body);
         setState(() {
-          photos = jsonResponse['photos'].toString();
-          print(photos);
+          imageUrl1 = jsonResponse['image_url'].toString();
+          print("Image downloaded and assigned: $imageUrl1");
         });
+      } else {
+        print("Failed to fetch image. Status code: ${response.statusCode}");
       }
     } catch (e) {
-      print(e);
+      print("Error fetching image: $e");
+    }
+  }
+
+  Future<void> getImages() async {
+    final Uri uri =
+        Uri.parse("$SERVER_ADDRESS/api/getImages?doctor_id=${widget.doctorId}");
+    final response = await get(uri);
+
+    try {
+      if (response.statusCode == 200) {
+        final jsonResponse = jsonDecode(response.body);
+        imageUrls = List<String>.from(jsonResponse['image_urls']);
+        setState(() {
+          imageUrls!.forEach((imageUrl) {
+            print("Image downloaded and assigned: $imageUrl");
+            // Here you can do whatever you want with the downloaded images
+          });
+        });
+      } else {
+        print("Failed to fetch images. Status code: ${response.statusCode}");
+      }
+    } catch (e) {
+      print("Error fetching images: $e");
     }
   }
 
@@ -128,7 +173,9 @@ class _GeneraLInfoState extends State<GeneraLInfo> {
     getName();
     getAboutMe();
     getCity();
-    getPhotos();
+    // getPhotos();
+    getImage();
+    getImages();
   }
 
   @override
@@ -157,28 +204,14 @@ class _GeneraLInfoState extends State<GeneraLInfo> {
               Navigator.of(context).pop();
             },
           ),
-          // actions: [
-          //   TextButton(
-          //     onPressed: () {
-          //       // Navigator.of(context).push(
-          //       //           MaterialPageRoute(
-          //       //             builder: (context) => DoctorChatListScreen(),
-          //       //           ),
-          //       //         );
-          //       // Add your button functionality here
-          //     },
-          //     child: Text(
-          //       'Save', // Text for the button
-          //       style: GoogleFonts.robotoCondensed(
-          //         fontSize: 23,
-          //         fontWeight: FontWeight.bold,
-          //         color: Colors.black, // Text color
-          //       ),
-          //     ),
-          //   ),
-          // ],
         ),
-        body: ContainerPage(widget.doctorId, name, about_me, location, photos),
+        body: imageUrls != null
+            ? ContainerPage(widget.doctorId, name, about_me, location, photos,
+                imageUrl1, imageUrls!)
+            : Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CircularProgressIndicator(),
+              ),
       ),
     );
   }
@@ -192,8 +225,12 @@ class ContainerPage extends StatefulWidget {
   final String name;
   final String aboutMe;
   final String city;
+  final String imageUrl1;
+  // final String imageUrls;
+  final List<String> imageUrls;
 
-  ContainerPage(this.id, this.name, this.aboutMe, this.city, this.photos);
+  ContainerPage(this.id, this.name, this.aboutMe, this.city, this.photos,
+      this.imageUrl1, this.imageUrls);
 }
 
 class _ContainerPageState extends State<ContainerPage> {
@@ -201,6 +238,7 @@ class _ContainerPageState extends State<ContainerPage> {
   bool isAboutMeStored = false;
   bool isLocationStored = false;
   bool isPhotoStored = false;
+  bool isImageStored = false;
 
   @override
   void initState() {
@@ -227,11 +265,17 @@ class _ContainerPageState extends State<ContainerPage> {
       isLocationStored = true;
     }
 
-    if (widget.photos.isEmpty) {
-      isPhotoStored = false;
+    // if (widget.photos.isEmpty) {
+    //   isPhotoStored = false;
+    // } else {
+    //   print("photos is not empty");
+    //   isPhotoStored = true;
+    // }
+    if (widget.imageUrl1.isEmpty) {
+      isImageStored = false;
     } else {
-      print("photos is not empty");
-      isPhotoStored = true;
+      print("imageUrl1 is not empty");
+      isImageStored = true;
     }
   }
 
@@ -509,8 +553,8 @@ class _ContainerPageState extends State<ContainerPage> {
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) =>
-                            PhotoSettingsPage(widget.id, widget.photos),
+                        builder: (context) => PhotoSettingsPage(
+                            widget.id, widget.imageUrl1, widget.imageUrls),
                       ),
                     );
                     // Navigator.of(context).push(
