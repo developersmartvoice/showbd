@@ -10,12 +10,14 @@ import 'package:appcode3/views/Doctor/loginAsDoctor.dart';
 import 'package:appcode3/views/GenderSettingsPage.dart';
 import 'package:appcode3/views/HourlyRate.dart';
 import 'package:appcode3/views/IwillShowYouSettingsPage.dart';
+import 'package:appcode3/views/LanguageNew.dart';
 import 'package:appcode3/views/LanguagesSettingsPage.dart';
 import 'package:appcode3/views/LocationSearchPageInfo.dart';
 import 'package:appcode3/views/MottoSettingsPage.dart';
 import 'package:appcode3/views/PhotoSettingsPage.dart';
 import 'package:appcode3/views/SendOfferScreen.dart';
 import 'package:appcode3/views/SendOffersScreen.dart';
+import 'package:appcode3/views/ServiceNew.dart';
 import 'package:appcode3/views/ServicesSettings.dart';
 import 'package:connectycube_sdk/connectycube_chat.dart';
 
@@ -55,6 +57,25 @@ class AboutHost extends StatefulWidget {
 }
 
 class _AboutHostState extends State<AboutHost> {
+  // List<String> selectedServices = [
+  //   'Translation & Interpretation',
+  //   'Pick up & Driving tours',
+  //   'Shopping',
+  //   'Nightlife & Bars',
+  //   'Food & Restaurants',
+  //   'Art & Museums',
+  //   'Sports & Recreation',
+  //   'History & Culture',
+  //   'Exploration & Sightseeing',
+  // ];
+  // List<String> selectedLanguages = [
+  //   'English',
+  //   'Bengali',
+  //   'Urdu',
+  //   'Spanish',
+  //   'French',
+  //   'Hindi'
+  // ];
   String motto = '';
   String iwillshowyou = '';
   String services = '';
@@ -390,6 +411,48 @@ class _ContainerPageState extends State<ContainerPage> {
 
   @override
   Widget build(BuildContext context) {
+    List<String> selectedServices = [
+      'Translation & Interpretation',
+      'Pick up & Driving tours',
+      'Shopping',
+      'Nightlife & Bars',
+      'Food & Restaurants',
+      'Art & Museums',
+      'Sports & Recreation',
+      'History & Culture',
+      'Exploration & Sightseeing',
+    ];
+    // Define your mapping of services to specific values
+    Map<String, String> serviceMapping = {
+      'Translation & Interpretation': 'Translate',
+      'Pick up & Driving tours': 'Tours',
+      'Shopping': 'Shop',
+      'Nightlife & Bars': 'Nightlife',
+      'Food & Restaurants': 'Food',
+      'Art & Museums': 'Art',
+      'Sports & Recreation': 'Sports',
+      'History & Culture': 'History',
+      'Exploration & Sightseeing': 'Exploration',
+    };
+
+    // Now, iterate through the selected services and map them to their values
+    for (String service in selectedServices) {
+      String mappedValue = serviceMapping[service] ??
+          ''; // Handle if service doesn't exist in mapping
+      print('$service -> $mappedValue');
+    }
+    ;
+
+    List<String> selectedLanguages = [
+      'English',
+      'Bengali',
+      'Hindi',
+      'Urdu',
+      'German',
+      'Korean',
+      'Spanish',
+      'Arabic',
+    ];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -791,7 +854,7 @@ class _ContainerPageState extends State<ContainerPage> {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) =>
-                          ServicesSettingsPage(widget.id, widget.services),
+                          ServiceNew(widget.id, widget.services),
                     ),
                   );
                 },
@@ -849,8 +912,10 @@ class _ContainerPageState extends State<ContainerPage> {
                       alignment: Alignment.centerRight,
                       width: MediaQuery.sizeOf(context).width * .4,
                       child: Text(
-                        //widget.services,
+                        //'${serviceMapping}',
                         'Services provided by me',
+                        //widget.services,
+                        //'${selectedActivities}',
                         style: TextStyle(
                           fontSize: 15.0,
                           fontWeight: FontWeight.bold,
@@ -1936,7 +2001,7 @@ class _ContainerPageState extends State<ContainerPage> {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) =>
-                          LanguagesSettingsPage(widget.id, widget.languages),
+                          LanguageNew(widget.id, widget.languages),
                     ),
                   );
                 },
@@ -1995,13 +2060,22 @@ class _ContainerPageState extends State<ContainerPage> {
                       alignment: Alignment.centerRight,
                       width: MediaQuery.sizeOf(context).width * .4,
                       child: Text(
+                        //'${selectedLanguages.join(', ')}',
+                        //'${selectedLanguages}',
                         widget.languages,
                         style: TextStyle(
-                          fontSize: 15.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey,
-                        ),
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey),
                       ),
+                      // Text(
+                      //   widget.languages,
+                      //   style: TextStyle(
+                      //     fontSize: 15.0,
+                      //     fontWeight: FontWeight.bold,
+                      //     color: Colors.grey,
+                      //   ),
+                      // ),
                     ),
                     // SizedBox(
                     //   width: 10,

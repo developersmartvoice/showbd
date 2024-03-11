@@ -1,211 +1,3 @@
-// import 'package:appcode3/modals/DoctorDetailsClass.dart';
-// import 'package:flutter/material.dart';
-
-// import 'dart:convert';
-// import 'dart:ui';
-// import 'package:appcode3/views/BookingScreen.dart';
-// import 'package:appcode3/views/Doctor/DoctorProfile.dart';
-// import 'package:appcode3/views/Doctor/LogoutScreen.dart';
-// import 'package:appcode3/views/Doctor/loginAsDoctor.dart';
-// import 'package:appcode3/views/SendOfferScreen.dart';
-// import 'package:appcode3/views/SendOffersScreen.dart';
-// import 'package:connectycube_sdk/connectycube_chat.dart';
-
-// import 'package:appcode3/en.dart';
-// import 'package:appcode3/main.dart';
-// import 'package:appcode3/modals/DoctorAppointmentClass.dart';
-// import 'package:appcode3/modals/DoctorPastAppointmentsClass.dart';
-// import 'package:appcode3/views/Doctor/DoctorChatListScreen.dart';
-// import 'package:appcode3/views/Doctor/DoctorAllAppointments.dart';
-// import 'package:appcode3/views/Doctor/DoctorAppointmentDetails.dart';
-// import 'package:appcode3/views/Doctor/DoctorProfileWithRating.dart';
-// import 'package:appcode3/views/Doctor/moreScreen/change_password_screen.dart';
-// import 'package:appcode3/views/Doctor/moreScreen/income_report.dart';
-// import 'package:appcode3/views/Doctor/moreScreen/subscription_screen.dart';
-
-// import 'package:cached_network_image/cached_network_image.dart';
-// //import 'package:facebook_audience_network/ad/ad_native.dart';
-// import 'package:firebase_messaging/firebase_messaging.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter/widgets.dart';
-// import 'package:flutter_html/style.dart';
-// //import 'package:flutter_native_admob/flutter_native_admob.dart';
-// import 'package:google_fonts/google_fonts.dart';
-// import 'package:http/http.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
-
-// import 'package:flutter/material.dart';
-
-// class ServicesSettingsPage extends StatefulWidget {
-//   //const NameSettingsPage({super.key});
-
-//   @override
-//   State<ServicesSettingsPage> createState() => _ServicesSettingsPageState();
-//   late final String id;
-//   late final String services;
-//   //late final String aboutMe;
-//   //late final String city;
-
-//   ServicesSettingsPage(this.id, this.services);
-// }
-
-// class _ServicesSettingsPageState extends State<ServicesSettingsPage> {
-//   //DoctorDetailsClass? doctorDetailsClass;
-//   Map<String, bool> selectedServices = {};
-//   List<String> services = [
-//     'Translation & Interpretation',
-//     'Pick up & Driving tours',
-//     'Shopping',
-//     'Nightlife & Bars',
-//     'Food & Restaurants',
-//     'Art & Museums',
-//     'Sports & Recreation',
-//     'History & Culture',
-//     'Exploration & Sightseeing',
-//   ];
-
-//   Map<String, dynamic> getServiceData(String serviceName) {
-//     switch (serviceName) {
-//       case 'translation':
-//         return {
-//           'text': 'Translation & Interpretation',
-//           'icon': Icons.translate
-//         };
-//       case 'shopping':
-//         return {'text': 'Shopping', 'icon': Icons.shopping_cart};
-//       case 'food':
-//         return {'text': 'Food & Restaurants', 'icon': Icons.food_bank_rounded};
-//       case 'art':
-//         return {'text': 'Art & Museums', 'icon': Icons.museum_rounded};
-//       case 'history':
-//         return {'text': 'History & Culture', 'icon': Icons.history_edu_rounded};
-//       case 'exploration':
-//         return {
-//           'text': 'Exploration & Sightseeing',
-//           'icon': Icons.data_exploration_sharp
-//         };
-//       case 'pick':
-//         return {
-//           'text': 'Pick up & Driving Tours',
-//           'icon': Icons.drive_eta_rounded
-//         };
-//       case 'nightlife':
-//         return {'text': 'Nightlife & Bars', 'icon': Icons.nightlife_rounded};
-//       // Add more cases as needed for other services
-//       // Default to a generic icon and the service name
-//       default:
-//         return {
-//           'text': 'Sports & Recreation',
-//           'icon': Icons.sports_soccer_rounded
-//         };
-//     }
-//   }
-
-//   List<bool> isSelectedList = [false];
-//   bool isChecked = false;
-//   late TextEditingController _controller;
-//   String enteredValue = '';
-//   bool isValueChanged = false;
-//   void updatingServices() async {
-//     final response =
-//         await post(Uri.parse("$SERVER_ADDRESS/api/updateServices"), body: {
-//       "id": widget.id,
-//       "services": enteredValue,
-//     });
-//     print("$SERVER_ADDRESS/api/updateServices");
-//     // print(response.body);
-//     if (response.statusCode == 200) {
-//       print("Services Updated");
-//       setState(() {
-//         Navigator.pop(context);
-//       });
-//     } else {
-//       print("Services Not Updated");
-//     }
-//   }
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     _controller = TextEditingController(text: widget.services);
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     //var services;
-//     return SafeArea(
-//       child: Scaffold(
-//         appBar: AppBar(
-//           title: Text('Activities',
-//               // style: GoogleFonts.robotoCondensed(
-//               //   color: Colors.white,
-//               //   fontSize: 25,
-//               //   fontWeight: FontWeight.w700,
-//               // ),
-//               style: Theme.of(context).textTheme.headline5!.apply(
-//                   color: Theme.of(context).backgroundColor,
-//                   fontWeightDelta: 5)),
-//           backgroundColor: const Color.fromARGB(255, 243, 103, 9),
-//           centerTitle: true,
-//           actions: [
-//             TextButton(
-//               onPressed: () {
-//                 if (isValueChanged) {
-//                   updatingServices();
-//                 } else {
-//                   // Navigator.pop(context);
-//                 }
-//               },
-//               child: Text(
-//                 'Save',
-//                 style: GoogleFonts.robotoCondensed(
-//                   color: Colors.black,
-//                   fontSize: 20,
-//                   fontWeight: FontWeight.w700,
-//                 ),
-//               ),
-//             ),
-//           ],
-//         ),
-//         body: Container(
-//           child: Column(
-//             children: [
-//               Expanded(
-//                 child: ListView.builder(
-//                     itemCount: services.length,
-//                     itemBuilder: (context, index) {
-//                       //final language = languages[index];
-//                       final service = services[index];
-//                       return CheckboxListTile(
-//                         title: Text(service),
-//                         value: selectedServices[service],
-//                         onChanged: (value) {
-//                           setState(() {
-//                             selectedServices[service] = value!;
-//                             isValueChanged = true;
-//                           });
-//                           // setState(() {
-//                           //   isValueChanged = (value ? service : '') as bool;
-//                           // });
-//                         },
-//                         controlAffinity: ListTileControlAffinity.trailing,
-//                         //secondary: isValueChanged == service
-//                         //  ? Icon(Icons.check)
-//                         //: null,
-//                       );
-//                       // ListTile(
-//                       //   title: Text(service),
-//                       // );
-//                     }),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 
@@ -271,6 +63,9 @@ class _ServicesSettingsPageState extends State<ServicesSettingsPage> {
   Map<String, bool> selectedServices = {};
   bool isValueChanged = false;
   bool isServiceSelected = false;
+  bool isActivitiesSelected = false;
+  List<String> selectedLanguages = [];
+  List<String> selectedActivities = [];
   //String selectedLanguage = '';
 
   bool isChecked = false;
@@ -293,6 +88,7 @@ class _ServicesSettingsPageState extends State<ServicesSettingsPage> {
   String enteredValue = '';
   //bool isValueChanged = false;
   void updatingServices(List<String> selectedServiceList) async {
+    String selectedServicesString = selectedServiceList.join(', ');
     final response =
         await post(Uri.parse("$SERVER_ADDRESS/api/updateServices"), body: {
       "id": widget.id,
@@ -303,8 +99,14 @@ class _ServicesSettingsPageState extends State<ServicesSettingsPage> {
     if (response.statusCode == 200) {
       print("Services Updated");
       setState(() {
-        Navigator.pop(context);
+        // Update local state to reflect the selected services
+        selectedServices.clear();
+        for (var service in selectedServiceList) {
+          selectedServices[service] = true;
+        }
+        //Navigator.pop(context);
       });
+      Navigator.pop(context);
     } else {
       print("Services Not Updated");
     }
@@ -340,15 +142,15 @@ class _ServicesSettingsPageState extends State<ServicesSettingsPage> {
                 if (selectedServices.isNotEmpty) {
                   // Update your logic here to handle the selected services
                   List<String> selectedServiceList = [
-                    'Translation & Interpretation',
-                    'Pick up & Driving tours',
-                    'Shopping',
-                    'Nightlife & Bars',
-                    'Food & Restaurants',
-                    'Art & Museums',
-                    'Sports & Recreation',
-                    'History & Culture',
-                    'Exploration & Sightseeing',
+                    // 'Translation & Interpretation',
+                    // 'Pick up & Driving tours',
+                    // 'Shopping',
+                    // 'Nightlife & Bars',
+                    // 'Food & Restaurants',
+                    // 'Art & Museums',
+                    // 'Sports & Recreation',
+                    // 'History & Culture',
+                    // 'Exploration & Sightseeing',
                   ];
                   selectedServices.forEach((key, value) {
                     if (value) {
@@ -376,28 +178,43 @@ class _ServicesSettingsPageState extends State<ServicesSettingsPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Expanded(
-                child: ListView.builder(
-                  itemCount: services.length,
-                  itemBuilder: (context, index) {
-                    final service = services[index];
-                    return CheckboxListTile(
-                      title: Text(service),
-                      value: selectedServices.containsKey(service)
-                          ? selectedServices[service]
-                          : false,
-                      //value: selectedServices[service],
-                      onChanged: (value) {
-                        setState(() {
-                          selectedServices[service] = value!;
-                          isValueChanged = true;
-                        });
-                      },
-                      controlAffinity: ListTileControlAffinity.trailing,
-                    );
-                  },
-                ),
-              ),
+              _buildMultiSelect('Activities', selectedActivities, [
+                'Translation & Interpretation',
+                'Pick Up & Driving Tours',
+                'Shopping',
+                'Nightlife & Bars',
+                'Food & Resturants',
+                'Arts & Museums',
+                'Sports & Recreation',
+                'History & Culture',
+                'Exploration & Sightseeing'
+              ], (value) {
+                setState(() {
+                  selectedActivities = value;
+                });
+              }),
+              // Expanded(
+              //   child: ListView.builder(
+              //     itemCount: services.length,
+              //     itemBuilder: (context, index) {
+              //       final service = services[index];
+              //       return CheckboxListTile(
+              //         title: Text(service),
+              //         value: selectedServices.containsKey(service)
+              //             ? selectedServices[service]
+              //             : false,
+              //         //value: selectedServices[service],
+              //         onChanged: (value) {
+              //           setState(() {
+              //             selectedServices[service] = value!;
+              //             isValueChanged = true;
+              //           });
+              //         },
+              //         controlAffinity: ListTileControlAffinity.trailing,
+              //       );
+              //     },
+              //   ),
+              // ),
 
               // Expanded(
               //   child: ListView.builder(
@@ -419,28 +236,137 @@ class _ServicesSettingsPageState extends State<ServicesSettingsPage> {
             ],
           ),
         ),
-
-        // bottomNavigationBar: BottomAppBar(
-        //   child: Padding(
-        //     padding: EdgeInsets.all(16.0),
-        //     child: Text(
-        //       'Selected Languages: ${selectedLanguages.entries.where((entry) => entry.value).map((entry) => entry.key).toList()}',
-        //       style: TextStyle(fontSize: 18.0),
-        //     ),
-        //   ),
-        // ),
-        // bottomNavigationBar: BottomAppBar(
-        //   child: Padding(
-        //     padding: EdgeInsets.all(16.0),
-        //     child: Text(
-        //       'Selected Language: $selectedLanguage',
-        //       style: TextStyle(fontSize: 18.0),
-        //     ),
-        //   ),
-        // ),
       ),
     );
   }
+
+  Widget _buildMultiSelect(String label, List<String> selectedValues,
+      List<String> options, ValueChanged<List<String>> onChanged) {
+    return Container(
+        child: Column(
+            // crossAxisAlignment: CrossAxisAlignment.start,
+            //mainAxisAlignment: MainAxisAlignment.start,
+
+            children: [
+          Column(
+            children: [
+              Container(
+                color: LIGHT_GREY_SCREEN_BACKGROUND,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: 18.0), // Adjust the left padding as needed
+                      // child: Text(
+                      //   label,
+                      //   style: GoogleFonts.robotoCondensed(
+                      //       fontWeight: FontWeight.w600,
+                      //       color: Colors.grey,
+                      //       fontSize: 25),
+                      // ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Wrap(
+                spacing: 12.0,
+                children: options.map((option) {
+                  String mappedOption = mapOption(option);
+                  return FilterChip(
+                    label: Text(option),
+                    selected: selectedValues.contains(mappedOption),
+                    onSelected: (selected) {
+                      List<String> newSelectedValues =
+                          List.from(selectedValues);
+                      String mappedOption = mapOption(option);
+                      if (selected) {
+                        newSelectedValues.add(mappedOption);
+                      } else {
+                        newSelectedValues.remove(mappedOption);
+                      }
+                      onChanged(newSelectedValues);
+                      if (selectedLanguages.isNotEmpty) {
+                        isActivitiesSelected = true;
+                      } else {
+                        isActivitiesSelected = false;
+                      }
+                    },
+                    selectedColor: Color.fromARGB(190, 255, 115, 0),
+                    labelStyle: TextStyle(
+                      color: selectedValues.contains(mappedOption)
+                          ? Colors.white
+                          : Colors.black, // Set font color based on selection
+                    ),
+                  );
+                }).toList(),
+              ),
+              // Divider(
+              //   height: 20,
+              //   color: Colors.grey,
+              // ),
+            ],
+          )
+        ]));
+  }
+
+  String mapOption(String option) {
+    switch (option) {
+      case 'Translation & Interpretation':
+        return 'translation';
+      case 'Pick Up & Driving Tours':
+        return 'pick';
+      case 'Shopping':
+        return 'shopping';
+      case 'Nightlife & Bars':
+        return 'nightlife';
+      case 'Food & Resturants':
+        return 'food';
+      case 'Arts & Museums':
+        return 'art';
+      case 'Sports & Recreation':
+        return 'sports';
+      case 'History & Culture':
+        return 'history';
+      case 'Exploration & Sightseeing':
+        return 'exploration';
+      case 'English':
+        return 'english';
+      case 'Bengali':
+        return 'bengali';
+      case 'Hindi':
+        return 'hindi';
+      case 'Urdu':
+        return 'urdu';
+      default:
+        return option;
+    }
+  }
+
+  // bottomNavigationBar: BottomAppBar(
+  //   child: Padding(
+  //     padding: EdgeInsets.all(16.0),
+  //     child: Text(
+  //       'Selected Languages: ${selectedLanguages.entries.where((entry) => entry.value).map((entry) => entry.key).toList()}',
+  //       style: TextStyle(fontSize: 18.0),
+  //     ),
+  //   ),
+  // ),
+  // bottomNavigationBar: BottomAppBar(
+  //   child: Padding(
+  //     padding: EdgeInsets.all(16.0),
+  //     child: Text(
+  //       'Selected Language: $selectedLanguage',
+  //       style: TextStyle(fontSize: 18.0),
+  //     ),
+  //   ),
+  // ),
+  //),
+  //);
+}
   // void updatingLanguages() {
   //   // Perform the update operation
   //   print('Updating languages...');
@@ -448,7 +374,7 @@ class _ServicesSettingsPageState extends State<ServicesSettingsPage> {
   //     isValueChanged = false; // Reset the value changed flag
   //   });
   // }
-}
+//}
 //         Container(
 //           color: LIGHT_GREY_SCREEN_BACKGROUND,
 //           child: Column(
