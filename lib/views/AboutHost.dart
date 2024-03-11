@@ -15,14 +15,9 @@ import 'package:appcode3/views/LanguagesSettingsPage.dart';
 import 'package:appcode3/views/LocationSearchPageInfo.dart';
 import 'package:appcode3/views/MottoSettingsPage.dart';
 import 'package:appcode3/views/PhotoSettingsPage.dart';
-<<<<<<< HEAD
-import 'package:appcode3/views/SendOfferScreen.dart';
-import 'package:appcode3/views/SendOffersScreen.dart';
 import 'package:appcode3/views/ServiceNew.dart';
-=======
 // import 'package:appcode3/views/SendOfferScreen.dart';
 // import 'package:appcode3/views/SendOffersScreen.dart';
->>>>>>> 428fba8f57f65dd0e42b8065390451a2cec497f7
 import 'package:appcode3/views/ServicesSettings.dart';
 // import 'package:connectycube_sdk/connectycube_chat.dart';
 
@@ -1205,12 +1200,12 @@ class _ContainerPageState extends State<ContainerPage> {
               color: Colors.white,
               child: InkWell(
                 onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          PhotoSettingsPage(widget.id, widget.photos),
-                    ),
-                  );
+                  // Navigator.of(context).push(
+                  //   MaterialPageRoute(
+                  //     builder: (context) =>
+                  //         PhotoSettingsPage(widget.id, widget.photos),
+                  //   ),
+                  // );
                 },
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
@@ -1276,12 +1271,12 @@ class _ContainerPageState extends State<ContainerPage> {
                         padding: const EdgeInsets.only(right: 5),
                         child: IconButton(
                           onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    PhotoSettingsPage(widget.id, widget.photos),
-                              ),
-                            );
+                            // Navigator.of(context).push(
+                            //   MaterialPageRoute(
+                            //     builder: (context) =>
+                            //         PhotoSettingsPage(widget.id, widget.photos),
+                            //   ),
+                            // );
                             // Add your logic for the onPressed event here
                             // Typically, this would involve navigating to the next screen or performing some action
                           },
