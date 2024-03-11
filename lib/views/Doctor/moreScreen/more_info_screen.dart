@@ -1129,11 +1129,14 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                                   fontWeight: FontWeight.w600,
                                 ),
                               )
-                            : Text(
-                                "Waiting for payment!",
-                                style: GoogleFonts.robotoCondensed(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w600,
+                            : Padding(
+                                padding: EdgeInsets.only(left: 20.0),
+                                child: Text(
+                                  "Waiting for payment!",
+                                  style: GoogleFonts.robotoCondensed(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                               )),
                     Icon(
