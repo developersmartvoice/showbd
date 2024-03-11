@@ -5,13 +5,13 @@ import 'package:appcode3/main.dart';
 import 'package:appcode3/modals/Call_All_In_One.dart';
 import 'package:appcode3/modals/NearbyDoctorClass.dart';
 import 'package:appcode3/modals/SearchDoctorClass.dart';
-import 'package:appcode3/views/AllAppointments.dart';
+// import 'package:appcode3/views/AllAppointments.dart';
 import 'package:appcode3/views/DetailsPage.dart';
 import 'package:appcode3/views/Doctor/DoctorAppointmentDetails.dart';
 import 'package:appcode3/views/HomeScreenNearby.dart';
 import 'package:appcode3/views/SearchedScreen.dart';
 import 'package:appcode3/views/SpecialityDoctorsScreen.dart';
-import 'package:appcode3/views/SpecialityScreen.dart';
+// import 'package:appcode3/views/SpecialityScreen.dart';
 import 'package:appcode3/views/UserAppointmentDetails.dart';
 import 'package:appcode3/views/incoming_call_image_name.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -396,12 +396,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       //         height: Get.height * 0.07,
                       //         alignment: Alignment.center,
                       //         child: CircularProgressIndicator()),
-                      isLoad
-                          ? isLoggedIn
-                              ? upCommingAppointments()
-                              : Container()
-                          : Container(),
-                      isLoad ? Container() : Container(),
+                      // isLoad
+                      //     ? isLoggedIn
+                      //         ? upCommingAppointments()
+                      //         : Container()
+                      //     : Container(),
+                      // isLoad ? Container() : Container(),
                       HomeScreenNearby(_scrollController2),
                     ],
                   ),
@@ -804,253 +804,253 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget upCommingAppointments() {
-    return Container(
-      margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //   children: [
-          //     Text(UPCOMING_APPOINTMENTS,
-          //         style: Theme.of(context).textTheme.bodyText2!.apply(
-          //               fontWeightDelta: 3,
-          //               color: Colors.orange,
-          //             )),
-          //     AppointmentList.length != 0
-          //         ? TextButton(
-          //             onPressed: () {
-          //               Navigator.push(
-          //                 context,
-          //                 MaterialPageRoute(
-          //                     builder: (context) =>
-          //                         AllAppointments(AppointmentList)),
-          //               );
-          //             },
-          //             child: Text(SEE_ALL,
-          //                 style: Theme.of(context).textTheme.bodyText1!.apply(
-          //                       // color: Theme.of(context).hintColor,
-          //                       color: Colors.orange,
-          //                     )),
-          //           )
-          //         : Container(
-          //             height: 40,
-          //           )
-          //   ],
-          // ),
-          // SizedBox(
-          //   height: 5,
-          // ),
-          // AppointmentList.length == 0
-          //     ? Container(
-          //         width: MediaQuery.of(context).size.width,
-          //         decoration: BoxDecoration(
-          //             color: Theme.of(context).backgroundColor,
-          //             borderRadius: BorderRadius.circular(15)),
-          //         child: Padding(
-          //           padding: const EdgeInsets.all(30.0),
-          //           child: Column(
-          //             children: [
-          //               Image.asset("assets/homeScreenImages/no_appo_img.png"),
-          //               SizedBox(
-          //                 height: 15,
-          //               ),
-          //               Text(
-          //                 YOU_DONOT_HAVE_ANY_UPCOMING_APPOINTMENT,
-          //                 style: TextStyle(
-          //                     fontWeight: FontWeight.w900, fontSize: 11),
-          //               ),
-          //               SizedBox(
-          //                 height: 3,
-          //               ),
-          //               Row(
-          //                 mainAxisAlignment: MainAxisAlignment.center,
-          //                 children: [
-          //                   Text(
-          //                     FIND_BEST_DOCTORS_NEAR_YOU_BY_SPECIALITY,
-          //                     style: TextStyle(
-          //                         fontWeight: FontWeight.w500, fontSize: 10),
-          //                   ),
-          //                   SizedBox(
-          //                     width: 3,
-          //                   ),
-          //                   InkWell(
-          //                     onTap: () {
-          //                       Navigator.push(
-          //                           context,
-          //                           MaterialPageRoute(
-          //                             builder: (context) => SpecialityScreen(),
-          //                           ));
-          //                     },
-          //                     child: Text(
-          //                       CLICK_HERE,
-          //                       style: TextStyle(
-          //                           fontWeight: FontWeight.w900,
-          //                           fontSize: 10,
-          //                           color: AMBER),
-          //                     ),
-          //                   ),
-          //                 ],
-          //               ),
-          //             ],
-          //           ),
-          //         ),
-          //       )
-          //     : ListView.builder(
-          //         itemCount:
-          //             AppointmentList.length > 2 ? 2 : AppointmentList.length,
-          //         shrinkWrap: true,
-          //         padding: EdgeInsets.all(0),
-          //         physics: ClampingScrollPhysics(),
-          //         itemBuilder: (context, index) {
-          //           print(
-          //               "$SERVER_ADDRESS/public/upload/doctors/${AppointmentList[index].doctorls!.image}");
-          //           return appointmentListWidget(index, AppointmentList);
-          //         },
-          //       )
-        ],
-      ),
-    );
-  }
+  // Widget upCommingAppointments() {
+  //   return Container(
+  //     margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
+  //     child: Column(
+  //       mainAxisSize: MainAxisSize.min,
+  //       mainAxisAlignment: MainAxisAlignment.start,
+  //       children: [
+  //         // Row(
+  //         //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //         //   children: [
+  //         //     Text(UPCOMING_APPOINTMENTS,
+  //         //         style: Theme.of(context).textTheme.bodyText2!.apply(
+  //         //               fontWeightDelta: 3,
+  //         //               color: Colors.orange,
+  //         //             )),
+  //         //     AppointmentList.length != 0
+  //         //         ? TextButton(
+  //         //             onPressed: () {
+  //         //               Navigator.push(
+  //         //                 context,
+  //         //                 MaterialPageRoute(
+  //         //                     builder: (context) =>
+  //         //                         AllAppointments(AppointmentList)),
+  //         //               );
+  //         //             },
+  //         //             child: Text(SEE_ALL,
+  //         //                 style: Theme.of(context).textTheme.bodyText1!.apply(
+  //         //                       // color: Theme.of(context).hintColor,
+  //         //                       color: Colors.orange,
+  //         //                     )),
+  //         //           )
+  //         //         : Container(
+  //         //             height: 40,
+  //         //           )
+  //         //   ],
+  //         // ),
+  //         // SizedBox(
+  //         //   height: 5,
+  //         // ),
+  //         // AppointmentList.length == 0
+  //         //     ? Container(
+  //         //         width: MediaQuery.of(context).size.width,
+  //         //         decoration: BoxDecoration(
+  //         //             color: Theme.of(context).backgroundColor,
+  //         //             borderRadius: BorderRadius.circular(15)),
+  //         //         child: Padding(
+  //         //           padding: const EdgeInsets.all(30.0),
+  //         //           child: Column(
+  //         //             children: [
+  //         //               Image.asset("assets/homeScreenImages/no_appo_img.png"),
+  //         //               SizedBox(
+  //         //                 height: 15,
+  //         //               ),
+  //         //               Text(
+  //         //                 YOU_DONOT_HAVE_ANY_UPCOMING_APPOINTMENT,
+  //         //                 style: TextStyle(
+  //         //                     fontWeight: FontWeight.w900, fontSize: 11),
+  //         //               ),
+  //         //               SizedBox(
+  //         //                 height: 3,
+  //         //               ),
+  //         //               Row(
+  //         //                 mainAxisAlignment: MainAxisAlignment.center,
+  //         //                 children: [
+  //         //                   Text(
+  //         //                     FIND_BEST_DOCTORS_NEAR_YOU_BY_SPECIALITY,
+  //         //                     style: TextStyle(
+  //         //                         fontWeight: FontWeight.w500, fontSize: 10),
+  //         //                   ),
+  //         //                   SizedBox(
+  //         //                     width: 3,
+  //         //                   ),
+  //         //                   InkWell(
+  //         //                     onTap: () {
+  //         //                       Navigator.push(
+  //         //                           context,
+  //         //                           MaterialPageRoute(
+  //         //                             builder: (context) => SpecialityScreen(),
+  //         //                           ));
+  //         //                     },
+  //         //                     child: Text(
+  //         //                       CLICK_HERE,
+  //         //                       style: TextStyle(
+  //         //                           fontWeight: FontWeight.w900,
+  //         //                           fontSize: 10,
+  //         //                           color: AMBER),
+  //         //                     ),
+  //         //                   ),
+  //         //                 ],
+  //         //               ),
+  //         //             ],
+  //         //           ),
+  //         //         ),
+  //         //       )
+  //         //     : ListView.builder(
+  //         //         itemCount:
+  //         //             AppointmentList.length > 2 ? 2 : AppointmentList.length,
+  //         //         shrinkWrap: true,
+  //         //         padding: EdgeInsets.all(0),
+  //         //         physics: ClampingScrollPhysics(),
+  //         //         itemBuilder: (context, index) {
+  //         //           print(
+  //         //               "$SERVER_ADDRESS/public/upload/doctors/${AppointmentList[index].doctorls!.image}");
+  //         //           return appointmentListWidget(index, AppointmentList);
+  //         //         },
+  //         //       )
+  //       ],
+  //     ),
+  //   );
+  // }
 
-  Widget appointmentListWidget(int index, List<Appointment> data) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(15),
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  UserAppointmentDetails(data[index].id.toString())),
-        );
-      },
-      child: Container(
-        height: 90,
-        margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
-        padding: EdgeInsets.all(8),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: WHITE,
-        ),
-        child: Row(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(15),
-              child: CachedNetworkImage(
-                imageUrl:
-                    "$SERVER_ADDRESS/public/upload/doctors/${data[index].doctorls!.image}",
-                height: 70,
-                width: 70,
-                fit: BoxFit.cover,
-                placeholder: (context, url) => Container(
-                  color: Theme.of(context).primaryColorLight,
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Image.asset(
-                      "assets/homeScreenImages/user_unactive.png",
-                      height: 20,
-                      width: 20,
-                    ),
-                  ),
-                ),
-                errorWidget: (context, url, err) => Container(
-                    color: Theme.of(context).primaryColorLight,
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Image.asset(
-                        "assets/homeScreenImages/user_unactive.png",
-                        height: 20,
-                        width: 20,
-                      ),
-                    )),
-              ),
-            ),
-            SizedBox(
-              width: 10,
-            ),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          data[index].doctorls!.name!,
-                          style: GoogleFonts.poppins(
-                              color: BLACK,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w500),
-                        ),
-                        Text(
-                          data[index].departmentName!,
-                          style: GoogleFonts.poppins(
-                              color: BLACK,
-                              fontSize: 11,
-                              fontWeight: FontWeight.w400),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 9,
-                  ),
-                  Container(
-                    child: Text(
-                      data[index].doctorls!.address!,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: GoogleFonts.poppins(
-                          color: LIGHT_GREY_TEXT,
-                          fontSize: 10,
-                          fontWeight: FontWeight.w400),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              width: 10,
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Image.asset(
-                  "assets/homeScreenImages/calender.png",
-                  height: 17,
-                  width: 17,
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  data[index].date.toString().substring(8) +
-                      "-" +
-                      data[index].date.toString().substring(5, 7) +
-                      "-" +
-                      data[index].date.toString().substring(0, 4),
-                  style: GoogleFonts.poppins(
-                      color: LIGHT_GREY_TEXT,
-                      fontSize: 11,
-                      fontWeight: FontWeight.w400),
-                ),
-                Text(
-                  data[index].slot!,
-                  style: GoogleFonts.poppins(
-                      color: BLACK, fontSize: 15, fontWeight: FontWeight.w500),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  // Widget appointmentListWidget(int index, List<Appointment> data) {
+  //   return InkWell(
+  //     borderRadius: BorderRadius.circular(15),
+  //     onTap: () {
+  //       Navigator.push(
+  //         context,
+  //         MaterialPageRoute(
+  //             builder: (context) =>
+  //                 UserAppointmentDetails(data[index].id.toString())),
+  //       );
+  //     },
+  //     child: Container(
+  //       height: 90,
+  //       margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
+  //       padding: EdgeInsets.all(8),
+  //       decoration: BoxDecoration(
+  //         borderRadius: BorderRadius.circular(10),
+  //         color: WHITE,
+  //       ),
+  //       child: Row(
+  //         children: [
+  //           ClipRRect(
+  //             borderRadius: BorderRadius.circular(15),
+  //             child: CachedNetworkImage(
+  //               imageUrl:
+  //                   "$SERVER_ADDRESS/public/upload/doctors/${data[index].doctorls!.image}",
+  //               height: 70,
+  //               width: 70,
+  //               fit: BoxFit.cover,
+  //               placeholder: (context, url) => Container(
+  //                 color: Theme.of(context).primaryColorLight,
+  //                 child: Padding(
+  //                   padding: const EdgeInsets.all(20.0),
+  //                   child: Image.asset(
+  //                     "assets/homeScreenImages/user_unactive.png",
+  //                     height: 20,
+  //                     width: 20,
+  //                   ),
+  //                 ),
+  //               ),
+  //               errorWidget: (context, url, err) => Container(
+  //                   color: Theme.of(context).primaryColorLight,
+  //                   child: Padding(
+  //                     padding: const EdgeInsets.all(20.0),
+  //                     child: Image.asset(
+  //                       "assets/homeScreenImages/user_unactive.png",
+  //                       height: 20,
+  //                       width: 20,
+  //                     ),
+  //                   )),
+  //             ),
+  //           ),
+  //           SizedBox(
+  //             width: 10,
+  //           ),
+  //           Expanded(
+  //             child: Column(
+  //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //               crossAxisAlignment: CrossAxisAlignment.start,
+  //               children: [
+  //                 Container(
+  //                   child: Column(
+  //                     crossAxisAlignment: CrossAxisAlignment.start,
+  //                     children: [
+  //                       Text(
+  //                         data[index].doctorls!.name!,
+  //                         style: GoogleFonts.poppins(
+  //                             color: BLACK,
+  //                             fontSize: 13,
+  //                             fontWeight: FontWeight.w500),
+  //                       ),
+  //                       Text(
+  //                         data[index].departmentName!,
+  //                         style: GoogleFonts.poppins(
+  //                             color: BLACK,
+  //                             fontSize: 11,
+  //                             fontWeight: FontWeight.w400),
+  //                       ),
+  //                     ],
+  //                   ),
+  //                 ),
+  //                 SizedBox(
+  //                   height: 9,
+  //                 ),
+  //                 Container(
+  //                   child: Text(
+  //                     data[index].doctorls!.address!,
+  //                     maxLines: 2,
+  //                     overflow: TextOverflow.ellipsis,
+  //                     style: GoogleFonts.poppins(
+  //                         color: LIGHT_GREY_TEXT,
+  //                         fontSize: 10,
+  //                         fontWeight: FontWeight.w400),
+  //                   ),
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //           SizedBox(
+  //             width: 10,
+  //           ),
+  //           Column(
+  //             mainAxisAlignment: MainAxisAlignment.center,
+  //             crossAxisAlignment: CrossAxisAlignment.end,
+  //             children: [
+  //               Image.asset(
+  //                 "assets/homeScreenImages/calender.png",
+  //                 height: 17,
+  //                 width: 17,
+  //               ),
+  //               SizedBox(
+  //                 height: 5,
+  //               ),
+  //               Text(
+  //                 data[index].date.toString().substring(8) +
+  //                     "-" +
+  //                     data[index].date.toString().substring(5, 7) +
+  //                     "-" +
+  //                     data[index].date.toString().substring(0, 4),
+  //                 style: GoogleFonts.poppins(
+  //                     color: LIGHT_GREY_TEXT,
+  //                     fontSize: 11,
+  //                     fontWeight: FontWeight.w400),
+  //               ),
+  //               Text(
+  //                 data[index].slot!,
+  //                 style: GoogleFonts.poppins(
+  //                     color: BLACK, fontSize: 15, fontWeight: FontWeight.w500),
+  //               ),
+  //             ],
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 
   _onChanged(String value) async {
     if (value.length == 0) {
