@@ -33,6 +33,9 @@ import 'package:flutter_html/style.dart';
 //import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:flutter/material.dart';
@@ -43,11 +46,12 @@ class PhotoSettingsPage extends StatefulWidget {
   @override
   State<PhotoSettingsPage> createState() => _PhotoSettingsPageState();
   late final String id;
-  late final String photos;
+  late final String imageUrl1;
+  late final List<String> images;
   //late final String aboutMe;
   //late final String city;
 
-  PhotoSettingsPage(this.id, this.photos);
+  PhotoSettingsPage(this.id, this.imageUrl1, this.images);
 }
 
 class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
@@ -57,7 +61,7 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
   File _pickedImage4 = File('');
   File _pickedImage5 = File('');
   // Provide a default image path if needed
-
+  // String imageUrl1 = '';
   //late File _pickedImage;
   late TextEditingController _controller;
   String enteredValue = '';
@@ -83,7 +87,7 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController(text: widget.photos);
+    _controller = TextEditingController(text: widget.imageUrl1);
   }
 
   @override
@@ -254,22 +258,11 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                           border: Border.all(
                               color: Colors.grey), // Optional border decoration
                         ),
-                        child: _pickedImage1 != null
-                            ? Image.file(
-                                _pickedImage1,
+                        child: widget.imageUrl1.isNotEmpty
+                            ? Image.network(
+                                widget.imageUrl1,
                                 fit: BoxFit.cover,
                               )
-                            //     : Placeholder(),
-                            // child: enteredValue.isNotEmpty
-                            //     ? Image.network(
-                            //         enteredValue,
-                            //         fit: BoxFit.cover,
-                            //       )
-                            // : widget.photos.isNotEmpty
-                            //     ? Image.file(
-                            //         widget.photos as File,
-                            //         fit: BoxFit.cover,
-                            //       )
                             : Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -277,7 +270,6 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                                   Text("Add Photo"),
                                 ],
                               ),
-                        //: Placeholder(), // Placeholder image if no image is set
                       ),
                     ),
                   ),

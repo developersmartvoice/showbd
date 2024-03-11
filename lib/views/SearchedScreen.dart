@@ -2,10 +2,12 @@ import 'dart:convert';
 
 import 'package:appcode3/en.dart';
 import 'package:appcode3/main.dart';
+import 'package:appcode3/modals/NearbyDoctorClass.dart';
 import 'package:appcode3/modals/SearchDoctorClass.dart';
 import 'package:appcode3/modals/SpecialityClass.dart';
-import 'package:appcode3/views/DetailsPage.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:appcode3/views/FilteredGuidesScreen.dart';
+// import 'package:appcode3/views/DetailsPage.dart';
+// import 'package:cached_network_image/cached_network_image.dart';
 //import 'package:facebook_audience_network/ad/ad_native.dart';
 import 'package:flutter/material.dart';
 //import 'package:flutter_native_admob/flutter_native_admob.dart';
@@ -14,6 +16,7 @@ import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SearchedScreen extends StatefulWidget {
+  // const SearchedScreen({super.key})
   // String keyword;
 
   // SearchedScreen(this.keyword);
@@ -21,6 +24,7 @@ class SearchedScreen extends StatefulWidget {
 
   @override
   _SearchedScreenState createState() => _SearchedScreenState();
+  // State<SearchedScreen> createState() => _SearchedScreenState();
 }
 
 class _SearchedScreenState extends State<SearchedScreen> {
@@ -29,13 +33,14 @@ class _SearchedScreenState extends State<SearchedScreen> {
   bool isLoading = false;
   bool isErrorInLoading = false;
   int? currentId;
+  NearbyDoctorsClass? _nearbyDoctorsClass;
   SearchDoctorClass? searchDoctorClass;
   List<DoctorData> _newData = [];
   String nextUrl = "";
   bool isLoadingMore = false;
   String searchKeyword = "";
   ScrollController _scrollController = ScrollController();
-  TextEditingController _textController = TextEditingController();
+  // TextEditingController _textController = TextEditingController();
   SpecialityClass? specialityClass;
   List<String> departmentList = [];
   double priceRange = 100;
@@ -49,6 +54,7 @@ class _SearchedScreenState extends State<SearchedScreen> {
   bool isActivitiesSelected = false;
   bool isGenderSelected = false;
   bool saveFilterSettings = false;
+  bool isFilterLoading = false;
 
   @override
   void initState() {
@@ -78,8 +84,21 @@ class _SearchedScreenState extends State<SearchedScreen> {
   getFiltersDoctors() async {
     final response = await post(Uri.parse("$SERVER_ADDRESS/api/filterdoctor"),
         body: getBodyParameter());
-    print(getBodyParameter());
-    print(response.body);
+    // print(getBodyParameter());
+    // print(response.body);
+    if (response.statusCode == 200) {
+      final jsonResponse = jsonDecode(response.body);
+      setState(() {
+        _nearbyDoctorsClass = NearbyDoctorsClass.fromJson(jsonResponse);
+        print(_nearbyDoctorsClass!.data!.nearbyData);
+        isFilterLoading = false;
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: ((context) =>
+                    FilteredGuidesScreen(_nearbyDoctorsClass!))));
+      });
+    }
   }
 
   String getBodyParameter() {
@@ -246,25 +265,29 @@ class _SearchedScreenState extends State<SearchedScreen> {
                             children: [
                               header(),
                               // upCommingAppointments(),
-                              body(),
-                              isLoadingMore
-                                  ? Padding(
-                                      padding: const EdgeInsets.all(20.0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          CircularProgressIndicator(
-                                            strokeWidth: 2,
-                                          ),
-                                          SizedBox(
-                                            width: 5,
-                                          ),
-                                          Text("Loading..."),
-                                        ],
-                                      ),
+                              isFilterLoading
+                                  ? Center(
+                                      child: CircularProgressIndicator(),
                                     )
-                                  : Container()
+                                  : body()
+                              // isLoadingMore
+                              //     ? Padding(
+                              //         padding: const EdgeInsets.all(20.0),
+                              //         child: Row(
+                              //           mainAxisAlignment:
+                              //               MainAxisAlignment.center,
+                              //           children: [
+                              //             CircularProgressIndicator(
+                              //               strokeWidth: 2,
+                              //             ),
+                              //             SizedBox(
+                              //               width: 5,
+                              //             ),
+                              //             Text("Loading..."),
+                              //           ],
+                              //         ),
+                              //       )
+                              //     : Container()
                             ],
                           ),
                   ),
@@ -457,6 +480,9 @@ class _SearchedScreenState extends State<SearchedScreen> {
                               isLanguageSelected ||
                               isActivitiesSelected ||
                               isGenderSelected) {
+                            setState(() {
+                              isFilterLoading = true;
+                            });
                             getFiltersDoctors();
                           } else {
                             print("No Value Selected");
@@ -954,51 +980,51 @@ class _SearchedScreenState extends State<SearchedScreen> {
     });
   }
 
-  _onChanged(String value) async {
-    if (value.length == 0) {
-      setState(() {
-        _newData.clear();
-        isErrorInLoading = false;
-        isSearching = false;
-        print("length 0");
-        print(_newData);
-      });
-    } else {
-      setState(() {
-        isLoading = true;
-        isSearching = true;
-      });
-      final response =
-          await get(Uri.parse("$SERVER_ADDRESS/api/searchdoctor?term=$value"))
-              .catchError((e) {
-        setState(() {
-          isLoading = false;
-          isErrorInLoading = true;
-        });
-      });
-      try {
-        if (response.statusCode == 200) {
-          final jsonResponse = jsonDecode(response.body);
-          searchDoctorClass = SearchDoctorClass.fromJson(jsonResponse);
-          //print([0].name);
-          setState(() {
-            _newData.clear();
-            //print(searchDoctorClass.data.doctorData);
-            _newData.addAll(searchDoctorClass!.data!.doctorData!);
-            _newData.removeWhere((element) => element.id == currentId);
-            nextUrl = searchDoctorClass!.data!.links!.last.url!;
-            print(nextUrl);
-            isLoading = false;
-          });
-        }
-      } catch (e) {
-        setState(() {
-          isLoading = false;
-          isErrorInLoading = true;
-        });
-      }
-    }
-  }
+  // _onChanged(String value) async {
+  //   if (value.length == 0) {
+  //     setState(() {
+  //       _newData.clear();
+  //       isErrorInLoading = false;
+  //       isSearching = false;
+  //       print("length 0");
+  //       print(_newData);
+  //     });
+  //   } else {
+  //     setState(() {
+  //       isLoading = true;
+  //       isSearching = true;
+  //     });
+  //     final response =
+  //         await get(Uri.parse("$SERVER_ADDRESS/api/searchdoctor?term=$value"))
+  //             .catchError((e) {
+  //       setState(() {
+  //         isLoading = false;
+  //         isErrorInLoading = true;
+  //       });
+  //     });
+  //     try {
+  //       if (response.statusCode == 200) {
+  //         final jsonResponse = jsonDecode(response.body);
+  //         searchDoctorClass = SearchDoctorClass.fromJson(jsonResponse);
+  //         //print([0].name);
+  //         setState(() {
+  //           _newData.clear();
+  //           //print(searchDoctorClass.data.doctorData);
+  //           _newData.addAll(searchDoctorClass!.data!.doctorData!);
+  //           _newData.removeWhere((element) => element.id == currentId);
+  //           nextUrl = searchDoctorClass!.data!.links!.last.url!;
+  //           print(nextUrl);
+  //           isLoading = false;
+  //         });
+  //       }
+  //     } catch (e) {
+  //       setState(() {
+  //         isLoading = false;
+  //         isErrorInLoading = true;
+  //       });
+  //     }
+  //   }
+  // }
 
   // _loadMoreFunc() async {
   //   if (nextUrl == null) {
