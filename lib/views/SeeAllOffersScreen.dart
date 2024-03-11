@@ -32,8 +32,8 @@ class _SeeAllOffersState extends State<SeeAllOffers> {
   void initState() {
     super.initState();
     setState(() {
-      // getSenderOffers();
-      // getReceiverOffers();
+      getSenderOffers();
+      getReceiverOffers();
     });
   }
 
