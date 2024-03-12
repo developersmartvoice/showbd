@@ -59,6 +59,11 @@ class _GeneraLInfoState extends State<GeneraLInfo> {
   // String imageUrls = '';
   List<String>? imageUrls;
 
+  bool isNameFetched = false;
+  bool isAboutMeFetched = false;
+  bool isLocationFetched = false;
+  bool isPhotosFetched = false;
+
   getName() async {
     final response = await get(
         Uri.parse("$SERVER_ADDRESS/api/getName?id=${widget.doctorId}"));
@@ -69,6 +74,7 @@ class _GeneraLInfoState extends State<GeneraLInfo> {
         setState(() {
           name = jsonResponse['name'].toString();
           print(name);
+          isNameFetched = true;
         });
       }
     } catch (e) {
@@ -85,6 +91,7 @@ class _GeneraLInfoState extends State<GeneraLInfo> {
         setState(() {
           about_me = jsonResponse['aboutus'].toString();
           print(about_me);
+          isAboutMeFetched = true;
         });
       }
     } catch (e) {
@@ -101,6 +108,7 @@ class _GeneraLInfoState extends State<GeneraLInfo> {
         setState(() {
           location = jsonResponse['city'].toString();
           print(location);
+          isLocationFetched = true;
         });
       }
     } catch (e) {
@@ -133,6 +141,9 @@ class _GeneraLInfoState extends State<GeneraLInfo> {
         final jsonResponse = jsonDecode(response.body);
         setState(() {
           imageUrl1 = jsonResponse['image_url'].toString();
+          if (imageUrl1.isNotEmpty) {
+            isPhotosFetched = true;
+          }
           print("Image downloaded and assigned: $imageUrl1");
         });
       } else {
@@ -153,10 +164,16 @@ class _GeneraLInfoState extends State<GeneraLInfo> {
         final jsonResponse = jsonDecode(response.body);
         imageUrls = List<String>.from(jsonResponse['image_urls']);
         setState(() {
-          imageUrls!.forEach((imageUrl) {
-            print("Image downloaded and assigned: $imageUrl");
-            // Here you can do whatever you want with the downloaded images
-          });
+          if (imageUrls == null) {
+            imageUrls = [];
+            isPhotosFetched = true;
+          } else {
+            isPhotosFetched = true;
+            imageUrls!.forEach((imageUrl) {
+              print("Image downloaded and assigned: $imageUrl");
+              // Here you can do whatever you want with the downloaded images
+            });
+          }
         });
       } else {
         print("Failed to fetch images. Status code: ${response.statusCode}");
@@ -205,23 +222,23 @@ class _GeneraLInfoState extends State<GeneraLInfo> {
             },
           ),
         ),
-        body: imageUrls != null
-            ? ContainerPage(widget.doctorId, name, about_me, location, photos,
+        body: isNameFetched &&
+                isPhotosFetched &&
+                isLocationFetched &&
+                isAboutMeFetched
+            ? ContainerPage(widget.doctorId, name, about_me, location,
                 imageUrl1, imageUrls!)
-            : Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CircularProgressIndicator(),
-              ),
+            : Container(
+                alignment: Alignment.center,
+                transformAlignment: Alignment.center,
+                child: CircularProgressIndicator()),
       ),
     );
   }
 }
 
 class ContainerPage extends StatefulWidget {
-  @override
-  _ContainerPageState createState() => _ContainerPageState();
   final String id;
-  final String photos;
   final String name;
   final String aboutMe;
   final String city;
@@ -229,8 +246,10 @@ class ContainerPage extends StatefulWidget {
   // final String imageUrls;
   final List<String> imageUrls;
 
-  ContainerPage(this.id, this.name, this.aboutMe, this.city, this.photos,
-      this.imageUrl1, this.imageUrls);
+  ContainerPage(this.id, this.name, this.aboutMe, this.city, this.imageUrl1,
+      this.imageUrls);
+  @override
+  _ContainerPageState createState() => _ContainerPageState();
 }
 
 class _ContainerPageState extends State<ContainerPage> {
@@ -244,38 +263,27 @@ class _ContainerPageState extends State<ContainerPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    if (widget.name.isEmpty) {
-      isNameStored = false;
-    } else {
-      print("name is not empty");
-      isNameStored = true;
+    if (widget.name.isNotEmpty) {
+      setState(() {
+        isNameStored = true;
+      });
     }
 
-    if (widget.aboutMe.isEmpty) {
-      isAboutMeStored = false;
-    } else {
-      print("about is not empty");
-      isAboutMeStored = true;
+    if (widget.aboutMe.isNotEmpty) {
+      setState(() {
+        isAboutMeStored = true;
+      });
     }
 
-    if (widget.city.isEmpty) {
-      isLocationStored = false;
-    } else {
-      print("location is not empty");
-      isLocationStored = true;
+    if (widget.city.isNotEmpty) {
+      setState(() {
+        isLocationStored = true;
+      });
     }
-
-    // if (widget.photos.isEmpty) {
-    //   isPhotoStored = false;
-    // } else {
-    //   print("photos is not empty");
-    //   isPhotoStored = true;
-    // }
-    if (widget.imageUrl1.isEmpty) {
-      isImageStored = false;
-    } else {
-      print("imageUrl1 is not empty");
-      isImageStored = true;
+    if (widget.imageUrl1.isNotEmpty) {
+      setState(() {
+        isPhotoStored = true;
+      });
     }
   }
 
@@ -312,7 +320,7 @@ class _ContainerPageState extends State<ContainerPage> {
                             height: 25,
                             decoration: BoxDecoration(
                               //color: _boxColor, // Color of the button
-                              color: !isNameStored ? Colors.green : Colors.grey,
+                              color: isNameStored ? Colors.green : Colors.grey,
                               shape: BoxShape.circle,
                               border: Border.all(
                                 color: Colors.grey, // Color of the border
@@ -321,7 +329,8 @@ class _ContainerPageState extends State<ContainerPage> {
                             ),
                             child: Icon(
                               Icons.check,
-                              color: isNameStored ? Colors.green : Colors.white,
+                              color:
+                                  !isNameStored ? Colors.green : Colors.white,
                               // color: Colors.white, // Color of the icon
                               size: 20.0, // Size of the icon
                             ),
@@ -380,76 +389,6 @@ class _ContainerPageState extends State<ContainerPage> {
                 height: 1,
                 color: Colors.white10,
               ),
-              // Container(
-              //   height: 70,
-              //   color: Colors.white,
-              //   child: Stack(
-              //     children: [
-              //       Positioned(
-              //         left: 10, // Adjust the position of the button as needed
-              //         top: 20, // Adjust the position of the button as needed
-              //         child: InkWell(
-              //           //onTap: _changeColor,
-              //           // Add your logic for the selection button onTap event here
-
-              //           child: Container(
-              //             width: 30,
-              //             height: 30,
-              //             decoration: BoxDecoration(
-              //               //color: _boxColor, // Color of the button
-              //               color: Colors.green,
-              //               shape: BoxShape.circle,
-              //               border: Border.all(
-              //                 color: Colors.black, // Color of the border
-              //                 width: 1.0, // Width of the border
-              //               ), // Circular shape
-              //             ),
-              //             child: Icon(
-              //               Icons.check,
-              //               //color: _isSelected ? Colors.green : Colors.white,
-              //               color: Colors.white, // Color of the icon
-              //               size: 25.0, // Size of the icon
-              //             ),
-              //           ),
-              //         ),
-              //       ),
-              //       Row(children: [
-              //         Expanded(
-              //           child: Padding(
-              //             padding: const EdgeInsets.only(right: 160.0),
-              //             child: Text(
-              //               'About me',
-              //               textAlign: TextAlign.center,
-              //               style: GoogleFonts.robotoCondensed(
-              //                 fontSize: 20.0,
-              //                 color: Colors.black,
-              //                 fontWeight: FontWeight.w500,
-              //               ),
-              //             ),
-              //           ),
-              //         ),
-              //         Align(
-              //           alignment: Alignment.centerRight,
-              //           child: IconButton(
-              //             onPressed: () {
-              //               Navigator.of(context).push(
-              //                 MaterialPageRoute(
-              //                   builder: (context) => AboutMeDetailsPage(),
-              //                 ),
-              //               );
-              //               // Add your logic for the onPressed event here
-              //               // Typically, this would involve navigating to the next screen or performing some action
-              //             },
-              //             //alignment: Alignment.centerRight,
-              //             icon: Icon(Icons.arrow_forward_ios_sharp),
-              //             color: Colors.black, // Color of the icon
-              //             iconSize: 24.0, // Size of the icon
-              //           ),
-              //         ),
-              //       ]),
-              //     ],
-              //   ),
-              // ),
               Container(
                 padding: EdgeInsets.all(10),
                 height: 60,
@@ -465,8 +404,6 @@ class _ContainerPageState extends State<ContainerPage> {
                   },
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
-                    // crossAxisAlignment: CrossAxisAlignment.stretch,
-                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Stack(
                         children: [
@@ -476,7 +413,7 @@ class _ContainerPageState extends State<ContainerPage> {
                             decoration: BoxDecoration(
                               //color: _boxColor, // Color of the button
                               color:
-                                  !isAboutMeStored ? Colors.green : Colors.grey,
+                                  isAboutMeStored ? Colors.green : Colors.grey,
                               shape: BoxShape.circle,
                               border: Border.all(
                                 color: Colors.grey, // Color of the border
@@ -485,8 +422,9 @@ class _ContainerPageState extends State<ContainerPage> {
                             ),
                             child: Icon(
                               Icons.check,
-                              color:
-                                  isAboutMeStored ? Colors.green : Colors.white,
+                              color: !isAboutMeStored
+                                  ? Colors.green
+                                  : Colors.white,
                               // color: Colors.white, // Color of the icon
                               size: 20.0, // Size of the icon
                             ),
@@ -575,9 +513,9 @@ class _ContainerPageState extends State<ContainerPage> {
                             width: MediaQuery.sizeOf(context).width * .1,
                             height: 25,
                             decoration: BoxDecoration(
-                              color: Colors.white,
-                              //color: _boxColor, // Color of the button
-                              //color: !isNameStored ? Colors.green : Colors.grey,
+                              // color: Colors.white,
+                              // color: _boxColor, // Color of the button
+                              color: isPhotoStored ? Colors.green : Colors.grey,
                               shape: BoxShape.circle,
                               border: Border.all(
                                 color: Colors.grey, // Color of the border
@@ -587,7 +525,7 @@ class _ContainerPageState extends State<ContainerPage> {
                             child: Icon(
                               Icons.check,
                               color:
-                                  isPhotoStored ? Colors.green : Colors.white,
+                                  !isPhotoStored ? Colors.green : Colors.white,
                               // color: Colors.white, // Color of the icon
                               size: 20.0, // Size of the icon
                             ),
@@ -613,18 +551,18 @@ class _ContainerPageState extends State<ContainerPage> {
                       SizedBox(
                         width: MediaQuery.sizeOf(context).width * .1,
                       ),
-                      // Container(
-                      //   alignment: Alignment.centerRight,
-                      //   width: MediaQuery.sizeOf(context).width * .4,
-                      //   child: Text(
-                      //     widget.name,
-                      //     style: TextStyle(
-                      //       fontSize: 18.0,
-                      //       fontWeight: FontWeight.bold,
-                      //       color: Colors.grey,
-                      //     ),
-                      //   ),
-                      // ),
+                      Container(
+                        alignment: Alignment.centerRight,
+                        width: MediaQuery.sizeOf(context).width * .4,
+                        child: Text(
+                            // widget.name,
+                            // style: TextStyle(
+                            //   fontSize: 18.0,
+                            //   fontWeight: FontWeight.bold,
+                            //   color: Colors.grey,
+                            // ),
+                            ""),
+                      ),
                       // SizedBox(
                       //   width: 10,
                       // ),
@@ -632,11 +570,8 @@ class _ContainerPageState extends State<ContainerPage> {
                         width: MediaQuery.sizeOf(context).width * .05,
                       ),
                       Container(
-                        padding: EdgeInsets.only(left: 180),
+                        // padding: EdgeInsets.only(left: 180),
                         width: MediaQuery.sizeOf(context).width * .1,
-                        // child: IconButton(
-                        //     onPressed: () {},
-                        //     icon: Icon(Icons.arrow_forward_ios)),
                         child: Icon(Icons.arrow_forward_ios, size: 20),
                       ),
                     ],
@@ -815,9 +750,8 @@ class _ContainerPageState extends State<ContainerPage> {
                             height: 25,
                             decoration: BoxDecoration(
                               //color: _boxColor, // Color of the button
-                              color: !isLocationStored
-                                  ? Colors.green
-                                  : Colors.grey,
+                              color:
+                                  isLocationStored ? Colors.green : Colors.grey,
                               shape: BoxShape.circle,
                               border: Border.all(
                                 color: Colors.grey, // Color of the border
@@ -826,7 +760,7 @@ class _ContainerPageState extends State<ContainerPage> {
                             ),
                             child: Icon(
                               Icons.check,
-                              color: isLocationStored
+                              color: !isLocationStored
                                   ? Colors.green
                                   : Colors.white,
                               // color: Colors.white, // Color of the icon
