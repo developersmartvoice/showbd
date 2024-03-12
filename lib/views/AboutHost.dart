@@ -1135,12 +1135,12 @@ class _ContainerPageState extends State<ContainerPage> {
               color: Colors.white,
               child: InkWell(
                 onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          PhotoSettingsPage(widget.id, widget.photos),
-                    ),
-                  );
+                  // Navigator.of(context).push(
+                  //   MaterialPageRoute(
+                  //     builder: (context) =>
+                  //         PhotoSettingsPage(widget.id, widget.photos),
+                  //   ),
+                  // );
                 },
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
@@ -1206,12 +1206,12 @@ class _ContainerPageState extends State<ContainerPage> {
                         padding: const EdgeInsets.only(right: 5),
                         child: IconButton(
                           onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    PhotoSettingsPage(widget.id, widget.photos),
-                              ),
-                            );
+                            // Navigator.of(context).push(
+                            //   MaterialPageRoute(
+                            //     builder: (context) =>
+                            //         PhotoSettingsPage(widget.id, widget.photos),
+                            //   ),
+                            // );
                             // Add your logic for the onPressed event here
                             // Typically, this would involve navigating to the next screen or performing some action
                           },

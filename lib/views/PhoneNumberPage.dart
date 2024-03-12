@@ -102,7 +102,7 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
             child: Text(
               'Save',
               style: GoogleFonts.robotoCondensed(
-                color: Colors.black,
+                color: Color.fromARGB(255, 0, 0, 0),
                 fontSize: 20,
                 fontWeight: FontWeight.w700,
               ),
@@ -115,7 +115,7 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
         child: Column(
           children: [
             Container(
-              height: 70,
+              height: 90,
               //color: Colors.white,
               child: Stack(children: [
                 Positioned(
@@ -155,11 +155,12 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
                   padding: EdgeInsets.all(16),
                   alignment: Alignment.topLeft,
                   child: Text(
-                    "Phone Page",
+                    PHONE_PAGE,
+                    textAlign: TextAlign.justify, // Align text to center
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 12,
-                      fontWeight: FontWeight.w200,
+                      fontWeight: FontWeight.w900,
                     ),
                   ),
                   // Text(
