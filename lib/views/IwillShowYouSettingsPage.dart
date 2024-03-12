@@ -121,10 +121,11 @@ class _IwillShowYouSettingsPageState extends State<IwillShowYouSettingsPage> {
                 alignment: Alignment.topLeft,
                 child: Text(
                   IWILLSHOWYOU_PAGE_1,
+                  textAlign: TextAlign.justify, // Align text to center
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 12,
-                    fontWeight: FontWeight.w200,
+                    fontWeight: FontWeight.w900,
                   ),
                 ),
               ),

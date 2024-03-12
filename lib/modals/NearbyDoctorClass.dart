@@ -101,16 +101,18 @@ class Data {
   }
 }
 
-class   NearbyData {
+class NearbyData {
   int? id;
   String? name;
   String? address;
   String? image;
   List<String>? images; // Add images field as a list of strings
+  String? city;
   double? distance;
   String? departmentName;
   String? consultationFee;
   String? aboutme;
+  String? motto;
   String? avgrating;
   String? totalreview;
 
@@ -120,10 +122,12 @@ class   NearbyData {
       this.address,
       this.image,
       this.images, // Include images field in the constructor
+      this.city,
       this.distance,
       this.departmentName,
       this.consultationFee,
       this.aboutme,
+      this.motto, // Add motto field in the constructor
       this.avgrating,
       this.totalreview});
 
@@ -136,10 +140,12 @@ class   NearbyData {
         ? List<String>.from(json['images'])
         : []; // Parse images as a list
 
+    city = json['city'];
     //distance = double.parse(json['distance'].toString()) ?? 0.0;
     departmentName = json['department_name'];
     consultationFee = json['consultation_fees'].toString();
     aboutme = json['aboutus'];
+    motto = json['motto'];
     avgrating = json['avgratting'].toString();
     totalreview = json['total_review'].toString();
   }
@@ -151,10 +157,12 @@ class   NearbyData {
     data['address'] = this.address;
     data['image'] = this.image;
     data['images'] = this.images; // Include images in the JSON output
+    data['city'] = this.city;
     data['distance'] = this.distance;
     data['department_name'] = this.departmentName;
     data['consultation_fees'] = this.consultationFee;
     data['aboutus'] = this.aboutme;
+    data['motto'] = this.motto;
     data['avgratting'] = this.avgrating;
     data['total_review'] = this.totalreview;
 

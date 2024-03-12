@@ -246,7 +246,7 @@ class _ContainerPageState extends State<ContainerPage> {
                         alignment: Alignment.center,
                         width: MediaQuery.sizeOf(context).width * .2,
                         child: Text(
-                          EMAIL,
+                          "Email",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 16.0,

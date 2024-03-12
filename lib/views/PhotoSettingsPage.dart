@@ -137,10 +137,11 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                   children: [
                     Text(
                       PHOTOS_PAGE,
+                      textAlign: TextAlign.justify, // Align text to center
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 12,
-                        fontWeight: FontWeight.w200,
+                        fontWeight: FontWeight.w900,
                       ),
                     ),
                     SizedBox(
@@ -148,10 +149,11 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                     ),
                     Text(
                       PHOTOS_PAGE_1,
+                      textAlign: TextAlign.justify, // Align text to center
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 12,
-                        fontWeight: FontWeight.w200,
+                        fontWeight: FontWeight.w900,
                       ),
                     ),
                   ],

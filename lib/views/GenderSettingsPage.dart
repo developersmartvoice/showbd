@@ -123,10 +123,11 @@ class _GenderSettingsPageState extends State<GenderSettingsPage> {
                 alignment: Alignment.topLeft,
                 child: Text(
                   GENDER_PAGE,
+                  textAlign: TextAlign.justify, // Align text to center
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 12,
-                    fontWeight: FontWeight.w200,
+                    fontWeight: FontWeight.w900,
                   ),
                 ),
               ),

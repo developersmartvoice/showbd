@@ -204,6 +204,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                 print(
                     'Name is ${list2[index].name} and ratings are ${list2[index].avgrating}');
                 print(list2[index].images);
+                print("Watching all citys! ${list2[index].city}");
 
                 // for (int i = 0; i < list2.length; i++) {
                 //   fetchDoctorDetails(list2[i].id);
@@ -218,15 +219,18 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                 //     "wanna see the data ${data1.name} and total Reviews are: ${data1.totalReview}");
 
                 return nearByGridWidget(
-                    data.image,
-                    data.name,
-                    data.departmentName,
-                    data.id,
-                    data.consultationFee,
-                    data.aboutme,
-                    data.avgrating,
-                    data.totalreview,
-                    data.images);
+                  data.image,
+                  data.name,
+                  data.departmentName,
+                  data.id,
+                  data.consultationFee,
+                  data.aboutme,
+                  data.motto,
+                  data.avgrating,
+                  data.city,
+                  data.images,
+                  data.totalreview,
+                );
               },
             ),
 
@@ -251,11 +255,12 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
     );
   }
 
-  Widget nearByGridWidget(img, name, dept, id, consultationFee, aboutMe,
-      avgRating, totalReview, imgs) {
+  Widget nearByGridWidget(img, name, dept, id, consultationFee, aboutMe, motto,
+      avgRating, city, imgs, totalReview) {
     // if (id == currentId) {
     //   return Container(height: 0, width: 0);
     // } else {
+    print("This is the city of the doctor: $city");
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -431,7 +436,25 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                             //     .withOpacity(0.8),
                             color: Colors.white,
                             backgroundColor: Color.fromARGB(94, 194, 191, 191),
-                            fontSize: 20,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: MediaQuery.sizeOf(context).width * 1,
+                        margin: EdgeInsets.only(top: 180),
+                        child: Text(
+                          city.toString().toUpperCase(),
+                          maxLines: 2,
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.ellipsis,
+                          style: GoogleFonts.poppins(
+                            // color: Color.fromARGB(255, 255, 94, 0)
+                            //     .withOpacity(0.8),
+                            color: Colors.white,
+                            backgroundColor: Color.fromARGB(94, 194, 191, 191),
+                            fontSize: 15,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
@@ -619,9 +642,9 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
             //),
             //),
             Text(
-              aboutMe.toString().length >= 30
-                  ? aboutMe.toString().substring(0, 30) + "..."
-                  : aboutMe.toString(),
+              motto.toString().length >= 30
+                  ? motto.toString().substring(0, 30) + "..."
+                  : motto.toString(),
               textAlign: TextAlign.center,
               style: GoogleFonts.poppins(
                 color: LIGHT_GREY_TEXT,
@@ -629,6 +652,17 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                 fontWeight: FontWeight.w500,
               ),
             ),
+            // Text(
+            //   aboutMe.toString().length >= 30
+            //       ? aboutMe.toString().substring(0, 30) + "..."
+            //       : aboutMe.toString(),
+            //   textAlign: TextAlign.center,
+            //   style: GoogleFonts.poppins(
+            //     color: LIGHT_GREY_TEXT,
+            //     fontSize: 20.0,
+            //     fontWeight: FontWeight.w500,
+            //   ),
+            // ),
             Divider(
               height: 30,
               color: Colors.grey,
@@ -786,6 +820,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
           lat = latitude.toString();
           lon = longitude.toString();
           nearbyDoctorsClass = NearbyDoctorsClass.fromJson(jsonResponse);
+          print(nearbyDoctorsClass!.data!.nearbyData![0].city);
           print("Finished");
           list2.addAll(nearbyDoctorsClass!.data!.nearbyData!);
           list2.removeWhere((element) => element.id == currentId);
