@@ -906,17 +906,17 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        // Navigator.of(context).push(
-                        //   MaterialPageRoute(
-                        //     builder: (context) => DoctorProfile(),
-                        //   ),
-                        // );
-                        Navigator.push(
-                          context,
+                        Navigator.of(context).push(
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  DetailsPage(doctorId.toString())),
+                            builder: (context) => DoctorProfile(),
+                          ),
                         );
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //       builder: (context) =>
+                        //           DetailsPage(doctorId.toString())),
+                        // );
                       },
                       child: Text('View Profile'),
                       style: ElevatedButton.styleFrom(
@@ -1129,11 +1129,14 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                                   fontWeight: FontWeight.w600,
                                 ),
                               )
-                            : Text(
-                                "Waiting for payment!",
-                                style: GoogleFonts.robotoCondensed(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w600,
+                            : Padding(
+                                padding: EdgeInsets.only(left: 20.0),
+                                child: Text(
+                                  "Waiting for payment!",
+                                  style: GoogleFonts.robotoCondensed(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                               )),
                     Icon(
