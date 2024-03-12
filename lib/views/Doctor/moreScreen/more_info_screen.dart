@@ -906,17 +906,17 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        // Navigator.of(context).push(
-                        //   MaterialPageRoute(
-                        //     builder: (context) => DoctorProfile(),
-                        //   ),
-                        // );
-                        Navigator.push(
-                          context,
+                        Navigator.of(context).push(
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  DetailsPage(doctorId.toString())),
+                            builder: (context) => DoctorProfile(),
+                          ),
                         );
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //       builder: (context) =>
+                        //           DetailsPage(doctorId.toString())),
+                        // );
                       },
                       child: Text('View Profile'),
                       style: ElevatedButton.styleFrom(
