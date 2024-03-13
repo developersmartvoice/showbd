@@ -141,7 +141,7 @@ const String PHOTOS_PAGE =
     "Add 5 photos that show others how amazing you are. This is your chance to make an awesome first impression! Remember: A friendly smile makes friends.";
 const String PHOTOS_PAGE_1 =
     "Important: We reserve our right to change your main photo or reject photos you upload that do not comply with our profile photo guidelines.";
-const String PHOTOS_PAGE_3 = "Click on the photo to edit";
+const String PHOTOS_PAGE_3 = "Click on the photo to edit.";
 const String IWILLSHOWYOU_PAGE_1 =
     "How would you describe the ideal tour around you? Be specific.";
 const String LANGUAGES = "Languages";
@@ -149,6 +149,8 @@ const String ABOUT = "About Me";
 const String LOCATION = "Location";
 const String EMAIL_PAGE =
     "Your email address will be used to send you booking confirmations. It won't be displayed on your profile.";
+const String PHONE_PAGE =
+    "Your phone number will be used to send you booking confirmations. It won't be displayed on your profile. Be sure to use a cell number you can easily be reached at!";
 const String ABOUT_ME_COL1 =
     "Let others know what you do in life and how you spending your free time.";
 const String ABOUT_ME_COL2 =

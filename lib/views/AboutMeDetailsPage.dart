@@ -237,10 +237,11 @@ class _AboutMeDetailsPageState extends State<AboutMeDetailsPage> {
                     children: [
                       Text(
                         ABOUT_ME_COL1,
+                        textAlign: TextAlign.justify, // Align text to center
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 12,
-                          fontWeight: FontWeight.w200,
+                          fontWeight: FontWeight.w900,
                         ),
                       ),
                       SizedBox(
@@ -248,10 +249,11 @@ class _AboutMeDetailsPageState extends State<AboutMeDetailsPage> {
                       ),
                       Text(
                         ABOUT_ME_COL2,
+                        textAlign: TextAlign.justify, // Align text to center
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 12,
-                          fontWeight: FontWeight.w200,
+                          fontWeight: FontWeight.w900,
                         ),
                       ),
                     ],
