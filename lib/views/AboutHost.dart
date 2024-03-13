@@ -37,6 +37,7 @@ import 'package:appcode3/main.dart';
 //import 'package:facebook_audience_network/ad/ad_native.dart';
 // import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 // import 'package:flutter_html/style.dart';
 //import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -76,6 +77,16 @@ class _AboutHostState extends State<AboutHost> {
   //   'French',
   //   'Hindi'
   // ];
+
+  Map<String, String> languageMap = {
+    "english": "English",
+    "bengali": "Bengali",
+    "hindi": "Hindi",
+    "urdu": "Urdu",
+    "french": "French",
+    "spanish": "Spanish"
+  };
+
   String motto = '';
   String iwillshowyou = '';
   String services = '';
@@ -85,7 +96,7 @@ class _AboutHostState extends State<AboutHost> {
   String photos = '';
   String about_me = '';
   String gender = '';
-  String languages = '';
+  List<String>? languages;
 
   getMotto() async {
     final response = await get(
@@ -207,46 +218,69 @@ class _AboutHostState extends State<AboutHost> {
     }
   }
 
+  // getLanguages() async {
+  //   final response = await get(
+  //       Uri.parse("$SERVER_ADDRESS/api/getLanguages?id=${widget.doctorId}"));
+  //   print("$SERVER_ADDRESS/api/getLanguages?id=${widget.doctorId}");
+  //   try {
+  //     if (response.statusCode == 200) {
+  //       final jsonResponse = jsonDecode(response.body);
+  //       setState(() {
+  //         languages = jsonResponse['languages'].toString();
+  //         print(languages);
+  //       });
+  //     }
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
+
   getLanguages() async {
     final response = await get(
         Uri.parse("$SERVER_ADDRESS/api/getLanguages?id=${widget.doctorId}"));
     print("$SERVER_ADDRESS/api/getLanguages?id=${widget.doctorId}");
+
     try {
       if (response.statusCode == 200) {
         final jsonResponse = jsonDecode(response.body);
-        setState(() {
-          languages = jsonResponse['languages'].toString();
-          print(languages);
-        });
+        setState(
+          () {
+            languages = jsonResponse['languages'].split(',');
+            print(languages);
+
+            // Split received languages string into a list
+            // languages = jsonResponse['languages'].split(',');
+          },
+        );
       }
     } catch (e) {
       print(e);
     }
   }
 
-  getPhotos() async {
-    final response = await get(
-        Uri.parse("$SERVER_ADDRESS/api/getPhotos?id=${widget.doctorId}"));
-    print("$SERVER_ADDRESS/api/getPhotos?id=${widget.doctorId}");
-    try {
-      if (response.statusCode == 200) {
-        final jsonResponse = jsonDecode(response.body);
-        setState(() {
-          languages = jsonResponse['photos'].toString();
-          print(photos);
-        });
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
+  // getPhotos() async {
+  //   final response = await get(
+  //       Uri.parse("$SERVER_ADDRESS/api/getPhotos?id=${widget.doctorId}"));
+  //   print("$SERVER_ADDRESS/api/getPhotos?id=${widget.doctorId}");
+  //   try {
+  //     if (response.statusCode == 200) {
+  //       final jsonResponse = jsonDecode(response.body);
+  //       setState(() {
+  //         languages = jsonResponse['photos'].toString();
+  //         print(photos);
+  //       });
+  //     }
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getMotto();
-    getPhotos();
+    // getPhotos();
     getConsultationFees();
     getAboutMe();
     getCity();
@@ -258,28 +292,31 @@ class _AboutHostState extends State<AboutHost> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 243, 103, 9),
-        title: Text('About host',
-            // style: GoogleFonts.robotoCondensed(
-            //   fontSize: 25,
-            //   fontWeight: FontWeight.bold,
-            //   color: WHITE,
-            // ),
-            style: Theme.of(context).textTheme.headline5!.apply(
-                color: Theme.of(context).backgroundColor, fontWeightDelta: 5)),
-        centerTitle: true,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
+        appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 243, 103, 9),
+          title: Text('About host',
+              // style: GoogleFonts.robotoCondensed(
+              //   fontSize: 25,
+              //   fontWeight: FontWeight.bold,
+              //   color: WHITE,
+              // ),
+              style: Theme.of(context).textTheme.headline5!.apply(
+                  color: Theme.of(context).backgroundColor,
+                  fontWeightDelta: 5)),
+          centerTitle: true,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
         ),
+        body: ContainerPage(widget.doctorId, motto, iwillshowyou, services,
+            consultationfees, photos, location, about_me, gender, languages!),
       ),
-      body: ContainerPage(widget.doctorId, motto, iwillshowyou, services,
-          consultationfees, photos, location, about_me, gender, languages),
     );
   }
 }
@@ -296,7 +333,7 @@ class ContainerPage extends StatefulWidget {
   final String city;
   final String aboutMe;
   final String gender;
-  final String languages;
+  final List<String> languages;
 
   ContainerPage(
     this.id,
@@ -2058,15 +2095,17 @@ class _ContainerPageState extends State<ContainerPage> {
                     ),
                     Container(
                       alignment: Alignment.centerRight,
-                      width: MediaQuery.sizeOf(context).width * .4,
+                      width: MediaQuery.of(context).size.width * 0.4,
                       child: Text(
-                        //'${selectedLanguages.join(', ')}',
-                        //'${selectedLanguages}',
-                        widget.languages,
+                        widget.languages
+                            .map((language) => language.capitalize)
+                            .join(
+                                ', '), // Join the list elements with a comma and space
                         style: TextStyle(
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey),
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey,
+                        ),
                       ),
                       // Text(
                       //   widget.languages,
@@ -2207,39 +2246,39 @@ class _ContainerPageState extends State<ContainerPage> {
         //child: SizedBox(
         //height: 70, // Adjust the height as needed
         //child:
-        Padding(
-          padding: EdgeInsets.fromLTRB(50, 15, 50, 15),
-          child: ElevatedButton(
-            onPressed: () {
-              // Navigator.of(context).push(
-              //   MaterialPageRoute(
-              //     builder: (context) =>
-              //         BookingScreen(widget.id, widget.guideName),
-              //   ),
-              // );
-            },
-            //child: Text('SUBMIT PROFILE'),
-            child: Padding(
-              padding: EdgeInsets.all(10), // Adjust padding as needed
-              child: Text('SUBMIT PROFILE'),
-            ),
-            style: ElevatedButton.styleFrom(
-              textStyle: GoogleFonts.robotoCondensed(
-                fontSize: 20.0,
-                fontWeight: FontWeight.w500,
-              ),
-              padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-              foregroundColor: Colors.white,
-              backgroundColor: Color.fromARGB(255, 243, 103, 9),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15.0),
-                side: BorderSide(
-                  color: Colors.white,
-                ), // Set border radius
-              ),
-            ),
-          ),
-        ),
+        // Padding(
+        //   padding: EdgeInsets.fromLTRB(50, 15, 50, 15),
+        //   child: ElevatedButton(
+        //     onPressed: () {
+        //       // Navigator.of(context).push(
+        //       //   MaterialPageRoute(
+        //       //     builder: (context) =>
+        //       //         BookingScreen(widget.id, widget.guideName),
+        //       //   ),
+        //       // );
+        //     },
+        //     //child: Text('SUBMIT PROFILE'),
+        //     child: Padding(
+        //       padding: EdgeInsets.all(10), // Adjust padding as needed
+        //       child: Text('SUBMIT PROFILE'),
+        //     ),
+        //     style: ElevatedButton.styleFrom(
+        //       textStyle: GoogleFonts.robotoCondensed(
+        //         fontSize: 20.0,
+        //         fontWeight: FontWeight.w500,
+        //       ),
+        //       padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+        //       foregroundColor: Colors.white,
+        //       backgroundColor: Color.fromARGB(255, 243, 103, 9),
+        //       shape: RoundedRectangleBorder(
+        //         borderRadius: BorderRadius.circular(15.0),
+        //         side: BorderSide(
+        //           color: Colors.white,
+        //         ), // Set border radius
+        //       ),
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }
