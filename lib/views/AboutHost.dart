@@ -10,12 +10,12 @@ import 'package:appcode3/views/AboutMeDetailsPage.dart';
 import 'package:appcode3/views/GenderSettingsPage.dart';
 import 'package:appcode3/views/HourlyRate.dart';
 import 'package:appcode3/views/IwillShowYouSettingsPage.dart';
-import 'package:appcode3/views/LanguageNew.dart';
+//import 'package:appcode3/views/LanguageNew.dart';
 import 'package:appcode3/views/LanguagesSettingsPage.dart';
 import 'package:appcode3/views/LocationSearchPageInfo.dart';
 import 'package:appcode3/views/MottoSettingsPage.dart';
-import 'package:appcode3/views/PhotoSettingsPage.dart';
-import 'package:appcode3/views/ServiceNew.dart';
+//import 'package:appcode3/views/PhotoSettingsPage.dart';
+//import 'package:appcode3/views/ServiceNew.dart';
 // import 'package:appcode3/views/SendOfferScreen.dart';
 // import 'package:appcode3/views/SendOffersScreen.dart';
 import 'package:appcode3/views/ServicesSettings.dart';
@@ -89,7 +89,7 @@ class _AboutHostState extends State<AboutHost> {
 
   String motto = '';
   String iwillshowyou = '';
-  String services = '';
+  List<String>? services;
   String consultationfees = '';
   //String photos = '';
   String location = '';
@@ -192,7 +192,7 @@ class _AboutHostState extends State<AboutHost> {
       if (response.statusCode == 200) {
         final jsonResponse = jsonDecode(response.body);
         setState(() {
-          services = jsonResponse['services'].toString();
+          services = jsonResponse['services'].split(',');
           print(services);
         });
       }
@@ -317,6 +317,11 @@ class _AboutHostState extends State<AboutHost> {
         body: ContainerPage(widget.doctorId, motto, iwillshowyou, services,
             consultationfees, photos, location, about_me, gender, languages!),
       ),
+<<<<<<< HEAD
+=======
+      body: ContainerPage(widget.doctorId, motto, iwillshowyou, services!,
+          consultationfees, photos, location, about_me, gender, languages),
+>>>>>>> 245995dc4988a633daa6cab7eca94198fd181f95
     );
   }
 }
@@ -327,7 +332,7 @@ class ContainerPage extends StatefulWidget {
   final String id;
   final String motto;
   final String iwillshowyou;
-  final String services;
+  final List<String> services;
   final String consultationfees;
   final String photos;
   final String city;
@@ -888,10 +893,16 @@ class _ContainerPageState extends State<ContainerPage> {
               color: Colors.white,
               child: InkWell(
                 onTap: () {
+                  // Navigator.of(context).push(
+                  //   MaterialPageRoute(
+                  //     builder: (context) =>
+                  //         ServiceNew(widget.id, widget.services),
+                  //   ),
+                  // );
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) =>
-                          ServiceNew(widget.id, widget.services),
+                          ServicesSettingsPage(widget.id, widget.services),
                     ),
                   );
                 },
@@ -950,8 +961,8 @@ class _ContainerPageState extends State<ContainerPage> {
                       width: MediaQuery.sizeOf(context).width * .4,
                       child: Text(
                         //'${serviceMapping}',
-                        'Services provided by me',
-                        //widget.services,
+                        'See your activities...',
+                        //widget.services.toString(),
                         //'${selectedActivities}',
                         style: TextStyle(
                           fontSize: 15.0,
@@ -2035,10 +2046,16 @@ class _ContainerPageState extends State<ContainerPage> {
               color: Colors.white,
               child: InkWell(
                 onTap: () {
+                  // Navigator.of(context).push(
+                  //   MaterialPageRoute(
+                  //     builder: (context) =>
+                  //         LanguageNew(widget.id, widget.languages),
+                  //   ),
+                  // );
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) =>
-                          LanguageNew(widget.id, widget.languages),
+                          LanguagesSettingsPage(widget.id, widget.languages),
                     ),
                   );
                 },
