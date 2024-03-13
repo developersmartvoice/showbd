@@ -37,6 +37,7 @@ class _DetailsPageState extends State<DetailsPage> {
   int count = 0;
   String? guideName;
   String? img;
+  String? city;
   List<String>? imgs;
   int currentPage = 0;
   String? guideId;
@@ -95,6 +96,7 @@ class _DetailsPageState extends State<DetailsPage> {
       guideName = doctorDetailsClass!.data!.name;
       img = doctorDetailsClass!.data!.image;
       // imgs?.addAll(doctorDetailsClass!.data!.images!);
+      city = doctorDetailsClass!.data!.city;
       print(doctorDetailsClass!.data!.avgratting);
       print(doctorDetailsClass!.data!.images!);
       // print(doctorDetailsClass!.data!.services!);
@@ -466,11 +468,47 @@ class _DetailsPageState extends State<DetailsPage> {
                   },
                 ),
               ),
-              Positioned(
-                  top: 55,
-                  // right: 15,
-                  child: consultationFee(
-                      doctorDetailsClass!.data!.consultationFee!)),
+              Container(
+                width: MediaQuery.sizeOf(context).width * 1,
+                margin: EdgeInsets.only(top: 240),
+                child: Text(
+                  guideName.toString().toUpperCase(),
+                  maxLines: 2,
+                  textAlign: TextAlign.left,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.poppins(
+                    // color: Color.fromARGB(255, 255, 94, 0)
+                    //     .withOpacity(0.8),
+                    color: Colors.white,
+                    backgroundColor: Color.fromARGB(94, 194, 191, 191),
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+              Container(
+                width: MediaQuery.sizeOf(context).width * 1,
+                margin: EdgeInsets.only(top: 270),
+                child: Text(
+                  city.toString().toUpperCase(),
+                  maxLines: 2,
+                  textAlign: TextAlign.left,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.poppins(
+                    // color: Color.fromARGB(255, 255, 94, 0)
+                    //     .withOpacity(0.8),
+                    color: Colors.white,
+                    backgroundColor: Color.fromARGB(94, 194, 191, 191),
+                    fontSize: 15,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+              // Positioned(
+              //     top: 55,
+              //     // right: 15,
+              //     child: consultationFee(
+              //         doctorDetailsClass!.data!.consultationFee!),),
             ],
           ),
         ),
@@ -1607,26 +1645,26 @@ class _DetailsPageState extends State<DetailsPage> {
   }
 }
 
-Widget consultationFee(String consultationFee) {
-  return Container(
-    width: 80.0, // Fixed width
-    height: 40.0, // Fixed height
-    margin: EdgeInsets.only(top: 20),
-    decoration: BoxDecoration(
-        color: Color.fromARGB(255, 255, 94, 0).withOpacity(0.8),
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(5),
-          bottomLeft: Radius.circular(5),
-        )),
-    child: Center(
-      child: Text(
-        '\$' + consultationFee + "/h",
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 14.0,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    ),
-  );
-}
+// Widget consultationFee(String consultationFee) {
+//   return Container(
+//     width: 80.0, // Fixed width
+//     height: 40.0, // Fixed height
+//     margin: EdgeInsets.only(top: 20),
+//     decoration: BoxDecoration(
+//         color: Color.fromARGB(255, 255, 94, 0).withOpacity(0.8),
+//         borderRadius: BorderRadius.only(
+//           topLeft: Radius.circular(5),
+//           bottomLeft: Radius.circular(5),
+//         )),
+//     child: Center(
+//       child: Text(
+//         '\$' + consultationFee + "/h",
+//         style: TextStyle(
+//           color: Colors.white,
+//           fontSize: 14.0,
+//           fontWeight: FontWeight.bold,
+//         ),
+//       ),
+//     ),
+//   );
+// }

@@ -46,15 +46,23 @@ class _FilteredGuidesScreen extends State<FilteredGuidesScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      appBar:
-          AppBar(title: Text("Filtered Result"), centerTitle: true, actions: [
-        IconButton(
-            onPressed: () {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => DoctorTabsScreen()));
-            },
-            icon: Icon(Icons.home_sharp))
-      ]),
+      appBar: AppBar(
+          title: Text("Filtered Result",
+              style: Theme.of(context).textTheme.headline5!.apply(
+                  color: Theme.of(context).backgroundColor,
+                  fontWeightDelta: 5)),
+          backgroundColor: const Color.fromARGB(255, 243, 103, 9),
+          centerTitle: true,
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => DoctorTabsScreen()));
+                },
+                icon: Icon(Icons.home_sharp))
+          ]),
       body: SingleChildScrollView(
         child: Column(children: [
           list2.isEmpty

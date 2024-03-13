@@ -120,10 +120,11 @@ class _NameSettingsPageState extends State<NameSettingsPage> {
                 alignment: Alignment.topLeft,
                 child: Text(
                   NAME_PAGE,
+                  textAlign: TextAlign.justify, // Align text to center
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 12,
-                    fontWeight: FontWeight.w200,
+                    fontWeight: FontWeight.w900,
                   ),
                 ),
               ),
