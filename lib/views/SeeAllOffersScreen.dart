@@ -6,6 +6,7 @@ import 'package:appcode3/modals/OffersClassReceiver.dart';
 import 'package:appcode3/modals/OffersClassSender.dart';
 import 'package:appcode3/views/ChatScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 
 class SeeAllOffers extends StatefulWidget {
@@ -94,6 +95,7 @@ class _SeeAllOffersState extends State<SeeAllOffers> {
                   children: [
                     Expanded(
                       child: Container(
+                        padding: EdgeInsets.only(left: 15),
                         alignment: Alignment.center,
                         child: ElevatedButton(
                           onPressed: () {
@@ -103,14 +105,31 @@ class _SeeAllOffersState extends State<SeeAllOffers> {
                             });
                           },
                           style: ElevatedButton.styleFrom(
-                            // padding: EdgeInsets.all(16.0),
+                            foregroundColor:
+                                isSenderSelected ? Colors.white : Colors.black,
+                            textStyle: GoogleFonts.robotoCondensed(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
+                            ),
                             backgroundColor: isSenderSelected
                                 ? Colors.orange
                                 : Color.fromARGB(255, 242, 235, 235),
+                            // elevation: 5, // Elevation
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(20), // Border radius
+                            ),
+                            minimumSize: Size(160, 50), // Set width and height
                           ),
+                          // style: ElevatedButton.styleFrom(
+                          //   // padding: EdgeInsets.all(16.0),
+                          //   backgroundColor: isSenderSelected
+                          //       ? Colors.orange
+                          //       : Color.fromARGB(255, 242, 235, 235),
+                          // ),
                           child: Text(
                             'Sent',
-                            style: TextStyle(
+                            style: GoogleFonts.robotoCondensed(
                                 color: isSenderSelected
                                     ? Colors.white
                                     : Colors.orange),
@@ -122,9 +141,10 @@ class _SeeAllOffersState extends State<SeeAllOffers> {
                         ),
                       ),
                     ),
-                    SizedBox(width: 16.0), // Adjust the spacing between buttons
+                    SizedBox(width: 2.0), // Adjust the spacing between buttons
                     Expanded(
                       child: Container(
+                        padding: EdgeInsets.only(right: 25),
                         child: ElevatedButton(
                           onPressed: () {
                             setState(() {
@@ -133,14 +153,31 @@ class _SeeAllOffersState extends State<SeeAllOffers> {
                             });
                           },
                           style: ElevatedButton.styleFrom(
-                            // padding: EdgeInsets.all(16.0),
+                            foregroundColor:
+                                isSenderSelected ? Colors.white : Colors.black,
+                            textStyle: GoogleFonts.robotoCondensed(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
+                            ),
                             backgroundColor: isSenderSelected
                                 ? Color.fromARGB(255, 242, 235, 235)
                                 : Colors.orange,
+                            // elevation: 5, // Elevation
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(20), // Border radius
+                            ),
+                            minimumSize: Size(160, 50), // Set width and height
                           ),
+                          // style: ElevatedButton.styleFrom(
+                          //   // padding: EdgeInsets.all(16.0),
+                          //   backgroundColor: isSenderSelected
+                          //       ? Color.fromARGB(255, 242, 235, 235)
+                          //       : Colors.orange,
+                          // ),
                           child: Text(
                             'Received',
-                            style: TextStyle(
+                            style: GoogleFonts.robotoCondensed(
                                 color: !isSenderSelected
                                     ? Colors.white
                                     : Colors.orange),

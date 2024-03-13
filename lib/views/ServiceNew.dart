@@ -36,31 +36,50 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
 class ServiceNew extends StatefulWidget {
+  final String id;
+  final String services;
+
+  ServiceNew(this.id, this.services);
   //const NameSettingsPage({super.key});
 
   @override
   State<ServiceNew> createState() => _ServiceNewState();
-  late final String id;
+  //late final String id;
   //late final String gender;
-  late final String services;
+  //late final String services;
   //late final String aboutMe;
   //late final String city;
 
-  ServiceNew(this.id, this.services);
+  //ServiceNew(this.id, this.services);
 }
 
 class _ServiceNewState extends State<ServiceNew> {
+  List<String> selectedServices = [];
   String selectedService = "";
   late TextEditingController _controller;
   // String enteredValue = '';
-  bool isGenderSelected = false;
+  //bool isGenderSelected = false;
   bool isServiceSelected = false;
   bool isValueChanged = false;
+
+  Map<String, String> serviceMap = {
+    "translation": "Translation & Interpretation",
+    "shopping": "Shopping",
+    "food": "Food & Restaurants",
+    "art": "Art & Museums",
+    "history": "History & Culture",
+    "exploration": "Exploration & Sightseeing",
+    "pick": "Pick up & Driving Tours",
+    "nightlife": "Nightlife & Bars",
+    "sports": "Sports & Recreation"
+  };
   void updatingServices() async {
+    List<String> mappedServices =
+        selectedServices.map((service) => serviceMap[service]!).toList();
     final response =
         await post(Uri.parse("$SERVER_ADDRESS/api/updateServices"), body: {
       "id": widget.id,
-      "services": selectedService,
+      "services": selectedServices,
     });
     print("$SERVER_ADDRESS/api/updateServices");
     print(response.body);
@@ -143,60 +162,28 @@ class _ServiceNewState extends State<ServiceNew> {
               //   ),
               // ),
               SizedBox(
-                height: 10,
+                height: 5,
               ),
-              Container(
-                color: Colors.white,
-                child: DropdownSearch<String>(
-                  items: [
-                    'Translation & Interpretation',
-                    'Pick up & Driving tours ',
-                    'Shopping',
-                    'Nightlife & Bars',
-                    'Food & Restaurants',
-                    'Arts & Museums',
-                    'Sports & Recreation',
-                    'History & Culture',
-                    'Exploration & Sightseeing',
-                  ],
-                  onChanged: (value) {
-                    setState(() {
-                      selectedService = value!;
-                      if (selectedService.isNotEmpty) {
-                        isServiceSelected = true;
-                      } else {
-                        isServiceSelected = false;
-                      }
-                    });
-                  },
-                  selectedItem:
-                      isServiceSelected ? selectedService : widget.services,
-                ),
-                // TextField(
-                //   controller: _controller,
-                //   style: TextStyle(
-                //     color: Colors.black,
-                //     fontSize: 16,
-                //     fontWeight: FontWeight.w200,
-                //   ),
-                //   onChanged: (value) {
-                //     setState(
-                //       () {
-                //         enteredValue = value;
-                //         if (enteredValue != widget.gender) {
-                //           isValueChanged = true;
-                //         } else {
-                //           isValueChanged = false;
-                //         }
-                //       },
-                //     );
-                //   },
-                //   decoration: InputDecoration(
-                //     border: OutlineInputBorder(),
-                //     hintText: widget.gender,
-                //     hintStyle: TextStyle(color: Colors.black),
-                //   ),
-                // ),
+
+              Column(
+                children: serviceMap.keys.map((key) {
+                  return CheckboxListTile(
+                    title: Text(serviceMap[key]!),
+                    value: selectedServices.contains(key),
+                    onChanged: (newValue) {
+                      setState(() {
+                        if (newValue != null) {
+                          if (newValue) {
+                            selectedServices.add(key);
+                          } else {
+                            selectedServices.remove(key);
+                          }
+                          isServiceSelected = selectedServices.isNotEmpty;
+                        }
+                      });
+                    },
+                  );
+                }).toList(),
               ),
             ],
           ),
@@ -205,3 +192,75 @@ class _ServiceNewState extends State<ServiceNew> {
     );
   }
 }
+
+// Map<String, String> serviceMap = {
+//   "translation": "Translation & Interpretation",
+//   "shopping": "Shopping",
+//   "food": "Food & Restaurants",
+//   "art": "Art & Museums",
+//   "history": "History & Culture",
+//   "exploration": "Exploration & Sightseeing",
+//   "pick": "Pick up & Driving Tours",
+//   "nightlife": "Nightlife & Bars",
+//   "sports": "Sports & Recreation"
+// };
+              // Container(
+              //   color: Colors.white,
+              //   child: DropdownSearch<String>(
+              //     items: [
+              //       'Translation & Interpretation',
+              //       'Pick up & Driving tours ',
+              //       'Shopping',
+              //       'Nightlife & Bars',
+              //       'Food & Restaurants',
+              //       'Arts & Museums',
+              //       'Sports & Recreation',
+              //       'History & Culture',
+              //       'Exploration & Sightseeing',
+              //     ],
+              //     onChanged: (value) {
+              //       setState(() {
+              //         selectedService = value!;
+              //         if (selectedService.isNotEmpty) {
+              //           isServiceSelected = true;
+              //         } else {
+              //           isServiceSelected = false;
+              //         }
+              //       });
+              //     },
+              //     selectedItem:
+              //         isServiceSelected ? selectedService : widget.services,
+              //   ),
+              //   // TextField(
+              //   //   controller: _controller,
+              //   //   style: TextStyle(
+              //   //     color: Colors.black,
+              //   //     fontSize: 16,
+              //   //     fontWeight: FontWeight.w200,
+              //   //   ),
+              //   //   onChanged: (value) {
+              //   //     setState(
+              //   //       () {
+              //   //         enteredValue = value;
+              //   //         if (enteredValue != widget.gender) {
+              //   //           isValueChanged = true;
+              //   //         } else {
+              //   //           isValueChanged = false;
+              //   //         }
+              //   //       },
+              //   //     );
+              //   //   },
+              //   //   decoration: InputDecoration(
+              //   //     border: OutlineInputBorder(),
+              //   //     hintText: widget.gender,
+              //   //     hintStyle: TextStyle(color: Colors.black),
+              //   //   ),
+              //   // ),
+              // ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
