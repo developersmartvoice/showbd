@@ -1122,11 +1122,14 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                     ),
                     Container(
                         child: isMember
-                            ? Text(
-                                "Member",
-                                style: GoogleFonts.robotoCondensed(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w600,
+                            ? Padding(
+                                padding: EdgeInsets.only(left: 100.0),
+                                child: Text(
+                                  "Member",
+                                  style: GoogleFonts.robotoCondensed(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                               )
                             : Padding(
