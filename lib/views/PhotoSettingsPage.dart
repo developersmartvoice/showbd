@@ -206,63 +206,63 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                                           10), // Gap between first box and second row
 
                                   // Second row with two columns, each containing a square box
-                                  Column(
-                                    children: [
-                                      Container(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.2, // 20% of screen width
-                                        height:
-                                            MediaQuery.of(context).size.width *
-                                                0.2, // 20% of screen width
-                                        color: Colors.green,
-                                        margin: EdgeInsets.only(
-                                            bottom: 10), // Gap between boxes
-                                      ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      Container(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.2, // 20% of screen width
-                                        height:
-                                            MediaQuery.of(context).size.width *
-                                                0.2, // 20% of screen width
-                                        color: Colors.red,
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(width: 5), // Gap between columns
+                                  // Column(
+                                  //   children: [
+                                  //     Container(
+                                  //       width:
+                                  //           MediaQuery.of(context).size.width *
+                                  //               0.2, // 20% of screen width
+                                  //       height:
+                                  //           MediaQuery.of(context).size.width *
+                                  //               0.2, // 20% of screen width
+                                  //       color: Colors.green,
+                                  //       margin: EdgeInsets.only(
+                                  //           bottom: 10), // Gap between boxes
+                                  //     ),
+                                  //     SizedBox(
+                                  //       height: 5,
+                                  //     ),
+                                  //     Container(
+                                  //       width:
+                                  //           MediaQuery.of(context).size.width *
+                                  //               0.2, // 20% of screen width
+                                  //       height:
+                                  //           MediaQuery.of(context).size.width *
+                                  //               0.2, // 20% of screen width
+                                  //       color: Colors.red,
+                                  //     ),
+                                  //   ],
+                                  // ),
+                                  // SizedBox(width: 5), // Gap between columns
 
-                                  // Third row with two columns, each containing a square box
-                                  Column(
-                                    children: [
-                                      Container(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.2, // 20% of screen width
-                                        height:
-                                            MediaQuery.of(context).size.width *
-                                                0.2, // 20% of screen width
-                                        color: Colors.yellow,
-                                        margin: EdgeInsets.only(
-                                            bottom: 10), // Gap between boxes
-                                      ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      Container(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.2, // 20% of screen width
-                                        height:
-                                            MediaQuery.of(context).size.width *
-                                                0.2, // 20% of screen width
-                                        color: Colors.orange,
-                                      ),
-                                    ],
-                                  ),
+                                  // // Third row with two columns, each containing a square box
+                                  // Column(
+                                  //   children: [
+                                  //     Container(
+                                  //       width:
+                                  //           MediaQuery.of(context).size.width *
+                                  //               0.2, // 20% of screen width
+                                  //       height:
+                                  //           MediaQuery.of(context).size.width *
+                                  //               0.2, // 20% of screen width
+                                  //       color: Colors.yellow,
+                                  //       margin: EdgeInsets.only(
+                                  //           bottom: 10), // Gap between boxes
+                                  //     ),
+                                  //     SizedBox(
+                                  //       height: 5,
+                                  //     ),
+                                  //     Container(
+                                  //       width:
+                                  //           MediaQuery.of(context).size.width *
+                                  //               0.2, // 20% of screen width
+                                  //       height:
+                                  //           MediaQuery.of(context).size.width *
+                                  //               0.2, // 20% of screen width
+                                  //       color: Colors.orange,
+                                  //     ),
+                                  //   ],
+                                  // ),
                                 ],
                               ),
                             ),
