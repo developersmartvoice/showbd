@@ -33,6 +33,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/style.dart';
+import 'package:get/get.dart';
 //import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
@@ -140,11 +141,9 @@ class _GeneraLInfoState extends State<GeneraLInfo> {
       if (response.statusCode == 200) {
         final jsonResponse = jsonDecode(response.body);
         setState(() {
-          imageUrl1 = jsonResponse['image_url'].toString();
-          if (imageUrl1.isNotEmpty) {
-            isPhotosFetched = true;
-          }
-          print("Image downloaded and assigned: $imageUrl1");
+          imageUrl1 = jsonResponse['image_url'] ?? "";
+
+          print("Only Image downloaded and assigned: $imageUrl1");
         });
       } else {
         print("Failed to fetch image. Status code: ${response.statusCode}");
@@ -162,7 +161,7 @@ class _GeneraLInfoState extends State<GeneraLInfo> {
     try {
       if (response.statusCode == 200) {
         final jsonResponse = jsonDecode(response.body);
-        imageUrls = List<String>.from(jsonResponse['image_urls']);
+        imageUrls = List<String>.from(jsonResponse['image_urls'] ?? "");
         setState(() {
           if (imageUrls == null) {
             imageUrls = [];

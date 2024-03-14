@@ -10,10 +10,12 @@ import 'package:appcode3/views/AboutMeDetailsPage.dart';
 import 'package:appcode3/views/GenderSettingsPage.dart';
 import 'package:appcode3/views/HourlyRate.dart';
 import 'package:appcode3/views/IwillShowYouSettingsPage.dart';
+import 'package:appcode3/views/LanguageNew.dart';
 //import 'package:appcode3/views/LanguageNew.dart';
 import 'package:appcode3/views/LanguagesSettingsPage.dart';
 import 'package:appcode3/views/LocationSearchPageInfo.dart';
 import 'package:appcode3/views/MottoSettingsPage.dart';
+import 'package:appcode3/views/PhotoSettingsPage.dart';
 //import 'package:appcode3/views/PhotoSettingsPage.dart';
 //import 'package:appcode3/views/ServiceNew.dart';
 // import 'package:appcode3/views/SendOfferScreen.dart';
@@ -37,6 +39,7 @@ import 'package:appcode3/main.dart';
 //import 'package:facebook_audience_network/ad/ad_native.dart';
 // import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 // import 'package:flutter_html/style.dart';
 //import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -76,6 +79,16 @@ class _AboutHostState extends State<AboutHost> {
   //   'French',
   //   'Hindi'
   // ];
+
+  Map<String, String> languageMap = {
+    "english": "English",
+    "bengali": "Bengali",
+    "hindi": "Hindi",
+    "urdu": "Urdu",
+    "french": "French",
+    "spanish": "Spanish"
+  };
+
   String motto = '';
   String iwillshowyou = '';
   List<String>? services;
@@ -85,7 +98,11 @@ class _AboutHostState extends State<AboutHost> {
   String photos = '';
   String about_me = '';
   String gender = '';
-  String languages = '';
+  List<String>? languages;
+  String imageUrl1 = '';
+  // String imageUrls = '';
+  List<String>? imageUrls;
+  bool isPhotosFetched = false;
 
   getMotto() async {
     final response = await get(
@@ -207,34 +224,89 @@ class _AboutHostState extends State<AboutHost> {
     }
   }
 
+  getImage() async {
+    final response = await get(
+        Uri.parse("$SERVER_ADDRESS/api/getImage?doctor_id=${widget.doctorId}"));
+
+    try {
+      if (response.statusCode == 200) {
+        final jsonResponse = jsonDecode(response.body);
+        setState(() {
+          imageUrl1 = jsonResponse['image_url'] ?? "";
+
+          print("Only Image downloaded and assigned: $imageUrl1");
+        });
+      } else {
+        print("Failed to fetch image. Status code: ${response.statusCode}");
+      }
+    } catch (e) {
+      print("Error fetching image: $e");
+    }
+  }
+
+  Future<void> getImages() async {
+    final Uri uri =
+        Uri.parse("$SERVER_ADDRESS/api/getImages?doctor_id=${widget.doctorId}");
+    final response = await get(uri);
+
+    try {
+      if (response.statusCode == 200) {
+        final jsonResponse = jsonDecode(response.body);
+        imageUrls = List<String>.from(jsonResponse['image_urls'] ?? "");
+        setState(() {
+          if (imageUrls == null) {
+            imageUrls = [];
+            isPhotosFetched = true;
+          } else {
+            isPhotosFetched = true;
+            imageUrls!.forEach((imageUrl) {
+              print("Image downloaded and assigned: $imageUrl");
+              // Here you can do whatever you want with the downloaded images
+            });
+          }
+        });
+      } else {
+        print("Failed to fetch images. Status code: ${response.statusCode}");
+      }
+    } catch (e) {
+      print("Error fetching images: $e");
+    }
+  }
+
+  // getLanguages() async {
+  //   final response = await get(
+  //       Uri.parse("$SERVER_ADDRESS/api/getLanguages?id=${widget.doctorId}"));
+  //   print("$SERVER_ADDRESS/api/getLanguages?id=${widget.doctorId}");
+  //   try {
+  //     if (response.statusCode == 200) {
+  //       final jsonResponse = jsonDecode(response.body);
+  //       setState(() {
+  //         languages = jsonResponse['languages'].toString();
+  //         print(languages);
+  //       });
+  //     }
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
+
   getLanguages() async {
     final response = await get(
         Uri.parse("$SERVER_ADDRESS/api/getLanguages?id=${widget.doctorId}"));
     print("$SERVER_ADDRESS/api/getLanguages?id=${widget.doctorId}");
-    try {
-      if (response.statusCode == 200) {
-        final jsonResponse = jsonDecode(response.body);
-        setState(() {
-          languages = jsonResponse['languages'].toString();
-          print(languages);
-        });
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
 
-  getPhotos() async {
-    final response = await get(
-        Uri.parse("$SERVER_ADDRESS/api/getPhotos?id=${widget.doctorId}"));
-    print("$SERVER_ADDRESS/api/getPhotos?id=${widget.doctorId}");
     try {
       if (response.statusCode == 200) {
         final jsonResponse = jsonDecode(response.body);
-        setState(() {
-          languages = jsonResponse['photos'].toString();
-          print(photos);
-        });
+        setState(
+          () {
+            languages = jsonResponse['languages'].split(',');
+            print(languages);
+
+            // Split received languages string into a list
+            // languages = jsonResponse['languages'].split(',');
+          },
+        );
       }
     } catch (e) {
       print(e);
@@ -245,8 +317,9 @@ class _AboutHostState extends State<AboutHost> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    getImage();
+    getImages();
     getMotto();
-    getPhotos();
     getConsultationFees();
     getAboutMe();
     getCity();
@@ -258,28 +331,46 @@ class _AboutHostState extends State<AboutHost> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 243, 103, 9),
-        title: Text('About host',
-            // style: GoogleFonts.robotoCondensed(
-            //   fontSize: 25,
-            //   fontWeight: FontWeight.bold,
-            //   color: WHITE,
-            // ),
-            style: Theme.of(context).textTheme.headline5!.apply(
-                color: Theme.of(context).backgroundColor, fontWeightDelta: 5)),
-        centerTitle: true,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
-      body: ContainerPage(widget.doctorId, motto, iwillshowyou, services!,
-          consultationfees, photos, location, about_me, gender, languages),
+    return SafeArea(
+      child: Scaffold(
+          backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
+          appBar: AppBar(
+            backgroundColor: const Color.fromARGB(255, 243, 103, 9),
+            title: Text('About host',
+                // style: GoogleFonts.robotoCondensed(
+                //   fontSize: 25,
+                //   fontWeight: FontWeight.bold,
+                //   color: WHITE,
+                // ),
+                style: Theme.of(context).textTheme.headline5!.apply(
+                    color: Theme.of(context).backgroundColor,
+                    fontWeightDelta: 5)),
+            centerTitle: true,
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ),
+          body: services != null && languages != null
+              ? ContainerPage(
+                  widget.doctorId,
+                  motto,
+                  iwillshowyou,
+                  services!,
+                  consultationfees,
+                  imageUrl1,
+                  imageUrls,
+                  location,
+                  about_me,
+                  gender,
+                  languages!)
+              : Container(
+                  alignment: Alignment.center,
+                  transformAlignment: Alignment.center,
+                  child: CircularProgressIndicator(),
+                )),
     );
   }
 }
@@ -292,11 +383,12 @@ class ContainerPage extends StatefulWidget {
   final String iwillshowyou;
   final List<String> services;
   final String consultationfees;
-  final String photos;
+  String? imageUrl1;
+  List<String>? imageUrls;
   final String city;
   final String aboutMe;
   final String gender;
-  final String languages;
+  final List<String> languages;
 
   ContainerPage(
     this.id,
@@ -304,7 +396,8 @@ class ContainerPage extends StatefulWidget {
     this.iwillshowyou,
     this.services,
     this.consultationfees,
-    this.photos,
+    this.imageUrl1,
+    this.imageUrls,
     this.city,
     this.aboutMe,
     this.gender,
@@ -383,7 +476,7 @@ class _ContainerPageState extends State<ContainerPage> {
       isLanguagesStored = true;
     }
 
-    if (widget.photos.isEmpty) {
+    if (widget.imageUrl1!.isEmpty) {
       isPhotoStored = false;
     } else {
       print("photos is not empty");
@@ -1201,15 +1294,21 @@ class _ContainerPageState extends State<ContainerPage> {
             ),
 
             Container(
-              padding: EdgeInsets.only(left: 4),
+              padding: EdgeInsets.all(10),
               height: 60,
               color: Colors.white,
               child: InkWell(
                 onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => PhotoSettingsPage(
+                          widget.id, widget.imageUrl1!, widget.imageUrls!),
+                    ),
+                  );
                   // Navigator.of(context).push(
                   //   MaterialPageRoute(
                   //     builder: (context) =>
-                  //         PhotoSettingsPage(widget.id, widget.photos),
+                  //         NameSettingsPage(widget.id, widget.name),
                   //   ),
                   // );
                 },
@@ -1224,7 +1323,9 @@ class _ContainerPageState extends State<ContainerPage> {
                           width: MediaQuery.sizeOf(context).width * .1,
                           height: 25,
                           decoration: BoxDecoration(
-                            color: Colors.white, // Color of the button
+                            // color: Colors.white,
+                            // color: _boxColor, // Color of the button
+                            color: isPhotoStored ? Colors.green : Colors.grey,
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: Colors.grey, // Color of the border
@@ -1233,65 +1334,54 @@ class _ContainerPageState extends State<ContainerPage> {
                           ),
                           child: Icon(
                             Icons.check,
-                            color: Colors.white, // Color of the icon
+                            color: !isPhotoStored ? Colors.green : Colors.white,
+                            // color: Colors.white, // Color of the icon
                             size: 20.0, // Size of the icon
                           ),
-                        ),
+                        )
                       ],
                     ),
+                    // SizedBox(
+                    //   width: MediaQuery.sizeOf(context).width * .01,
+                    // ),
                     Container(
-                      padding: EdgeInsets.only(left: 5),
+                      padding: EdgeInsets.only(right: 15),
                       alignment: Alignment.center,
-                      //width: MediaQuery.sizeOf(context).width * .2,
+                      width: MediaQuery.sizeOf(context).width * .2,
                       child: Text(
                         'Photos',
-                        style: GoogleFonts.robotoCondensed(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.w500,
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
                           // color: Color.fromARGB(255, 243, 103, 9),
                         ),
                       ),
                     ),
                     SizedBox(
-                      //width: MediaQuery.sizeOf(context).width * .1,
-                      width: 253,
+                      width: MediaQuery.sizeOf(context).width * .1,
                     ),
-                    // Container(
-                    //   alignment: Alignment.centerRight,
-                    //   width: MediaQuery.sizeOf(context).width * .4,
-                    //   child: Text(
-                    //     '',
-                    //     style: TextStyle(
-                    //       fontSize: 15.0,
-                    //       fontWeight: FontWeight.bold,
-                    //       color: Colors.grey,
-                    //     ),
-                    //   ),
-                    // ),
-                    // SizedBox(
-                    //   width: MediaQuery.sizeOf(context).width * .05,
-                    // ),
                     Container(
-                      height: 70,
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 5),
-                        child: IconButton(
-                          onPressed: () {
-                            // Navigator.of(context).push(
-                            //   MaterialPageRoute(
-                            //     builder: (context) =>
-                            //         PhotoSettingsPage(widget.id, widget.photos),
-                            //   ),
-                            // );
-                            // Add your logic for the onPressed event here
-                            // Typically, this would involve navigating to the next screen or performing some action
-                          },
-                          alignment: Alignment.centerRight,
-                          icon: Icon(Icons.arrow_forward_ios_sharp),
-                          color: Colors.black, // Color of the icon
-                          iconSize: 20.0, // Size of the icon
-                        ),
-                      ),
+                      alignment: Alignment.centerRight,
+                      width: MediaQuery.sizeOf(context).width * .4,
+                      child: Text(
+                          // widget.name,
+                          // style: TextStyle(
+                          //   fontSize: 18.0,
+                          //   fontWeight: FontWeight.bold,
+                          //   color: Colors.grey,
+                          // ),
+                          ""),
+                    ),
+                    // SizedBox(
+                    //   width: 10,
+                    // ),
+                    SizedBox(
+                      width: MediaQuery.sizeOf(context).width * .05,
+                    ),
+                    Container(
+                      // padding: EdgeInsets.only(left: 180),
+                      width: MediaQuery.sizeOf(context).width * .1,
+                      child: Icon(Icons.arrow_forward_ios, size: 20),
                     ),
                   ],
                 ),
@@ -2013,7 +2103,7 @@ class _ContainerPageState extends State<ContainerPage> {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) =>
-                          LanguagesSettingsPage(widget.id, widget.languages),
+                          LanguageNew(widget.id, widget.languages),
                     ),
                   );
                 },
@@ -2070,15 +2160,17 @@ class _ContainerPageState extends State<ContainerPage> {
                     ),
                     Container(
                       alignment: Alignment.centerRight,
-                      width: MediaQuery.sizeOf(context).width * .4,
+                      width: MediaQuery.of(context).size.width * 0.4,
                       child: Text(
-                        //'${selectedLanguages.join(', ')}',
-                        //'${selectedLanguages}',
-                        widget.languages,
+                        widget.languages
+                            .map((language) => language.capitalize)
+                            .join(
+                                ', '), // Join the list elements with a comma and space
                         style: TextStyle(
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey),
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey,
+                        ),
                       ),
                       // Text(
                       //   widget.languages,
@@ -2219,39 +2311,39 @@ class _ContainerPageState extends State<ContainerPage> {
         //child: SizedBox(
         //height: 70, // Adjust the height as needed
         //child:
-        Padding(
-          padding: EdgeInsets.fromLTRB(50, 15, 50, 15),
-          child: ElevatedButton(
-            onPressed: () {
-              // Navigator.of(context).push(
-              //   MaterialPageRoute(
-              //     builder: (context) =>
-              //         BookingScreen(widget.id, widget.guideName),
-              //   ),
-              // );
-            },
-            //child: Text('SUBMIT PROFILE'),
-            child: Padding(
-              padding: EdgeInsets.all(10), // Adjust padding as needed
-              child: Text('SUBMIT PROFILE'),
-            ),
-            style: ElevatedButton.styleFrom(
-              textStyle: GoogleFonts.robotoCondensed(
-                fontSize: 20.0,
-                fontWeight: FontWeight.w500,
-              ),
-              padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-              foregroundColor: Colors.white,
-              backgroundColor: Color.fromARGB(255, 243, 103, 9),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15.0),
-                side: BorderSide(
-                  color: Colors.white,
-                ), // Set border radius
-              ),
-            ),
-          ),
-        ),
+        // Padding(
+        //   padding: EdgeInsets.fromLTRB(50, 15, 50, 15),
+        //   child: ElevatedButton(
+        //     onPressed: () {
+        //       // Navigator.of(context).push(
+        //       //   MaterialPageRoute(
+        //       //     builder: (context) =>
+        //       //         BookingScreen(widget.id, widget.guideName),
+        //       //   ),
+        //       // );
+        //     },
+        //     //child: Text('SUBMIT PROFILE'),
+        //     child: Padding(
+        //       padding: EdgeInsets.all(10), // Adjust padding as needed
+        //       child: Text('SUBMIT PROFILE'),
+        //     ),
+        //     style: ElevatedButton.styleFrom(
+        //       textStyle: GoogleFonts.robotoCondensed(
+        //         fontSize: 20.0,
+        //         fontWeight: FontWeight.w500,
+        //       ),
+        //       padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+        //       foregroundColor: Colors.white,
+        //       backgroundColor: Color.fromARGB(255, 243, 103, 9),
+        //       shape: RoundedRectangleBorder(
+        //         borderRadius: BorderRadius.circular(15.0),
+        //         side: BorderSide(
+        //           color: Colors.white,
+        //         ), // Set border radius
+        //       ),
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }
