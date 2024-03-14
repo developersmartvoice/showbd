@@ -1327,15 +1327,15 @@ class _DetailsPageState extends State<DetailsPage> {
       case 'shopping':
         return {'text': 'Shopping', 'icon': Icons.shopping_cart};
       case 'food':
-        return {'text': 'Food & Restaurants', 'icon': Icons.food_bank_rounded};
+        return {'text': 'Food & Restaurants', 'icon': Icons.restaurant};
       case 'art':
-        return {'text': 'Art & Museums', 'icon': Icons.museum_rounded};
+        return {'text': 'Art & Museums', 'icon': Icons.museum_outlined};
       case 'history':
-        return {'text': 'History & Culture', 'icon': Icons.history_edu_rounded};
+        return {'text': 'History & Culture', 'icon': Icons.music_video};
       case 'exploration':
         return {
           'text': 'Exploration & Sightseeing',
-          'icon': Icons.data_exploration_sharp
+          'icon': Icons.explore_outlined
         };
       case 'pick':
         return {
@@ -1349,7 +1349,7 @@ class _DetailsPageState extends State<DetailsPage> {
       default:
         return {
           'text': 'Sports & Recreation',
-          'icon': Icons.sports_soccer_rounded
+          'icon': Icons.sports_kabaddi_outlined
         };
     }
   }
