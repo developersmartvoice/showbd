@@ -469,6 +469,7 @@ class _DetailsPageState extends State<DetailsPage> {
                 ),
               ),
               Container(
+                padding: EdgeInsets.only(left: 5),
                 width: MediaQuery.sizeOf(context).width * 1,
                 margin: EdgeInsets.only(top: 240),
                 child: Text(
@@ -487,6 +488,7 @@ class _DetailsPageState extends State<DetailsPage> {
                 ),
               ),
               Container(
+                padding: EdgeInsets.only(left: 5),
                 width: MediaQuery.sizeOf(context).width * 1,
                 margin: EdgeInsets.only(top: 270),
                 child: Text(

@@ -49,7 +49,7 @@ class TripCard extends StatelessWidget {
   Widget tripImage() {
     // Placeholder image, replace with your own or use a network image
     return Image.asset(
-      'assets/waterfalls-thailand-nature-wallpaper-its-finest_1000348-2530.jpg',
+      'assets/Tropical-Wallpaper03-1920x1200.jpg',
       height: 150.0,
       width: double.infinity,
       fit: BoxFit.fill,

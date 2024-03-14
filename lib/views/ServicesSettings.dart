@@ -220,30 +220,103 @@ class _ServicesSettingsPageState extends State<ServicesSettingsPage> {
             ),
           ],
         ),
-
         body: Container(
           padding: EdgeInsets.all(10),
           child: ListView(
             children: serviceMap.keys.map((key) {
-              return CheckboxListTile(
+              bool isSelected = selectedServices.contains(key);
+
+              IconData iconData;
+              switch (key) {
+                case 'translation':
+                  iconData = Icons.translate;
+                  break;
+                case 'shopping':
+                  iconData = Icons.shopping_bag_outlined;
+                  break;
+                case 'food':
+                  iconData = Icons.restaurant;
+                  break;
+                case 'art':
+                  iconData = Icons.museum_outlined;
+                  break;
+                case 'history':
+                  iconData = Icons.music_video;
+                  break;
+                case 'exploration':
+                  iconData = Icons.explore_outlined;
+                  break;
+                case 'pick':
+                  iconData = Icons.drive_eta_outlined;
+                  break;
+                case 'nightlife':
+                  iconData = Icons.local_bar_outlined;
+                  break;
+                case 'sports':
+                  iconData = Icons.sports_kabaddi_outlined;
+                  break;
+                default:
+                  iconData =
+                      Icons.error_outline; // Default icon if key not found
+              }
+
+              return ListTile(
                 dense: true,
+                leading: Icon(iconData),
                 title: Text(serviceMap[key]!),
-                value: selectedServices.contains(key),
-                onChanged: (newValue) {
+                selected: isSelected,
+                onTap: () {
                   setState(() {
-                    if (newValue == true) {
-                      selectedServices.add(key);
-                    } else {
+                    if (isSelected) {
                       selectedServices.remove(key);
+                    } else {
+                      selectedServices.add(key);
                     }
-                    isServiceSelected = selectedServices.isNotEmpty;
                   });
                 },
-                secondary: key == 'translation' ? Icon(Icons.translate) : null,
+                trailing: isSelected ? Icon(Icons.check) : null,
               );
             }).toList(),
           ),
         ),
+      ),
+    );
+  }
+}
+              // return CheckboxListTile(
+              //   dense: true,
+              //   title: Text(serviceMap[key]!),
+              //   value: selectedServices.contains(key),
+              //   onChanged: (newValue) {
+              //     setState(() {
+              //       if (newValue == true) {
+              //         selectedServices.add(key);
+              //       } else {
+              //         selectedServices.remove(key);
+              //       }
+              //       isServiceSelected = selectedServices.isNotEmpty;
+              //     });
+              //   },
+                // secondary: key == 'translation'
+                //     ? Icon(Icons.translate)
+                //     : key == 'shopping'
+                //         ? Icon(Icons.shopping_bag_outlined)
+                //         : key == 'food'
+                //             ? Icon(Icons.restaurant)
+                //             : key == 'art'
+                //                 ? Icon(Icons.museum_outlined)
+                //                 : key == 'history'
+                //                     ? Icon(Icons.music_video)
+                //                     : key == 'exploration'
+                //                         ? Icon(Icons.explore_outlined)
+                //                         : key == 'pick'
+                //                             ? Icon(Icons.drive_eta_outlined)
+                //                             : key == 'nightlife'
+                //                                 ? Icon(Icons.local_bar_outlined)
+                //                                 : key == 'sports'
+                //                                     ? Icon(Icons
+                //                                         .sports_kabaddi_outlined)
+                //                                     : null,
         // body: Container(
         //   padding: EdgeInsets.all(10),
         //   height: 300,
@@ -317,9 +390,6 @@ class _ServicesSettingsPageState extends State<ServicesSettingsPage> {
         //     // ),
         //   ],
         // ),
-      ),
-    );
-  }
 
   // Widget _buildMultiSelect(String label, List<String> selectedValues,
   //     List<String> options, ValueChanged<List<String>> onChanged) {
@@ -447,7 +517,7 @@ class _ServicesSettingsPageState extends State<ServicesSettingsPage> {
   // ),
   //),
   //);
-}
+
   // void updatingLanguages() {
   //   // Perform the update operation
   //   print('Updating languages...');
