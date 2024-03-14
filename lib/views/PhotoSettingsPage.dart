@@ -36,6 +36,7 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
     if (pickedFile != null) {
       setState(() {
         _image = File(pickedFile.path);
+        isImageChanged = true;
       });
     }
   }
@@ -45,6 +46,7 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
     if (pickedFile != null) {
       setState(() {
         _image = File(pickedFile.path);
+        isImageChanged = true;
       });
     }
   }
@@ -63,10 +65,28 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
           actions: [
             TextButton(
               onPressed: () {
-                setState(() {
-                  isUploadClicked = true;
-                });
-                _uploadImage();
+                if (isImageChanged) {
+                  setState(() {
+                    isUploadClicked = true;
+                  });
+                  _uploadImage();
+                } else {
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: Text('No Image Selected'),
+                      content: Text('Please select an image before uploading.'),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text('OK'),
+                        ),
+                      ],
+                    ),
+                  );
+                }
               },
               child: Text(
                 'Save',
@@ -271,11 +291,11 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                   onTap: () {
                     Navigator.of(context).pop();
                     _getImageFromCamera();
-                    if (_image != null) {
-                      setState(() {
-                        isImageChanged = true;
-                      });
-                    }
+                    // if (_image != null) {
+                    //   setState(() {
+                    //     isImageChanged = true;
+                    //   });
+                    // }
                   },
                 ),
                 Padding(
@@ -286,11 +306,11 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                   onTap: () {
                     Navigator.of(context).pop();
                     _getImageFromGallery();
-                    if (_image != null) {
-                      setState(() {
-                        isImageChanged = true;
-                      });
-                    }
+                    // if (_image != null) {
+                    //   setState(() {
+                    //     isImageChanged = true;
+                    //   });
+                    // }
                   },
                 ),
               ],
@@ -402,9 +422,9 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
             actions: [
               TextButton(
                 onPressed: () {
-                  // Navigator.of(context).pop();
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: ((context) => MoreInfoScreen())));
+                  Navigator.of(context).pop();
+                  // Navigator.of(context).push(MaterialPageRoute(
+                  //     builder: ((context) => MoreInfoScreen())));
                 },
                 child: Text('OK'),
               ),
