@@ -5,8 +5,6 @@ import 'package:appcode3/main.dart';
 import 'package:appcode3/notificationHelper.dart';
 import 'package:appcode3/views/Doctor/DoctorChatListScreen.dart';
 import 'package:appcode3/views/Doctor/DoctorDashboard.dart';
-import 'package:appcode3/views/Doctor/DoctorPastAppointments.dart';
-import 'package:appcode3/views/Doctor/DoctorProfile.dart';
 import 'package:appcode3/views/Doctor/Tour.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
