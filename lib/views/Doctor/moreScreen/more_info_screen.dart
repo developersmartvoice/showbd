@@ -630,9 +630,13 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
     if (response.statusCode == 200) {
       final jsonResponse = jsonDecode(response.body);
       if (jsonResponse['is_member'] == 0) {
-        isMember = false;
+        setState(() {
+          isMember = false;
+        });
       } else {
-        isMember = true;
+        setState(() {
+          isMember = true;
+        });
       }
     } else {
       print("Api is not call properly");
@@ -1305,7 +1309,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                           ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(left: 150),
+                      padding: EdgeInsets.only(left: 100),
                       child: Text(
                         selectedCurrency,
                         style: GoogleFonts.robotoCondensed(
