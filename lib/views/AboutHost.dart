@@ -77,6 +77,7 @@ class _AboutHostState extends State<AboutHost> {
   // String imageUrls = '';
   List<String>? imageUrls;
   bool isPhotosFetched = false;
+  bool isMottoStored = false;
 
   getMotto() async {
     final response = await get(
@@ -510,7 +511,9 @@ class _ContainerPageState extends State<ContainerPage> {
                           height: 25,
                           decoration: BoxDecoration(
                             //color: _boxColor, // Color of the button
-                            color: isMottoStored ? Colors.green : Colors.grey,
+                            color: widget.motto.isNotEmpty
+                                ? Colors.green
+                                : Colors.white,
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: Colors.grey, // Color of the border
@@ -519,8 +522,7 @@ class _ContainerPageState extends State<ContainerPage> {
                           ),
                           child: Icon(
                             Icons.check,
-                            color: !isMottoStored ? Colors.green : Colors.white,
-                            // color: Colors.white, // Color of the icon
+                            color: Colors.white, // Color of the icon
                             size: 20.0, // Size of the icon
                           ),
                         )
@@ -558,12 +560,12 @@ class _ContainerPageState extends State<ContainerPage> {
                         ),
                       ),
                     ),
-                    // SizedBox(
-                    //   width: 10,
-                    // ),
                     SizedBox(
-                      width: MediaQuery.sizeOf(context).width * .05,
+                      width: 15,
                     ),
+                    // SizedBox(
+                    //   width: MediaQuery.sizeOf(context).width * .05,
+                    // ),
                     Container(
                       width: MediaQuery.sizeOf(context).width * .1,
                       // child: IconButton(
@@ -608,9 +610,9 @@ class _ContainerPageState extends State<ContainerPage> {
                           height: 25,
                           decoration: BoxDecoration(
                             //color: _boxColor, // Color of the button
-                            color: isIWillShowYouStored
+                            color: widget.iwillshowyou.isNotEmpty
                                 ? Colors.green
-                                : Colors.grey,
+                                : Colors.white,
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: Colors.grey, // Color of the border
@@ -619,10 +621,7 @@ class _ContainerPageState extends State<ContainerPage> {
                           ),
                           child: Icon(
                             Icons.check,
-                            color: !isIWillShowYouStored
-                                ? Colors.green
-                                : Colors.white,
-                            // color: Colors.white, // Color of the icon
+                            color: Colors.white,
                             size: 20.0, // Size of the icon
                           ),
                         )
@@ -663,9 +662,14 @@ class _ContainerPageState extends State<ContainerPage> {
                       ),
                     ),
 
-                    Icon(
-                      Icons.arrow_forward_ios,
-                      size: 20,
+                    Container(
+                      child: Padding(
+                        padding: EdgeInsets.only(right: 5),
+                        child: Icon(
+                          Icons.arrow_forward_ios,
+                          size: 20,
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -706,8 +710,9 @@ class _ContainerPageState extends State<ContainerPage> {
                           height: 25,
                           decoration: BoxDecoration(
                             //color: _boxColor, // Color of the button
-                            color:
-                                isServicesStored ? Colors.green : Colors.grey,
+                            color: widget.services.isNotEmpty
+                                ? Colors.green
+                                : Colors.white,
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: Colors.grey, // Color of the border
@@ -716,9 +721,7 @@ class _ContainerPageState extends State<ContainerPage> {
                           ),
                           child: Icon(
                             Icons.check,
-                            color:
-                                !isServicesStored ? Colors.green : Colors.white,
-                            // color: Colors.white, // Color of the icon
+                            color: Colors.white,
                             size: 20.0, // Size of the icon
                           ),
                         )
@@ -766,6 +769,7 @@ class _ContainerPageState extends State<ContainerPage> {
                       width: MediaQuery.sizeOf(context).width * .05,
                     ),
                     Container(
+                      padding: EdgeInsets.only(right: 10),
                       width: MediaQuery.sizeOf(context).width * .1,
                       // child: IconButton(
                       //     onPressed: () {},
@@ -806,9 +810,9 @@ class _ContainerPageState extends State<ContainerPage> {
                           height: 25,
                           decoration: BoxDecoration(
                             //color: Colors.white,
-                            color: isConsultationFeesStored
+                            color: widget.consultationfees.isNotEmpty
                                 ? Colors.green
-                                : Colors.grey, // Color of the button
+                                : Colors.white, // Color of the button
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: Colors.grey, // Color of the border
@@ -817,10 +821,7 @@ class _ContainerPageState extends State<ContainerPage> {
                           ),
                           child: Icon(
                             Icons.check,
-                            color: !isConsultationFeesStored
-                                ? Colors.green
-                                : Colors.white,
-                            //color: Colors.white, // Color of the icon
+                            color: Colors.white,
                             size: 20.0, // Size of the icon
                           ),
                         ),
@@ -890,7 +891,7 @@ class _ContainerPageState extends State<ContainerPage> {
               color: Colors.white10,
             ),
             Container(
-              padding: EdgeInsets.all(10),
+              padding: EdgeInsets.only(left: 5),
               height: 60,
               color: Colors.white,
               child: InkWell(
@@ -921,7 +922,9 @@ class _ContainerPageState extends State<ContainerPage> {
                           decoration: BoxDecoration(
                             // color: Colors.white,
                             // color: _boxColor, // Color of the button
-                            color: isPhotoStored ? Colors.green : Colors.grey,
+                            color: widget.imageUrl1!.isNotEmpty
+                                ? Colors.green
+                                : Colors.white,
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: Colors.grey, // Color of the border
@@ -930,8 +933,7 @@ class _ContainerPageState extends State<ContainerPage> {
                           ),
                           child: Icon(
                             Icons.check,
-                            color: !isPhotoStored ? Colors.green : Colors.white,
-                            // color: Colors.white, // Color of the icon
+                            color: Colors.white,
                             size: 20.0, // Size of the icon
                           ),
                         )
@@ -941,7 +943,7 @@ class _ContainerPageState extends State<ContainerPage> {
                     //   width: MediaQuery.sizeOf(context).width * .01,
                     // ),
                     Container(
-                      padding: EdgeInsets.only(right: 15),
+                      padding: EdgeInsets.only(right: 20),
                       alignment: Alignment.center,
                       width: MediaQuery.sizeOf(context).width * .2,
                       child: Text(
@@ -1012,8 +1014,9 @@ class _ContainerPageState extends State<ContainerPage> {
                           height: 25,
                           decoration: BoxDecoration(
                             //color: _boxColor, // Color of the button
-                            color:
-                                isLocationStored ? Colors.green : Colors.grey,
+                            color: widget.city.isNotEmpty
+                                ? Colors.green
+                                : Colors.white,
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: Colors.grey, // Color of the border
@@ -1022,9 +1025,7 @@ class _ContainerPageState extends State<ContainerPage> {
                           ),
                           child: Icon(
                             Icons.check,
-                            color:
-                                !isLocationStored ? Colors.green : Colors.white,
-                            // color: Colors.white, // Color of the icon
+                            color: Colors.white,
                             size: 20.0, // Size of the icon
                           ),
                         )
@@ -1106,7 +1107,9 @@ class _ContainerPageState extends State<ContainerPage> {
                           height: 25,
                           decoration: BoxDecoration(
                             //color: _boxColor, // Color of the button
-                            color: isAboutMeStored ? Colors.green : Colors.grey,
+                            color: widget.aboutMe.isNotEmpty
+                                ? Colors.green
+                                : Colors.white,
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: Colors.grey, // Color of the border
@@ -1115,9 +1118,7 @@ class _ContainerPageState extends State<ContainerPage> {
                           ),
                           child: Icon(
                             Icons.check,
-                            color:
-                                !isAboutMeStored ? Colors.green : Colors.white,
-                            // color: Colors.white, // Color of the icon
+                            color: Colors.white,
                             size: 20.0, // Size of the icon
                           ),
                         )
@@ -1199,7 +1200,9 @@ class _ContainerPageState extends State<ContainerPage> {
                           height: 25,
                           decoration: BoxDecoration(
                             //color: _boxColor, // Color of the button
-                            color: isGenderStored ? Colors.green : Colors.grey,
+                            color: widget.gender.isNotEmpty
+                                ? Colors.green
+                                : Colors.white,
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: Colors.grey, // Color of the border
@@ -1208,9 +1211,7 @@ class _ContainerPageState extends State<ContainerPage> {
                           ),
                           child: Icon(
                             Icons.check,
-                            color:
-                                !isGenderStored ? Colors.green : Colors.white,
-                            // color: Colors.white, // Color of the icon
+                            color: Colors.white,
                             size: 20.0, // Size of the icon
                           ),
                         )
@@ -1300,8 +1301,9 @@ class _ContainerPageState extends State<ContainerPage> {
                           height: 25,
                           decoration: BoxDecoration(
                             //color: _boxColor, // Color of the button
-                            color:
-                                isLanguagesStored ? Colors.green : Colors.grey,
+                            color: widget.languages.isNotEmpty
+                                ? Colors.green
+                                : Colors.white,
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: Colors.grey, // Color of the border
@@ -1310,10 +1312,7 @@ class _ContainerPageState extends State<ContainerPage> {
                           ),
                           child: Icon(
                             Icons.check,
-                            color: !isLanguagesStored
-                                ? Colors.green
-                                : Colors.white,
-                            // color: Colors.white, // Color of the icon
+                            color: Colors.white,
                             size: 20.0, // Size of the icon
                           ),
                         )
