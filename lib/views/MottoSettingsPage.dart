@@ -1,38 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'dart:convert';
-import 'dart:ui';
-import 'package:appcode3/views/BookingScreen.dart';
-import 'package:appcode3/views/Doctor/DoctorProfile.dart';
-import 'package:appcode3/views/Doctor/LogoutScreen.dart';
-import 'package:appcode3/views/Doctor/loginAsDoctor.dart';
-import 'package:appcode3/views/SendOfferScreen.dart';
-import 'package:appcode3/views/SendOffersScreen.dart';
-import 'package:connectycube_sdk/connectycube_chat.dart';
-
 import 'package:appcode3/en.dart';
 import 'package:appcode3/main.dart';
-import 'package:appcode3/modals/DoctorAppointmentClass.dart';
-import 'package:appcode3/modals/DoctorPastAppointmentsClass.dart';
-import 'package:appcode3/views/Doctor/DoctorChatListScreen.dart';
-import 'package:appcode3/views/Doctor/DoctorAllAppointments.dart';
-import 'package:appcode3/views/Doctor/DoctorAppointmentDetails.dart';
-import 'package:appcode3/views/Doctor/DoctorProfileWithRating.dart';
-import 'package:appcode3/views/Doctor/moreScreen/change_password_screen.dart';
-import 'package:appcode3/views/Doctor/moreScreen/income_report.dart';
-import 'package:appcode3/views/Doctor/moreScreen/subscription_screen.dart';
-
-import 'package:cached_network_image/cached_network_image.dart';
-//import 'package:facebook_audience_network/ad/ad_native.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_html/style.dart';
-//import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import 'package:flutter/material.dart';
 
 class MottoSettingsPage extends StatefulWidget {
   //const NameSettingsPage({super.key});
@@ -51,6 +22,7 @@ class _MottoSettingsPageState extends State<MottoSettingsPage> {
   late TextEditingController _controller;
   String enteredValue = '';
   bool isValueChanged = false;
+  bool loading = false;
   void updatingMotto() async {
     final response =
         await post(Uri.parse("$SERVER_ADDRESS/api/updateMotto"), body: {
@@ -62,7 +34,8 @@ class _MottoSettingsPageState extends State<MottoSettingsPage> {
     if (response.statusCode == 200) {
       print("Motto Updated");
       setState(() {
-        Navigator.pop(context);
+        loading = false;
+        Navigator.of(context).pop(true);
       });
     } else {
       print("Motto Not Updated");
@@ -95,9 +68,26 @@ class _MottoSettingsPageState extends State<MottoSettingsPage> {
             TextButton(
               onPressed: () {
                 if (isValueChanged) {
+                  setState(() {
+                    loading = true;
+                  });
                   updatingMotto();
                 } else {
-                  // Navigator.pop(context);
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text("You didn't change the anything!"),
+                        actions: <Widget>[
+                          TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text("OK"))
+                        ],
+                      );
+                    },
+                  );
                 }
               },
               child: Text(
@@ -111,73 +101,81 @@ class _MottoSettingsPageState extends State<MottoSettingsPage> {
             ),
           ],
         ),
-        body: Container(
-          color: LIGHT_GREY_SCREEN_BACKGROUND,
-          child: Column(
-            children: [
-              Container(
-                padding: EdgeInsets.all(16),
-                alignment: Alignment.topLeft,
+        body: loading
+            ? Container(
+                alignment: Alignment.center,
+                transformAlignment: Alignment.center,
+                child: CircularProgressIndicator(),
+              )
+            : Container(
+                color: LIGHT_GREY_SCREEN_BACKGROUND,
                 child: Column(
                   children: [
-                    Text(
-                      MOTTO_PAGE_1,
-                      textAlign: TextAlign.justify, // Align text to center
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w900,
+                    Container(
+                      padding: EdgeInsets.all(16),
+                      alignment: Alignment.topLeft,
+                      child: Column(
+                        children: [
+                          Text(
+                            MOTTO_PAGE_1,
+                            textAlign:
+                                TextAlign.justify, // Align text to center
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w900,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            MOTTO_PAGE_2,
+                            textAlign:
+                                TextAlign.justify, // Align text to center
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w900,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     SizedBox(
                       height: 10,
                     ),
-                    Text(
-                      MOTTO_PAGE_2,
-                      textAlign: TextAlign.justify, // Align text to center
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w900,
+                    Container(
+                      color: Colors.white,
+                      child: TextField(
+                        controller: _controller,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w200,
+                        ),
+                        onChanged: (value) {
+                          setState(
+                            () {
+                              enteredValue = value;
+                              if (enteredValue != widget.motto) {
+                                isValueChanged = true;
+                              } else {
+                                isValueChanged = false;
+                              }
+                            },
+                          );
+                        },
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: "Add Your Motto",
+                          hintStyle: TextStyle(color: Colors.black),
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                color: Colors.white,
-                child: TextField(
-                  controller: _controller,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w200,
-                  ),
-                  onChanged: (value) {
-                    setState(
-                      () {
-                        enteredValue = value;
-                        if (enteredValue != widget.motto) {
-                          isValueChanged = true;
-                        } else {
-                          isValueChanged = false;
-                        }
-                      },
-                    );
-                  },
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: widget.motto,
-                    hintStyle: TextStyle(color: Colors.black),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }

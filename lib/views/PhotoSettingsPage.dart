@@ -422,7 +422,7 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
             actions: [
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  Navigator.of(context).pop(true);
                   // Navigator.of(context).push(MaterialPageRoute(
                   //     builder: ((context) => MoreInfoScreen())));
                 },
