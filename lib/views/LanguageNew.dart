@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:appcode3/en.dart';
 import 'package:appcode3/main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
@@ -27,7 +26,7 @@ class _LanguageNewState extends State<LanguageNew> {
     if (response.statusCode == 200) {
       print("Language Updated");
       setState(() {
-        Navigator.pop(context);
+        Navigator.of(context).pop(true);
       });
     } else {
       print("Language Not Updated");

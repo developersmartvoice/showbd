@@ -272,6 +272,10 @@ class _AboutHostState extends State<AboutHost> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    fetchedData();
+  }
+
+  fetchedData() {
     getImage();
     getImages();
     getMotto();
@@ -320,13 +324,21 @@ class _AboutHostState extends State<AboutHost> {
                   location,
                   about_me,
                   gender,
-                  languages!)
+                  languages!,
+                  _handleDataReload)
               : Container(
                   alignment: Alignment.center,
                   transformAlignment: Alignment.center,
                   child: CircularProgressIndicator(),
                 )),
     );
+  }
+
+  // Add this method to handle the data reload
+  void _handleDataReload(bool dataUpdated) {
+    if (dataUpdated) {
+      fetchedData();
+    }
   }
 }
 
@@ -345,20 +357,21 @@ class ContainerPage extends StatefulWidget {
   final String aboutMe;
   final String gender;
   final List<String> languages;
+  final Function(bool) handleDataReload; // Add this field
 
   ContainerPage(
-    this.id,
-    this.motto,
-    this.iwillshowyou,
-    this.services,
-    this.consultationfees,
-    this.imageUrl1,
-    this.imageUrls,
-    this.city,
-    this.aboutMe,
-    this.gender,
-    this.languages,
-  );
+      this.id,
+      this.motto,
+      this.iwillshowyou,
+      this.services,
+      this.consultationfees,
+      this.imageUrl1,
+      this.imageUrls,
+      this.city,
+      this.aboutMe,
+      this.gender,
+      this.languages,
+      this.handleDataReload);
 }
 
 class _ContainerPageState extends State<ContainerPage> {
@@ -492,12 +505,16 @@ class _ContainerPageState extends State<ContainerPage> {
               color: Colors.white,
               child: InkWell(
                 onTap: () {
-                  Navigator.of(context).push(
+                  Navigator.of(context)
+                      .push(
                     MaterialPageRoute(
                       builder: (context) =>
                           MottoSettingsPage(widget.id, widget.motto),
                     ),
-                  );
+                  )
+                      .then((dataUpdated) {
+                    widget.handleDataReload(dataUpdated ?? false);
+                  });
                 },
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
@@ -591,12 +608,16 @@ class _ContainerPageState extends State<ContainerPage> {
               color: Colors.white,
               child: InkWell(
                 onTap: () {
-                  Navigator.of(context).push(
+                  Navigator.of(context)
+                      .push(
                     MaterialPageRoute(
                       builder: (context) => IwillShowYouSettingsPage(
                           widget.id, widget.iwillshowyou),
                     ),
-                  );
+                  )
+                      .then((dataUpdated) {
+                    widget.handleDataReload(dataUpdated ?? false);
+                  });
                 },
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
@@ -691,12 +712,16 @@ class _ContainerPageState extends State<ContainerPage> {
                   //         ServiceNew(widget.id, widget.services),
                   //   ),
                   // );
-                  Navigator.of(context).push(
+                  Navigator.of(context)
+                      .push(
                     MaterialPageRoute(
                       builder: (context) =>
                           ServicesSettingsPage(widget.id, widget.services),
                     ),
-                  );
+                  )
+                      .then((dataUpdated) {
+                    widget.handleDataReload(dataUpdated ?? false);
+                  });
                 },
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
@@ -762,18 +787,12 @@ class _ContainerPageState extends State<ContainerPage> {
                         ),
                       ),
                     ),
-                    // SizedBox(
-                    //   width: 10,
-                    // ),
                     SizedBox(
                       width: MediaQuery.sizeOf(context).width * .05,
                     ),
                     Container(
                       padding: EdgeInsets.only(right: 10),
                       width: MediaQuery.sizeOf(context).width * .1,
-                      // child: IconButton(
-                      //     onPressed: () {},
-                      //     icon: Icon(Icons.arrow_forward_ios)),
                       alignment: Alignment.centerRight,
                       child: Icon(Icons.arrow_forward_ios, size: 20),
                     ),
@@ -791,12 +810,16 @@ class _ContainerPageState extends State<ContainerPage> {
               color: Colors.white,
               child: InkWell(
                 onTap: () {
-                  Navigator.of(context).push(
+                  Navigator.of(context)
+                      .push(
                     MaterialPageRoute(
                       builder: (context) => HourlyRateSettingsPage(
                           widget.id, widget.consultationfees),
                     ),
-                  );
+                  )
+                      .then((dataUpdated) {
+                    widget.handleDataReload(dataUpdated ?? false);
+                  });
                 },
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
@@ -872,8 +895,6 @@ class _ContainerPageState extends State<ContainerPage> {
                                     widget.id, widget.consultationfees),
                               ),
                             );
-                            // Add your logic for the onPressed event here
-                            // Typically, this would involve navigating to the next screen or performing some action
                           },
                           alignment: Alignment.centerRight,
                           icon: Icon(Icons.arrow_forward_ios_sharp),
@@ -896,18 +917,16 @@ class _ContainerPageState extends State<ContainerPage> {
               color: Colors.white,
               child: InkWell(
                 onTap: () {
-                  Navigator.of(context).push(
+                  Navigator.of(context)
+                      .push(
                     MaterialPageRoute(
                       builder: (context) => PhotoSettingsPage(
                           widget.id, widget.imageUrl1!, widget.imageUrls!),
                     ),
-                  );
-                  // Navigator.of(context).push(
-                  //   MaterialPageRoute(
-                  //     builder: (context) =>
-                  //         NameSettingsPage(widget.id, widget.name),
-                  //   ),
-                  // );
+                  )
+                      .then((dataUpdated) {
+                    widget.handleDataReload(dataUpdated ?? false);
+                  });
                 },
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
@@ -995,12 +1014,16 @@ class _ContainerPageState extends State<ContainerPage> {
               color: Colors.white,
               child: InkWell(
                 onTap: () {
-                  Navigator.of(context).push(
+                  Navigator.of(context)
+                      .push(
                     MaterialPageRoute(
                       builder: (context) =>
                           LocationSearchPageInfo(widget.id, widget.city),
                     ),
-                  );
+                  )
+                      .then((dataUpdated) {
+                    widget.handleDataReload(dataUpdated ?? false);
+                  });
                 },
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
@@ -1088,12 +1111,16 @@ class _ContainerPageState extends State<ContainerPage> {
               color: Colors.white,
               child: InkWell(
                 onTap: () {
-                  Navigator.of(context).push(
+                  Navigator.of(context)
+                      .push(
                     MaterialPageRoute(
                       builder: (context) =>
                           AboutMeDetailsPage(widget.id, widget.aboutMe),
                     ),
-                  );
+                  )
+                      .then((dataUpdated) {
+                    widget.handleDataReload(dataUpdated ?? false);
+                  });
                 },
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
@@ -1181,12 +1208,16 @@ class _ContainerPageState extends State<ContainerPage> {
               color: Colors.white,
               child: InkWell(
                 onTap: () {
-                  Navigator.of(context).push(
+                  Navigator.of(context)
+                      .push(
                     MaterialPageRoute(
                       builder: (context) =>
                           GenderSettingsPage(widget.id, widget.gender),
                     ),
-                  );
+                  )
+                      .then((dataUpdated) {
+                    widget.handleDataReload(dataUpdated ?? false);
+                  });
                 },
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
@@ -1276,18 +1307,16 @@ class _ContainerPageState extends State<ContainerPage> {
               color: Colors.white,
               child: InkWell(
                 onTap: () {
-                  // Navigator.of(context).push(
-                  //   MaterialPageRoute(
-                  //     builder: (context) =>
-                  //         LanguageNew(widget.id, widget.languages),
-                  //   ),
-                  // );
-                  Navigator.of(context).push(
+                  Navigator.of(context)
+                      .push(
                     MaterialPageRoute(
                       builder: (context) =>
                           LanguageNew(widget.id, widget.languages),
                     ),
-                  );
+                  )
+                      .then((dataUpdated) {
+                    widget.handleDataReload(dataUpdated ?? false);
+                  });
                 },
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
@@ -1362,10 +1391,6 @@ class _ContainerPageState extends State<ContainerPage> {
                     ),
                     Container(
                       width: MediaQuery.sizeOf(context).width * .1,
-                      // child: IconButton(
-                      //     onPressed: () {},
-                      //     icon: Icon(Icons.arrow_forward_ios)),
-
                       child: Icon(Icons.arrow_forward_ios, size: 20),
                     ),
                   ],
