@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
 
 class Tour extends StatefulWidget {
   const Tour({Key? key});
@@ -48,44 +47,6 @@ class _TourState extends State<Tour> {
           tripsClass = TripsClass.fromJson(jsonResponse);
           print("Here data after successful request!!");
           print(tripsClass!.data!);
-        });
-      } else {
-        setState(() {
-          isTripsAvailable = false;
-        });
-      }
-    }
-  }
-
-  // Define a list to store expired trip IDs
-  List<int> expiredTripIds = [];
-
-  fetchExpiredTrips(int id) async {
-    final response =
-        await http.get(Uri.parse("$SERVER_ADDRESS/api/gettrip?guide_id=$id"));
-    if (response.statusCode == 200) {
-      final jsonResponse = jsonDecode(response.body);
-      if (jsonResponse['status'].toString() == "1") {
-        // Assuming jsonResponse contains a list of trips
-        List<dynamic> tripsData = jsonResponse['trip_details'];
-        // Clear the expiredTripIds list before populating it
-        expiredTripIds.clear();
-        tripsData.forEach((trip) {
-          // Parse end_date of the trip
-          DateTime endDate = DateTime.parse(trip['end_date']);
-          // Get the current time
-          DateTime currentTime = DateTime.now();
-          // Compare end_date with current time
-          if (endDate.isBefore(currentTime)) {
-            // Trip is expired, add its ID to the list
-            expiredTripIds.add(trip['id']);
-          }
-        });
-        setState(() {
-          // Update UI or state based on the expiredTripIds list
-          // Here you can compare with existing IDs and determine if a trip is expired or not
-          // For example, you can iterate through the trips and check if their IDs are in expiredTripIds list
-          // If yes, it means the trip is expired, otherwise not
         });
       } else {
         setState(() {
@@ -248,6 +209,7 @@ class _TourState extends State<Tour> {
           itemCount: tripsClass!.data!.length,
           itemBuilder: (context, index) {
             Trip trip = tripsClass!.data![index];
+
             return TripCard(
               trip: trip,
               context: context, // Pass the context here
