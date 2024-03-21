@@ -11,10 +11,11 @@ class TripCard extends StatelessWidget {
   final BuildContext context;
   final Function(int) onDeleteSuccess; // Define callback function
 
-  TripCard(
-      {required this.trip,
-      required this.context,
-      required this.onDeleteSuccess});
+  TripCard({
+    required this.trip,
+    required this.context,
+    required this.onDeleteSuccess,
+  });
 
   Future<void> deleteTrip(int id) async {
     final response = await http.post(
@@ -29,27 +30,30 @@ class TripCard extends StatelessWidget {
       if (jsonResponse['delete'] == "Trip deleted successfully") {
         print("Trip Deleted");
         showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: Text("Trip Deleted Successfully",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.bold,
-                    )),
-                actions: <Widget>[
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                      onDeleteSuccess(
-                          id); // Call onDeleteSuccess with the trip ID
-                    },
-                    child: Text("OK"),
-                  )
-                ],
-              );
-            });
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text(
+                "Trip Deleted Successfully",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 15.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    onDeleteSuccess(
+                        id); // Call onDeleteSuccess with the trip ID
+                  },
+                  child: Text("OK"),
+                )
+              ],
+            );
+          },
+        );
       } else {
         print("Trip Not Deleted");
       }
@@ -103,6 +107,9 @@ class TripCard extends StatelessWidget {
   }
 
   Widget tripDetails() {
+    String formattedStartDate = formatDate(trip.startDate ?? '');
+    String formattedEndDate = formatDate(trip.endDate ?? '');
+
     return Container(
       padding: EdgeInsets.fromLTRB(14, 5, 14, 5),
       alignment: Alignment.center,
@@ -137,7 +144,7 @@ class TripCard extends StatelessWidget {
               Icon(Icons.calendar_month_sharp),
               SizedBox(width: 10),
               Text(
-                '${trip.startDate ?? ''} to ${trip.endDate ?? ''}',
+                '$formattedStartDate to $formattedEndDate',
                 style: TextStyle(
                   color: Colors.grey,
                 ),
@@ -152,11 +159,84 @@ class TripCard extends StatelessWidget {
               Text(
                 'Number of People: ${getNumberString(trip.peopleQuantity)}',
               ),
+              Spacer(),
+              trip.endDate!.compareTo(DateTime.now().toString()) < 0
+                  ? Text(
+                      'Expired',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16.0,
+                        color: Colors.red,
+                      ),
+                    )
+                  : Text(
+                      'Active',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16.0,
+                        color: Colors.green,
+                      ),
+                    ),
             ],
           ),
         ],
       ),
     );
+  }
+
+  String formatDate(String date) {
+    DateTime dateTime = DateTime.parse(date);
+    String day = dateTime.day.toString();
+    String month = dateTime.month.toString();
+    String year = dateTime.year.toString();
+    List<String> suffixes = [
+      'th',
+      'st',
+      'nd',
+      'rd',
+      'th',
+      'th',
+      'th',
+      'th',
+      'th',
+      'th'
+    ];
+    String suffix = suffixes[int.parse(day) % 10];
+    if (day.length == 1) {
+      day = '0$day';
+    }
+    return '$day$suffix ${_getMonth(month)} $year';
+  }
+
+  String _getMonth(String month) {
+    switch (month) {
+      case '1':
+        return 'Jan';
+      case '2':
+        return 'Feb';
+      case '3':
+        return 'Mar';
+      case '4':
+        return 'Apr';
+      case '5':
+        return 'May';
+      case '6':
+        return 'Jun';
+      case '7':
+        return 'Jul';
+      case '8':
+        return 'Aug';
+      case '9':
+        return 'Sep';
+      case '10':
+        return 'Oct';
+      case '11':
+        return 'Nov';
+      case '12':
+        return 'Dec';
+      default:
+        return '';
+    }
   }
 
   String getNumberString(n) {
