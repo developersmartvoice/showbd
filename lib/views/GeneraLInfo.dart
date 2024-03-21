@@ -277,7 +277,9 @@ class _ContainerPageState extends State<ContainerPage> {
                             height: 25,
                             decoration: BoxDecoration(
                               //color: _boxColor, // Color of the button
-                              color: isNameStored ? Colors.green : Colors.grey,
+                              color: widget.name.isNotEmpty
+                                  ? Colors.green
+                                  : Colors.white,
                               shape: BoxShape.circle,
                               border: Border.all(
                                 color: Colors.grey, // Color of the border
@@ -286,9 +288,7 @@ class _ContainerPageState extends State<ContainerPage> {
                             ),
                             child: Icon(
                               Icons.check,
-                              color:
-                                  !isNameStored ? Colors.green : Colors.white,
-                              // color: Colors.white, // Color of the icon
+                              color: Colors.white,
                               size: 20.0, // Size of the icon
                             ),
                           )
@@ -364,8 +364,9 @@ class _ContainerPageState extends State<ContainerPage> {
                             height: 25,
                             decoration: BoxDecoration(
                               //color: _boxColor, // Color of the button
-                              color:
-                                  isAboutMeStored ? Colors.green : Colors.grey,
+                              color: widget.aboutMe.isNotEmpty
+                                  ? Colors.green
+                                  : Colors.white,
                               shape: BoxShape.circle,
                               border: Border.all(
                                 color: Colors.grey, // Color of the border
@@ -374,10 +375,7 @@ class _ContainerPageState extends State<ContainerPage> {
                             ),
                             child: Icon(
                               Icons.check,
-                              color: !isAboutMeStored
-                                  ? Colors.green
-                                  : Colors.white,
-                              // color: Colors.white, // Color of the icon
+                              color: Colors.white,
                               size: 20.0, // Size of the icon
                             ),
                           )
@@ -460,9 +458,7 @@ class _ContainerPageState extends State<ContainerPage> {
                             ),
                             child: Icon(
                               Icons.check,
-                              color:
-                                  !isPhotoStored ? Colors.green : Colors.white,
-                              // color: Colors.white, // Color of the icon
+                              color: Colors.white,
                               size: 20.0, // Size of the icon
                             ),
                           )
@@ -535,8 +531,9 @@ class _ContainerPageState extends State<ContainerPage> {
                             height: 25,
                             decoration: BoxDecoration(
                               //color: _boxColor, // Color of the button
-                              color:
-                                  isLocationStored ? Colors.green : Colors.grey,
+                              color: widget.city.isNotEmpty
+                                  ? Colors.green
+                                  : Colors.white,
                               shape: BoxShape.circle,
                               border: Border.all(
                                 color: Colors.grey, // Color of the border
@@ -545,10 +542,7 @@ class _ContainerPageState extends State<ContainerPage> {
                             ),
                             child: Icon(
                               Icons.check,
-                              color: !isLocationStored
-                                  ? Colors.green
-                                  : Colors.white,
-                              // color: Colors.white, // Color of the icon
+                              color: Colors.white,
                               size: 20.0, // Size of the icon
                             ),
                           )
