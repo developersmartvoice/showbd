@@ -1,11 +1,8 @@
-import 'dart:async';
 import 'dart:convert';
 
 import 'package:appcode3/en.dart';
 import 'package:appcode3/main.dart';
 import 'package:appcode3/views/Doctor/DoctorTabScreen.dart';
-import 'package:appcode3/views/RegisterAsUser.dart';
-import 'package:connectycube_sdk/connectycube_calls.dart';
 import 'package:connectycube_sdk/connectycube_chat.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -17,7 +14,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../VideoCall/utils/pref_util.dart';
 import '../ForgetPassword.dart';
-import '../HomeScreen.dart';
 import 'RegisterAsDoctor.dart';
 
 class LoginAsDoctor extends StatefulWidget {
@@ -172,13 +168,13 @@ class _LoginAsDoctorState extends State<LoginAsDoctor> {
                 pref.setString("userIdWithAscii",
                     '100' + jsonResponse['register']['doctor_id'].toString());
               });
-              // Navigator.of(context).popUntil((route) => route.isFirst);
-              // Navigator.pushReplacement(context,
-              //     MaterialPageRoute(builder: (context) => DoctorTabsScreen())
-              // );
+              Navigator.of(context).popUntil((route) => route.isFirst);
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => DoctorTabsScreen()));
 
               CubeUser user = CubeUser(
-                id: jsonResponse['register']['connectycube_user_id'],
+                id: int.tryParse(
+                    jsonResponse['register']['connectycube_user_id']),
                 login: jsonResponse['register']['login_id'],
                 fullName: jsonResponse['register']['name']
                     .toString()
@@ -193,10 +189,10 @@ class _LoginAsDoctorState extends State<LoginAsDoctor> {
             print('firebasse db error $onError');
           });
         }
-        setState(() {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => DoctorTabsScreen()));
-        });
+        // setState(() {
+        //   Navigator.push(context,
+        //       MaterialPageRoute(builder: (context) => DoctorTabsScreen()));
+        // });
       } catch (e) {
         Navigator.pop(context);
         messageDialog(ERROR, UNABLE_TO_LOAD_DATA_FORM_SERVER);

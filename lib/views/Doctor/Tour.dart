@@ -7,13 +7,13 @@ import 'package:appcode3/views/CreateTrip.dart';
 import 'package:appcode3/views/TripCard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class Tour extends StatefulWidget {
-  const Tour({super.key});
+  const Tour({Key? key});
 
   @override
   State<Tour> createState() => _TourState();
@@ -23,12 +23,20 @@ class _TourState extends State<Tour> {
   TripsClass? tripsClass;
   String? doctorId;
   Future? future1;
+  Future? future2;
   bool isTripsAvailable = false;
 
-  fetchTrips(id) async {
+  void handleDeleteSuccess(int deletedTripId) {
+    // Remove the deleted trip from tripsClass.data
+    setState(() {
+      tripsClass?.data?.removeWhere((trip) => trip.id == deletedTripId);
+    });
+  }
+
+  fetchTrips(int id) async {
     final response =
-        await get(Uri.parse("$SERVER_ADDRESS/api/gettrip?guide_id=$doctorId"));
-    print(Uri.parse("$SERVER_ADDRESS/api/gettrip?guide_id=$doctorId"));
+        await get(Uri.parse("$SERVER_ADDRESS/api/gettrip?guide_id=$id"));
+    print(Uri.parse("$SERVER_ADDRESS/api/gettrip?guide_id=$id"));
     print('Trips are -> ${response.body}');
     // print(response.statusCode);
     if (response.statusCode == 200) {
@@ -49,6 +57,44 @@ class _TourState extends State<Tour> {
     }
   }
 
+  // Define a list to store expired trip IDs
+  List<int> expiredTripIds = [];
+
+  fetchExpiredTrips(int id) async {
+    final response =
+        await http.get(Uri.parse("$SERVER_ADDRESS/api/gettrip?guide_id=$id"));
+    if (response.statusCode == 200) {
+      final jsonResponse = jsonDecode(response.body);
+      if (jsonResponse['status'].toString() == "1") {
+        // Assuming jsonResponse contains a list of trips
+        List<dynamic> tripsData = jsonResponse['trip_details'];
+        // Clear the expiredTripIds list before populating it
+        expiredTripIds.clear();
+        tripsData.forEach((trip) {
+          // Parse end_date of the trip
+          DateTime endDate = DateTime.parse(trip['end_date']);
+          // Get the current time
+          DateTime currentTime = DateTime.now();
+          // Compare end_date with current time
+          if (endDate.isBefore(currentTime)) {
+            // Trip is expired, add its ID to the list
+            expiredTripIds.add(trip['id']);
+          }
+        });
+        setState(() {
+          // Update UI or state based on the expiredTripIds list
+          // Here you can compare with existing IDs and determine if a trip is expired or not
+          // For example, you can iterate through the trips and check if their IDs are in expiredTripIds list
+          // If yes, it means the trip is expired, otherwise not
+        });
+      } else {
+        setState(() {
+          isTripsAvailable = false;
+        });
+      }
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -57,7 +103,7 @@ class _TourState extends State<Tour> {
         doctorId = pref.getString("userId");
         print(doctorId);
         print("fetchTrips function is calling");
-        future1 = fetchTrips(doctorId);
+        future1 = fetchTrips(int.parse(doctorId!));
         print("This is future: $future1");
       });
     });
@@ -128,15 +174,11 @@ class _TourState extends State<Tour> {
                         'Create a Trip',
                         style: GoogleFonts.poppins(
                           fontWeight: FontWeight.w700,
-                          //color: Colors.blue,
                           fontSize: 18,
                         ),
                       ),
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.fromLTRB(95, 13, 95, 13),
-                        // padding: EdgeInsets.symmetric(
-                        //     horizontal: MediaQuery.of(context).size.width * .2,
-                        //     vertical: MediaQuery.of(context).size.height * .02),
                         backgroundColor: Colors.blue,
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
@@ -152,30 +194,6 @@ class _TourState extends State<Tour> {
               SizedBox(
                 height: MediaQuery.of(context).size.height * .02,
               ),
-              // Container(
-              //   child: Column(
-              //       mainAxisAlignment:
-              //           MainAxisAlignment.center, // Center vertically
-              //       children: [
-              //         Text(
-              //           "My saved Trips!",
-              //           style: GoogleFonts.poppins(
-              //               fontWeight: FontWeight.w500,
-              //               color: BLACK,
-              //               fontSize: 18),
-              //         ),
-              //         SizedBox(
-              //           height: 15,
-              //         ),
-              //         Text(
-              //           "You haven't created any Trips yet. Create your first Trip so available locals can send you offers.",
-              //           style: GoogleFonts.poppins(
-              //               fontWeight: FontWeight.w400,
-              //               color: BLACK,
-              //               fontSize: 14),
-              //         )
-              //       ]),
-              // )
               isTripsAvailable && tripsClass!.data!.isNotEmpty
                   ? Text(
                       "My Trips",
@@ -230,34 +248,15 @@ class _TourState extends State<Tour> {
           itemCount: tripsClass!.data!.length,
           itemBuilder: (context, index) {
             Trip trip = tripsClass!.data![index];
-            return TripCard(trip: trip);
+            return TripCard(
+              trip: trip,
+              context: context, // Pass the context here
+              onDeleteSuccess: handleDeleteSuccess, // Pass callback function
+            );
           },
         ),
       );
     } else {
-      // return Container(
-      //   child: Column(
-      //     mainAxisAlignment: MainAxisAlignment.center,
-      //     children: [
-      //       SizedBox(
-      //         height: MediaQuery.of(context).size.height * .25,
-      //       ),
-      //       Text(
-      //         "My saved Trips!",
-      //         style: GoogleFonts.poppins(
-      //             fontWeight: FontWeight.w500, color: BLACK, fontSize: 18),
-      //       ),
-      //       SizedBox(
-      //         height: 15,
-      //       ),
-      //       Text(
-      //         "You haven't created any Trips yet. Create your first Trip so available locals can send you offers.",
-      //         style: GoogleFonts.poppins(
-      //             fontWeight: FontWeight.w400, color: BLACK, fontSize: 14),
-      //       )
-      //     ],
-      //   ),
-      // );
       return Container();
     }
   }

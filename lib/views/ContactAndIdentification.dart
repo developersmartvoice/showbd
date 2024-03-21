@@ -99,50 +99,53 @@ class _GeneraLInfoState extends State<ContactAndIdentification> {
     setState(() {
       print("This is form Contact page: ${widget.id}");
     });
-    return Scaffold(
-      backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 243, 103, 9),
-        centerTitle: true,
-        title: Text('Contact & Identification',
-            // style: GoogleFonts.robotoCondensed(
-            //   color: Colors.white,
-            //   fontSize: 25,
-            //   fontWeight: FontWeight.w700, // Title text color
-            // ),
-            style: Theme.of(context).textTheme.headline5!.apply(
-                color: Theme.of(context).backgroundColor, fontWeightDelta: 5)),
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.black, // Back button color
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
+        appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 243, 103, 9),
+          centerTitle: true,
+          title: Text('Contact & Identification',
+              // style: GoogleFonts.robotoCondensed(
+              //   color: Colors.white,
+              //   fontSize: 25,
+              //   fontWeight: FontWeight.w700, // Title text color
+              // ),
+              style: Theme.of(context).textTheme.headline5!.apply(
+                  color: Theme.of(context).backgroundColor,
+                  fontWeightDelta: 5)),
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+              color: Colors.black, // Back button color
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
           ),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
+          // actions: [
+          //   TextButton(
+          //     onPressed: () {
+          //       // Navigator.of(context).push(
+          //       //           MaterialPageRoute(
+          //       //             builder: (context) => DoctorChatListScreen(),
+          //       //           ),
+          //       //         );
+          //       // Add your button functionality here
+          //     },
+          //     child: Text(
+          //       'Save', // Text for the button
+          //       style: GoogleFonts.robotoCondensed(
+          //         fontSize: 23,
+          //         fontWeight: FontWeight.bold,
+          //         color: Colors.black, // Text color
+          //       ),
+          //     ),
+          //   ),
+          // ],
         ),
-        // actions: [
-        //   TextButton(
-        //     onPressed: () {
-        //       // Navigator.of(context).push(
-        //       //           MaterialPageRoute(
-        //       //             builder: (context) => DoctorChatListScreen(),
-        //       //           ),
-        //       //         );
-        //       // Add your button functionality here
-        //     },
-        //     child: Text(
-        //       'Save', // Text for the button
-        //       style: GoogleFonts.robotoCondensed(
-        //         fontSize: 23,
-        //         fontWeight: FontWeight.bold,
-        //         color: Colors.black, // Text color
-        //       ),
-        //     ),
-        //   ),
-        // ],
+        body: ContainerPage(widget.id, email, phone),
       ),
-      body: ContainerPage(widget.id, email, phone),
     );
   }
 }
