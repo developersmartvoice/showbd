@@ -151,7 +151,7 @@ class _IwillShowYouSettingsPageState extends State<IwillShowYouSettingsPage> {
                         },
                         decoration: InputDecoration(
                           border: OutlineInputBorder(),
-                          hintText: widget.iwillshowyou,
+                          hintText: "Add I will show you",
                           hintStyle: TextStyle(color: Colors.black),
                         ),
                       ),

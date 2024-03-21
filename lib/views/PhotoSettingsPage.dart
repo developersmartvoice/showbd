@@ -25,6 +25,7 @@ class PhotoSettingsPage extends StatefulWidget {
 class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
   File? _image;
   List<File?> _images = List<File?>.filled(4, null);
+  List<String> imagesBox = List.generate(4, (index) => "");
   bool isUploadClicked = false;
   bool isImageChanged = false;
   bool isImagesChanged = false;
@@ -103,6 +104,19 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
           });
       }
     }
+  }
+
+  loadImagesBox() {
+    for (int i = 0; i < widget.imgs.length; i++) {
+      imagesBox[i] = widget.imgs[i];
+    }
+    print("Here are the images: $imagesBox");
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadImagesBox();
   }
 
   @override
@@ -270,7 +284,7 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                                   Column(
                                     children: [
                                       _images[0] != null ||
-                                              widget.imgs.isNotEmpty
+                                              imagesBox[0].isNotEmpty
                                           ? InkWell(
                                               onTap: () {
                                                 _showImagesPreview(0);
@@ -328,7 +342,7 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                                         height: 5,
                                       ),
                                       _images[2] != null ||
-                                              widget.imgs.isNotEmpty
+                                              imagesBox[2].isNotEmpty
                                           ? InkWell(
                                               onTap: () {
                                                 _showImagesPreview(2);
@@ -390,7 +404,7 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                                   Column(
                                     children: [
                                       _images[1] != null ||
-                                              widget.imgs.isNotEmpty
+                                              imagesBox[1].isNotEmpty
                                           ? InkWell(
                                               onTap: () {
                                                 _showImagesPreview(1);
@@ -448,7 +462,7 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                                         height: 5,
                                       ),
                                       _images[3] != null ||
-                                              widget.imgs.isNotEmpty
+                                              imagesBox[3].isNotEmpty
                                           ? InkWell(
                                               onTap: () {
                                                 _showImagesPreview(3);
@@ -617,6 +631,85 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
     }
   }
 
+  String imagesBody(int index) {
+    Map<String, dynamic> requestBody = {
+      'doctor_id': widget.id,
+      'index': index,
+    };
+
+    return jsonEncode(requestBody);
+  }
+
+  deleteImages(int index) async {
+    final response = await delete(Uri.parse("$SERVER_ADDRESS/api/deleteImages"),
+        body: imagesBody(index), headers: {"Content-Type": "application/json"});
+    final jsonResponse = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      if (jsonResponse['message'] == "Image deleted successfully") {
+        setState(() {
+          print("image deleted!");
+          widget.imgs[index] = "";
+          loadImagesBox();
+          isDeletePressed = false;
+        });
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text(jsonResponse['message']),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop(true);
+                  },
+                  child: Text("OK"),
+                )
+              ],
+            );
+          },
+        );
+      } else {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text("Try Again Later"),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text("OK"),
+                )
+              ],
+            );
+          },
+        );
+      }
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(jsonResponse['error'] ?? "Unknown Error"),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  setState(() {
+                    isDeletePressed = false;
+                  });
+                },
+                child: Text("OK"),
+              )
+            ],
+          );
+        },
+      );
+    }
+  }
+
   Future<void> _uploadImage() async {
     if (_image == null) return;
 
@@ -703,8 +796,8 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
         builder: (BuildContext context) {
           return AlertDialog(
             content: SizedBox(
-              width: MediaQuery.of(context).size.width * 0.7,
-              height: MediaQuery.of(context).size.width * 0.7,
+              width: MediaQuery.of(context).size.width * 1,
+              height: MediaQuery.of(context).size.width * 1,
               child: _image != null
                   ? Image.file(_image!, fit: BoxFit.contain)
                   : CachedNetworkImage(
@@ -759,8 +852,8 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
         builder: (BuildContext context) {
           return AlertDialog(
             content: SizedBox(
-              width: MediaQuery.of(context).size.width * 0.7,
-              height: MediaQuery.of(context).size.width * 0.7,
+              width: MediaQuery.of(context).size.width * 1,
+              height: MediaQuery.of(context).size.width * 1,
               child: _images[index] != null
                   ? Image.file(_images[index]!, fit: BoxFit.contain)
                   : CachedNetworkImage(
@@ -788,7 +881,7 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                         setState(() {
                           isDeletePressed = true;
                         });
-                        // deleteImage();
+                        deleteImages(index);
                       }
                     },
                     child: Text("Delete Photo"),
