@@ -163,7 +163,7 @@ class _GeneraLInfoState extends State<GeneraLInfo> {
           leading: IconButton(
             icon: Icon(
               Icons.arrow_back,
-              color: Colors.black, // Back button color
+              color: Colors.white, // Back button color
             ),
             onPressed: () {
               Navigator.of(context).pop();

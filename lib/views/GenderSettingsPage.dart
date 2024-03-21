@@ -3,26 +3,20 @@ import 'package:flutter/material.dart';
 
 import 'package:appcode3/en.dart';
 import 'package:appcode3/main.dart';
-//import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 
 class GenderSettingsPage extends StatefulWidget {
-  //const NameSettingsPage({super.key});
-
   @override
   State<GenderSettingsPage> createState() => _GenderSettingsPageState();
   late final String id;
   late final String gender;
-  //late final String aboutMe;
-  //late final String city;
 
   GenderSettingsPage(this.id, this.gender);
 }
 
 class _GenderSettingsPageState extends State<GenderSettingsPage> {
   String selectedGender = "";
-  late TextEditingController _controller;
   // String enteredValue = '';
   bool isGenderSelected = false;
   bool isValueChanged = false;
@@ -47,7 +41,6 @@ class _GenderSettingsPageState extends State<GenderSettingsPage> {
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController(text: widget.gender);
   }
 
   @override
@@ -56,11 +49,6 @@ class _GenderSettingsPageState extends State<GenderSettingsPage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Gender',
-              // style: GoogleFonts.robotoCondensed(
-              //   color: Colors.white,
-              //   fontSize: 25,
-              //   fontWeight: FontWeight.w700,
-              // ),
               style: Theme.of(context).textTheme.headline5!.apply(
                   color: Theme.of(context).backgroundColor,
                   fontWeightDelta: 5)),
@@ -142,31 +130,6 @@ class _GenderSettingsPageState extends State<GenderSettingsPage> {
                   selectedItem:
                       isGenderSelected ? selectedGender : widget.gender,
                 ),
-                // TextField(
-                //   controller: _controller,
-                //   style: TextStyle(
-                //     color: Colors.black,
-                //     fontSize: 16,
-                //     fontWeight: FontWeight.w200,
-                //   ),
-                //   onChanged: (value) {
-                //     setState(
-                //       () {
-                //         enteredValue = value;
-                //         if (enteredValue != widget.gender) {
-                //           isValueChanged = true;
-                //         } else {
-                //           isValueChanged = false;
-                //         }
-                //       },
-                //     );
-                //   },
-                //   decoration: InputDecoration(
-                //     border: OutlineInputBorder(),
-                //     hintText: widget.gender,
-                //     hintStyle: TextStyle(color: Colors.black),
-                //   ),
-                // ),
               ),
             ],
           ),
