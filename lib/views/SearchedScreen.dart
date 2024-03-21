@@ -2,29 +2,20 @@ import 'dart:convert';
 
 import 'package:appcode3/en.dart';
 import 'package:appcode3/main.dart';
-import 'package:appcode3/modals/NearbyDoctorClass.dart';
+import 'package:appcode3/modals/FilterClass.dart';
 import 'package:appcode3/modals/SearchDoctorClass.dart';
 import 'package:appcode3/modals/SpecialityClass.dart';
 import 'package:appcode3/views/FilteredGuidesScreen.dart';
-// import 'package:appcode3/views/DetailsPage.dart';
-// import 'package:cached_network_image/cached_network_image.dart';
-//import 'package:facebook_audience_network/ad/ad_native.dart';
 import 'package:flutter/material.dart';
-//import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SearchedScreen extends StatefulWidget {
   // const SearchedScreen({super.key})
-  // String keyword;
-
-  // SearchedScreen(this.keyword);
-  // SearchedScreen();
 
   @override
   _SearchedScreenState createState() => _SearchedScreenState();
-  // State<SearchedScreen> createState() => _SearchedScreenState();
 }
 
 class _SearchedScreenState extends State<SearchedScreen> {
@@ -33,7 +24,7 @@ class _SearchedScreenState extends State<SearchedScreen> {
   bool isLoading = false;
   bool isErrorInLoading = false;
   int? currentId;
-  NearbyDoctorsClass? _nearbyDoctorsClass;
+  FilterClass? _filterClass;
   SearchDoctorClass? searchDoctorClass;
   List<DoctorData> _newData = [];
   String nextUrl = "";
@@ -82,22 +73,27 @@ class _SearchedScreenState extends State<SearchedScreen> {
   }
 
   getFiltersDoctors() async {
-    final response = await post(Uri.parse("$SERVER_ADDRESS/api/filterdoctor"),
-        body: getBodyParameter());
-    // print(getBodyParameter());
-    // print(response.body);
-    if (response.statusCode == 200) {
-      final jsonResponse = jsonDecode(response.body);
-      setState(() {
-        _nearbyDoctorsClass = NearbyDoctorsClass.fromJson(jsonResponse);
-        print(_nearbyDoctorsClass!.data!.nearbyData);
-        isFilterLoading = false;
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: ((context) =>
-                    FilteredGuidesScreen(_nearbyDoctorsClass!))));
-      });
+    String body = getBodyParameter();
+    if (body.isNotEmpty) {
+      print("This body is from Inside the condition!: $body");
+      final response = await post(Uri.parse("$SERVER_ADDRESS/api/filterdoctor"),
+          headers: {'Content-Type': 'application/json'}, body: body);
+      // print(getBodyParameter());
+      // print(response);
+      if (response.statusCode == 200) {
+        final jsonResponse = jsonDecode(response.body);
+        print("Total Found: ${jsonResponse['data']['total']}");
+        setState(() {
+          _filterClass = FilterClass.fromJson(jsonResponse);
+          // print("Total Found: ${_filterClass!.data!.total}");
+          isFilterLoading = false;
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: ((context) =>
+                      FilteredGuidesScreen(_filterClass!, body))));
+        });
+      }
     }
   }
 
@@ -112,6 +108,7 @@ class _SearchedScreenState extends State<SearchedScreen> {
         'languages': selectedLanguages,
         'services': selectedActivities,
       };
+      print(jsonEncode(requestBody));
       return jsonEncode(requestBody);
     } else if (isFeesSelected && isLanguageSelected && isActivitiesSelected) {
       Map<String, dynamic> requestBody = {
@@ -119,6 +116,7 @@ class _SearchedScreenState extends State<SearchedScreen> {
         'languages': selectedLanguages,
         'services': selectedActivities,
       };
+      print(jsonEncode(requestBody));
       return jsonEncode(requestBody);
     } else if (isFeesSelected && isLanguageSelected && isGenderSelected) {
       Map<String, dynamic> requestBody = {
@@ -126,6 +124,7 @@ class _SearchedScreenState extends State<SearchedScreen> {
         'gender': filterGender,
         'languages': selectedLanguages,
       };
+      print(jsonEncode(requestBody));
       return jsonEncode(requestBody);
     } else if (isFeesSelected && isActivitiesSelected && isGenderSelected) {
       Map<String, dynamic> requestBody = {
@@ -133,6 +132,7 @@ class _SearchedScreenState extends State<SearchedScreen> {
         'gender': filterGender,
         'services': selectedActivities,
       };
+      print(jsonEncode(requestBody));
       return jsonEncode(requestBody);
     } else if (isLanguageSelected && isActivitiesSelected && isGenderSelected) {
       Map<String, dynamic> requestBody = {
@@ -140,67 +140,77 @@ class _SearchedScreenState extends State<SearchedScreen> {
         'languages': selectedLanguages,
         'services': selectedActivities,
       };
+      print(jsonEncode(requestBody));
       return jsonEncode(requestBody);
     } else if (isFeesSelected && isLanguageSelected) {
       Map<String, dynamic> requestBody = {
         'consultation_fees': filterFees,
         'languages': selectedLanguages,
       };
+      print(jsonEncode(requestBody));
       return jsonEncode(requestBody);
     } else if (isFeesSelected && isActivitiesSelected) {
       Map<String, dynamic> requestBody = {
         'consultation_fees': filterFees,
         'services': selectedActivities,
       };
+      print(jsonEncode(requestBody));
       return jsonEncode(requestBody);
     } else if (isFeesSelected && isGenderSelected) {
       Map<String, dynamic> requestBody = {
         'consultation_fees': filterFees,
         'gender': filterGender,
       };
+      print(jsonEncode(requestBody));
       return jsonEncode(requestBody);
     } else if (isLanguageSelected && isActivitiesSelected) {
       Map<String, dynamic> requestBody = {
         'languages': selectedLanguages,
         'services': selectedActivities,
       };
+      print(jsonEncode(requestBody));
       return jsonEncode(requestBody);
     } else if (isLanguageSelected && isGenderSelected) {
       Map<String, dynamic> requestBody = {
-        'consultation_fees': filterFees,
         'gender': filterGender,
         'languages': selectedLanguages,
-        'services': selectedActivities,
       };
+      print(jsonEncode(requestBody));
       return jsonEncode(requestBody);
     } else if (isActivitiesSelected && isGenderSelected) {
       Map<String, dynamic> requestBody = {
         'gender': filterGender,
         'services': selectedActivities,
       };
+      print(jsonEncode(requestBody));
       return jsonEncode(requestBody);
     } else if (isFeesSelected) {
       Map<String, dynamic> requestBody = {
         'consultation_fees': filterFees,
       };
+      print(jsonEncode(requestBody));
       return jsonEncode(requestBody);
     } else if (isLanguageSelected) {
       Map<String, dynamic> requestBody = {
         'languages': selectedLanguages,
       };
+      print(jsonEncode(requestBody));
       return jsonEncode(requestBody);
     } else if (isActivitiesSelected) {
       Map<String, dynamic> requestBody = {
         'services': selectedActivities,
       };
+      print(jsonEncode(requestBody));
       return jsonEncode(requestBody);
     } else if (isGenderSelected) {
       Map<String, dynamic> requestBody = {
         'gender': filterGender,
       };
+      print(jsonEncode(requestBody));
       return jsonEncode(requestBody);
+    } else {
+      return '';
     }
-    return '';
   }
 
   @override
@@ -559,8 +569,10 @@ class _SearchedScreenState extends State<SearchedScreen> {
               child: ElevatedButton(
                 onPressed: () {
                   _clearFilters();
-                  filterGender = null;
-                  filterFees = null;
+                  setState(() {
+                    filterGender = null;
+                    filterFees = null;
+                  });
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
@@ -972,6 +984,10 @@ class _SearchedScreenState extends State<SearchedScreen> {
 
   void _clearFilters() {
     setState(() {
+      isFeesSelected = false;
+      isGenderSelected = false;
+      isLanguageSelected = false;
+      isActivitiesSelected = false;
       priceRange = 100;
       selectedLanguages = [];
       selectedActivities = [];

@@ -1,56 +1,22 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 
-import 'dart:convert';
-import 'dart:ui';
-import 'package:appcode3/views/BookingScreen.dart';
-import 'package:appcode3/views/Doctor/DoctorProfile.dart';
-import 'package:appcode3/views/Doctor/LogoutScreen.dart';
-import 'package:appcode3/views/Doctor/loginAsDoctor.dart';
-import 'package:appcode3/views/SendOfferScreen.dart';
-import 'package:appcode3/views/SendOffersScreen.dart';
-import 'package:connectycube_sdk/connectycube_chat.dart';
-
 import 'package:appcode3/en.dart';
 import 'package:appcode3/main.dart';
-import 'package:appcode3/modals/DoctorAppointmentClass.dart';
-import 'package:appcode3/modals/DoctorPastAppointmentsClass.dart';
-import 'package:appcode3/views/Doctor/DoctorChatListScreen.dart';
-import 'package:appcode3/views/Doctor/DoctorAllAppointments.dart';
-import 'package:appcode3/views/Doctor/DoctorAppointmentDetails.dart';
-import 'package:appcode3/views/Doctor/DoctorProfileWithRating.dart';
-import 'package:appcode3/views/Doctor/moreScreen/change_password_screen.dart';
-import 'package:appcode3/views/Doctor/moreScreen/income_report.dart';
-import 'package:appcode3/views/Doctor/moreScreen/subscription_screen.dart';
-
-import 'package:cached_network_image/cached_network_image.dart';
-//import 'package:facebook_audience_network/ad/ad_native.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_html/style.dart';
-//import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import 'package:flutter/material.dart';
 
 class GenderSettingsPage extends StatefulWidget {
-  //const NameSettingsPage({super.key});
-
   @override
   State<GenderSettingsPage> createState() => _GenderSettingsPageState();
   late final String id;
   late final String gender;
-  //late final String aboutMe;
-  //late final String city;
 
   GenderSettingsPage(this.id, this.gender);
 }
 
 class _GenderSettingsPageState extends State<GenderSettingsPage> {
   String selectedGender = "";
-  late TextEditingController _controller;
   // String enteredValue = '';
   bool isGenderSelected = false;
   bool isValueChanged = false;
@@ -65,7 +31,7 @@ class _GenderSettingsPageState extends State<GenderSettingsPage> {
     if (response.statusCode == 200) {
       print("Gender Updated");
       setState(() {
-        Navigator.pop(context);
+        Navigator.of(context).pop(true);
       });
     } else {
       print("Gender Not Updated");
@@ -75,7 +41,6 @@ class _GenderSettingsPageState extends State<GenderSettingsPage> {
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController(text: widget.gender);
   }
 
   @override
@@ -84,11 +49,6 @@ class _GenderSettingsPageState extends State<GenderSettingsPage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Gender',
-              // style: GoogleFonts.robotoCondensed(
-              //   color: Colors.white,
-              //   fontSize: 25,
-              //   fontWeight: FontWeight.w700,
-              // ),
               style: Theme.of(context).textTheme.headline5!.apply(
                   color: Theme.of(context).backgroundColor,
                   fontWeightDelta: 5)),
@@ -100,7 +60,21 @@ class _GenderSettingsPageState extends State<GenderSettingsPage> {
                 if (isGenderSelected) {
                   updatingGender();
                 } else {
-                  // Navigator.pop(context);
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text("You didn't change the anything!"),
+                        actions: <Widget>[
+                          TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text("OK"))
+                        ],
+                      );
+                    },
+                  );
                 }
               },
               child: Text(
@@ -156,31 +130,6 @@ class _GenderSettingsPageState extends State<GenderSettingsPage> {
                   selectedItem:
                       isGenderSelected ? selectedGender : widget.gender,
                 ),
-                // TextField(
-                //   controller: _controller,
-                //   style: TextStyle(
-                //     color: Colors.black,
-                //     fontSize: 16,
-                //     fontWeight: FontWeight.w200,
-                //   ),
-                //   onChanged: (value) {
-                //     setState(
-                //       () {
-                //         enteredValue = value;
-                //         if (enteredValue != widget.gender) {
-                //           isValueChanged = true;
-                //         } else {
-                //           isValueChanged = false;
-                //         }
-                //       },
-                //     );
-                //   },
-                //   decoration: InputDecoration(
-                //     border: OutlineInputBorder(),
-                //     hintText: widget.gender,
-                //     hintStyle: TextStyle(color: Colors.black),
-                //   ),
-                // ),
               ),
             ],
           ),

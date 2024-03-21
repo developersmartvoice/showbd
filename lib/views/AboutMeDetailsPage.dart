@@ -32,7 +32,7 @@ class _AboutMeDetailsPageState extends State<AboutMeDetailsPage> {
     if (response.statusCode == 200) {
       print("About Me Updated");
       setState(() {
-        Navigator.pop(context);
+        Navigator.of(context).pop(true);
       });
     } else {
       print("About Me Not Updated");
@@ -67,7 +67,21 @@ class _AboutMeDetailsPageState extends State<AboutMeDetailsPage> {
                 if (isValueChanged) {
                   updatingAboutMe();
                 } else {
-                  // Navigator.pop(context);
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text("You didn't change anything!"),
+                        actions: <Widget>[
+                          TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text("OK"))
+                        ],
+                      );
+                    },
+                  );
                 }
               },
               child: Text(

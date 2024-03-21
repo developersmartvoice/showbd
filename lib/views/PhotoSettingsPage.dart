@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:appcode3/en.dart';
 import 'package:appcode3/main.dart';
-import 'package:appcode3/views/Doctor/moreScreen/more_info_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,7 +12,6 @@ import 'package:image_picker/image_picker.dart';
 
 // ignore: must_be_immutable
 class PhotoSettingsPage extends StatefulWidget {
-  // const PhotoSettingsPage({super.key});
   String id;
   String img;
   List<String> imgs;
@@ -26,28 +24,84 @@ class PhotoSettingsPage extends StatefulWidget {
 
 class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
   File? _image;
+  List<File?> _images = List<File?>.filled(4, null);
   bool isUploadClicked = false;
   bool isImageChanged = false;
+  bool isImagesChanged = false;
   bool isDeletePressed = false;
 
-  Future<void> _getImageFromGallery() async {
+  Future<void> _getImageFromGallery(int index) async {
     final pickedFile =
         await ImagePicker().getImage(source: ImageSource.gallery);
     if (pickedFile != null) {
-      setState(() {
-        _image = File(pickedFile.path);
-        isImageChanged = true;
-      });
+      switch (index) {
+        case 0:
+          setState(() {
+            _images[0] = File(pickedFile.path);
+            isImagesChanged = true;
+          });
+          break;
+        case 1:
+          setState(() {
+            _images[1] = File(pickedFile.path);
+            isImagesChanged = true;
+          });
+          break;
+        case 2:
+          setState(() {
+            _images[2] = File(pickedFile.path);
+            isImagesChanged = true;
+          });
+          break;
+        case 3:
+          setState(() {
+            _images[3] = File(pickedFile.path);
+            isImagesChanged = true;
+          });
+          break;
+        default:
+          setState(() {
+            _image = File(pickedFile.path);
+            isImageChanged = true;
+          });
+      }
     }
   }
 
-  Future<void> _getImageFromCamera() async {
+  Future<void> _getImageFromCamera(int index) async {
     final pickedFile = await ImagePicker().getImage(source: ImageSource.camera);
     if (pickedFile != null) {
-      setState(() {
-        _image = File(pickedFile.path);
-        isImageChanged = true;
-      });
+      switch (index) {
+        case 0:
+          setState(() {
+            _images[0] = File(pickedFile.path);
+            isImagesChanged = true;
+          });
+          break;
+        case 1:
+          setState(() {
+            _images[1] = File(pickedFile.path);
+            isImagesChanged = true;
+          });
+          break;
+        case 2:
+          setState(() {
+            _images[2] = File(pickedFile.path);
+            isImagesChanged = true;
+          });
+          break;
+        case 3:
+          setState(() {
+            _images[3] = File(pickedFile.path);
+            isImagesChanged = true;
+          });
+          break;
+        default:
+          setState(() {
+            _image = File(pickedFile.path);
+            isImageChanged = true;
+          });
+      }
     }
   }
 
@@ -98,6 +152,13 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
               ),
             ),
           ],
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            color: Colors.white,
+            onPressed: () {
+              Navigator.of(context).pop(true);
+            },
+          ),
         ),
         body: isDeletePressed || isUploadClicked
             ? Container(
@@ -180,7 +241,7 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                                         )
                                       : InkWell(
                                           onTap: () {
-                                            _showImagePickerDialog();
+                                            _showImagePickerDialog(-1);
                                           },
                                           child: Container(
                                               width: MediaQuery.of(context)
@@ -206,63 +267,243 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                                           10), // Gap between first box and second row
 
                                   // Second row with two columns, each containing a square box
-                                  // Column(
-                                  //   children: [
-                                  //     Container(
-                                  //       width:
-                                  //           MediaQuery.of(context).size.width *
-                                  //               0.2, // 20% of screen width
-                                  //       height:
-                                  //           MediaQuery.of(context).size.width *
-                                  //               0.2, // 20% of screen width
-                                  //       color: Colors.green,
-                                  //       margin: EdgeInsets.only(
-                                  //           bottom: 10), // Gap between boxes
-                                  //     ),
-                                  //     SizedBox(
-                                  //       height: 5,
-                                  //     ),
-                                  //     Container(
-                                  //       width:
-                                  //           MediaQuery.of(context).size.width *
-                                  //               0.2, // 20% of screen width
-                                  //       height:
-                                  //           MediaQuery.of(context).size.width *
-                                  //               0.2, // 20% of screen width
-                                  //       color: Colors.red,
-                                  //     ),
-                                  //   ],
-                                  // ),
-                                  // SizedBox(width: 5), // Gap between columns
+                                  Column(
+                                    children: [
+                                      _images[0] != null ||
+                                              widget.imgs.isNotEmpty
+                                          ? InkWell(
+                                              onTap: () {
+                                                _showImagesPreview(0);
+                                              },
+                                              child: Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.2, // 20% of screen width
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.2, // 30% of screen width
+                                                child: _images[0] != null
+                                                    ? Image.file(_images[0]!,
+                                                        fit: BoxFit.cover)
+                                                    : CachedNetworkImage(
+                                                        imageUrl:
+                                                            widget.imgs[0],
+                                                        fit: BoxFit.cover,
+                                                        placeholder: (context,
+                                                                url) =>
+                                                            CircularProgressIndicator(),
+                                                        errorWidget: (context,
+                                                                url, error) =>
+                                                            Icon(Icons.error),
+                                                      ),
+                                              ),
+                                            )
+                                          : InkWell(
+                                              onTap: () {
+                                                _showImagePickerDialog(0);
+                                              },
+                                              child: Container(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.2, // 20% of screen width
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.2, // 30% of screen width
+                                                  color: Colors.grey[300],
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Icon(Icons.camera_alt),
+                                                      Text("Add Photo"),
+                                                    ],
+                                                  )),
+                                            ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      _images[2] != null ||
+                                              widget.imgs.isNotEmpty
+                                          ? InkWell(
+                                              onTap: () {
+                                                _showImagesPreview(2);
+                                              },
+                                              child: Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.2, // 20% of screen width
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.2, // 30% of screen width
+                                                child: _images[2] != null
+                                                    ? Image.file(_images[2]!,
+                                                        fit: BoxFit.cover)
+                                                    : CachedNetworkImage(
+                                                        imageUrl:
+                                                            widget.imgs[2],
+                                                        fit: BoxFit.cover,
+                                                        placeholder: (context,
+                                                                url) =>
+                                                            CircularProgressIndicator(),
+                                                        errorWidget: (context,
+                                                                url, error) =>
+                                                            Icon(Icons.error),
+                                                      ),
+                                              ),
+                                            )
+                                          : InkWell(
+                                              onTap: () {
+                                                _showImagePickerDialog(2);
+                                              },
+                                              child: Container(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.2, // 20% of screen width
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.2, // 30% of screen width
+                                                  color: Colors.grey[300],
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Icon(Icons.camera_alt),
+                                                      Text("Add Photo"),
+                                                    ],
+                                                  )),
+                                            ),
+                                    ],
+                                  ),
+                                  SizedBox(width: 5), // Gap between columns
 
                                   // // Third row with two columns, each containing a square box
-                                  // Column(
-                                  //   children: [
-                                  //     Container(
-                                  //       width:
-                                  //           MediaQuery.of(context).size.width *
-                                  //               0.2, // 20% of screen width
-                                  //       height:
-                                  //           MediaQuery.of(context).size.width *
-                                  //               0.2, // 20% of screen width
-                                  //       color: Colors.yellow,
-                                  //       margin: EdgeInsets.only(
-                                  //           bottom: 10), // Gap between boxes
-                                  //     ),
-                                  //     SizedBox(
-                                  //       height: 5,
-                                  //     ),
-                                  //     Container(
-                                  //       width:
-                                  //           MediaQuery.of(context).size.width *
-                                  //               0.2, // 20% of screen width
-                                  //       height:
-                                  //           MediaQuery.of(context).size.width *
-                                  //               0.2, // 20% of screen width
-                                  //       color: Colors.orange,
-                                  //     ),
-                                  //   ],
-                                  // ),
+                                  Column(
+                                    children: [
+                                      _images[1] != null ||
+                                              widget.imgs.isNotEmpty
+                                          ? InkWell(
+                                              onTap: () {
+                                                _showImagesPreview(1);
+                                              },
+                                              child: Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.2, // 20% of screen width
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.2, // 30% of screen width
+                                                child: _images[1] != null
+                                                    ? Image.file(_images[1]!,
+                                                        fit: BoxFit.cover)
+                                                    : CachedNetworkImage(
+                                                        imageUrl:
+                                                            widget.imgs[1],
+                                                        fit: BoxFit.cover,
+                                                        placeholder: (context,
+                                                                url) =>
+                                                            CircularProgressIndicator(),
+                                                        errorWidget: (context,
+                                                                url, error) =>
+                                                            Icon(Icons.error),
+                                                      ),
+                                              ),
+                                            )
+                                          : InkWell(
+                                              onTap: () {
+                                                _showImagePickerDialog(1);
+                                              },
+                                              child: Container(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.2, // 20% of screen width
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.2, // 30% of screen width
+                                                  color: Colors.grey[300],
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Icon(Icons.camera_alt),
+                                                      Text("Add Photo"),
+                                                    ],
+                                                  )),
+                                            ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      _images[3] != null ||
+                                              widget.imgs.isNotEmpty
+                                          ? InkWell(
+                                              onTap: () {
+                                                _showImagesPreview(3);
+                                              },
+                                              child: Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.2, // 20% of screen width
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.2, // 30% of screen width
+                                                child: _images[3] != null
+                                                    ? Image.file(_images[3]!,
+                                                        fit: BoxFit.cover)
+                                                    : CachedNetworkImage(
+                                                        imageUrl:
+                                                            widget.imgs[3],
+                                                        fit: BoxFit.cover,
+                                                        placeholder: (context,
+                                                                url) =>
+                                                            CircularProgressIndicator(),
+                                                        errorWidget: (context,
+                                                                url, error) =>
+                                                            Icon(Icons.error),
+                                                      ),
+                                              ),
+                                            )
+                                          : InkWell(
+                                              onTap: () {
+                                                _showImagePickerDialog(3);
+                                              },
+                                              child: Container(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.2, // 20% of screen width
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.2, // 30% of screen width
+                                                  color: Colors.grey[300],
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Icon(Icons.camera_alt),
+                                                      Text("Add Photo"),
+                                                    ],
+                                                  )),
+                                            ),
+                                    ],
+                                  ),
                                 ],
                               ),
                             ),
@@ -277,7 +518,7 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
     );
   }
 
-  Future<void> _showImagePickerDialog() async {
+  Future<void> _showImagePickerDialog(int index) async {
     await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -290,12 +531,7 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                   child: Text('Take Photo'),
                   onTap: () {
                     Navigator.of(context).pop();
-                    _getImageFromCamera();
-                    // if (_image != null) {
-                    //   setState(() {
-                    //     isImageChanged = true;
-                    //   });
-                    // }
+                    _getImageFromCamera(index);
                   },
                 ),
                 Padding(
@@ -305,12 +541,7 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                   child: Text('Choose from Gallery'),
                   onTap: () {
                     Navigator.of(context).pop();
-                    _getImageFromGallery();
-                    // if (_image != null) {
-                    //   setState(() {
-                    //     isImageChanged = true;
-                    //   });
-                    // }
+                    _getImageFromGallery(index);
                   },
                 ),
               ],
@@ -422,9 +653,7 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
             actions: [
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).pop();
-                  // Navigator.of(context).push(MaterialPageRoute(
-                  //     builder: ((context) => MoreInfoScreen())));
+                  Navigator.of(context).pop(true);
                 },
                 child: Text('OK'),
               ),
@@ -504,6 +733,62 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                           isDeletePressed = true;
                         });
                         deleteImage();
+                      }
+                    },
+                    child: Text("Delete Photo"),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text('Close'),
+                  ),
+                ],
+              )
+            ],
+          );
+        },
+      );
+    }
+  }
+
+  void _showImagesPreview(int index) {
+    if (_images[index] != null || widget.imgs[index].isNotEmpty) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: SizedBox(
+              width: MediaQuery.of(context).size.width * 0.7,
+              height: MediaQuery.of(context).size.width * 0.7,
+              child: _images[index] != null
+                  ? Image.file(_images[index]!, fit: BoxFit.contain)
+                  : CachedNetworkImage(
+                      imageUrl: widget.imgs[index],
+                      fit: BoxFit.contain,
+                      placeholder: (context, url) =>
+                          CircularProgressIndicator(),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    ),
+            ),
+            actions: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      // _showImagePickerDialog();
+                      if (_images[index] != null) {
+                        setState(() {
+                          _images[index] = null;
+                          isImagesChanged = false;
+                        });
+                      } else {
+                        setState(() {
+                          isDeletePressed = true;
+                        });
+                        // deleteImage();
                       }
                     },
                     child: Text("Delete Photo"),
