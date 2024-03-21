@@ -510,7 +510,7 @@ class _ContainerPageState extends State<ContainerPage> {
         Column(
           children: [
             Container(
-              padding: EdgeInsets.only(left: 4),
+              // padding: EdgeInsets.only(left: 4),
               height: 60,
               color: Colors.white,
               child: InkWell(
@@ -528,8 +528,6 @@ class _ContainerPageState extends State<ContainerPage> {
                 },
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
-                  // crossAxisAlignment: CrossAxisAlignment.stretch,
-                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Stack(
                       children: [
@@ -555,13 +553,10 @@ class _ContainerPageState extends State<ContainerPage> {
                         )
                       ],
                     ),
-                    // SizedBox(
-                    //   width: MediaQuery.sizeOf(context).width * .01,
-                    // ),
                     Container(
-                      padding: EdgeInsets.only(right: 30),
-                      alignment: Alignment.center,
-                      width: MediaQuery.sizeOf(context).width * .2,
+                      // padding: EdgeInsets.only(right: 30),
+                      alignment: Alignment.centerLeft,
+                      width: MediaQuery.sizeOf(context).width * .25,
                       child: Text(
                         'Motto',
                         style: GoogleFonts.robotoCondensed(
@@ -571,7 +566,6 @@ class _ContainerPageState extends State<ContainerPage> {
                         ),
                       ),
                     ),
-
                     SizedBox(
                       width: MediaQuery.sizeOf(context).width * .1,
                     ),
@@ -588,16 +582,10 @@ class _ContainerPageState extends State<ContainerPage> {
                       ),
                     ),
                     SizedBox(
-                      width: 12,
+                      width: MediaQuery.sizeOf(context).width * .01,
                     ),
-                    // SizedBox(
-                    //   width: MediaQuery.sizeOf(context).width * .05,
-                    // ),
                     Container(
                       width: MediaQuery.sizeOf(context).width * .1,
-                      // child: IconButton(
-                      //     onPressed: () {},
-                      //     icon: Icon(Icons.arrow_forward_ios)),
                       alignment: Alignment.centerRight,
                       child: Icon(
                         Icons.arrow_forward_ios,
@@ -613,7 +601,7 @@ class _ContainerPageState extends State<ContainerPage> {
               color: Colors.white10,
             ),
             Container(
-              padding: EdgeInsets.only(left: 4),
+              // padding: EdgeInsets.only(left: 4),
               height: 60,
               color: Colors.white,
               child: InkWell(
@@ -631,8 +619,6 @@ class _ContainerPageState extends State<ContainerPage> {
                 },
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
-                  // crossAxisAlignment: CrossAxisAlignment.stretch,
-                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Stack(
                       children: [
@@ -662,10 +648,9 @@ class _ContainerPageState extends State<ContainerPage> {
                     //   width: MediaQuery.sizeOf(context).width * .01,
                     // ),
                     Container(
-                      padding: EdgeInsets.only(left: 5),
-                      alignment: Alignment.center,
+                      alignment: Alignment.centerLeft,
                       //width: 150,
-                      //width: MediaQuery.sizeOf(context).width * .2,
+                      width: MediaQuery.sizeOf(context).width * .25,
                       child: Text(
                         'I will show you',
                         style: GoogleFonts.robotoCondensed(
@@ -680,7 +665,7 @@ class _ContainerPageState extends State<ContainerPage> {
                       width: MediaQuery.sizeOf(context).width * .1,
                     ),
                     Container(
-                      padding: EdgeInsets.only(right: 37),
+                      // padding: EdgeInsets.only(right: 37),
                       alignment: Alignment.centerRight,
                       width: MediaQuery.sizeOf(context).width * .4,
                       child: Text(
@@ -692,14 +677,15 @@ class _ContainerPageState extends State<ContainerPage> {
                         ),
                       ),
                     ),
-
+                    SizedBox(
+                      width: MediaQuery.sizeOf(context).width * .01,
+                    ),
                     Container(
-                      child: Padding(
-                        padding: EdgeInsets.only(right: 5),
-                        child: Icon(
-                          Icons.arrow_forward_ios,
-                          size: 20,
-                        ),
+                      width: MediaQuery.sizeOf(context).width * .1,
+                      alignment: Alignment.centerRight,
+                      child: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 20,
                       ),
                     ),
                   ],
@@ -711,7 +697,7 @@ class _ContainerPageState extends State<ContainerPage> {
               color: Colors.white10,
             ),
             Container(
-              padding: EdgeInsets.only(left: 4),
+              // padding: EdgeInsets.only(left: 4),
               height: 60,
               color: Colors.white,
               child: InkWell(
@@ -762,13 +748,9 @@ class _ContainerPageState extends State<ContainerPage> {
                         )
                       ],
                     ),
-                    // SizedBox(
-                    //   width: MediaQuery.sizeOf(context).width * .01,
-                    // ),
                     Container(
-                      padding: EdgeInsets.only(right: 1),
-                      alignment: Alignment.center,
-                      width: MediaQuery.sizeOf(context).width * .2,
+                      alignment: Alignment.centerLeft,
+                      width: MediaQuery.sizeOf(context).width * .25,
                       child: Text(
                         'Activities',
                         style: GoogleFonts.robotoCondensed(
@@ -778,7 +760,6 @@ class _ContainerPageState extends State<ContainerPage> {
                         ),
                       ),
                     ),
-
                     SizedBox(
                       width: MediaQuery.sizeOf(context).width * .1,
                     ),
@@ -798,10 +779,9 @@ class _ContainerPageState extends State<ContainerPage> {
                       ),
                     ),
                     SizedBox(
-                      width: MediaQuery.sizeOf(context).width * .05,
+                      width: MediaQuery.sizeOf(context).width * .01,
                     ),
                     Container(
-                      padding: EdgeInsets.only(right: 10),
                       width: MediaQuery.sizeOf(context).width * .1,
                       alignment: Alignment.centerRight,
                       child: Icon(Icons.arrow_forward_ios, size: 20),
@@ -815,7 +795,7 @@ class _ContainerPageState extends State<ContainerPage> {
               color: Colors.white10,
             ),
             Container(
-              padding: EdgeInsets.only(left: 4),
+              // padding: EdgeInsets.only(left: 4),
               height: 60,
               color: Colors.white,
               child: InkWell(
@@ -861,9 +841,8 @@ class _ContainerPageState extends State<ContainerPage> {
                       ],
                     ),
                     Container(
-                      padding: EdgeInsets.only(left: 5),
-                      alignment: Alignment.center,
-                      //width: MediaQuery.sizeOf(context).width * .2,
+                      alignment: Alignment.centerLeft,
+                      width: MediaQuery.sizeOf(context).width * .25,
                       child: Text(
                         'Hourly rate',
                         style: GoogleFonts.robotoCondensed(
@@ -874,11 +853,9 @@ class _ContainerPageState extends State<ContainerPage> {
                       ),
                     ),
                     SizedBox(
-                      //width: MediaQuery.sizeOf(context).width * .1,
-                      width: 50,
+                      width: MediaQuery.sizeOf(context).width * .1,
                     ),
                     Container(
-                      padding: EdgeInsets.only(right: 15),
                       alignment: Alignment.centerRight,
                       width: MediaQuery.sizeOf(context).width * .4,
                       child: Text(
@@ -890,28 +867,13 @@ class _ContainerPageState extends State<ContainerPage> {
                         ),
                       ),
                     ),
-                    // SizedBox(
-                    //   width: MediaQuery.sizeOf(context).width * .05,
-                    // ),
+                    SizedBox(
+                      width: MediaQuery.sizeOf(context).width * .01,
+                    ),
                     Container(
-                      height: 70,
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 5),
-                        child: IconButton(
-                          onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => HourlyRateSettingsPage(
-                                    widget.id, widget.consultationfees),
-                              ),
-                            );
-                          },
-                          alignment: Alignment.centerRight,
-                          icon: Icon(Icons.arrow_forward_ios_sharp),
-                          color: Colors.black, // Color of the icon
-                          iconSize: 20.0, // Size of the icon
-                        ),
-                      ),
+                      width: MediaQuery.sizeOf(context).width * .1,
+                      alignment: Alignment.centerRight,
+                      child: Icon(Icons.arrow_forward_ios, size: 20),
                     ),
                   ],
                 ),
@@ -922,7 +884,7 @@ class _ContainerPageState extends State<ContainerPage> {
               color: Colors.white10,
             ),
             Container(
-              padding: EdgeInsets.only(left: 5),
+              // padding: EdgeInsets.only(left: 5),
               height: 60,
               color: Colors.white,
               child: InkWell(
@@ -940,8 +902,6 @@ class _ContainerPageState extends State<ContainerPage> {
                 },
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
-                  // crossAxisAlignment: CrossAxisAlignment.stretch,
-                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Stack(
                       children: [
@@ -968,18 +928,14 @@ class _ContainerPageState extends State<ContainerPage> {
                         )
                       ],
                     ),
-                    // SizedBox(
-                    //   width: MediaQuery.sizeOf(context).width * .01,
-                    // ),
                     Container(
-                      padding: EdgeInsets.only(right: 20),
-                      alignment: Alignment.center,
-                      width: MediaQuery.sizeOf(context).width * .2,
+                      alignment: Alignment.centerLeft,
+                      width: MediaQuery.sizeOf(context).width * .25,
                       child: Text(
                         'Photos',
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
+                        style: GoogleFonts.robotoCondensed(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.w500,
                           // color: Color.fromARGB(255, 243, 103, 9),
                         ),
                       ),
@@ -990,24 +946,14 @@ class _ContainerPageState extends State<ContainerPage> {
                     Container(
                       alignment: Alignment.centerRight,
                       width: MediaQuery.sizeOf(context).width * .4,
-                      child: Text(
-                          // widget.name,
-                          // style: TextStyle(
-                          //   fontSize: 18.0,
-                          //   fontWeight: FontWeight.bold,
-                          //   color: Colors.grey,
-                          // ),
-                          ""),
+                      child: Text(""),
                     ),
-                    // SizedBox(
-                    //   width: 10,
-                    // ),
                     SizedBox(
-                      width: MediaQuery.sizeOf(context).width * .05,
+                      width: MediaQuery.sizeOf(context).width * .01,
                     ),
                     Container(
-                      // padding: EdgeInsets.only(left: 180),
                       width: MediaQuery.sizeOf(context).width * .1,
+                      alignment: Alignment.centerRight,
                       child: Icon(Icons.arrow_forward_ios, size: 20),
                     ),
                   ],
@@ -1019,7 +965,7 @@ class _ContainerPageState extends State<ContainerPage> {
               color: Colors.white10,
             ),
             Container(
-              padding: EdgeInsets.only(left: 5),
+              // padding: EdgeInsets.only(left: 5),
               height: 60,
               color: Colors.white,
               child: InkWell(
@@ -1064,21 +1010,18 @@ class _ContainerPageState extends State<ContainerPage> {
                         )
                       ],
                     ),
-                    // SizedBox(
-                    //   width: MediaQuery.sizeOf(context).width * .01,
-                    // ),
                     Container(
-                        padding: EdgeInsets.only(right: 5),
-                        alignment: Alignment.center,
-                        width: MediaQuery.sizeOf(context).width * .2,
-                        child: Text(
-                          LOCATION,
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold,
-                            // color: Color.fromARGB(255, 243, 103, 9),
-                          ),
-                        )),
+                      alignment: Alignment.centerLeft,
+                      width: MediaQuery.sizeOf(context).width * .25,
+                      child: Text(
+                        LOCATION,
+                        style: GoogleFonts.robotoCondensed(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.w500,
+                          // color: Color.fromARGB(255, 243, 103, 9),
+                        ),
+                      ),
+                    ),
                     SizedBox(
                       width: MediaQuery.sizeOf(context).width * .1,
                     ),
@@ -1094,17 +1037,12 @@ class _ContainerPageState extends State<ContainerPage> {
                         ),
                       ),
                     ),
-                    // SizedBox(
-                    //   width: 10,
-                    // ),
                     SizedBox(
-                      width: MediaQuery.sizeOf(context).width * .05,
+                      width: MediaQuery.sizeOf(context).width * .01,
                     ),
                     Container(
                       width: MediaQuery.sizeOf(context).width * .1,
-                      // child: IconButton(
-                      //     onPressed: () {},
-                      //     icon: Icon(Icons.arrow_forward_ios)),
+                      alignment: Alignment.centerRight,
                       child: Icon(Icons.arrow_forward_ios, size: 20),
                     )
                   ],
@@ -1116,7 +1054,7 @@ class _ContainerPageState extends State<ContainerPage> {
               color: Colors.white10,
             ),
             Container(
-              padding: EdgeInsets.only(left: 5),
+              // padding: EdgeInsets.only(left: 5),
               height: 60,
               color: Colors.white,
               child: InkWell(
@@ -1165,17 +1103,17 @@ class _ContainerPageState extends State<ContainerPage> {
                     //   width: MediaQuery.sizeOf(context).width * .01,
                     // ),
                     Container(
-                        alignment: Alignment.center,
-                        padding: EdgeInsets.only(left: 5),
-                        width: MediaQuery.sizeOf(context).width * .2,
-                        child: Text(
-                          ABOUT,
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold,
-                            // color: Color.fromARGB(255, 243, 103, 9),
-                          ),
-                        )),
+                      alignment: Alignment.centerLeft,
+                      width: MediaQuery.sizeOf(context).width * .25,
+                      child: Text(
+                        ABOUT,
+                        style: GoogleFonts.robotoCondensed(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.w500,
+                          // color: Color.fromARGB(255, 243, 103, 9),
+                        ),
+                      ),
+                    ),
                     SizedBox(
                       width: MediaQuery.sizeOf(context).width * .1,
                     ),
@@ -1191,17 +1129,12 @@ class _ContainerPageState extends State<ContainerPage> {
                         ),
                       ),
                     ),
-                    // SizedBox(
-                    //   width: 10,
-                    // ),
                     SizedBox(
-                      width: MediaQuery.sizeOf(context).width * .05,
+                      width: MediaQuery.sizeOf(context).width * .01,
                     ),
                     Container(
                       width: MediaQuery.sizeOf(context).width * .1,
-                      // child: IconButton(
-                      //     onPressed: () {},
-                      //     icon: Icon(Icons.arrow_forward_ios)),
+                      alignment: Alignment.centerRight,
                       child: Icon(Icons.arrow_forward_ios, size: 20),
                     )
                   ],
@@ -1213,7 +1146,7 @@ class _ContainerPageState extends State<ContainerPage> {
               color: Colors.white10,
             ),
             Container(
-              padding: EdgeInsets.only(left: 5),
+              // padding: EdgeInsets.only(left: 5),
               height: 60,
               color: Colors.white,
               child: InkWell(
@@ -1262,9 +1195,9 @@ class _ContainerPageState extends State<ContainerPage> {
                     //   width: MediaQuery.sizeOf(context).width * .01,
                     // ),
                     Container(
-                      padding: EdgeInsets.only(right: 15),
-                      alignment: Alignment.center,
-                      width: MediaQuery.sizeOf(context).width * .2,
+                      // padding: EdgeInsets.only(right: 15),
+                      alignment: Alignment.centerLeft,
+                      width: MediaQuery.sizeOf(context).width * .25,
                       child: Text(
                         'Gender',
                         style: GoogleFonts.robotoCondensed(
@@ -1294,13 +1227,11 @@ class _ContainerPageState extends State<ContainerPage> {
                     //   width: 10,
                     // ),
                     SizedBox(
-                      width: MediaQuery.sizeOf(context).width * .05,
+                      width: MediaQuery.sizeOf(context).width * .01,
                     ),
                     Container(
                       width: MediaQuery.sizeOf(context).width * .1,
-                      // child: IconButton(
-                      //     onPressed: () {},
-                      //     icon: Icon(Icons.arrow_forward_ios)),
+                      alignment: Alignment.centerRight,
                       child: Icon(Icons.arrow_forward_ios, size: 20),
                     ),
                   ],
@@ -1312,7 +1243,7 @@ class _ContainerPageState extends State<ContainerPage> {
               color: Colors.white10,
             ),
             Container(
-              padding: EdgeInsets.only(left: 5),
+              // padding: EdgeInsets.only(left: 5),
               height: 60,
               color: Colors.white,
               child: InkWell(
@@ -1361,22 +1292,19 @@ class _ContainerPageState extends State<ContainerPage> {
                     //   width: MediaQuery.sizeOf(context).width * .01,
                     // ),
                     Container(
-                      padding: EdgeInsets.only(left: 8),
-                      alignment: Alignment.center,
-                      //width: MediaQuery.sizeOf(context).width * .2,
+                      alignment: Alignment.centerLeft,
+                      width: MediaQuery.sizeOf(context).width * .25,
                       child: Text(
                         LANGUAGES,
                         style: GoogleFonts.robotoCondensed(
                           fontSize: 20.0,
                           fontWeight: FontWeight.w500,
-                          // color: Color.fromARGB(255, 243, 103, 9),
                         ),
                       ),
                     ),
 
                     SizedBox(
-                      width: 30,
-                      //width: MediaQuery.sizeOf(context).width * .1,
+                      width: MediaQuery.sizeOf(context).width * .1,
                     ),
                     Container(
                       alignment: Alignment.centerRight,
@@ -1393,14 +1321,12 @@ class _ContainerPageState extends State<ContainerPage> {
                         ),
                       ),
                     ),
-                    // SizedBox(
-                    //   width: 10,
-                    // ),
                     SizedBox(
-                      width: MediaQuery.sizeOf(context).width * .05,
+                      width: MediaQuery.sizeOf(context).width * .01,
                     ),
                     Container(
                       width: MediaQuery.sizeOf(context).width * .1,
+                      alignment: Alignment.centerRight,
                       child: Icon(Icons.arrow_forward_ios, size: 20),
                     ),
                   ],

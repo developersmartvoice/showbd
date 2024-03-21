@@ -251,7 +251,6 @@ class _ContainerPageState extends State<ContainerPage> {
           child: Column(
             children: [
               Container(
-                padding: EdgeInsets.all(10),
                 height: 60,
                 color: Colors.white,
                 child: InkWell(
@@ -295,8 +294,7 @@ class _ContainerPageState extends State<ContainerPage> {
                         ],
                       ),
                       Container(
-                        padding: EdgeInsets.only(right: 22),
-                        alignment: Alignment.center,
+                        alignment: Alignment.centerLeft,
                         width: MediaQuery.sizeOf(context).width * .2,
                         child: Text(
                           NAME,
@@ -327,6 +325,7 @@ class _ContainerPageState extends State<ContainerPage> {
                       ),
                       Container(
                         width: MediaQuery.sizeOf(context).width * .1,
+                        alignment: Alignment.centerRight,
                         child: Icon(Icons.arrow_forward_ios, size: 20),
                       ),
                     ],
@@ -338,7 +337,6 @@ class _ContainerPageState extends State<ContainerPage> {
                 color: Colors.white10,
               ),
               Container(
-                padding: EdgeInsets.all(10),
                 height: 60,
                 color: Colors.white,
                 child: InkWell(
@@ -382,9 +380,8 @@ class _ContainerPageState extends State<ContainerPage> {
                         ],
                       ),
                       Container(
-                          alignment: Alignment.center,
-                          padding: EdgeInsets.only(left: 5),
-                          width: MediaQuery.sizeOf(context).width * .2,
+                          alignment: Alignment.centerLeft,
+                          width: MediaQuery.sizeOf(context).width * .25,
                           child: Text(
                             ABOUT,
                             style: TextStyle(
@@ -409,10 +406,11 @@ class _ContainerPageState extends State<ContainerPage> {
                         ),
                       ),
                       SizedBox(
-                        width: MediaQuery.sizeOf(context).width * .05,
+                        width: MediaQuery.sizeOf(context).width * .01,
                       ),
                       Container(
                         width: MediaQuery.sizeOf(context).width * .1,
+                        alignment: Alignment.centerRight,
                         child: Icon(Icons.arrow_forward_ios, size: 20),
                       )
                     ],
@@ -424,7 +422,6 @@ class _ContainerPageState extends State<ContainerPage> {
                 color: Colors.white10,
               ),
               Container(
-                padding: EdgeInsets.all(10),
                 height: 60,
                 color: Colors.white,
                 child: InkWell(
@@ -468,15 +465,13 @@ class _ContainerPageState extends State<ContainerPage> {
                       //   width: MediaQuery.sizeOf(context).width * .01,
                       // ),
                       Container(
-                        padding: EdgeInsets.only(right: 15),
-                        alignment: Alignment.center,
-                        width: MediaQuery.sizeOf(context).width * .2,
+                        alignment: Alignment.centerLeft,
+                        width: MediaQuery.sizeOf(context).width * .25,
                         child: Text(
                           'Photos',
                           style: TextStyle(
                             fontSize: 16.0,
                             fontWeight: FontWeight.bold,
-                            // color: Color.fromARGB(255, 243, 103, 9),
                           ),
                         ),
                       ),
@@ -489,11 +484,11 @@ class _ContainerPageState extends State<ContainerPage> {
                         child: Text(""),
                       ),
                       SizedBox(
-                        width: MediaQuery.sizeOf(context).width * .05,
+                        width: MediaQuery.sizeOf(context).width * .01,
                       ),
                       Container(
-                        // padding: EdgeInsets.only(left: 180),
                         width: MediaQuery.sizeOf(context).width * .1,
+                        alignment: Alignment.centerRight,
                         child: Icon(Icons.arrow_forward_ios, size: 20),
                       ),
                     ],
@@ -505,7 +500,6 @@ class _ContainerPageState extends State<ContainerPage> {
                 color: Colors.white10,
               ),
               Container(
-                padding: EdgeInsets.all(10),
                 height: 60,
                 color: Colors.white,
                 child: InkWell(
@@ -549,8 +543,8 @@ class _ContainerPageState extends State<ContainerPage> {
                         ],
                       ),
                       Container(
-                          alignment: Alignment.center,
-                          width: MediaQuery.sizeOf(context).width * .2,
+                          alignment: Alignment.centerLeft,
+                          width: MediaQuery.sizeOf(context).width * .25,
                           child: Text(
                             LOCATION,
                             style: TextStyle(
@@ -575,10 +569,11 @@ class _ContainerPageState extends State<ContainerPage> {
                         ),
                       ),
                       SizedBox(
-                        width: MediaQuery.sizeOf(context).width * .05,
+                        width: MediaQuery.sizeOf(context).width * .01,
                       ),
                       Container(
                         width: MediaQuery.sizeOf(context).width * .1,
+                        alignment: Alignment.centerRight,
                         child: Icon(Icons.arrow_forward_ios, size: 20),
                       )
                     ],
