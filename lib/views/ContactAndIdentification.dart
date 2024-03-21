@@ -221,8 +221,9 @@ class _ContainerPageState extends State<ContainerPage> {
                             height: 25,
                             decoration: BoxDecoration(
                               //color: _boxColor, // Color of the button
-                              color:
-                                  !isEmailStored ? Colors.green : Colors.grey,
+                              color: widget.email.isNotEmpty
+                                  ? Colors.green
+                                  : Colors.white,
                               shape: BoxShape.circle,
                               border: Border.all(
                                 color: Colors.grey, // Color of the border
@@ -232,9 +233,7 @@ class _ContainerPageState extends State<ContainerPage> {
                             child: Icon(
                               Icons.check,
                               //color: _isSelected ? Colors.green : Colors.white,
-                              //color: Colors.white, // Color of the icon
-                              color:
-                                  isEmailStored ? Colors.green : Colors.white,
+                              color: Colors.white, // Color of the icon
                               size: 20.0, // Size of the icon
                             ),
                           ),
@@ -338,8 +337,9 @@ class _ContainerPageState extends State<ContainerPage> {
                             height: 25,
                             decoration: BoxDecoration(
                               //color: _boxColor, // Color of the button
-                              color:
-                                  !isPhoneStored ? Colors.green : Colors.grey,
+                              color: widget.phone.isNotEmpty
+                                  ? Colors.green
+                                  : Colors.white,
                               shape: BoxShape.circle,
                               border: Border.all(
                                 color: Colors.grey, // Color of the border
@@ -348,9 +348,7 @@ class _ContainerPageState extends State<ContainerPage> {
                             ),
                             child: Icon(
                               Icons.check,
-                              color:
-                                  isPhoneStored ? Colors.green : Colors.white,
-                              // color: Colors.white, // Color of the icon
+                              color: Colors.white,
                               size: 20.0, // Size of the icon
                             ),
                           )

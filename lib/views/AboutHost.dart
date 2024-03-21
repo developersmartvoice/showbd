@@ -172,10 +172,16 @@ class _AboutHostState extends State<AboutHost> {
     try {
       if (response.statusCode == 200) {
         final jsonResponse = jsonDecode(response.body);
-        setState(() {
-          services = jsonResponse['services'].split(',');
-          print(services);
-        });
+        if (jsonResponse['services'] != null) {
+          setState(() {
+            services = jsonResponse['services'].split(',');
+            print(services);
+          });
+        } else {
+          setState(() {
+            services = [];
+          });
+        }
       }
     } catch (e) {
       print(e);
@@ -256,12 +262,16 @@ class _AboutHostState extends State<AboutHost> {
     try {
       if (response.statusCode == 200) {
         final jsonResponse = jsonDecode(response.body);
-        setState(
-          () {
+        if (jsonResponse['languages'] != null) {
+          setState(() {
             languages = jsonResponse['languages'].split(',');
             print(languages);
-          },
-        );
+          });
+        } else {
+          setState(() {
+            languages = [];
+          });
+        }
       }
     } catch (e) {
       print(e);
@@ -532,7 +542,7 @@ class _ContainerPageState extends State<ContainerPage> {
                     //   width: MediaQuery.sizeOf(context).width * .01,
                     // ),
                     Container(
-                      padding: EdgeInsets.only(right: 25),
+                      padding: EdgeInsets.only(right: 30),
                       alignment: Alignment.center,
                       width: MediaQuery.sizeOf(context).width * .2,
                       child: Text(
@@ -561,7 +571,7 @@ class _ContainerPageState extends State<ContainerPage> {
                       ),
                     ),
                     SizedBox(
-                      width: 15,
+                      width: 12,
                     ),
                     // SizedBox(
                     //   width: MediaQuery.sizeOf(context).width * .05,
