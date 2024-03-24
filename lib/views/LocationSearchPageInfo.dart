@@ -19,7 +19,6 @@ class _LocationSearchPageInfoState extends State<LocationSearchPageInfo> {
 
   String? selectedCity;
 
-  late TextEditingController _controller;
   String enteredValue = '';
   bool isValueChanged = false;
   void updatingCity() async {
@@ -44,7 +43,6 @@ class _LocationSearchPageInfoState extends State<LocationSearchPageInfo> {
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController(text: widget.city);
   }
 
   List<String> suggestedCities = [

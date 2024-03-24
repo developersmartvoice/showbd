@@ -179,7 +179,9 @@ class _GeneraLInfoState extends State<GeneraLInfo> {
             : Container(
                 alignment: Alignment.center,
                 transformAlignment: Alignment.center,
-                child: CircularProgressIndicator()),
+                child: CircularProgressIndicator(
+                  color: const Color.fromARGB(255, 243, 103, 9),
+                )),
       ),
     );
   }
@@ -295,7 +297,7 @@ class _ContainerPageState extends State<ContainerPage> {
                       ),
                       Container(
                         alignment: Alignment.centerLeft,
-                        width: MediaQuery.sizeOf(context).width * .2,
+                        width: MediaQuery.sizeOf(context).width * .25,
                         child: Text(
                           NAME,
                           style: TextStyle(
@@ -321,7 +323,7 @@ class _ContainerPageState extends State<ContainerPage> {
                         ),
                       ),
                       SizedBox(
-                        width: MediaQuery.sizeOf(context).width * .05,
+                        width: MediaQuery.sizeOf(context).width * .01,
                       ),
                       Container(
                         width: MediaQuery.sizeOf(context).width * .1,

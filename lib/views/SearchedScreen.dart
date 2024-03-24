@@ -267,6 +267,7 @@ class _SearchedScreenState extends State<SearchedScreen> {
                     child: isLoading
                         ? Center(
                             child: CircularProgressIndicator(
+                              color: const Color.fromARGB(255, 243, 103, 9),
                               valueColor: AlwaysStoppedAnimation(
                                   Theme.of(context).hintColor),
                             ),
@@ -277,7 +278,10 @@ class _SearchedScreenState extends State<SearchedScreen> {
                               // upCommingAppointments(),
                               isFilterLoading
                                   ? Center(
-                                      child: CircularProgressIndicator(),
+                                      child: CircularProgressIndicator(
+                                        color: const Color.fromARGB(
+                                            255, 243, 103, 9),
+                                      ),
                                     )
                                   : body()
                               // isLoadingMore

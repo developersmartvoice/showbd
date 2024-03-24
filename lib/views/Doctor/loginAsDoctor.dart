@@ -60,6 +60,7 @@ class _LoginAsDoctorState extends State<LoginAsDoctor> {
           await post(Uri.parse("$SERVER_ADDRESS/api/savetoken"), body: {
         "token": token,
         "type": "1",
+        // ignore: body_might_complete_normally_catch_error
       }).catchError((e) {
         Navigator.pop(context);
         messageDialog(ERROR, UNABLE_TO_SAVE_TOKEN_TO_SERVER);
@@ -115,6 +116,7 @@ class _LoginAsDoctorState extends State<LoginAsDoctor> {
         'email': emailAddress,
         'password': pass,
         'token': token,
+        // ignore: body_might_complete_normally_catch_error
       }).catchError((e) {
         Navigator.pop(context);
         messageDialog(ERROR, UNABLE_TO_LOAD_DATA_FORM_SERVER);
@@ -527,7 +529,9 @@ class _LoginAsDoctorState extends State<LoginAsDoctor> {
               margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
               child: Row(
                 children: [
-                  CircularProgressIndicator(),
+                  CircularProgressIndicator(
+                    color: const Color.fromARGB(255, 243, 103, 9),
+                  ),
                   SizedBox(
                     width: 15,
                   ),

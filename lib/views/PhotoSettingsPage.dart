@@ -178,7 +178,9 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
             ? Container(
                 alignment: Alignment.center,
                 transformAlignment: Alignment.center,
-                child: CircularProgressIndicator(),
+                child: CircularProgressIndicator(
+                  color: const Color.fromARGB(255, 243, 103, 9),
+                ),
               )
             : Container(
                 color: LIGHT_GREY_SCREEN_BACKGROUND,
@@ -246,7 +248,11 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                                                     fit: BoxFit.cover,
                                                     placeholder: (context,
                                                             url) =>
-                                                        CircularProgressIndicator(),
+                                                        CircularProgressIndicator(
+                                                      color:
+                                                          const Color.fromARGB(
+                                                              255, 243, 103, 9),
+                                                    ),
                                                     errorWidget:
                                                         (context, url, error) =>
                                                             Icon(Icons.error),
@@ -307,7 +313,11 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                                                         fit: BoxFit.cover,
                                                         placeholder: (context,
                                                                 url) =>
-                                                            CircularProgressIndicator(),
+                                                            CircularProgressIndicator(
+                                                          color: const Color
+                                                              .fromARGB(
+                                                              255, 243, 103, 9),
+                                                        ),
                                                         errorWidget: (context,
                                                                 url, error) =>
                                                             Icon(Icons.error),
@@ -365,7 +375,11 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                                                         fit: BoxFit.cover,
                                                         placeholder: (context,
                                                                 url) =>
-                                                            CircularProgressIndicator(),
+                                                            CircularProgressIndicator(
+                                                          color: const Color
+                                                              .fromARGB(
+                                                              255, 243, 103, 9),
+                                                        ),
                                                         errorWidget: (context,
                                                                 url, error) =>
                                                             Icon(Icons.error),
@@ -427,7 +441,11 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                                                         fit: BoxFit.cover,
                                                         placeholder: (context,
                                                                 url) =>
-                                                            CircularProgressIndicator(),
+                                                            CircularProgressIndicator(
+                                                          color: const Color
+                                                              .fromARGB(
+                                                              255, 243, 103, 9),
+                                                        ),
                                                         errorWidget: (context,
                                                                 url, error) =>
                                                             Icon(Icons.error),
@@ -485,7 +503,11 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                                                         fit: BoxFit.cover,
                                                         placeholder: (context,
                                                                 url) =>
-                                                            CircularProgressIndicator(),
+                                                            CircularProgressIndicator(
+                                                          color: const Color
+                                                              .fromARGB(
+                                                              255, 243, 103, 9),
+                                                        ),
                                                         errorWidget: (context,
                                                                 url, error) =>
                                                             Icon(Icons.error),
@@ -803,8 +825,9 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                   : CachedNetworkImage(
                       imageUrl: widget.img,
                       fit: BoxFit.contain,
-                      placeholder: (context, url) =>
-                          CircularProgressIndicator(),
+                      placeholder: (context, url) => CircularProgressIndicator(
+                        color: const Color.fromARGB(255, 243, 103, 9),
+                      ),
                       errorWidget: (context, url, error) => Icon(Icons.error),
                     ),
             ),
@@ -859,8 +882,9 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                   : CachedNetworkImage(
                       imageUrl: widget.imgs[index],
                       fit: BoxFit.contain,
-                      placeholder: (context, url) =>
-                          CircularProgressIndicator(),
+                      placeholder: (context, url) => CircularProgressIndicator(
+                        color: const Color.fromARGB(255, 243, 103, 9),
+                      ),
                       errorWidget: (context, url, error) => Icon(Icons.error),
                     ),
             ),

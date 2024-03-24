@@ -522,6 +522,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http; // Update import statement
 import 'package:shared_preferences/shared_preferences.dart';
 
+// ignore: must_be_immutable
 class FilteredGuidesScreen extends StatefulWidget {
   FilterClass filterClass;
   String? body;

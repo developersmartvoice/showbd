@@ -3,23 +3,19 @@ import 'dart:convert';
 import 'package:appcode3/en.dart';
 import 'package:appcode3/main.dart';
 import 'package:appcode3/modals/DoctorDetailsClass.dart';
-import 'package:appcode3/views/AboutScreen.dart';
 import 'package:appcode3/views/BookingScreen.dart';
 import 'package:appcode3/views/ChoosePlan.dart';
 import 'package:appcode3/views/CreateTrip.dart';
-import 'package:appcode3/views/HelpCenter.dart';
 import 'package:appcode3/views/MakeAppointment.dart';
-import 'package:appcode3/views/MapWidget.dart';
-import 'package:appcode3/views/ReviewsScreen.dart';
 import 'package:appcode3/views/loginAsUser.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+// ignore: must_be_immutable
 class DetailsPage extends StatefulWidget {
   String id;
 
@@ -81,6 +77,7 @@ class _DetailsPageState extends State<DetailsPage> {
     });
     final response = await get(Uri.parse(
             "$SERVER_ADDRESS/api/doctordetail?doctor_id=${widget.id}"))
+        // ignore: body_might_complete_normally_catch_error
         .catchError((e) {
       print("ERROR ${e.toString()}");
       setState(() {
@@ -150,13 +147,7 @@ class _DetailsPageState extends State<DetailsPage> {
                             child: SingleChildScrollView(
                               child: Column(
                                 children: [
-                                  // header(),
-                                  // appointmentListWidget(),
                                   doctorDetails(),
-                                  // SizedBox(
-                                  //   height: 80,
-                                  // ),
-                                  // button(),
                                 ],
                               ),
                             ),
@@ -164,7 +155,8 @@ class _DetailsPageState extends State<DetailsPage> {
                         ],
                       )
                     : Center(
-                        child: CircularProgressIndicator(),
+                        child: CircularProgressIndicator(
+                            color: const Color.fromARGB(255, 243, 103, 9)),
                       ),
             // header(),
           ],
@@ -452,16 +444,20 @@ class _DetailsPageState extends State<DetailsPage> {
                       return CachedNetworkImage(
                         imageUrl: doctorDetailsClass!.data!.image!,
                         fit: BoxFit.fill,
-                        placeholder: (context, url) =>
-                            Center(child: CircularProgressIndicator()),
+                        placeholder: (context, url) => Center(
+                            child: CircularProgressIndicator(
+                          color: const Color.fromARGB(255, 243, 103, 9),
+                        )),
                         errorWidget: (context, url, error) => Icon(Icons.error),
                       );
                     } else {
                       return CachedNetworkImage(
                         imageUrl: doctorDetailsClass!.data!.images![index - 1],
                         fit: BoxFit.fill,
-                        placeholder: (context, url) =>
-                            Center(child: CircularProgressIndicator()),
+                        placeholder: (context, url) => Center(
+                            child: CircularProgressIndicator(
+                          color: const Color.fromARGB(255, 243, 103, 9),
+                        )),
                         errorWidget: (context, url, error) => Icon(Icons.error),
                       );
                     }

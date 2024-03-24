@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -13,10 +12,9 @@ import 'package:connectycube_sdk/connectycube_sdk.dart';
 import 'call_kit_manager.dart';
 import '../conversation_screen.dart';
 import '../incoming_call_screen.dart';
-import '../utils/configs.dart';
 import '../utils/consts.dart';
 
-class CallManager with WidgetsBindingObserver{
+class CallManager with WidgetsBindingObserver {
   static String TAG = "CallManager";
 
   // collect pending calls in case when it was accepted/ended before establish chat connection
@@ -37,13 +35,12 @@ class CallManager with WidgetsBindingObserver{
   P2PSession? _currentCall;
   BuildContext? context;
 
-
   init(BuildContext context) {
     this.context = context;
 
     _initCustomMediaConfigs();
 
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
 
     if (CubeChatConnection.instance.isAuthenticated()) {
       _initCalls();
@@ -65,7 +62,7 @@ class CallManager with WidgetsBindingObserver{
       // requestStoragePermission();
       // fetchStatus();
       // fetchSavedStatus();
-    }else{
+    } else {
       // Get.back();
     }
   }
@@ -83,7 +80,6 @@ class CallManager with WidgetsBindingObserver{
   }
 
   void _initCalls() {
-
     if (_callClient == null) {
       _callClient = P2PClient.instance;
 
@@ -121,7 +117,7 @@ class CallManager with WidgetsBindingObserver{
           await value.remove('callSessionCS');
         });
       }
-      if(!_isInForeground){
+      if (!_isInForeground) {
         await SharedPreferences.getInstance().then((value) async {
           await value.remove('callSessionCS');
         });
@@ -149,7 +145,6 @@ class CallManager with WidgetsBindingObserver{
   }
 
   Future<void> _showIncomingCallScreen(P2PSession callSession) async {
-
     // if (context != null) {
     //   Navigator.push(
     //     context!,
@@ -173,21 +168,19 @@ class CallManager with WidgetsBindingObserver{
       pref.reload();
       pref.reload();
       var tmp = pref.getString('callSessionCS');
-      if(pref.getString('callSessionCS')!=null){
+      if (pref.getString('callSessionCS') != null) {
         // if(pref.getBool('callReject') ?? false){
         //   Get.back();
         //   CallManager.instance.reject(tmp!);
         // }else{
-          CallManager.instance.acceptCall(tmp!);
+        CallManager.instance.acceptCall(tmp!);
         // }
-      }else{
-        Get.to(()=>IncomingCallScreen(callSession));
+      } else {
+        Get.to(() => IncomingCallScreen(callSession));
       }
     });
 
     // Get.to(()=>IncomingCallScreen(callSession));
-
-
   }
 
   void _savePendingCall(sessionId) {
@@ -211,17 +204,16 @@ class CallManager with WidgetsBindingObserver{
       await SharedPreferences.getInstance().then((pref) {
         pref.reload();
         pref.reload();
-        if(pref.getString('callSessionCS')!=null){
+        if (pref.getString('callSessionCS') != null) {
           Get.back();
-          Get.to(()=>ConversationCallScreen(_currentCall!, true));
-        }else{
-          Get.off(()=>ConversationCallScreen(_currentCall!, true));
+          Get.to(() => ConversationCallScreen(_currentCall!, true));
+        } else {
+          Get.off(() => ConversationCallScreen(_currentCall!, true));
         }
       });
 
       // old
       // Get.off(()=>ConversationCallScreen(_currentCall!, true));
-
     } else {
       _callsMap[sessionId] = CallState.ACCEPTED;
     }

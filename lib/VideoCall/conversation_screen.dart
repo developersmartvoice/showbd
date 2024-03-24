@@ -1,4 +1,3 @@
-import 'package:appcode3/main.dart';
 import 'package:connectycube_sdk/connectycube_sdk.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
-import 'dart:typed_data';
 import 'package:appcode3/views/incoming_call_image_name.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -30,8 +29,8 @@ import 'MyPhotoViewer.dart';
 import 'MyVideoPlayer.dart';
 import 'MyVideoThumbnail.dart';
 
+// ignore: must_be_immutable
 class ChatScreen extends StatefulWidget {
-
   String? userName;
   String? uid;
   dynamic connectCubId;
@@ -48,7 +47,6 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
-
   int listCount = 0;
   bool showButton = false;
   String? myUid;
@@ -83,7 +81,6 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
   bool isKeybord = false;
   String opponentName = '';
   String opponentImage = '';
-
 
   bool isFileUploading = false;
   double uploadingProgress = 0.0;
@@ -139,7 +136,7 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
     var status2 = await Permission.storage.status;
     if (!status.isGranted) {
       await Permission.manageExternalStorage.request();
-      var status = await Permission.manageExternalStorage.status;
+      // var status = await Permission.manageExternalStorage.status;
     }
     if (!status2.isGranted) {
       await Permission.storage.request();
@@ -147,8 +144,8 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
   }
 
   Future getImage() async {
-    final pickedFile = await ImagePicker().pickImage(
-        source: ImageSource.camera);
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.camera);
 
     setState(() {
       if (pickedFile != null) {
@@ -180,10 +177,7 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
                   children: [
                     Container(
                       height: 50,
-                      width: MediaQuery
-                          .of(context)
-                          .size
-                          .width / 4,
+                      width: MediaQuery.of(context).size.width / 4,
                       child: InkWell(
                         onTap: () {
                           getImage();
@@ -199,24 +193,21 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
                               child: Image.asset(
                                 "assets/moreScreenImages/header_bg.png",
                                 height: 50,
-                                width: MediaQuery
-                                    .of(context)
-                                    .size
-                                    .width / 4,
+                                width: MediaQuery.of(context).size.width / 4,
                                 fit: BoxFit.fill,
                                 // width: MediaQuery.of(context).size.width,
                               ),
                             ),
                             Center(
                               child:
-                              // Text(
-                              //     'Audio Call',
-                              //     style: Theme.of(context).textTheme.bodyText1!.apply(
-                              //         color: Theme.of(context).backgroundColor,
-                              //         fontSizeDelta: 2
-                              //     )
-                              // ),
-                              Icon(
+                                  // Text(
+                                  //     'Audio Call',
+                                  //     style: Theme.of(context).textTheme.bodyText1!.apply(
+                                  //         color: Theme.of(context).backgroundColor,
+                                  //         fontSizeDelta: 2
+                                  //     )
+                                  // ),
+                                  Icon(
                                 Icons.camera_alt_outlined,
                                 color: Colors.white,
                               ),
@@ -230,10 +221,7 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
                     ),
                     Container(
                       height: 50,
-                      width: MediaQuery
-                          .of(context)
-                          .size
-                          .width / 4,
+                      width: MediaQuery.of(context).size.width / 4,
                       child: InkWell(
                         onTap: () {
                           pickFile();
@@ -248,10 +236,7 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
                               borderRadius: BorderRadius.circular(25),
                               child: Image.asset(
                                 "assets/moreScreenImages/header_bg.png",
-                                width: MediaQuery
-                                    .of(context)
-                                    .size
-                                    .width / 4,
+                                width: MediaQuery.of(context).size.width / 4,
                                 height: 50,
                                 fit: BoxFit.fill,
                                 // width: MediaQuery.of(context).size.width,
@@ -259,14 +244,14 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
                             ),
                             Center(
                               child:
-                              // Text(
-                              //     'Video Call',
-                              //     style: Theme.of(context).textTheme.bodyText1!.apply(
-                              //         color: Theme.of(context).backgroundColor,
-                              //         fontSizeDelta: 2
-                              //     )
-                              // ),
-                              Icon(
+                                  // Text(
+                                  //     'Video Call',
+                                  //     style: Theme.of(context).textTheme.bodyText1!.apply(
+                                  //         color: Theme.of(context).backgroundColor,
+                                  //         fontSizeDelta: 2
+                                  //     )
+                                  // ),
+                                  Icon(
                                 Icons.file_present,
                                 color: Colors.white,
                               ),
@@ -286,7 +271,6 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
       },
     );
   }
-
 
   @override
   void initState() {
@@ -317,23 +301,23 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
 
     var keyboardVisibilityController = KeyboardVisibilityController();
     // Query
-    print('Keyboard visibility direct query: ${keyboardVisibilityController
-        .isVisible}');
+    print(
+        'Keyboard visibility direct query: ${keyboardVisibilityController.isVisible}');
 
     // Subscribe
     keyboardSubscription =
         keyboardVisibilityController.onChange.listen((bool isKeybord) {
-          print('Keyboard visibility update. Is visible: $isKeybord');
-          setState(() {
-            this.isKeybord = isKeybord;
-          });
+      print('Keyboard visibility update. Is visible: $isKeybord');
+      setState(() {
+        this.isKeybord = isKeybord;
+      });
 
-          if (isKeybord && isEmojiKeybord) {
-            setState(() {
-              isEmojiKeybord = false;
-            });
-          }
+      if (isKeybord && isEmojiKeybord) {
+        setState(() {
+          isEmojiKeybord = false;
         });
+      }
+    });
 
     myFocusNode = FocusNode();
 
@@ -369,7 +353,7 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
     //   myconnectCubId = value!.id;
     //   print('my cc id $myconnectCubId');
     // });
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
     _lvScrollCtrl.addListener(() {
       //print(_lvScrollCtrl);1
       if (_lvScrollCtrl.position.maxScrollExtent ==
@@ -393,12 +377,11 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
 
   loadUserProfile() async {
     await FirebaseDatabase.instance.ref(widget.uid!).once().then((value) {
-      setState(() {
-      });
+      setState(() {});
     });
 
     DatabaseReference starCountRef =
-    FirebaseDatabase.instance.ref(widget.uid!).child("TokenList");
+        FirebaseDatabase.instance.ref(widget.uid!).child("TokenList");
     starCountRef.once().then((DatabaseEvent event) {
       final data = event.snapshot.value;
       print("----------> " + event.snapshot.value.toString());
@@ -412,8 +395,9 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
       print("final token list :- ${tokensList}");
     });
 
-    DatabaseReference starCountRef2 =
-    FirebaseDatabase.instance.ref(myUid!).child("chatlist")
+    DatabaseReference starCountRef2 = FirebaseDatabase.instance
+        .ref(myUid!)
+        .child("chatlist")
         .child(widget.uid!);
 
     starCountRef2.once().then((DatabaseEvent event) {
@@ -436,12 +420,12 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
   uploadDataWithBackgroundService(String taskId, result) async {
     CollectionReference collectionReference = FirebaseFirestore.instance
         .collection("Chats")
-        .doc(channelId).collection("All Chat");
+        .doc(channelId)
+        .collection("All Chat");
 
     print("501 -- ${jsonDecode(result.response)['data']}");
     print("503 -- ${jsonDecode(result.response)}");
     await collectionReference.doc(taskId.toString()).update({
-
       "msg": jsonDecode(result.response)['data'],
       "time": DateTime.now().toString(),
       "uid": myUid,
@@ -451,7 +435,8 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
     });
 
     if (isFirstMessage) {
-      DatabaseReference dbRef = FirebaseDatabase.instance.ref(myUid!)
+      DatabaseReference dbRef = FirebaseDatabase.instance
+          .ref(myUid!)
           .child("chatlist")
           .child(widget.uid!);
 
@@ -466,7 +451,8 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
         "channelId": channelId
       });
 
-      DatabaseReference dbRef2 = FirebaseDatabase.instance.ref(widget.uid!)
+      DatabaseReference dbRef2 = FirebaseDatabase.instance
+          .ref(widget.uid!)
           .child("chatlist")
           .child(myUid!);
 
@@ -477,11 +463,13 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
         dbRef2.set({
           "time": DateTime.now().toString(),
           "last_msg": jsonDecode(result.response)['data'],
-          "type": jsonDecode(result.response)['data'].toString().contains(
-              ".jpg") ? 1 : 2,
-          "messageCount": snapshot.isEmpty == null
-              ? 1
-              : snapshot['messageCount'] + 1,
+          "type":
+              jsonDecode(result.response)['data'].toString().contains(".jpg")
+                  ? 1
+                  : 2,
+          // ignore: unnecessary_null_comparison
+          "messageCount":
+              snapshot.isEmpty == null ? 1 : snapshot['messageCount'] + 1,
           "status": 0,
           "channelId": channelId
         });
@@ -489,9 +477,9 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
       setState(() {
         isFirstMessage = false;
       });
-    }
-    else {
-      DatabaseReference dbRef = FirebaseDatabase.instance.ref(myUid!)
+    } else {
+      DatabaseReference dbRef = FirebaseDatabase.instance
+          .ref(myUid!)
           .child("chatlist")
           .child(widget.uid!);
       print("method 1");
@@ -506,10 +494,10 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
         "channelId": channelId
       });
 
-      DatabaseReference dbRef2 = FirebaseDatabase.instance.ref(widget.uid!)
+      DatabaseReference dbRef2 = FirebaseDatabase.instance
+          .ref(widget.uid!)
           .child("chatlist")
           .child(myUid!);
-
 
       await dbRef2.once().then((DatabaseEvent event) {
         final snapshot = event.snapshot.value as Map;
@@ -519,8 +507,10 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
           // "time": DateTime.now().subtract(timeDifference!).toString(),
           "time": DateTime.now().toString(),
           "last_msg": jsonDecode(result.response)['data'],
-          "type": jsonDecode(result.response)['data'].toString().contains(
-              ".jpg") ? 1 : 2,
+          "type":
+              jsonDecode(result.response)['data'].toString().contains(".jpg")
+                  ? 1
+                  : 2,
           "messageCount": snapshot.isEmpty ? 1 : snapshot['messageCount'] + 1,
           "channelId": channelId
         });
@@ -552,51 +542,38 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
   }
 
   getUserPreference() {
-    databaseReference2
-        .child(widget.uid!)
-        .onValue
-        .listen((DatabaseEvent event) {
+    databaseReference2.child(widget.uid!).onValue.listen((DatabaseEvent event) {
       final snapshot = event.snapshot.value as Map;
       // print('chat screen back value ===========<><><><>');
       // print(event.snapshot.value);
       // print('===========<><><><>');
       if (event.snapshot.value == null) {
         Navigator.pop(context);
-      }
-      else {
+      } else {
         if (mounted) {
           setState(() {
             if (event.snapshot.value != null) {
-              if (snapshot['presence'] != null &&
-                  currentTime != null) {
+              if (snapshot['presence'] != null && currentTime != null) {
                 if (snapshot['presence']) {
                   print("time difference : " +
-                      currentTime
-                      !.difference(
-                          DateTime.parse(snapshot['last_seen']
-                              .toString()))
+                      currentTime!
+                          .difference(
+                              DateTime.parse(snapshot['last_seen'].toString()))
                           .toString());
-                  if (currentTime
-                  !.difference(
-                      DateTime.parse(
-                          snapshot['last_seen'].toString()))
-                      .inMinutes <= 1) {
+                  if (currentTime!
+                          .difference(
+                              DateTime.parse(snapshot['last_seen'].toString()))
+                          .inMinutes <=
+                      1) {
                     userStatus = "Online";
                   } else {
-                    userStatus = "last seen ${
-                        DateTime.parse(snapshot['last_seen']
-                            .toString()).add(DateTime
-                            .now()
-                            .timeZoneOffset)
-                            .toString()
-                            .substring(0, 19)
-                    }";
+                    userStatus =
+                        "last seen ${DateTime.parse(snapshot['last_seen'].toString()).add(DateTime.now().timeZoneOffset).toString().substring(0, 19)}";
                   }
                 } else {
                   print("last seen ${snapshot['last_seen']}");
-                  userStatus = "last seen ${snapshot['last_seen']
-                      .toString()
-                      .substring(0, 19)}";
+                  userStatus =
+                      "last seen ${snapshot['last_seen'].toString().substring(0, 19)}";
                 }
               }
             }
@@ -625,7 +602,6 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
         });
       }
       //getTypingStatus();
-
     });
   }
 
@@ -645,9 +621,8 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
 
   void markAsTyping() {
     DatabaseReference db = FirebaseDatabase.instance.ref();
-    db.child(widget.uid!).child("chatlist").child(myUid!).update({
-      "typingTime": 1
-    },
+    db.child(widget.uid!).child("chatlist").child(myUid!).update(
+      {"typingTime": 1},
     );
 
     db
@@ -660,9 +635,9 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
       markTypingAsZerotimer.cancel();
       if (event.snapshot.value == 1) {
         markTypingAsZerotimer = Timer(Duration(seconds: 1), () {
-          db.child(widget.uid!).child("chatlist").child(myUid!).update({
-            "typingTime": 0
-          },);
+          db.child(widget.uid!).child("chatlist").child(myUid!).update(
+            {"typingTime": 0},
+          );
         });
       }
     });
@@ -710,7 +685,6 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -720,39 +694,40 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
           backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.white,
-
             flexibleSpace: Stack(
               children: [
-                Image.asset("assets/moreScreenImages/header_bg.png",
+                Image.asset(
+                  "assets/moreScreenImages/header_bg.png",
                   height: 60,
                   fit: BoxFit.fill,
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width,
+                  width: MediaQuery.of(context).size.width,
                 ),
                 Container(
                   height: 60,
                   child: Row(
                     children: [
-                      SizedBox(width: 15,),
+                      SizedBox(
+                        width: 15,
+                      ),
                       InkWell(
                         onTap: () {
                           Navigator.pop(context);
                         },
-                        child: Image.asset("assets/moreScreenImages/back.png",
+                        child: Image.asset(
+                          "assets/moreScreenImages/back.png",
                           height: 25,
                           width: 22,
                         ),
                       ),
-                      SizedBox(width: 10,),
+                      SizedBox(
+                        width: 10,
+                      ),
                       Text(
                         widget.userName ?? "",
                         style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w600,
                             color: WHITE,
-                            fontSize: 22
-                        ),
+                            fontSize: 22),
                       )
                     ],
                   ),
@@ -763,588 +738,609 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
           ),
           body: requestStatus == null
               ? Center(
-            child: CircularProgressIndicator(
-              strokeWidth: 1.5,
-            ),
-          )
+                  child: CircularProgressIndicator(
+                    color: const Color.fromARGB(255, 243, 103, 9),
+                    strokeWidth: 1.5,
+                  ),
+                )
               : Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Expanded(
-                flex: 1,
-                child: StreamBuilder(
-                    stream: FirebaseFirestore.instance.collection("Chats")
-                        .doc(channelId)
-                        .collection("All Chat")
-                        .orderBy("time", descending: true)
-                        .limit(perPage).snapshots(),
-                    builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                      if (snapshot.hasData && snapshot.data!.docs.length > 0) {
-                        return Container(
-                          child: ListView.builder(
-                            controller: _lvScrollCtrl,
-                            reverse: true,
-                            itemCount: snapshot.data!.docs.length,
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) {
-                              if (index == snapshot.data!.docs.length) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.waiting &&
-                                    snapshot.data!.docs.length > 20) {
-                                  print("\n\nwaiting : loaded");
-                                  return Container();
-                                } else if (snapshot.connectionState ==
-                                    ConnectionState.active &&
-                                    snapshot.data!.docs.length > 20) {
-                                  print("\n\nactive : Loading " +
-                                      snapshot.hasData.toString());
-                                  isLoading = true;
-                                  Timer(Duration(seconds: 3), () {
-                                    setState(() {
-                                      isLoading = showLoadingIndicator = false;
-                                    });
-                                  });
-                                  return isLoading ? Container(
-                                    margin: EdgeInsets.all(30),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment
-                                          .center,
-                                      children: [
-                                        CircularProgressIndicator(
-                                          strokeWidth: 2,
-                                          valueColor: AlwaysStoppedAnimation(
-                                              Colors.grey
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ) : Container();
-                                } else if (snapshot.data!.docs.length > 20) {
-                                  print(snapshot.connectionState);
-                                  return Container(
-                                    margin: EdgeInsets.all(0),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment
-                                          .center,
-                                      children: [
-                                        CircularProgressIndicator(
-                                          strokeWidth: 2,
-                                          valueColor: AlwaysStoppedAnimation(
-                                              Colors.grey),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                } else {
-                                  return Container();
-                                }
-                              }
-
-                              else if (index < snapshot.data!.docs.length) {
-                                lastMessageUid =
-                                snapshot.data!.docs[index]['uid'];
-                                lastMessageDate = DateTime.parse(
-                                    snapshot.data!.docs[index]['time']
-                                        .toString())
-                                    .toLocal();
-
-
-                                int k = snapshot.data!.docs.length > index
-                                    ? index + 1
-                                    : snapshot.data!.docs.length - 1;
-
-                                int daysDifference = DateTime
-                                    .now()
-                                    .difference(DateTime.parse(
-                                    snapshot.data!.docs[index]['time']
-                                        .toString())
-                                    .toLocal())
-                                    .inDays;
-                                int daysDifference2 = k >=
-                                    snapshot.data!.docs.length ? 3 : DateTime
-                                    .now()
-                                    .difference(DateTime.parse(
-                                    snapshot.data!.docs[index + 1]['time']
-                                        .toString()).toLocal())
-                                    .inDays;
-
-                                return Padding(
-                                  padding: const EdgeInsets.fromLTRB(
-                                      15, 0.5, 15, 1),
-                                  child: Column(
-                                    children: [
-
-                                      k >= snapshot.data!.docs.length
-                                          ? (daysDifference2 -
-                                          daysDifference) >=
-                                          1
-                                          ? Row(
-                                        children: [
-                                          Expanded(
-                                            child: Divider(
-                                              height: 10,
-                                              thickness: 0.5,
-                                              color: Colors.grey.shade600,
-                                            ),
-                                          ),
-                                          SizedBox(width: 10,),
-                                          Text(daysDifference == 0
-                                              ? "Today"
-                                              : daysDifference == 1
-                                              ? "Yesterday"
-                                              : "${DateTime
-                                              .now()
-                                              .add(
-                                              Duration(days: -daysDifference))
-                                              .day}  ${monthsList[DateTime
-                                              .now()
-                                              .add(
-                                              Duration(days: -daysDifference))
-                                              .month - 1]}, ${DateTime
-                                              .now()
-                                              .add(
-                                              Duration(days: -daysDifference))
-                                              .year}",
-                                            style: TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.grey
-                                            ),
-                                          ),
-                                          SizedBox(width: 10,),
-                                          Expanded(
-                                            child: Divider(
-                                              height: 30,
-                                              thickness: 0.5,
-                                              color: Colors.grey.shade600,
-                                            ),
-                                          ),
-                                        ],
-                                      )
-                                          : Container()
-                                          : lastMessageDate!.compareTo(
-                                          DateTime.parse(
-                                              snapshot.data!.docs[index]['time']
-                                                  .toString()).toLocal()) == 0
-                                          ? Container()
-                                          : (daysDifference2 -
-                                          daysDifference) >=
-                                          1 ? Row(
-                                        children: [
-                                          Expanded(
-                                            child: Divider(
-                                              height: 10,
-                                              thickness: 0.5,
-                                              color: Colors.grey.shade600,
-                                            ),
-                                          ),
-                                          SizedBox(width: 10,),
-                                          Text(daysDifference == 0
-                                              ? "Today"
-                                              : daysDifference == 1
-                                              ? "Yesterday"
-                                              : "${DateTime
-                                              .now()
-                                              .add(
-                                              Duration(days: -daysDifference))
-                                              .day}  ${monthsList[DateTime
-                                              .now()
-                                              .add(
-                                              Duration(days: -daysDifference))
-                                              .month - 1]}, ${DateTime
-                                              .now()
-                                              .add(
-                                              Duration(days: -daysDifference))
-                                              .year}",
-                                            style: TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.grey
-                                            ),
-                                          ),
-                                          SizedBox(width: 10,),
-                                          Expanded(
-                                            child: Divider(
-                                              height: 30,
-                                              thickness: 0.5,
-                                              color: Colors.grey.shade600,
-                                            ),
-                                          ),
-                                        ],
-                                      ) : Container(),
-
-                                      Row(
-                                        mainAxisAlignment: snapshot.data
-                                        !.docs[index]['uid'] == myUid
-                                            ? MainAxisAlignment.end
-                                            : MainAxisAlignment.start,
-                                        children: [
-                                          Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: StreamBuilder(
+                          stream: FirebaseFirestore.instance
+                              .collection("Chats")
+                              .doc(channelId)
+                              .collection("All Chat")
+                              .orderBy("time", descending: true)
+                              .limit(perPage)
+                              .snapshots(),
+                          builder:
+                              (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                            if (snapshot.hasData &&
+                                snapshot.data!.docs.length > 0) {
+                              return Container(
+                                child: ListView.builder(
+                                  controller: _lvScrollCtrl,
+                                  reverse: true,
+                                  itemCount: snapshot.data!.docs.length,
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, index) {
+                                    if (index == snapshot.data!.docs.length) {
+                                      if (snapshot.connectionState ==
+                                              ConnectionState.waiting &&
+                                          snapshot.data!.docs.length > 20) {
+                                        print("\n\nwaiting : loaded");
+                                        return Container();
+                                      } else if (snapshot.connectionState ==
+                                              ConnectionState.active &&
+                                          snapshot.data!.docs.length > 20) {
+                                        print("\n\nactive : Loading " +
+                                            snapshot.hasData.toString());
+                                        isLoading = true;
+                                        Timer(Duration(seconds: 3), () {
+                                          setState(() {
+                                            isLoading =
+                                                showLoadingIndicator = false;
+                                          });
+                                        });
+                                        return isLoading
+                                            ? Container(
+                                                margin: EdgeInsets.all(30),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    CircularProgressIndicator(
+                                                      color:
+                                                          const Color.fromARGB(
+                                                              255, 243, 103, 9),
+                                                      strokeWidth: 2,
+                                                      valueColor:
+                                                          AlwaysStoppedAnimation(
+                                                              Colors.grey),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                            : Container();
+                                      } else if (snapshot.data!.docs.length >
+                                          20) {
+                                        print(snapshot.connectionState);
+                                        return Container(
+                                          margin: EdgeInsets.all(0),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
                                             children: [
-                                              k >= snapshot.data!.docs.length
-                                                  ? Padding(
-                                                padding: const EdgeInsets
-                                                    .fromLTRB(0, 5, 0, 0),
-                                                child: Text(
-                                                  DateTime
-                                                      .parse(snapshot.data
-                                                  !.docs[index]['time']
-                                                      .toString())
-                                                      .add(DateTime
-                                                      .now()
-                                                      .timeZoneOffset)
-                                                      .hour
-                                                      .toString()
-                                                      + ":" +
-                                                      (DateTime
-                                                          .parse(snapshot.data
-                                                      !.docs[index]['time']
-                                                          .toString())
-                                                          .add(DateTime
-                                                          .now()
-                                                          .timeZoneOffset)
-                                                          .minute < 10
-                                                          ? "0" + DateTime
-                                                          .parse(snapshot.data
-                                                      !.docs[index]['time']
-                                                          .toString())
-                                                          .add(DateTime
-                                                          .now()
-                                                          .timeZoneOffset)
-                                                          .minute
-                                                          .toString()
-                                                          : DateTime
-                                                          .parse(snapshot.data
-                                                      !.docs[index]['time']
-                                                          .toString())
-                                                          .add(DateTime
-                                                          .now()
-                                                          .timeZoneOffset)
-                                                          .minute
-                                                          .toString()),
-                                                  style: TextStyle(
-                                                      color: Colors.grey,
-                                                      fontSize: 10
-                                                  ),
-                                                ),
-                                              )
-                                                  : lastMessageUid ==
-                                                  snapshot.data!.docs[index +
-                                                      1]['uid'] &&
-                                                  (DateTime
-                                                      .parse(snapshot.data
-                                                  !.docs[index]['time']
-                                                      .toString())
-                                                      .add(DateTime
-                                                      .now()
-                                                      .timeZoneOffset)
-                                                      .minute - DateTime
-                                                      .parse(
-                                                      snapshot.data!
-                                                          .docs[index +
-                                                          1]['time'].toString())
-                                                      .add(DateTime
-                                                      .now()
-                                                      .timeZoneOffset)
-                                                      .minute) == 0
-                                                  ? Container() : Padding(
-                                                padding: const EdgeInsets
-                                                    .fromLTRB(0, 5, 0, 0),
-                                                child: Text(
-                                                  DateTime
-                                                      .parse(snapshot.data
-                                                  !.docs[index]['time']
-                                                      .toString())
-                                                      .add(DateTime
-                                                      .now()
-                                                      .timeZoneOffset)
-                                                      .hour
-                                                      .toString()
-                                                      + ":" +
-                                                      (DateTime
-                                                          .parse(snapshot.data
-                                                      !.docs[index]['time']
-                                                          .toString())
-                                                          .add(DateTime
-                                                          .now()
-                                                          .timeZoneOffset)
-                                                          .minute < 10
-                                                          ? "0" + DateTime
-                                                          .parse(snapshot.data
-                                                      !.docs[index]['time']
-                                                          .toString())
-                                                          .add(DateTime
-                                                          .now()
-                                                          .timeZoneOffset)
-                                                          .minute
-                                                          .toString()
-                                                          : DateTime
-                                                          .parse(snapshot.data
-                                                      !.docs[index]['time']
-                                                          .toString())
-                                                          .add(DateTime
-                                                          .now()
-                                                          .timeZoneOffset)
-                                                          .minute
-                                                          .toString()),
-                                                  style: TextStyle(
-                                                      color: Colors.grey,
-                                                      fontSize: 10
-                                                  ),
-                                                ),
-                                              )
-
+                                              CircularProgressIndicator(
+                                                color: const Color.fromARGB(
+                                                    255, 243, 103, 9),
+                                                strokeWidth: 2,
+                                                valueColor:
+                                                    AlwaysStoppedAnimation(
+                                                        Colors.grey),
+                                              ),
                                             ],
                                           ),
-                                        ],
-                                      ),
+                                        );
+                                      } else {
+                                        return Container();
+                                      }
+                                    } else if (index <
+                                        snapshot.data!.docs.length) {
+                                      lastMessageUid =
+                                          snapshot.data!.docs[index]['uid'];
+                                      lastMessageDate = DateTime.parse(snapshot
+                                              .data!.docs[index]['time']
+                                              .toString())
+                                          .toLocal();
 
-                                      Row(
-                                        mainAxisAlignment: snapshot.data
-                                        !.docs[index]['uid'] ==
-                                            myUid
-                                            ? MainAxisAlignment.end
-                                            : MainAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            constraints: BoxConstraints(
-                                                maxWidth: MediaQuery
-                                                    .of(context)
-                                                    .size
-                                                    .width - 120),
-                                            decoration: BoxDecoration(
-                                              borderRadius: k >=
-                                                  snapshot.data!.docs.length
-                                                  ? BorderRadius.circular(10)
-                                                  : BorderRadius.only(
-                                                topRight: snapshot.data
-                                                !.docs[index]['uid'] == myUid
-                                                    ? lastMessageUid ==
-                                                    snapshot.data
-                                                    !.docs[k]['uid'] &&
-                                                    (DateTime
-                                                        .parse(snapshot.data
-                                                    !.docs[index]['time']
-                                                        .toString())
-                                                        .toLocal()
-                                                        .minute - DateTime
-                                                        .parse(snapshot.data
-                                                    !.docs[index]['time']
-                                                        .toString())
-                                                        .toLocal()
-                                                        .minute) == 0
-                                                    ? Radius.circular(5)
-                                                    : Radius.circular(0)
-                                                    : Radius.circular(15),
-                                                bottomRight: snapshot.data
-                                                !.docs[index]['uid'] == myUid
-                                                    ? Radius.circular(5)
-                                                    : Radius.circular(10),
-                                                bottomLeft: snapshot.data
-                                                !.docs[index]['uid'] == myUid
-                                                    ? Radius.circular(10)
-                                                    : Radius.circular(5),
-                                                topLeft: snapshot.data
-                                                !.docs[index]['uid'] != myUid
-                                                    ? lastMessageUid ==
-                                                    snapshot.data
-                                                    !.docs[k]['uid'] &&
-                                                    (DateTime
-                                                        .parse(snapshot.data
-                                                    !.docs[index]['time']
-                                                        .toString())
-                                                        .toLocal()
-                                                        .minute - DateTime
-                                                        .parse(snapshot.data
-                                                    !.docs[index]['time']
-                                                        .toString())
-                                                        .toLocal()
-                                                        .minute) == 0
-                                                    ? Radius.circular(5)
-                                                    : Radius.circular(0)
-                                                    : Radius.circular(15),
-                                              ),
-                                              color: snapshot.data
-                                              !.docs[index]['uid'] == myUid
-                                                  ? Theme
-                                                  .of(context)
-                                                  .primaryColor
-                                                  .withOpacity(0.8)
-                                                  : Colors.grey.shade200,
-                                              gradient: snapshot.data
-                                              !.docs[index]['uid'] == myUid
-                                                  ? LinearGradient(
-                                                  colors: [
-                                                    Colors.blue,
-                                                    Colors.lightBlueAccent
+                                      int k = snapshot.data!.docs.length > index
+                                          ? index + 1
+                                          : snapshot.data!.docs.length - 1;
+
+                                      int daysDifference = DateTime.now()
+                                          .difference(DateTime.parse(snapshot
+                                                  .data!.docs[index]['time']
+                                                  .toString())
+                                              .toLocal())
+                                          .inDays;
+                                      int daysDifference2 =
+                                          k >= snapshot.data!.docs.length
+                                              ? 3
+                                              : DateTime.now()
+                                                  .difference(DateTime.parse(
+                                                          snapshot
+                                                              .data!
+                                                              .docs[index + 1]
+                                                                  ['time']
+                                                              .toString())
+                                                      .toLocal())
+                                                  .inDays;
+
+                                      return Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            15, 0.5, 15, 1),
+                                        child: Column(
+                                          children: [
+                                            k >= snapshot.data!.docs.length
+                                                ? (daysDifference2 -
+                                                            daysDifference) >=
+                                                        1
+                                                    ? Row(
+                                                        children: [
+                                                          Expanded(
+                                                            child: Divider(
+                                                              height: 10,
+                                                              thickness: 0.5,
+                                                              color: Colors.grey
+                                                                  .shade600,
+                                                            ),
+                                                          ),
+                                                          SizedBox(
+                                                            width: 10,
+                                                          ),
+                                                          Text(
+                                                            daysDifference == 0
+                                                                ? "Today"
+                                                                : daysDifference ==
+                                                                        1
+                                                                    ? "Yesterday"
+                                                                    : "${DateTime.now().add(Duration(days: -daysDifference)).day}  ${monthsList[DateTime.now().add(Duration(days: -daysDifference)).month - 1]}, ${DateTime.now().add(Duration(days: -daysDifference)).year}",
+                                                            style: TextStyle(
+                                                                fontSize: 12,
+                                                                color: Colors
+                                                                    .grey),
+                                                          ),
+                                                          SizedBox(
+                                                            width: 10,
+                                                          ),
+                                                          Expanded(
+                                                            child: Divider(
+                                                              height: 30,
+                                                              thickness: 0.5,
+                                                              color: Colors.grey
+                                                                  .shade600,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      )
+                                                    : Container()
+                                                : lastMessageDate!.compareTo(
+                                                            DateTime.parse(snapshot
+                                                                    .data!
+                                                                    .docs[index]
+                                                                        ['time']
+                                                                    .toString())
+                                                                .toLocal()) ==
+                                                        0
+                                                    ? Container()
+                                                    : (daysDifference2 -
+                                                                daysDifference) >=
+                                                            1
+                                                        ? Row(
+                                                            children: [
+                                                              Expanded(
+                                                                child: Divider(
+                                                                  height: 10,
+                                                                  thickness:
+                                                                      0.5,
+                                                                  color: Colors
+                                                                      .grey
+                                                                      .shade600,
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                width: 10,
+                                                              ),
+                                                              Text(
+                                                                daysDifference ==
+                                                                        0
+                                                                    ? "Today"
+                                                                    : daysDifference ==
+                                                                            1
+                                                                        ? "Yesterday"
+                                                                        : "${DateTime.now().add(Duration(days: -daysDifference)).day}  ${monthsList[DateTime.now().add(Duration(days: -daysDifference)).month - 1]}, ${DateTime.now().add(Duration(days: -daysDifference)).year}",
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        12,
+                                                                    color: Colors
+                                                                        .grey),
+                                                              ),
+                                                              SizedBox(
+                                                                width: 10,
+                                                              ),
+                                                              Expanded(
+                                                                child: Divider(
+                                                                  height: 30,
+                                                                  thickness:
+                                                                      0.5,
+                                                                  color: Colors
+                                                                      .grey
+                                                                      .shade600,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          )
+                                                        : Container(),
+                                            Row(
+                                              mainAxisAlignment: snapshot.data!
+                                                          .docs[index]['uid'] ==
+                                                      myUid
+                                                  ? MainAxisAlignment.end
+                                                  : MainAxisAlignment.start,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    k >=
+                                                            snapshot.data!.docs
+                                                                .length
+                                                        ? Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .fromLTRB(
+                                                                    0, 5, 0, 0),
+                                                            child: Text(
+                                                              DateTime.parse(snapshot
+                                                                          .data!
+                                                                          .docs[index]
+                                                                              [
+                                                                              'time']
+                                                                          .toString())
+                                                                      .add(DateTime.now()
+                                                                          .timeZoneOffset)
+                                                                      .hour
+                                                                      .toString() +
+                                                                  ":" +
+                                                                  (DateTime.parse(snapshot.data!.docs[index]['time'].toString()).add(DateTime.now().timeZoneOffset).minute <
+                                                                          10
+                                                                      ? "0" +
+                                                                          DateTime.parse(snapshot.data!.docs[index]['time'].toString())
+                                                                              .add(DateTime.now()
+                                                                                  .timeZoneOffset)
+                                                                              .minute
+                                                                              .toString()
+                                                                      : DateTime.parse(snapshot.data!.docs[index]['time'].toString())
+                                                                          .add(DateTime.now().timeZoneOffset)
+                                                                          .minute
+                                                                          .toString()),
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .grey,
+                                                                  fontSize: 10),
+                                                            ),
+                                                          )
+                                                        : lastMessageUid ==
+                                                                    snapshot.data!.docs[
+                                                                            index +
+                                                                                1]
+                                                                        [
+                                                                        'uid'] &&
+                                                                (DateTime.parse(snapshot.data!.docs[index]['time'].toString())
+                                                                            .add(DateTime.now()
+                                                                                .timeZoneOffset)
+                                                                            .minute -
+                                                                        DateTime.parse(snapshot.data!.docs[index + 1]['time'].toString())
+                                                                            .add(DateTime.now().timeZoneOffset)
+                                                                            .minute) ==
+                                                                    0
+                                                            ? Container()
+                                                            : Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .fromLTRB(
+                                                                        0,
+                                                                        5,
+                                                                        0,
+                                                                        0),
+                                                                child: Text(
+                                                                  DateTime.parse(snapshot
+                                                                              .data!
+                                                                              .docs[index][
+                                                                                  'time']
+                                                                              .toString())
+                                                                          .add(DateTime.now()
+                                                                              .timeZoneOffset)
+                                                                          .hour
+                                                                          .toString() +
+                                                                      ":" +
+                                                                      (DateTime.parse(snapshot.data!.docs[index]['time'].toString()).add(DateTime.now().timeZoneOffset).minute <
+                                                                              10
+                                                                          ? "0" +
+                                                                              DateTime.parse(snapshot.data!.docs[index]['time'].toString()).add(DateTime.now().timeZoneOffset).minute.toString()
+                                                                          : DateTime.parse(snapshot.data!.docs[index]['time'].toString()).add(DateTime.now().timeZoneOffset).minute.toString()),
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .grey,
+                                                                      fontSize:
+                                                                          10),
+                                                                ),
+                                                              )
                                                   ],
-                                                  stops: [0.3, 1],
-                                                  begin: Alignment.centerLeft,
-                                                  end: Alignment.centerRight
-                                              )
-                                                  : null,
+                                                ),
+                                              ],
                                             ),
-                                            padding: snapshot.data
-                                            !.docs[index]['type'] == "text"
-                                                ? EdgeInsets.all(10)
-                                                : EdgeInsets.all(4),
-                                            child: InkWell(
-                                              onLongPress: () {
-                                                print("Long Pressed : ${snapshot
-                                                    .data!.docs[index].id}");
-                                                if (snapshot.data
-                                                !.docs[index]['type'] !=
-                                                    "task" && snapshot.data
-                                                !.docs[index]['uid'] ==
-                                                    myUid) {
-                                                  unsendDialog(snapshot, index);
-                                                }
-                                              },
-                                              child:
-
-                                              typeToWidget(
-                                                message: snapshot.data
-                                                !.docs[index]['msg'],
-                                                type: snapshot.data
-                                                !.docs[index]['type'],
-                                                uid: snapshot.data
-                                                !.docs[index]['uid'],
-                                              ),
-
+                                            Row(
+                                              mainAxisAlignment: snapshot.data!
+                                                          .docs[index]['uid'] ==
+                                                      myUid
+                                                  ? MainAxisAlignment.end
+                                                  : MainAxisAlignment.start,
+                                              children: [
+                                                Container(
+                                                  constraints: BoxConstraints(
+                                                      maxWidth:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width -
+                                                              120),
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        k >=
+                                                                snapshot.data!
+                                                                    .docs.length
+                                                            ? BorderRadius
+                                                                .circular(10)
+                                                            : BorderRadius.only(
+                                                                topRight: snapshot.data!.docs[index]
+                                                                            [
+                                                                            'uid'] ==
+                                                                        myUid
+                                                                    ? lastMessageUid == snapshot.data!.docs[k]['uid'] &&
+                                                                            (DateTime.parse(snapshot.data!.docs[index]['time'].toString()).toLocal().minute - DateTime.parse(snapshot.data!.docs[index]['time'].toString()).toLocal().minute) ==
+                                                                                0
+                                                                        ? Radius.circular(
+                                                                            5)
+                                                                        : Radius.circular(
+                                                                            0)
+                                                                    : Radius
+                                                                        .circular(
+                                                                            15),
+                                                                bottomRight: snapshot.data!.docs[index]
+                                                                            [
+                                                                            'uid'] ==
+                                                                        myUid
+                                                                    ? Radius
+                                                                        .circular(
+                                                                            5)
+                                                                    : Radius
+                                                                        .circular(
+                                                                            10),
+                                                                bottomLeft: snapshot.data!.docs[index]
+                                                                            [
+                                                                            'uid'] ==
+                                                                        myUid
+                                                                    ? Radius
+                                                                        .circular(
+                                                                            10)
+                                                                    : Radius
+                                                                        .circular(
+                                                                            5),
+                                                                topLeft: snapshot.data!.docs[index]
+                                                                            [
+                                                                            'uid'] !=
+                                                                        myUid
+                                                                    ? lastMessageUid == snapshot.data!.docs[k]['uid'] &&
+                                                                            (DateTime.parse(snapshot.data!.docs[index]['time'].toString()).toLocal().minute - DateTime.parse(snapshot.data!.docs[index]['time'].toString()).toLocal().minute) ==
+                                                                                0
+                                                                        ? Radius.circular(
+                                                                            5)
+                                                                        : Radius.circular(
+                                                                            0)
+                                                                    : Radius
+                                                                        .circular(
+                                                                            15),
+                                                              ),
+                                                    color: snapshot.data!
+                                                                    .docs[index]
+                                                                ['uid'] ==
+                                                            myUid
+                                                        ? Theme.of(context)
+                                                            .primaryColor
+                                                            .withOpacity(0.8)
+                                                        : Colors.grey.shade200,
+                                                    gradient: snapshot.data!
+                                                                    .docs[index]
+                                                                ['uid'] ==
+                                                            myUid
+                                                        ? LinearGradient(
+                                                            colors: [
+                                                                Colors.blue,
+                                                                Colors
+                                                                    .lightBlueAccent
+                                                              ],
+                                                            stops: [
+                                                                0.3,
+                                                                1
+                                                              ],
+                                                            begin: Alignment
+                                                                .centerLeft,
+                                                            end: Alignment
+                                                                .centerRight)
+                                                        : null,
+                                                  ),
+                                                  padding:
+                                                      snapshot.data!.docs[index]
+                                                                  ['type'] ==
+                                                              "text"
+                                                          ? EdgeInsets.all(10)
+                                                          : EdgeInsets.all(4),
+                                                  child: InkWell(
+                                                    onLongPress: () {
+                                                      print(
+                                                          "Long Pressed : ${snapshot.data!.docs[index].id}");
+                                                      if (snapshot.data!.docs[
+                                                                      index]
+                                                                  ['type'] !=
+                                                              "task" &&
+                                                          snapshot.data!.docs[
+                                                                      index]
+                                                                  ['uid'] ==
+                                                              myUid) {
+                                                        unsendDialog(
+                                                            snapshot, index);
+                                                      }
+                                                    },
+                                                    child: typeToWidget(
+                                                      message: snapshot.data!
+                                                          .docs[index]['msg'],
+                                                      type: snapshot.data!
+                                                          .docs[index]['type'],
+                                                      uid: snapshot.data!
+                                                          .docs[index]['uid'],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              }
-                              else {
-                                return LinearProgressIndicator();
-                              }
-                            },
-                          ),
-                        );
-                      } else
-                      if (snapshot.hasData && snapshot.data!.docs.length == 0) {
-                        print("its first message");
-                        Future.delayed(Duration(seconds: 1), () {
-                          setState(() {
-                            isFirstMessage = true;
-                          });
-                        });
-                        return Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            // Image.asset(
-                            //     "assets/say_hi.png",
-                            //   height: 200,
-                            // ),
-                            Text("No Conversations",
-                              style: TextStyle(fontWeight: FontWeight.bold,
-                                  fontSize: 25
-                              ),
-                            ),
-                            SizedBox(height: 5,),
-                            Text("You didn't made any conversation yet",
-                              style: TextStyle(fontWeight: FontWeight.bold,
-                                  fontSize: 13,
-                                  color: Colors.grey.shade500
-                              ),
-                            ),
-                            SizedBox(height: 25,),
-                            Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Colors.grey.shade100
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text("Say Hi",
-                                  style: TextStyle(fontWeight: FontWeight.bold,
-                                      fontSize: 17,
-                                      color: Theme
-                                          .of(context)
-                                          .primaryColor
-                                  ),
+                                          ],
+                                        ),
+                                      );
+                                    } else {
+                                      return LinearProgressIndicator();
+                                    }
+                                  },
                                 ),
-                              ),
-                            )
-                          ],
-                        );
-                      } else {
-                        return Container();
-                      }
-                    }
-                ),
-              ),
-
-              isSeenStatusExist ? Padding(
-                padding: const EdgeInsets.fromLTRB(10, 5, 15, 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text("seen ",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey.shade500,
-                          fontSize: 10
-                      ),
+                              );
+                            } else if (snapshot.hasData &&
+                                snapshot.data!.docs.length == 0) {
+                              print("its first message");
+                              Future.delayed(Duration(seconds: 1), () {
+                                setState(() {
+                                  isFirstMessage = true;
+                                });
+                              });
+                              return Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  // Image.asset(
+                                  //     "assets/say_hi.png",
+                                  //   height: 200,
+                                  // ),
+                                  Text(
+                                    "No Conversations",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 25),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    "You didn't made any conversation yet",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 13,
+                                        color: Colors.grey.shade500),
+                                  ),
+                                  SizedBox(
+                                    height: 25,
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        color: Colors.grey.shade100),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        "Say Hi",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 17,
+                                            color:
+                                                Theme.of(context).primaryColor),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              );
+                            } else {
+                              return Container();
+                            }
+                          }),
                     ),
-                    Container(
-                        height: 15,
-                        width: 15,
-                        child: ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Text('')
-                        )
-                    )
+                    isSeenStatusExist
+                        ? Padding(
+                            padding: const EdgeInsets.fromLTRB(10, 5, 15, 0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(
+                                  "seen ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.grey.shade500,
+                                      fontSize: 10),
+                                ),
+                                Container(
+                                    height: 15,
+                                    width: 15,
+                                    child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(8),
+                                        child: Text('')))
+                              ],
+                            ),
+                          )
+                        : Container(),
+                    isFileUploading
+                        ? Container(
+                            color: Colors.grey.shade100,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children: [
+                                  ClipRRect(
+                                    child: Image.memory(
+                                      fileThumbnail!,
+                                      height: 30,
+                                      width: 30,
+                                      fit: BoxFit.cover,
+                                    ),
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Sending File",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.grey.shade700),
+                                        ),
+                                        SizedBox(
+                                          height: 5,
+                                        ),
+                                        LinearProgressIndicator(
+                                          minHeight: 2,
+                                          value: uploadingProgress,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Icon(
+                                    Icons.cancel,
+                                    color: Colors.grey.shade700,
+                                  ),
+                                  //Expanded(child: LinearProgressIndicator()),
+                                ],
+                              ),
+                            ),
+                          )
+                        : Container(),
+                    statusToWidget(requestStatus),
                   ],
                 ),
-              ) : Container(),
-
-              isFileUploading ? Container(
-                color: Colors.grey.shade100,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      ClipRRect(
-                        child: Image.memory(
-                          fileThumbnail!,
-                          height: 30,
-                          width: 30,
-                          fit: BoxFit.cover,
-                        ),
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      SizedBox(width: 10,),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("Sending File", style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                color: Colors.grey.shade700),),
-                            SizedBox(height: 5,),
-                            LinearProgressIndicator(
-                              minHeight: 2,
-                              value: uploadingProgress,
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(width: 10,),
-                      Icon(Icons.cancel, color: Colors.grey.shade700,),
-                      //Expanded(child: LinearProgressIndicator()),
-                    ],
-                  ),
-                ),
-              ) : Container(),
-
-              statusToWidget(requestStatus),
-
-            ],
-          ),
         ),
       ),
     );
@@ -1366,10 +1362,11 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
       isSeenStatusExist = false;
     });
 
-
     textEditingController = TextEditingController(text: "");
-    await FirebaseFirestore.instance.collection("Chats")
-        .doc(channelId).collection("All Chat")
+    await FirebaseFirestore.instance
+        .collection("Chats")
+        .doc(channelId)
+        .collection("All Chat")
         .add({
       "msg": msg,
       "time": DateTime.now().toString(),
@@ -1380,7 +1377,8 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
     });
 
     if (isFirstMessage) {
-      DatabaseReference dbRef = FirebaseDatabase.instance.ref(myUid!)
+      DatabaseReference dbRef = FirebaseDatabase.instance
+          .ref(myUid!)
           .child("chatlist")
           .child(widget.uid!);
 
@@ -1393,10 +1391,10 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
         "channelId": channelId
       });
 
-      DatabaseReference dbRef2 = FirebaseDatabase.instance.ref(widget.uid!)
+      DatabaseReference dbRef2 = FirebaseDatabase.instance
+          .ref(widget.uid!)
           .child("chatlist")
           .child(myUid!);
-
 
       await dbRef2.once().then((value) {
         final snapshot = value.snapshot.value as Map;
@@ -1405,8 +1403,11 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
           "time": DateTime.now().toString(),
           "last_msg": msg,
           "type": type,
-          "messageCount": snapshot.isEmpty ? 1 : snapshot['messageCount'] == null ? 1 : snapshot['messageCount'] +
-              1,
+          "messageCount": snapshot.isEmpty
+              ? 1
+              : snapshot['messageCount'] == null
+                  ? 1
+                  : snapshot['messageCount'] + 1,
           "status": 0,
           "channelId": channelId
         });
@@ -1414,9 +1415,9 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
       setState(() {
         isFirstMessage = false;
       });
-    }
-    else {
-      DatabaseReference dbRef = FirebaseDatabase.instance.ref(myUid!)
+    } else {
+      DatabaseReference dbRef = FirebaseDatabase.instance
+          .ref(myUid!)
           .child("chatlist")
           .child(widget.uid!);
 
@@ -1428,8 +1429,8 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
         "channelId": channelId
       });
 
-
-      DatabaseReference dbRef2 = FirebaseDatabase.instance.ref(widget.uid!)
+      DatabaseReference dbRef2 = FirebaseDatabase.instance
+          .ref(widget.uid!)
           .child("chatlist")
           .child(myUid!);
 
@@ -1445,10 +1446,11 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
           "time": DateTime.now().toString(),
           "last_msg": msg,
           "type": type,
-          "messageCount": call.isEmpty ? 1 : call['messageCount'] == null
+          "messageCount": call.isEmpty
               ? 1
-              : call['messageCount'] +
-              1,
+              : call['messageCount'] == null
+                  ? 1
+                  : call['messageCount'] + 1,
           "channelId": channelId
         });
       });
@@ -1470,7 +1472,8 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
 
     CollectionReference collectionReference = FirebaseFirestore.instance
         .collection("Chats")
-        .doc(channelId).collection("All Chat");
+        .doc(channelId)
+        .collection("All Chat");
     await collectionReference.doc(taskId).set({
       "msg": msg,
       "time": DateTime.now().toString(),
@@ -1480,8 +1483,12 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
   }
 
   void deleteTask(String taskId) async {
-    await FirebaseFirestore.instance.collection("Chats").doc(channelId)
-        .collection("All Chat").doc(taskId).delete();
+    await FirebaseFirestore.instance
+        .collection("Chats")
+        .doc(channelId)
+        .collection("All Chat")
+        .doc(taskId)
+        .delete();
   }
 
   void updateTaskToFile(int type, String taskId) async {
@@ -1494,10 +1501,10 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
       isSeenStatusExist = false;
     });
 
-
     CollectionReference collectionReference = FirebaseFirestore.instance
         .collection("Chats")
-        .doc(channelId).collection("All Chat");
+        .doc(channelId)
+        .collection("All Chat");
     await collectionReference.doc(taskId).set({
       "msg": msg,
       "time": DateTime.now().toString(),
@@ -1506,7 +1513,8 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
     });
 
     if (isFirstMessage) {
-      DatabaseReference dbRef = FirebaseDatabase.instance.ref(myUid!)
+      DatabaseReference dbRef = FirebaseDatabase.instance
+          .ref(myUid!)
           .child("chatlist")
           .child(widget.uid!);
 
@@ -1519,7 +1527,8 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
         "channelId": channelId
       });
 
-      DatabaseReference dbRef2 = FirebaseDatabase.instance.ref(widget.uid!)
+      DatabaseReference dbRef2 = FirebaseDatabase.instance
+          .ref(widget.uid!)
           .child("chatlist")
           .child(myUid!);
 
@@ -1539,9 +1548,9 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
       setState(() {
         isFirstMessage = false;
       });
-    }
-    else {
-      DatabaseReference dbRef = FirebaseDatabase.instance.ref(myUid!)
+    } else {
+      DatabaseReference dbRef = FirebaseDatabase.instance
+          .ref(myUid!)
           .child("chatlist")
           .child(widget.uid!);
 
@@ -1554,10 +1563,10 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
         "channelId": channelId
       });
 
-      DatabaseReference dbRef2 = FirebaseDatabase.instance.ref(widget.uid!)
+      DatabaseReference dbRef2 = FirebaseDatabase.instance
+          .ref(widget.uid!)
           .child("chatlist")
           .child(myUid!);
-
 
       await dbRef2.onValue.listen((DatabaseEvent event) {
         final snapshot = event.snapshot.value as Map;
@@ -1578,13 +1587,10 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
     }
   }
 
-
   void markAsSeen() async {
     String x = "${widget.uid}";
-    seenRef = FirebaseDatabase.instance.ref(myUid!)
-        .child('chatlist').child(x);
-    FirebaseDatabase.instance.ref(myUid!)
-        .child('chatlist').child("x").set({
+    seenRef = FirebaseDatabase.instance.ref(myUid!).child('chatlist').child(x);
+    FirebaseDatabase.instance.ref(myUid!).child('chatlist').child("x").set({
       "messageCount": 0,
     });
     // seenRefListner = seenRef!.once().then((value){
@@ -1617,8 +1623,8 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
           currentTime = DateTime.parse(event.snapshot.value.toString());
           // print(currentTime.toString());
           // print("Now : " + DateTime.now().toString());
-          timeDifference = DateTime.now().difference(
-              DateTime.parse(event.snapshot.value.toString()));
+          timeDifference = DateTime.now()
+              .difference(DateTime.parse(event.snapshot.value.toString()));
           // print("Difference : " + DateTime.now().difference(
           //     DateTime.parse(event.snapshot.value.toString())).toString());
           // print("Subtract : " +
@@ -1674,9 +1680,8 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
     if (file!.files[0].path!.contains(".jpg") ||
         file!.files[0].path!.contains(".png") ||
         file!.files[0].path!.contains(".jpeg")) {
-      uploadFileToServer(
-          File(file!.files[0].path!).readAsBytesSync(), "jpg", "file",
-          file!.files[0].path!);
+      uploadFileToServer(File(file!.files[0].path!).readAsBytesSync(), "jpg",
+          "file", file!.files[0].path!);
     }
     if (Platform.isIOS) {
       if (file!.files[0].path!.contains(".MP4")) {
@@ -1685,9 +1690,8 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
         //     MyVideoPlayer(
         //       type:1,
         //         url: file!.files[0].path!)));
-        uploadFileToServer(
-            File(file!.files[0].path!).readAsBytesSync(), "mp4", "file",
-            file!.files[0].path!);
+        uploadFileToServer(File(file!.files[0].path!).readAsBytesSync(), "mp4",
+            "file", file!.files[0].path!);
       }
     } else {
       if (file!.files[0].path!.contains(".mp4")) {
@@ -1696,9 +1700,8 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
         //     MyVideoPlayer(
         //       type:1,
         //         url: file!.files[0].path!)));
-        uploadFileToServer1(
-            File(file!.files[0].path!).readAsBytesSync(), "mp4", "file",
-            file!.files[0].path!);
+        uploadFileToServer1(File(file!.files[0].path!).readAsBytesSync(), "mp4",
+            "file", file!.files[0].path!);
       }
     }
   }
@@ -1723,20 +1726,25 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(height: 20,),
-                CircularProgressIndicator(),
-                SizedBox(height: 20,),
+                SizedBox(
+                  height: 20,
+                ),
+                CircularProgressIndicator(
+                  color: const Color.fromARGB(255, 243, 103, 9),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
                 Text("Please wait while processing video"),
               ],
             ),
           );
-        }
-    );
+        });
   }
 
   /// New
-  uploadFileToServer1(Uint8List result, String extension, String type,
-      path) async {
+  uploadFileToServer1(
+      Uint8List result, String extension, String type, path) async {
     await getExternalStorageDirectory().then((value) async {
       print(value);
 
@@ -1750,23 +1758,18 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
 
         FileItem(path: path),
         // FileItem(savedDir: savedDir, filename: filename)
-
       ];
 
       final tag = "image upload ${Random().nextInt(9999)}";
 
-
       print('image path is $path');
 
-      var taskId = await uploader.enqueue(
-          MultipartFormDataUpload(
-            url: "$SERVER_ADDRESS/api/mediaupload",
-            files: fItem,
-            method: UploadMethod.POST,
-            tag: tag,
-          )
-
-      );
+      var taskId = await uploader.enqueue(MultipartFormDataUpload(
+        url: "$SERVER_ADDRESS/api/mediaupload",
+        files: fItem,
+        method: UploadMethod.POST,
+        tag: tag,
+      ));
 
       setState(() {
         message = value.toString();
@@ -1810,8 +1813,7 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
       setState(() {
         _tasks.putIfAbsent(
             tag,
-                () =>
-                UploadItem(
+            () => UploadItem(
                   id: taskId,
                   tag: tag,
                   type: MediaType.Video,
@@ -1821,8 +1823,8 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
     });
   }
 
-  uploadFileToServer(Uint8List result, String extension, String type,
-      path) async {
+  uploadFileToServer(
+      Uint8List result, String extension, String type, path) async {
     final uploader = FlutterUploader();
 
     // File f2 = await File(path).create();
@@ -1833,23 +1835,18 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
 
       FileItem(path: path),
       // FileItem(savedDir: savedDir, filename: filename)
-
     ];
 
     final tag = "image upload ${Random().nextInt(9999)}";
 
-
     print('image path is $path');
 
-    var taskId = await uploader.enqueue(
-        MultipartFormDataUpload(
-          url: "$SERVER_ADDRESS/api/mediaupload",
-          files: fItem,
-          method: UploadMethod.POST,
-          tag: tag,
-        )
-
-    );
+    var taskId = await uploader.enqueue(MultipartFormDataUpload(
+      url: "$SERVER_ADDRESS/api/mediaupload",
+      files: fItem,
+      method: UploadMethod.POST,
+      tag: tag,
+    ));
 
     setState(() {
       message = path;
@@ -1893,8 +1890,7 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
     setState(() {
       _tasks.putIfAbsent(
           tag,
-              () =>
-              UploadItem(
+          () => UploadItem(
                 id: taskId,
                 tag: tag,
                 type: MediaType.Video,
@@ -1902,7 +1898,6 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
               ));
     });
   }
-
 
   /// New typeToWidget
   Widget typeToWidget({String? message, int? type, String? uid}) {
@@ -1912,123 +1907,130 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
       // String ext = message.split('.').last;
       String ext = message!.split('.').last;
       // print('msg type $ext');
-      return
-        (ext == 'mp4' || ext == 'MP4') ? InkWell(
-          onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) =>
-                MyVideoPlayer(
-                    type: 2,
-                    url: SERVER_ADDRESS + "/public/upload/chat/" + message)));
-            // Get.to(()=> MyVideoPlayer(SERVER_ADDRESS + "/public/upload/chat/" + message));
-          },
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: MyVideoThumbNail(
-                    SERVER_ADDRESS + "/public/upload/chat/" + message),),
-              Container(
-                decoration: BoxDecoration(
-                  color: BLACK
-                      .withOpacity(0.7),
-                  borderRadius:
-                  BorderRadius.circular(5),
-                ),
-                child: Icon(
-                  Icons.play_arrow,
-                  color: WHITE,
-                ),
-              )
-            ],
-          ),
-          // child:
-
-          // FutureBuilder(
-          //     future: generateImage(
-          //         SERVER_ADDRESS + "/public/upload/chat/" + message),
-          //     builder: (context, snapshot) {
-          //       if (snapshot.hasData) {
-          //         return Stack(
-          //           alignment: Alignment.center,
-          //           children: [
-          //             ClipRRect(
-          //               borderRadius: BorderRadius.circular(10),
-          //               child: Image.file(
-          //                 File(snapshot.data.toString()),
-          //                 fit: BoxFit.cover,
-          //                 height: 300,
-          //               ),
-          //             ),
-          //             Container(
-          //               decoration: BoxDecoration(
-          //                 color: BLACK
-          //                     .withOpacity(0.7),
-          //                 borderRadius:
-          //                 BorderRadius.circular(5),
-          //               ),
-          //               child: Icon(
-          //                 Icons.play_arrow,
-          //                 color: WHITE,
-          //               ),
-          //             )
-          //           ],
-          //         );
-          //       }
-          //       return Container(
-          //           height: 200,
-          //           width: 200,
-          //           alignment: Alignment.center,
-          //           child: const CircularProgressIndicator());
-          //     })
-        )
-            :
-        InkWell(
-          onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) =>
-                MyPhotoViewer(
-                    url: SERVER_ADDRESS + "/public/upload/chat/" + message)));
-          },
-          child: Hero(
-            tag: SERVER_ADDRESS + "/public/upload/chat/" + message,
-            child: ClipRRect(
-              child:
-              CachedNetworkImage(
-                imageUrl: SERVER_ADDRESS + "/public/upload/chat/" +
-                    message,
-                placeholder: (context, url) =>
-                    Container(
-                        child: Center(child: CircularProgressIndicator())),
-                errorWidget: (context, url, error) => Icon(Icons.error),
-                height: 200,
-                width: 200,
-                fit: BoxFit.cover,
+      return (ext == 'mp4' || ext == 'MP4')
+          ? InkWell(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MyVideoPlayer(
+                            type: 2,
+                            url: SERVER_ADDRESS +
+                                "/public/upload/chat/" +
+                                message)));
+                // Get.to(()=> MyVideoPlayer(SERVER_ADDRESS + "/public/upload/chat/" + message));
+              },
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: MyVideoThumbNail(
+                        SERVER_ADDRESS + "/public/upload/chat/" + message),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: BLACK.withOpacity(0.7),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Icon(
+                      Icons.play_arrow,
+                      color: WHITE,
+                    ),
+                  )
+                ],
               ),
-              borderRadius: BorderRadius.circular(10),
-            ),
-          ),
-        );
-    }
-    else if (type == 3 && uid == myUid) {
+              // child:
+
+              // FutureBuilder(
+              //     future: generateImage(
+              //         SERVER_ADDRESS + "/public/upload/chat/" + message),
+              //     builder: (context, snapshot) {
+              //       if (snapshot.hasData) {
+              //         return Stack(
+              //           alignment: Alignment.center,
+              //           children: [
+              //             ClipRRect(
+              //               borderRadius: BorderRadius.circular(10),
+              //               child: Image.file(
+              //                 File(snapshot.data.toString()),
+              //                 fit: BoxFit.cover,
+              //                 height: 300,
+              //               ),
+              //             ),
+              //             Container(
+              //               decoration: BoxDecoration(
+              //                 color: BLACK
+              //                     .withOpacity(0.7),
+              //                 borderRadius:
+              //                 BorderRadius.circular(5),
+              //               ),
+              //               child: Icon(
+              //                 Icons.play_arrow,
+              //                 color: WHITE,
+              //               ),
+              //             )
+              //           ],
+              //         );
+              //       }
+              //       return Container(
+              //           height: 200,
+              //           width: 200,
+              //           alignment: Alignment.center,
+              //           child: const CircularProgressIndicator());
+              //     })
+            )
+          : InkWell(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MyPhotoViewer(
+                            url: SERVER_ADDRESS +
+                                "/public/upload/chat/" +
+                                message)));
+              },
+              child: Hero(
+                tag: SERVER_ADDRESS + "/public/upload/chat/" + message,
+                child: ClipRRect(
+                  child: CachedNetworkImage(
+                    imageUrl: SERVER_ADDRESS + "/public/upload/chat/" + message,
+                    placeholder: (context, url) => Container(
+                        child: Center(
+                            child: CircularProgressIndicator(
+                      color: const Color.fromARGB(255, 243, 103, 9),
+                    ))),
+                    errorWidget: (context, url, error) => Icon(Icons.error),
+                    height: 200,
+                    width: 200,
+                    fit: BoxFit.cover,
+                  ),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            );
+    } else if (type == 3 && uid == myUid) {
       final uploader = FlutterUploader();
       return InkWell(
-        onLongPress: () {
-
-        },
+        onLongPress: () {},
         child: Container(
           height: 200,
           child: Stack(
             children: [
               Center(
                 child: CircularProgressIndicator(
+                  color: const Color.fromARGB(255, 243, 103, 9),
                   valueColor: AlwaysStoppedAnimation(WHITE),
                 ),
               ),
               Align(
                 alignment: Alignment.bottomRight,
                 child: //u == null
-                //     ? Text("Upload Failed", style: TextStyle(color: Colors.white),)
-                Text('Uploading File', style: TextStyle(color: WHITE),),
+                    //     ? Text("Upload Failed", style: TextStyle(color: Colors.white),)
+                    Text(
+                  'Uploading File',
+                  style: TextStyle(color: WHITE),
+                ),
               ),
               Center(
                 child: InkWell(
@@ -2036,14 +2038,16 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
                       // deleteTask(taskId);
                       // uploader.cancel(taskId: taskId);
                     },
-                    child: Icon(Icons.upload_rounded, color: WHITE,)),
+                    child: Icon(
+                      Icons.upload_rounded,
+                      color: WHITE,
+                    )),
               ),
             ],
           ),
         ),
       );
-    }
-    else if (type == 0) {
+    } else if (type == 0) {
       return InkWell(
         onTap: () async {
           if (isURL(message!)) {
@@ -2058,20 +2062,19 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
             message!,
             style: GoogleFonts.ubuntu(
                 fontSize: isURL(message) ? 18 : 15,
-                color: uid == myUid
-                    ? Colors.white
-                    : Colors.black,
+                color: uid == myUid ? Colors.white : Colors.black,
                 fontWeight: isURL(message) ? FontWeight.w300 : FontWeight.w400,
                 decoration: isURL(message)
                     ? TextDecoration.underline
-                    : TextDecoration.none
-            ),
+                    : TextDecoration.none),
           ),
         ),
       );
-    }
-    else if (type == 3 && uid != myUid) {
-      return Text("Uploading file...", style: TextStyle(fontSize: 10),);
+    } else if (type == 3 && uid != myUid) {
+      return Text(
+        "Uploading file...",
+        style: TextStyle(fontSize: 10),
+      );
     }
     // else if (type == 2) {
     //   return
@@ -2128,14 +2131,11 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
             message!,
             style: GoogleFonts.ubuntu(
                 fontSize: isURL(message) ? 18 : 15,
-                color: uid == myUid
-                    ? Colors.white
-                    : Colors.black,
+                color: uid == myUid ? Colors.white : Colors.black,
                 fontWeight: isURL(message) ? FontWeight.w300 : FontWeight.w400,
                 decoration: isURL(message)
                     ? TextDecoration.underline
-                    : TextDecoration.none
-            ),
+                    : TextDecoration.none),
           ),
         ),
       );
@@ -2152,7 +2152,6 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
     return fileName.toString();
   }
 
-
   Widget statusToWidget(data) {
     if (data == 0) {
       return Container(
@@ -2166,15 +2165,12 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
                   //acceptChatRequest();
                 },
                 child: Container(
-                  decoration: BoxDecoration(
-                      color: Colors.grey.shade200
-                  ),
+                  decoration: BoxDecoration(color: Colors.grey.shade200),
                   child: Padding(
                     padding: const EdgeInsets.all(20.0),
-                    child: Text("Reject",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w900
-                      ),
+                    child: Text(
+                      "Reject",
+                      style: TextStyle(fontWeight: FontWeight.w900),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -2188,18 +2184,13 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
                 },
                 child: Container(
                   decoration: BoxDecoration(
-                      color: Theme
-                          .of(context)
-                          .primaryColor
-                          .withOpacity(0.8)
-                  ),
+                      color: Theme.of(context).primaryColor.withOpacity(0.8)),
                   child: Padding(
                     padding: const EdgeInsets.all(20.0),
-                    child: Text("Accept",
+                    child: Text(
+                      "Accept",
                       style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w900
-                      ),
+                          color: Colors.white, fontWeight: FontWeight.w900),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -2209,8 +2200,7 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
           ],
         ),
       );
-    }
-    else if (data == 1) {
+    } else if (data == 1) {
       return Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
@@ -2241,15 +2231,13 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
                     ),
                     hintText: "Type a message here...",
                     filled: true,
-                    hintStyle: TextStyle(
-                        fontSize: 15
-                    ),
+                    hintStyle: TextStyle(fontSize: 15),
                     prefixIcon: IconButton(
                       icon:
-                      // Icon(Icons.emoji_emotions_outlined),
-                      isEmojiKeybord ?
-                      Icon(Icons.keyboard)
-                          : Icon(Icons.emoji_emotions_outlined),
+                          // Icon(Icons.emoji_emotions_outlined),
+                          isEmojiKeybord
+                              ? Icon(Icons.keyboard)
+                              : Icon(Icons.emoji_emotions_outlined),
                       onPressed: () async {
                         print('emoji keybord is $isEmojiKeybord');
                         print('smiple keybord is $isKeybord');
@@ -2261,8 +2249,8 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
                           });
                         } else {
                           myFocusNode.unfocus();
-                          await SystemChannels.textInput.invokeMethod(
-                              'TextInput.hide');
+                          await SystemChannels.textInput
+                              .invokeMethod('TextInput.hide');
                           await Future.delayed(Duration(milliseconds: 100));
 
                           // FocusScopeNode currentFocus = FocusScope.of(context);
@@ -2274,7 +2262,6 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
                             isEmojiKeybord = !isEmojiKeybord;
                           });
                         }
-
 
                         // FocusScopeNode currentFocus = FocusScope.of(context);
                         //
@@ -2289,8 +2276,7 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
                         _showMyDialog();
                         // pickFile();
                       },
-                    )
-                ),
+                    )),
                 onChanged: (val) {
                   markAsTyping();
                   setState(() {
@@ -2304,38 +2290,40 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
                 },
               ),
             ),
-            SizedBox(width: 8,),
-            showButton ? FloatingActionButton(
-              shape: CircleBorder(
-                  side: BorderSide(
-                      width: 5,
-                      color: Colors.white
+            SizedBox(
+              width: 8,
+            ),
+            showButton
+                ? FloatingActionButton(
+                    shape: CircleBorder(
+                        side: BorderSide(width: 5, color: Colors.white)),
+                    //color: Theme.of(context).primaryColor,
+                    onPressed: () {
+                      sendMessage(0);
+                    },
+                    elevation: 0.0,
+                    child: Transform.rotate(
+                      angle: 5.5,
+                      child: Icon(
+                        Icons.send,
+                      ),
+                    ),
                   )
-              ),
-              //color: Theme.of(context).primaryColor,
-              onPressed: () {
-                sendMessage(0);
-              },
-              elevation: 0.0,
-              child: Transform.rotate(
-                angle: 5.5,
-                child: Icon(
-                  Icons.send,
-                ),
-              ),
-            ) : Container(),
+                : Container(),
           ],
         ),
       );
-    }
-    else {
+    } else {
       return Container();
     }
   }
 
   acceptChatRequest() async {
-    await FirebaseDatabase.instance.ref(myUid!).child('chatlist')
-        .child(widget.uid!).update({
+    await FirebaseDatabase.instance
+        .ref(myUid!)
+        .child('chatlist')
+        .child(widget.uid!)
+        .update({
       "status": 1,
     }).then((value) {
       setState(() {
@@ -2343,7 +2331,6 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
       });
     });
   }
-
 
   unsendDialog(AsyncSnapshot<QuerySnapshot> snapshot, index) {
     return showDialog(
@@ -2353,9 +2340,11 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
           return AlertDialog(
             backgroundColor: Colors.white,
             elevation: 0,
-            title: Text("Remove Message", style: TextStyle(
-              color: Colors.black,
-            ),
+            title: Text(
+              "Remove Message",
+              style: TextStyle(
+                color: Colors.black,
+              ),
               textAlign: TextAlign.center,
             ),
             content: Column(
@@ -2364,8 +2353,11 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
                 //typeToUnsendDialogContent(snapshot.data.docs[index]['type'],snapshot.data.docs[index]['msg'].toString()),
                 Text(
                   "Are you sure to remove this message ?",
-                  style: TextStyle(fontSize: 13, color: Colors.red.shade800),),
-                SizedBox(height: 20,),
+                  style: TextStyle(fontSize: 13, color: Colors.red.shade800),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
                 Row(
                   children: [
                     Expanded(
@@ -2385,14 +2377,17 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
                               style: TextStyle(
                                   fontSize: 15,
                                   color: Colors.black,
-                                  fontWeight: FontWeight.bold),),
+                                  fontWeight: FontWeight.bold),
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
                 Row(
                   children: [
                     Expanded(
@@ -2413,7 +2408,8 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
                               style: TextStyle(
                                   fontSize: 15,
                                   color: Colors.white,
-                                  fontWeight: FontWeight.bold),),
+                                  fontWeight: FontWeight.bold),
+                            ),
                           ),
                         ),
                       ),
@@ -2423,33 +2419,42 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
               ],
             ),
           );
-        }
-    );
+        });
   }
 
   unsendMessage(String id, int index, int length,
       AsyncSnapshot<QuerySnapshot> snapshot) async {
     print("\n\n" + index.toString() + "  " + length.toString());
     if (index > 0) {
-      await FirebaseFirestore.instance.collection("Chats").doc(channelId)
+      await FirebaseFirestore.instance
+          .collection("Chats")
+          .doc(channelId)
           .collection("All Chat")
-          .doc(id).delete();
+          .doc(id)
+          .delete();
       Navigator.pop(context);
-    }
-    else if (length == 1) {
-      await FirebaseFirestore.instance.collection("Chats").doc(channelId)
+    } else if (length == 1) {
+      await FirebaseFirestore.instance
+          .collection("Chats")
+          .doc(channelId)
           .collection("All Chat")
-          .doc(id).delete();
-      await FirebaseDatabase.instance.ref(myUid!)
+          .doc(id)
+          .delete();
+      await FirebaseDatabase.instance
+          .ref(myUid!)
           .child("chatlist")
-          .child(widget.uid!).remove();
-      await FirebaseDatabase.instance.ref(widget.uid!)
+          .child(widget.uid!)
+          .remove();
+      await FirebaseDatabase.instance
+          .ref(widget.uid!)
           .child("chatlist")
-          .child(myUid!).remove();
+          .child(myUid!)
+          .remove();
       Navigator.pop(context);
     } else {
       DatabaseReference documentReference = FirebaseDatabase.instance
-          .ref(myUid!).child('chatlist')
+          .ref(myUid!)
+          .child('chatlist')
           .child(widget.uid!);
       await documentReference.update({
         // "time": snapshot.data!.docs[1]['time'].toDate().toUtc().toString(),
@@ -2459,7 +2464,8 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
       });
 
       DatabaseReference documentReference2 = FirebaseDatabase.instance
-          .ref(widget.uid!).child('chatlist')
+          .ref(widget.uid!)
+          .child('chatlist')
           .child(myUid!);
       await documentReference2.update({
         // "time": snapshot.data!.docs[1]['time'].toDate().toUtc().toString(),
@@ -2469,9 +2475,12 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
       });
       Navigator.pop(context);
 
-      await FirebaseFirestore.instance.collection("Chats").doc(channelId)
+      await FirebaseFirestore.instance
+          .collection("Chats")
+          .doc(channelId)
           .collection("All Chat")
-          .doc(id).delete();
+          .doc(id)
+          .delete();
     }
   }
 
@@ -2488,17 +2497,24 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
           child: CachedNetworkImage(
             imageUrl: SERVER_ADDRESS + "/public/upload/chat/" + msg,
             fit: BoxFit.cover,
-            placeholder: (context, s) =>
-                Container(
-                  child: Center(child: CircularProgressIndicator(),),),
-            errorWidget: (context, s, y) =>
-                Container(
-                  child: Center(child: CircularProgressIndicator(),),),
+            placeholder: (context, s) => Container(
+              child: Center(
+                child: CircularProgressIndicator(
+                  color: const Color.fromARGB(255, 243, 103, 9),
+                ),
+              ),
+            ),
+            errorWidget: (context, s, y) => Container(
+              child: Center(
+                child: CircularProgressIndicator(
+                  color: const Color.fromARGB(255, 243, 103, 9),
+                ),
+              ),
+            ),
           ),
         ),
       );
-    }
-    else if (type == 2) {
+    } else if (type == 2) {
       return ClipRRect(
         borderRadius: BorderRadius.circular(10),
         child: Container(
@@ -2518,15 +2534,17 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
                 ),
                 Center(
                   child: Icon(
-                    Icons.play_circle_fill, color: Colors.white, size: 70,),
+                    Icons.play_circle_fill,
+                    color: Colors.white,
+                    size: 70,
+                  ),
                 )
               ],
             ),
           ),
         ),
       );
-    }
-    else {
+    } else {
       return Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
@@ -2536,21 +2554,22 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
           padding: const EdgeInsets.all(8.0),
           child: Text(
             msg,
-            style: TextStyle(fontSize: 15),),
+            style: TextStyle(fontSize: 15),
+          ),
         ),
       );
     }
   }
 
-
-  Future<Map<String, dynamic>> sendNotification(String userName, String message,
-      String token) async {
+  Future<Map<String, dynamic>> sendNotification(
+      String userName, String message, String token) async {
     await firebaseMessaging.requestPermission(
         sound: true, badge: true, alert: true, provisional: false);
 
     print('sent message to this token : $token');
 
-    await http.post(
+    await http
+        .post(
       Uri.parse('https://fcm.googleapis.com/fcm/send'),
       // 'https://fcm.googleapis.com/fcm/send',
       headers: <String, String>{
@@ -2561,8 +2580,7 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
         <String, dynamic>{
           'priority': 'high',
           'notification': <String, dynamic>{
-            'android': <String, String>{
-            },
+            'android': <String, String>{},
             'title': userName,
             'body': message,
           },
@@ -2571,9 +2589,8 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
             'body': message,
             'title': userName,
             // 'channel' : channelId?.codeUnits[0].toString() + channelId.codeUnits[1].toString() + channelId.codeUnits.last.toString(),
-            'channel': '${channelId?.codeUnits[0].toString()}${channelId
-                ?.codeUnits[1].toString()}${channelId?.codeUnits.last
-                .toString()}',
+            'channel':
+                '${channelId?.codeUnits[0].toString()}${channelId?.codeUnits[1].toString()}${channelId?.codeUnits.last.toString()}',
             'uid': myUid.toString(),
             'channelId': channelId!,
             'myName': myName,
@@ -2588,17 +2605,16 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
           'to': token,
         },
       ),
-    ).then((value) {
+    )
+        .then((value) {
       print("\n\nMessage sent : ${value.body}");
     });
 
     final Completer<Map<String, dynamic>> completer =
-    Completer<Map<String, dynamic>>();
+        Completer<Map<String, dynamic>>();
 
     return completer.future;
   }
-
-
 }
 
 class UploadItem {
@@ -2616,18 +2632,17 @@ class UploadItem {
     this.status = UploadTaskStatus.undefined,
   });
 
-  UploadItem copyWith({UploadTaskStatus? status, int? progress}) =>
-      UploadItem(
-          id: this.id,
-          tag: this.tag,
-          type: this.type,
-          status: status ?? this.status,
-          progress: progress ?? this.progress);
+  UploadItem copyWith({UploadTaskStatus? status, int? progress}) => UploadItem(
+      id: this.id,
+      tag: this.tag,
+      type: this.type,
+      status: status ?? this.status,
+      progress: progress ?? this.progress);
 
   bool isCompleted() =>
       this.status == UploadTaskStatus.canceled ||
-          this.status == UploadTaskStatus.complete ||
-          this.status == UploadTaskStatus.failed;
+      this.status == UploadTaskStatus.complete ||
+      this.status == UploadTaskStatus.failed;
 }
 
 enum MediaType { Image, Video }

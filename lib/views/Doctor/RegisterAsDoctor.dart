@@ -21,7 +21,6 @@ class RegisterAsDoctor extends StatefulWidget {
 }
 
 class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
-
   String name = "";
   String phoneNumber = "";
   String email = "";
@@ -38,39 +37,36 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
   bool _passwordVisible1 = true;
   final _formKey = GlobalKey<FormState>();
 
-  storeToken() async{
+  storeToken() async {
     dialog();
     print('Saving token');
-    await FirebaseMessaging.instance.getToken().then((value) async{
+    await FirebaseMessaging.instance.getToken().then((value) async {
       //Toast.show(value, context, duration: 2);
       print(value);
       setState(() {
-        token =value!;
+        token = value!;
       });
 
-      final response = await post(
-          Uri.parse("$SERVER_ADDRESS/api/savetoken"),
-          body: {
-            "token":token,
-            "type": "1",
-          }
-      ).catchError((e){
+      final response =
+          await post(Uri.parse("$SERVER_ADDRESS/api/savetoken"), body: {
+        "token": token,
+        "type": "1",
+      }).catchError((e) {
         Navigator.pop(context);
-      messageDialog(ERROR, UNABLE_TO_LOAD_DATA_FORM_SERVER);
+        messageDialog(ERROR, UNABLE_TO_LOAD_DATA_FORM_SERVER);
       });
-      if(response.statusCode == 200){
+      if (response.statusCode == 200) {
         Navigator.pop(context);
         final jsonResponse = jsonDecode(response.body);
-        if(jsonResponse['success'].toString() == "1"){
-          SharedPreferences.getInstance().then((pref){
+        if (jsonResponse['success'].toString() == "1") {
+          SharedPreferences.getInstance().then((pref) {
             pref.setBool("isTokenExist", true);
             print("token stored");
           });
           //Navigator.pop(context);
           registerUser();
         }
-      }
-      else{
+      } else {
         Navigator.pop(context);
         print("token not stored");
         messageDialog(ERROR, response.body.toString());
@@ -78,46 +74,41 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
         //     MaterialPageRoute(builder: (context) => TabsScreen())
         // );
       }
-
-    }).catchError((e){
+    }).catchError((e) {
       Navigator.pop(context);
       print("token not accessed");
       messageDialog(ERROR, UNABLE_TO_SAVE_TOKEN_TO_SERVER);
     });
     setState(() {
-      token ="";
+      token = "";
     });
   }
-
 
   registerUser() async {
     if (name.isEmpty) {
       setState(() {
         isNameError = true;
       });
-    }
-    else if (phoneNumber.length < PHONE_NUMBER_LENGTH) {
+    } else if (phoneNumber.length < PHONE_NUMBER_LENGTH) {
       setState(() {
         isPhoneNumberError = true;
         phnNumberError = ENTER_VALID_MOBILE_NUMBER;
       });
-    }
-    else if (EmailValidator.validate(email) == false) {
+    } else if (EmailValidator.validate(email) == false) {
       setState(() {
         isEmailError = true;
       });
-    }
-    else if (password != confirmPassword || password.length == 0) {
+    } else if (password != confirmPassword || password.length == 0) {
       setState(() {
         isPassError = true;
       });
-    }else if(token == null || token.isEmpty){
+    } else if (token == null || token.isEmpty) {
       storeToken();
-    }
-    else {
+    } else {
       dialog();
       //Toast.show("Creating account please wait", context);
-      String url = "$SERVER_ADDRESS/api/doctorregister?name=$name&email=$email&phone=$phoneNumber&password=$password&token=$token";
+      String url =
+          "$SERVER_ADDRESS/api/doctorregister?name=$name&email=$email&phone=$phoneNumber&password=$password&token=$token";
       print(url);
       print(name);
       print(email);
@@ -130,7 +121,7 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
         'phone': phoneNumber,
         'password': password,
         'token': token
-      }).catchError((e){
+      }).catchError((e) {
         Navigator.pop(context);
         messageDialog(ERROR, UNABLE_TO_LOAD_DATA_FORM_SERVER);
       });
@@ -145,8 +136,7 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
             messageDialog(ERROR, error);
             //isPhoneNumberError = true;
           });
-        }
-        else {
+        } else {
           String? token = await firebaseMessaging.getToken();
           FirebaseDatabase.instance
               .reference()
@@ -168,10 +158,14 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
                 pref.setString(
                     "userId", jsonResponse['register']['user_id'].toString());
                 pref.setString("name", jsonResponse['register']['name']);
-                pref.setString("phone", jsonResponse['register']['phone'].toString());
+                pref.setString(
+                    "phone", jsonResponse['register']['phone'].toString());
                 pref.setString("email", jsonResponse['register']['email']);
                 pref.setString("token", token.toString());
-                pref.setString('myCCID', jsonResponse['register']['connectycube_user_id'].toString());
+                pref.setString(
+                    'myCCID',
+                    jsonResponse['register']['connectycube_user_id']
+                        .toString());
                 pref.setString("userIdWithAscii",
                     '100' + jsonResponse['register']['user_id'].toString());
               });
@@ -192,7 +186,7 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
             });
           });
         }
-      }catch(e){
+      } catch (e) {
         Navigator.pop(context);
         messageDialog(ERROR, UNABLE_TO_LOAD_DATA_FORM_SERVER);
       }
@@ -247,11 +241,11 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
     });
   }
 
-  getToken() async{
-    await SharedPreferences.getInstance().then((pref) async{
-      if(pref.getBool("isTokenExist") ?? false) {
+  getToken() async {
+    await SharedPreferences.getInstance().then((pref) async {
+      if (pref.getBool("isTokenExist") ?? false) {
         String? tokenLocal = await FirebaseMessaging.instance.getToken();
-        setState(()  {
+        setState(() {
           print("1-> token retrieved");
           token = tokenLocal!;
         });
@@ -288,10 +282,11 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
     );
   }
 
-  Widget header(){
+  Widget header() {
     return Stack(
       children: [
-        Image.asset("assets/moreScreenImages/header_bg.png",
+        Image.asset(
+          "assets/moreScreenImages/header_bg.png",
           height: 60,
           fit: BoxFit.fill,
           width: MediaQuery.of(context).size.width,
@@ -300,24 +295,26 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
           height: 60,
           child: Row(
             children: [
-              SizedBox(width: 15,),
+              SizedBox(
+                width: 15,
+              ),
               InkWell(
-                onTap: (){
+                onTap: () {
                   Navigator.pop(context);
                 },
-                child: Image.asset("assets/moreScreenImages/back.png",
+                child: Image.asset(
+                  "assets/moreScreenImages/back.png",
                   height: 25,
                   width: 22,
                 ),
               ),
-              SizedBox(width: 10,),
+              SizedBox(
+                width: 10,
+              ),
               Text(
                 REGISTER_AS_DOCTOR,
                 style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w600,
-                    color: WHITE,
-                    fontSize: 22
-                ),
+                    fontWeight: FontWeight.w600, color: WHITE, fontSize: 22),
               )
             ],
           ),
@@ -326,14 +323,15 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
     );
   }
 
-  Widget bottom(){
+  Widget bottom() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(ALREADY_HAVE_AN_ACCOUNT,
+            Text(
+              ALREADY_HAVE_AN_ACCOUNT,
               style: GoogleFonts.poppins(
                 color: BLACK,
                 fontSize: 12,
@@ -341,10 +339,11 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
               ),
             ),
             GestureDetector(
-              onTap: (){
+              onTap: () {
                 Navigator.pop(context);
               },
-              child: Text(" $LOGIN_NOW",
+              child: Text(
+                " $LOGIN_NOW",
                 style: GoogleFonts.poppins(
                   color: AMBER,
                   fontSize: 12,
@@ -361,303 +360,297 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
     );
   }
 
-  Widget registerForm(){
+  Widget registerForm() {
     return Container(
-    height: MediaQuery.of(context).size.height - 150,
-    decoration: BoxDecoration(
-      color: WHITE,
-      borderRadius: BorderRadius.only(bottomRight: Radius.circular(20), bottomLeft: Radius.circular(20))
-    ),
-    child: Padding(
-    padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-    child: Form(
-      key: _formKey,
-      child: Column(
-        children: [
-          TextField(
-            decoration: InputDecoration(
-              labelText: ENTER_NAME,
-              labelStyle: GoogleFonts.poppins(
-                  color: LIGHT_GREY_TEXT,
-                  fontWeight: FontWeight.w400
-              ),
-              border: UnderlineInputBorder(),
-              focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: LIGHT_GREY_TEXT)
-              ),
-              errorText: isNameError ? ENTER_NAME : null,
-            ),
-            style: GoogleFonts.poppins(
-                color: BLACK,
-                fontWeight: FontWeight.w500
-            ),
-            onChanged: (val){
-              setState(() {
-                name = val;
-                isNameError = false;
-              });
-            },
-          ),
-          SizedBox(height: 3,),
-          TextField(
-            keyboardType: TextInputType.phone,
-            decoration: InputDecoration(
-                labelText: ENTER_MOBILE_NUMBER,
-                labelStyle: GoogleFonts.poppins(
-                    color: LIGHT_GREY_TEXT,
-                    fontWeight: FontWeight.w400
+      height: MediaQuery.of(context).size.height - 150,
+      decoration: BoxDecoration(
+          color: WHITE,
+          borderRadius: BorderRadius.only(
+              bottomRight: Radius.circular(20),
+              bottomLeft: Radius.circular(20))),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              TextField(
+                decoration: InputDecoration(
+                  labelText: ENTER_NAME,
+                  labelStyle: GoogleFonts.poppins(
+                      color: LIGHT_GREY_TEXT, fontWeight: FontWeight.w400),
+                  border: UnderlineInputBorder(),
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: LIGHT_GREY_TEXT)),
+                  errorText: isNameError ? ENTER_NAME : null,
                 ),
-                errorText: isPhoneNumberError ? phnNumberError : null,
-                border: UnderlineInputBorder(),
-                focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: LIGHT_GREY_TEXT)
-                )
-            ),
-            style: GoogleFonts.poppins(
-                color: BLACK,
-                fontWeight: FontWeight.w500
-            ),
-            onChanged: (val){
-              setState(() {
-                phoneNumber = val;
-                isPhoneNumberError = false;
-              });
-            },
-          ),
-          SizedBox(height: 3,),
-          TextField(
-            keyboardType: TextInputType.emailAddress,
-            decoration: InputDecoration(
-                labelText: ENTER_YOUR_EMAIL,
-                labelStyle: GoogleFonts.poppins(
-                    color: LIGHT_GREY_TEXT,
-                    fontWeight: FontWeight.w400
-                ),
-                errorText: isEmailError ? ENTER_VALID_EMAIL_ADDRESS : null,
-                border: UnderlineInputBorder(),
-                focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: LIGHT_GREY_TEXT)
-                )
-            ),
-            style: GoogleFonts.poppins(
-                color: BLACK,
-                fontWeight: FontWeight.w500
-            ),
-            onChanged: (val){
-              setState(() {
-                email = val;
-                isEmailError = false;
-              });
-            },
-          ),
-          SizedBox(height: 3,),
-          TextFormField(
-            obscureText: _passwordVisible,
-            decoration: InputDecoration(
-                labelText: PASSWORD_STR,
-                labelStyle: GoogleFonts.poppins(
-                    color: Colors.grey.shade600,
-                    fontWeight: FontWeight.w400
-                ),
-                errorText: isPassError ? PASSWORD_DOES_NOT_MATCH : null,
-                border: UnderlineInputBorder(),
-                focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey)
-                ),
-              suffixIcon: IconButton(
-                icon: Icon(
-                  // Based on passwordVisible state choose the icon
-                  _passwordVisible
-                      ? Icons.visibility
-                      : Icons.visibility_off,
-                  color: Theme.of(context).primaryColorDark,
-                ),
-                onPressed: () {
-                  // Update the state i.e. toogle the state of passwordVisible variable
+                style: GoogleFonts.poppins(
+                    color: BLACK, fontWeight: FontWeight.w500),
+                onChanged: (val) {
                   setState(() {
-                    _passwordVisible = !_passwordVisible;
+                    name = val;
+                    isNameError = false;
                   });
                 },
               ),
-            ),
-            validator: (value){
-              setState(() {
-                password = value!;
-              });
-              if(password.isEmpty){
-                return 'Please Enter Confirm Password';
-              }
-              else if(password.length < 6){
-                return 'Please Enter atleast 6 characters';
-              }
-              return null;
-            },
-            style: GoogleFonts.poppins(
-                color: Colors.black,
-                fontWeight: FontWeight.w500
-            ),
-            onChanged: (val){
-              setState(() {
-                password = val;
-                isPassError = false;
-              });
-            },
-
-          ),
-          SizedBox(height: 3,),
-          TextFormField(
-            obscureText: _passwordVisible1,
-            decoration: InputDecoration(
-                labelText: CONFIRM_PASSWORD,
-                labelStyle: GoogleFonts.poppins(
-                    color: LIGHT_GREY_TEXT,
-                    fontWeight: FontWeight.w400
-                ),
-                errorText: isPassError ? PASSWORD_DOES_NOT_MATCH : null,
-                border: UnderlineInputBorder(),
-                focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: LIGHT_GREY_TEXT)
-                ),
-              suffixIcon: IconButton(
-                icon: Icon(
-                  // Based on passwordVisible state choose the icon
-                  _passwordVisible1
-                      ? Icons.visibility
-                      : Icons.visibility_off,
-                  color: Theme.of(context).primaryColorDark,
-                ),
-                onPressed: () {
-                  // Update the state i.e. toogle the state of passwordVisible variable
+              SizedBox(
+                height: 3,
+              ),
+              TextField(
+                keyboardType: TextInputType.phone,
+                decoration: InputDecoration(
+                    labelText: ENTER_MOBILE_NUMBER,
+                    labelStyle: GoogleFonts.poppins(
+                        color: LIGHT_GREY_TEXT, fontWeight: FontWeight.w400),
+                    errorText: isPhoneNumberError ? phnNumberError : null,
+                    border: UnderlineInputBorder(),
+                    focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: LIGHT_GREY_TEXT))),
+                style: GoogleFonts.poppins(
+                    color: BLACK, fontWeight: FontWeight.w500),
+                onChanged: (val) {
                   setState(() {
-                    _passwordVisible1 = !_passwordVisible1;
+                    phoneNumber = val;
+                    isPhoneNumberError = false;
                   });
                 },
               ),
-            ),
-            validator: (value){
-              setState(() {
-                confirmPassword = value!;
-              });
-              if(confirmPassword.isEmpty){
-                return 'Please Enter Confirm Password';
-              }
-              else if(confirmPassword.length < 6){
-                return 'Please Enter atleast 6 characters';
-              }
-              return null;
-            },
-            style: GoogleFonts.poppins(
-                color: BLACK,
-                fontWeight: FontWeight.w500
-            ),
-            onChanged: (val){
-              setState(() {
-                confirmPassword = val;
-                isPassError = false;
-              });
-            },
-          ),
-          SizedBox(height: 3,),
-          SizedBox(
-            height: 20,
-          ),
-          Container(
-            height: 50,
-            //width: MediaQuery.of(context).size.width,
-            child: InkWell(
-              onTap: (){
-                if(_formKey.currentState!.validate()){
-                  registerUser();
-                }
-              },
-              child: Stack(
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(25),
-                    child: Image.asset("assets/moreScreenImages/header_bg.png",
-                      height: 50,
-                      fit: BoxFit.fill,
-                      width: MediaQuery.of(context).size.width,
+              SizedBox(
+                height: 3,
+              ),
+              TextField(
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(
+                    labelText: ENTER_YOUR_EMAIL,
+                    labelStyle: GoogleFonts.poppins(
+                        color: LIGHT_GREY_TEXT, fontWeight: FontWeight.w400),
+                    errorText: isEmailError ? ENTER_VALID_EMAIL_ADDRESS : null,
+                    border: UnderlineInputBorder(),
+                    focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: LIGHT_GREY_TEXT))),
+                style: GoogleFonts.poppins(
+                    color: BLACK, fontWeight: FontWeight.w500),
+                onChanged: (val) {
+                  setState(() {
+                    email = val;
+                    isEmailError = false;
+                  });
+                },
+              ),
+              SizedBox(
+                height: 3,
+              ),
+              TextFormField(
+                obscureText: _passwordVisible,
+                decoration: InputDecoration(
+                  labelText: PASSWORD_STR,
+                  labelStyle: GoogleFonts.poppins(
+                      color: Colors.grey.shade600, fontWeight: FontWeight.w400),
+                  errorText: isPassError ? PASSWORD_DOES_NOT_MATCH : null,
+                  border: UnderlineInputBorder(),
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey)),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      // Based on passwordVisible state choose the icon
+                      _passwordVisible
+                          ? Icons.visibility
+                          : Icons.visibility_off,
+                      color: Theme.of(context).primaryColorDark,
                     ),
+                    onPressed: () {
+                      // Update the state i.e. toogle the state of passwordVisible variable
+                      setState(() {
+                        _passwordVisible = !_passwordVisible;
+                      });
+                    },
                   ),
-                  Center(
-                    child: Text(
-                      REGISTER,
-                      style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w500,
-                          color: WHITE,
-                          fontSize: 18
-                      ),
-                    ),
-                  )
-                ],
+                ),
+                validator: (value) {
+                  setState(() {
+                    password = value!;
+                  });
+                  if (password.isEmpty) {
+                    return 'Please Enter Confirm Password';
+                  } else if (password.length < 6) {
+                    return 'Please Enter atleast 6 characters';
+                  }
+                  return null;
+                },
+                style: GoogleFonts.poppins(
+                    color: Colors.black, fontWeight: FontWeight.w500),
+                onChanged: (val) {
+                  setState(() {
+                    password = val;
+                    isPassError = false;
+                  });
+                },
               ),
-            ),
+              SizedBox(
+                height: 3,
+              ),
+              TextFormField(
+                obscureText: _passwordVisible1,
+                decoration: InputDecoration(
+                  labelText: CONFIRM_PASSWORD,
+                  labelStyle: GoogleFonts.poppins(
+                      color: LIGHT_GREY_TEXT, fontWeight: FontWeight.w400),
+                  errorText: isPassError ? PASSWORD_DOES_NOT_MATCH : null,
+                  border: UnderlineInputBorder(),
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: LIGHT_GREY_TEXT)),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      // Based on passwordVisible state choose the icon
+                      _passwordVisible1
+                          ? Icons.visibility
+                          : Icons.visibility_off,
+                      color: Theme.of(context).primaryColorDark,
+                    ),
+                    onPressed: () {
+                      // Update the state i.e. toogle the state of passwordVisible variable
+                      setState(() {
+                        _passwordVisible1 = !_passwordVisible1;
+                      });
+                    },
+                  ),
+                ),
+                validator: (value) {
+                  setState(() {
+                    confirmPassword = value!;
+                  });
+                  if (confirmPassword.isEmpty) {
+                    return 'Please Enter Confirm Password';
+                  } else if (confirmPassword.length < 6) {
+                    return 'Please Enter atleast 6 characters';
+                  }
+                  return null;
+                },
+                style: GoogleFonts.poppins(
+                    color: BLACK, fontWeight: FontWeight.w500),
+                onChanged: (val) {
+                  setState(() {
+                    confirmPassword = val;
+                    isPassError = false;
+                  });
+                },
+              ),
+              SizedBox(
+                height: 3,
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                height: 50,
+                //width: MediaQuery.of(context).size.width,
+                child: InkWell(
+                  onTap: () {
+                    if (_formKey.currentState!.validate()) {
+                      registerUser();
+                    }
+                  },
+                  child: Stack(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(25),
+                        child: Image.asset(
+                          "assets/moreScreenImages/header_bg.png",
+                          height: 50,
+                          fit: BoxFit.fill,
+                          width: MediaQuery.of(context).size.width,
+                        ),
+                      ),
+                      Center(
+                        child: Text(
+                          REGISTER,
+                          style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w500,
+                              color: WHITE,
+                              fontSize: 18),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+            ],
           ),
-          SizedBox(height: 10,),
-        ],
+        ),
       ),
-    ),
-    ),
     );
   }
 
-  dialog(){
+  dialog() {
     return showDialog(
         context: context,
-        builder: (context){
+        builder: (context) {
           return AlertDialog(
-            title: Text(CREATING_ACCOUNT,
+            title: Text(
+              CREATING_ACCOUNT,
               style: GoogleFonts.poppins(),
             ),
             content: Container(
               margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
               child: Row(
                 children: [
-                  CircularProgressIndicator(),
-                  SizedBox(width: 15,),
+                  CircularProgressIndicator(
+                    color: const Color.fromARGB(255, 243, 103, 9),
+                  ),
+                  SizedBox(
+                    width: 15,
+                  ),
                   Expanded(
-                    child: Text(PLEASE_WAIT_WHILE_CREATING_ACCOUNT,
-                      style: GoogleFonts.poppins(
-                          fontSize: 12
-                      ),
+                    child: Text(
+                      PLEASE_WAIT_WHILE_CREATING_ACCOUNT,
+                      style: GoogleFonts.poppins(fontSize: 12),
                     ),
                   )
                 ],
               ),
             ),
           );
-        }
-    );
+        });
   }
 
-  messageDialog(String s1, String s2){
+  messageDialog(String s1, String s2) {
     Navigator.pop(context);
     return showDialog(
         context: context,
-        builder: (context){
+        builder: (context) {
           return AlertDialog(
-            title: Text(s1,style: GoogleFonts.comfortaa(
-              fontWeight: FontWeight.bold,
-            ),),
+            title: Text(
+              s1,
+              style: GoogleFonts.comfortaa(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(s2,style: GoogleFonts.poppins(
-                  fontSize: 14,
-                ),)
+                Text(
+                  s2,
+                  style: GoogleFonts.poppins(
+                    fontSize: 14,
+                  ),
+                )
               ],
             ),
             actions: [
               ElevatedButton(
-                onPressed: (){
+                onPressed: () {
                   Navigator.pop(context);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Theme.of(context).hintColor,
                 ),
-                child: Text(OK,style: GoogleFonts.poppins(
+                child: Text(
+                  OK,
+                  style: GoogleFonts.poppins(
                     fontWeight: FontWeight.w500,
                     color: BLACK,
                   ),
@@ -665,8 +658,6 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
               ),
             ],
           );
-        }
-    );
+        });
   }
-
 }

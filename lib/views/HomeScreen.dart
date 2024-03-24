@@ -88,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
     print("respons4 : ${response.body}");
 
     if (response.statusCode == 200) {
-      final responseData = jsonDecode(response.body);
+      // final responseData = jsonDecode(response.body);
       // call_all_api = Call_All_Api.fromJson(responseData);
       // bannerList.addAll(call_all_api.data!.banner!);
       // list.addAll(call_all_api.data!.speciality!);
@@ -259,7 +259,9 @@ class _HomeScreenState extends State<HomeScreen> {
         margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
         child: Row(
           children: [
-            CircularProgressIndicator(),
+            CircularProgressIndicator(
+              color: const Color.fromARGB(255, 243, 103, 9),
+            ),
             SizedBox(
               width: 15,
             ),
@@ -415,7 +417,9 @@ class _HomeScreenState extends State<HomeScreen> {
   slider() {
     return isBannerLoading
         ? Center(
-            child: CircularProgressIndicator(),
+            child: CircularProgressIndicator(
+              color: const Color.fromARGB(255, 243, 103, 9),
+            ),
           )
         : Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
@@ -560,7 +564,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 )
               : isSpecialityLoading
                   ? Center(
-                      child: CircularProgressIndicator(),
+                      child: CircularProgressIndicator(
+                        color: const Color.fromARGB(255, 243, 103, 9),
+                      ),
                     )
                   : Container(
                       height: 70,
@@ -719,6 +725,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: Padding(
                                     padding: const EdgeInsets.all(13),
                                     child: CircularProgressIndicator(
+                                      color: const Color.fromARGB(
+                                          255, 243, 103, 9),
                                       strokeWidth: 1.5,
                                       valueColor: isLoading
                                           ? AlwaysStoppedAnimation(
@@ -1069,6 +1077,7 @@ class _HomeScreenState extends State<HomeScreen> {
       print(Uri.parse("$SERVER_ADDRESS/api/searchdoctor?term=$value"));
       final response =
           await get(Uri.parse("$SERVER_ADDRESS/api/searchdoctor?term=$value"))
+              // ignore: body_might_complete_normally_catch_error
               .catchError((e) {
         setState(() {
           isLoading = false;
@@ -1098,9 +1107,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   _loadMoreFunc() async {
-    if (nextUrl == null) {
-      return;
-    }
     setState(() {
       isLoadingMore = true;
     });
@@ -1175,10 +1181,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       await pop(animated: true);
                     } else if (!status.isGranted &&
                         s1 == PERMISSION_NOT_GRANTED) {
-                      Map<Permission, PermissionStatus> statuses = await [
-                        Permission.location,
-                        Permission.storage,
-                      ].request();
                       _getLocationStart();
                       // We didn't ask for permission yet or the permission has been denied before but not permanently.
                     }

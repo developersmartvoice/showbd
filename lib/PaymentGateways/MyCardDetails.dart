@@ -1,17 +1,11 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:flutter_stripe/flutter_stripe.dart';
-// import 'package:flutter_stripe/flutter_stripe.dart' as fs;
-//import 'package:stripe_payment/stripe_payment.dart';
-import 'package:toast/toast.dart';
 
 import '../en.dart';
 import '../main.dart';
 
+// ignore: must_be_immutable
 class MyCardDetails extends StatefulWidget {
-
   bool doPop;
   MyCardDetails(this.doPop);
 
@@ -37,23 +31,21 @@ class MyCardDetailsState extends State<MyCardDetails> {
   @override
   void initState() {
     // TODO: implement initState
-    if(widget.doPop){
+    if (widget.doPop) {
       justPop();
-    }else{
+    } else {
       // Stripe.publishableKey = STRIPE_KEY;
     }
     super.initState();
   }
 
-  justPop() async{
-    await Future.delayed(Duration(milliseconds:500));
+  justPop() async {
+    await Future.delayed(Duration(milliseconds: 500));
     Navigator.pop(context, true);
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold();
     // return MaterialApp(
     //   //title: 'Flutter Credit Card View Demo',
@@ -326,46 +318,53 @@ class MyCardDetailsState extends State<MyCardDetails> {
     // );
   }
 
-  showdialog(String e){
+  showdialog(String e) {
     return showDialog(
         context: context,
         barrierDismissible: false,
-        builder: (context){
+        builder: (context) {
           return AlertDialog(
-            title: Text(ALERT[LANGUAGE_TYPE],style: TextStyle(
-              fontFamily: 'GlobalFonts',
-              color: BLACK,
-              fontWeight: FontWeight.bold,
-            ),),
+            title: Text(
+              ALERT[LANGUAGE_TYPE],
+              style: TextStyle(
+                fontFamily: 'GlobalFonts',
+                color: BLACK,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(e.toString(),style: TextStyle(
-                  fontFamily: 'GlobalFonts',
-                  color: BLACK,
-                  fontSize: 15,
-                ),)
+                Text(
+                  e.toString(),
+                  style: TextStyle(
+                    fontFamily: 'GlobalFonts',
+                    color: BLACK,
+                    fontSize: 15,
+                  ),
+                )
               ],
             ),
             actions: [
               TextButton(
-                onPressed: (){
+                onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Text('Retry',style: TextStyle(
-                  fontFamily: 'GlobalFonts',
-                  color: THEME_COLOR,
-                  fontWeight: FontWeight.w900,
-                ),),
+                child: Text(
+                  'Retry',
+                  style: TextStyle(
+                    fontFamily: 'GlobalFonts',
+                    color: THEME_COLOR,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
               ),
-
             ],
           );
-        }
-    );
+        });
   }
 
-  makePayment() async{
+  makePayment() async {
     // if(_card?.complete == true){
     //   try {
     //
@@ -395,48 +394,53 @@ class MyCardDetailsState extends State<MyCardDetails> {
     // }
   }
 
-
-
-  errorDialog(String error){
+  errorDialog(String error) {
     return showDialog(
         context: context,
         barrierDismissible: false,
-        builder: (context){
+        builder: (context) {
           return AlertDialog(
-            title: Text(ALERT[LANGUAGE_TYPE],style:  TextStyle(
-              fontFamily: 'GlobalFonts',
-              color: BLACK,
-              fontWeight: FontWeight.bold,
-            ),),
+            title: Text(
+              ALERT[LANGUAGE_TYPE],
+              style: TextStyle(
+                fontFamily: 'GlobalFonts',
+                color: BLACK,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(error ,style:  TextStyle(
-                  fontFamily: 'GlobalFonts',
-                  color: BLACK,
-                  fontSize: 15,
-                ),)
+                Text(
+                  error,
+                  style: TextStyle(
+                    fontFamily: 'GlobalFonts',
+                    color: BLACK,
+                    fontSize: 15,
+                  ),
+                )
               ],
             ),
             actions: [
               TextButton(
-                onPressed: (){
+                onPressed: () {
                   Navigator.pop(context);
                 },
                 style: TextButton.styleFrom(
                   backgroundColor: THEME_COLOR,
                 ),
                 // color: THEME_COLOR,
-                child: Text(YES[LANGUAGE_TYPE],style:  TextStyle(
-                  fontFamily: 'GlobalFonts',
-                  color: BLACK,
-                  fontWeight: FontWeight.w900,
-                ),),
+                child: Text(
+                  YES[LANGUAGE_TYPE],
+                  style: TextStyle(
+                    fontFamily: 'GlobalFonts',
+                    color: BLACK,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
               ),
             ],
           );
-        }
-    );
+        });
   }
-
 }

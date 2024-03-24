@@ -339,7 +339,9 @@ class _AboutHostState extends State<AboutHost> {
               : Container(
                   alignment: Alignment.center,
                   transformAlignment: Alignment.center,
-                  child: CircularProgressIndicator(),
+                  child: CircularProgressIndicator(
+                    color: const Color.fromARGB(255, 243, 103, 9),
+                  ),
                 )),
     );
   }
@@ -1215,7 +1217,7 @@ class _ContainerPageState extends State<ContainerPage> {
                       alignment: Alignment.centerRight,
                       width: MediaQuery.sizeOf(context).width * .4,
                       child: Text(
-                        widget.gender,
+                        widget.gender.capitalize.toString(),
                         style: TextStyle(
                           fontSize: 15.0,
                           fontWeight: FontWeight.bold,

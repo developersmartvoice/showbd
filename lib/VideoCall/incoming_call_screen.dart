@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import '../views/incoming_call_image_name.dart';
 import 'managers/call_manager.dart';
 
+// ignore: must_be_immutable
 class IncomingCallScreen extends StatelessWidget {
   static const String TAG = "IncomingCallScreen";
   final P2PSession _callSession;
@@ -16,8 +17,6 @@ class IncomingCallScreen extends StatelessWidget {
   IncomingCallScreen(this._callSession);
 
   NotificationHelper notificationHelper = NotificationHelper();
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -118,7 +117,8 @@ class IncomingCallScreen extends StatelessWidget {
                               backgroundColor: Colors.red,
                               onPressed: () {
                                 print("on press red button");
-                                notificationHelper.checkNotificationStatus("124");
+                                notificationHelper
+                                    .checkNotificationStatus("124");
                                 _rejectCall(context, _callSession);
                               }),
                         ),

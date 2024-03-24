@@ -4,17 +4,11 @@ import 'dart:convert';
 import 'package:appcode3/main.dart';
 import 'package:appcode3/views/Doctor/DoctorTabScreen.dart';
 import 'package:appcode3/views/Doctor/loginAsDoctor.dart';
-import 'package:appcode3/views/HomeScreen.dart';
-import 'package:appcode3/views/loginAsUser.dart';
-import 'package:connectycube_sdk/connectycube_calls.dart';
 import 'package:connectycube_sdk/connectycube_chat.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../VideoCall/utils/pref_util.dart';
-import 'Doctor/DoctorAppointmentDetails.dart';
-import 'UserAppointmentDetails.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -113,6 +107,7 @@ class _SplashScreenState extends State<SplashScreen> {
         await post(Uri.parse("$SERVER_ADDRESS/api/savetoken"), body: {
       "token": token,
       "type": "1",
+      // ignore: body_might_complete_normally_catch_error
     }).catchError((e) {
       Timer(Duration(seconds: 2), () {
         Navigator.pushReplacement(

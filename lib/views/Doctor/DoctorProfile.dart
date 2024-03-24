@@ -2,33 +2,23 @@
 
 import 'dart:convert';
 import 'dart:io';
-import 'package:appcode3/views/Doctor/DoctorProfileSteps/add_holiday.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:appcode3/en.dart';
 import 'package:appcode3/main.dart';
 import 'package:appcode3/modals/DoctorProfileSetails.dart';
 import 'package:appcode3/modals/DoctorScheduleDetails.dart';
 import 'package:appcode3/modals/SpecialityClass.dart';
-import 'package:appcode3/views/Doctor/DoctorProfileSteps/DoctorProfileStepOne.dart';
-import 'package:appcode3/views/Doctor/DoctorProfileSteps/DoctorProfileStepThree.dart';
-import 'package:appcode3/views/Doctor/DoctorProfileSteps/DoctorProfileStepTwo.dart';
 import 'package:appcode3/views/Doctor/DoctorProfileSteps/StepThreeDetailsScreen.dart';
 import 'package:appcode3/views/Doctor/DoctorTabScreen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
-//import 'package:facebook_audience_network/ad/ad_native.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:geocode/geocode.dart';
-import 'package:geocode/geocode.dart' as geo;
-//import 'package:flutter_native_admob/flutter_native_admob.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:toast/toast.dart';
 import 'DoctorProfileSteps/holiday_list.dart';
 import 'package:geocoding/geocoding.dart';
 
@@ -77,6 +67,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
     print("REQUEST URL : $SERVER_ADDRESS/api/doctordetail?doctor_id=$doctorId");
     final response = await get(
             Uri.parse("$SERVER_ADDRESS/api/doctordetail?doctor_id=$doctorId"))
+        // ignore: body_might_complete_normally_catch_error
         .catchError((e) {
       setState(() {
         isErrorInLoading = true;
@@ -299,6 +290,8 @@ class _DoctorProfileState extends State<DoctorProfile> {
                                     MediaQuery.of(context).size.height - 250,
                                 child: Center(
                                   child: CircularProgressIndicator(
+                                    color:
+                                        const Color.fromARGB(255, 243, 103, 9),
                                     strokeWidth: 2,
                                   ),
                                 ),
@@ -338,6 +331,8 @@ class _DoctorProfileState extends State<DoctorProfile> {
                                     MediaQuery.of(context).size.height - 170,
                                 child: Center(
                                   child: CircularProgressIndicator(
+                                    color:
+                                        const Color.fromARGB(255, 243, 103, 9),
                                     strokeWidth: 2,
                                   ),
                                 ),
@@ -1759,7 +1754,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
     });
     print("\n\n\n\n Marker: ${_markers["Current Location"]}\n\n");
 
-    GeoCode geoCode = GeoCode();
+    // GeoCode geoCode = GeoCode();
     //if(x) {
     final coordinates =
         new Coordinates(latitude: latLng.latitude, longitude: latLng.longitude);
@@ -1819,7 +1814,9 @@ class _DoctorProfileState extends State<DoctorProfile> {
                           future == null ||
                           future2 == null) {
                         return Center(
-                          child: CircularProgressIndicator(),
+                          child: CircularProgressIndicator(
+                            color: const Color.fromARGB(255, 243, 103, 9),
+                          ),
                         );
                       } else {
                         return GoogleMap(
@@ -1859,19 +1856,19 @@ class _DoctorProfileState extends State<DoctorProfile> {
   _getLocationStart() async {
     print('Started');
     //Toast.show("loading", context);
-    Position? position = await Geolocator.getCurrentPosition(
-            desiredAccuracy: LocationAccuracy.high)
-        .then((value) async {
-      setState(() {
-        _center = LatLng(value.latitude, value.longitude);
-        print("\n\n\n\n\nLocation loaded");
-        locateMarker(_center!, false);
-      });
-      return value;
-    }).catchError((e) {
-      Toast.show(e.toString());
-      print(e);
-    });
+    // Position? position = await Geolocator.getCurrentPosition(
+    //         desiredAccuracy: LocationAccuracy.high)
+    //     .then((value) async {
+    //   setState(() {
+    //     _center = LatLng(value.latitude, value.longitude);
+    //     print("\n\n\n\n\nLocation loaded");
+    //     locateMarker(_center!, false);
+    //   });
+    //   return value;
+    // }).catchError((e) {
+    //   Toast.show(e.toString());
+    //   print(e);
+    // });
   }
 
   // step three ---------------------------
@@ -1897,6 +1894,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                         height: MediaQuery.of(context).size.height - 170,
                         child: Center(
                           child: CircularProgressIndicator(
+                            color: const Color.fromARGB(255, 243, 103, 9),
                             strokeWidth: 2,
                           ),
                         ),
@@ -1916,6 +1914,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                         height: MediaQuery.of(context).size.height - 170,
                         child: Center(
                           child: CircularProgressIndicator(
+                            color: const Color.fromARGB(255, 243, 103, 9),
                             strokeWidth: 2,
                           ),
                         ),
@@ -2128,7 +2127,9 @@ class _DoctorProfileState extends State<DoctorProfile> {
               margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
               child: Row(
                 children: [
-                  CircularProgressIndicator(),
+                  CircularProgressIndicator(
+                    color: const Color.fromARGB(255, 243, 103, 9),
+                  ),
                   SizedBox(
                     width: 15,
                   ),
@@ -2252,6 +2253,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
         "department_id": departmentId.toString(),
         "facebook_url": facebook,
         "twitter_url": twitter,
+        // ignore: body_might_complete_normally_catch_error
       }).catchError((e) {
         Navigator.pop(context);
         messageDialog(ERROR, UNABLE_TO_LOAD_DATA_FORM_SERVER);
@@ -2311,6 +2313,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
           },
         ),
       )
+          // ignore: body_might_complete_normally_catch_error
           .catchError((e) {
         Navigator.pop(context);
         messageDialog(ERROR, UNABLE_TO_LOAD_DATA_FORM_SERVER);

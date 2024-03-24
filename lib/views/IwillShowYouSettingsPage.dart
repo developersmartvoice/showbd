@@ -106,7 +106,9 @@ class _IwillShowYouSettingsPageState extends State<IwillShowYouSettingsPage> {
             ? Container(
                 alignment: Alignment.center,
                 transformAlignment: Alignment.center,
-                child: CircularProgressIndicator(),
+                child: CircularProgressIndicator(
+                  color: const Color.fromARGB(255, 243, 103, 9),
+                ),
               )
             : Container(
                 color: LIGHT_GREY_SCREEN_BACKGROUND,
