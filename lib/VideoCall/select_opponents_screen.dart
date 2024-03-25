@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:connectycube_sdk/connectycube_sdk.dart';
-import '/views/Doctor/DoctorDashboard.dart';
 
 import '../views/HomeScreen.dart';
 import 'managers/call_manager.dart';
@@ -36,7 +35,8 @@ class SelectOpponentsScreen extends StatelessWidget {
             ),
             IconButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => HomeScreen()));
               },
               icon: Icon(
                 Icons.backspace_outlined,

@@ -7,7 +7,6 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
-import 'package:url_launcher/url_launcher.dart';
 //import 'package:webview_flutter/webview_flutter.dart';
 
 import '../main.dart';
@@ -37,6 +36,7 @@ class _AboutScreenState extends State<AboutScreen> {
 
   AboutUs() async {
     final response =
+        // ignore: body_might_complete_normally_catch_error
         await get(Uri.parse("$SERVER_ADDRESS/api/about")).catchError((e) {
       setState(() {
         isLoading = true;
@@ -71,7 +71,9 @@ class _AboutScreenState extends State<AboutScreen> {
               padding: const EdgeInsets.all(10.0),
               child: isLoading
                   ? Center(
-                      child: CircularProgressIndicator(),
+                      child: CircularProgressIndicator(
+                        color: const Color.fromARGB(255, 243, 103, 9),
+                      ),
                     )
                   : Html(
                       data: """$fileText""",

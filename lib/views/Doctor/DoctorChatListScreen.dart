@@ -154,7 +154,10 @@ class _ChatListScreenState extends State<ChatListScreen> {
     return Scaffold(
       backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
       body: isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? Center(
+              child: CircularProgressIndicator(
+              color: const Color.fromARGB(255, 243, 103, 9),
+            ))
           : SafeArea(
               child: Column(
                 children: [
@@ -615,7 +618,10 @@ class _ChatListScreenState extends State<ChatListScreen> {
                                     },
                                   ),
                                 )
-                          : Center(child: CircularProgressIndicator()),
+                          : Center(
+                              child: CircularProgressIndicator(
+                              color: const Color.fromARGB(255, 243, 103, 9),
+                            )),
                     ),
                   ),
                 ],

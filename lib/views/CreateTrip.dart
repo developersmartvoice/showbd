@@ -537,6 +537,7 @@ class _CreateTripState extends State<CreateTrip> {
                           width: 24,
                           height: 24,
                           child: CircularProgressIndicator(
+                            color: const Color.fromARGB(255, 243, 103, 9),
                             valueColor:
                                 AlwaysStoppedAnimation<Color>(Colors.white),
                           ),

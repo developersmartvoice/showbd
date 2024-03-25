@@ -31,7 +31,6 @@ class _ShurjoPayPaymentState extends State<ShurjoPayPayment> {
   TextEditingController _phoneNumberController = TextEditingController();
   // TextEditingController _addressController = TextEditingController();
   TextEditingController _cityController = TextEditingController();
-  TextEditingController _postalCodeController = TextEditingController();
   String? name, city, phoneNo;
   String address = "Bangladesh";
   int? postalCode;

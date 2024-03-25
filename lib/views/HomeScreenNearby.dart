@@ -238,7 +238,9 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                 ? Container()
                 : Padding(
                     padding: const EdgeInsets.only(top: 15),
-                    child: CircularProgressIndicator(),
+                    child: CircularProgressIndicator(
+                      color: const Color.fromARGB(255, 243, 103, 9),
+                    ),
                   ),
             isLoadingMore
                 ? Padding(
@@ -802,6 +804,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
     print("lon is : $longitude");
     final response = await get(Uri.parse(
             "$SERVER_ADDRESS/api/nearbydoctor?lat=${latitude}&lon=${longitude}"))
+        // ignore: body_might_complete_normally_catch_error
         .catchError((e) {
       setState(() {
         isErrorInNearby = true;

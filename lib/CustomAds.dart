@@ -1,29 +1,21 @@
 //import 'package:facebook_audience_network/ad/ad_native.dart';
 //import 'package:facebook_audience_network/ad/ad_native.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
-// import 'package:native_admob_flutter/native_admob_flutter.dart';
 
-import 'main.dart';
-
-class CustomAds{
-
+class CustomAds {
   final String ADMOB_ID = "ca-app-pub-7803172892594923/5172476997";
   final String FACEBOOK_AD_ID = "727786934549239_727793487881917";
 
   // final nativeAdController = NativeAdmobController();
 
-  Widget nativeAds({required int id}){
-
+  Widget nativeAds({required int id}) {
     return
-      //id==0
-      //    ?
-      Container(
-        margin: EdgeInsets.symmetric(
-            vertical: 10
-        ),
-        child: NativeAds(),
-      );
+        //id==0
+        //    ?
+        Container(
+      margin: EdgeInsets.symmetric(vertical: 10),
+      child: NativeAds(),
+    );
     //   FacebookNativeAd(
     //     placementId: FACEBOOK_AD_ID,
     //     adType: NativeAdType.NATIVE_BANNER_AD,
@@ -42,7 +34,6 @@ class CustomAds{
   }
 }
 
-
 class NativeAds extends StatefulWidget {
   const NativeAds({Key? key}) : super(key: key);
 
@@ -60,10 +51,7 @@ class _NativeAdsState extends State<NativeAds>
   void initState() {
     super.initState();
     // controller.load();
-
   }
-
-
 
   @override
   void dispose() {
@@ -81,4 +69,3 @@ class _NativeAdsState extends State<NativeAds>
   @override
   bool get wantKeepAlive => true;
 }
-

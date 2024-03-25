@@ -124,7 +124,9 @@ class _MemberShipDetails extends State<MemberShipDetails> {
                 : Container(
                     alignment: Alignment.center,
                     transformAlignment: Alignment.center,
-                    child: CircularProgressIndicator(),
+                    child: CircularProgressIndicator(
+                      color: const Color.fromARGB(255, 243, 103, 9),
+                    ),
                   )),
       ),
     );

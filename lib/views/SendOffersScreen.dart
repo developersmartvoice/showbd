@@ -1,32 +1,10 @@
-import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:appcode3/modals/SendOfferClass.dart';
-import 'package:appcode3/views/Doctor/DoctorProfile.dart';
 import 'package:appcode3/views/SendOfferScreen.dart';
-import 'package:connectycube_sdk/connectycube_chat.dart';
-
-import 'package:appcode3/en.dart';
-import 'package:appcode3/main.dart';
-import 'package:appcode3/modals/DoctorAppointmentClass.dart';
-import 'package:appcode3/modals/DoctorPastAppointmentsClass.dart';
-import 'package:appcode3/views/Doctor/DoctorChatListScreen.dart';
-import 'package:appcode3/views/Doctor/DoctorAllAppointments.dart';
-import 'package:appcode3/views/Doctor/DoctorAppointmentDetails.dart';
-import 'package:appcode3/views/Doctor/DoctorProfileWithRating.dart';
-import 'package:appcode3/views/Doctor/moreScreen/change_password_screen.dart';
-import 'package:appcode3/views/Doctor/moreScreen/income_report.dart';
-import 'package:appcode3/views/Doctor/moreScreen/subscription_screen.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
-//import 'package:facebook_audience_network/ad/ad_native.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/style.dart';
-//import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart';
-import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SendOffersScreen extends StatefulWidget {
   // const SendOffersScreen({Key? key}) : super(key: key);
@@ -219,7 +197,10 @@ class _SendOffersScreenState extends State<SendOffersScreen> {
                                 ? CachedNetworkImage(
                                     imageUrl: guide.imageURL!,
                                     placeholder: (context, url) =>
-                                        CircularProgressIndicator(),
+                                        CircularProgressIndicator(
+                                      color: const Color.fromARGB(
+                                          255, 243, 103, 9),
+                                    ),
                                     errorWidget: (context, url, error) =>
                                         Icon(Icons.error),
                                     imageBuilder: (context, imageProvider) =>

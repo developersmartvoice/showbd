@@ -1,28 +1,14 @@
 import 'dart:convert';
 import 'package:appcode3/modals/SendOfferClass.dart';
 import 'package:appcode3/views/DetailsPage.dart';
-import 'package:appcode3/views/Doctor/DoctorProfile.dart';
-import 'package:connectycube_sdk/connectycube_chat.dart';
 
 import 'package:appcode3/en.dart';
 import 'package:appcode3/main.dart';
-import 'package:appcode3/modals/DoctorAppointmentClass.dart';
-import 'package:appcode3/modals/DoctorPastAppointmentsClass.dart';
 import 'package:appcode3/views/Doctor/DoctorChatListScreen.dart';
-import 'package:appcode3/views/Doctor/DoctorAllAppointments.dart';
-import 'package:appcode3/views/Doctor/DoctorAppointmentDetails.dart';
-import 'package:appcode3/views/Doctor/DoctorProfileWithRating.dart';
-import 'package:appcode3/views/Doctor/moreScreen/change_password_screen.dart';
-import 'package:appcode3/views/Doctor/moreScreen/income_report.dart';
-import 'package:appcode3/views/Doctor/moreScreen/subscription_screen.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dropdown_search/dropdown_search.dart';
-//import 'package:facebook_audience_network/ad/ad_native.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/style.dart';
-//import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -214,8 +200,6 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
 
   double containerHeight = 50.0;
 
-  String? _selectedOption;
-
 // Function to show the modal bottom sheet with options
   void _showOptions(BuildContext context) {
     showModalBottomSheet(
@@ -227,7 +211,6 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
               title: Text('1H'),
               onTap: () {
                 setState(() {
-                  _selectedOption = '1H';
                   Navigator.pop(
                       context); // Close the bottom sheet after selection
                 });
@@ -237,7 +220,6 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
               title: Text('2H'),
               onTap: () {
                 setState(() {
-                  _selectedOption = '2H';
                   Navigator.pop(
                       context); // Close the bottom sheet after selection
                 });
@@ -248,7 +230,6 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
               title: Text('3H'),
               onTap: () {
                 setState(() {
-                  _selectedOption = '3H';
                   Navigator.pop(
                       context); // Close the bottom sheet after selection
                 });
@@ -261,8 +242,6 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
     );
   }
 
-  String? _selectedOption2;
-
 // Function to show the modal bottom sheet with options
   void _showOptions2(BuildContext context) {
     showModalBottomSheet(
@@ -274,7 +253,6 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
               title: Text('Flexible'),
               onTap: () {
                 setState(() {
-                  _selectedOption2 = 'Flexible';
                   Navigator.pop(
                       context); // Close the bottom sheet after selection
                 });
@@ -284,7 +262,6 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
               title: Text('Earlier'),
               onTap: () {
                 setState(() {
-                  _selectedOption2 = 'Earlier';
                   Navigator.pop(
                       context); // Close the bottom sheet after selection
                 });
@@ -295,7 +272,6 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
               title: Text('Morning'),
               onTap: () {
                 setState(() {
-                  _selectedOption2 = 'Morning';
                   Navigator.pop(
                       context); // Close the bottom sheet after selection
                 });
@@ -306,7 +282,6 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
               title: Text('Noon'),
               onTap: () {
                 setState(() {
-                  _selectedOption2 = 'Noon';
                   Navigator.pop(
                       context); // Close the bottom sheet after selection
                 });
@@ -317,7 +292,6 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
               title: Text('Afternoon'),
               onTap: () {
                 setState(() {
-                  _selectedOption2 = 'Afternoon';
                   Navigator.pop(
                       context); // Close the bottom sheet after selection
                 });
@@ -401,7 +375,11 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
                     //   child: CircularProgressIndicator(),
                     // );
 
-                    isErrorLoading ? CircularProgressIndicator() : Container();
+                    isErrorLoading
+                        ? CircularProgressIndicator(
+                            color: const Color.fromARGB(255, 243, 103, 9),
+                          )
+                        : Container();
                   });
                   postingSendOffer();
                 } else {

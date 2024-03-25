@@ -370,7 +370,10 @@ class _ChatListScreenState extends State<ChatListScreen> {
                                     },
                                   ),
                                 )
-                          : Center(child: CircularProgressIndicator()),
+                          : Center(
+                              child: CircularProgressIndicator(
+                              color: const Color.fromARGB(255, 243, 103, 9),
+                            )),
                     ),
                   ),
                 ],

@@ -230,7 +230,9 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
         margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
         child: Row(
           children: [
-            CircularProgressIndicator(),
+            CircularProgressIndicator(
+              color: const Color.fromARGB(255, 243, 103, 9),
+            ),
             SizedBox(
               width: 15,
             ),
@@ -328,6 +330,7 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
                     height: 100,
                     child: Center(
                         child: CircularProgressIndicator(
+                      color: const Color.fromARGB(255, 243, 103, 9),
                       strokeWidth: 2,
                     )));
               }
@@ -502,6 +505,7 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
                   doctorId == null) {
                 return Center(
                   child: CircularProgressIndicator(
+                    color: const Color.fromARGB(255, 243, 103, 9),
                     strokeWidth: 2,
                   ),
                 );

@@ -19,6 +19,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'my_photo_viewer.dart';
 
+// ignore: must_be_immutable
 class UserAppointmentDetails extends StatefulWidget {
   String id;
 
@@ -43,7 +44,6 @@ class _UserAppointmentDetailsState extends State<UserAppointmentDetails> {
   Duration parseDuration(String s) {
     int hours = 0;
     int minutes = 0;
-    int micros;
     int second;
     List<String> parts = s.split(':');
     if (parts.length > 2) {
@@ -53,7 +53,6 @@ class _UserAppointmentDetailsState extends State<UserAppointmentDetails> {
       minutes = int.parse(parts[parts.length - 2]);
     }
     second = int.parse(parts[parts.length - 1]);
-    micros = (double.parse(parts[parts.length - 1]) * 1000000).round();
     return Duration(hours: hours, minutes: minutes, seconds: second);
   }
 
@@ -76,6 +75,7 @@ class _UserAppointmentDetailsState extends State<UserAppointmentDetails> {
     final response = await http
         .get(Uri.parse(
             "$SERVER_ADDRESS/api/appointmentdetail?id=${widget.id}&type=1"))
+        // ignore: body_might_complete_normally_catch_error
         .catchError((e) {
       setState(() {
         isErrorInLoading = true;
@@ -123,10 +123,6 @@ class _UserAppointmentDetailsState extends State<UserAppointmentDetails> {
   @override
   Widget build(BuildContext context) {
     String strDigits(int n) => n.toString().padLeft(2, '0');
-    final days = strDigits(myDuration.inDays);
-    final hours = strDigits(myDuration.inHours.remainder(24));
-    final minutes = strDigits(myDuration.inMinutes.remainder(60));
-    final seconds = strDigits(myDuration.inSeconds.remainder(60));
     return SafeArea(
       child: Scaffold(
         backgroundColor: Theme.of(context).primaryColorLight,
@@ -932,6 +928,7 @@ class _UserAppointmentDetailsState extends State<UserAppointmentDetails> {
       case 5:
         return REJECTED;
     }
+    return null;
   }
   // 9bvcyGyzj7Y
 

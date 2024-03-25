@@ -745,6 +745,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                     height: 100,
                     child: Center(
                         child: CircularProgressIndicator(
+                      color: const Color.fromARGB(255, 243, 103, 9),
                       strokeWidth: 2,
                     )));
               }

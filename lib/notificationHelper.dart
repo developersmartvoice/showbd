@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:appcode3/views/ChatScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
@@ -40,8 +37,8 @@ class NotificationHelper {
 
   initialize() async {
     flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-    const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/launcher_icon');
+    // const AndroidInitializationSettings initializationSettingsAndroid =
+    //     AndroidInitializationSettings('@mipmap/launcher_icon');
     // final IOSInitializationSettings initializationSettingsIOS =
     // IOSInitializationSettings(
     //     onDidReceiveLocalNotification: onDidReceiveLocalNotification);
@@ -94,8 +91,8 @@ class NotificationHelper {
               builder: (context) =>
                   DoctorAppointmentDetails(payload.split(":")[1].toString())),
         );
-      } else if (payload.split(":")[0].toString() == '0') {
-        int ccId = int.parse(payload.split(":")[1].toString());
+        // } else if (payload.split(":")[0].toString() == '0') {
+        //   int ccId = int.parse(payload.split(":")[1].toString());
         // Navigator.push(context!,
         //   MaterialPageRoute(builder: (context) =>
         //       ChatScreen(

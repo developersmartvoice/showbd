@@ -8,12 +8,10 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 // import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
-import 'package:url_launcher/url_launcher.dart';
 // import 'package:webview_flutter/webview_flutter.dart';
 //import 'package:webview_flutter/webview_flutter.dart';
 
 import '../main.dart';
-
 
 class TermAndConditions extends StatefulWidget {
   @override
@@ -21,7 +19,6 @@ class TermAndConditions extends StatefulWidget {
 }
 
 class _TermAndConditionsState extends State<TermAndConditions> {
-
   // WebViewController? _controller;
   String fileText = "";
   bool isLoading = true;
@@ -30,7 +27,6 @@ class _TermAndConditionsState extends State<TermAndConditions> {
   String url = "";
   double progress = 0;
   final GlobalKey webViewKey = GlobalKey();
-
 
   @override
   void initState() {
@@ -42,8 +38,9 @@ class _TermAndConditionsState extends State<TermAndConditions> {
 
   privacypolicy() async {
     final response = await get(
-        // Uri.parse("$SERVER_ADDRESS/api/privecy"))
-        Uri.parse("$SERVER_ADDRESS/api/about"))
+            // Uri.parse("$SERVER_ADDRESS/api/privecy"))
+            Uri.parse("$SERVER_ADDRESS/api/about"))
+        // ignore: body_might_complete_normally_catch_error
         .catchError((e) {
       setState(() {
         isLoading = true;
@@ -77,12 +74,14 @@ class _TermAndConditionsState extends State<TermAndConditions> {
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: isLoading
-                  ? Center(child: CircularProgressIndicator(),)
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
                   : SingleChildScrollView(
-                child: Html(
-                  data: """$fileText""",
-                ),
-              ),
+                      child: Html(
+                        data: """$fileText""",
+                      ),
+                    ),
               // child: isLoading? Center(child: CircularProgressIndicator(),):InAppWebView(
               //   key: webViewKey,
               //   // contextMenu: contextMenu,
@@ -142,44 +141,43 @@ class _TermAndConditionsState extends State<TermAndConditions> {
               //   },
               // )
             ),
-          )
-      ),
+          )),
     );
   }
 
   Widget header() {
     return Stack(
       children: [
-        Image.asset("assets/moreScreenImages/header_bg.png",
+        Image.asset(
+          "assets/moreScreenImages/header_bg.png",
           height: 60,
           fit: BoxFit.fill,
-          width: MediaQuery
-              .of(context)
-              .size
-              .width,
+          width: MediaQuery.of(context).size.width,
         ),
         Container(
           height: 60,
           child: Row(
             children: [
-              SizedBox(width: 15,),
+              SizedBox(
+                width: 15,
+              ),
               InkWell(
                 onTap: () {
                   Navigator.pop(context);
                 },
-                child: Image.asset("assets/moreScreenImages/back.png",
+                child: Image.asset(
+                  "assets/moreScreenImages/back.png",
                   height: 25,
                   width: 22,
                 ),
               ),
-              SizedBox(width: 10,),
+              SizedBox(
+                width: 10,
+              ),
               Text(
                 TERM_AND_CONDITIONS,
                 style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w600,
-                    color: WHITE,
-                    fontSize: 22
-                ),
+                    fontWeight: FontWeight.w600, color: WHITE, fontSize: 22),
               )
             ],
           ),
@@ -188,4 +186,3 @@ class _TermAndConditionsState extends State<TermAndConditions> {
     );
   }
 }
-

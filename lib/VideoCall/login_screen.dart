@@ -92,6 +92,7 @@ class BodyState extends State<BodyLayout> {
                       visible: _isLoginContinues &&
                           users[index].id == _selectedUserId,
                       child: CircularProgressIndicator(
+                        color: const Color.fromARGB(255, 243, 103, 9),
                         strokeWidth: 2,
                       ),
                     ),
