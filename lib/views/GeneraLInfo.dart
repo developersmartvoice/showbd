@@ -151,37 +151,47 @@ class _GeneraLInfoState extends State<GeneraLInfo> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
-        appBar: AppBar(
-          backgroundColor: const Color.fromARGB(255, 243, 103, 9),
-          centerTitle: true,
-          title: Text('General information',
-              style: Theme.of(context).textTheme.headline5!.apply(
-                  color: Theme.of(context).backgroundColor,
-                  fontWeightDelta: 5)),
-          leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back,
-              color: Colors.white, // Back button color
+      child: WillPopScope(
+        onWillPop: () async {
+          // Pop the dialog if it's open
+          if (Navigator.of(context).canPop()) {
+            Navigator.of(context).pop(true);
+            return false; // Prevent default back button behavior
+          }
+          return true; // Allow default back button behavior
+        },
+        child: Scaffold(
+          backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
+          appBar: AppBar(
+            backgroundColor: const Color.fromARGB(255, 243, 103, 9),
+            centerTitle: true,
+            title: Text('General information',
+                style: Theme.of(context).textTheme.headline5!.apply(
+                    color: Theme.of(context).backgroundColor,
+                    fontWeightDelta: 5)),
+            leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back,
+                color: Colors.white, // Back button color
+              ),
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
             ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
           ),
+          body: isNameFetched &&
+                  isPhotosFetched &&
+                  isLocationFetched &&
+                  isAboutMeFetched
+              ? ContainerPage(widget.doctorId, name, about_me, location,
+                  imageUrl1, imageUrls!, _handleDataReload)
+              : Container(
+                  alignment: Alignment.center,
+                  transformAlignment: Alignment.center,
+                  child: CircularProgressIndicator(
+                    color: const Color.fromARGB(255, 243, 103, 9),
+                  )),
         ),
-        body: isNameFetched &&
-                isPhotosFetched &&
-                isLocationFetched &&
-                isAboutMeFetched
-            ? ContainerPage(widget.doctorId, name, about_me, location,
-                imageUrl1, imageUrls!, _handleDataReload)
-            : Container(
-                alignment: Alignment.center,
-                transformAlignment: Alignment.center,
-                child: CircularProgressIndicator(
-                  color: const Color.fromARGB(255, 243, 103, 9),
-                )),
       ),
     );
   }
