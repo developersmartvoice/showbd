@@ -133,11 +133,22 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
           actions: [
             TextButton(
               onPressed: () {
-                if (isImageChanged) {
+                if (isImageChanged && isImagesChanged) {
                   setState(() {
                     isUploadClicked = true;
                   });
                   _uploadImage();
+                  _uploadImages();
+                } else if (isImageChanged) {
+                  setState(() {
+                    isUploadClicked = true;
+                  });
+                  _uploadImage();
+                } else if (isImagesChanged) {
+                  setState(() {
+                    isUploadClicked = true;
+                  });
+                  _uploadImages();
                 } else {
                   showDialog(
                     context: context,
@@ -608,6 +619,7 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
+                    Navigator.of(context).pop(true);
                   },
                   child: Text("OK"),
                 )
@@ -768,6 +780,7 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
             actions: [
               TextButton(
                 onPressed: () {
+                  Navigator.of(context).pop();
                   Navigator.of(context).pop(true);
                 },
                 child: Text('OK'),
@@ -785,6 +798,9 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
+                  setState(() {
+                    isUploadClicked = false;
+                  });
                 },
                 child: Text('OK'),
               ),
@@ -798,6 +814,121 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
         builder: (context) => AlertDialog(
           title: Text('Error'),
           content: Text('Failed to upload image'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
+  Future<void> _uploadImages() async {
+    try {
+      // Check if _images list is empty
+      if (_images.isEmpty) {
+        // Show error message if no images are selected
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Error'),
+            content: Text('Please select at least one image to upload'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          ),
+        );
+        return;
+      }
+
+      // Create a multipart request
+      var request = http.MultipartRequest(
+        'POST',
+        Uri.parse('$SERVER_ADDRESS/api/updateImages'),
+      );
+
+      // Add doctor_id to the request
+      request.fields['doctor_id'] = widget.id; // Replace with actual doctor_id
+
+      // Add images to the request
+      for (int i = 0; i < _images.length; i++) {
+        print(_images[i]);
+        print(_images.length);
+        if (_images[i] != null) {
+          request.files.add(await http.MultipartFile.fromPath(
+            'images[]', // Match the API parameter name
+            _images[i]!.path,
+          ));
+        }
+      }
+
+      // Send the request
+      var response = await request.send();
+
+      // Check the response status
+      if (response.statusCode == 200) {
+        setState(() {
+          isUploadClicked = false;
+        });
+        // If successful, show success message
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Success'),
+            content: Text('Images uploaded successfully'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop(true);
+                },
+                child: Text('OK'),
+              ),
+            ],
+          ),
+        );
+      } else {
+        setState(() {
+          isUploadClicked = false;
+        });
+        // If not successful, show error message
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Error'),
+            content: Text('Failed to upload images'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          ),
+        );
+      }
+    } catch (e) {
+      // Handle exceptions
+      print('Error uploading images: $e');
+      setState(() {
+        isUploadClicked = false;
+      });
+      // Show error message
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Error'),
+          content: Text('Error uploading images. Please try again later.'),
           actions: [
             TextButton(
               onPressed: () {
@@ -856,6 +987,7 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                   TextButton(
                     onPressed: () {
                       Navigator.of(context).pop();
+                      // Navigator.of(context).pop(true);
                     },
                     child: Text('Close'),
                   ),
