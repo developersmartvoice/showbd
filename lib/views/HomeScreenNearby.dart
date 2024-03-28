@@ -113,6 +113,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
     return SafeArea(
       child: Container(
         margin: EdgeInsets.fromLTRB(14, 0, 14, 0),
+        // margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.0),
         child: Column(
           children: [
             // isNearbyLoading ? Container(
@@ -267,7 +268,8 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => DetailsPage(id.toString())),
+          MaterialPageRoute(
+              builder: (context) => DetailsPage(id.toString(), true)),
         );
       },
       child: Container(
@@ -400,7 +402,9 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                       ),
 
                       Container(
-                        margin: EdgeInsets.only(top: 10),
+                        // margin: EdgeInsets.only(top: 10),
+                        margin: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.height * 0.175),
                         // color: Colors.black,
                         width: MediaQuery.sizeOf(context).width * 1,
                         child: Row(
@@ -426,8 +430,10 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                       ),
 
                       Container(
+                        height: MediaQuery.sizeOf(context).height * 0.035,
                         width: MediaQuery.sizeOf(context).width * 1,
-                        margin: EdgeInsets.only(top: 150),
+                        margin: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.height * 0.17),
                         child: Text(
                           name.toString().toUpperCase(),
                           maxLines: 2,
@@ -445,7 +451,9 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                       ),
                       Container(
                         width: MediaQuery.sizeOf(context).width * 1,
-                        margin: EdgeInsets.only(top: 180),
+                        // margin: EdgeInsets.only(top: 180),
+                        margin: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.height * 0.2),
                         child: Text(
                           city.toString().toUpperCase(),
                           maxLines: 2,
@@ -457,7 +465,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                             color: Colors.white,
                             backgroundColor: Color.fromARGB(94, 194, 191, 191),
                             fontSize: 15,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
@@ -465,7 +473,9 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                       Container(
                         width: 60.0, // Fixed width
                         height: 40.0, // Fixed height
-                        margin: EdgeInsets.only(top: 20),
+                        // margin: EdgeInsets.only(top: 20),
+                        margin: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.height * 0.03),
                         decoration: BoxDecoration(
                             color: Color.fromARGB(255, 255, 94, 0)
                                 .withOpacity(0.8),
@@ -643,17 +653,36 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
             //fontWeight: FontWeight.w500,
             //),
             //),
-            Text(
-              motto.toString().length >= 30
-                  ? motto.toString().substring(0, 30) + "..."
-                  : motto.toString(),
-              textAlign: TextAlign.center,
-              style: GoogleFonts.poppins(
-                color: LIGHT_GREY_TEXT,
-                fontSize: 20.0,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
+
+            motto == null
+                ? Container()
+                : Container(
+                    child: Center(
+                      child: Text(
+                        motto.toString().length >= 30
+                            ? motto.toString().substring(0, 30) + "..."
+                            : motto.toString(),
+                        style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w500,
+                            //color: LIGHT_GREY_TEXT,
+                            color: Colors.black,
+                            fontSize: 20),
+                        textAlign: TextAlign.center,
+                        //textAlignVertical: TextAlignVertical.center,
+                      ),
+                    ),
+                  ),
+            // Text(
+            //   motto.toString().length >= 30
+            //       ? motto.toString().substring(0, 30) + "..."
+            //       : motto.toString(),
+            //   textAlign: TextAlign.center,
+            //   style: GoogleFonts.poppins(
+            //     color: LIGHT_GREY_TEXT,
+            //     fontSize: 20.0,
+            //     fontWeight: FontWeight.w500,
+            //   ),
+            // ),
             // Text(
             //   aboutMe.toString().length >= 30
             //       ? aboutMe.toString().substring(0, 30) + "..."

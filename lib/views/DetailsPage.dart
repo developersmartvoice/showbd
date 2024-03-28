@@ -18,8 +18,9 @@ import 'package:url_launcher/url_launcher.dart';
 // ignore: must_be_immutable
 class DetailsPage extends StatefulWidget {
   String id;
+  bool isSelf;
 
-  DetailsPage(this.id);
+  DetailsPage(this.id, this.isSelf);
 
   @override
   _DetailsPageState createState() => _DetailsPageState();
@@ -669,102 +670,109 @@ class _DetailsPageState extends State<DetailsPage> {
 
                 child: Column(
                   children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Expanded(
-                          child: ElevatedButton.icon(
-                            onPressed: () {
-                              !isMember
-                                  ? Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                          builder: (context) => ChoosePlan()
-                                          //BookingScreen(widget.id, guideName!),
-                                          ),
-                                    )
-                                  : Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                          builder: (context) => BookingScreen(
-                                              widget.id, guideName!)),
-                                    );
-                            },
-                            icon: Icon(Icons.connect_without_contact_sharp),
-                            label: Text("Contact"),
-                            style: ElevatedButton.styleFrom(
-                              foregroundColor: Colors.white,
-                              backgroundColor:
-                                  const Color.fromARGB(255, 3, 142, 255),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              padding: EdgeInsets.all(10.0),
-                              elevation: 5.0,
-                              shadowColor: Colors.grey,
-                              textStyle: GoogleFonts.poppins(
-                                fontSize: 19.0,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white, // Set text color to white
-                              ),
-                            ),
-                          ),
-                        ),
-                        //textStyle: GoogleFonts.poppins(
-                        //backgroundColor: Colors.white,
-                        //fontSize: 18.0,
-                        //fontWeight: FontWeight.w500,
-                        //color: Colors.white,
-                        //),
-                        //primary: Colors.blue,
-                        //backgroundColor: Colors.blue,
-                        //shape: RoundedRectangleBorder(
-                        //borderRadius: BorderRadius.circular(
-                        // 10.0), // Set border radius
-                        //),
-                        //padding: EdgeInsets.all(
-                        //10.0), // Customize horizontal padding
-                        //elevation: 5.0, // Set elevation
-                        //shadowColor: Colors.grey, // Set shadow color
-                        //),
-                        //),
-                        //),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                          child: ElevatedButton.icon(
-                            onPressed: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => CreateTrip(),
+                    widget.isSelf
+                        ? Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Expanded(
+                                child: ElevatedButton.icon(
+                                  onPressed: () {
+                                    !isMember
+                                        ? Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ChoosePlan()
+                                                //BookingScreen(widget.id, guideName!),
+                                                ),
+                                          )
+                                        : Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    BookingScreen(
+                                                        widget.id, guideName!)),
+                                          );
+                                  },
+                                  icon:
+                                      Icon(Icons.connect_without_contact_sharp),
+                                  label: Text("Contact"),
+                                  style: ElevatedButton.styleFrom(
+                                    foregroundColor: Colors.white,
+                                    backgroundColor:
+                                        const Color.fromARGB(255, 3, 142, 255),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    padding: EdgeInsets.all(10.0),
+                                    elevation: 5.0,
+                                    shadowColor: Colors.grey,
+                                    textStyle: GoogleFonts.poppins(
+                                      fontSize: 19.0,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors
+                                          .white, // Set text color to white
+                                    ),
+                                  ),
                                 ),
-                              );
-                            },
-                            icon: Icon(Icons.airplane_ticket_sharp),
-                            label: Text("Create A Trip"),
-                            style: ElevatedButton.styleFrom(
-                              textStyle: GoogleFonts.poppins(
-                                fontSize: 19.0,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.blueAccent,
                               ),
-                              backgroundColor: Colors.blue,
-                              foregroundColor: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                                side: BorderSide(
-                                  color: Colors.blue,
-                                ), // Set border radius
+                              //textStyle: GoogleFonts.poppins(
+                              //backgroundColor: Colors.white,
+                              //fontSize: 18.0,
+                              //fontWeight: FontWeight.w500,
+                              //color: Colors.white,
+                              //),
+                              //primary: Colors.blue,
+                              //backgroundColor: Colors.blue,
+                              //shape: RoundedRectangleBorder(
+                              //borderRadius: BorderRadius.circular(
+                              // 10.0), // Set border radius
+                              //),
+                              //padding: EdgeInsets.all(
+                              //10.0), // Customize horizontal padding
+                              //elevation: 5.0, // Set elevation
+                              //shadowColor: Colors.grey, // Set shadow color
+                              //),
+                              //),
+                              //),
+                              SizedBox(
+                                width: 10,
                               ),
-                              padding: EdgeInsets.all(
-                                  10.0), // Customize horizontal padding
-                              elevation: 5.0, // Set elevation
-                              shadowColor: Colors.grey, // Set shadow color
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                              Expanded(
+                                child: ElevatedButton.icon(
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => CreateTrip(),
+                                      ),
+                                    );
+                                  },
+                                  icon: Icon(Icons.airplane_ticket_sharp),
+                                  label: Text("Create A Trip"),
+                                  style: ElevatedButton.styleFrom(
+                                    textStyle: GoogleFonts.poppins(
+                                      fontSize: 19.0,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.blueAccent,
+                                    ),
+                                    backgroundColor: Colors.blue,
+                                    foregroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      side: BorderSide(
+                                        color: Colors.blue,
+                                      ), // Set border radius
+                                    ),
+                                    padding: EdgeInsets.all(
+                                        10.0), // Customize horizontal padding
+                                    elevation: 5.0, // Set elevation
+                                    shadowColor:
+                                        Colors.grey, // Set shadow color
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                        : Container(),
                     SizedBox(
                       height: 8,
                     ),
