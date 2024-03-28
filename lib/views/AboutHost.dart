@@ -301,48 +301,54 @@ class _AboutHostState extends State<AboutHost> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-          backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
-          appBar: AppBar(
-            backgroundColor: const Color.fromARGB(255, 243, 103, 9),
-            title: Text('About host',
-                // style: GoogleFonts.robotoCondensed(
-                //   fontSize: 25,
-                //   fontWeight: FontWeight.bold,
-                //   color: WHITE,
-                // ),
-                style: Theme.of(context).textTheme.headline5!.apply(
-                    color: Theme.of(context).backgroundColor,
-                    fontWeightDelta: 5)),
-            centerTitle: true,
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () {
-                Navigator.pop(context);
-              },
+      child: WillPopScope(
+        onWillPop: () async {
+          // Pop the dialog if it's open
+          if (Navigator.of(context).canPop()) {
+            Navigator.of(context).pop(true);
+            return false; // Prevent default back button behavior
+          }
+          return true; // Allow default back button behavior
+        },
+        child: Scaffold(
+            backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
+            appBar: AppBar(
+              backgroundColor: const Color.fromARGB(255, 243, 103, 9),
+              title: Text('About host',
+                  style: Theme.of(context).textTheme.headline5!.apply(
+                      color: Theme.of(context).backgroundColor,
+                      fontWeightDelta: 5)),
+              centerTitle: true,
+              leading: IconButton(
+                icon: Icon(Icons.arrow_back),
+                color: WHITE,
+                onPressed: () {
+                  Navigator.of(context).pop(true);
+                },
+              ),
             ),
-          ),
-          body: services != null && languages != null
-              ? ContainerPage(
-                  widget.doctorId,
-                  motto,
-                  iwillshowyou,
-                  services!,
-                  consultationfees,
-                  imageUrl1,
-                  imageUrls,
-                  location,
-                  about_me,
-                  gender,
-                  languages!,
-                  _handleDataReload)
-              : Container(
-                  alignment: Alignment.center,
-                  transformAlignment: Alignment.center,
-                  child: CircularProgressIndicator(
-                    color: const Color.fromARGB(255, 243, 103, 9),
-                  ),
-                )),
+            body: services != null && languages != null
+                ? ContainerPage(
+                    widget.doctorId,
+                    motto,
+                    iwillshowyou,
+                    services!,
+                    consultationfees,
+                    imageUrl1,
+                    imageUrls,
+                    location,
+                    about_me,
+                    gender,
+                    languages!,
+                    _handleDataReload)
+                : Container(
+                    alignment: Alignment.center,
+                    transformAlignment: Alignment.center,
+                    child: CircularProgressIndicator(
+                      color: const Color.fromARGB(255, 243, 103, 9),
+                    ),
+                  )),
+      ),
     );
   }
 

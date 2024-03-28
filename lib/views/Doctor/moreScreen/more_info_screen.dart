@@ -1,448 +1,3 @@
-//
-// import 'package:cached_network_image/cached_network_image.dart';
-// import 'package:flutter/material.dart';
-//
-//
-// class DoctorInfoScreen extends StatefulWidget {
-//   int profileType;
-//   DoctorInfoScreen(this.profileType);
-//
-//   @override
-//   State<DoctorInfoScreen> createState() => _DoctorInfoScreenState();
-// }
-//
-// class _DoctorInfoScreenState extends State<DoctorInfoScreen> {
-//
-//   var name;
-//   BottomNavigationController bottomNavigationController = Get.put(BottomNavigationController());
-//   // final viewUserProfileController = Get.put(ViewUserProfileController());
-//
-//
-//
-//
-//   // ViewUserProfileController viewUserProfileController=Get.put(ViewUserProfileController());
-//
-//
-//
-//   bool isLoading = true;
-//
-//   var phoneNumber;
-//   var email;
-//   var id;
-//   var image;
-//
-//   @override
-//   void initState() {
-//
-//     getData();
-//     super.initState();
-//   }
-//   getData() async {
-//     final prefs = await SharedPreferences.getInstance();
-//     name = prefs.getString('name');
-//     phoneNumber = prefs.getInt('phone');
-//     id=prefs.getInt('user_id').toString();
-//     image = prefs.getString('image');
-//     // viewUserProfileController.getProfileData();
-//     setState(() {});
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Container(
-//         padding: const EdgeInsets.only(top: 40, left: 15, right: 15),
-//         height: MediaQuery.of(context).size.height,
-//         width: MediaQuery.of(context).size.width,
-//         decoration:  BoxDecoration(
-//           image: DecorationImage(
-//             fit: BoxFit.cover,
-//             image:brightness == Brightness.light? AssetImage('assets/order_list/bg-design.png'):AssetImage(
-//               AppImages.imageAppBg,
-//             ),
-//           ),
-//         ),
-//         child: ListView(
-//           physics: const AlwaysScrollableScrollPhysics(),
-//           padding: EdgeInsets.zero,
-//           children: [
-//             Text(
-//               More[AppConst.LANGUAGE_TYPE],
-//               style: AppFontStyle.appBarTextStyle.copyWith( color: ThemeManager().getBlackColor),
-//             ),
-//             const SizedBox(height: 20),
-//             GetBuilder<ViewUserProfileController>(
-//                 init: ViewUserProfileController(),
-//                 builder: (VUP) {
-//                   return  VUP.isProfileDataLoading == true ? Center(child: CircularProgressIndicator(),) : GestureDetector(
-//                     onTap: () async{
-//                       // SharedPreferences prefs = await SharedPreferences.getInstance();
-//                       // prefs.setString('userImage', VUP.viewProfileModel!.data.image.toString());
-//                       // prefs.setString('userName', VUP.viewProfileModel!.data.name.toString());
-//                       // profile.setId=VUP.viewProfileModel!.data.id.toInt();
-//                       // profile.setName=VUP.viewProfileModel!.data.name.toString();
-//                       // profile.setEmail=VUP.viewProfileModel!.data.email.toString();
-//                       // profile.setImg=VUP.viewProfileModel!.data.image.toString();
-//                     },
-//                     child: Container(
-//                       padding: const EdgeInsets.only(top: 15, bottom: 15, left: 10, right: 10),
-//                       decoration: BoxDecoration(
-//                         color: ThemeManager().textFieldFillColor.withOpacity(0.8),
-//                         borderRadius: BorderRadius.circular(15),
-//                       ),
-//                       child: Row(
-//                         children: [
-//                           Stack(
-//                             alignment:Alignment.bottomRight,
-//                             children: [
-//                               ClipRRect(
-//                                 borderRadius: BorderRadius.circular(50),
-//                                 child: Container(
-//                                   height: 50,
-//                                   width: 50,
-//                                   decoration: BoxDecoration(
-//                                     borderRadius:
-//                                     BorderRadius.circular(50),
-//                                   ),
-//                                   child: CachedNetworkImage(
-//                                     imageUrl: VUP.viewProfileModel!.data.image == "null"
-//                                         ? AppImages.userDefault
-//                                         : AppConst.editProfile + VUP.viewProfileModel!.data.image.toString(),
-//                                     placeholder: (context, url) =>
-//                                         Image.asset(AppImages
-//                                             .userDefault),
-//                                     errorWidget: (context, url, error) => Image.asset(AppImages
-//                                         .userDefault),
-//                                     fit: BoxFit.cover,
-//                                   ),
-//                                 ),
-//                               ),
-//
-//                             ],
-//                           ),
-//
-//                           const SizedBox(
-//                             width: 10,
-//                           ),
-//                           Flexible(
-//                             child: Column(
-//                               crossAxisAlignment: CrossAxisAlignment.start,
-//                               children: [
-//                                 Text(
-//                                   VUP.viewProfileModel!.data.name == '' && VUP.viewProfileModel!.data.name == null ?
-//                                   // '${profile.getName}',
-//                                   AppStrings.userName: VUP.viewProfileModel!.data.name.toString(),
-//                                   style: GoogleFonts.poppins(
-//                                       color: ThemeManager().getBlackColor,
-//                                       fontWeight: FontWeight.w300,
-//                                       fontSize: 20),
-//                                   overflow: TextOverflow.ellipsis,
-//                                 ),
-//                                 Text(
-//                                   VUP.viewProfileModel!.data.phone == '' && VUP.viewProfileModel!.data.phone == null ?
-//                                   // "$phoneNumber",
-//                                   // '123456789':  VUP.viewProfileModel!.data.phone.toString(),
-//                                   '123456789':  phoneNumber.toString(),
-//                                   style: AppFontStyle.smallGreyFont,
-//                                   overflow: TextOverflow.ellipsis,
-//                                 )
-//                               ],
-//                             ),
-//                           ),
-//                         ],
-//                       ),
-//
-//                     ),
-//                   );}
-//
-//             ),
-//             const SizedBox(height: 12),
-//
-//             ///-------Give FeedBack-------
-//             const SizedBox(height: 12),
-//             GestureDetector(
-//                 onTap: (){
-//                   Get.to(()=>GiveFeedBackScreen());
-//                 },
-//                 child: MoreUserCard( title: Give_Feedback[AppConst.LANGUAGE_TYPE])),
-//             ///-------Recommended Pharmacy-------
-//             (widget.profileType == DOCTOR ) ? const SizedBox(height: 12) : SizedBox(height: 0,),
-//             (widget.profileType == DOCTOR ) ?
-//             GestureDetector(
-//                 onTap: () {
-//                   Get.to(() => RecommendedPharmacyScreen());
-//                 },
-//                 child: MoreUserCard(
-//                     title: Recommended_Pharmacy[AppConst.LANGUAGE_TYPE])) : Container(),
-//
-//             // (widget.profileType == DOCTOR || widget.profileType == HOSPITAL) ? const SizedBox(height: 12) : SizedBox(height: 0,),
-//             // (widget.profileType == DOCTOR || widget.profileType == HOSPITAL) ? GestureDetector(
-//             //     onTap: (){
-//             //       Get.to(()=>RecommendedPharmacyScreen());
-//             //     },
-//             //     child: MoreUserCard( title: Recommended_Pharmacy[AppConst.LANGUAGE_TYPE])) : Container(),
-//             ///--------- call ambulance ---------
-//             (widget.profileType == HOSPITAL) ? const SizedBox(height: 12) : SizedBox(height: 0,),
-//             ( widget.profileType == HOSPITAL) ?
-//             GetBuilder<ViewUserProfileController>(
-//                 init: ViewUserProfileController(),
-//                 builder: (VUP) {
-//                   return GestureDetector(
-//                       onTap: (){
-//                         print("SetupProfileController ${VUP.ambulancePrice}");
-//                         // print('ambulance price------${VUP.viewProfileModel!.data.ambulancePrice}');
-//                         Get.to(()=>AddAmbulanceScreen(VUP.ambulancePrice));
-//                       },
-//                       child: MoreUserCard( title:  Add_Ambulance[AppConst.LANGUAGE_TYPE],));
-//                 })
-//                 : Container(),
-//             ///--------- Department ---------
-//             (widget.profileType == HOSPITAL) ? const SizedBox(height: 12) : SizedBox(height: 0,),
-//             ( widget.profileType == HOSPITAL) ? GestureDetector(
-//                 onTap: (){
-//
-//                   Get.to(()=>DepartmentListScreen());
-//                 },
-//                 child: MoreUserCard( title: Departments[AppConst.LANGUAGE_TYPE])) : Container(),
-//             ///-------Log Out-------
-//             const SizedBox(height: 12),
-//             GestureDetector(
-//                 onTap: () async {
-//                   _showLogoutDialog(context,bottomNavigationController);
-//                 },
-//                 child: MoreUserCard(
-//                     title: logOut[AppConst.LANGUAGE_TYPE])
-//             ),
-//
-//             const SizedBox(height: 20),
-//
-//           ],
-//         ),
-//       ),
-//
-//
-//     );
-//   }
-//
-// }
-//
-//
-//
-// ///----------- logout dialog -----------------
-// Future<void> _showLogoutDialog(context, BottomNavigationController bottomNavigationController,) async {
-//   return showDialog<void>(
-//     context: context,
-//     barrierDismissible: false, // user must tap button!
-//     builder: (BuildContext context) {
-//       return AlertDialog(
-//         shape: const RoundedRectangleBorder(
-//             borderRadius: BorderRadius.all(Radius.circular(20.0))),
-//         contentPadding:
-//         const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-//         backgroundColor: ThemeManager().dropDownBackGroundColor,
-//         // title: const Text('AlertDialog Title'),
-//         content: SingleChildScrollView(
-//           child: ListBody(
-//             children: <Widget>[
-//               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-//                 Image.asset(
-//                   AppImages.logout,
-//                   height: 40,
-//                 ),
-//                 const SizedBox(width: 15),
-//                 Text(Logout[AppConst.LANGUAGE_TYPE],
-//                     style: AppFontStyle.appBarLightTextStyle
-//                         .copyWith(fontSize: 35)),
-//               ]),
-//               const SizedBox(height: 10),
-//               Center(
-//                   child: Text(
-//                     LogoutConMsg[AppConst.LANGUAGE_TYPE],
-//                     style: AppFontStyle.smallGreyFont.copyWith(fontSize: 18),
-//                     textAlign: TextAlign.center,
-//                   )),
-//               const SizedBox(height: 15),
-//               Row(
-//                 children: [
-//                   Expanded(
-//                     child: GestureDetector(
-//                       onTap: () {
-//                         Get.back();
-//                       },
-//                       child: Container(
-//                         height: 50,
-//                         decoration: BoxDecoration(
-//                           border: Border.all(color: AppColor.blue),
-//                           borderRadius: BorderRadius.circular(30),
-//                         ),
-//                         child: Center(
-//                           child: Text(
-//                             no[AppConst.LANGUAGE_TYPE],
-//                             style: GoogleFonts.poppins(
-//                                 color: ThemeManager().getFontBlackColor,
-//                                 fontSize: 24,
-//                                 fontWeight: FontWeight.w700),
-//                           ),
-//                         ),
-//                       ),
-//                     ),
-//                   ),
-//                   const SizedBox(width: 10),
-//                   Expanded(
-//                     child: GestureDetector(
-//                       onTap: () async {
-//                         await SharedPreferences.getInstance().then((pref) async {
-//                           int? id = pref.getInt(AppConst.userId);
-//                           // FirebaseDatabase.instance
-//                           //     .reference()
-//                           //     .child(id!.toString())
-//                           //     .child("TokenList")
-//                           //     .set({"device": 'logout'}).then((value) async {
-//
-//                           Get.delete<DoctorDashboardController>();
-//                           Get.delete<AppointmentDetailController>();
-//                           Get.delete<SetupProfileController>();
-//
-//                           Get.delete<PharmacyDashboardController>();
-//                           Get.delete<AppointmentDetailController>();
-//                           Get.delete<MyWalletController>();
-//                           Get.delete<PharmacyProfileController>();
-//                           Get.delete<UploadSpecialistController>();
-//
-//                           Get.delete<LaboratoryDashboardController>();
-//                           Get.delete<LaboratoryOrderDetailController>();
-//                           Get.delete<LaboratoryProfileController>();
-//                           Get.delete<AllLaboratoryOrderListScreen>();
-//
-//                           Get.delete<HospitalDashboardController>();
-//
-//                           Get.delete<PharmacyProductListController>();
-//
-//                           Get.delete<BeautyDashboardController>();
-//
-//                           Get.delete<ViewUserProfileController>();
-//                           Get.delete<MedicalDashboardController>();
-//                           Get.delete<MedicalOrderDetailController>();
-//                           Get.delete<MedicalProfileController>();
-//                           Get.delete<MedicalProductListController>();
-//
-//
-//                           try{
-//                             CubeChatConnection.instance.logout();
-//                           }catch(e){
-//                             print('Logout error $e');
-//                           }
-//
-//                           // if(setupProfileController.currentIndex==0){
-//                           //   Get.delete<DoctorDashboardController>();
-//                           //   Get.delete<AppointmentDetailController>();
-//                           //   Get.delete<MyWalletController>();
-//                           //   Get.delete<SetupProfileController>();
-//                           //   Get.delete<UploadSpecialistController>();
-//                           //   update();
-//                           // }
-//
-//                           // else if(laboratoryProfileController.currentIndex == 0){
-//                           //   Get.delete<LaboratoryDashboardController>();
-//                           //   Get.delete<LaboratoryOrderDetailController>();
-//                           //   Get.delete<LaboratoryProfileController>();
-//                           //   Get.delete<AllLaboratoryOrderListScreen>();
-//                           //   Get.delete<MyWalletController>();
-//                           //   Get.delete<AppointmentDetailController>();
-//                           //   update();
-//                           // }
-//
-//                           // else if(pharmacyProfileController.currentIndex == 0){
-//                           //   Get.delete<PharmacyDashboardController>();
-//                           //   Get.delete<AppointmentDetailController>();
-//                           //   Get.delete<MyWalletController>();
-//                           //   Get.delete<PharmacyProfileController>();
-//                           //   Get.delete<UploadSpecialistController>();
-//                           //   update();
-//                           // }
-//
-//                           // Get.delete<PharmacyDashboardController>();
-//                           // Get.delete<AppointmentDetailController>();
-//                           // Get.delete<MyWalletController>();
-//                           // Get.delete<PharmacyProfileController>();
-//                           // Get.delete<UploadSpecialistController>();
-//                           //
-//                           // // Get.delete<DoctorDashboardController>();
-//                           // // Get.delete<AppointmentDetailController>();
-//                           // // Get.delete<SetupProfileController>();
-//                           //
-//                           // Get.delete<LaboratoryDashboardController>();
-//                           // Get.delete<LaboratoryOrderDetailController>();
-//                           // Get.delete<LaboratoryProfileController>();
-//                           // Get.delete<AllLaboratoryOrderListScreen>();
-//                           //
-//                           // Get.delete<HospitalDashboardController>();
-//                           //
-//                           // Get.delete<PharmacyProductListController>();
-//                           // Get.delete<SetupProfileController>();
-//
-//
-//                           // setupProfileController.currentIndex = 0;
-//                           // final prefs = await SharedPreferences.getInstance();
-//                           String? token = await pref.getString('token');
-//                           await pref.clear();
-//                           await pref.setString('token', token!);
-//                           await pref.setBool('seen',true);
-//                           // Get.delete<BottomNavigationController>();
-//                           bottomNavigationController.tabIndex = 0;
-//                           Get.offAll(() => Login());
-//                           // });
-//                         });
-//
-//                         // doctorDashboardController.doctorDashboardDetailModel.
-//                         // CubeChatConnection.instance.logout();
-//                         // setupProfileController.currentIndex = 0;
-//                         // Get.delete<DoctorDashboardController>();
-//                         // Get.delete<AppointmentDetailController>();
-//                         // Get.delete<MyWalletController>();
-//                         // Get.delete<SetupProfileController>();
-//                         // Get.delete<UploadSpecialistController>();
-//                         // final prefs = await SharedPreferences.getInstance();
-//                         // prefs.clear();
-//                         // // Get.delete<BottomNavigationController>();
-//                         // tabIndex = 0;
-//                         // Get.offAll(() => Login());
-//                       },
-//                       child: Container(
-//                         height: 50,
-//                         decoration: BoxDecoration(
-//                           image: const DecorationImage(
-//                             image: AssetImage(
-//                               AppImages.imageBtnBg2,
-//                             ),
-//                             fit: BoxFit.fill,
-//                           ),
-//                           // border:Border.all(color:AppColor.blue),
-//                           borderRadius: BorderRadius.circular(50),
-//                         ),
-//                         child: Center(
-//                           child: Text(
-//                             yes[AppConst.LANGUAGE_TYPE],
-//                             style: GoogleFonts.poppins(
-//                                 color: AppColor.white,
-//                                 fontSize: 24,
-//                                 fontWeight: FontWeight.w700),
-//                           ),
-//                         ),
-//                       ),
-//                     ),
-//                   ),
-//                 ],
-//               )
-//             ],
-//           ),
-//         ),
-//       );
-//     },
-//   );
-// }
-//
-
 import 'dart:convert';
 import 'package:appcode3/views/AboutHost.dart';
 import 'package:appcode3/views/ChoosePlan.dart';
@@ -484,33 +39,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
   bool isErrorInLoading = false;
   bool isMember = false;
 
-  // List<String> currencies = ['USD', 'EUR', 'GBP', 'JPY', 'CAD'];
-  String selectedCurrency = '';
-
-  // Future<void> _showCurrencySelectionDialog(BuildContext context) async {
-  //   final selectedCurrency = await showDialog<String>(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return AlertDialog(
-  //         title: Text('Choose Currency'),
-  //         content: Container(
-  //           width: double.minPositive,
-  //           child: ListView.builder(
-  //             shrinkWrap: true,
-  //             itemCount: currencies.length,
-  //             itemBuilder: (BuildContext context, int index) {
-  //               return ListTile(
-  //                 title: Text(currencies[index]),
-  //                 onTap: () {
-  //                   Navigator.of(context).pop(currencies[index]);
-  //                 },
-  //               );
-  //             },
-  //           ),
-  //         ),
-  //       );
-  //     },
-  //   ); // Example currencies
+  String selectedCurrency = 'Select Currency';
 
   fetchDoctorAppointment() async {
     final response = await get(Uri.parse(
@@ -537,11 +66,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
         'doctor detail url ->${'$SERVER_ADDRESS/api/doctordetail?doctor_id=$doctorId'}');
     final response = await get(
         Uri.parse("$SERVER_ADDRESS/api/doctordetail?doctor_id=$doctorId"));
-    //     .catchError((e){
-    //   setState(() {
-    //     isErrorInLoading = true;
-    //   });
-    // });
+
     try {
       if (response.statusCode == 200) {
         print("url --> ${response.request!.url}");
@@ -551,14 +76,6 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
           try {
             doctorProfileWithRating =
                 DoctorProfileWithRating.fromJson(jsonResponse);
-            // SharedPreferences sp = await SharedPreferences.getInstance();
-            // sp.setString('profilePic', doctorProfileWithRating!.data!.image??'');
-            // if(doctorProfileWithRating!.data!.isSubscription==0){
-            //   Navigator.push(context,
-            //     MaterialPageRoute(builder: (context) => DoctorChooseYourPlan(doctorUrl: doctorProfileWithRating!.data!.image.toString())),
-            //   );
-            // }
-            // ;
             print('doctor image is ${doctorProfileWithRating!.data!.image}');
           } catch (E) {
             print('Dashboard error is : ${E}');
@@ -589,6 +106,8 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
           selectedCurrency = jsonResponse['currency'] != null
               ? jsonResponse['currency']
               : "Select Currency";
+
+          saveCurrencyToSharedPreferences(selectedCurrency);
           print("Currency from api: $selectedCurrency");
         });
       } else {
@@ -596,6 +115,19 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
       }
     } catch (e) {
       print('Error: $e');
+    }
+  }
+
+  void saveCurrencyToSharedPreferences(String currency) async {
+    if (currency == "Select Currency") {
+      currency = "BDT";
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('selectedCurrency', currency);
+      print('Currency saved to SharedPreferences: $currency');
+    } else {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('Currency', currency);
+      print('Currency saved to SharedPreferences: $currency');
     }
   }
 
@@ -609,8 +141,6 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
       if (response.statusCode == 200) {
         final jsonResponse = json.decode(response.body);
         setState(() {
-          // currencies = data.cast<String>();
-          // selectedCurrency = currencies.isNotEmpty ? currencies.first : '';
           selectedCurrency = jsonResponse['currency'] != null
               ? "Select Currency"
               : jsonResponse['currency'];
@@ -658,11 +188,21 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
       setState(() {
         doctorId = pref.getString("userId");
         future = fetchDoctorAppointment();
-        future2 = fetchDoctorDetails();
-        getCurrency();
-        checkIsMember();
+        fetchedData();
       });
     });
+  }
+
+  fetchedData() {
+    future2 = fetchDoctorDetails();
+    getCurrency();
+    checkIsMember();
+  }
+
+  void _handleDataReload(bool dataUpdated) {
+    if (dataUpdated) {
+      fetchedData();
+    }
   }
 
   @override
@@ -716,6 +256,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
   Widget doctorProfile() {
     return isErrorInLoading
         ? Container(
+            height: MediaQuery.sizeOf(context).height * .25,
             child: Center(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -742,7 +283,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
               if (snapshot.connectionState == ConnectionState.waiting ||
                   doctorId == null) {
                 return Container(
-                    height: 100,
+                    height: MediaQuery.sizeOf(context).height * .25,
                     child: Center(
                         child: CircularProgressIndicator(
                       color: const Color.fromARGB(255, 243, 103, 9),
@@ -750,22 +291,9 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                     )));
               }
               return Container(
+                height: MediaQuery.sizeOf(context).height * .25,
                 width: MediaQuery.sizeOf(context).width * 1,
-                //margin: EdgeInsets.all(8),
                 padding: EdgeInsets.all(16),
-                //child: Column(
-                //crossAxisAlignment: CrossAxisAlignment.center,
-                //children: <Widget>[
-                //child: CircleAvatar(
-                //backgroundImage: AssetImage('assets/homeScreenImages/user_unactive.png'),
-                //),
-                //],
-                //),
-                //decoration: BoxDecoration(
-                //borderRadius: BorderRadius.circular(10),
-                // color: Colors.red
-                //color: Theme.of(context).backgroundColor,
-                //),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -1007,31 +535,57 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => GeneraLInfo(doctorId!)),
-              );
+              ).then((dataUpdated) {
+                _handleDataReload(dataUpdated ?? false);
+              });
             },
             child: Container(
+              width: MediaQuery.sizeOf(context).width * 1,
               height: 50,
               margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
               decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 243, 103, 9),
-                  borderRadius: BorderRadius.circular(10)),
+                // color: Color.fromARGB(255, 243, 103, 9),
+                color: WHITE,
+                borderRadius: BorderRadius.circular(10),
+                border: Border(
+                  bottom: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                  top: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                  right: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                  left: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                ),
+              ),
               child: Container(
                 margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      GENERAL_INFORMATION,
-                      //style: Theme.of(context).textTheme.subtitle1,
-                      style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                            color:
-                                Colors.white, // Replace with your desired color
-                          ),
+                    Container(
+                      width: MediaQuery.sizeOf(context).width * .5,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        GENERAL_INFORMATION,
+                        //style: Theme.of(context).textTheme.subtitle1,
+                        style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                              color: Color.fromARGB(255, 243, 103,
+                                  9), // Replace with your desired color
+                            ),
+                      ),
                     ),
-                    Icon(
-                      Icons.arrow_forward_ios,
-                      size: 20,
-                      color: Colors.white,
+                    SizedBox(
+                      width: MediaQuery.sizeOf(context).width * .1,
+                    ),
+                    Container(
+                      width: MediaQuery.sizeOf(context).width * .05,
+                      alignment: Alignment.centerRight,
+                      child: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 20,
+                        color: Color.fromARGB(255, 243, 103, 9),
+                      ),
                     ),
                   ],
                 ),
@@ -1053,26 +607,49 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
               );
             },
             child: Container(
+              width: MediaQuery.sizeOf(context).width * 1,
               height: 50,
               margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
               decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 243, 103, 9),
-                  borderRadius: BorderRadius.circular(10)),
+                color: WHITE,
+                borderRadius: BorderRadius.circular(10),
+                border: Border(
+                  bottom: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                  top: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                  right: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                  left: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                ),
+              ),
               child: Container(
                 margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      CONTACT_AND_IDENTIFICATION,
-                      style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                            color: Colors.white,
-                          ),
+                    Container(
+                      width: MediaQuery.sizeOf(context).width * .5,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        CONTACT_AND_IDENTIFICATION,
+                        style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                              color: Color.fromARGB(255, 243, 103, 9),
+                            ),
+                      ),
                     ),
-                    Icon(
-                      Icons.arrow_forward_ios,
-                      size: 20,
-                      color: Colors.white,
+                    SizedBox(
+                      width: MediaQuery.sizeOf(context).width * .05,
+                    ),
+                    Container(
+                      width: MediaQuery.sizeOf(context).width * .05,
+                      alignment: Alignment.centerRight,
+                      child: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 20,
+                        color: Color.fromARGB(255, 243, 103, 9),
+                      ),
                     ),
                   ],
                 ),
@@ -1098,48 +675,75 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                     );
             },
             child: Container(
+              width: MediaQuery.sizeOf(context).width * 1,
               height: 50,
               margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
               decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 243, 103, 9),
-                  borderRadius: BorderRadius.circular(10)),
+                color: WHITE,
+                borderRadius: BorderRadius.circular(10),
+                border: Border(
+                  bottom: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                  top: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                  right: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                  left: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                ),
+              ),
               child: Container(
                 margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      MEMBERSHIP,
-                      style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                            color: Colors.white,
-                          ),
-                    ),
                     Container(
+                      width: MediaQuery.sizeOf(context).width * .25,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        MEMBERSHIP,
+                        style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                              color: Color.fromARGB(255, 243, 103, 9),
+                            ),
+                      ),
+                    ),
+
+                    SizedBox(
+                      width: MediaQuery.sizeOf(context).width * .05,
+                    ),
+
+                    Container(
+                        width: MediaQuery.sizeOf(context).width * .4,
+                        alignment: Alignment.centerRight,
                         child: isMember
-                            ? Padding(
-                                padding: EdgeInsets.only(left: 100.0),
-                                child: Text(
-                                  "Member",
-                                  style: GoogleFonts.robotoCondensed(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                            ? Text(
+                                "Member",
+                                style: GoogleFonts.robotoCondensed(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w800,
+                                  color: Color.fromARGB(197, 1, 50, 3),
                                 ),
                               )
-                            : Padding(
-                                padding: EdgeInsets.only(left: 20.0),
-                                child: Text(
-                                  "Waiting for payment!",
-                                  style: GoogleFonts.robotoCondensed(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                            : Text(
+                                "Waiting for payment!",
+                                style: GoogleFonts.robotoCondensed(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color.fromARGB(197, 131, 22, 0),
                                 ),
                               )),
-                    Icon(
-                      Icons.arrow_forward_ios,
-                      size: 20,
-                      color: Colors.white,
+
+                    SizedBox(
+                      width: MediaQuery.sizeOf(context).width * .05,
+                    ),
+                    Container(
+                      width: MediaQuery.sizeOf(context).width * .05,
+                      alignment: Alignment.centerRight,
+                      child: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 20,
+                        color: Color.fromARGB(255, 243, 103, 9),
+                      ),
                     ),
                     // TextButton(
                     //   onPressed: () {
@@ -1191,29 +795,53 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => AboutHost(doctorId!)),
-              );
+              ).then((dataUpdated) {
+                _handleDataReload(dataUpdated ?? false);
+              });
             },
             child: Container(
               height: 50,
               margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
               decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 243, 103, 9),
-                  borderRadius: BorderRadius.circular(10)),
+                color: WHITE,
+                borderRadius: BorderRadius.circular(10),
+                border: Border(
+                  bottom: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                  top: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                  right: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                  left: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                ),
+              ),
               child: Container(
                 margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      ABOUT_HOST,
-                      style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                            color: Colors.white,
-                          ),
+                    Container(
+                      width: MediaQuery.sizeOf(context).width * .5,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        ABOUT_HOST,
+                        style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                              color: Color.fromARGB(255, 243, 103, 9),
+                            ),
+                      ),
                     ),
-                    Icon(
-                      Icons.arrow_forward_ios,
-                      size: 20,
-                      color: Colors.white,
+                    SizedBox(
+                      width: MediaQuery.sizeOf(context).width * .1,
+                    ),
+                    Container(
+                      width: MediaQuery.sizeOf(context).width * .05,
+                      alignment: Alignment.centerRight,
+                      child: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 20,
+                        color: Color.fromARGB(255, 243, 103, 9),
+                      ),
                     ),
                     // TextButton(onPressed: (){
                     //   Navigator.push(context,
@@ -1241,7 +869,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                 context: context,
                 builder: (BuildContext context) {
                   return SimpleDialog(
-                    title: Text("Select Currency"),
+                    title: Center(child: Text("Select Currency")),
                     children: <Widget>[
                       SimpleDialogOption(
                         onPressed: () {
@@ -1291,11 +919,22 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
               );
             },
             child: Container(
+              width: MediaQuery.sizeOf(context).width * 1,
               height: 50,
               margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
               decoration: BoxDecoration(
-                color: Color.fromARGB(255, 243, 103, 9),
+                color: WHITE,
                 borderRadius: BorderRadius.circular(10),
+                border: Border(
+                  bottom: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                  top: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                  right: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                  left: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                ),
               ),
 
               child: Container(
@@ -1303,29 +942,45 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      CURRENCY_EXCHANGE,
-                      style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                            color: Colors.white,
-                          ),
+                    Container(
+                      width: MediaQuery.sizeOf(context).width * .25,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        CURRENCY_EXCHANGE,
+                        style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                              color: Color.fromARGB(255, 243, 103, 9),
+                            ),
+                      ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 100),
+                    SizedBox(
+                      width: MediaQuery.sizeOf(context).width * .05,
+                    ),
+                    Container(
+                      width: MediaQuery.sizeOf(context).width * .4,
+                      alignment: Alignment.centerRight,
                       child: Text(
                         selectedCurrency,
                         style: GoogleFonts.robotoCondensed(
                           fontSize: 15,
                           fontWeight: FontWeight.w600,
+                          color: Color.fromARGB(197, 1, 50, 3),
                         ),
                         // Theme.of(context).textTheme.subtitle1?.copyWith(
                         //       color: Colors.black,
                         //     ),
                       ),
                     ),
-                    Icon(
-                      Icons.arrow_forward_ios,
-                      size: 20,
-                      color: Colors.white,
+                    SizedBox(
+                      width: MediaQuery.sizeOf(context).width * .05,
+                    ),
+                    Container(
+                      width: MediaQuery.sizeOf(context).width * .05,
+                      alignment: Alignment.centerRight,
+                      child: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 20,
+                        color: Color.fromARGB(255, 243, 103, 9),
+                      ),
                     ),
                   ],
                 ),
@@ -1746,23 +1401,46 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
               height: 50,
               margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
               decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 243, 103, 9),
-                  borderRadius: BorderRadius.circular(10)),
+                color: WHITE,
+                borderRadius: BorderRadius.circular(10),
+                border: Border(
+                  bottom: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                  top: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                  right: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                  left: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                ),
+              ),
               child: Container(
                 margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      DELETE_ACCOUNT,
-                      style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                            color: Colors.white,
-                          ),
+                    Container(
+                      width: MediaQuery.sizeOf(context).width * .5,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        DELETE_ACCOUNT,
+                        style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                              color: Color.fromARGB(255, 243, 103, 9),
+                            ),
+                      ),
                     ),
-                    Icon(
-                      Icons.arrow_forward_ios,
-                      size: 20,
-                      color: Colors.white,
+
+                    SizedBox(
+                      width: MediaQuery.sizeOf(context).width * .1,
+                    ),
+                    Container(
+                      width: MediaQuery.sizeOf(context).width * .05,
+                      alignment: Alignment.centerRight,
+                      child: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 20,
+                        color: Color.fromARGB(255, 243, 103, 9),
+                      ),
                     ),
                     // TextButton(onPressed: (){
                     //   Navigator.push(context,
