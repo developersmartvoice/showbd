@@ -194,9 +194,9 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
   }
 
   fetchedData() {
-    future2 = fetchDoctorDetails();
     getCurrency();
     checkIsMember();
+    future2 = fetchDoctorDetails();
   }
 
   void _handleDataReload(bool dataUpdated) {
@@ -896,7 +896,8 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                             selectedCurrency = 'USD';
                             updateCurrency(selectedCurrency);
                           });
-                          Navigator.of(context).pop();
+                          fetchedData();
+                          Navigator.of(context).pop(true);
                         },
                         child: Center(
                           child: Text(
@@ -918,7 +919,8 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                             selectedCurrency = 'BDT';
                             updateCurrency(selectedCurrency);
                           });
-                          Navigator.of(context).pop();
+                          fetchedData();
+                          Navigator.of(context).pop(true);
                         },
                         child: Center(
                           child: Text(
