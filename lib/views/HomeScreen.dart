@@ -308,7 +308,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) => DetailsPage(
-                                              _newData[index].id.toString())));
+                                              _newData[index].id.toString(),
+                                              true)));
                                 },
                                 child: Column(
                                   children: [

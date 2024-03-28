@@ -904,7 +904,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  DetailsPage(doctorId.toString())),
+                                  DetailsPage(doctorId.toString(), false)),
                         );
                       },
                       child: Text('View Profile'),

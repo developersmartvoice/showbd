@@ -224,7 +224,8 @@ class _SpecialityDoctorsScreenState extends State<SpecialityDoctorsScreen> {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => DetailsPage(id.toString())),
+          MaterialPageRoute(
+              builder: (context) => DetailsPage(id.toString(), true)),
         );
       },
       child: Container(
