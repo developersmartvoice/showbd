@@ -60,6 +60,7 @@ class _ChoosePlanState extends State<ChoosePlan> {
             centerTitle: true,
             leading: IconButton(
               icon: Icon(Icons.arrow_back),
+              color: WHITE,
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -591,7 +592,11 @@ class _ChoosePlanState extends State<ChoosePlan> {
                                       ),
                                     ),
                                     Text(
-                                      '৳${amount!.toStringAsFixed(2)}',
+                                      currency == 'USD'
+                                          ? '\$' +
+                                              '${amount!.toStringAsFixed(2)}'
+                                          : '৳' +
+                                              '${amount!.toStringAsFixed(2)}',
                                       style: GoogleFonts.robotoCondensed(
                                         fontSize: 16,
                                         color: Colors
