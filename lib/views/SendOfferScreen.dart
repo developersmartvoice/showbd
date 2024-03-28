@@ -469,7 +469,7 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) =>
-                                    DetailsPage(doctorId.toString()),
+                                    DetailsPage(doctorId.toString(), true),
                               ),
                             );
                           },

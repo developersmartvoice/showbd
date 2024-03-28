@@ -681,7 +681,8 @@ class _FilteredGuidesScreenState extends State<FilteredGuidesScreen> {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => DetailsPage(id.toString())),
+          MaterialPageRoute(
+              builder: (context) => DetailsPage(id.toString(), true)),
         );
       },
       child: Container(
