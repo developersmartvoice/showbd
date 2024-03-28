@@ -39,7 +39,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
   bool isErrorInLoading = false;
   bool isMember = false;
 
-  String selectedCurrency = '';
+  String selectedCurrency = 'Select Currency';
 
   fetchDoctorAppointment() async {
     final response = await get(Uri.parse(
@@ -106,6 +106,8 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
           selectedCurrency = jsonResponse['currency'] != null
               ? jsonResponse['currency']
               : "Select Currency";
+
+          saveCurrencyToSharedPreferences(selectedCurrency);
           print("Currency from api: $selectedCurrency");
         });
       } else {
@@ -113,6 +115,19 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
       }
     } catch (e) {
       print('Error: $e');
+    }
+  }
+
+  void saveCurrencyToSharedPreferences(String currency) async {
+    if (currency == "Select Currency") {
+      currency = "BDT";
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('selectedCurrency', currency);
+      print('Currency saved to SharedPreferences: $currency');
+    } else {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('Currency', currency);
+      print('Currency saved to SharedPreferences: $currency');
     }
   }
 
@@ -174,14 +189,14 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
         doctorId = pref.getString("userId");
         future = fetchDoctorAppointment();
         fetchedData();
-        getCurrency();
-        checkIsMember();
       });
     });
   }
 
   fetchedData() {
     future2 = fetchDoctorDetails();
+    getCurrency();
+    checkIsMember();
   }
 
   void _handleDataReload(bool dataUpdated) {
