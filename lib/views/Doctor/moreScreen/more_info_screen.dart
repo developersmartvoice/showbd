@@ -525,34 +525,52 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
               });
             },
             child: Container(
+              width: MediaQuery.sizeOf(context).width * 1,
               height: 50,
               margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
               decoration: BoxDecoration(
-                  // color: Color.fromARGB(255, 243, 103, 9),
-                  color: WHITE,
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border(
-                      bottom: BorderSide(width: 2, color: Colors.orange),
-                      top: BorderSide(width: 2, color: Colors.orange),
-                      right: BorderSide(width: 2, color: Colors.orange),
-                      left: BorderSide(width: 2, color: Colors.orange))),
+                // color: Color.fromARGB(255, 243, 103, 9),
+                color: WHITE,
+                borderRadius: BorderRadius.circular(10),
+                border: Border(
+                  bottom: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                  top: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                  right: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                  left: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                ),
+              ),
               child: Container(
                 margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      GENERAL_INFORMATION,
-                      //style: Theme.of(context).textTheme.subtitle1,
-                      style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                            color: Color.fromARGB(255, 243, 103,
-                                9), // Replace with your desired color
-                          ),
+                    Container(
+                      width: MediaQuery.sizeOf(context).width * .5,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        GENERAL_INFORMATION,
+                        //style: Theme.of(context).textTheme.subtitle1,
+                        style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                              color: Color.fromARGB(255, 243, 103,
+                                  9), // Replace with your desired color
+                            ),
+                      ),
                     ),
-                    Icon(
-                      Icons.arrow_forward_ios,
-                      size: 20,
-                      color: Color.fromARGB(255, 243, 103, 9),
+                    SizedBox(
+                      width: MediaQuery.sizeOf(context).width * .1,
+                    ),
+                    Container(
+                      width: MediaQuery.sizeOf(context).width * .05,
+                      alignment: Alignment.centerRight,
+                      child: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 20,
+                        color: Color.fromARGB(255, 243, 103, 9),
+                      ),
                     ),
                   ],
                 ),
@@ -574,26 +592,49 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
               );
             },
             child: Container(
+              width: MediaQuery.sizeOf(context).width * 1,
               height: 50,
               margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
               decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 243, 103, 9),
-                  borderRadius: BorderRadius.circular(10)),
+                color: WHITE,
+                borderRadius: BorderRadius.circular(10),
+                border: Border(
+                  bottom: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                  top: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                  right: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                  left: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                ),
+              ),
               child: Container(
                 margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      CONTACT_AND_IDENTIFICATION,
-                      style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                            color: Colors.white,
-                          ),
+                    Container(
+                      width: MediaQuery.sizeOf(context).width * .5,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        CONTACT_AND_IDENTIFICATION,
+                        style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                              color: Color.fromARGB(255, 243, 103, 9),
+                            ),
+                      ),
                     ),
-                    Icon(
-                      Icons.arrow_forward_ios,
-                      size: 20,
-                      color: Colors.white,
+                    SizedBox(
+                      width: MediaQuery.sizeOf(context).width * .05,
+                    ),
+                    Container(
+                      width: MediaQuery.sizeOf(context).width * .05,
+                      alignment: Alignment.centerRight,
+                      child: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 20,
+                        color: Color.fromARGB(255, 243, 103, 9),
+                      ),
                     ),
                   ],
                 ),
@@ -619,48 +660,75 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                     );
             },
             child: Container(
+              width: MediaQuery.sizeOf(context).width * 1,
               height: 50,
               margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
               decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 243, 103, 9),
-                  borderRadius: BorderRadius.circular(10)),
+                color: WHITE,
+                borderRadius: BorderRadius.circular(10),
+                border: Border(
+                  bottom: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                  top: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                  right: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                  left: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                ),
+              ),
               child: Container(
                 margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      MEMBERSHIP,
-                      style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                            color: Colors.white,
-                          ),
-                    ),
                     Container(
+                      width: MediaQuery.sizeOf(context).width * .25,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        MEMBERSHIP,
+                        style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                              color: Color.fromARGB(255, 243, 103, 9),
+                            ),
+                      ),
+                    ),
+
+                    SizedBox(
+                      width: MediaQuery.sizeOf(context).width * .05,
+                    ),
+
+                    Container(
+                        width: MediaQuery.sizeOf(context).width * .4,
+                        alignment: Alignment.centerRight,
                         child: isMember
-                            ? Padding(
-                                padding: EdgeInsets.only(left: 100.0),
-                                child: Text(
-                                  "Member",
-                                  style: GoogleFonts.robotoCondensed(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                            ? Text(
+                                "Member",
+                                style: GoogleFonts.robotoCondensed(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w800,
+                                  color: Color.fromARGB(197, 1, 50, 3),
                                 ),
                               )
-                            : Padding(
-                                padding: EdgeInsets.only(left: 20.0),
-                                child: Text(
-                                  "Waiting for payment!",
-                                  style: GoogleFonts.robotoCondensed(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                            : Text(
+                                "Waiting for payment!",
+                                style: GoogleFonts.robotoCondensed(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color.fromARGB(197, 131, 22, 0),
                                 ),
                               )),
-                    Icon(
-                      Icons.arrow_forward_ios,
-                      size: 20,
-                      color: Colors.white,
+
+                    SizedBox(
+                      width: MediaQuery.sizeOf(context).width * .05,
+                    ),
+                    Container(
+                      width: MediaQuery.sizeOf(context).width * .05,
+                      alignment: Alignment.centerRight,
+                      child: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 20,
+                        color: Color.fromARGB(255, 243, 103, 9),
+                      ),
                     ),
                     // TextButton(
                     //   onPressed: () {
@@ -720,23 +788,45 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
               height: 50,
               margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
               decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 243, 103, 9),
-                  borderRadius: BorderRadius.circular(10)),
+                color: WHITE,
+                borderRadius: BorderRadius.circular(10),
+                border: Border(
+                  bottom: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                  top: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                  right: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                  left: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                ),
+              ),
               child: Container(
                 margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      ABOUT_HOST,
-                      style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                            color: Colors.white,
-                          ),
+                    Container(
+                      width: MediaQuery.sizeOf(context).width * .5,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        ABOUT_HOST,
+                        style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                              color: Color.fromARGB(255, 243, 103, 9),
+                            ),
+                      ),
                     ),
-                    Icon(
-                      Icons.arrow_forward_ios,
-                      size: 20,
-                      color: Colors.white,
+                    SizedBox(
+                      width: MediaQuery.sizeOf(context).width * .1,
+                    ),
+                    Container(
+                      width: MediaQuery.sizeOf(context).width * .05,
+                      alignment: Alignment.centerRight,
+                      child: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 20,
+                        color: Color.fromARGB(255, 243, 103, 9),
+                      ),
                     ),
                     // TextButton(onPressed: (){
                     //   Navigator.push(context,
@@ -764,7 +854,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                 context: context,
                 builder: (BuildContext context) {
                   return SimpleDialog(
-                    title: Text("Select Currency"),
+                    title: Center(child: Text("Select Currency")),
                     children: <Widget>[
                       SimpleDialogOption(
                         onPressed: () {
@@ -814,11 +904,22 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
               );
             },
             child: Container(
+              width: MediaQuery.sizeOf(context).width * 1,
               height: 50,
               margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
               decoration: BoxDecoration(
-                color: Color.fromARGB(255, 243, 103, 9),
+                color: WHITE,
                 borderRadius: BorderRadius.circular(10),
+                border: Border(
+                  bottom: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                  top: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                  right: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                  left: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                ),
               ),
 
               child: Container(
@@ -826,29 +927,45 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      CURRENCY_EXCHANGE,
-                      style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                            color: Colors.white,
-                          ),
+                    Container(
+                      width: MediaQuery.sizeOf(context).width * .25,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        CURRENCY_EXCHANGE,
+                        style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                              color: Color.fromARGB(255, 243, 103, 9),
+                            ),
+                      ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 100),
+                    SizedBox(
+                      width: MediaQuery.sizeOf(context).width * .05,
+                    ),
+                    Container(
+                      width: MediaQuery.sizeOf(context).width * .4,
+                      alignment: Alignment.centerRight,
                       child: Text(
                         selectedCurrency,
                         style: GoogleFonts.robotoCondensed(
                           fontSize: 15,
                           fontWeight: FontWeight.w600,
+                          color: Color.fromARGB(197, 1, 50, 3),
                         ),
                         // Theme.of(context).textTheme.subtitle1?.copyWith(
                         //       color: Colors.black,
                         //     ),
                       ),
                     ),
-                    Icon(
-                      Icons.arrow_forward_ios,
-                      size: 20,
-                      color: Colors.white,
+                    SizedBox(
+                      width: MediaQuery.sizeOf(context).width * .05,
+                    ),
+                    Container(
+                      width: MediaQuery.sizeOf(context).width * .05,
+                      alignment: Alignment.centerRight,
+                      child: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 20,
+                        color: Color.fromARGB(255, 243, 103, 9),
+                      ),
                     ),
                   ],
                 ),
@@ -1269,23 +1386,46 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
               height: 50,
               margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
               decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 243, 103, 9),
-                  borderRadius: BorderRadius.circular(10)),
+                color: WHITE,
+                borderRadius: BorderRadius.circular(10),
+                border: Border(
+                  bottom: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                  top: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                  right: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                  left: BorderSide(
+                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                ),
+              ),
               child: Container(
                 margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      DELETE_ACCOUNT,
-                      style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                            color: Colors.white,
-                          ),
+                    Container(
+                      width: MediaQuery.sizeOf(context).width * .5,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        DELETE_ACCOUNT,
+                        style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                              color: Color.fromARGB(255, 243, 103, 9),
+                            ),
+                      ),
                     ),
-                    Icon(
-                      Icons.arrow_forward_ios,
-                      size: 20,
-                      color: Colors.white,
+
+                    SizedBox(
+                      width: MediaQuery.sizeOf(context).width * .1,
+                    ),
+                    Container(
+                      width: MediaQuery.sizeOf(context).width * .05,
+                      alignment: Alignment.centerRight,
+                      child: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 20,
+                        color: Color.fromARGB(255, 243, 103, 9),
+                      ),
                     ),
                     // TextButton(onPressed: (){
                     //   Navigator.push(context,
