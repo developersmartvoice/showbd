@@ -528,8 +528,14 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
               height: 50,
               margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
               decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 243, 103, 9),
-                  borderRadius: BorderRadius.circular(10)),
+                  // color: Color.fromARGB(255, 243, 103, 9),
+                  color: WHITE,
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border(
+                      bottom: BorderSide(width: 2, color: Colors.orange),
+                      top: BorderSide(width: 2, color: Colors.orange),
+                      right: BorderSide(width: 2, color: Colors.orange),
+                      left: BorderSide(width: 2, color: Colors.orange))),
               child: Container(
                 margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
                 child: Row(
@@ -539,14 +545,14 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                       GENERAL_INFORMATION,
                       //style: Theme.of(context).textTheme.subtitle1,
                       style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                            color:
-                                Colors.white, // Replace with your desired color
+                            color: Color.fromARGB(255, 243, 103,
+                                9), // Replace with your desired color
                           ),
                     ),
                     Icon(
                       Icons.arrow_forward_ios,
                       size: 20,
-                      color: Colors.white,
+                      color: Color.fromARGB(255, 243, 103, 9),
                     ),
                   ],
                 ),
