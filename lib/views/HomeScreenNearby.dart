@@ -116,77 +116,6 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
         // margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.0),
         child: Column(
           children: [
-            // isNearbyLoading ? Container(
-            //   height: MediaQuery.of(context).size.height,
-            //   width: MediaQuery.of(context).size.width,
-            //   child: Column(
-            //     children: [
-            //       SizedBox(height: 150,),
-            //       CircularProgressIndicator(),
-            //     ],
-            //   ),
-            // ) :
-            // list2 == null
-            //     ? isErrorInNearby ? Container(
-            //   child: Center(
-            //     child: Column(
-            //       mainAxisAlignment: MainAxisAlignment.center,
-            //       children: [
-            //         SizedBox(
-            //           height: 30,
-            //         ),
-            //         Text(TURN_ON_LOCATION_AND_RETRY,
-            //           style: GoogleFonts.poppins(
-            //               color: Colors.black,
-            //               fontWeight: FontWeight.w400,
-            //               fontSize: 12
-            //           ),
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ) : Center(
-            //   child: CircularProgressIndicator(
-            //     valueColor: AlwaysStoppedAnimation(Theme.of(context).hintColor),
-            //     strokeWidth: 2,
-            //   ),
-            // )
-            //     :
-            /// Old With Ads
-            // ListView.builder(
-            //   shrinkWrap: true,
-            //   physics: ClampingScrollPhysics(),
-            //   itemCount: list.length > 4 ? (list.length/4).ceil() : 1,
-            //   itemBuilder: (context, i){
-            //     print((list.length/4).floor());
-            //     print((list.length/4).ceil());
-            //     // bool isFourMultiplay = list.length
-            //     return Column(
-            //       children: [
-            //         GridView.builder(
-            //           shrinkWrap: true,
-            //           physics: ClampingScrollPhysics(),
-            //           gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-            //               maxCrossAxisExtent: 200,
-            //               childAspectRatio: 0.75,
-            //               crossAxisSpacing: 10,
-            //               mainAxisSpacing: 10),
-            //           itemCount: 4,
-            //           itemBuilder: (BuildContext ctx, index) {
-            //               return index + (i*4) > list.length - 1 ? Container(color:Colors.pink) : nearByGridWidget(
-            //                 list[index + (i*4)].image,
-            //                 list[index + (i*4)].name,
-            //                 list[index + (i*4)].departmentName,
-            //                 list[index + (i*4)].id,
-            //               );
-            //           },
-            //         ),
-            //         ENABLE_ADS ? customAds.nativeAds(id: AD_TYPE) : Container(height: 10,),
-            //       ],
-            //     );
-            //   },
-            // ),
-
             /// New For Spacing Issue
 
             GridView.builder(
@@ -206,18 +135,6 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                     'Name is ${list2[index].name} and ratings are ${list2[index].avgrating}');
                 print(list2[index].images);
                 print("Watching all citys! ${list2[index].city}");
-
-                // for (int i = 0; i < list2.length; i++) {
-                //   fetchDoctorDetails(list2[i].id);
-                // }
-
-                // var data1 = list3[index];
-                // var data1 = list3[ind2x];
-                // print("This printing from My gridbuilderview List2: $list2");
-                // print("This printing from My gridbuilderview List3: $list3");
-
-                // print(
-                //     "wanna see the data ${data1.name} and total Reviews are: ${data1.totalReview}");
 
                 return nearByGridWidget(
                   data.image,
@@ -260,9 +177,6 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
 
   Widget nearByGridWidget(img, name, dept, id, consultationFee, aboutMe, motto,
       avgRating, city, imgs, totalReview) {
-    // if (id == currentId) {
-    //   return Container(height: 0, width: 0);
-    // } else {
     print("This is the city of the doctor: $city");
     return InkWell(
       onTap: () {
@@ -286,377 +200,214 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                 offset: Offset(0, 2),
               ),
             ]),
-        // constraints: BoxConstraints(
-        //   minHeight: 500.0, // Set the minimum height
-        //   maxHeight: 500.0, // Set the maximum height
-        // ),
-        // padding: EdgeInsets.fromLTRB(0, 0, 0, 2),
         child: Column(
           children: [
             Container(
-              // height: 200,
-              child: Expanded(
-                child: Container(
-                  child: Stack(
-                    alignment: Alignment.topRight,
-                    children: [
-                      // -------------------------------------
+              height: MediaQuery.of(context).size.height * .22,
+              child: Stack(
+                alignment: Alignment.topRight,
+                children: [
+                  // -------------------------------------
 
-                      CarouselSlider.builder(
-                        carouselController: sliderController,
-                        itemCount: imgs != null
-                            ? imgs.length + 1
-                            : 1, // Add 1 to account for the fixed image
-                        itemBuilder: (context, index, realIndex) {
-                          if (index == 0) {
-                            print("realIndex is $realIndex");
-                            // int individualPage = 0;
-                            // currentPage = 0;
-                            // Display the fixed image at the beginning
-                            return Container(
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(8),
-                                  topRight: Radius.circular(8),
-                                ),
-                                child: CachedNetworkImage(
-                                  imageUrl: img,
-                                  fit: BoxFit.fill,
-                                  width: double.infinity,
-                                  placeholder: (context, url) => Container(
-                                    color: Theme.of(context).primaryColorLight,
-                                    child: Center(
-                                      child: Image.asset(
-                                        "assets/homeScreenImages/user_unactive.png",
-                                        height: 50,
-                                        width: 50,
-                                      ),
-                                    ),
-                                  ),
-                                  errorWidget: (context, url, err) => Container(
-                                    color: Theme.of(context).primaryColorLight,
-                                    child: Center(
-                                      child: Image.asset(
-                                        "assets/homeScreenImages/user_unactive.png",
-                                        height: 50,
-                                        width: 50,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            );
-                          } else {
-                            // Display the rest of the images from imgs
-                            var imgIndex =
-                                index - 1; // Adjust the index for imgs
-                            // currentPage = imgIndex;
-                            return ClipRRect(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(8),
-                                topRight: Radius.circular(8),
-                              ),
-                              child: CachedNetworkImage(
-                                imageUrl:
-                                    imgs[imgIndex], // Use the image from imgs
-                                fit: BoxFit.cover,
-                                width: double.infinity,
-                                placeholder: (context, url) => Container(
-                                  color: Theme.of(context).primaryColorLight,
-                                  child: Center(
-                                    child: Image.asset(
-                                      "assets/homeScreenImages/user_unactive.png",
-                                      height: 50,
-                                      width: 50,
-                                    ),
-                                  ),
-                                ),
-                                errorWidget: (context, url, err) => Container(
-                                  color: Theme.of(context).primaryColorLight,
-                                  child: Center(
-                                    child: Image.asset(
-                                      "assets/homeScreenImages/user_unactive.png",
-                                      height: 50,
-                                      width: 50,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            );
-                          }
-                        },
-                        options: CarouselOptions(
-                          viewportFraction: 1,
-                          height: 200.0,
-                          initialPage: 0,
-                          reverse: false,
-                          autoPlay: false, // Set to false for manual control
-                          enableInfiniteScroll:
-                              false, // Disable infinite scroll
-                          onPageChanged: (index, reason) {
-                            setState(() {
-                              currentPage = index;
-                            });
-                          },
-                        ),
-                      ),
-
-                      Container(
-                        // margin: EdgeInsets.only(top: 10),
-                        margin: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height * 0.175),
-                        // color: Colors.black,
-                        width: MediaQuery.sizeOf(context).width * 1,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: List.generate(
-                              imgs!.isNotEmpty ? (imgs!.length + 1) : (1),
-                              (index) {
-                            // index < 0 ? currentPage = 0 : {};
-                            print(currentPage);
-                            return Container(
-                              margin: EdgeInsets.symmetric(horizontal: 5),
-                              width: 8,
-                              height: 8,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: currentPage == index
-                                    ? Colors.orange
-                                    : Colors.grey,
-                              ),
-                            );
-                          }),
-                        ),
-                      ),
-
-                      Container(
-                        height: MediaQuery.sizeOf(context).height * 0.035,
-                        width: MediaQuery.sizeOf(context).width * 1,
-                        margin: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height * 0.17),
-                        child: Text(
-                          name.toString().toUpperCase(),
-                          maxLines: 2,
-                          textAlign: TextAlign.center,
-                          overflow: TextOverflow.ellipsis,
-                          style: GoogleFonts.poppins(
-                            // color: Color.fromARGB(255, 255, 94, 0)
-                            //     .withOpacity(0.8),
-                            color: Colors.white,
-                            backgroundColor: Color.fromARGB(94, 194, 191, 191),
-                            fontSize: 18,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: MediaQuery.sizeOf(context).width * 1,
-                        // margin: EdgeInsets.only(top: 180),
-                        margin: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height * 0.2),
-                        child: Text(
-                          city.toString().toUpperCase(),
-                          maxLines: 2,
-                          textAlign: TextAlign.center,
-                          overflow: TextOverflow.ellipsis,
-                          style: GoogleFonts.poppins(
-                            // color: Color.fromARGB(255, 255, 94, 0)
-                            //     .withOpacity(0.8),
-                            color: Colors.white,
-                            backgroundColor: Color.fromARGB(94, 194, 191, 191),
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-
-                      Container(
-                        width: 60.0, // Fixed width
-                        height: 40.0, // Fixed height
-                        // margin: EdgeInsets.only(top: 20),
-                        margin: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height * 0.03),
-                        decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 255, 94, 0)
-                                .withOpacity(0.8),
+                  CarouselSlider.builder(
+                    carouselController: sliderController,
+                    itemCount: imgs != null
+                        ? imgs.length + 1
+                        : 1, // Add 1 to account for the fixed image
+                    itemBuilder: (context, index, realIndex) {
+                      if (index == 0) {
+                        print("realIndex is $realIndex");
+                        // int individualPage = 0;
+                        // currentPage = 0;
+                        // Display the fixed image at the beginning
+                        return Container(
+                          child: ClipRRect(
                             borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(5),
-                              bottomLeft: Radius.circular(5),
-                            )),
-                        child: Center(
-                          child: Text(
-                            '\$' + consultationFee + "/h",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.bold,
+                              topLeft: Radius.circular(8),
+                              topRight: Radius.circular(8),
+                            ),
+                            child: CachedNetworkImage(
+                              imageUrl: img,
+                              fit: BoxFit.fill,
+                              width: double.infinity,
+                              placeholder: (context, url) => Container(
+                                color: Theme.of(context).primaryColorLight,
+                                child: Center(
+                                  child: Image.asset(
+                                    "assets/homeScreenImages/user_unactive.png",
+                                    height: 50,
+                                    width: 50,
+                                  ),
+                                ),
+                              ),
+                              errorWidget: (context, url, err) => Container(
+                                color: Theme.of(context).primaryColorLight,
+                                child: Center(
+                                  child: Image.asset(
+                                    "assets/homeScreenImages/user_unactive.png",
+                                    height: 50,
+                                    width: 50,
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
+                        );
+                      } else {
+                        // Display the rest of the images from imgs
+                        var imgIndex = index - 1; // Adjust the index for imgs
+                        // currentPage = imgIndex;
+                        return ClipRRect(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(8),
+                            topRight: Radius.circular(8),
+                          ),
+                          child: CachedNetworkImage(
+                            imageUrl: imgs[imgIndex], // Use the image from imgs
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                            placeholder: (context, url) => Container(
+                              color: Theme.of(context).primaryColorLight,
+                              child: Center(
+                                child: Image.asset(
+                                  "assets/homeScreenImages/user_unactive.png",
+                                  height: 50,
+                                  width: 50,
+                                ),
+                              ),
+                            ),
+                            errorWidget: (context, url, err) => Container(
+                              color: Theme.of(context).primaryColorLight,
+                              child: Center(
+                                child: Image.asset(
+                                  "assets/homeScreenImages/user_unactive.png",
+                                  height: 50,
+                                  width: 50,
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      }
+                    },
+                    options: CarouselOptions(
+                      viewportFraction: 1,
+                      height: 200.0,
+                      initialPage: 0,
+                      reverse: false,
+                      autoPlay: false, // Set to false for manual control
+                      enableInfiniteScroll: false, // Disable infinite scroll
+                      onPageChanged: (index, reason) {
+                        setState(() {
+                          currentPage = index;
+                        });
+                      },
+                    ),
+                  ),
 
-                          //child: SizedBox(child:
-                          //Text(
-                          //name,
-                          //maxLines: 2,
-                          //textAlign: TextAlign.center,
-                          //overflow: TextOverflow.ellipsis,
-                          //style: GoogleFonts.poppins(
-                          //color: Color.fromARGB(255, 255, 94, 0).withOpacity(0.8),
-                          //fontSize: 16,
-                          //fontWeight: FontWeight.w500,
-                          //),
-                          //),
+                  Container(
+                    // margin: EdgeInsets.only(top: 10),
+                    margin: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.height * 0.01),
+                    // color: Colors.black,
+                    width: MediaQuery.sizeOf(context).width * 1,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(
+                          imgs!.isNotEmpty ? (imgs!.length + 1) : (1), (index) {
+                        // index < 0 ? currentPage = 0 : {};
+                        print(currentPage);
+                        return Container(
+                          margin: EdgeInsets.symmetric(horizontal: 5),
+                          width: 8,
+                          height: 8,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: currentPage == index
+                                ? Colors.orange
+                                : Colors.grey,
+                          ),
+                        );
+                      }),
+                    ),
+                  ),
 
-                          //)
+                  Container(
+                    height: MediaQuery.sizeOf(context).height * 0.035,
+                    width: MediaQuery.sizeOf(context).width * 1,
+                    margin: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.height * 0.17),
+                    child: Text(
+                      name.toString().toUpperCase(),
+                      maxLines: 2,
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      style: GoogleFonts.poppins(
+                        // color: Color.fromARGB(255, 255, 94, 0)
+                        //     .withOpacity(0.8),
+                        color: Colors.white,
+                        backgroundColor: Color.fromARGB(94, 194, 191, 191),
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.sizeOf(context).width * 1,
+                    // margin: EdgeInsets.only(top: 180),
+                    margin: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.height * 0.2),
+                    child: Text(
+                      city.toString().toUpperCase(),
+                      maxLines: 2,
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      style: GoogleFonts.poppins(
+                        // color: Color.fromARGB(255, 255, 94, 0)
+                        //     .withOpacity(0.8),
+                        color: Colors.white,
+                        backgroundColor: Color.fromARGB(94, 194, 191, 191),
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+
+                  Container(
+                    width: 60.0, // Fixed width
+                    height: 40.0, // Fixed height
+                    // margin: EdgeInsets.only(top: 20),
+                    margin: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.height * 0.03),
+                    decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 255, 94, 0).withOpacity(0.8),
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(5),
+                          bottomLeft: Radius.circular(5),
+                        )),
+                    child: Center(
+                      child: Text(
+                        '\$' + consultationFee + "/h",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-
-                      // add button
-                      // Container(
-                      //   margin: EdgeInsets.only(top: 135),
-                      //   width: 160,
-                      //   height: 50,
-                      //   child: isLoggedIn
-                      //       ? ElevatedButton(
-                      //           onPressed: () {
-                      //             Navigator.push(
-                      //                 context,
-                      //                 MaterialPageRoute(
-                      //                     builder: (context) => MakeAppointment(
-                      //                         id.toString(),
-                      //                         name.toString(),
-                      //                         consultationFee.toString())));
-                      //           },
-                      //           style: ElevatedButton.styleFrom(
-                      //             primary: Color.fromARGB(186, 1, 122, 21),
-                      //             shape: RoundedRectangleBorder(
-                      //               borderRadius: BorderRadius.only(
-                      //                 topLeft: Radius.circular(5),
-                      //                 bottomLeft: Radius.circular(5),
-                      //               ),
-                      //               // Adjust the radius as needed
-                      //             ),
-                      //             minimumSize: Size(10,
-                      //                 35), // Set the minimum width and height
-                      //             // Set the button color to orange
-                      //           ),
-                      //           child: Row(
-                      //             mainAxisSize: MainAxisSize.min,
-                      //             crossAxisAlignment: CrossAxisAlignment.center,
-                      //             mainAxisAlignment: MainAxisAlignment.start,
-                      //             children: [
-                      //               Icon(
-                      //                 Icons
-                      //                     .calendar_today, // Add the booking icon
-                      //                 color: Colors
-                      //                     .white, // Set the icon color to white
-                      //               ),
-                      //               SizedBox(
-                      //                   width:
-                      //                       8), // Add some spacing between the icon and text
-                      //               Text(
-                      //                 BOOK_NOW,
-                      //                 style: GoogleFonts.poppins(
-                      //                   fontWeight: FontWeight.w500,
-                      //                   color: Colors
-                      //                       .white, // Set the text color to white
-                      //                   fontSize: 10,
-                      //                 ),
-                      //               ),
-                      //             ],
-                      //           ),
-                      //         )
-                      //       : ElevatedButton(
-                      //           onPressed: () {
-                      //             // Handle button click, e.g., navigate to the login screen
-                      //             Navigator.push(
-                      //                 context,
-                      //                 MaterialPageRoute(
-                      //                     builder: (context) => LoginAsUser()));
-                      //           },
-                      //           style: ElevatedButton.styleFrom(
-                      //             primary: const Color.fromARGB(255, 255, 94, 0)
-                      //                 .withOpacity(0.8),
-                      //             shape: RoundedRectangleBorder(
-                      //               borderRadius: BorderRadius.only(
-                      //                 topLeft: Radius.circular(5),
-                      //                 bottomLeft: Radius.circular(5),
-                      //               ),
-                      //               // Adjust the radius as needed
-                      //             ),
-                      //             minimumSize: Size(60,
-                      //                 40), // Set the minimum width and height
-                      //             // Set the button color to orange
-                      //           ),
-                      //           child: Row(
-                      //             crossAxisAlignment: CrossAxisAlignment.center,
-                      //             mainAxisAlignment: MainAxisAlignment.start,
-                      //             children: [
-                      //               Icon(
-                      //                 Icons
-                      //                     .calendar_today, // Add the booking icon
-                      //                 color: Colors
-                      //                     .white, // Set the icon color to white
-                      //               ),
-                      //               SizedBox(
-                      //                   width:
-                      //                       8), // Add some spacing between the icon and text
-                      //               Text(
-                      //                 BOOK_NOW,
-                      //                 style: GoogleFonts.poppins(
-                      //                   fontWeight: FontWeight.w500,
-                      //                   color: Colors
-                      //                       .white, // Set the text color to white
-                      //                   fontSize: 10,
-                      //                 ),
-                      //               ),
-
-                      //               Text(
-                      //                 name,
-                      //                 maxLines: 2,
-                      //                 textAlign: TextAlign.center,
-                      //                 overflow: TextOverflow.ellipsis,
-                      //                 style: GoogleFonts.poppins(
-                      //                   color: Color.fromARGB(255, 255, 94, 0)
-                      //                       .withOpacity(0.8),
-                      //                   fontSize: 16,
-                      //                   fontWeight: FontWeight.w500,
-                      //                 ),
-                      //               ),
-                      //             ],
-                      //           ),
-                      //         ),
-                      // )
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
             ),
             SizedBox(
               height: 10,
             ),
-            // Text(
-            //   name,
-            //   maxLines: 2,
-            //   textAlign: TextAlign.center,
-            //   overflow: TextOverflow.ellipsis,
-            //   style: GoogleFonts.poppins(
-            //     color: Color.fromARGB(255, 255, 94, 0).withOpacity(0.8),
-            //     fontSize: 16,
-            //     fontWeight: FontWeight.w500,
-            //   ),
-            // ),
-            //Text(
-            //dept,
-            //style: GoogleFonts.poppins(
-            //color: LIGHT_GREY_TEXT,
-            //fontSize: 9.5,
-            //fontWeight: FontWeight.w500,
-            //),
-            //),
-
             motto == null
-                ? Container()
+                ? Container(
+                    height: MediaQuery.of(context).size.height * .03,
+                  )
                 : Container(
+                    height: MediaQuery.of(context).size.height * .03,
                     child: Center(
                       child: Text(
                         motto.toString().length >= 30
@@ -672,34 +423,14 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                       ),
                     ),
                   ),
-            // Text(
-            //   motto.toString().length >= 30
-            //       ? motto.toString().substring(0, 30) + "..."
-            //       : motto.toString(),
-            //   textAlign: TextAlign.center,
-            //   style: GoogleFonts.poppins(
-            //     color: LIGHT_GREY_TEXT,
-            //     fontSize: 20.0,
-            //     fontWeight: FontWeight.w500,
-            //   ),
-            // ),
-            // Text(
-            //   aboutMe.toString().length >= 30
-            //       ? aboutMe.toString().substring(0, 30) + "..."
-            //       : aboutMe.toString(),
-            //   textAlign: TextAlign.center,
-            //   style: GoogleFonts.poppins(
-            //     color: LIGHT_GREY_TEXT,
-            //     fontSize: 20.0,
-            //     fontWeight: FontWeight.w500,
-            //   ),
-            // ),
             Divider(
               height: 30,
               color: Colors.grey,
             ),
             Container(
-              height: 40,
+              alignment: Alignment.bottomCenter,
+              transformAlignment: Alignment.bottomCenter,
+              height: MediaQuery.of(context).size.height * .05,
               // padding: EdgeInsets.only(left: 30, right: 30),
               child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -755,7 +486,6 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
         ),
       ),
     );
-    // }
   }
 
   Widget StarRating(avgRating) {
@@ -876,41 +606,6 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
       messageDialog(ERROR, UNABLE_TO_LOAD_DATA_FORM_SERVER);
     }
   }
-
-  // fetchDoctorDetails(id) async {
-  //   // setState(() {
-  //   //   isNearbyLoading = true;
-  //   // });
-  //   final response =
-  //       await get(Uri.parse("$SERVER_ADDRESS/api/viewdoctor?doctor_id=${id}"))
-  //           .catchError((e) {
-  //     print("ERROR ${e.toString()}");
-  //     setState(() {
-  //       isErrorInNearby = true;
-  //     });
-  //   });
-
-  //   print(response.request);
-
-  //   if (response.statusCode == 200) {
-  //     final jsonResponse = jsonDecode(response.body);
-  //     doctorDetailsClass = DoctorDetailsClass.fromJson(jsonResponse);
-  //     list3.add(doctorDetailsClass!.data!);
-  //     // print(doctorDetailsClass!.data!.avgratting);
-  //     // print(id);
-  //     print("-------------------------------------------------------------");
-  //     for (int i = 0; i < list3.length; i++) {
-  //       DetailsClass.Data currentData = list3[i];
-  //       print('$i, ${currentData.name.toString()}');
-  //       // Access properties of currentData as needed
-  //     }
-  //     print("-------------------------------------------------------------");
-  //     setState(() {
-  //       isNearbyLoading = false;
-  //       //doctorDetailsClass.data.avgratting = '3';
-  //     });
-  //   }
-  // }
 
   int count = 0;
 
