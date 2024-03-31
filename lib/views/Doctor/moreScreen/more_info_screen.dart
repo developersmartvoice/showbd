@@ -293,7 +293,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
               return Container(
                 height: MediaQuery.sizeOf(context).height * .25,
                 width: MediaQuery.sizeOf(context).width * 1,
-                padding: EdgeInsets.all(16),
+                padding: EdgeInsets.all(10),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
