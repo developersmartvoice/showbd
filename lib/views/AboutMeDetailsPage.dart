@@ -42,7 +42,8 @@ class _AboutMeDetailsPageState extends State<AboutMeDetailsPage> {
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController(text: widget.aboutMe);
+    _controller = TextEditingController(
+        text: widget.aboutMe != 'null' ? widget.aboutMe : "");
   }
 
   @override
@@ -268,8 +269,8 @@ class _AboutMeDetailsPageState extends State<AboutMeDetailsPage> {
                   },
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: widget.aboutMe,
-                    hintStyle: TextStyle(color: Colors.black),
+                    hintText: "Write about yourself",
+                    hintStyle: TextStyle(color: Colors.grey),
                   ),
                 ),
               )

@@ -10,6 +10,7 @@ import 'package:appcode3/views/MakeAppointment.dart';
 import 'package:appcode3/views/loginAsUser.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -199,7 +200,7 @@ class _DetailsPageState extends State<DetailsPage> {
                 width: MediaQuery.sizeOf(context).width * .8,
                 alignment: Alignment.center,
                 child: Text(
-                  guideName!,
+                  guideName!.capitalize.toString(),
                   style: GoogleFonts.poppins(
                       fontWeight: FontWeight.w600, color: WHITE, fontSize: 22),
                 ),
@@ -466,9 +467,11 @@ class _DetailsPageState extends State<DetailsPage> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(left: 5),
+                padding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width * .04),
                 width: MediaQuery.sizeOf(context).width * 1,
-                margin: EdgeInsets.only(top: 240),
+                margin: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height * .24),
                 child: Text(
                   guideName.toString().toUpperCase(),
                   maxLines: 2,
@@ -485,9 +488,11 @@ class _DetailsPageState extends State<DetailsPage> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(left: 5),
+                padding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width * .04),
                 width: MediaQuery.sizeOf(context).width * 1,
-                margin: EdgeInsets.only(top: 270),
+                margin: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height * .27),
                 child: Text(
                   city.toString().toUpperCase(),
                   maxLines: 2,
@@ -689,8 +694,8 @@ class _DetailsPageState extends State<DetailsPage> {
                                         : Navigator.of(context).push(
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    BookingScreen(
-                                                        widget.id, guideName!)),
+                                                    BookingScreen(widget.id,
+                                                        guideId!, guideName!)),
                                           );
                                   },
                                   icon:

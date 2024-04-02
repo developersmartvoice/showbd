@@ -1,14 +1,21 @@
+import 'dart:convert';
+
 import 'package:appcode3/en.dart';
+import 'package:appcode3/main.dart';
+import 'package:appcode3/modals/OffersClassSender.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 
 class BookingScreen extends StatefulWidget {
-  final String id;
+  final String sender_id;
+  final String receiver_id;
   final String guideName;
 
-  BookingScreen(this.id, this.guideName);
+  BookingScreen(this.sender_id, this.receiver_id, this.guideName);
 
   @override
   State<BookingScreen> createState() => _BookingScreenState();
@@ -16,19 +23,52 @@ class BookingScreen extends StatefulWidget {
 
 class _BookingScreenState extends State<BookingScreen> {
   DateTime? selectedDate;
+  String? selectedDatePost;
   String selectedDuration = "";
   String selectedMeetingTime = "";
   String selectedNumberOfPeople = "";
   String specificInterest = "";
+  int people = 0;
+  int timeDuration = 0;
+  bool isDatePicked = false;
+  bool isTimeDurationPicked = false;
+  bool isMeetingTimePicled = false;
+  bool isNumberofPeoplePicked = false;
+  bool isMessageGiven = false;
+  String? receipent_image;
+  String? sender_image;
+  List<DeviceToken>? deviceToken;
+
+  directBooking() async {
+    Map<String, dynamic> postData = {
+      'sender_id': int.parse(widget.sender_id),
+      'recipient_id': int.parse(widget.receiver_id),
+      'date': selectedDatePost,
+      'duration': int.parse(selectedDuration),
+      'timing': selectedMeetingTime,
+      'message': specificInterest
+    };
+
+    String postDataJson = jsonEncode(postData);
+
+    final response = await post(
+        Uri.parse("$SERVER_ADDRESS/api/updateDirectBooking"),
+        body: postDataJson);
+
+    if (response.statusCode == 200) {
+      final jsonResponse = jsonDecode(response.body);
+      if (jsonResponse['message'] == 'Direct booking created successfully') {}
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    String hintText = 'Hello ${widget.guideName}, ';
+    String hintText = 'Hello ${widget.guideName.capitalize}, ';
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            'Booking ${widget.guideName}',
+            'Booking ${widget.guideName.toUpperCase()}',
             //centerTitle: true,
             style: GoogleFonts.robotoCondensed(
               color: Colors.white,
@@ -85,7 +125,7 @@ class _BookingScreenState extends State<BookingScreen> {
                                   padding: const EdgeInsets.all(
                                       8.0), // Add padding here
                                   child: Text(
-                                    DateFormat('MM, dd, yyyy')
+                                    DateFormat('dd - MMM - yyyy')
                                         .format(selectedDate!),
                                     style: TextStyle(fontSize: 16),
                                   ),
@@ -165,6 +205,17 @@ class _BookingScreenState extends State<BookingScreen> {
                                   items: ['1h', '2h', '3h'],
                                   onChanged: (value) {
                                     setState(() {
+                                      isTimeDurationPicked = true;
+                                      if (value == '1h') {
+                                        timeDuration = 1;
+                                      } else if (value == '2h') {
+                                        timeDuration = 2;
+                                      } else if (value == '3h') {
+                                        timeDuration = 3;
+                                      } else {
+                                        timeDuration = 0;
+                                        isTimeDurationPicked = false;
+                                      }
                                       selectedDuration = value!;
                                     });
                                   },
@@ -218,6 +269,11 @@ class _BookingScreenState extends State<BookingScreen> {
                                   ],
                                   onChanged: (value) {
                                     setState(() {
+                                      if (value != null) {
+                                        isMeetingTimePicled = true;
+                                      } else {
+                                        isMeetingTimePicled = false;
+                                      }
                                       selectedMeetingTime = value!;
                                     });
                                   },
@@ -270,10 +326,24 @@ class _BookingScreenState extends State<BookingScreen> {
                                   ],
                                   onChanged: (value) {
                                     setState(() {
-                                      selectedMeetingTime = value!;
+                                      isNumberofPeoplePicked = true;
+                                      if (value == 'Just me') {
+                                        people = 1;
+                                      } else if (value == 'Two people') {
+                                        people = 2;
+                                      } else if (value == 'Three people') {
+                                        people = 3;
+                                      } else if (value ==
+                                          'More than three people') {
+                                        people = 4;
+                                      } else {
+                                        people = 0;
+                                        isMeetingTimePicled = false;
+                                      }
+                                      selectedNumberOfPeople = value!;
                                     });
                                   },
-                                  selectedItem: selectedMeetingTime,
+                                  selectedItem: selectedNumberOfPeople,
                                 ),
                               ),
                             ],
@@ -305,6 +375,11 @@ class _BookingScreenState extends State<BookingScreen> {
                         TextField(
                           onChanged: (value) {
                             setState(() {
+                              if (value.isNotEmpty) {
+                                isMessageGiven = true;
+                              } else {
+                                isMessageGiven = false;
+                              }
                               specificInterest = value;
                             });
                           },
@@ -315,29 +390,30 @@ class _BookingScreenState extends State<BookingScreen> {
                           ),
                         ),
                         SizedBox(height: 50),
-                        ElevatedButton(
-                          onPressed: () {
-                            // Navigator.of(context).push(
-                            //   MaterialPageRoute(
-                            //     builder: (context) =>
-                            //         BookingScreen(widget.id, widget.guideName),
-                            //   ),
-                            // );
-                          },
-                          child: Text('REQUEST TO BOOK'),
-                          style: ElevatedButton.styleFrom(
-                            textStyle: GoogleFonts.robotoCondensed(
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.w700,
-                            ),
-                            padding: EdgeInsets.fromLTRB(112, 20, 114, 20),
-                            foregroundColor: Colors.white,
-                            backgroundColor: Color.fromARGB(255, 243, 103, 9),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              side: BorderSide(
-                                color: Colors.white,
-                              ), // Set border radius
+                        Center(
+                          child: ElevatedButton(
+                            onPressed: () {
+                              print("This is Time duration: $timeDuration");
+                              print("This is number of people: $people");
+                              print("This is Sender_ID: ${widget.sender_id}");
+                              print(
+                                  "This is Receiver_ID: ${widget.receiver_id}");
+                            },
+                            child: Text('REQUEST TO BOOK'),
+                            style: ElevatedButton.styleFrom(
+                              textStyle: GoogleFonts.robotoCondensed(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.w700,
+                              ),
+                              padding: EdgeInsets.fromLTRB(112, 20, 114, 20),
+                              foregroundColor: Colors.white,
+                              backgroundColor: Color.fromARGB(255, 243, 103, 9),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                side: BorderSide(
+                                  color: Colors.white,
+                                ), // Set border radius
+                              ),
                             ),
                           ),
                         ),
@@ -358,12 +434,19 @@ class _BookingScreenState extends State<BookingScreen> {
       context: context,
       initialDate: selectedDate ?? DateTime.now(),
       firstDate: DateTime.now(),
-      lastDate: DateTime(2025),
+      lastDate: DateTime(4000),
     );
 
     if (picked != null && picked != selectedDate) {
       setState(() {
         selectedDate = picked;
+        selectedDatePost = DateFormat('yyyy-MM-dd').format(selectedDate!);
+        isDatePicked = true;
+        print("This is selected Date: $selectedDatePost");
+      });
+    } else {
+      setState(() {
+        isDatePicked = false;
       });
     }
   }

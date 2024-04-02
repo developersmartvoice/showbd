@@ -194,9 +194,9 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
   }
 
   fetchedData() {
-    future2 = fetchDoctorDetails();
     getCurrency();
     checkIsMember();
+    future2 = fetchDoctorDetails();
   }
 
   void _handleDataReload(bool dataUpdated) {
@@ -293,7 +293,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
               return Container(
                 height: MediaQuery.sizeOf(context).height * .25,
                 width: MediaQuery.sizeOf(context).width * 1,
-                padding: EdgeInsets.all(16),
+                padding: EdgeInsets.all(10),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -721,7 +721,8 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                                 style: GoogleFonts.robotoCondensed(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w800,
-                                  color: Color.fromARGB(197, 1, 50, 3),
+                                  //color: Color.fromARGB(197, 1, 50, 3),
+                                  color: Colors.green,
                                 ),
                               )
                             : Text(
@@ -729,7 +730,8 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                                 style: GoogleFonts.robotoCondensed(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w600,
-                                  color: Color.fromARGB(197, 131, 22, 0),
+                                  //color: Color.fromARGB(197, 131, 22, 0),
+                                  color: Colors.red,
                                 ),
                               )),
 
@@ -869,7 +871,23 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                 context: context,
                 builder: (BuildContext context) {
                   return SimpleDialog(
-                    title: Center(child: Text("Select Currency")),
+                    title: Center(
+                      child: Text(
+                        "Select Currency".toUpperCase(),
+                        style: TextStyle(
+                          color: const Color.fromARGB(255, 243, 103, 9),
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    contentPadding: EdgeInsets.fromLTRB(30, 20, 30, 20),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                      side: BorderSide(
+                        color: const Color.fromARGB(255, 243, 103, 9),
+                      ),
+                    ),
                     children: <Widget>[
                       SimpleDialogOption(
                         onPressed: () {
@@ -878,9 +896,21 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                             selectedCurrency = 'USD';
                             updateCurrency(selectedCurrency);
                           });
-                          Navigator.of(context).pop();
+                          fetchedData();
+                          Navigator.of(context).pop(true);
                         },
-                        child: Text('USD'),
+                        child: Center(
+                          child: Text(
+                            'USD',
+                            style: TextStyle(
+                              color: Color.fromARGB(197, 1, 50, 3),
+                              fontSize: 17,
+                              fontWeight: selectedCurrency == 'USD'
+                                  ? FontWeight.bold
+                                  : FontWeight.normal,
+                            ),
+                          ),
+                        ),
                       ),
                       SimpleDialogOption(
                         onPressed: () {
@@ -889,30 +919,22 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                             selectedCurrency = 'BDT';
                             updateCurrency(selectedCurrency);
                           });
-                          Navigator.of(context).pop();
+                          fetchedData();
+                          Navigator.of(context).pop(true);
                         },
-                        child: Text('BDT'),
+                        child: Center(
+                          child: Text(
+                            'BDT',
+                            style: TextStyle(
+                              color: Color.fromARGB(197, 1, 50, 3),
+                              fontSize: 17,
+                              fontWeight: selectedCurrency == 'BDT'
+                                  ? FontWeight.bold
+                                  : FontWeight.normal,
+                            ),
+                          ),
+                        ),
                       ),
-                      // SimpleDialogOption(
-                      //   onPressed: () {
-                      //     // Perform actions upon selecting EUR
-                      //     setState(() {
-                      //       selectedCurrency = 'EUR';
-                      //     });
-                      //     Navigator.of(context).pop();
-                      //   },
-                      //   child: Text('EUR'),
-                      // ),
-                      // SimpleDialogOption(
-                      //   onPressed: () {
-                      //     // Perform actions upon selecting GBP
-                      //     setState(() {
-                      //       selectedCurrency = 'GBP';
-                      //     });
-                      //     Navigator.of(context).pop();
-                      //   },
-                      //   child: Text('GBP'),
-                      // ),
                     ],
                   );
                 },
