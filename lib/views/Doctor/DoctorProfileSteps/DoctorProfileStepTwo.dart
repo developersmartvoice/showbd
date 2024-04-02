@@ -12,6 +12,7 @@ class DoctorProfileStepTwo extends StatefulWidget {
 }
 
 class _DoctorProfileStepTwoState extends State<DoctorProfileStepTwo> {
+
   GoogleMapController? mapController;
   final Map<String, Marker> _markers = {};
   LatLng? _center;
@@ -22,7 +23,8 @@ class _DoctorProfileStepTwoState extends State<DoctorProfileStepTwo> {
     mapController = controller;
   }
 
-  locateMarker(LatLng latLng) async {
+
+  locateMarker(LatLng latLng) async{
     final marker = Marker(
       markerId: MarkerId("curr_loc"),
       position: latLng,
@@ -34,19 +36,23 @@ class _DoctorProfileStepTwoState extends State<DoctorProfileStepTwo> {
 
     GeoCode geoCode = GeoCode();
 
-    final coordinates =
-        new Coordinates(latitude: latLng.latitude, longitude: latLng.longitude);
+    final coordinates = new Coordinates(latitude: latLng.latitude, longitude: latLng.longitude);
     print(coordinates);
     var addresses = await geoCode.reverseGeocoding(
-        longitude: coordinates.longitude!, latitude: coordinates.latitude!);
+      longitude: coordinates.longitude!,
+      latitude: coordinates.latitude!
+    );
     var first = addresses;
     print(addresses);
     print("${first.toString()}");
-    setState(
-      () {
-        textEditingController.text = first.toString();
-      },
-    );
+    setState(() {
+      // addressLine = first.addressLine;
+      textEditingController.text = first.toString();
+      // mapController.(CameraUpdate.newCameraPosition(CameraPosition(target: _center,zoom: 15 ))).catchError((e){
+      //   Toast.show(e, context);
+      // });
+    });
+
   }
 
   @override
@@ -66,32 +72,41 @@ class _DoctorProfileStepTwoState extends State<DoctorProfileStepTwo> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        backgroundColor: Theme.of(context).primaryColorLight,
-        body: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-              child: TextField(
-                controller: textEditingController,
-                decoration: InputDecoration(
-                  labelText: ADDRESS,
-                  labelStyle: TextStyle(
-                    color: Theme.of(context).primaryColorDark.withOpacity(0.4),
+        child: Scaffold(
+          backgroundColor: Theme.of(context).primaryColorLight,
+          body: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                child: TextField(
+                  controller: textEditingController,
+                  decoration: InputDecoration(
+                    labelText: ADDRESS,
+                    labelStyle: TextStyle(
+                      color: Theme.of(context).primaryColorDark.withOpacity(0.4),
+                    ),
+                    border: UnderlineInputBorder(),
+                    focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Theme.of(context).primaryColorDark)
+                    ),
+                    //errorText: isNameError ? ENTER_NAME : null,
                   ),
-                  border: UnderlineInputBorder(),
-                  focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                          color: Theme.of(context).primaryColorDark)),
-                  //errorText: isNameError ? ENTER_NAME : null,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14
+                  ),
+                  // onChanged: (val){
+                  //   setState(() {
+                  //     name = val;
+                  //     isNameError = false;
+                  //   });
+                  // },
                 ),
-                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
               ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: FutureBuilder(
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: FutureBuilder(
                     future: getLocation,
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
@@ -100,13 +115,10 @@ class _DoctorProfileStepTwoState extends State<DoctorProfileStepTwo> {
                         );
                       } else {
                         return InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      ChooseLocation(_center!),
-                                ));
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => ChooseLocation(_center!),
+                            ));
                           },
                           child: GoogleMap(
                             onMapCreated: _onMapCreated,
@@ -129,22 +141,33 @@ class _DoctorProfileStepTwoState extends State<DoctorProfileStepTwo> {
                           ),
                         );
                       }
-                    }),
+                    }
+                  ),
+                ),
               ),
-            ),
-            SizedBox(
-              height: 70,
-            ),
-          ],
+              SizedBox(height: 70,),
+            ],
+          ),
         ),
-      ),
     );
   }
 
-  _getLocationStart() async {
+   _getLocationStart() async {
     print('Started');
+    //Toast.show("loading", context);
+    // Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high).then((value) async{
+    //   setState(() {
+    //     _center = LatLng(value.latitude, value.longitude);
+    //     //locateMarker(_center);
+    //   });
+    // })
+    //     .catchError((e){
+    //   Toast.show(e.toString(), context,duration: 3);
+    //   print(e);
+    // });
+
     Position pos = await Geolocator.getCurrentPosition(
-            desiredAccuracy: LocationAccuracy.high)
+        desiredAccuracy: LocationAccuracy.high)
         .then((value) {
       {
         setState(() {
@@ -158,4 +181,6 @@ class _DoctorProfileStepTwoState extends State<DoctorProfileStepTwo> {
       print(e);
     });
   }
+
+
 }

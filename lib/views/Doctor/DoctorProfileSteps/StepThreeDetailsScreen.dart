@@ -1,13 +1,20 @@
 import 'dart:convert';
+
+import 'package:appcode3/views/Doctor/DoctorProfile.dart';
+
 import '../../../../en.dart';
 import '../../../../main.dart';
 import '../../../../modals/DoctorProfileSetails.dart';
 import '../../../../modals/DoctorSlotDetails.dart';
 import '../../../../modals/SpecialityClass.dart';
+import '../../../../modals/Test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
+// import 'package:masked_text_input_formatter/masked_text_input_formatter.dart';
+import 'package:toast/toast.dart';
 
 class StepThreeDetailsScreen extends StatefulWidget {
   String id;
@@ -92,6 +99,7 @@ class _StepThreeDetailsScreenState extends State<StepThreeDetailsScreen> {
               (_picked!.minute > 10
                   ? _picked!.minute.toString()
                   : "0" + _picked!.minute.toString());
+          //_picked.hour > 10 ? _picked.hour.toString() : "0"+_picked.hour.toString() + ":" + (_picked.minute > 10 ? _picked.minute.toString() : "0"+_picked.minute.toString());
           textEditingControllerEndTime[i].text = (_picked!.hour > 10
                   ? _picked!.hour.toString()
                   : "0" + _picked!.hour.toString()) +
@@ -99,6 +107,7 @@ class _StepThreeDetailsScreenState extends State<StepThreeDetailsScreen> {
               (_picked!.minute > 10
                   ? _picked!.minute.toString()
                   : "0" + _picked!.minute.toString());
+          //_picked.hour > 10 ? _picked.hour.toString() : "0"+_picked.hour.toString() + ":" + (_picked.minute > 10 ? _picked.minute.toString() : "0"+_picked.minute.toString());
           isError[i] = false;
           print(endTime[i]);
           selectedvValue[i] = null;
@@ -159,18 +168,17 @@ class _StepThreeDetailsScreenState extends State<StepThreeDetailsScreen> {
     if (response.statusCode == 200) {
       final jsonResponse = jsonDecode(response.body);
       if (jsonResponse['success'].toString() == "1") {
-        setState(
-          () {
-            doctorSlotsDetails = DoctorSlotsDetails.fromJson(jsonResponse);
-            print(doctorSlotsDetails!.data);
-            if (doctorSlotsDetails!.data!.isEmpty) {
-              isSlotAvailable = false;
-            } else {
-              initializeValues();
-              isSlotAvailable = true;
-            }
-          },
-        );
+        setState(() {
+          doctorSlotsDetails = DoctorSlotsDetails.fromJson(jsonResponse);
+          print(doctorSlotsDetails!.data);
+          if (doctorSlotsDetails!.data!.isEmpty) {
+            isSlotAvailable = false;
+          } else {
+            initializeValues();
+            isSlotAvailable = true;
+          }
+          //print("\n\n\n\n\nisSlotAvailable : "+isSlotAvailable.toString());
+        });
       } else {
         setState(() {
           isSlotAvailable = false;
@@ -223,6 +231,10 @@ class _StepThreeDetailsScreenState extends State<StepThreeDetailsScreen> {
       textEditingControllerEndTime.add(TextEditingController(text: ""));
       textEditingControllerStartTime.add(TextEditingController(text: ""));
     });
+    //      slotsList[slotsList.length + 1].add(Getslotls());
+
+    //selectedvValue.add("${doctorSlotsDetails.data[i].duration} Minutes");
+    //}
   }
 
   Future<bool> _onWillPopScope() async {
@@ -661,6 +673,11 @@ class _StepThreeDetailsScreenState extends State<StepThreeDetailsScreen> {
               int.parse(startTime.split(":")[0]),
               int.parse(startTime.split(":")[1]),
             );
+            // print(dateTime.add(Duration(minutes: x * interval))
+            //     .toString()
+            //     .substring(11, 16) + "${dateTime
+            //     .add(Duration(minutes: x * interval))
+            //     .hour > 12 ? " PM" : " AM"}");
             setState(() {
               int ii = interval;
               slotsList[i].add(Getslotls(
@@ -758,9 +775,11 @@ class _StepThreeDetailsScreenState extends State<StepThreeDetailsScreen> {
       child: Container(
         height: 50,
         margin: EdgeInsets.fromLTRB(20, 10, 20, 20),
+        //width: MediaQuery.of(context).size.width,
         child: InkWell(
           onTap: () {
             generateJson();
+            //print(doctorSlotsDetails.toJson());
           },
           child: Stack(
             children: [
@@ -832,6 +851,7 @@ class _StepThreeDetailsScreenState extends State<StepThreeDetailsScreen> {
         x = x + "]${i < 6 ? "," : ""}";
       }
       x = x + "}}";
+      //print("x----->  "+x);
       bool isErrorExist = false;
       String msg = "";
       for (int i = 0; i < isError.length; i++) {
@@ -843,7 +863,12 @@ class _StepThreeDetailsScreenState extends State<StepThreeDetailsScreen> {
       }
 
       isErrorExist ? messageDialog(ERROR, msg) : uploadData(x);
+
+      // print();
     }
+    // else
+
+    // }
   }
 
   uploadData(x) async {
@@ -869,6 +894,7 @@ class _StepThreeDetailsScreenState extends State<StepThreeDetailsScreen> {
         "phoneno": widget.myData.phoneno,
         "services": widget.myData.services?.join(", "),
         "languages": widget.myData.languages?.join(", "),
+        //widget.base64image == null ? "doctor_id" : widget.doctorId : "image" : widget.base64image,
         "department_id": departmentId.toString(),
         "facebook_url": widget.myData.facebookUrl,
         "twitter_url": widget.myData.twitterUrl,
@@ -993,6 +1019,8 @@ class _StepThreeDetailsScreenState extends State<StepThreeDetailsScreen> {
                   ],
                 );
               });
+
+          // Navigator.push(context, MaterialPageRoute(builder: (context)=>DoctorProfile()));
         } else {
           Navigator.pop(context);
           messageDialog(ERROR, jsonResponse['register']);

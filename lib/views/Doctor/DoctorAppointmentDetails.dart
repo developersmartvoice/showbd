@@ -1,7 +1,10 @@
+// ignore_for_file: deprecated_member_use, must_be_immutable
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
+
 import 'package:appcode3/VideoCall/managers/call_manager.dart';
 import 'package:appcode3/VideoCall/utils/consts.dart';
 import 'package:appcode3/en.dart';
@@ -460,6 +463,11 @@ class _DoctorAppointmentDetailsState extends State<DoctorAppointmentDetails> {
                                   _showMyDialog(
                                       list.connectycubeUserId!.toInt(), list);
                                 },
+                                // child: Image.asset(
+                                //   "assets/video-call.png",
+                                //   height: 45,
+                                //   width: 45,
+                                // ),
                                 child: Container(
                                     alignment: Alignment.center,
                                     decoration: BoxDecoration(
@@ -476,38 +484,79 @@ class _DoctorAppointmentDetailsState extends State<DoctorAppointmentDetails> {
                               width: 10,
                             ),
                             InkWell(
-                              onTap: () {
-                                print("pressed");
-                                print("live chat pressed");
-                                // new chat navigation screen
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ChatScreen(
-                                      list.userName,
-                                      '117' + userId.toString(),
-                                      list.connectycubeUserId,
-                                      true,
-                                      list.deviceToken,
-                                      list.doctorImage,
-                                      list.userImage,
+                                onTap: () {
+                                  print("pressed");
+                                  print("live chat pressed");
+
+                                  /// old chat navigation screen
+                                  // Navigator.push(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //         builder: (context) => ChatScreen(
+                                  //             list.userName,
+                                  //             '117' + userId.toString(),
+                                  //             list.connectycubeUserId,
+                                  //             false,list.deviceToken)));
+
+                                  /// new chat navigation screen
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ChatScreen(
+                                        list.userName,
+                                        '117' + userId.toString(),
+                                        list.connectycubeUserId,
+                                        true,
+                                        list.deviceToken,
+                                        list.doctorImage,
+                                        list.userImage,
+                                      ),
                                     ),
-                                  ),
-                                );
-                              },
-                              child: Container(
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    color: Color(0xff01d8c9),
-                                    borderRadius: BorderRadius.circular(15)),
-                                height: 40,
-                                width: 45,
-                                child: Icon(
-                                  Icons.chat,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
+                                  );
+                                },
+                                child: Container(
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                        color: Color(0xff01d8c9),
+                                        borderRadius:
+                                            BorderRadius.circular(15)),
+                                    height: 40,
+                                    width: 45,
+                                    child: Icon(
+                                      Icons.chat,
+                                      color: Colors.white,
+                                    ))),
+
+                            // InkWell(
+                            //   onTap: () {
+                            //     print("pressed");
+                            //     // Navigator.push(
+                            //     //   context,
+                            //     //   MaterialPageRoute(
+                            //     //     builder: (context) => ChatScreen(
+                            //     //       list.user_name,
+                            //     //       '117' + userId.toString(),
+                            //     //       list.connectycubeUserId,
+                            //     //       true,
+                            //     //       list.deviceToken,
+                            //     //       list.doctor_Image,
+                            //     //       list.user_Image,
+                            //     //     ),
+                            //     //   ),
+                            //     // );
+                            //   },
+                            //   child: Container(
+                            //       alignment: Alignment.center,
+                            //       decoration: BoxDecoration(
+                            //           color: Color(0xff01d8c9),
+                            //           borderRadius: BorderRadius.circular(15)),
+                            //       height: 40,
+                            //       width: 45,
+                            //       child: Icon(
+                            //         Icons.chat,
+                            //         color: Colors.white,
+                            //       )),
+                            // )
                           ],
                         ),
                         SizedBox(
@@ -733,6 +782,9 @@ class _DoctorAppointmentDetailsState extends State<DoctorAppointmentDetails> {
                             messageDialog(ERROR,
                                 "Appointment is on ${doctorAppointmentDetailsClass!.data!.date}. You can't mark it as Completed today");
                           }
+                          // print(doctorAppointmentDetailsClass.data.date);
+                          // print(DateTime.now().toString().substring(0,10));
+                          //changeStatus("4");
                         },
                         child: Stack(
                           children: [
@@ -820,6 +872,19 @@ class _DoctorAppointmentDetailsState extends State<DoctorAppointmentDetails> {
   uploadPrescriptionAndChangeStatus(String status) async {
     await showUploadPrescriptionSheet();
     print('closed');
+
+    // final response = await post("$SERVER_ADDRESS/api/appointmentstatuschange?app_id=${widget.id}&status=$status");
+    // if(response.statusCode == 200){
+    //   final jsonResponse = jsonDecode(response.body);
+    //   if(jsonResponse['success'] == "1"){
+    //     Navigator.pop(context);
+    //     //messageDialog(SUCCESSFUL, jsonResponse['msg']);
+    //     setState(() {
+    //       getAppointmentDetails = fetchAppointmentDetails();
+    //       areChangesMade = true;
+    //     });
+    //   }
+    // }
   }
 
   uploadPrescription() async {
@@ -1343,25 +1408,34 @@ class _DoctorAppointmentDetailsState extends State<DoctorAppointmentDetails> {
                     )
                   ],
                 )
+                // Text('This is a demo alert dialog.'),
+                // Text('Would you like to approve of this message?'),
               ],
             ),
           ),
+          // actions: <Widget>[
+          //   TextButton(
+          //     child: const Text('Approve'),
+          //     onPressed: () {
+          //       Navigator.of(context).pop();
+          //     },
+          //   ),
+          // ],
         );
       },
     );
   }
 
-  Future<Map<String, dynamic>> sendCallNotification(
-      String token, int type, Data data) async {
+  Future<Map<String, dynamic>> sendCallNotification(String token,int type,Data data) async {
+
     print('send notification call');
 
-    String sessionId =
-        "${DateTime.now().millisecondsSinceEpoch}${Random().nextInt(9999999)}";
+    String sessionId = "${DateTime.now().millisecondsSinceEpoch}${Random().nextInt(9999999)}";
 
     String? mytoken;
     String? myconnectCubId;
     String? myName;
-    SharedPreferences.getInstance().then((value) {
+    SharedPreferences.getInstance().then((value){
       value.setString("currentCallToken", token);
       value.setString("currentCallSessionId", sessionId);
       mytoken = value.getString('token');
@@ -1373,8 +1447,8 @@ class _DoctorAppointmentDetailsState extends State<DoctorAppointmentDetails> {
     await FirebaseMessaging.instance.requestPermission(
         sound: true, badge: true, alert: true, provisional: false);
 
-    await http
-        .post(
+
+    await http.post(
       Uri.parse('https://fcm.googleapis.com/fcm/send'),
       headers: <String, String>{
         'Content-Type': 'application/json',
@@ -1383,8 +1457,13 @@ class _DoctorAppointmentDetailsState extends State<DoctorAppointmentDetails> {
       body: jsonEncode(
         <String, dynamic>{
           'priority': 'high',
-          'notification': <String, dynamic>{
-            'android': <String, String>{},
+          'notification' : <String, dynamic>{
+            'android' : <String,String>{
+            },
+            // 'title' : "Call Notification",
+            // 'body' : '',
+            // 'title' : "$userName calling you",
+            // 'body' : 'click here to answer',
           },
           'data': <String, String>{
             'callNotification': 1.toString(),
@@ -1406,16 +1485,15 @@ class _DoctorAppointmentDetailsState extends State<DoctorAppointmentDetails> {
           'to': token,
         },
       ),
-    )
-        .then((value) {
+    ).then((value){
       print("\n\nMessage sent : ${value.body}");
       print('send token $token');
-    }).catchError((onError) {
+    }).catchError((onError){
       print('\n\n Catch Error on notification $onError');
     });
 
     final Completer<Map<String, dynamic>> completer =
-        Completer<Map<String, dynamic>>();
+    Completer<Map<String, dynamic>>();
 
     return completer.future;
   }

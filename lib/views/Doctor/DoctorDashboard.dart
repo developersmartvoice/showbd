@@ -5,19 +5,26 @@ import 'package:appcode3/en.dart';
 import 'package:appcode3/views/HomeScreen.dart';
 import 'package:appcode3/views/incoming_call_image_name.dart';
 import 'package:appcode3/main.dart';
+import 'package:appcode3/modals/DoctorAppointmentClass.dart';
 import 'package:appcode3/modals/DoctorPastAppointmentsClass.dart';
 import 'package:appcode3/views/Doctor/DoctorAllAppointments.dart';
 import 'package:appcode3/views/Doctor/DoctorAppointmentDetails.dart';
 import 'package:appcode3/views/Doctor/DoctorProfileWithRating.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+//import 'package:facebook_audience_network/ad/ad_native.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+//import 'package:flutter_native_admob/flutter_native_admob.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../VideoCall/managers/call_manager.dart';
 import '../../notificationHelper.dart';
+import '../AllAppointments.dart';
+import '../UserAppointmentDetails.dart';
 import 'DoctorChooseYourPlan.dart';
 
 class DoctorDashboard extends StatefulWidget {
@@ -64,6 +71,12 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
         'doctor detail url ->${'$SERVER_ADDRESS/api/doctordetail?doctor_id=$doctorId'}');
     final response = await get(
         Uri.parse("$SERVER_ADDRESS/api/doctordetail?doctor_id=$doctorId"));
+    // .catchError((e){
+    //   setState(() {
+    //     isErrorInLoading = true;
+    //   });
+    // });
+    // try {
     if (response.statusCode == 200) {
       print('status================${response.body}');
       final jsonResponse = jsonDecode(response.body);
@@ -71,9 +84,12 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
         try {
           doctorProfileWithRating =
               DoctorProfileWithRating.fromJson(jsonResponse);
+          // SharedPreferences sp = await SharedPreferences.getInstance();
+          // sp.setString('profilePic', doctorProfileWithRating!.data!.image??'');
           print(
               'subscription================${doctorProfileWithRating!.data!.isSubscription}');
           print('subscription================${doctorProfileWithRating!.data}');
+          // if(doctorProfileWithRating!.data!.isSubscription == "0"){
           if (doctorProfileWithRating!.data!.isSubscription == 1) {
             Navigator.push(
               context,
@@ -94,6 +110,12 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
     } else {
       setState(() {});
     }
+    // }catch(e){
+    //
+    //   setState(() {
+    //     isErrorInLoading = true;
+    //   });
+    // }
   }
 
   getToken() async {
@@ -112,6 +134,11 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
 
   @override
   void initState() {
+    // nativeAdController.setNonPersonalizedAds(true);
+    // nativeAdController.setTestDeviceIds(["0B43A6DF92B4C06E3D9DBF00BA6DA410"]);
+    // nativeAdController.stateChanged.listen((event) {
+    //   print(event);
+    // });
     // TODO: implement initState
     super.initState();
     //getMessages();
@@ -120,50 +147,67 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
     getToken();
     if (mounted) {
       FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler);
-      FirebaseMessaging.onMessage.listen(
-        (message) {
-          print("onDoctor dashboard onMessage: $message");
-          print("\n\n" + message.toString());
-          var payloadData =
-              '${message.data['notificationType']}:${message.data['ccId']}';
-          if (message.data['order_id'] != null) {
-            notificationHelper.showNotification(
+      FirebaseMessaging.onMessage.listen((message) {
+        print("onDoctor dashboard onMessage: $message");
+        print("\n\n" + message.toString());
+        var payloadData =
+            '${message.data['notificationType']}:${message.data['ccId']}';
+        if (message.data['order_id'] != null) {
+          notificationHelper.showNotification(
+            title: message.notification!.title,
+            body: message.notification!.body,
+            payload: "${message.data['type']}:${message.data['order_id']}",
+            id: "124",
+            // context2: context
+          );
+        } else if (payloadData.split(":")[0].toString() == '3') {
+          notificationHelper.showNotification(
+            title: 'Call Rejected',
+            body: message.notification!.body,
+            payload: payloadData,
+            id: "124",
+          );
+          try {
+            print('success on reject call ');
+            Get.to(() => Container());
+            CallManager.instance.reject(message.data['sessionId']);
+          } catch (e) {
+            print('error on reject call $e');
+          }
+        } else if (payloadData.split(":")[0].toString() == '1') {
+          print('call coming');
+          // incomingCallManager.setValue(message.data['$PARAM_CALLER_NAME'], message.data['Default']);
+          print('call image is : ${message.data['image']}');
+          incomingCallManager.setValue(
+              message.data['$PARAM_CALLER_NAME'], message.data['image']);
+        } else {
+          notificationHelper.showNotification(
               title: message.notification!.title,
-              body: message.notification!.body,
-              payload: "${message.data['type']}:${message.data['order_id']}",
-              id: "124",
-              // context2: context
-            );
-          } else if (payloadData.split(":")[0].toString() == '3') {
-            notificationHelper.showNotification(
-              title: 'Call Rejected',
               body: message.notification!.body,
               payload: payloadData,
               id: "124",
-            );
-            try {
-              print('success on reject call ');
-              Get.to(() => Container());
-              CallManager.instance.reject(message.data['sessionId']);
-            } catch (e) {
-              print('error on reject call $e');
-            }
-          } else if (payloadData.split(":")[0].toString() == '1') {
-            print('call coming');
-            // incomingCallManager.setValue(message.data['$PARAM_CALLER_NAME'], message.data['Default']);
-            print('call image is : ${message.data['image']}');
-            incomingCallManager.setValue(
-                message.data['$PARAM_CALLER_NAME'], message.data['image']);
-          } else {
-            notificationHelper.showNotification(
-                title: message.notification!.title,
-                body: message.notification!.body,
-                payload: payloadData,
-                id: "124",
-                context2: context);
-          }
-        },
-      );
+              context2: context);
+        }
+      });
+
+      // FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      //   print("onMessageAppOpened: $message");
+      //   if (message.data['type'] == "user_id") {
+      //     Navigator.push(
+      //       context,
+      //       MaterialPageRoute(
+      //           builder: (context) => UserAppointmentDetails(
+      //               message.data['order_id'].toString())),
+      //     );
+      //   } else if (message.data['type'] == "doctor_id") {
+      //     Navigator.push(
+      //       context,
+      //       MaterialPageRoute(
+      //           builder: (context) => DoctorAppointmentDetails(
+      //               message.data['order_id'].toString())),
+      //     );
+      //   }
+      // });
     }
 
     SharedPreferences.getInstance().then((pref) {
@@ -207,6 +251,24 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
   @override
   Widget build(BuildContext context) {
     return HomeScreen();
+    // return SafeArea(
+    //     child: Scaffold(
+
+    //       backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
+    //       appBar: AppBar(
+    //         automaticallyImplyLeading: false,
+    //         flexibleSpace: header(),
+    //       ),
+    //       body: SingleChildScrollView(
+    //         child: Column(
+    //           children: [
+    //             doctorProfile(),
+    //             upCommingAppointments(),
+    //           ],
+    //         ),
+    //       ),
+    //     )
+    // );
   }
 
   Widget header() {
