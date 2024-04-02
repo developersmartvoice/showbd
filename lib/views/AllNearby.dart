@@ -5,15 +5,10 @@ import 'package:appcode3/en.dart';
 import 'package:appcode3/modals/NearbyDoctorClass.dart';
 import 'package:appcode3/views/DetailsPage.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-//import 'package:facebook_audience_network/ad/ad_native.dart';
 import 'package:flutter/material.dart';
-//import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
-// import 'package:loadmore/loadmore.dart';
-// import 'package:paging/paging.dart';
-
 import '../main.dart';
 
 class AllNearby extends StatefulWidget {
@@ -286,10 +281,6 @@ class _AllNearbyState extends State<AllNearby> {
                         width: 50,
                       ),
                     ),
-                    //child: Padding(
-                    //   padding: const EdgeInsets.all(20.0),
-                    // )
-                    //
                   ),
                 ),
               ),
@@ -326,7 +317,6 @@ class _AllNearbyState extends State<AllNearby> {
     Position position = await Geolocator.getCurrentPosition(
             desiredAccuracy: LocationAccuracy.high)
         .catchError((e) {
-      //Toast.show(e.toString(), context,duration: 3);
       print("e :$e");
     });
 
@@ -373,45 +363,41 @@ class _AllNearbyState extends State<AllNearby> {
 
   messageDialog(String s1, String s2) {
     return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text(s1, style: Theme.of(context).textTheme.bodyText1),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  s2,
-                  style: Theme.of(context).textTheme.bodyText1,
-                )
-              ],
-            ),
-            actions: [
-              TextButton(
-                  onPressed: () async {
-                    var status = await Permission.location.status;
-                    if (!status.isGranted && s1 == PERMISSION_NOT_GRANTED) {
-                      Map<Permission, PermissionStatus> statuses = await [
-                        Permission.location,
-                        Permission.storage,
-                      ].request();
-                      _getLocationStart();
-                      // We didn't ask for permission yet or the permission has been denied before but not permanently.
-                    }
-
-//
-                    Navigator.pop(context);
-                  },
-                  style: TextButton.styleFrom(
-                    backgroundColor: Theme.of(context).primaryColor,
-                  ),
-                  // color: Theme.of(context).primaryColor,
-                  child:
-                      Text(OK, style: Theme.of(context).textTheme.bodyText1)),
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(s1, style: Theme.of(context).textTheme.bodyText1),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                s2,
+                style: Theme.of(context).textTheme.bodyText1,
+              )
             ],
-          );
-        });
+          ),
+          actions: [
+            TextButton(
+                onPressed: () async {
+                  var status = await Permission.location.status;
+                  if (!status.isGranted && s1 == PERMISSION_NOT_GRANTED) {
+                    Map<Permission, PermissionStatus> statuses = await [
+                      Permission.location,
+                      Permission.storage,
+                    ].request();
+                    _getLocationStart();
+                  }
+                  Navigator.pop(context);
+                },
+                style: TextButton.styleFrom(
+                  backgroundColor: Theme.of(context).primaryColor,
+                ),
+                child: Text(OK, style: Theme.of(context).textTheme.bodyText1)),
+          ],
+        );
+      },
+    );
   }
 
   Future<bool?> _loadMoreFunc() async {

@@ -37,8 +37,10 @@ class _ChangePasswordState extends State<ChangePassword> {
 
   ChangePassword() async {
     isErrorInLoading = true;
-    print('change password url ------------------------------> ${Uri.parse("$SERVER_ADDRESS/api/change_password_doctor")}');
-    var request = http.MultipartRequest('POST', Uri.parse("$SERVER_ADDRESS/api/change_password_doctor"));
+    print(
+        'change password url ------------------------------> ${Uri.parse("$SERVER_ADDRESS/api/change_password_doctor")}');
+    var request = http.MultipartRequest(
+        'POST', Uri.parse("$SERVER_ADDRESS/api/change_password_doctor"));
     request.fields.addAll({
       'doctor_id': docId.toString(),
       'old_password': oldpassword.text,
@@ -52,19 +54,20 @@ class _ChangePasswordState extends State<ChangePassword> {
       var resp = json.decode(response.body);
       setState(() {
         isErrorInLoading = false;
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(resp['msg'],textAlign: TextAlign.center)));
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(resp['msg'], textAlign: TextAlign.center)));
       });
       Navigator.pop(context);
       print("resp is===>>>${resp['msg']}");
-    }
-    else {
+    } else {
       setState(() {
         isErrorInLoading = true;
       });
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(response.reasonPhrase.toString(),textAlign: TextAlign.center)));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(response.reasonPhrase.toString(),
+              textAlign: TextAlign.center)));
       print(response.reasonPhrase);
     }
-
   }
 
   bool _passwordVisible = true;
@@ -83,200 +86,170 @@ class _ChangePasswordState extends State<ChangePassword> {
           child: Column(
             children: [
               Form(
-                key: _formKey,
+                  key: _formKey,
                   child: Column(
-                children: [
-                  TextFormField(
-                    controller: oldpassword,
-                    obscureText: _passwordVisible,
-                    obscuringCharacter: '*',
-                    decoration: InputDecoration(
-                      // hintText: "Old Password",
-                      labelText: OLD_PASSWORD,
-                      labelStyle: GoogleFonts.poppins(
-                          color: LIGHT_GREY_TEXT,
-                          fontWeight: FontWeight.w400
-                      ),
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          // Based on passwordVisible state choose the icon
-                          _passwordVisible
-                              ? Icons.visibility
-                              : Icons.visibility_off,
-                          color: Theme.of(context).primaryColorDark,
+                    children: [
+                      TextFormField(
+                        controller: oldpassword,
+                        obscureText: _passwordVisible,
+                        obscuringCharacter: '*',
+                        decoration: InputDecoration(
+                          // hintText: "Old Password",
+                          labelText: OLD_PASSWORD,
+                          labelStyle: GoogleFonts.poppins(
+                              color: LIGHT_GREY_TEXT,
+                              fontWeight: FontWeight.w400),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              // Based on passwordVisible state choose the icon
+                              _passwordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: Theme.of(context).primaryColorDark,
+                            ),
+                            onPressed: () {
+                              // Update the state i.e. toogle the state of passwordVisible variable
+                              setState(() {
+                                _passwordVisible = !_passwordVisible;
+                              });
+                            },
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                            color: LIGHT_GREY_TEXT,
+                          )),
                         ),
-                        onPressed: () {
-                          // Update the state i.e. toogle the state of passwordVisible variable
+                        style: GoogleFonts.poppins(fontWeight: FontWeight.w500),
+                        validator: (value) {
                           setState(() {
-                            _passwordVisible = !_passwordVisible;
+                            oldpwd = value!;
                           });
+                          if (oldpwd.isEmpty) {
+                            return 'Please Enter Old Password';
+                          }
+                          return null;
                         },
                       ),
-                      focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: LIGHT_GREY_TEXT,)
-                      ),
-
-                      // focusedBorder: OutlineInputBorder(
-                      //     borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                      //     borderSide: BorderSide(color: Colors.grey)),
-                      // enabledBorder: OutlineInputBorder(
-                      //     borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                      //     borderSide: BorderSide(color: Colors.grey)),
-                      // errorBorder: OutlineInputBorder(
-                      //     borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                      //     borderSide: BorderSide(color: Colors.grey)),
-                    ),
-                    style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w500
-                    ),
-                    validator: (value){
-                      setState(() {
-                        oldpwd = value!;
-                      });
-                      if(oldpwd.isEmpty){
-                        return 'Please Enter Old Password';
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(height: 10),
-                  TextFormField(
-                    controller: newpassword,
-                    obscureText: _passwordVisible1,
-                    obscuringCharacter: '*',
-                    decoration: InputDecoration(
-                      // hintText: "New Password",
-                      labelText: NEW_PASSWORD,
-                      labelStyle: GoogleFonts.poppins(
-                          color: LIGHT_GREY_TEXT,
-                          fontWeight: FontWeight.w400
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: LIGHT_GREY_TEXT,)
-                      ),
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          // Based on passwordVisible state choose the icon
-                          _passwordVisible1
-                              ? Icons.visibility
-                              : Icons.visibility_off,
-                          color: Theme.of(context).primaryColorDark,
+                      SizedBox(height: 10),
+                      TextFormField(
+                        controller: newpassword,
+                        obscureText: _passwordVisible1,
+                        obscuringCharacter: '*',
+                        decoration: InputDecoration(
+                          // hintText: "New Password",
+                          labelText: NEW_PASSWORD,
+                          labelStyle: GoogleFonts.poppins(
+                              color: LIGHT_GREY_TEXT,
+                              fontWeight: FontWeight.w400),
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                            color: LIGHT_GREY_TEXT,
+                          )),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              // Based on passwordVisible state choose the icon
+                              _passwordVisible1
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: Theme.of(context).primaryColorDark,
+                            ),
+                            onPressed: () {
+                              // Update the state i.e. toogle the state of passwordVisible variable
+                              setState(() {
+                                _passwordVisible1 = !_passwordVisible1;
+                              });
+                            },
+                          ),
                         ),
-                        onPressed: () {
-                          // Update the state i.e. toogle the state of passwordVisible variable
+                        style: GoogleFonts.poppins(fontWeight: FontWeight.w500),
+                        validator: (value) {
                           setState(() {
-                            _passwordVisible1 = !_passwordVisible1;
+                            newpwd = value!;
                           });
+                          if (newpwd.isEmpty) {
+                            return 'Please Enter New Password';
+                          }
+                          return null;
                         },
                       ),
-                      // focusedBorder: OutlineInputBorder(
-                      //     borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                      //     borderSide: BorderSide(color: Colors.grey)),
-                      // enabledBorder: OutlineInputBorder(
-                      //     borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                      //     borderSide: BorderSide(color: Colors.grey)),
-                      // errorBorder: OutlineInputBorder(
-                      //     borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                      //     borderSide: BorderSide(color: Colors.grey)),
-                    ),
-                    style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w500
-                    ),
-                    validator: (value){
-                      setState(() {
-                        newpwd = value!;
-                      });
-                      if(newpwd.isEmpty){
-                        return 'Please Enter New Password';
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(height: 10),
-                  TextFormField(
-                    controller: confirmpassword,
-                    obscureText: _passwordVisible2,
-                    obscuringCharacter: '*',
-                    decoration: InputDecoration(
-                      // hintText: "Confirm Password",
-                      labelText: CONFIRM_PASSWORD,
-                      labelStyle: GoogleFonts.poppins(
-                          color: LIGHT_GREY_TEXT,
-                          fontWeight: FontWeight.w400
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: LIGHT_GREY_TEXT,)
-                      ),
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          // Based on passwordVisible state choose the icon
-                          _passwordVisible2
-                              ? Icons.visibility
-                              : Icons.visibility_off,
-                          color: Theme.of(context).primaryColorDark,
+                      SizedBox(height: 10),
+                      TextFormField(
+                        controller: confirmpassword,
+                        obscureText: _passwordVisible2,
+                        obscuringCharacter: '*',
+                        decoration: InputDecoration(
+                          // hintText: "Confirm Password",
+                          labelText: CONFIRM_PASSWORD,
+                          labelStyle: GoogleFonts.poppins(
+                              color: LIGHT_GREY_TEXT,
+                              fontWeight: FontWeight.w400),
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                            color: LIGHT_GREY_TEXT,
+                          )),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              // Based on passwordVisible state choose the icon
+                              _passwordVisible2
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: Theme.of(context).primaryColorDark,
+                            ),
+                            onPressed: () {
+                              // Update the state i.e. toogle the state of passwordVisible variable
+                              setState(() {
+                                _passwordVisible2 = !_passwordVisible2;
+                              });
+                            },
+                          ),
                         ),
-                        onPressed: () {
-                          // Update the state i.e. toogle the state of passwordVisible variable
+                        style: GoogleFonts.poppins(fontWeight: FontWeight.w500),
+                        validator: (value) {
                           setState(() {
-                            _passwordVisible2 = !_passwordVisible2;
+                            confpwd = value!;
                           });
+                          if (newpwd != confpwd) {
+                            return 'Password Not Matched!';
+                          }
+                          return null;
                         },
                       ),
-                      // focusedBorder: OutlineInputBorder(
-                      //     borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                      //     borderSide: BorderSide(color: Colors.grey)),
-                      // enabledBorder: OutlineInputBorder(
-                      //     borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                      //     borderSide: BorderSide(color: Colors.grey)),
-                      // errorBorder: OutlineInputBorder(
-                      //     borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                      //     borderSide: BorderSide(color: Colors.grey)),
-                    ),
-                    style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w500
-                    ),
-                    validator: (value){
-                      setState(() {
-                        confpwd = value!;
-                      });
-                      if(newpwd != confpwd){
-                        return 'Password Not Matched!';
-                      }
-                      return null;
-                    },
-                  ),
-                ],
-              )),
-              SizedBox(height: 70,),
+                    ],
+                  )),
+              SizedBox(
+                height: 70,
+              ),
               // Expanded(child: Container()),
               Container(
                 height: 50,
                 //width: MediaQuery.of(context).size.width,
                 child: InkWell(
-                  onTap: (){
-                   if(_formKey.currentState!.validate()){
-                     ChangePassword();
-                   }
+                  onTap: () {
+                    if (_formKey.currentState!.validate()) {
+                      ChangePassword();
+                    }
                   },
                   child: Stack(
                     children: [
                       ClipRRect(
                         borderRadius: BorderRadius.circular(25),
-                        child: Image.asset("assets/moreScreenImages/header_bg.png",
+                        child: Image.asset(
+                          "assets/moreScreenImages/header_bg.png",
                           height: 50,
                           fit: BoxFit.fill,
                           width: MediaQuery.of(context).size.width,
                         ),
                       ),
                       Center(
-                        child: isErrorInLoading == true ? CircularProgressIndicator(color: Colors.white): Text(
-                          "Change Password",
-                          style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w500,
-                              color: WHITE,
-                              fontSize: 18
-                          ),
-                        ),
+                        child: isErrorInLoading == true
+                            ? CircularProgressIndicator(color: Colors.white)
+                            : Text(
+                                "Change Password",
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.w500,
+                                    color: WHITE,
+                                    fontSize: 18),
+                              ),
                       )
                     ],
                   ),
@@ -289,11 +262,11 @@ class _ChangePasswordState extends State<ChangePassword> {
     );
   }
 
-  Widget header(){
+  Widget header() {
     return Stack(
       children: [
-
-        Image.asset("assets/moreScreenImages/header_bg.png",
+        Image.asset(
+          "assets/moreScreenImages/header_bg.png",
           height: 60,
           fit: BoxFit.fill,
           width: MediaQuery.of(context).size.width,
@@ -302,13 +275,13 @@ class _ChangePasswordState extends State<ChangePassword> {
           height: 60,
           child: Row(
             children: [
-              SizedBox(width: 55,),
-              Text(
-                  CHANGE_PASSWORD,
-                  style: Theme.of(context).textTheme.headline5!.apply(color: Theme.of(context).backgroundColor,
-                      fontWeightDelta: 5
-                  )
-              )
+              SizedBox(
+                width: 55,
+              ),
+              Text(CHANGE_PASSWORD,
+                  style: Theme.of(context).textTheme.headline5!.apply(
+                      color: Theme.of(context).backgroundColor,
+                      fontWeightDelta: 5))
             ],
           ),
         ),

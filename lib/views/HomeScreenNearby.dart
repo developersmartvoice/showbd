@@ -116,79 +116,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
         // margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.0),
         child: Column(
           children: [
-            // isNearbyLoading ? Container(
-            //   height: MediaQuery.of(context).size.height,
-            //   width: MediaQuery.of(context).size.width,
-            //   child: Column(
-            //     children: [
-            //       SizedBox(height: 150,),
-            //       CircularProgressIndicator(),
-            //     ],
-            //   ),
-            // ) :
-            // list2 == null
-            //     ? isErrorInNearby ? Container(
-            //   child: Center(
-            //     child: Column(
-            //       mainAxisAlignment: MainAxisAlignment.center,
-            //       children: [
-            //         SizedBox(
-            //           height: 30,
-            //         ),
-            //         Text(TURN_ON_LOCATION_AND_RETRY,
-            //           style: GoogleFonts.poppins(
-            //               color: Colors.black,
-            //               fontWeight: FontWeight.w400,
-            //               fontSize: 12
-            //           ),
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ) : Center(
-            //   child: CircularProgressIndicator(
-            //     valueColor: AlwaysStoppedAnimation(Theme.of(context).hintColor),
-            //     strokeWidth: 2,
-            //   ),
-            // )
-            //     :
-            /// Old With Ads
-            // ListView.builder(
-            //   shrinkWrap: true,
-            //   physics: ClampingScrollPhysics(),
-            //   itemCount: list.length > 4 ? (list.length/4).ceil() : 1,
-            //   itemBuilder: (context, i){
-            //     print((list.length/4).floor());
-            //     print((list.length/4).ceil());
-            //     // bool isFourMultiplay = list.length
-            //     return Column(
-            //       children: [
-            //         GridView.builder(
-            //           shrinkWrap: true,
-            //           physics: ClampingScrollPhysics(),
-            //           gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-            //               maxCrossAxisExtent: 200,
-            //               childAspectRatio: 0.75,
-            //               crossAxisSpacing: 10,
-            //               mainAxisSpacing: 10),
-            //           itemCount: 4,
-            //           itemBuilder: (BuildContext ctx, index) {
-            //               return index + (i*4) > list.length - 1 ? Container(color:Colors.pink) : nearByGridWidget(
-            //                 list[index + (i*4)].image,
-            //                 list[index + (i*4)].name,
-            //                 list[index + (i*4)].departmentName,
-            //                 list[index + (i*4)].id,
-            //               );
-            //           },
-            //         ),
-            //         ENABLE_ADS ? customAds.nativeAds(id: AD_TYPE) : Container(height: 10,),
-            //       ],
-            //     );
-            //   },
-            // ),
-
             /// New For Spacing Issue
-
             GridView.builder(
               shrinkWrap: true,
               // physics: ClampingScrollPhysics(),
@@ -206,18 +134,6 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                     'Name is ${list2[index].name} and ratings are ${list2[index].avgrating}');
                 print(list2[index].images);
                 print("Watching all citys! ${list2[index].city}");
-
-                // for (int i = 0; i < list2.length; i++) {
-                //   fetchDoctorDetails(list2[i].id);
-                // }
-
-                // var data1 = list3[index];
-                // var data1 = list3[ind2x];
-                // print("This printing from My gridbuilderview List2: $list2");
-                // print("This printing from My gridbuilderview List3: $list3");
-
-                // print(
-                //     "wanna see the data ${data1.name} and total Reviews are: ${data1.totalReview}");
 
                 return nearByGridWidget(
                   data.image,
@@ -260,9 +176,6 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
 
   Widget nearByGridWidget(img, name, dept, id, consultationFee, aboutMe, motto,
       avgRating, city, imgs, totalReview) {
-    // if (id == currentId) {
-    //   return Container(height: 0, width: 0);
-    // } else {
     print("This is the city of the doctor: $city");
     return InkWell(
       onTap: () {
@@ -286,11 +199,6 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                 offset: Offset(0, 2),
               ),
             ]),
-        // constraints: BoxConstraints(
-        //   minHeight: 500.0, // Set the minimum height
-        //   maxHeight: 500.0, // Set the maximum height
-        // ),
-        // padding: EdgeInsets.fromLTRB(0, 0, 0, 2),
         child: Column(
           children: [
             Container(
@@ -300,8 +208,6 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                   child: Stack(
                     alignment: Alignment.topRight,
                     children: [
-                      // -------------------------------------
-
                       CarouselSlider.builder(
                         carouselController: sliderController,
                         itemCount: imgs != null
@@ -310,9 +216,6 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                         itemBuilder: (context, index, realIndex) {
                           if (index == 0) {
                             print("realIndex is $realIndex");
-                            // int individualPage = 0;
-                            // currentPage = 0;
-                            // Display the fixed image at the beginning
                             return Container(
                               child: ClipRRect(
                                 borderRadius: BorderRadius.only(
@@ -400,11 +303,10 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                           },
                         ),
                       ),
-
                       Container(
                         // margin: EdgeInsets.only(top: 10),
                         margin: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height * 0.175),
+                            top: MediaQuery.of(context).size.height * 0.225),
                         // color: Colors.black,
                         width: MediaQuery.sizeOf(context).width * 1,
                         child: Row(
@@ -428,7 +330,6 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                           }),
                         ),
                       ),
-
                       Container(
                         height: MediaQuery.sizeOf(context).height * 0.035,
                         width: MediaQuery.sizeOf(context).width * 1,
@@ -469,7 +370,6 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                           ),
                         ),
                       ),
-
                       Container(
                         width: 60.0, // Fixed width
                         height: 40.0, // Fixed height
@@ -492,140 +392,8 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-
-                          //child: SizedBox(child:
-                          //Text(
-                          //name,
-                          //maxLines: 2,
-                          //textAlign: TextAlign.center,
-                          //overflow: TextOverflow.ellipsis,
-                          //style: GoogleFonts.poppins(
-                          //color: Color.fromARGB(255, 255, 94, 0).withOpacity(0.8),
-                          //fontSize: 16,
-                          //fontWeight: FontWeight.w500,
-                          //),
-                          //),
-
-                          //)
                         ),
                       ),
-
-                      // add button
-                      // Container(
-                      //   margin: EdgeInsets.only(top: 135),
-                      //   width: 160,
-                      //   height: 50,
-                      //   child: isLoggedIn
-                      //       ? ElevatedButton(
-                      //           onPressed: () {
-                      //             Navigator.push(
-                      //                 context,
-                      //                 MaterialPageRoute(
-                      //                     builder: (context) => MakeAppointment(
-                      //                         id.toString(),
-                      //                         name.toString(),
-                      //                         consultationFee.toString())));
-                      //           },
-                      //           style: ElevatedButton.styleFrom(
-                      //             primary: Color.fromARGB(186, 1, 122, 21),
-                      //             shape: RoundedRectangleBorder(
-                      //               borderRadius: BorderRadius.only(
-                      //                 topLeft: Radius.circular(5),
-                      //                 bottomLeft: Radius.circular(5),
-                      //               ),
-                      //               // Adjust the radius as needed
-                      //             ),
-                      //             minimumSize: Size(10,
-                      //                 35), // Set the minimum width and height
-                      //             // Set the button color to orange
-                      //           ),
-                      //           child: Row(
-                      //             mainAxisSize: MainAxisSize.min,
-                      //             crossAxisAlignment: CrossAxisAlignment.center,
-                      //             mainAxisAlignment: MainAxisAlignment.start,
-                      //             children: [
-                      //               Icon(
-                      //                 Icons
-                      //                     .calendar_today, // Add the booking icon
-                      //                 color: Colors
-                      //                     .white, // Set the icon color to white
-                      //               ),
-                      //               SizedBox(
-                      //                   width:
-                      //                       8), // Add some spacing between the icon and text
-                      //               Text(
-                      //                 BOOK_NOW,
-                      //                 style: GoogleFonts.poppins(
-                      //                   fontWeight: FontWeight.w500,
-                      //                   color: Colors
-                      //                       .white, // Set the text color to white
-                      //                   fontSize: 10,
-                      //                 ),
-                      //               ),
-                      //             ],
-                      //           ),
-                      //         )
-                      //       : ElevatedButton(
-                      //           onPressed: () {
-                      //             // Handle button click, e.g., navigate to the login screen
-                      //             Navigator.push(
-                      //                 context,
-                      //                 MaterialPageRoute(
-                      //                     builder: (context) => LoginAsUser()));
-                      //           },
-                      //           style: ElevatedButton.styleFrom(
-                      //             primary: const Color.fromARGB(255, 255, 94, 0)
-                      //                 .withOpacity(0.8),
-                      //             shape: RoundedRectangleBorder(
-                      //               borderRadius: BorderRadius.only(
-                      //                 topLeft: Radius.circular(5),
-                      //                 bottomLeft: Radius.circular(5),
-                      //               ),
-                      //               // Adjust the radius as needed
-                      //             ),
-                      //             minimumSize: Size(60,
-                      //                 40), // Set the minimum width and height
-                      //             // Set the button color to orange
-                      //           ),
-                      //           child: Row(
-                      //             crossAxisAlignment: CrossAxisAlignment.center,
-                      //             mainAxisAlignment: MainAxisAlignment.start,
-                      //             children: [
-                      //               Icon(
-                      //                 Icons
-                      //                     .calendar_today, // Add the booking icon
-                      //                 color: Colors
-                      //                     .white, // Set the icon color to white
-                      //               ),
-                      //               SizedBox(
-                      //                   width:
-                      //                       8), // Add some spacing between the icon and text
-                      //               Text(
-                      //                 BOOK_NOW,
-                      //                 style: GoogleFonts.poppins(
-                      //                   fontWeight: FontWeight.w500,
-                      //                   color: Colors
-                      //                       .white, // Set the text color to white
-                      //                   fontSize: 10,
-                      //                 ),
-                      //               ),
-
-                      //               Text(
-                      //                 name,
-                      //                 maxLines: 2,
-                      //                 textAlign: TextAlign.center,
-                      //                 overflow: TextOverflow.ellipsis,
-                      //                 style: GoogleFonts.poppins(
-                      //                   color: Color.fromARGB(255, 255, 94, 0)
-                      //                       .withOpacity(0.8),
-                      //                   fontSize: 16,
-                      //                   fontWeight: FontWeight.w500,
-                      //                 ),
-                      //               ),
-                      //             ],
-                      //           ),
-                      //         ),
-                      // )
                     ],
                   ),
                 ),
@@ -634,26 +402,6 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
             SizedBox(
               height: 10,
             ),
-            // Text(
-            //   name,
-            //   maxLines: 2,
-            //   textAlign: TextAlign.center,
-            //   overflow: TextOverflow.ellipsis,
-            //   style: GoogleFonts.poppins(
-            //     color: Color.fromARGB(255, 255, 94, 0).withOpacity(0.8),
-            //     fontSize: 16,
-            //     fontWeight: FontWeight.w500,
-            //   ),
-            // ),
-            //Text(
-            //dept,
-            //style: GoogleFonts.poppins(
-            //color: LIGHT_GREY_TEXT,
-            //fontSize: 9.5,
-            //fontWeight: FontWeight.w500,
-            //),
-            //),
-
             motto == null
                 ? Container()
                 : Container(
@@ -666,36 +414,14 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                             fontWeight: FontWeight.w500,
                             //color: LIGHT_GREY_TEXT,
                             color: Colors.black,
-                            fontSize: 20),
+                            fontSize: 19),
                         textAlign: TextAlign.center,
                         //textAlignVertical: TextAlignVertical.center,
                       ),
                     ),
                   ),
-            // Text(
-            //   motto.toString().length >= 30
-            //       ? motto.toString().substring(0, 30) + "..."
-            //       : motto.toString(),
-            //   textAlign: TextAlign.center,
-            //   style: GoogleFonts.poppins(
-            //     color: LIGHT_GREY_TEXT,
-            //     fontSize: 20.0,
-            //     fontWeight: FontWeight.w500,
-            //   ),
-            // ),
-            // Text(
-            //   aboutMe.toString().length >= 30
-            //       ? aboutMe.toString().substring(0, 30) + "..."
-            //       : aboutMe.toString(),
-            //   textAlign: TextAlign.center,
-            //   style: GoogleFonts.poppins(
-            //     color: LIGHT_GREY_TEXT,
-            //     fontSize: 20.0,
-            //     fontWeight: FontWeight.w500,
-            //   ),
-            // ),
             Divider(
-              height: 30,
+              height: 20,
               color: Colors.grey,
             ),
             Container(
@@ -804,9 +530,6 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
           desiredAccuracy: LocationAccuracy.high);
 
       callApi(latitude: position.latitude, longitude: position.longitude);
-      // for (int i = 0; i < list2.length; i++) {
-      //   fetchDoctorDetails(list2[i].id);
-      // }
       hasApiBeenCalled = true;
     } else if (status.isPermanentlyDenied) {
       print("Here isPermanentlyDenied");
@@ -856,11 +579,6 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
           print("Finished");
           list2.addAll(nearbyDoctorsClass!.data!.nearbyData!);
           list2.removeWhere((element) => element.id == currentId);
-
-          // list3.clear();
-          // for (int i = 0; i < list2.length; i++) {
-          //   fetchDoctorDetails(list2[i].id);
-          // }
           nextUrl = nearbyDoctorsClass!.data!.nextPageUrl!;
 
           print(nextUrl);
@@ -876,41 +594,6 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
       messageDialog(ERROR, UNABLE_TO_LOAD_DATA_FORM_SERVER);
     }
   }
-
-  // fetchDoctorDetails(id) async {
-  //   // setState(() {
-  //   //   isNearbyLoading = true;
-  //   // });
-  //   final response =
-  //       await get(Uri.parse("$SERVER_ADDRESS/api/viewdoctor?doctor_id=${id}"))
-  //           .catchError((e) {
-  //     print("ERROR ${e.toString()}");
-  //     setState(() {
-  //       isErrorInNearby = true;
-  //     });
-  //   });
-
-  //   print(response.request);
-
-  //   if (response.statusCode == 200) {
-  //     final jsonResponse = jsonDecode(response.body);
-  //     doctorDetailsClass = DoctorDetailsClass.fromJson(jsonResponse);
-  //     list3.add(doctorDetailsClass!.data!);
-  //     // print(doctorDetailsClass!.data!.avgratting);
-  //     // print(id);
-  //     print("-------------------------------------------------------------");
-  //     for (int i = 0; i < list3.length; i++) {
-  //       DetailsClass.Data currentData = list3[i];
-  //       print('$i, ${currentData.name.toString()}');
-  //       // Access properties of currentData as needed
-  //     }
-  //     print("-------------------------------------------------------------");
-  //     setState(() {
-  //       isNearbyLoading = false;
-  //       //doctorDetailsClass.data.avgratting = '3';
-  //     });
-  //   }
-  // }
 
   int count = 0;
 
@@ -952,13 +635,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                         count++;
                         setState(() {});
                       }
-                      // else{
-                      //   messageDialog(PERMISSION_NOT_GRANTED, "User denied permissions to access the device's location.");
-                      // }
-                      // We didn't ask for permission yet or the permission has been denied before but not permanently.
                     }
-
-//
                     Navigator.pop(context);
                   },
                   style: TextButton.styleFrom(
@@ -991,10 +668,6 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
           print(nextUrl);
           list2.addAll(nearbyDoctorsClass!.data!.nearbyData!);
           list2.removeWhere((element) => element.id == currentId);
-          // list3.clear();
-          // for (int i = 0; i < list2.length; i++) {
-          //   fetchDoctorDetails(list2[i].id);
-          // }
         });
       }
     }
