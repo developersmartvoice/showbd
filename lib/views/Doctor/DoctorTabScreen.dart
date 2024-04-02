@@ -105,17 +105,6 @@ class _DoctorTabsScreenState extends State<DoctorTabsScreen> {
                   ),
                   label: "Home",
                 ),
-                // BottomNavigationBarItem(
-                //   icon: Image.asset(
-                //     index == 1
-                //         ? "assets/homeScreenImages/appointment_active.png"
-                //         : "assets/homeScreenImages/appointment_unactive.png",
-                //     height: 25,
-                //     width: 25,
-                //     fit: BoxFit.cover,
-                //   ),
-                //   label: "Appointment",
-                // ),
                 BottomNavigationBarItem(
                   icon: Image.asset(
                     index == 1
@@ -127,17 +116,6 @@ class _DoctorTabsScreenState extends State<DoctorTabsScreen> {
                   ),
                   label: "Tour",
                 ),
-                // BottomNavigationBarItem(
-                //   icon: Image.asset(
-                //     index == 2
-                //         ? "assets/homeScreenImages/user_active.png"
-                //         : "assets/homeScreenImages/user_unactive.png",
-                //     height: 25,
-                //     width: 25,
-                //     fit: BoxFit.cover,
-                //   ),
-                //   label: "Edit profile",
-                // ),
                 BottomNavigationBarItem(
                   icon: Image.asset(
                     index == 2
@@ -154,8 +132,6 @@ class _DoctorTabsScreenState extends State<DoctorTabsScreen> {
                     index == 3
                         ? "assets/homeScreenImages/profile_active.png"
                         : "assets/homeScreenImages/profile_unactive.png",
-                    // ? "assets/loginScreenImages/logout-(1).png"
-                    // : "assets/loginScreenImages/logout.png",
                     height: 25,
                     width: 25,
                     fit: BoxFit.cover,
@@ -189,49 +165,49 @@ class _DoctorTabsScreenState extends State<DoctorTabsScreen> {
 
   messageDialog(String s1, String s2) {
     return showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) {
-          return AlertDialog(
-            title: Text(
-              s1,
-              style: GoogleFonts.comfortaa(
-                fontWeight: FontWeight.bold,
-              ),
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(
+            s1,
+            style: GoogleFonts.comfortaa(
+              fontWeight: FontWeight.bold,
             ),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  s2,
-                  style: GoogleFonts.poppins(
-                    fontSize: 14,
-                  ),
-                )
-              ],
-            ),
-            actions: [
-              TextButton(
-                onPressed: () async {
-                  await SharedPreferences.getInstance().then((pref) {
-                    pref.setBool("isLoggedInAsDoctor", false);
-                  });
-                },
-                style: TextButton.styleFrom(
-                  backgroundColor: Theme.of(context).primaryColor,
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                s2,
+                style: GoogleFonts.poppins(
+                  fontSize: 14,
                 ),
-                // color: Theme.of(context).primaryColor,
-                child: Text(
-                  YES,
-                  style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w500,
-                    color: BLACK,
-                  ),
-                ),
-              ),
+              )
             ],
-          );
-        });
+          ),
+          actions: [
+            TextButton(
+              onPressed: () async {
+                await SharedPreferences.getInstance().then((pref) {
+                  pref.setBool("isLoggedInAsDoctor", false);
+                });
+              },
+              style: TextButton.styleFrom(
+                backgroundColor: Theme.of(context).primaryColor,
+              ),
+              child: Text(
+                YES,
+                style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.w500,
+                  color: BLACK,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 }

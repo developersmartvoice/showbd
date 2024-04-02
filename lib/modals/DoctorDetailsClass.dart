@@ -36,8 +36,7 @@ class Data {
   List<String>? services;
   List<String>? languages;
   // List<String>? aboutme;
-  String?
-      motto; /////////////////////////////////////////////////////////////////
+  String? motto;
   String? iwillshowyou;
   String? image;
   List<String>? images; // Add images field as a list of strings
@@ -103,8 +102,6 @@ class Data {
         ?.split(',')
         .map((e) => e.trim())
         .toList();
-    // aboutme =
-    //     (json['about me'] as String?)?.split(',').map((e) => e.trim()).toList();
     image = json['image'];
     images = json['images'] != null
         ? List<String>.from(json['images'])
@@ -137,15 +134,10 @@ class Data {
     data['lat'] = this.lat;
     data['lon'] = this.lon;
     data['phoneno'] = this.phoneno;
-    // data['services'] = this.services;
-    // data['healthcare'] = this.healthcare;
     data['services'] = services?.join(', ');
     data['languages'] = languages?.join(', ');
-    // data['about me'] = aboutme?.join(', ');
-    //data['i will show you'] = iwillshowyou?.join(', ');
     data['image'] = this.image;
     data['images'] = this.images; // Include images in the JSON output
-    //data['department_id'] = this.departmentId.toString();
     data['city'] = this.city;
     data['working_time'] = this.workingTime;
     data['password'] = this.password;

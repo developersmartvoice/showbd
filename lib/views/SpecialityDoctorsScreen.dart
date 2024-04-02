@@ -9,13 +9,10 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
-// import 'package:loadmore/loadmore.dart';
-// import 'package:paging/paging.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../main.dart';
 
-// ignore: must_be_immutable
 class SpecialityDoctorsScreen extends StatefulWidget {
   String id;
   String? name;
@@ -262,10 +259,6 @@ class _SpecialityDoctorsScreenState extends State<SpecialityDoctorsScreen> {
                         width: 50,
                       ),
                     ),
-                    //child: Padding(
-                    //   padding: const EdgeInsets.all(20.0),
-                    // )
-                    //
                   ),
                 ),
               ),
@@ -320,7 +313,6 @@ class _SpecialityDoctorsScreenState extends State<SpecialityDoctorsScreen> {
           });
         }
       }).catchError((e) {
-        //Toast.show(e.toString(), context,duration: 3);
         print(e);
         messageDialog(ERROR, UNABLE_TO_LOAD_DATA_FORM_SERVER);
         if (mounted) {
@@ -408,14 +400,12 @@ class _SpecialityDoctorsScreenState extends State<SpecialityDoctorsScreen> {
                       if (status.isPermanentlyDenied == false) {
                         _getLocationStart();
                       }
-                      // We didn't ask for permission yet or the permission has been denied before but not permanently.
                     }
                     Navigator.pop(context);
                   },
                   style: TextButton.styleFrom(
                     backgroundColor: Theme.of(context).primaryColor,
                   ),
-                  // color: Theme.of(context).primaryColor,
                   child:
                       Text(OK, style: Theme.of(context).textTheme.bodyText1)),
             ],

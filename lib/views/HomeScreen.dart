@@ -5,13 +5,11 @@ import 'package:appcode3/main.dart';
 import 'package:appcode3/modals/Call_All_In_One.dart';
 import 'package:appcode3/modals/NearbyDoctorClass.dart';
 import 'package:appcode3/modals/SearchDoctorClass.dart';
-// import 'package:appcode3/views/AllAppointments.dart';
 import 'package:appcode3/views/DetailsPage.dart';
 import 'package:appcode3/views/Doctor/DoctorAppointmentDetails.dart';
 import 'package:appcode3/views/HomeScreenNearby.dart';
 import 'package:appcode3/views/SearchedScreen.dart';
 import 'package:appcode3/views/SpecialityDoctorsScreen.dart';
-// import 'package:appcode3/views/SpecialityScreen.dart';
 import 'package:appcode3/views/UserAppointmentDetails.dart';
 import 'package:appcode3/views/incoming_call_image_name.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -88,14 +86,6 @@ class _HomeScreenState extends State<HomeScreen> {
     print("respons4 : ${response.body}");
 
     if (response.statusCode == 200) {
-      // final responseData = jsonDecode(response.body);
-      // call_all_api = Call_All_Api.fromJson(responseData);
-      // bannerList.addAll(call_all_api.data!.banner!);
-      // list.addAll(call_all_api.data!.speciality!);
-
-      // AppointmentList.addAll(call_all_api.data!.appointment!);
-      // print("AppointmentList.length : ${AppointmentList.length}");
-
       isLoad = true;
       setState(() {});
     }
@@ -121,52 +111,53 @@ class _HomeScreenState extends State<HomeScreen> {
     });
 
     FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler);
-    FirebaseMessaging.onMessage.listen((message) {
-      print("onMessage: $message");
-      print("\n\n" + message.toString());
-      // notificationHelper.showNotification(title: message.notification!.title,body: message.notification!.body ,payload: "${message.data['type']}:${message.data['order_id']}", id: "124", context2: context);
+    FirebaseMessaging.onMessage.listen(
+      (message) {
+        print("onMessage: $message");
+        print("\n\n" + message.toString());
+        // notificationHelper.showNotification(title: message.notification!.title,body: message.notification!.body ,payload: "${message.data['type']}:${message.data['order_id']}", id: "124", context2: context);
 
-      var payloadData =
-          '${message.data['notificationType']}:${message.data['ccId']}';
+        var payloadData =
+            '${message.data['notificationType']}:${message.data['ccId']}';
 
-      print(payloadData);
+        print(payloadData);
 
-      if (message.data['order_id'] != null) {
-        notificationHelper.showNotification(
+        if (message.data['order_id'] != null) {
+          notificationHelper.showNotification(
+              title: message.notification!.title,
+              body: message.notification!.body,
+              payload: "${message.data['type']}:${message.data['order_id']}",
+              id: "124",
+              context2: context);
+        } else if (payloadData.split(":")[0].toString() == '3') {
+          notificationHelper.showNotification(
+            title: 'Call Rejected',
+            body: message.notification!.body,
+            payload: payloadData,
+            id: "124",
+          );
+          try {
+            print('success on reject call ');
+            Get.to(() => Container());
+            CallManager.instance.reject(message.data['sessionId']);
+          } catch (e) {
+            print('error on reject call $e');
+          }
+        } else if (payloadData.split(":")[0].toString() == '1') {
+          print('call coming');
+
+          incomingCallManager.setValue(
+              message.data['$PARAM_CALLER_NAME'], message.data['image'] ?? "");
+        } else {
+          notificationHelper.showNotification(
             title: message.notification!.title,
             body: message.notification!.body,
-            payload: "${message.data['type']}:${message.data['order_id']}",
+            payload: payloadData,
             id: "124",
-            context2: context);
-      } else if (payloadData.split(":")[0].toString() == '3') {
-        notificationHelper.showNotification(
-          title: 'Call Rejected',
-          body: message.notification!.body,
-          payload: payloadData,
-          id: "124",
-        );
-        try {
-          print('success on reject call ');
-          Get.to(() => Container());
-          CallManager.instance.reject(message.data['sessionId']);
-        } catch (e) {
-          print('error on reject call $e');
+          );
         }
-      } else if (payloadData.split(":")[0].toString() == '1') {
-        print('call coming');
-
-        incomingCallManager.setValue(
-            message.data['$PARAM_CALLER_NAME'], message.data['image'] ?? "");
-      } else {
-        notificationHelper.showNotification(
-          title: message.notification!.title,
-          body: message.notification!.body,
-          payload: payloadData,
-          id: "124",
-          // context2: context
-        );
-      }
-    });
+      },
+    );
 
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
       print("onMessageAppOpened: $message");
@@ -205,42 +196,6 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     });
   }
-
-  // callApi({double? latitude, double? longitude}) async {
-  //   final response = await get(Uri.parse(
-  //           "$SERVER_ADDRESS/api/nearbydoctor?lat=${latitude}&lon=${longitude}"))
-  //       .catchError((e) {
-  //     setState(() {
-  //       isErrorInNearby = true;
-  //     });
-  //     messageDialog(ERROR, UNABLE_TO_LOAD_DATA_FORM_SERVER);
-  //   });
-
-  //   print("API : " + response.request!.url.toString());
-
-  //   final jsonResponse = jsonDecode(response.body);
-  //   print(jsonResponse.toString());
-  //   if (response.statusCode == 200 && jsonResponse['status'] == 1) {
-  //     //print([0].name);
-  //     if (mounted) {
-  //       setState(() {
-  //         lat = latitude.toString();
-  //         lon = longitude.toString();
-  //         nearbyDoctorsClass = NearbyDoctorsClass.fromJson(jsonResponse);
-  //         print("Finished");
-  //         list2.addAll(nearbyDoctorsClass!.data!.nearbyData!);
-  //         nextUrl = nearbyDoctorsClass!.data!.nextPageUrl!;
-  //         print(nextUrl);
-  //         isNearbyLoading = false;
-  //       });
-  //     }
-  //   } else {
-  //     setState(() {
-  //       isErrorInNearby = true;
-  //     });
-  //     messageDialog(ERROR, UNABLE_TO_LOAD_DATA_FORM_SERVER);
-  //   }
-  // }
 
   Future<bool> dialogPop() async {
     print('dialog cancle');
@@ -365,22 +320,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ],
                                 ),
                               );
-                              // return ListTile(
-                              //   title: Text(
-                              //     _newData[index].name,
-                              //     style: GoogleFonts.poppins(
-                              //         color: Theme.of(context).primaryColorDark,
-                              //         fontSize: 14
-                              //     ),
-                              //   ),
-                              //   trailing: Icon(
-                              //     Icons.search,
-                              //     size: 18,
-                              //   ),
-                              //   onTap: (){
-                              //     Navigator.push(context, MaterialPageRoute(builder: (context) => DetailsPage(_newData[index].id.toString())));
-                              //   },
-                              // );
                             }),
                       ),
                     ],
@@ -393,18 +332,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.13,
                       ),
-                      // isLoad
-                      //     ? slider()
-                      //     : Container(
-                      //         height: Get.height * 0.07,
-                      //         alignment: Alignment.center,
-                      //         child: CircularProgressIndicator()),
-                      // isLoad
-                      //     ? isLoggedIn
-                      //         ? upCommingAppointments()
-                      //         : Container()
-                      //     : Container(),
-                      // isLoad ? Container() : Container(),
                       HomeScreenNearby(_scrollController2),
                     ],
                   ),
@@ -432,7 +359,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 carouselController: sliderController,
                 itemCount: bannerList.length,
                 itemBuilder: (context, index, realIndex) {
-                  // return buildImage(index);
                   return Container();
                 },
                 options: CarouselOptions(
@@ -672,29 +598,10 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.fromLTRB(16, 10, 16, 0),
             child: Column(
               children: [
-                // Row(
-                //   //crossAxisAlignment: CrossAxisAlignment.baseline,
-                //   children: [
-                //     Text("$WELCOME, ",
-                //         style: Theme.of(context).textTheme.caption!.apply(
-                //               color: Theme.of(context).backgroundColor,
-                //               fontSizeDelta: 4,
-                //             )),
-                //     Text(userName,
-                //         style: Theme.of(context).textTheme.headline5!.apply(
-                //             color: Theme.of(context).backgroundColor,
-                //             fontWeightDelta: 2)),
-                //   ],
-                // ),
-                // SizedBox(
-                //   height: 10,
-                // ),
                 Row(
                   children: [
                     Expanded(
                       child: Container(
-                        // height: 50,
-                        //margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           color: Theme.of(context).backgroundColor,
@@ -759,14 +666,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               _onChanged(val);
                             });
                           },
-                          // onChanged: (val) {
-
-                          // },
-                          // onSubmitted: (val) {
-                          //   setState(() {
-                          //     searchKeyword = val;
-                          //   });
-                          // },
                         ),
                       ),
                     ),
@@ -779,15 +678,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => SearchedScreen()));
-                        setState(() {
-                          // _newData.clear();
-                          // _textController.clear();
-                          // _textController.text = "";
-                          // _onChanged(_textController.text);
-                          //_textController = new TextEditingController();
-                          //textField.controller.clearComposing();
-                          //_textController.selection.end;
-                        });
+                        setState(
+                          () {},
+                        );
                       },
                       child: Container(
                         width: 50,
@@ -796,11 +689,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: Theme.of(context).backgroundColor,
                           borderRadius: BorderRadius.circular(15),
                         ),
-                        child: Center(
-                            // child: Image.asset(
-                            //   "assets/homeScreenImages/search_icon.png",
-                            // ),
-                            child: Icon(Icons.filter_list)),
+                        child: Center(child: Icon(Icons.filter_list)),
                       ),
                     ),
                   ],
@@ -812,254 +701,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ],
     );
   }
-
-  // Widget upCommingAppointments() {
-  //   return Container(
-  //     margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
-  //     child: Column(
-  //       mainAxisSize: MainAxisSize.min,
-  //       mainAxisAlignment: MainAxisAlignment.start,
-  //       children: [
-  //         // Row(
-  //         //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //         //   children: [
-  //         //     Text(UPCOMING_APPOINTMENTS,
-  //         //         style: Theme.of(context).textTheme.bodyText2!.apply(
-  //         //               fontWeightDelta: 3,
-  //         //               color: Colors.orange,
-  //         //             )),
-  //         //     AppointmentList.length != 0
-  //         //         ? TextButton(
-  //         //             onPressed: () {
-  //         //               Navigator.push(
-  //         //                 context,
-  //         //                 MaterialPageRoute(
-  //         //                     builder: (context) =>
-  //         //                         AllAppointments(AppointmentList)),
-  //         //               );
-  //         //             },
-  //         //             child: Text(SEE_ALL,
-  //         //                 style: Theme.of(context).textTheme.bodyText1!.apply(
-  //         //                       // color: Theme.of(context).hintColor,
-  //         //                       color: Colors.orange,
-  //         //                     )),
-  //         //           )
-  //         //         : Container(
-  //         //             height: 40,
-  //         //           )
-  //         //   ],
-  //         // ),
-  //         // SizedBox(
-  //         //   height: 5,
-  //         // ),
-  //         // AppointmentList.length == 0
-  //         //     ? Container(
-  //         //         width: MediaQuery.of(context).size.width,
-  //         //         decoration: BoxDecoration(
-  //         //             color: Theme.of(context).backgroundColor,
-  //         //             borderRadius: BorderRadius.circular(15)),
-  //         //         child: Padding(
-  //         //           padding: const EdgeInsets.all(30.0),
-  //         //           child: Column(
-  //         //             children: [
-  //         //               Image.asset("assets/homeScreenImages/no_appo_img.png"),
-  //         //               SizedBox(
-  //         //                 height: 15,
-  //         //               ),
-  //         //               Text(
-  //         //                 YOU_DONOT_HAVE_ANY_UPCOMING_APPOINTMENT,
-  //         //                 style: TextStyle(
-  //         //                     fontWeight: FontWeight.w900, fontSize: 11),
-  //         //               ),
-  //         //               SizedBox(
-  //         //                 height: 3,
-  //         //               ),
-  //         //               Row(
-  //         //                 mainAxisAlignment: MainAxisAlignment.center,
-  //         //                 children: [
-  //         //                   Text(
-  //         //                     FIND_BEST_DOCTORS_NEAR_YOU_BY_SPECIALITY,
-  //         //                     style: TextStyle(
-  //         //                         fontWeight: FontWeight.w500, fontSize: 10),
-  //         //                   ),
-  //         //                   SizedBox(
-  //         //                     width: 3,
-  //         //                   ),
-  //         //                   InkWell(
-  //         //                     onTap: () {
-  //         //                       Navigator.push(
-  //         //                           context,
-  //         //                           MaterialPageRoute(
-  //         //                             builder: (context) => SpecialityScreen(),
-  //         //                           ));
-  //         //                     },
-  //         //                     child: Text(
-  //         //                       CLICK_HERE,
-  //         //                       style: TextStyle(
-  //         //                           fontWeight: FontWeight.w900,
-  //         //                           fontSize: 10,
-  //         //                           color: AMBER),
-  //         //                     ),
-  //         //                   ),
-  //         //                 ],
-  //         //               ),
-  //         //             ],
-  //         //           ),
-  //         //         ),
-  //         //       )
-  //         //     : ListView.builder(
-  //         //         itemCount:
-  //         //             AppointmentList.length > 2 ? 2 : AppointmentList.length,
-  //         //         shrinkWrap: true,
-  //         //         padding: EdgeInsets.all(0),
-  //         //         physics: ClampingScrollPhysics(),
-  //         //         itemBuilder: (context, index) {
-  //         //           print(
-  //         //               "$SERVER_ADDRESS/public/upload/doctors/${AppointmentList[index].doctorls!.image}");
-  //         //           return appointmentListWidget(index, AppointmentList);
-  //         //         },
-  //         //       )
-  //       ],
-  //     ),
-  //   );
-  // }
-
-  // Widget appointmentListWidget(int index, List<Appointment> data) {
-  //   return InkWell(
-  //     borderRadius: BorderRadius.circular(15),
-  //     onTap: () {
-  //       Navigator.push(
-  //         context,
-  //         MaterialPageRoute(
-  //             builder: (context) =>
-  //                 UserAppointmentDetails(data[index].id.toString())),
-  //       );
-  //     },
-  //     child: Container(
-  //       height: 90,
-  //       margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
-  //       padding: EdgeInsets.all(8),
-  //       decoration: BoxDecoration(
-  //         borderRadius: BorderRadius.circular(10),
-  //         color: WHITE,
-  //       ),
-  //       child: Row(
-  //         children: [
-  //           ClipRRect(
-  //             borderRadius: BorderRadius.circular(15),
-  //             child: CachedNetworkImage(
-  //               imageUrl:
-  //                   "$SERVER_ADDRESS/public/upload/doctors/${data[index].doctorls!.image}",
-  //               height: 70,
-  //               width: 70,
-  //               fit: BoxFit.cover,
-  //               placeholder: (context, url) => Container(
-  //                 color: Theme.of(context).primaryColorLight,
-  //                 child: Padding(
-  //                   padding: const EdgeInsets.all(20.0),
-  //                   child: Image.asset(
-  //                     "assets/homeScreenImages/user_unactive.png",
-  //                     height: 20,
-  //                     width: 20,
-  //                   ),
-  //                 ),
-  //               ),
-  //               errorWidget: (context, url, err) => Container(
-  //                   color: Theme.of(context).primaryColorLight,
-  //                   child: Padding(
-  //                     padding: const EdgeInsets.all(20.0),
-  //                     child: Image.asset(
-  //                       "assets/homeScreenImages/user_unactive.png",
-  //                       height: 20,
-  //                       width: 20,
-  //                     ),
-  //                   )),
-  //             ),
-  //           ),
-  //           SizedBox(
-  //             width: 10,
-  //           ),
-  //           Expanded(
-  //             child: Column(
-  //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //               crossAxisAlignment: CrossAxisAlignment.start,
-  //               children: [
-  //                 Container(
-  //                   child: Column(
-  //                     crossAxisAlignment: CrossAxisAlignment.start,
-  //                     children: [
-  //                       Text(
-  //                         data[index].doctorls!.name!,
-  //                         style: GoogleFonts.poppins(
-  //                             color: BLACK,
-  //                             fontSize: 13,
-  //                             fontWeight: FontWeight.w500),
-  //                       ),
-  //                       Text(
-  //                         data[index].departmentName!,
-  //                         style: GoogleFonts.poppins(
-  //                             color: BLACK,
-  //                             fontSize: 11,
-  //                             fontWeight: FontWeight.w400),
-  //                       ),
-  //                     ],
-  //                   ),
-  //                 ),
-  //                 SizedBox(
-  //                   height: 9,
-  //                 ),
-  //                 Container(
-  //                   child: Text(
-  //                     data[index].doctorls!.address!,
-  //                     maxLines: 2,
-  //                     overflow: TextOverflow.ellipsis,
-  //                     style: GoogleFonts.poppins(
-  //                         color: LIGHT_GREY_TEXT,
-  //                         fontSize: 10,
-  //                         fontWeight: FontWeight.w400),
-  //                   ),
-  //                 ),
-  //               ],
-  //             ),
-  //           ),
-  //           SizedBox(
-  //             width: 10,
-  //           ),
-  //           Column(
-  //             mainAxisAlignment: MainAxisAlignment.center,
-  //             crossAxisAlignment: CrossAxisAlignment.end,
-  //             children: [
-  //               Image.asset(
-  //                 "assets/homeScreenImages/calender.png",
-  //                 height: 17,
-  //                 width: 17,
-  //               ),
-  //               SizedBox(
-  //                 height: 5,
-  //               ),
-  //               Text(
-  //                 data[index].date.toString().substring(8) +
-  //                     "-" +
-  //                     data[index].date.toString().substring(5, 7) +
-  //                     "-" +
-  //                     data[index].date.toString().substring(0, 4),
-  //                 style: GoogleFonts.poppins(
-  //                     color: LIGHT_GREY_TEXT,
-  //                     fontSize: 11,
-  //                     fontWeight: FontWeight.w400),
-  //               ),
-  //               Text(
-  //                 data[index].slot!,
-  //                 style: GoogleFonts.poppins(
-  //                     color: BLACK, fontSize: 15, fontWeight: FontWeight.w500),
-  //               ),
-  //             ],
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
 
   _onChanged(String value) async {
     if (value.length == 0) {
