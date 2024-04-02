@@ -694,8 +694,8 @@ class _DetailsPageState extends State<DetailsPage> {
                                         : Navigator.of(context).push(
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    BookingScreen(
-                                                        widget.id, guideName!)),
+                                                    BookingScreen(widget.id,
+                                                        guideId!, guideName!)),
                                           );
                                   },
                                   icon:

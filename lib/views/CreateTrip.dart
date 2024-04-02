@@ -4,7 +4,6 @@ import 'package:appcode3/en.dart';
 import 'package:appcode3/main.dart';
 import 'package:appcode3/views/Doctor/Tour.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';

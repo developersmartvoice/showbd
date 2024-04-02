@@ -25,11 +25,17 @@ class _ChoosePlanState extends State<ChoosePlan> {
   @override
   void initState() {
     super.initState();
-    SharedPreferences.getInstance().then((value) {
+    print(currency);
+    SharedPreferences.getInstance().then((prefs) {
       setState(() {
-        currency = value.getString("Currency");
+        if (prefs.containsKey("Currency") &&
+            prefs.getString("Currency") != null) {
+          currency = prefs.getString("Currency")!;
+        } else {
+          currency = "BDT";
+        }
         print(currency);
-        getAmount(currency!);
+        getAmount(currency!); // Assuming this function is defined elsewhere
       });
     });
   }

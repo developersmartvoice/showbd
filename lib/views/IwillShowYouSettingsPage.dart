@@ -46,7 +46,8 @@ class _IwillShowYouSettingsPageState extends State<IwillShowYouSettingsPage> {
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController(text: widget.iwillshowyou);
+    _controller = TextEditingController(
+        text: widget.iwillshowyou != 'null' ? widget.iwillshowyou : '');
   }
 
   @override
@@ -154,7 +155,7 @@ class _IwillShowYouSettingsPageState extends State<IwillShowYouSettingsPage> {
                         decoration: InputDecoration(
                           border: OutlineInputBorder(),
                           hintText: "Add I will show you",
-                          hintStyle: TextStyle(color: Colors.black),
+                          hintStyle: TextStyle(color: Colors.grey),
                         ),
                       ),
                     )

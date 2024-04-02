@@ -22,6 +22,7 @@ class _HourlyRateSettingsPageState extends State<HourlyRateSettingsPage> {
   late TextEditingController _controller;
   String enteredValue = '';
   bool isValueChanged = false;
+  bool loading = false;
   void updatingConsultationFees() async {
     final response = await post(
         Uri.parse("$SERVER_ADDRESS/api/updateConsultationFees"),
@@ -34,6 +35,7 @@ class _HourlyRateSettingsPageState extends State<HourlyRateSettingsPage> {
     if (response.statusCode == 200) {
       print("Hourly Rate Updated");
       setState(() {
+        loading = false;
         Navigator.of(context).pop(true);
       });
     } else {
@@ -44,7 +46,8 @@ class _HourlyRateSettingsPageState extends State<HourlyRateSettingsPage> {
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController(text: widget.consultationfees);
+    _controller = TextEditingController(
+        text: widget.consultationfees != '0' ? widget.consultationfees : "0");
   }
 
   @override
@@ -67,6 +70,9 @@ class _HourlyRateSettingsPageState extends State<HourlyRateSettingsPage> {
             TextButton(
               onPressed: () {
                 if (isValueChanged) {
+                  setState(() {
+                    loading = true;
+                  });
                   updatingConsultationFees();
                 } else {
                   // Navigator.pop(context);
@@ -83,72 +89,81 @@ class _HourlyRateSettingsPageState extends State<HourlyRateSettingsPage> {
             ),
           ],
         ),
-        body: Container(
-          color: LIGHT_GREY_SCREEN_BACKGROUND,
-          child: Column(
-            children: [
-              Container(
-                padding: EdgeInsets.all(16),
-                alignment: Alignment.topLeft,
+        body: loading
+            ? Container(
+                alignment: Alignment.center,
+                transformAlignment: Alignment.center,
+                child: CircularProgressIndicator(
+                  color: const Color.fromARGB(255, 243, 103, 9),
+                ),
+              )
+            : Container(
+                color: LIGHT_GREY_SCREEN_BACKGROUND,
                 child: Column(
                   children: [
-                    Text(
-                      HOURLY_RATE_PAGE,
-                      textAlign: TextAlign.justify, // Align text to center
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w900,
+                    Container(
+                      padding: EdgeInsets.all(16),
+                      alignment: Alignment.topLeft,
+                      child: Column(
+                        children: [
+                          Text(
+                            HOURLY_RATE_PAGE,
+                            textAlign:
+                                TextAlign.justify, // Align text to center
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w900,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          // Text(
+                          //   MOTTO_PAGE_2,
+                          //   style: TextStyle(
+                          //     color: Colors.black,
+                          //     fontSize: 12,
+                          //     fontWeight: FontWeight.w200,
+                          //   ),
+                          // ),
+                        ],
                       ),
                     ),
                     SizedBox(
                       height: 10,
                     ),
-                    // Text(
-                    //   MOTTO_PAGE_2,
-                    //   style: TextStyle(
-                    //     color: Colors.black,
-                    //     fontSize: 12,
-                    //     fontWeight: FontWeight.w200,
-                    //   ),
-                    // ),
+                    Container(
+                      color: Colors.white,
+                      child: TextField(
+                        controller: _controller,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w200,
+                        ),
+                        onChanged: (value) {
+                          setState(
+                            () {
+                              enteredValue = value;
+                              if (enteredValue != widget.consultationfees) {
+                                isValueChanged = true;
+                              } else {
+                                isValueChanged = false;
+                              }
+                            },
+                          );
+                        },
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: "Add your hourly fees",
+                          hintStyle: TextStyle(color: Colors.grey),
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                color: Colors.white,
-                child: TextField(
-                  controller: _controller,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w200,
-                  ),
-                  onChanged: (value) {
-                    setState(
-                      () {
-                        enteredValue = value;
-                        if (enteredValue != widget.consultationfees) {
-                          isValueChanged = true;
-                        } else {
-                          isValueChanged = false;
-                        }
-                      },
-                    );
-                  },
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: widget.consultationfees,
-                    hintStyle: TextStyle(color: Colors.black),
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
       ),
     );
   }

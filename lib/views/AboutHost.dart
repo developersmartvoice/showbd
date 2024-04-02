@@ -581,7 +581,9 @@ class _ContainerPageState extends State<ContainerPage> {
                       alignment: Alignment.centerRight,
                       width: MediaQuery.sizeOf(context).width * .4,
                       child: Text(
-                        widget.motto,
+                        widget.motto != 'null'
+                            ? widget.motto
+                            : "Add your motto",
                         style: TextStyle(
                           fontSize: 15.0,
                           fontWeight: FontWeight.bold,
@@ -677,7 +679,9 @@ class _ContainerPageState extends State<ContainerPage> {
                       alignment: Alignment.centerRight,
                       width: MediaQuery.sizeOf(context).width * .4,
                       child: Text(
-                        widget.iwillshowyou,
+                        widget.iwillshowyou != 'null'
+                            ? widget.iwillshowyou
+                            : "Add what you can show",
                         style: TextStyle(
                           fontSize: 15.0,
                           fontWeight: FontWeight.bold,
@@ -867,7 +871,9 @@ class _ContainerPageState extends State<ContainerPage> {
                       alignment: Alignment.centerRight,
                       width: MediaQuery.sizeOf(context).width * .4,
                       child: Text(
-                        widget.consultationfees,
+                        widget.consultationfees != '0'
+                            ? widget.consultationfees
+                            : "Free",
                         style: TextStyle(
                           fontSize: 15.0,
                           fontWeight: FontWeight.bold,
@@ -1037,7 +1043,7 @@ class _ContainerPageState extends State<ContainerPage> {
                       alignment: Alignment.centerRight,
                       width: MediaQuery.sizeOf(context).width * .4,
                       child: Text(
-                        widget.city,
+                        widget.city != 'null' ? widget.city : "Add your city",
                         style: TextStyle(
                           fontSize: 15.0,
                           fontWeight: FontWeight.bold,
@@ -1129,7 +1135,9 @@ class _ContainerPageState extends State<ContainerPage> {
                       alignment: Alignment.centerRight,
                       width: MediaQuery.sizeOf(context).width * .4,
                       child: Text(
-                        widget.aboutMe,
+                        widget.aboutMe != 'null'
+                            ? widget.aboutMe
+                            : "Add About me",
                         style: TextStyle(
                           fontSize: 15.0,
                           fontWeight: FontWeight.bold,
@@ -1223,7 +1231,9 @@ class _ContainerPageState extends State<ContainerPage> {
                       alignment: Alignment.centerRight,
                       width: MediaQuery.sizeOf(context).width * .4,
                       child: Text(
-                        widget.gender.capitalize.toString(),
+                        widget.gender != 'null'
+                            ? widget.gender.capitalize.toString()
+                            : "Add your gender",
                         style: TextStyle(
                           fontSize: 15.0,
                           fontWeight: FontWeight.bold,
