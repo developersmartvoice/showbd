@@ -1,8 +1,13 @@
+import 'dart:convert';
+
 import 'package:appcode3/en.dart';
+import 'package:appcode3/main.dart';
+import 'package:appcode3/modals/OffersClassSender.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 
 class BookingScreen extends StatefulWidget {
@@ -18,6 +23,7 @@ class BookingScreen extends StatefulWidget {
 
 class _BookingScreenState extends State<BookingScreen> {
   DateTime? selectedDate;
+  String? selectedDatePost;
   String selectedDuration = "";
   String selectedMeetingTime = "";
   String selectedNumberOfPeople = "";
@@ -29,6 +35,32 @@ class _BookingScreenState extends State<BookingScreen> {
   bool isMeetingTimePicled = false;
   bool isNumberofPeoplePicked = false;
   bool isMessageGiven = false;
+  String? receipent_image;
+  String? sender_image;
+  List<DeviceToken>? deviceToken;
+
+  directBooking() async {
+    Map<String, dynamic> postData = {
+      'sender_id': int.parse(widget.sender_id),
+      'recipient_id': int.parse(widget.receiver_id),
+      'date': selectedDatePost,
+      'duration': int.parse(selectedDuration),
+      'timing': selectedMeetingTime,
+      'message': specificInterest
+    };
+
+    String postDataJson = jsonEncode(postData);
+
+    final response = await post(
+        Uri.parse("$SERVER_ADDRESS/api/updateDirectBooking"),
+        body: postDataJson);
+
+    if (response.statusCode == 200) {
+      final jsonResponse = jsonDecode(response.body);
+      if (jsonResponse['message'] == 'Direct booking created successfully') {}
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     String hintText = 'Hello ${widget.guideName.capitalize}, ';
@@ -408,8 +440,9 @@ class _BookingScreenState extends State<BookingScreen> {
     if (picked != null && picked != selectedDate) {
       setState(() {
         selectedDate = picked;
+        selectedDatePost = DateFormat('yyyy-MM-dd').format(selectedDate!);
         isDatePicked = true;
-        print("This is selected Date: $selectedDate");
+        print("This is selected Date: $selectedDatePost");
       });
     } else {
       setState(() {

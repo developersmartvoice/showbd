@@ -45,7 +45,8 @@ class _MottoSettingsPageState extends State<MottoSettingsPage> {
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController(text: widget.motto);
+    _controller =
+        TextEditingController(text: widget.motto != 'null' ? widget.motto : "");
   }
 
   @override
@@ -171,7 +172,7 @@ class _MottoSettingsPageState extends State<MottoSettingsPage> {
                         decoration: InputDecoration(
                           border: OutlineInputBorder(),
                           hintText: "Add Your Motto",
-                          hintStyle: TextStyle(color: Colors.black),
+                          hintStyle: TextStyle(color: Colors.grey),
                         ),
                       ),
                     ),

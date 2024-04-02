@@ -127,8 +127,11 @@ class _GenderSettingsPageState extends State<GenderSettingsPage> {
                       }
                     });
                   },
-                  selectedItem:
-                      isGenderSelected ? selectedGender : widget.gender,
+                  selectedItem: isGenderSelected
+                      ? selectedGender
+                      : widget.gender != 'null'
+                          ? widget.gender
+                          : "Select your gender",
                 ),
               ),
             ],

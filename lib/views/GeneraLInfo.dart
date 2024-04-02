@@ -409,7 +409,9 @@ class _ContainerPageState extends State<ContainerPage> {
                         alignment: Alignment.centerRight,
                         width: MediaQuery.sizeOf(context).width * .4,
                         child: Text(
-                          widget.aboutMe,
+                          widget.aboutMe != 'null'
+                              ? widget.aboutMe
+                              : "Add About me",
                           style: TextStyle(
                             fontSize: 15.0,
                             fontWeight: FontWeight.bold,
@@ -572,7 +574,7 @@ class _ContainerPageState extends State<ContainerPage> {
                         alignment: Alignment.centerRight,
                         width: MediaQuery.sizeOf(context).width * .4,
                         child: Text(
-                          widget.city,
+                          widget.city != 'null' ? widget.city : "Add your city",
                           style: TextStyle(
                             fontSize: 15.0,
                             fontWeight: FontWeight.bold,

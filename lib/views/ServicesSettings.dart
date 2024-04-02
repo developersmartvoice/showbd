@@ -19,9 +19,9 @@ class _ServicesSettingsPageState extends State<ServicesSettingsPage> {
   List<String> selectedServices = [];
   bool isValueChanged = false;
   bool isServiceSelected = false;
-  bool isActivitiesSelected = false;
+  // bool isActivitiesSelected = false;
   List<String> selectedLanguages = [];
-
+  bool loading = false;
   bool isChecked = false;
   //late SharedPreferences prefs;
   String selectedService = "";
@@ -57,7 +57,9 @@ class _ServicesSettingsPageState extends State<ServicesSettingsPage> {
     print("$SERVER_ADDRESS/api/updateServices");
     if (response.statusCode == 200) {
       print("Services Updated");
-
+      setState(() {
+        loading = false;
+      });
       Navigator.of(context).pop(true);
     } else {
       print("Services Not Updated");
@@ -78,7 +80,12 @@ class _ServicesSettingsPageState extends State<ServicesSettingsPage> {
           actions: [
             TextButton(
               onPressed: () {
+                print("Checking isServiceSelected: $isServiceSelected");
                 if (isServiceSelected) {
+                  print(selectedServices);
+                  setState(() {
+                    loading = true;
+                  });
                   updatingServices();
                 } else {
                   // Navigator.pop(context);
@@ -95,65 +102,77 @@ class _ServicesSettingsPageState extends State<ServicesSettingsPage> {
             ),
           ],
         ),
-        body: Container(
-          padding: EdgeInsets.all(10),
-          child: ListView(
-            children: serviceMap.keys.map((key) {
-              bool isSelected = selectedServices.contains(key);
-
-              IconData iconData;
-              switch (key) {
-                case 'translation':
-                  iconData = Icons.translate;
-                  break;
-                case 'shopping':
-                  iconData = Icons.shopping_bag_outlined;
-                  break;
-                case 'food':
-                  iconData = Icons.restaurant;
-                  break;
-                case 'art':
-                  iconData = Icons.museum_outlined;
-                  break;
-                case 'history':
-                  iconData = Icons.music_video;
-                  break;
-                case 'exploration':
-                  iconData = Icons.explore_outlined;
-                  break;
-                case 'pick':
-                  iconData = Icons.drive_eta_outlined;
-                  break;
-                case 'nightlife':
-                  iconData = Icons.local_bar_outlined;
-                  break;
-                case 'sports':
-                  iconData = Icons.sports_kabaddi_outlined;
-                  break;
-                default:
-                  iconData =
-                      Icons.error_outline; // Default icon if key not found
-              }
-
-              return ListTile(
-                dense: true,
-                leading: Icon(iconData),
-                title: Text(serviceMap[key]!),
-                selected: isSelected,
-                onTap: () {
-                  setState(() {
-                    if (isSelected) {
-                      selectedServices.remove(key);
-                    } else {
-                      selectedServices.add(key);
+        body: loading
+            ? Container(
+                alignment: Alignment.center,
+                transformAlignment: Alignment.center,
+                child: CircularProgressIndicator(
+                  color: const Color.fromARGB(255, 243, 103, 9),
+                ),
+              )
+            : Container(
+                padding: EdgeInsets.all(10),
+                child: ListView(
+                  children: serviceMap.keys.map((key) {
+                    bool isSelected = selectedServices.contains(key);
+                    IconData iconData;
+                    switch (key) {
+                      case 'translation':
+                        iconData = Icons.translate;
+                        break;
+                      case 'shopping':
+                        iconData = Icons.shopping_bag_outlined;
+                        break;
+                      case 'food':
+                        iconData = Icons.restaurant;
+                        break;
+                      case 'art':
+                        iconData = Icons.museum_outlined;
+                        break;
+                      case 'history':
+                        iconData = Icons.music_video;
+                        break;
+                      case 'exploration':
+                        iconData = Icons.explore_outlined;
+                        break;
+                      case 'pick':
+                        iconData = Icons.drive_eta_outlined;
+                        break;
+                      case 'nightlife':
+                        iconData = Icons.local_bar_outlined;
+                        break;
+                      case 'sports':
+                        iconData = Icons.sports_kabaddi_outlined;
+                        break;
+                      default:
+                        iconData = Icons
+                            .error_outline; // Default icon if key not found
                     }
-                  });
-                },
-                trailing: isSelected ? Icon(Icons.check) : null,
-              );
-            }).toList(),
-          ),
-        ),
+
+                    return ListTile(
+                      dense: true,
+                      leading: Icon(iconData),
+                      title: Text(serviceMap[key]!),
+                      selected: isSelected,
+                      onTap: () {
+                        setState(() {
+                          if (isSelected) {
+                            selectedServices.remove(key);
+                            print(
+                                "Checking selectedServices: $selectedServices");
+                          } else {
+                            selectedServices.add(key);
+                            print(
+                                "Checking selectedServices: $selectedServices");
+                          }
+                          isServiceSelected = selectedServices.isNotEmpty;
+                        });
+                      },
+                      trailing: isSelected ? Icon(Icons.check) : null,
+                    );
+                  }).toList(),
+                ),
+              ),
       ),
     );
   }

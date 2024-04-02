@@ -14,6 +14,7 @@ class LanguageNew extends StatefulWidget {
 class _LanguageNewState extends State<LanguageNew> {
   List<String> selectedLanguages = [];
   bool isLanguageSelected = false;
+  bool loading = false;
 
   void updatingLanguages() async {
     final response =
@@ -26,6 +27,7 @@ class _LanguageNewState extends State<LanguageNew> {
     if (response.statusCode == 200) {
       print("Language Updated");
       setState(() {
+        loading = false;
         Navigator.of(context).pop(true);
       });
     } else {
@@ -99,6 +101,9 @@ class _LanguageNewState extends State<LanguageNew> {
             TextButton(
               onPressed: () {
                 if (isLanguageSelected && selectedLanguages.isNotEmpty) {
+                  setState(() {
+                    loading = true;
+                  });
                   updatingLanguages();
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -127,42 +132,50 @@ class _LanguageNewState extends State<LanguageNew> {
             ),
           ],
         ),
-        body: Container(
-          color: LIGHT_GREY_SCREEN_BACKGROUND,
-          padding: EdgeInsets.all(10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 10),
-                child: Center(
-                  child: Text(
-                    'Select Your Preferred Language',
-                    style: GoogleFonts.robotoCondensed(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+        body: loading
+            ? Container(
+                alignment: Alignment.center,
+                transformAlignment: Alignment.center,
+                child: CircularProgressIndicator(
+                  color: const Color.fromARGB(255, 243, 103, 9),
+                ),
+              )
+            : Container(
+                color: LIGHT_GREY_SCREEN_BACKGROUND,
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      child: Center(
+                        child: Text(
+                          'Select Your Preferred Language',
+                          style: GoogleFonts.robotoCondensed(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 15, right: 15),
+                      child: Divider(
+                        height: 2,
+                        color: Colors.black,
+                      ),
+                    ),
+                    Container(
+                      height: 370,
+                      child: ListView(
+                        children: languageMap.keys.map((key) {
+                          return buildLanguageItem(key, languageMap[key]!);
+                        }).toList(),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.only(left: 15, right: 15),
-                child: Divider(
-                  height: 2,
-                  color: Colors.black,
-                ),
-              ),
-              Container(
-                height: 370,
-                child: ListView(
-                  children: languageMap.keys.map((key) {
-                    return buildLanguageItem(key, languageMap[key]!);
-                  }).toList(),
-                ),
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }
