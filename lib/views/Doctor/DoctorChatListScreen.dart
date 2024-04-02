@@ -2,21 +2,15 @@ import 'dart:convert';
 
 import 'package:appcode3/en.dart';
 import 'package:appcode3/main.dart';
-import 'package:appcode3/modals/OffersClassSender.dart';
 import 'package:appcode3/modals/SendOfferClass.dart';
 import 'package:appcode3/views/ChatScreen.dart';
-import 'package:appcode3/views/Doctor/loginAsDoctor.dart';
 import 'package:appcode3/views/SeeAllOffersScreen.dart';
-import 'package:appcode3/views/SendOfferScreen.dart';
 import 'package:appcode3/views/SendOffersScreen.dart';
-import 'package:appcode3/views/loginAsUser.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
-import 'package:http/http.dart' as http;
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -150,6 +144,43 @@ class _ChatListScreenState extends State<ChatListScreen> {
 
   bool st = false;
 
+  void check() {
+    tripCount > 0
+        ? Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => SendOffersScreen(
+                notifyGuides: notifyGds,
+              ),
+            ),
+          )
+        : showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('No person found!'),
+                content:
+                    Text('No person is looking for a local in your place!'),
+                actions: [
+                  TextButton(
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStatePropertyAll<Color>(Colors.red),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(
+                      'Close',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ],
+              );
+            },
+          );
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
@@ -168,15 +199,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => SendOffersScreen(
-                                  notifyGuides:
-                                      _sendOfferClass!.notifiedGuides!,
-                                ),
-                              ),
-                            );
+                            check();
                           },
                           child: Card(
                             child: Row(
@@ -238,45 +261,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                                 IconButton(
                                   icon: Icon(Icons.arrow_forward_ios_sharp),
                                   onPressed: () {
-                                    tripCount > 0
-                                        ? Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  SendOffersScreen(
-                                                notifyGuides: notifyGds,
-                                              ),
-                                            ),
-                                          )
-                                        : showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return AlertDialog(
-                                                title: Text('No person found!'),
-                                                content: Text(
-                                                    'No person is looking for a local in your place!'),
-                                                actions: [
-                                                  TextButton(
-                                                    style: ButtonStyle(
-                                                      backgroundColor:
-                                                          MaterialStatePropertyAll<
-                                                                  Color>(
-                                                              Colors.red),
-                                                    ),
-                                                    onPressed: () {
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                    },
-                                                    child: Text(
-                                                      'Close',
-                                                      style: TextStyle(
-                                                          color: Colors.white),
-                                                    ),
-                                                  ),
-                                                ],
-                                              );
-                                            },
-                                          );
+                                    check();
                                   },
                                 ),
                               ],
