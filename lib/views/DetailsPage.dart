@@ -698,9 +698,16 @@ class _DetailsPageState extends State<DetailsPage> {
                                                         guideId!, guideName!)),
                                           );
                                   },
-                                  icon:
-                                      Icon(Icons.connect_without_contact_sharp),
-                                  label: Text("Contact"),
+                                  icon: Icon(
+                                      Icons.connect_without_contact_sharp,
+                                      size: MediaQuery.of(context).size.width *
+                                          0.05),
+                                  label: Text("Contact",
+                                      style: TextStyle(
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.04)),
                                   style: ElevatedButton.styleFrom(
                                     foregroundColor: Colors.white,
                                     backgroundColor:
@@ -751,8 +758,15 @@ class _DetailsPageState extends State<DetailsPage> {
                                       ),
                                     );
                                   },
-                                  icon: Icon(Icons.airplane_ticket_sharp),
-                                  label: Text("Create A Trip"),
+                                  icon: Icon(Icons.airplane_ticket_sharp,
+                                      size: MediaQuery.of(context).size.width *
+                                          0.05),
+                                  label: Text("Create A Trip",
+                                      style: TextStyle(
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.04)),
                                   style: ElevatedButton.styleFrom(
                                     textStyle: GoogleFonts.poppins(
                                       fontSize: 19.0,

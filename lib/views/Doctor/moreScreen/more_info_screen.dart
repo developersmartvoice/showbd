@@ -572,6 +572,8 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                         style: Theme.of(context).textTheme.subtitle1?.copyWith(
                               color: Color.fromARGB(255, 243, 103,
                                   9), // Replace with your desired color
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.035,
                             ),
                       ),
                     ),
@@ -636,6 +638,8 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                         CONTACT_AND_IDENTIFICATION,
                         style: Theme.of(context).textTheme.subtitle1?.copyWith(
                               color: Color.fromARGB(255, 243, 103, 9),
+                              fontSize: MediaQuery.of(context).size.width *
+                                  0.035, // Adjust this value as needed
                             ),
                       ),
                     ),
@@ -704,6 +708,8 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                         MEMBERSHIP,
                         style: Theme.of(context).textTheme.subtitle1?.copyWith(
                               color: Color.fromARGB(255, 243, 103, 9),
+                              fontSize: MediaQuery.of(context).size.width *
+                                  0.035, // Adjust this value as needed
                             ),
                       ),
                     ),
@@ -830,6 +836,8 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                         ABOUT_HOST,
                         style: Theme.of(context).textTheme.subtitle1?.copyWith(
                               color: Color.fromARGB(255, 243, 103, 9),
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.035,
                             ),
                       ),
                     ),
@@ -971,6 +979,8 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                         CURRENCY_EXCHANGE,
                         style: Theme.of(context).textTheme.subtitle1?.copyWith(
                               color: Color.fromARGB(255, 243, 103, 9),
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.035,
                             ),
                       ),
                     ),
@@ -1448,6 +1458,8 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                         DELETE_ACCOUNT,
                         style: Theme.of(context).textTheme.subtitle1?.copyWith(
                               color: Color.fromARGB(255, 243, 103, 9),
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.035,
                             ),
                       ),
                     ),
