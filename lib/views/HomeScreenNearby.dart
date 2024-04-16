@@ -594,8 +594,8 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
           nextUrl = nearbyDoctorsClass!.data!.nextPageUrl!;
 
           print(nextUrl);
-          print(list2[8].name);
-          print(list2[8].consultationFee);
+          // print(list2[8].name);
+          // print(list2[8].consultationFee);
           isNearbyLoading = false;
         });
       }
