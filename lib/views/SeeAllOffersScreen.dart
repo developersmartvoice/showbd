@@ -345,6 +345,16 @@ class _SeeAllOffersState extends State<SeeAllOffers> {
                                 );
                               });
                             },
+                            subtitle: Center(
+                              child: Text(
+                                'Tap to chat',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w900,
+                                ),
+                              ),
+                            ),
                           ),
                         );
                       },
@@ -518,7 +528,15 @@ class _SeeAllOffersState extends State<SeeAllOffers> {
                           },
                         ))
                       : Container(
-                          child: Text("No Data Found!"),
+                          margin: EdgeInsets.only(
+                              top: MediaQuery.sizeOf(context).height * .2),
+                          alignment: Alignment.center,
+                          transformAlignment: Alignment.center,
+                          child: Text(
+                            "No Data Found!",
+                            style: TextStyle(
+                                fontSize: 35, fontWeight: FontWeight.bold),
+                          ),
                         ),
             ],
           ),
