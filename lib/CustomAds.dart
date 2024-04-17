@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 
 class CustomAds {
-  final String ADMOB_ID = "ca-app-pub-7803172892594923/5172476997";
-  final String FACEBOOK_AD_ID = "727786934549239_727793487881917";
+  // final String ADMOB_ID = "ca-app-pub-7803172892594923/5172476997";
+  // final String FACEBOOK_AD_ID = "727786934549239_727793487881917";
 
   // final nativeAdController = NativeAdmobController();
 

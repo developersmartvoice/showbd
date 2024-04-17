@@ -299,24 +299,22 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(50),
-                      child: CachedNetworkImage(
-                        //alignment: Alignment.topCenter,
-                        imageUrl: doctorProfileWithRating!.data!.image!,
-                        height: 85,
-                        width: 85,
-                        fit: BoxFit.cover,
-                        placeholder: (context, url) => Container(
-                          color: Theme.of(context).primaryColorLight,
-                          child: Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Image.asset(
-                              "assets/homeScreenImages/user_unactive.png",
-                              height: 20,
-                              width: 20,
-                            ),
-                          ),
-                        ),
-                        errorWidget: (context, url, err) => Container(
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    DetailsPage(doctorId.toString(), false)),
+                          );
+                        },
+                        child: CachedNetworkImage(
+                          //alignment: Alignment.topCenter,
+                          imageUrl: doctorProfileWithRating!.data!.image!,
+                          height: 85,
+                          width: 85,
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) => Container(
                             color: Theme.of(context).primaryColorLight,
                             child: Padding(
                               padding: const EdgeInsets.all(20.0),
@@ -325,7 +323,19 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                                 height: 20,
                                 width: 20,
                               ),
-                            )),
+                            ),
+                          ),
+                          errorWidget: (context, url, err) => Container(
+                              color: Theme.of(context).primaryColorLight,
+                              child: Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: Image.asset(
+                                  "assets/homeScreenImages/user_unactive.png",
+                                  height: 20,
+                                  width: 20,
+                                ),
+                              )),
+                        ),
                       ),
                     ),
                     SizedBox(

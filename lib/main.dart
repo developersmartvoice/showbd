@@ -53,8 +53,8 @@ const String serverToken =
 
 const LANGUAGE = "en";
 int PHONE_NUMBER_LENGTH = 10;
-const String ADMOB_ID = "ca-app-pub-7803172892594923/5172476997";
-const String FACEBOOK_AD_ID = "727786934549239_727793487881917";
+// const String ADMOB_ID = "ca-app-pub-7803172892594923/5172476997";
+// const String FACEBOOK_AD_ID = "727786934549239_727793487881917";
 
 const defaultUserImage = 'assets/default-user.png';
 

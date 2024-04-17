@@ -264,7 +264,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                           ),
                           child: CachedNetworkImage(
                             imageUrl: imgs[imgIndex], // Use the image from imgs
-                            fit: BoxFit.cover,
+                            fit: BoxFit.fill,
                             width: double.infinity,
                             placeholder: (context, url) => Container(
                               color: Theme.of(context).primaryColorLight,
