@@ -132,10 +132,11 @@ class _TourState extends State<Tour> {
                       },
                       icon: Icon(CupertinoIcons.plus_circle_fill),
                       label: Text(
-                        'Create a Trip',
+                        'Create Trip',
                         style: GoogleFonts.poppins(
                           fontWeight: FontWeight.w700,
-                          fontSize: 18,
+                          fontSize:
+                              MediaQuery.of(context).size.width * 0.05 / 1.2,
                         ),
                       ),
                       style: ElevatedButton.styleFrom(

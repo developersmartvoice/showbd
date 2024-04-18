@@ -318,7 +318,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                                       "Click to View Your Sent and Received Offers!",
                                       style: TextStyle(
                                         color: Colors.white,
-                                        fontSize: 16,
+                                        fontSize: 14,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
