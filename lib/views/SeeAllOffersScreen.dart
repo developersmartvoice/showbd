@@ -508,13 +508,13 @@ class _SeeAllOffersState extends State<SeeAllOffers> {
                                         MaterialPageRoute(
                                             builder: (context) => ChatScreen(
                                                 chatDataReceiver![index].name,
-                                                "117" +
+                                                "100" +
                                                     chatDataReceiver![index]
                                                         .uid
                                                         .toString(),
                                                 chatDataReceiver![index]
                                                     .connectycubeUserId,
-                                                true,
+                                                false,
                                                 chatDataReceiver![index]
                                                     .deviceToken,
                                                 chatDataReceiver![index]
@@ -523,6 +523,16 @@ class _SeeAllOffersState extends State<SeeAllOffers> {
                                                     .senderImage)));
                                   });
                                 },
+                                subtitle: Center(
+                                  child: Text(
+                                    'Tap to chat',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w900,
+                                    ),
+                                  ),
+                                ),
                               ),
                             );
                           },

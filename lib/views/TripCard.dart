@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:appcode3/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:appcode3/modals/TripsClass.dart';
 
@@ -118,18 +119,27 @@ class TripCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(CupertinoIcons.location_circle_fill),
-              SizedBox(width: 10),
+              Icon(
+                CupertinoIcons.location_circle_fill,
+                size: MediaQuery.of(context).size.width * 0.06,
+              ),
+              SizedBox(width: MediaQuery.of(context).size.width * 0.01),
               Text(
                 'Trip to ${trip.destination ?? ''}',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 16.0,
+                  fontSize: MediaQuery.of(context).size.width * 0.05 / 1.2,
                 ),
               ),
               Spacer(),
+              // SizedBox(
+              //   width: MediaQuery.of(context).size.width * 0.2,
+              // ),
               IconButton(
-                icon: Icon(Icons.delete),
+                icon: Icon(
+                  Icons.delete,
+                  size: MediaQuery.of(context).size.width * 0.06,
+                ),
                 onPressed: () {
                   showDeleteConfirmationDialog((id) {
                     deleteTrip(id); // Call deleteTrip with the trip ID
@@ -141,12 +151,14 @@ class TripCard extends StatelessWidget {
           SizedBox(height: 8.0),
           Row(
             children: [
-              Icon(Icons.calendar_month_sharp),
+              Icon(Icons.calendar_month_sharp,
+                  size: MediaQuery.of(context).size.width * 0.05),
               SizedBox(width: 10),
               Text(
                 '$formattedStartDate to $formattedEndDate',
                 style: TextStyle(
                   color: Colors.grey,
+                  fontSize: MediaQuery.of(context).size.width * 0.05 / 1.9,
                 ),
               ),
             ],
@@ -154,18 +166,28 @@ class TripCard extends StatelessWidget {
           SizedBox(height: 8.0),
           Row(
             children: [
-              Icon(CupertinoIcons.person_3_fill),
-              SizedBox(width: 10),
+              Icon(
+                CupertinoIcons.person_3_fill,
+                size: MediaQuery.of(context).size.width * 0.05,
+              ),
+              SizedBox(width: MediaQuery.of(context).size.width * 0.01),
               Text(
                 'Number of People: ${getNumberString(trip.peopleQuantity)}',
+                style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.width * 0.05 / 1.7,
+                ),
               ),
               Spacer(),
+              // SizedBox(
+              //   width: MediaQuery.of(context).size.width * 0.2,
+              // ),
               trip.endDate!.compareTo(DateTime.now().toString()) < 0
                   ? Text(
                       'Expired',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 16.0,
+                        fontSize:
+                            MediaQuery.of(context).size.width * 0.05 / 1.9,
                         color: Colors.red,
                       ),
                     )
@@ -173,7 +195,8 @@ class TripCard extends StatelessWidget {
                       'Active',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 16.0,
+                        fontSize:
+                            MediaQuery.of(context).size.width * 0.05 / 1.5,
                         color: Colors.green,
                       ),
                     ),
@@ -257,19 +280,23 @@ class TripCard extends StatelessWidget {
     return Card(
       elevation: 2.0,
       margin: EdgeInsets.symmetric(vertical: 8.0),
-      child: ListTile(
-        contentPadding: EdgeInsets.all(0),
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            tripImage(),
-            SizedBox(height: 6.0),
-            tripDetails(),
-          ],
+      child: Container(
+        width: MediaQuery.of(context).size.width *
+            0.9, // Adjust this factor as needed
+        child: ListTile(
+          contentPadding: EdgeInsets.all(0),
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              tripImage(),
+              SizedBox(height: 6.0),
+              tripDetails(),
+            ],
+          ),
+          onTap: () {
+            // Handle tap on a trip (if needed)
+          },
         ),
-        onTap: () {
-          // Handle tap on a trip (if needed)
-        },
       ),
     );
   }

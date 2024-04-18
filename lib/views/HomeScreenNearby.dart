@@ -390,7 +390,8 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                         '\$' + consultationFee + "/h",
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 14.0,
+                          fontSize:
+                              MediaQuery.of(context).size.width * 0.05 / 2.00,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -417,7 +418,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                             fontWeight: FontWeight.w500,
                             //color: LIGHT_GREY_TEXT,
                             color: Colors.black,
-                            fontSize: 20),
+                            fontSize: 18),
                         textAlign: TextAlign.center,
                         //textAlignVertical: TextAlignVertical.center,
                       ),
