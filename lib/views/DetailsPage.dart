@@ -680,72 +680,53 @@ class _DetailsPageState extends State<DetailsPage> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              // Expanded(
-                              //   child: ElevatedButton.icon(
-                              //     onPressed: () {
-                              //       !isMember
-                              //           ? Navigator.of(context).push(
-                              //               MaterialPageRoute(
-                              //                   builder: (context) =>
-                              //                       ChoosePlan()
-                              //                   //BookingScreen(widget.id, guideName!),
-                              //                   ),
-                              //             )
-                              //           : Navigator.of(context).push(
-                              //               MaterialPageRoute(
-                              //                   builder: (context) =>
-                              //                       BookingScreen(widget.id,
-                              //                           guideId!, guideName!)),
-                              //             );
-                              //     },
-                              //     icon: Icon(
-                              //         Icons.connect_without_contact_sharp,
-                              //         size: MediaQuery.of(context).size.width *
-                              //             0.05),
-                              //     label: Text("Contact",
-                              //         style: TextStyle(
-                              //             fontSize: MediaQuery.of(context)
-                              //                     .size
-                              //                     .width *
-                              //                 0.04)),
-                              //     style: ElevatedButton.styleFrom(
-                              //       foregroundColor: Colors.white,
-                              //       backgroundColor:
-                              //           const Color.fromARGB(255, 3, 142, 255),
-                              //       shape: RoundedRectangleBorder(
-                              //         borderRadius: BorderRadius.circular(10.0),
-                              //       ),
-                              //       padding: EdgeInsets.all(10.0),
-                              //       elevation: 5.0,
-                              //       shadowColor: Colors.grey,
-                              //       textStyle: GoogleFonts.poppins(
-                              //         fontSize: 19.0,
-                              //         fontWeight: FontWeight.w500,
-                              //         color: Colors
-                              //             .white, // Set text color to white
-                              //       ),
-                              //     ),
-                              //   ),
-                              // ),
-                              //textStyle: GoogleFonts.poppins(
-                              //backgroundColor: Colors.white,
-                              //fontSize: 18.0,
-                              //fontWeight: FontWeight.w500,
-                              //color: Colors.white,
-                              //),
-                              //primary: Colors.blue,
-                              //backgroundColor: Colors.blue,
-                              //shape: RoundedRectangleBorder(
-                              //borderRadius: BorderRadius.circular(
-                              // 10.0), // Set border radius
-                              //),
-                              //padding: EdgeInsets.all(
-                              //10.0), // Customize horizontal padding
-                              //elevation: 5.0, // Set elevation
-                              //shadowColor: Colors.grey, // Set shadow color
-                              //),
-                              //),
-                              //),
+                              Expanded(
+                                child: ElevatedButton.icon(
+                                  onPressed: () {
+                                    !isMember
+                                        ? Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ChoosePlan()
+                                                //BookingScreen(widget.id, guideName!),
+                                                ),
+                                          )
+                                        : Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    BookingScreen(widget.id,
+                                                        guideId!, guideName!)),
+                                          );
+                                  },
+                                  icon: Icon(
+                                      Icons.connect_without_contact_sharp,
+                                      size: MediaQuery.of(context).size.width *
+                                          0.05),
+                                  label: Text("Contact",
+                                      style: TextStyle(
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.04)),
+                                  style: ElevatedButton.styleFrom(
+                                    foregroundColor: Colors.white,
+                                    backgroundColor:
+                                        const Color.fromARGB(255, 3, 142, 255),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    padding: EdgeInsets.all(10.0),
+                                    elevation: 5.0,
+                                    shadowColor: Colors.grey,
+                                    textStyle: GoogleFonts.poppins(
+                                      fontSize: 19.0,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors
+                                          .white, // Set text color to white
+                                    ),
+                                  ),
+                                ),
+                              ),
                               SizedBox(
                                 width: 10,
                               ),
