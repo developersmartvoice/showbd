@@ -90,7 +90,7 @@ class Data {
     email = json['email'];
     aboutus = json['aboutus'];
     motto = json['motto'];
-    iwillshowyou = json['iwillshowyou'];
+    iwillshowyou = json['I_will_show_you'];
     address = json['address'];
     lat = json['lat'].toString();
     lon = json['lon'].toString();
@@ -132,7 +132,7 @@ class Data {
     data['email'] = this.email;
     data['aboutus'] = this.aboutus;
     data['motto'] = this.motto;
-    data['iwillshowyou'] = this.iwillshowyou;
+    data['I_will_show_you'] = this.iwillshowyou;
     data['address'] = this.address;
     data['lat'] = this.lat;
     data['lon'] = this.lon;
