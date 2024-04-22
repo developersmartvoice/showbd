@@ -141,7 +141,7 @@ class _TourState extends State<Tour> {
                       ),
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.fromLTRB(95, 13, 95, 13),
-                        backgroundColor: Colors.blue,
+                        backgroundColor: Color.fromARGB(255, 243, 103, 9),
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0),

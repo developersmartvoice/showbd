@@ -849,9 +849,9 @@ class _SearchedScreenState extends State<SearchedScreen> {
                       }
                       onChanged(newSelectedValues);
                       if (selectedLanguages.isNotEmpty) {
-                        isActivitiesSelected = true;
+                        isLanguageSelected = true;
                       } else {
-                        isActivitiesSelected = false;
+                        isLanguageSelected = false;
                       }
                     },
                     selectedColor: Color.fromARGB(190, 255, 115, 0),

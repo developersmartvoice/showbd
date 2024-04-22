@@ -522,7 +522,7 @@ class _CreateTripState extends State<CreateTrip> {
                             peoplePicked &&
                             genderPicked
                         ? Color.fromARGB(255, 255, 84, 5)
-                        : Colors.lightBlue,
+                        : Color.fromARGB(255, 185, 199, 206),
                     fixedSize: Size(
                       MediaQuery.of(context).size.width * .5,
                       50,
@@ -541,7 +541,10 @@ class _CreateTripState extends State<CreateTrip> {
                                 AlwaysStoppedAnimation<Color>(Colors.white),
                           ),
                         )
-                      : Icon(Icons.travel_explore),
+                      : Icon(
+                          Icons.travel_explore,
+                          color: Colors.white,
+                        ),
                   label: isLoading
                       ? SizedBox.shrink() // Hide label when loading
                       : Text(
