@@ -10,6 +10,7 @@ import 'package:appcode3/views/MakeAppointment.dart';
 import 'package:appcode3/views/loginAsUser.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
@@ -38,7 +39,7 @@ class _DetailsPageState extends State<DetailsPage> {
   String? city;
   List<String>? imgs;
   int currentPage = 0;
-  String? guideId;
+  String? senderId;
   bool isMember = false;
 
   // String? get consultationFee => null;
@@ -52,7 +53,7 @@ class _DetailsPageState extends State<DetailsPage> {
     SharedPreferences.getInstance().then((pref) {
       setState(() {
         isLoggedIn = pref.getBool("isLoggedInAsDoctor") ?? false;
-        guideId = pref.getString("userId");
+        senderId = pref.getString("userId");
         checkIsMember();
       });
     });
@@ -60,7 +61,7 @@ class _DetailsPageState extends State<DetailsPage> {
 
   checkIsMember() async {
     final response = await get(
-        Uri.parse("$SERVER_ADDRESS/api/check_membership?id=${guideId}"));
+        Uri.parse("$SERVER_ADDRESS/api/check_membership?id=${senderId}"));
     if (response.statusCode == 200) {
       final jsonResponse = jsonDecode(response.body);
       if (jsonResponse['is_member'] == 0) {
@@ -695,7 +696,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                             MaterialPageRoute(
                                                 builder: (context) =>
                                                     BookingScreen(widget.id,
-                                                        guideId!, guideName!)),
+                                                        senderId!, guideName!)),
                                           );
                                   },
                                   icon: Icon(
@@ -711,19 +712,22 @@ class _DetailsPageState extends State<DetailsPage> {
                                   style: ElevatedButton.styleFrom(
                                     foregroundColor: Colors.white,
                                     backgroundColor:
-                                        const Color.fromARGB(255, 3, 142, 255),
+                                        Color.fromARGB(255, 243, 103, 9),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10.0),
+                                      side: BorderSide(
+                                        color: Colors.white,
+                                      ),
                                     ),
                                     padding: EdgeInsets.all(10.0),
                                     elevation: 5.0,
                                     shadowColor: Colors.grey,
-                                    textStyle: GoogleFonts.poppins(
-                                      fontSize: 19.0,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors
-                                          .white, // Set text color to white
-                                    ),
+                                    // textStyle: GoogleFonts.poppins(
+                                    //   fontSize: 19.0,
+                                    //   fontWeight: FontWeight.w500,
+                                    //   color: Colors
+                                    //       .white, // Set text color to white
+                                    // ),
                                   ),
                                 ),
                               ),
@@ -749,17 +753,18 @@ class _DetailsPageState extends State<DetailsPage> {
                                                   .width *
                                               0.04)),
                                   style: ElevatedButton.styleFrom(
-                                    textStyle: GoogleFonts.poppins(
-                                      fontSize: 19.0,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.blueAccent,
-                                    ),
-                                    backgroundColor: Colors.blue,
+                                    // textStyle: GoogleFonts.poppins(
+                                    //   fontSize: 19.0,
+                                    //   fontWeight: FontWeight.w500,
+                                    //   color: Colors.blueAccent,
+                                    // ),
+                                    backgroundColor:
+                                        Color.fromARGB(255, 243, 103, 9),
                                     foregroundColor: Colors.white,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10.0),
                                       side: BorderSide(
-                                        color: Colors.blue,
+                                        color: Colors.white,
                                       ), // Set border radius
                                     ),
                                     padding: EdgeInsets.all(
@@ -848,7 +853,9 @@ class _DetailsPageState extends State<DetailsPage> {
                               fontWeight: FontWeight.w300,
                               //color: LIGHT_GREY_TEXT,
                               color: Colors.black,
-                              fontSize: 25),
+                              fontSize: MediaQuery.of(context).size.width *
+                                  0.05 /
+                                  1.5),
                           textAlign: TextAlign.center,
                           //textAlignVertical: TextAlignVertical.center,
                         ),
@@ -1088,6 +1095,11 @@ class _DetailsPageState extends State<DetailsPage> {
                               ? Text("")
                               : Text(
                                   doctorDetailsClass!.data!.aboutus.toString(),
+                                  style: TextStyle(
+                                      fontSize:
+                                          MediaQuery.of(context).size.width *
+                                              0.05 /
+                                              1.5),
                                 )
                         ],
                       ),
@@ -1127,7 +1139,13 @@ class _DetailsPageState extends State<DetailsPage> {
                     width: 0,
                   ),
                   doctorDetailsClass!.data!.services == null
-                      ? Text("No Activities")
+                      ? Text(
+                          "No Activities",
+                          style: TextStyle(
+                              fontSize: MediaQuery.of(context).size.width *
+                                  0.05 /
+                                  1.5),
+                        )
                       : Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -1153,7 +1171,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                 // Create a widget to represent each service with an icon
                                 return Container(
                                   // padding: EdgeInsets.only(left: 0),
-                                  height: 25,
+                                  // height: 25,
                                   child: ListTile(
                                     // contentPadding: EdgeInsets.symmetric(
                                     //     vertical: customListTileHeight),
@@ -1170,20 +1188,29 @@ class _DetailsPageState extends State<DetailsPage> {
                                         // Add an icon before the text
 
                                         Icon(serviceData['icon'],
-                                            size:
-                                                15.0), // Replace with the desired icon
+                                            size: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.05 /
+                                                1.5), // Replace with the desired icon
 
                                         // Add some spacing between the icon and text
                                         SizedBox(width: 8.0),
 
                                         // Display the text with customized style
 
-                                        Text(serviceData['text'],
-                                            style: TextStyle(
-                                              fontSize: 15,
-                                              color: Colors.blueGrey,
-                                              //fontWeight: FontWeight.w900,
-                                            )),
+                                        Expanded(
+                                          child: Text(serviceData['text'],
+                                              style: TextStyle(
+                                                fontSize: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.05 /
+                                                    1.5,
+                                                color: Colors.blueGrey,
+                                                //fontWeight: FontWeight.w900,
+                                              )),
+                                        ),
                                       ],
                                     ),
                                     // You can customize the ListTile further if needed
@@ -1224,7 +1251,9 @@ class _DetailsPageState extends State<DetailsPage> {
                               .map((language) {
                             // Customize text size
                             TextStyle textStyle = TextStyle(
-                                fontSize: 12.0,
+                                fontSize: MediaQuery.of(context).size.width *
+                                    0.05 /
+                                    1.5,
                                 //color: LIGHT_GREY_TEXT,
                                 fontWeight: FontWeight.w500);
 
@@ -1244,7 +1273,10 @@ class _DetailsPageState extends State<DetailsPage> {
                                     )
                                   : Text('$displayText',
                                       style: TextStyle(
-                                        fontSize: 12,
+                                        fontSize:
+                                            MediaQuery.of(context).size.width *
+                                                0.05 /
+                                                1.5,
                                         fontWeight: FontWeight.w500,
                                         color: Colors.black,
                                       )),

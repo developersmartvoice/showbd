@@ -551,7 +551,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
             },
             child: Container(
               width: MediaQuery.sizeOf(context).width * 1,
-              height: 50,
+              height: MediaQuery.of(context).size.height * .06,
               margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
               decoration: BoxDecoration(
                 // color: Color.fromARGB(255, 243, 103, 9),
@@ -621,7 +621,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
             },
             child: Container(
               width: MediaQuery.sizeOf(context).width * 1,
-              height: 50,
+              height: MediaQuery.of(context).size.height * .06,
               margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
               decoration: BoxDecoration(
                 color: WHITE,
@@ -692,7 +692,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
             },
             child: Container(
               width: MediaQuery.sizeOf(context).width * 1,
-              height: 50,
+              height: MediaQuery.of(context).size.height * .06,
               margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
               decoration: BoxDecoration(
                 color: WHITE,
@@ -823,7 +823,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
               });
             },
             child: Container(
-              height: 50,
+              height: MediaQuery.of(context).size.height * .06,
               margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
               decoration: BoxDecoration(
                 color: WHITE,
@@ -966,7 +966,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
             },
             child: Container(
               width: MediaQuery.sizeOf(context).width * 1,
-              height: 50,
+              height: MediaQuery.of(context).size.height * .06,
               margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
               decoration: BoxDecoration(
                 color: WHITE,
@@ -1448,7 +1448,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
             //     // ));
             //   },
             child: Container(
-              height: 50,
+              height: MediaQuery.of(context).size.height * .06,
               margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
               decoration: BoxDecoration(
                 color: WHITE,
