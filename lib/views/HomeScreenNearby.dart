@@ -124,9 +124,9 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
               physics: ScrollPhysics(),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 1,
-                  childAspectRatio: 1.25,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10),
+                  childAspectRatio: .92,
+                  crossAxisSpacing: 0,
+                  mainAxisSpacing: 15),
               itemCount: list2.length,
               itemBuilder: (BuildContext ctx, index) {
                 var data = list2[index];
@@ -203,33 +203,72 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
         child: Column(
           children: [
             Container(
-              height: MediaQuery.of(context).size.height * .22,
+              height: MediaQuery.of(context).size.height *
+                  0.35, // Adjusted height to accommodate additional content
               child: Stack(
                 alignment: Alignment.topRight,
                 children: [
-                  // -------------------------------------
-
+                  // Image Carousel
                   CarouselSlider.builder(
                     carouselController: sliderController,
-                    itemCount: imgs != null
-                        ? imgs.length + 1
-                        : 1, // Add 1 to account for the fixed image
+                    itemCount: imgs != null ? imgs.length + 1 : 1,
                     itemBuilder: (context, index, realIndex) {
                       if (index == 0) {
-                        print("realIndex is $realIndex");
-                        // int individualPage = 0;
-                        // currentPage = 0;
-                        // Display the fixed image at the beginning
+                        // Fixed image
                         return Container(
                           child: ClipRRect(
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(8),
                               topRight: Radius.circular(8),
                             ),
+                            child: AspectRatio(
+                              aspectRatio: MediaQuery.of(context).size.width *
+                                  10 /
+                                  MediaQuery.of(context).size.height *
+                                  .5,
+                              child: CachedNetworkImage(
+                                imageUrl: img,
+                                fit: BoxFit.fill, // Make the image responsive
+                                placeholder: (context, url) => Container(
+                                  color: Theme.of(context).primaryColorLight,
+                                  child: Center(
+                                    child: Image.asset(
+                                      "assets/homeScreenImages/user_unactive.png",
+                                      height: 50,
+                                      width: 50,
+                                    ),
+                                  ),
+                                ),
+                                errorWidget: (context, url, err) => Container(
+                                  color: Theme.of(context).primaryColorLight,
+                                  child: Center(
+                                    child: Image.asset(
+                                      "assets/homeScreenImages/user_unactive.png",
+                                      height: 50,
+                                      width: 50,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      } else {
+                        // Rest of the images from imgs
+                        var imgIndex = index - 1;
+                        return ClipRRect(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(8),
+                            topRight: Radius.circular(8),
+                          ),
+                          child: AspectRatio(
+                            aspectRatio: MediaQuery.of(context).size.width *
+                                10 /
+                                MediaQuery.of(context).size.height *
+                                .5,
                             child: CachedNetworkImage(
-                              imageUrl: img,
+                              imageUrl: imgs[imgIndex],
                               fit: BoxFit.fill,
-                              width: double.infinity,
                               placeholder: (context, url) => Container(
                                 color: Theme.of(context).primaryColorLight,
                                 child: Center(
@@ -253,50 +292,15 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                             ),
                           ),
                         );
-                      } else {
-                        // Display the rest of the images from imgs
-                        var imgIndex = index - 1; // Adjust the index for imgs
-                        // currentPage = imgIndex;
-                        return ClipRRect(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(8),
-                            topRight: Radius.circular(8),
-                          ),
-                          child: CachedNetworkImage(
-                            imageUrl: imgs[imgIndex], // Use the image from imgs
-                            fit: BoxFit.fill,
-                            width: double.infinity,
-                            placeholder: (context, url) => Container(
-                              color: Theme.of(context).primaryColorLight,
-                              child: Center(
-                                child: Image.asset(
-                                  "assets/homeScreenImages/user_unactive.png",
-                                  height: 50,
-                                  width: 50,
-                                ),
-                              ),
-                            ),
-                            errorWidget: (context, url, err) => Container(
-                              color: Theme.of(context).primaryColorLight,
-                              child: Center(
-                                child: Image.asset(
-                                  "assets/homeScreenImages/user_unactive.png",
-                                  height: 50,
-                                  width: 50,
-                                ),
-                              ),
-                            ),
-                          ),
-                        );
                       }
                     },
                     options: CarouselOptions(
                       viewportFraction: 1,
-                      height: 200.0,
+                      height: MediaQuery.of(context).size.height * 0.35,
                       initialPage: 0,
                       reverse: false,
-                      autoPlay: false, // Set to false for manual control
-                      enableInfiniteScroll: false, // Disable infinite scroll
+                      autoPlay: false,
+                      enableInfiniteScroll: false,
                       onPageChanged: (index, reason) {
                         setState(() {
                           currentPage = index;
@@ -306,85 +310,15 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                   ),
 
                   Container(
-                    // margin: EdgeInsets.only(top: 10),
-                    margin: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.height * 0.01),
-                    // color: Colors.black,
-                    width: MediaQuery.sizeOf(context).width * 1,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: List.generate(
-                          imgs!.isNotEmpty ? (imgs!.length + 1) : (1), (index) {
-                        // index < 0 ? currentPage = 0 : {};
-                        print(currentPage);
-                        return Container(
-                          margin: EdgeInsets.symmetric(horizontal: 5),
-                          width: 8,
-                          height: 8,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: currentPage == index
-                                ? Colors.orange
-                                : Colors.grey,
-                          ),
-                        );
-                      }),
-                    ),
-                  ),
-
-                  Container(
-                    height: MediaQuery.sizeOf(context).height * 0.035,
-                    width: MediaQuery.sizeOf(context).width * 1,
-                    margin: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.height * 0.17),
-                    child: Text(
-                      name.toString().toUpperCase(),
-                      maxLines: 2,
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                      style: GoogleFonts.poppins(
-                        // color: Color.fromARGB(255, 255, 94, 0)
-                        //     .withOpacity(0.8),
-                        color: Colors.white,
-                        backgroundColor: Color.fromARGB(94, 194, 191, 191),
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: MediaQuery.sizeOf(context).width * 1,
-                    // margin: EdgeInsets.only(top: 180),
-                    margin: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.height * 0.2),
-                    child: Text(
-                      city.toString().toUpperCase(),
-                      maxLines: 2,
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                      style: GoogleFonts.poppins(
-                        // color: Color.fromARGB(255, 255, 94, 0)
-                        //     .withOpacity(0.8),
-                        color: Colors.white,
-                        backgroundColor: Color.fromARGB(94, 194, 191, 191),
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-
-                  Container(
-                    width: 60.0, // Fixed width
-                    height: 40.0, // Fixed height
-                    // margin: EdgeInsets.only(top: 20),
-                    margin: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.height * 0.03),
+                    width: 60.0,
+                    height: 40.0,
                     decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 255, 94, 0).withOpacity(0.8),
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(5),
-                          bottomLeft: Radius.circular(5),
-                        )),
+                      color: Color.fromARGB(255, 255, 94, 0).withOpacity(0.8),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(5),
+                        bottomLeft: Radius.circular(5),
+                      ),
+                    ),
                     child: Center(
                       child: Text(
                         '\$' + consultationFee + "/h",
@@ -397,94 +331,440 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                       ),
                     ),
                   ),
+                  // Additional Content
+                  Positioned(
+                    bottom: 10,
+                    left: 0,
+                    right: 0,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          name.toString().toUpperCase(),
+                          maxLines: 2,
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.ellipsis,
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            backgroundColor: Color.fromARGB(94, 194, 191, 191),
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        city == null
+                            ? Container()
+                            : Text(
+                                city.toString().toUpperCase(),
+                                maxLines: 2,
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
+                                style: GoogleFonts.poppins(
+                                  color: Colors.white,
+                                  backgroundColor:
+                                      Color.fromARGB(94, 194, 191, 191),
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                      ],
+                    ),
+                  ),
+
+                  // Indicator dots
+                  Container(
+                    margin: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.height * 0.01),
+                    width: MediaQuery.of(context).size.width * 1,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(
+                        imgs!.isNotEmpty ? (imgs!.length + 1) : (1),
+                        (index) {
+                          return Container(
+                            margin: EdgeInsets.symmetric(horizontal: 5),
+                            width: 8,
+                            height: 8,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: currentPage == index
+                                  ? Colors.orange
+                                  : Colors.grey,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
-            SizedBox(
-              height: 10,
-            ),
+            SizedBox(height: 10),
+            // Rest of your content
             motto == null
                 ? Container(
-                    height: MediaQuery.of(context).size.height * .03,
+                    height: MediaQuery.of(context).size.height * .05,
                   )
                 : Container(
-                    height: MediaQuery.of(context).size.height * .03,
+                    height: MediaQuery.of(context).size.height * .05,
                     child: Center(
                       child: Text(
                         motto.toString().length >= 30
                             ? motto.toString().substring(0, 30) + "..."
                             : motto.toString(),
                         style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w500,
-                            //color: LIGHT_GREY_TEXT,
-                            color: Colors.black,
-                            fontSize: 18),
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black,
+                          fontSize: 18,
+                        ),
                         textAlign: TextAlign.center,
-                        //textAlignVertical: TextAlignVertical.center,
                       ),
                     ),
                   ),
             Divider(
-              height: 30,
+              height: 1,
               color: Colors.grey,
             ),
             Container(
-              alignment: Alignment.bottomCenter,
-              transformAlignment: Alignment.bottomCenter,
-              height: MediaQuery.of(context).size.height * .05,
-              // padding: EdgeInsets.only(left: 30, right: 30),
+              alignment: Alignment.center,
+              transformAlignment: Alignment.center,
+              height: MediaQuery.of(context).size.height * .055,
               child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.4,
-                      child: Column(
-                        children: [
-                          Text(
-                            "Reviews",
-                            style: GoogleFonts.poppins(
-                              color: LIGHT_GREY_TEXT,
-                              fontSize: 9.5,
-                              fontWeight: FontWeight.w500,
-                            ),
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.45,
+                    child: Column(
+                      children: [
+                        Text(
+                          "Reviews",
+                          style: GoogleFonts.poppins(
+                            color: LIGHT_GREY_TEXT,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
                           ),
-                          Text(
-                            totalReview,
-                            style: GoogleFonts.poppins(
-                              color: BLACK,
-                              fontSize: 12.5,
-                              fontWeight: FontWeight.w500,
-                            ),
+                        ),
+                        Text(
+                          totalReview,
+                          style: GoogleFonts.poppins(
+                            color: BLACK,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.4,
-                      child: Column(
-                        children: [
-                          Text(
-                            "Ratings",
-                            style: GoogleFonts.poppins(
-                              color: LIGHT_GREY_TEXT,
-                              fontSize: 9.5,
-                              fontWeight: FontWeight.w500,
-                            ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.45,
+                    child: Column(
+                      children: [
+                        Text(
+                          "Ratings",
+                          style: GoogleFonts.poppins(
+                            color: LIGHT_GREY_TEXT,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
                           ),
-                          SizedBox(
-                            height: 4,
-                          ),
-                          avgRating != 'null'
-                              ? StarRating(double.parse(avgRating))
-                              : StarRating(0)
-                        ],
-                      ),
+                        ),
+                        SizedBox(height: 4),
+                        avgRating != 'null'
+                            ? StarRating(double.parse(avgRating))
+                            : StarRating(0)
+                      ],
                     ),
-                  ]),
-            )
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
+
+        //     Column(
+        //   children: [
+        //     Container(
+        //       height: MediaQuery.of(context).size.height * .21,
+        //       child: Stack(
+        //         alignment: Alignment.topRight,
+        //         children: [
+        //           // -------------------------------------
+
+        //           CarouselSlider.builder(
+        //             carouselController: sliderController,
+        //             itemCount: imgs != null
+        //                 ? imgs.length + 1
+        //                 : 1, // Add 1 to account for the fixed image
+        //             itemBuilder: (context, index, realIndex) {
+        //               if (index == 0) {
+        //                 print("realIndex is $realIndex");
+        //                 // int individualPage = 0;
+        //                 // currentPage = 0;
+        //                 // Display the fixed image at the beginning
+        //                 return Container(
+        //                   child: ClipRRect(
+        //                     borderRadius: BorderRadius.only(
+        //                       topLeft: Radius.circular(8),
+        //                       topRight: Radius.circular(8),
+        //                     ),
+        //                     child: CachedNetworkImage(
+        //                       imageUrl: img,
+        //                       fit: BoxFit.fill,
+        //                       width: double.infinity,
+        //                       placeholder: (context, url) => Container(
+        //                         color: Theme.of(context).primaryColorLight,
+        //                         child: Center(
+        //                           child: Image.asset(
+        //                             "assets/homeScreenImages/user_unactive.png",
+        //                             height: 50,
+        //                             width: 50,
+        //                           ),
+        //                         ),
+        //                       ),
+        //                       errorWidget: (context, url, err) => Container(
+        //                         color: Theme.of(context).primaryColorLight,
+        //                         child: Center(
+        //                           child: Image.asset(
+        //                             "assets/homeScreenImages/user_unactive.png",
+        //                             height: 50,
+        //                             width: 50,
+        //                           ),
+        //                         ),
+        //                       ),
+        //                     ),
+        //                   ),
+        //                 );
+        //               } else {
+        //                 // Display the rest of the images from imgs
+        //                 var imgIndex = index - 1; // Adjust the index for imgs
+        //                 // currentPage = imgIndex;
+        //                 return ClipRRect(
+        //                   borderRadius: BorderRadius.only(
+        //                     topLeft: Radius.circular(8),
+        //                     topRight: Radius.circular(8),
+        //                   ),
+        //                   child: CachedNetworkImage(
+        //                     imageUrl: imgs[imgIndex], // Use the image from imgs
+        //                     fit: BoxFit.fill,
+        //                     width: double.infinity,
+        //                     placeholder: (context, url) => Container(
+        //                       color: Theme.of(context).primaryColorLight,
+        //                       child: Center(
+        //                         child: Image.asset(
+        //                           "assets/homeScreenImages/user_unactive.png",
+        //                           height: 50,
+        //                           width: 50,
+        //                         ),
+        //                       ),
+        //                     ),
+        //                     errorWidget: (context, url, err) => Container(
+        //                       color: Theme.of(context).primaryColorLight,
+        //                       child: Center(
+        //                         child: Image.asset(
+        //                           "assets/homeScreenImages/user_unactive.png",
+        //                           height: 50,
+        //                           width: 50,
+        //                         ),
+        //                       ),
+        //                     ),
+        //                   ),
+        //                 );
+        //               }
+        //             },
+        //             options: CarouselOptions(
+        //               viewportFraction: 1,
+        //               height: 250.0,
+        //               initialPage: 0,
+        //               reverse: false,
+        //               autoPlay: false, // Set to false for manual control
+        //               enableInfiniteScroll: false, // Disable infinite scroll
+        //               onPageChanged: (index, reason) {
+        //                 setState(() {
+        //                   currentPage = index;
+        //                 });
+        //               },
+        //             ),
+        //           ),
+
+        //           Container(
+        //             // margin: EdgeInsets.only(top: 10),
+        //             margin: EdgeInsets.only(
+        //                 top: MediaQuery.of(context).size.height * 0.01),
+        //             // color: Colors.black,
+        //             width: MediaQuery.sizeOf(context).width * 1,
+        //             child: Row(
+        //               mainAxisAlignment: MainAxisAlignment.center,
+        //               children: List.generate(
+        //                   imgs!.isNotEmpty ? (imgs!.length + 1) : (1), (index) {
+        //                 // index < 0 ? currentPage = 0 : {};
+        //                 print(currentPage);
+        //                 return Container(
+        //                   margin: EdgeInsets.symmetric(horizontal: 5),
+        //                   width: 8,
+        //                   height: 8,
+        //                   decoration: BoxDecoration(
+        //                     shape: BoxShape.circle,
+        //                     color: currentPage == index
+        //                         ? Colors.orange
+        //                         : Colors.grey,
+        //                   ),
+        //                 );
+        //               }),
+        //             ),
+        //           ),
+
+        //           Container(
+        //             height: MediaQuery.sizeOf(context).height * 0.70,
+        //             width: MediaQuery.sizeOf(context).width * 1,
+        //             margin: EdgeInsets.only(
+        //                 top: MediaQuery.of(context).size.height * 0.17),
+        //             child: Text(
+        //               name.toString().toUpperCase(),
+        //               maxLines: 2,
+        //               textAlign: TextAlign.center,
+        //               overflow: TextOverflow.ellipsis,
+        //               style: GoogleFonts.poppins(
+        //                 // color: Color.fromARGB(255, 255, 94, 0)
+        //                 //     .withOpacity(0.8),
+        //                 color: Colors.white,
+        //                 backgroundColor: Color.fromARGB(94, 194, 191, 191),
+        //                 fontSize: 18,
+        //                 fontWeight: FontWeight.w700,
+        //               ),
+        //             ),
+        //           ),
+        //           Container(
+        //             width: MediaQuery.sizeOf(context).width * 1,
+        //             // margin: EdgeInsets.only(top: 180),
+        //             margin: EdgeInsets.only(
+        //                 top: MediaQuery.of(context).size.height * 0.2),
+        //             child: Text(
+        //               city.toString().toUpperCase(),
+        //               maxLines: 2,
+        //               textAlign: TextAlign.center,
+        //               overflow: TextOverflow.ellipsis,
+        //               style: GoogleFonts.poppins(
+        //                 // color: Color.fromARGB(255, 255, 94, 0)
+        //                 //     .withOpacity(0.8),
+        //                 color: Colors.white,
+        //                 backgroundColor: Color.fromARGB(94, 194, 191, 191),
+        //                 fontSize: 15,
+        //                 fontWeight: FontWeight.w500,
+        //               ),
+        //             ),
+        //           ),
+
+        //           Container(
+        //             width: 60.0, // Fixed width
+        //             height: 40.0, // Fixed height
+        //             // margin: EdgeInsets.only(top: 20),
+        //             margin: EdgeInsets.only(
+        //                 top: MediaQuery.of(context).size.height * 0.03),
+        //             decoration: BoxDecoration(
+        //                 color: Color.fromARGB(255, 255, 94, 0).withOpacity(0.8),
+        //                 borderRadius: BorderRadius.only(
+        //                   topLeft: Radius.circular(5),
+        //                   bottomLeft: Radius.circular(5),
+        //                 )),
+        //             child: Center(
+        //               child: Text(
+        //                 '\$' + consultationFee + "/h",
+        //                 style: TextStyle(
+        //                   color: Colors.white,
+        //                   fontSize:
+        //                       MediaQuery.of(context).size.width * 0.05 / 2.00,
+        //                   fontWeight: FontWeight.bold,
+        //                 ),
+        //               ),
+        //             ),
+        //           ),
+        //         ],
+        //       ),
+        //     ),
+        //     SizedBox(
+        //       height: 50,
+        //     ),
+        //     motto == null
+        //         ? Container(
+        //             height: MediaQuery.of(context).size.height * .03,
+        //           )
+        //         : Container(
+        //             height: MediaQuery.of(context).size.height * .03,
+        //             child: Center(
+        //               child: Text(
+        //                 motto.toString().length >= 30
+        //                     ? motto.toString().substring(0, 30) + "..."
+        //                     : motto.toString(),
+        //                 style: GoogleFonts.poppins(
+        //                     fontWeight: FontWeight.w500,
+        //                     //color: LIGHT_GREY_TEXT,
+        //                     color: Colors.black,
+        //                     fontSize: 18),
+        //                 textAlign: TextAlign.center,
+        //                 //textAlignVertical: TextAlignVertical.center,
+        //               ),
+        //             ),
+        //           ),
+        //     Divider(
+        //       height: 10,
+        //       color: Colors.grey,
+        //     ),
+        //     Container(
+        //       alignment: Alignment.bottomCenter,
+        //       transformAlignment: Alignment.bottomCenter,
+        //       height: MediaQuery.of(context).size.height * .035,
+        //       // padding: EdgeInsets.only(left: 30, right: 30),
+        //       child: Row(
+        //           crossAxisAlignment: CrossAxisAlignment.center,
+        //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //           children: [
+        //             Container(
+        //               width: MediaQuery.of(context).size.width * 0.4,
+        //               child: Column(
+        //                 children: [
+        //                   Text(
+        //                     "Reviews",
+        //                     style: GoogleFonts.poppins(
+        //                       color: LIGHT_GREY_TEXT,
+        //                       fontSize: 9.5,
+        //                       fontWeight: FontWeight.w500,
+        //                     ),
+        //                   ),
+        //                   Text(
+        //                     totalReview,
+        //                     style: GoogleFonts.poppins(
+        //                       color: BLACK,
+        //                       fontSize: 12.5,
+        //                       fontWeight: FontWeight.w500,
+        //                     ),
+        //                   ),
+        //                 ],
+        //               ),
+        //             ),
+        //             Container(
+        //               width: MediaQuery.of(context).size.width * 0.4,
+        //               child: Column(
+        //                 children: [
+        //                   Text(
+        //                     "Ratings",
+        //                     style: GoogleFonts.poppins(
+        //                       color: LIGHT_GREY_TEXT,
+        //                       fontSize: 9.5,
+        //                       fontWeight: FontWeight.w500,
+        //                     ),
+        //                   ),
+        //                   SizedBox(
+        //                     height: 4,
+        //                   ),
+        //                   avgRating != 'null'
+        //                       ? StarRating(double.parse(avgRating))
+        //                       : StarRating(0)
+        //                 ],
+        //               ),
+        //             ),
+        //           ]),
+        //     )
+        //   ],
+        // ),
       ),
     );
   }

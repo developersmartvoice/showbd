@@ -425,7 +425,7 @@ class _DetailsPageState extends State<DetailsPage> {
     return Column(
       children: [
         Container(
-          height: 300, // Adjust the height as needed
+          height: 400, // Adjust the height as needed
           child: Stack(
             alignment: Alignment.topRight,
             children: [
@@ -445,7 +445,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     if (index == 0) {
                       return CachedNetworkImage(
                         imageUrl: doctorDetailsClass!.data!.image!,
-                        fit: BoxFit.fill,
+                        fit: BoxFit.fitWidth,
                         placeholder: (context, url) => Center(
                             child: CircularProgressIndicator(
                           color: const Color.fromARGB(255, 243, 103, 9),
@@ -468,10 +468,10 @@ class _DetailsPageState extends State<DetailsPage> {
               ),
               Container(
                 padding: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width * .04),
+                    left: MediaQuery.of(context).size.width * .02),
                 width: MediaQuery.sizeOf(context).width * 1,
                 margin: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * .24),
+                    top: MediaQuery.of(context).size.height * .38),
                 child: Text(
                   guideName.toString().toUpperCase(),
                   maxLines: 2,
@@ -489,24 +489,26 @@ class _DetailsPageState extends State<DetailsPage> {
               ),
               Container(
                 padding: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width * .04),
+                    left: MediaQuery.of(context).size.width * .02),
                 width: MediaQuery.sizeOf(context).width * 1,
                 margin: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * .27),
-                child: Text(
-                  city.toString().toUpperCase(),
-                  maxLines: 2,
-                  textAlign: TextAlign.left,
-                  overflow: TextOverflow.ellipsis,
-                  style: GoogleFonts.poppins(
-                    // color: Color.fromARGB(255, 255, 94, 0)
-                    //     .withOpacity(0.8),
-                    color: Colors.white,
-                    backgroundColor: Color.fromARGB(94, 194, 191, 191),
-                    fontSize: 15,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
+                    top: MediaQuery.of(context).size.height * .41),
+                child: doctorDetailsClass!.data!.city == null
+                    ? Container()
+                    : Text(
+                        city.toString().toUpperCase(),
+                        maxLines: 2,
+                        textAlign: TextAlign.left,
+                        overflow: TextOverflow.ellipsis,
+                        style: GoogleFonts.poppins(
+                          // color: Color.fromARGB(255, 255, 94, 0)
+                          //     .withOpacity(0.8),
+                          color: Colors.white,
+                          backgroundColor: Color.fromARGB(94, 194, 191, 191),
+                          fontSize: 15,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
               ),
               // Positioned(
               //     top: 55,
@@ -581,9 +583,9 @@ class _DetailsPageState extends State<DetailsPage> {
               //     ),
               //   ],
               // ),
-              SizedBox(
-                height: 5,
-              ),
+              // SizedBox(
+              //   height: 5,
+              // ),
               Container(
                 alignment: Alignment.center,
                 // child: ElevatedButton(
@@ -808,18 +810,18 @@ class _DetailsPageState extends State<DetailsPage> {
               //   height: 10,
               // ),
 
-              doctorDetailsClass!.data!.motto == null
-                  ? Container()
-                  : Divider(
-                      height: 10.0,
-                      color: Colors.grey[500],
-                    ),
+              // doctorDetailsClass!.data!.motto == null
+              //     ? Container()
+              //     : Divider(
+              //         height: 10.0,
+              //         color: Colors.grey[500],
+              //       ),
 
-              doctorDetailsClass!.data!.motto == null
-                  ? Container()
-                  : SizedBox(
-                      height: 10,
-                    ),
+              // doctorDetailsClass!.data!.motto == null
+              //     ? Container()
+              //     : SizedBox(
+              //         height: 10,
+              //       ),
 
               // Column(
               //   crossAxisAlignment: CrossAxisAlignment.center,
@@ -845,7 +847,7 @@ class _DetailsPageState extends State<DetailsPage> {
                           doctorDetailsClass!.data!.motto.toString(),
 
                           style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w300,
+                              fontWeight: FontWeight.w600,
                               //color: LIGHT_GREY_TEXT,
                               color: Colors.black,
                               fontSize: 25),
@@ -859,10 +861,10 @@ class _DetailsPageState extends State<DetailsPage> {
                 height: 5,
               ),
 
-              Divider(
-                height: 30.0,
-                color: Colors.grey[500],
-              ),
+              // Divider(
+              //   height: 30.0,
+              //   color: Colors.grey[500],
+              // ),
 
               //Column(
               //crossAxisAlignment: CrossAxisAlignment.start,
@@ -1147,7 +1149,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                     getServiceData(service);
 
                                 // Customize text size`
-// Adjust the font size as needed
+                                // Adjust the font size as needed
                                 // Customize ListTile height
                                 // double customListTileHeight = 0.0;
                                 // Create a widget to represent each service with an icon
@@ -1195,9 +1197,9 @@ class _DetailsPageState extends State<DetailsPage> {
                         )
                 ],
               ),
-              SizedBox(
-                height: 10,
-              ),
+              // SizedBox(
+              //   height: 10,
+              // ),
               Divider(
                 height: 35.0,
                 color: Colors.grey[500],
@@ -1218,7 +1220,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     height: 5,
                   ),
                   doctorDetailsClass!.data!.languages == null
-                      ? Text("No Languages Selected")
+                      ? Container()
                       : Row(
                           children: doctorDetailsClass!.data!.languages!
                               .map((language) {
@@ -1257,10 +1259,10 @@ class _DetailsPageState extends State<DetailsPage> {
               SizedBox(
                 height: 10,
               ),
-              Divider(
-                height: 35.0,
-                color: Colors.grey[500],
-              ),
+              // Divider(
+              //   height: 35.0,
+              //   color: Colors.grey[500],
+              // ),
               // Column(
               //   crossAxisAlignment: CrossAxisAlignment.start,
               //   children: [
