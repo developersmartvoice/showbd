@@ -171,7 +171,7 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                 'Save',
                 style: GoogleFonts.robotoCondensed(
                   color: Colors.black,
-                  fontSize: 20,
+                  fontSize: MediaQuery.of(context).size.width * 0.03,
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -208,7 +208,8 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                                 TextAlign.justify, // Align text to center
                             style: TextStyle(
                               color: Colors.black,
-                              fontSize: 12,
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.025,
                               fontWeight: FontWeight.w900,
                             ),
                           ),
@@ -221,7 +222,8 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                                 TextAlign.justify, // Align text to center
                             style: TextStyle(
                               color: Colors.black,
-                              fontSize: 12,
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.025,
                               fontWeight: FontWeight.w900,
                             ),
                           ),

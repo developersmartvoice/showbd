@@ -150,7 +150,7 @@ class _LocationSearchPageInfoState extends State<LocationSearchPageInfo> {
                 'Save',
                 style: GoogleFonts.robotoCondensed(
                   color: Colors.black,
-                  fontSize: 20,
+                  fontSize: MediaQuery.of(context).size.width * 0.03,
                   fontWeight: FontWeight.w700,
                 ),
               ),

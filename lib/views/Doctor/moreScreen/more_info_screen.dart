@@ -208,21 +208,38 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(
-      backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        flexibleSpace: header(),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            doctorProfile(),
-            upCommingAppointments(),
-          ],
+      child: Scaffold(
+        backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
+        appBar: AppBar(
+          title: Text('ACCOUNT INORMATION',
+              style: Theme.of(context).textTheme.headline5!.apply(
+                  color: Theme.of(context).backgroundColor,
+                  fontWeightDelta: 5)),
+          centerTitle: true,
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(
+                    "assets/moreScreenImages/header_bg.png"), // Add your background image path
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        ),
+        // appBar: AppBar(
+        //   automaticallyImplyLeading: false,
+        //   flexibleSpace: header(),
+        // ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              doctorProfile(),
+              upCommingAppointments(),
+            ],
+          ),
         ),
       ),
-    ));
+    );
   }
 
   Widget header() {
@@ -291,7 +308,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                     )));
               }
               return Container(
-                height: MediaQuery.sizeOf(context).height * .25,
+                height: MediaQuery.sizeOf(context).height * .30,
                 width: MediaQuery.sizeOf(context).width * 1,
                 padding: EdgeInsets.all(10),
                 child: Column(
@@ -423,41 +440,42 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                     // ),
                     Text(
                       doctorProfileWithRating!.data!.name!.toUpperCase(),
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle1!
-                          .apply(fontWeightDelta: 2),
+                      style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width *
+                            0.035, // Adjust font size dynamically
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black, // Adjust color as needed
+                      ),
                     ),
+
                     SizedBox(
                       height: 10,
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        // Navigator.of(context).push(
-                        //   MaterialPageRoute(
-                        //     builder: (context) => DoctorProfile(),
-                        //   ),
-                        // );
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  DetailsPage(doctorId.toString(), false)),
+                            builder: (context) =>
+                                DetailsPage(doctorId.toString(), false),
+                          ),
                         );
                       },
-                      child: Text('View Profile'),
-                      style: ElevatedButton.styleFrom(
-                        textStyle: GoogleFonts.poppins(
-                          fontSize: 16.0,
+                      child: Text(
+                        'View Profile',
+                        style: TextStyle(
+                          fontSize: MediaQuery.of(context).size.width *
+                              0.03, // Adjust font size dynamically
                           fontWeight: FontWeight.w500,
                         ),
+                      ),
+                      style: ElevatedButton.styleFrom(
                         foregroundColor: Colors.white,
                         backgroundColor: Color.fromARGB(255, 243, 103, 9),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
                           side: BorderSide(
-                            color: Colors.white,
-                          ), // Set border radius
+                              color: Colors.white), // Set border radius
                         ),
                       ),
                     ),
@@ -530,7 +548,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                   child: Text(
                     'PROFILE SETTINGS',
                     style: TextStyle(
-                      fontSize: 18.0,
+                      fontSize: MediaQuery.of(context).size.width * 0.04,
                       fontWeight: FontWeight.bold,
                       color: Color.fromARGB(255, 243, 103, 9),
                     ),
@@ -574,18 +592,22 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      width: MediaQuery.sizeOf(context).width * .5,
+                      width: MediaQuery.of(context).size.width * 0.5,
                       alignment: Alignment.centerLeft,
-                      child: Text(
-                        GENERAL_INFORMATION,
-                        //style: Theme.of(context).textTheme.subtitle1,
-                        style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                              color: Color.fromARGB(255, 243, 103,
-                                  9), // Replace with your desired color
-                              fontSize: MediaQuery.of(context).size.width *
-                                  0.05 /
-                                  1.5,
-                            ),
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          GENERAL_INFORMATION,
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle1
+                              ?.copyWith(
+                                color: Color.fromARGB(255, 243, 103, 9),
+                                fontSize: MediaQuery.of(context).size.width *
+                                    0.05 /
+                                    1.5,
+                              ),
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -643,16 +665,22 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      width: MediaQuery.sizeOf(context).width * .5,
+                      width: MediaQuery.of(context).size.width * 0.5,
                       alignment: Alignment.centerLeft,
-                      child: Text(
-                        CONTACT_AND_IDENTIFICATION,
-                        style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                              color: Color.fromARGB(255, 243, 103, 9),
-                              fontSize: MediaQuery.of(context).size.width *
-                                  0.05 /
-                                  1.5, // Adjust this value as needed
-                            ),
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          CONTACT_AND_IDENTIFICATION,
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle1
+                              ?.copyWith(
+                                color: Color.fromARGB(255, 243, 103, 9),
+                                fontSize: MediaQuery.of(context).size.width *
+                                    0.05 /
+                                    1.5, // Adjust this value as needed
+                              ),
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -714,16 +742,22 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      width: MediaQuery.sizeOf(context).width * .25,
+                      width: MediaQuery.of(context).size.width * 0.25,
                       alignment: Alignment.centerLeft,
-                      child: Text(
-                        MEMBERSHIP,
-                        style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                              color: Color.fromARGB(255, 243, 103, 9),
-                              fontSize: MediaQuery.of(context).size.width *
-                                  0.05 /
-                                  1.5, // Adjust this value as needed
-                            ),
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          MEMBERSHIP,
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle1
+                              ?.copyWith(
+                                color: Color.fromARGB(255, 243, 103, 9),
+                                fontSize: MediaQuery.of(context).size.width *
+                                    0.05 /
+                                    1.5, // Adjust this value as needed
+                              ),
+                        ),
                       ),
                     ),
 
@@ -732,15 +766,17 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                     ),
 
                     Container(
-                        width: MediaQuery.sizeOf(context).width * .4,
-                        alignment: Alignment.centerRight,
+                      width: MediaQuery.of(context).size.width * 0.4,
+                      alignment: Alignment.centerRight,
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
                         child: isMember
                             ? Text(
                                 "Member",
                                 style: GoogleFonts.robotoCondensed(
-                                  fontSize: 15,
+                                  fontSize:
+                                      MediaQuery.of(context).size.width * 0.025,
                                   fontWeight: FontWeight.w800,
-                                  //color: Color.fromARGB(197, 1, 50, 3),
                                   color: Colors.green,
                                 ),
                               )
@@ -751,10 +787,11 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                                       0.05 /
                                       1.5,
                                   fontWeight: FontWeight.w600,
-                                  //color: Color.fromARGB(197, 131, 22, 0),
                                   color: Colors.red,
                                 ),
-                              )),
+                              ),
+                      ),
+                    ),
 
                     SizedBox(
                       width: MediaQuery.sizeOf(context).width * .05,
@@ -802,7 +839,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                   child: Text(
                     'LOCAL HOST',
                     style: TextStyle(
-                      fontSize: 18.0,
+                      fontSize: MediaQuery.of(context).size.width * 0.04,
                       fontWeight: FontWeight.bold,
                       color: Color.fromARGB(255, 243, 103, 9),
                     ),
@@ -845,18 +882,25 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      width: MediaQuery.sizeOf(context).width * .5,
+                      width: MediaQuery.of(context).size.width * 0.5,
                       alignment: Alignment.centerLeft,
-                      child: Text(
-                        ABOUT_HOST,
-                        style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                              color: Color.fromARGB(255, 243, 103, 9),
-                              fontSize: MediaQuery.of(context).size.width *
-                                  0.05 /
-                                  1.5,
-                            ),
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          ABOUT_HOST,
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle1
+                              ?.copyWith(
+                                color: Color.fromARGB(255, 243, 103, 9),
+                                fontSize: MediaQuery.of(context).size.width *
+                                    0.05 /
+                                    1.5,
+                              ),
+                        ),
                       ),
                     ),
+
                     SizedBox(
                       width: MediaQuery.sizeOf(context).width * .1,
                     ),
@@ -913,29 +957,29 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                       ),
                     ),
                     children: <Widget>[
-                      SimpleDialogOption(
-                        onPressed: () {
-                          // Perform actions upon selecting USD
-                          setState(() {
-                            selectedCurrency = 'USD';
-                            updateCurrency(selectedCurrency);
-                          });
-                          fetchedData();
-                          Navigator.of(context).pop(true);
-                        },
-                        child: Center(
-                          child: Text(
-                            'USD',
-                            style: TextStyle(
-                              color: Color.fromARGB(197, 1, 50, 3),
-                              fontSize: 17,
-                              fontWeight: selectedCurrency == 'USD'
-                                  ? FontWeight.bold
-                                  : FontWeight.normal,
-                            ),
-                          ),
-                        ),
-                      ),
+                      // SimpleDialogOption(
+                      //   onPressed: () {
+                      //     // Perform actions upon selecting USD
+                      //     setState(() {
+                      //       selectedCurrency = 'USD';
+                      //       updateCurrency(selectedCurrency);
+                      //     });
+                      //     fetchedData();
+                      //     Navigator.of(context).pop(true);
+                      //   },
+                      //   child: Center(
+                      //     child: Text(
+                      //       'USD',
+                      //       style: TextStyle(
+                      //         color: Color.fromARGB(197, 1, 50, 3),
+                      //         fontSize: 17,
+                      //         fontWeight: selectedCurrency == 'USD'
+                      //             ? FontWeight.bold
+                      //             : FontWeight.normal,
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                       SimpleDialogOption(
                         onPressed: () {
                           // Perform actions upon selecting BDT
@@ -989,35 +1033,40 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      width: MediaQuery.sizeOf(context).width * .25,
+                      width: MediaQuery.of(context).size.width * 0.25,
                       alignment: Alignment.centerLeft,
-                      child: Text(
-                        CURRENCY_EXCHANGE,
-                        style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                              color: Color.fromARGB(255, 243, 103, 9),
-                              fontSize: MediaQuery.of(context).size.width *
-                                  0.05 /
-                                  1.5,
-                            ),
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          CURRENCY_EXCHANGE,
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle1
+                              ?.copyWith(
+                                color: Color.fromARGB(255, 243, 103, 9),
+                                fontSize: MediaQuery.of(context).size.width *
+                                    0.05 /
+                                    1.5,
+                              ),
+                        ),
                       ),
                     ),
                     SizedBox(
                       width: MediaQuery.sizeOf(context).width * .05,
                     ),
                     Container(
-                      width: MediaQuery.sizeOf(context).width * .4,
+                      width: MediaQuery.of(context).size.width * 0.4,
                       alignment: Alignment.centerRight,
-                      child: Text(
-                        selectedCurrency,
-                        style: GoogleFonts.robotoCondensed(
-                          fontSize:
-                              MediaQuery.of(context).size.width * 0.05 / 1.5,
-                          fontWeight: FontWeight.w600,
-                          color: Color.fromARGB(197, 1, 50, 3),
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          selectedCurrency,
+                          style: GoogleFonts.robotoCondensed(
+                            fontSize: MediaQuery.of(context).size.width * 0.025,
+                            fontWeight: FontWeight.w600,
+                            color: Color.fromARGB(197, 1, 50, 3),
+                          ),
                         ),
-                        // Theme.of(context).textTheme.subtitle1?.copyWith(
-                        //       color: Colors.black,
-                        //     ),
                       ),
                     ),
                     SizedBox(
@@ -1422,7 +1471,8 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                   child: Text(
                     'OTHERS',
                     style: TextStyle(
-                      fontSize: 18.0,
+                      fontSize: MediaQuery.of(context).size.width *
+                          0.04, // Adjust font size dynamically
                       fontWeight: FontWeight.bold,
                       color: Color.fromARGB(255, 243, 103, 9),
                     ),
@@ -1470,16 +1520,22 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      width: MediaQuery.sizeOf(context).width * .5,
+                      width: MediaQuery.of(context).size.width * 0.5,
                       alignment: Alignment.centerLeft,
-                      child: Text(
-                        DELETE_ACCOUNT,
-                        style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                              color: Color.fromARGB(255, 243, 103, 9),
-                              fontSize: MediaQuery.of(context).size.width *
-                                  0.05 /
-                                  1.5,
-                            ),
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          DELETE_ACCOUNT,
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle1
+                              ?.copyWith(
+                                color: Color.fromARGB(255, 243, 103, 9),
+                                fontSize: MediaQuery.of(context).size.width *
+                                    0.05 /
+                                    1.5,
+                              ),
+                        ),
                       ),
                     ),
 
@@ -1515,40 +1571,34 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
           ),
           Container(
             child: ElevatedButton.icon(
-              // onPressed: () {
-              //   Navigator.of(context).push(
-              //     MaterialPageRoute(
-              //       // builder: (context) => LogOutScreen(),
-              //     ),
-              //   );
-              // },
               onPressed: () {
                 messageDialog(LOGOUT, ARE_YOU_SURE_TO_LOGOUT);
-                // Navigator.push(context,
-                //     MaterialPageRoute(builder: (context) => LogOutScreen()));
               },
               icon: Icon(Icons.logout),
-              label: Text('Logout'),
+              label: Flexible(
+                child: Text(
+                  'Logout',
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width * 0.04,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.white,
                 backgroundColor: Color.fromARGB(255, 243, 103, 9),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.0),
-                  side: BorderSide(
-                    color: Colors.white,
-                  ),
+                  side: BorderSide(color: Colors.white),
                 ),
                 padding: EdgeInsets.all(10.0),
                 elevation: 5.0,
-                //shadowColor: Colors.grey,
-                textStyle: GoogleFonts.poppins(
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white, // Set text color to white
-                ),
               ),
             ),
           ),
+
           SizedBox(
             height: 10,
           ),

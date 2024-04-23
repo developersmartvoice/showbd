@@ -158,7 +158,7 @@ class TripCard extends StatelessWidget {
                 '$formattedStartDate to $formattedEndDate',
                 style: TextStyle(
                   color: Colors.grey,
-                  fontSize: MediaQuery.of(context).size.width * 0.05 / 1.9,
+                  fontSize: MediaQuery.of(context).size.width * 0.023,
                 ),
               ),
             ],
@@ -174,7 +174,7 @@ class TripCard extends StatelessWidget {
               Text(
                 'Number of People: ${getNumberString(trip.peopleQuantity)}',
                 style: TextStyle(
-                  fontSize: MediaQuery.of(context).size.width * 0.05 / 1.7,
+                  fontSize: MediaQuery.of(context).size.width * 0.017,
                 ),
               ),
               Spacer(),
@@ -186,8 +186,7 @@ class TripCard extends StatelessWidget {
                       'Expired',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize:
-                            MediaQuery.of(context).size.width * 0.05 / 1.9,
+                        fontSize: MediaQuery.of(context).size.width * 0.025,
                         color: Colors.red,
                       ),
                     )
@@ -195,8 +194,7 @@ class TripCard extends StatelessWidget {
                       'Active',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize:
-                            MediaQuery.of(context).size.width * 0.05 / 1.5,
+                        fontSize: MediaQuery.of(context).size.width * 0.025,
                         color: Colors.green,
                       ),
                     ),

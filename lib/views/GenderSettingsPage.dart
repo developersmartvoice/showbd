@@ -81,7 +81,7 @@ class _GenderSettingsPageState extends State<GenderSettingsPage> {
                 'Save',
                 style: GoogleFonts.robotoCondensed(
                   color: Colors.black,
-                  fontSize: 20,
+                  fontSize: MediaQuery.of(context).size.width * 0.03,
                   fontWeight: FontWeight.w700,
                 ),
               ),

@@ -96,7 +96,7 @@ class _IwillShowYouSettingsPageState extends State<IwillShowYouSettingsPage> {
                 'Save',
                 style: GoogleFonts.robotoCondensed(
                   color: Colors.black,
-                  fontSize: 20,
+                  fontSize: MediaQuery.of(context).size.width * 0.03,
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -123,7 +123,7 @@ class _IwillShowYouSettingsPageState extends State<IwillShowYouSettingsPage> {
                         textAlign: TextAlign.justify, // Align text to center
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 12,
+                          fontSize: MediaQuery.of(context).size.width * 0.025,
                           fontWeight: FontWeight.w900,
                         ),
                       ),
@@ -137,7 +137,7 @@ class _IwillShowYouSettingsPageState extends State<IwillShowYouSettingsPage> {
                         controller: _controller,
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 16,
+                          fontSize: MediaQuery.of(context).size.width * 0.025,
                           fontWeight: FontWeight.w200,
                         ),
                         onChanged: (value) {

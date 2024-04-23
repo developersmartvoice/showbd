@@ -95,7 +95,7 @@ class _ServicesSettingsPageState extends State<ServicesSettingsPage> {
                 'Save',
                 style: GoogleFonts.robotoCondensed(
                   color: Colors.black,
-                  fontSize: 18,
+                  fontSize: MediaQuery.of(context).size.width * 0.03,
                   fontWeight: FontWeight.w600,
                 ),
               ),

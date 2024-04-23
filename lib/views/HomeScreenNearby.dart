@@ -309,28 +309,34 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                     ),
                   ),
 
-                  Container(
-                    width: 60.0,
-                    height: 40.0,
-                    decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 255, 94, 0).withOpacity(0.8),
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(5),
-                        bottomLeft: Radius.circular(5),
+                  Positioned(
+                    top: 30, // Adjust the top position as needed
+                    right: 0, // Adjust the left position as needed
+                    child: Container(
+                      width: 60.0,
+                      height: 40.0,
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 255, 94, 0).withOpacity(0.8),
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(5),
+                          bottomLeft: Radius.circular(5),
+                        ),
                       ),
-                    ),
-                    child: Center(
-                      child: Text(
-                        '\$' + consultationFee + "/h",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize:
-                              MediaQuery.of(context).size.width * 0.05 / 2.00,
-                          fontWeight: FontWeight.bold,
+                      child: Center(
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            '\$' + consultationFee + "/h",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
                       ),
                     ),
                   ),
+
                   // Additional Content
                   Positioned(
                     bottom: 10,
@@ -347,7 +353,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                           style: GoogleFonts.poppins(
                             color: Colors.white,
                             backgroundColor: Color.fromARGB(94, 194, 191, 191),
-                            fontSize: 18,
+                            fontSize: MediaQuery.of(context).size.width * 0.035,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
@@ -362,7 +368,8 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                                   color: Colors.white,
                                   backgroundColor:
                                       Color.fromARGB(94, 194, 191, 191),
-                                  fontSize: 15,
+                                  fontSize:
+                                      MediaQuery.of(context).size.width * 0.035,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -416,6 +423,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                           color: Colors.black,
                           fontSize: 18,
                         ),
+                        overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -432,46 +440,72 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.45,
-                    child: Column(
-                      children: [
-                        Text(
-                          "Reviews",
-                          style: GoogleFonts.poppins(
-                            color: LIGHT_GREY_TEXT,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
+                  Expanded(
+                    child: Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Flexible(
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                "Reviews",
+                                style: GoogleFonts.poppins(
+                                  color: LIGHT_GREY_TEXT,
+                                  fontSize:
+                                      MediaQuery.of(context).size.width * 0.018,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
-                        Text(
-                          totalReview,
-                          style: GoogleFonts.poppins(
-                            color: BLACK,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
+                          Flexible(
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                totalReview,
+                                style: GoogleFonts.poppins(
+                                  color: BLACK,
+                                  fontSize:
+                                      MediaQuery.of(context).size.width * 0.035,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.45,
-                    child: Column(
-                      children: [
-                        Text(
-                          "Ratings",
-                          style: GoogleFonts.poppins(
-                            color: LIGHT_GREY_TEXT,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
+                  Expanded(
+                    child: Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Flexible(
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                "Ratings",
+                                style: GoogleFonts.poppins(
+                                  color: LIGHT_GREY_TEXT,
+                                  fontSize:
+                                      MediaQuery.of(context).size.width * 0.035,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
-                        SizedBox(height: 4),
-                        avgRating != 'null'
-                            ? StarRating(double.parse(avgRating))
-                            : StarRating(0)
-                      ],
+                          SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.width * 0.035),
+                          avgRating != 'null'
+                              ? StarRating(double.parse(avgRating))
+                              : StarRating(0),
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -781,7 +815,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
         Icon(
           iconData,
           color: iconColor,
-          size: 10,
+          size: MediaQuery.of(context).size.width * 0.035,
         ),
       );
     }
