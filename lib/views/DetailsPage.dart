@@ -472,7 +472,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     left: MediaQuery.of(context).size.width * .02),
                 width: MediaQuery.sizeOf(context).width * 1,
                 margin: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * .38),
+                    top: MediaQuery.of(context).size.height * .36),
                 child: Text(
                   guideName.toString().toUpperCase(),
                   maxLines: 2,
@@ -689,28 +689,34 @@ class _DetailsPageState extends State<DetailsPage> {
                                     !isMember
                                         ? Navigator.of(context).push(
                                             MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ChoosePlan()
-                                                //BookingScreen(widget.id, guideName!),
-                                                ),
+                                              builder: (context) =>
+                                                  ChoosePlan(),
+                                            ),
                                           )
                                         : Navigator.of(context).push(
                                             MaterialPageRoute(
-                                                builder: (context) =>
-                                                    BookingScreen(widget.id,
-                                                        senderId!, guideName!)),
+                                              builder: (context) =>
+                                                  BookingScreen(widget.id,
+                                                      senderId!, guideName!),
+                                            ),
                                           );
                                   },
                                   icon: Icon(
-                                      Icons.connect_without_contact_sharp,
-                                      size: MediaQuery.of(context).size.width *
-                                          0.05),
-                                  label: Text("Contact",
+                                    Icons.connect_without_contact_sharp,
+                                    size: MediaQuery.of(context).size.width *
+                                        0.05,
+                                  ),
+                                  label: Flexible(
+                                    child: Text(
+                                      "Contact",
                                       style: TextStyle(
-                                          fontSize: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.04)),
+                                        fontSize:
+                                            MediaQuery.of(context).size.width *
+                                                0.04,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
                                   style: ElevatedButton.styleFrom(
                                     foregroundColor: Colors.white,
                                     backgroundColor:
@@ -724,12 +730,6 @@ class _DetailsPageState extends State<DetailsPage> {
                                     padding: EdgeInsets.all(10.0),
                                     elevation: 5.0,
                                     shadowColor: Colors.grey,
-                                    // textStyle: GoogleFonts.poppins(
-                                    //   fontSize: 19.0,
-                                    //   fontWeight: FontWeight.w500,
-                                    //   color: Colors
-                                    //       .white, // Set text color to white
-                                    // ),
                                   ),
                                 ),
                               ),
@@ -745,21 +745,23 @@ class _DetailsPageState extends State<DetailsPage> {
                                       ),
                                     );
                                   },
-                                  icon: Icon(Icons.airplane_ticket_sharp,
-                                      size: MediaQuery.of(context).size.width *
-                                          0.05),
-                                  label: Text("Create A Trip",
+                                  icon: Icon(
+                                    Icons.airplane_ticket_sharp,
+                                    size: MediaQuery.of(context).size.width *
+                                        0.05,
+                                  ),
+                                  label: Flexible(
+                                    child: Text(
+                                      "Create A Trip",
                                       style: TextStyle(
-                                          fontSize: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.04)),
+                                        fontSize:
+                                            MediaQuery.of(context).size.width *
+                                                0.04,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
                                   style: ElevatedButton.styleFrom(
-                                    // textStyle: GoogleFonts.poppins(
-                                    //   fontSize: 19.0,
-                                    //   fontWeight: FontWeight.w500,
-                                    //   color: Colors.blueAccent,
-                                    // ),
                                     backgroundColor:
                                         Color.fromARGB(255, 243, 103, 9),
                                     foregroundColor: Colors.white,
@@ -767,13 +769,11 @@ class _DetailsPageState extends State<DetailsPage> {
                                       borderRadius: BorderRadius.circular(10.0),
                                       side: BorderSide(
                                         color: Colors.white,
-                                      ), // Set border radius
+                                      ),
                                     ),
-                                    padding: EdgeInsets.all(
-                                        10.0), // Customize horizontal padding
-                                    elevation: 5.0, // Set elevation
-                                    shadowColor:
-                                        Colors.grey, // Set shadow color
+                                    padding: EdgeInsets.all(10.0),
+                                    elevation: 5.0,
+                                    shadowColor: Colors.grey,
                                   ),
                                 ),
                               ),
@@ -852,12 +852,11 @@ class _DetailsPageState extends State<DetailsPage> {
                           doctorDetailsClass!.data!.motto.toString(),
 
                           style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w600,
+                              fontWeight: FontWeight.bold,
                               //color: LIGHT_GREY_TEXT,
-                              color: Colors.black,
-                              fontSize: MediaQuery.of(context).size.width *
-                                  0.05 /
-                                  1.5),
+                              color: Color.fromARGB(255, 24, 18, 31),
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.04),
                           textAlign: TextAlign.center,
                           //textAlignVertical: TextAlignVertical.center,
                         ),
@@ -1041,25 +1040,36 @@ class _DetailsPageState extends State<DetailsPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Divider(
+                            height: 10.0,
+                            color: Colors.grey[500],
+                          ),
                           Text(
                             // doctorDetailsClass!.data!.aboutme == null
                             //     ? " "
                             //     :
                             I_WILL_SHOW_YOU,
                             style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w400,
                                 color: BLACK,
-                                fontSize: 20),
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.045),
                           ),
                           SizedBox(
                             height: 5,
                           ),
                           doctorDetailsClass!.data!.iwillshowyou == null
-                              ? Text(
+                              ? Text("")
+                              : Text(
+                                  style: GoogleFonts.poppins(
+                                      // fontWeight: FontWeight.w400,
+                                      color: Colors.blueGrey,
+                                      fontSize:
+                                          MediaQuery.of(context).size.width *
+                                              0.03),
                                   doctorDetailsClass!.data!.iwillshowyou
                                       .toString(),
                                 )
-                              : Text("")
                         ],
                       ),
                     ),
@@ -1086,7 +1096,7 @@ class _DetailsPageState extends State<DetailsPage> {
                             //     :
                             ABOUT_GUIDE,
                             style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w400,
                                 color: BLACK,
                                 fontSize: 20),
                           ),
@@ -1097,11 +1107,12 @@ class _DetailsPageState extends State<DetailsPage> {
                               ? Text("")
                               : Text(
                                   doctorDetailsClass!.data!.aboutus.toString(),
-                                  style: TextStyle(
+                                  style: GoogleFonts.poppins(
+                                      // fontWeight: FontWeight.w400,
+                                      color: Colors.blueGrey,
                                       fontSize:
                                           MediaQuery.of(context).size.width *
-                                              0.05 /
-                                              1.5),
+                                              0.03),
                                 )
                         ],
                       ),
@@ -1123,9 +1134,9 @@ class _DetailsPageState extends State<DetailsPage> {
                   Text(
                     doctorDetailsClass!.data!.services == null ? " " : SERVICES,
                     style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w400,
                         color: BLACK,
-                        fontSize: 20),
+                        fontSize: MediaQuery.of(context).size.width * 0.045),
                   ),
                   //SizedBox(height: 8,),
                   // Text(
@@ -1239,9 +1250,9 @@ class _DetailsPageState extends State<DetailsPage> {
                         ? " "
                         : HEALTH_CARE,
                     style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.bold,
                         color: BLACK,
-                        fontSize: 20),
+                        fontSize: MediaQuery.of(context).size.width * 0.045),
                   ),
                   SizedBox(
                     height: 5,

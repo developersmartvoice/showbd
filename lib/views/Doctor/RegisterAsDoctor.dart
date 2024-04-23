@@ -311,10 +311,14 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
               SizedBox(
                 width: 10,
               ),
-              Text(
-                REGISTER_AS_DOCTOR,
-                style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w600, color: WHITE, fontSize: 22),
+              Center(
+                child: Text(
+                  REGISTER_AS_DOCTOR,
+                  style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w600,
+                      color: WHITE,
+                      fontSize: MediaQuery.of(context).size.width * 0.04),
+                ),
               )
             ],
           ),
@@ -334,7 +338,7 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
               ALREADY_HAVE_AN_ACCOUNT,
               style: GoogleFonts.poppins(
                 color: BLACK,
-                fontSize: 12,
+                fontSize: MediaQuery.of(context).size.width * 0.02,
                 fontWeight: FontWeight.w400,
               ),
             ),
@@ -346,7 +350,7 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
                 " $LOGIN_NOW",
                 style: GoogleFonts.poppins(
                   color: AMBER,
-                  fontSize: 12,
+                  fontSize: MediaQuery.of(context).size.width * 0.025,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -362,7 +366,7 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
 
   Widget registerForm() {
     return Container(
-      height: MediaQuery.of(context).size.height - 150,
+      height: MediaQuery.of(context).size.height - 280,
       decoration: BoxDecoration(
           color: WHITE,
           borderRadius: BorderRadius.only(
@@ -567,7 +571,8 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
                           style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w500,
                               color: WHITE,
-                              fontSize: 18),
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.04),
                         ),
                       )
                     ],

@@ -320,10 +320,14 @@ class _LoginAsDoctorState extends State<LoginAsDoctor> {
               //   ),
               // ),
               // SizedBox(width: 10,),
-              Text(
-                GUIDE_LOGIN,
-                style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w600, color: WHITE, fontSize: 22),
+              Center(
+                child: Text(
+                  GUIDE_LOGIN,
+                  style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w600,
+                      color: WHITE,
+                      fontSize: MediaQuery.of(context).size.width * 0.05),
+                ),
               )
             ],
           ),
@@ -342,23 +346,25 @@ class _LoginAsDoctorState extends State<LoginAsDoctor> {
             Text(
               DO_NOT_HAVE_AN_ACCOUNT,
               style: GoogleFonts.poppins(
-                color: BLACK,
-                fontSize: 12,
+                color: Colors.black,
+                fontSize: MediaQuery.of(context).size.width *
+                    0.02, // Adjust font size dynamically
                 fontWeight: FontWeight.w400,
               ),
             ),
             GestureDetector(
               onTap: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => RegisterAsDoctor()));
+                  context,
+                  MaterialPageRoute(builder: (context) => RegisterAsDoctor()),
+                );
               },
               child: Text(
                 " $REGISTER_NOW",
                 style: GoogleFonts.poppins(
                   color: AMBER,
-                  fontSize: 12,
+                  fontSize: MediaQuery.of(context).size.width *
+                      0.025, // Adjust font size dynamically
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -367,7 +373,7 @@ class _LoginAsDoctorState extends State<LoginAsDoctor> {
         ),
         SizedBox(
           height: 20,
-        )
+        ),
       ],
     );
   }
@@ -501,7 +507,7 @@ class _LoginAsDoctorState extends State<LoginAsDoctor> {
                         style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w500,
                             color: WHITE,
-                            fontSize: 18),
+                            fontSize: MediaQuery.of(context).size.width * 0.04),
                       ),
                     )
                   ],

@@ -89,7 +89,7 @@ class _AboutMeDetailsPageState extends State<AboutMeDetailsPage> {
                 'Save',
                 style: GoogleFonts.robotoCondensed(
                   color: Colors.black,
-                  fontSize: 20,
+                  fontSize: MediaQuery.of(context).size.width * 0.03,
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -227,7 +227,7 @@ class _AboutMeDetailsPageState extends State<AboutMeDetailsPage> {
                         textAlign: TextAlign.justify, // Align text to center
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 12,
+                          fontSize: MediaQuery.of(context).size.width * 0.025,
                           fontWeight: FontWeight.w900,
                         ),
                       ),
@@ -239,7 +239,7 @@ class _AboutMeDetailsPageState extends State<AboutMeDetailsPage> {
                         textAlign: TextAlign.justify, // Align text to center
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 12,
+                          fontSize: MediaQuery.of(context).size.width * 0.025,
                           fontWeight: FontWeight.w900,
                         ),
                       ),
@@ -254,7 +254,7 @@ class _AboutMeDetailsPageState extends State<AboutMeDetailsPage> {
                   controller: _controller,
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: 16,
+                    fontSize: MediaQuery.of(context).size.width * 0.025,
                     fontWeight: FontWeight.w200,
                   ),
                   onChanged: (value) {

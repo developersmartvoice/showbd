@@ -568,7 +568,7 @@ class _ContainerPageState extends State<ContainerPage> {
                       child: Text(
                         'Motto',
                         style: GoogleFonts.robotoCondensed(
-                          fontSize: 20.0,
+                          fontSize: MediaQuery.of(context).size.width * 0.03,
                           fontWeight: FontWeight.w500,
                           // color: Color.fromARGB(255, 243, 103, 9),
                         ),
@@ -585,10 +585,11 @@ class _ContainerPageState extends State<ContainerPage> {
                             ? widget.motto
                             : "Add your motto",
                         style: TextStyle(
-                          fontSize: 15.0,
+                          fontSize: MediaQuery.of(context).size.width * 0.025,
                           fontWeight: FontWeight.bold,
                           color: Colors.grey,
                         ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     SizedBox(
@@ -664,10 +665,11 @@ class _ContainerPageState extends State<ContainerPage> {
                       child: Text(
                         'I will show you',
                         style: GoogleFonts.robotoCondensed(
-                          fontSize: 20.0,
+                          fontSize: MediaQuery.of(context).size.width * 0.03,
                           fontWeight: FontWeight.w500,
                           // color: Color.fromARGB(255, 243, 103, 9),
                         ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
 
@@ -683,10 +685,11 @@ class _ContainerPageState extends State<ContainerPage> {
                             ? widget.iwillshowyou
                             : "Add what you can show",
                         style: TextStyle(
-                          fontSize: 15.0,
+                          fontSize: MediaQuery.of(context).size.width * 0.025,
                           fontWeight: FontWeight.bold,
                           color: Colors.grey,
                         ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     SizedBox(
@@ -766,7 +769,7 @@ class _ContainerPageState extends State<ContainerPage> {
                       child: Text(
                         'Activities',
                         style: GoogleFonts.robotoCondensed(
-                          fontSize: 20.0,
+                          fontSize: MediaQuery.of(context).size.width * 0.03,
                           fontWeight: FontWeight.w500,
                           // color: Color.fromARGB(255, 243, 103, 9),
                         ),
@@ -784,10 +787,11 @@ class _ContainerPageState extends State<ContainerPage> {
                         //widget.services.toString(),
                         //'${selectedActivities}',
                         style: TextStyle(
-                          fontSize: 15.0,
+                          fontSize: MediaQuery.of(context).size.width * 0.025,
                           fontWeight: FontWeight.bold,
                           color: Colors.grey,
                         ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     SizedBox(
@@ -858,10 +862,11 @@ class _ContainerPageState extends State<ContainerPage> {
                       child: Text(
                         'Hourly rate',
                         style: GoogleFonts.robotoCondensed(
-                          fontSize: 20.0,
+                          fontSize: MediaQuery.of(context).size.width * 0.03,
                           fontWeight: FontWeight.w500,
                           // color: Color.fromARGB(255, 243, 103, 9),
                         ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     SizedBox(
@@ -875,7 +880,7 @@ class _ContainerPageState extends State<ContainerPage> {
                             ? widget.consultationfees
                             : "Free",
                         style: TextStyle(
-                          fontSize: 15.0,
+                          fontSize: MediaQuery.of(context).size.width * 0.025,
                           fontWeight: FontWeight.bold,
                           color: Colors.grey,
                         ),
@@ -948,7 +953,7 @@ class _ContainerPageState extends State<ContainerPage> {
                       child: Text(
                         'Photos',
                         style: GoogleFonts.robotoCondensed(
-                          fontSize: 20.0,
+                          fontSize: MediaQuery.of(context).size.width * 0.03,
                           fontWeight: FontWeight.w500,
                           // color: Color.fromARGB(255, 243, 103, 9),
                         ),
@@ -1030,7 +1035,7 @@ class _ContainerPageState extends State<ContainerPage> {
                       child: Text(
                         LOCATION,
                         style: GoogleFonts.robotoCondensed(
-                          fontSize: 20.0,
+                          fontSize: MediaQuery.of(context).size.width * 0.03,
                           fontWeight: FontWeight.w500,
                           // color: Color.fromARGB(255, 243, 103, 9),
                         ),
@@ -1045,10 +1050,11 @@ class _ContainerPageState extends State<ContainerPage> {
                       child: Text(
                         widget.city != 'null' ? widget.city : "Add your city",
                         style: TextStyle(
-                          fontSize: 15.0,
+                          fontSize: MediaQuery.of(context).size.width * 0.025,
                           fontWeight: FontWeight.bold,
                           color: Colors.grey,
                         ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     SizedBox(
@@ -1122,7 +1128,7 @@ class _ContainerPageState extends State<ContainerPage> {
                       child: Text(
                         ABOUT,
                         style: GoogleFonts.robotoCondensed(
-                          fontSize: 20.0,
+                          fontSize: MediaQuery.of(context).size.width * 0.03,
                           fontWeight: FontWeight.w500,
                           // color: Color.fromARGB(255, 243, 103, 9),
                         ),
@@ -1139,10 +1145,11 @@ class _ContainerPageState extends State<ContainerPage> {
                             ? widget.aboutMe
                             : "Add About me",
                         style: TextStyle(
-                          fontSize: 15.0,
+                          fontSize: MediaQuery.of(context).size.width * 0.025,
                           fontWeight: FontWeight.bold,
                           color: Colors.grey,
                         ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     SizedBox(
@@ -1217,7 +1224,7 @@ class _ContainerPageState extends State<ContainerPage> {
                       child: Text(
                         'Gender',
                         style: GoogleFonts.robotoCondensed(
-                          fontSize: 20.0,
+                          fontSize: MediaQuery.of(context).size.width * 0.03,
                           fontWeight: FontWeight.w500,
                           // color: Color.fromARGB(255, 243, 103, 9),
                         ),
@@ -1235,10 +1242,11 @@ class _ContainerPageState extends State<ContainerPage> {
                             ? widget.gender.capitalize.toString()
                             : "Add your gender",
                         style: TextStyle(
-                          fontSize: 15.0,
+                          fontSize: MediaQuery.of(context).size.width * 0.025,
                           fontWeight: FontWeight.bold,
                           color: Colors.grey,
                         ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     // SizedBox(
@@ -1315,9 +1323,10 @@ class _ContainerPageState extends State<ContainerPage> {
                       child: Text(
                         LANGUAGES,
                         style: GoogleFonts.robotoCondensed(
-                          fontSize: 20.0,
+                          fontSize: MediaQuery.of(context).size.width * 0.03,
                           fontWeight: FontWeight.w500,
                         ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
 
@@ -1333,10 +1342,11 @@ class _ContainerPageState extends State<ContainerPage> {
                             .join(
                                 ', '), // Join the list elements with a comma and space
                         style: TextStyle(
-                          fontSize: 15.0,
+                          fontSize: MediaQuery.of(context).size.width * 0.025,
                           fontWeight: FontWeight.bold,
                           color: Colors.grey,
                         ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     SizedBox(

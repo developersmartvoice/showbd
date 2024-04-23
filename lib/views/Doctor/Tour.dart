@@ -116,9 +116,10 @@ class _TourState extends State<Tour> {
                       'Save time by planning your trip and get offers from locals',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w500,
-                          color: BLACK,
-                          fontSize: 15),
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                        fontSize: 15,
+                      ),
                     ),
                     SizedBox(height: 16.0),
                     ElevatedButton.icon(
@@ -140,7 +141,9 @@ class _TourState extends State<Tour> {
                         ),
                       ),
                       style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.fromLTRB(95, 13, 95, 13),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 13,
+                            horizontal: 25), // Adjust padding dynamically
                         backgroundColor: Color.fromARGB(255, 243, 103, 9),
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
@@ -151,6 +154,7 @@ class _TourState extends State<Tour> {
                   ],
                 ),
               ),
+
               // Add the column view for displaying trips here
               // You can use a ListView.builder or any other widget based on your data
               SizedBox(
@@ -162,7 +166,7 @@ class _TourState extends State<Tour> {
                       style: GoogleFonts.poppins(
                           fontWeight: FontWeight.w500,
                           color: BLACK,
-                          fontSize: 18),
+                          fontSize: MediaQuery.of(context).size.width * 0.03),
                     )
                   : Container(
                       alignment: Alignment.center,
@@ -170,25 +174,35 @@ class _TourState extends State<Tour> {
                         // mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           SizedBox(
-                            height: MediaQuery.of(context).size.height * .25,
+                            height: MediaQuery.of(context).size.height *
+                                0.03, // Adjust the height dynamically
                           ),
                           Text(
                             "My saved Trips!",
                             style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w500,
-                                color: BLACK,
-                                fontSize: 18),
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black,
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.035,
+                            ),
                           ),
                           SizedBox(
-                            height: 15,
+                            height: 5,
                           ),
                           Text(
                             "You haven't created any Trips yet. Create your first Trip so available locals can send you offers.",
                             style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w400,
-                                color: BLACK,
-                                fontSize: 14),
-                          )
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.025,
+                            ),
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height *
+                                0.01, // Adjust the height dynamically
+                          ),
+                          buildTripList(),
                         ],
                       ),
                     ),

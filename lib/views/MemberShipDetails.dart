@@ -96,7 +96,8 @@ class _MemberShipDetails extends State<MemberShipDetails> {
                             "You subscribed for 1 month.",
                             style: TextStyle(
                               fontWeight: FontWeight.bold, // Making text bold
-                              fontSize: 18, // Adjusting font size
+                              fontSize: MediaQuery.of(context).size.width *
+                                  0.04, // Adjusting font size
                             ),
                           ),
                           SizedBox(
@@ -113,7 +114,8 @@ class _MemberShipDetails extends State<MemberShipDetails> {
                             formattedEndDate!,
                             style: TextStyle(
                               fontWeight: FontWeight.bold, // Making text bold
-                              fontSize: 18, // Adjusting font size
+                              fontSize: MediaQuery.of(context).size.width *
+                                  0.04, // Adjusting font size
                               color: Colors.blue, // Changing text color to blue
                             ),
                           )

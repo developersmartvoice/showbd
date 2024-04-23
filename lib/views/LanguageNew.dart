@@ -125,7 +125,7 @@ class _LanguageNewState extends State<LanguageNew> {
                 'Save',
                 style: GoogleFonts.robotoCondensed(
                   color: Colors.black,
-                  fontSize: 20,
+                  fontSize: MediaQuery.of(context).size.width * 0.03,
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -152,7 +152,7 @@ class _LanguageNewState extends State<LanguageNew> {
                         child: Text(
                           'Select Your Preferred Language',
                           style: GoogleFonts.robotoCondensed(
-                            fontSize: 20,
+                            fontSize: MediaQuery.of(context).size.width * 0.03,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

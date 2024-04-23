@@ -205,7 +205,7 @@ class _ContainerPageState extends State<ContainerPage> {
                           "Email",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 16.0,
+                            fontSize: MediaQuery.of(context).size.width * 0.03,
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
                           ),
@@ -220,10 +220,11 @@ class _ContainerPageState extends State<ContainerPage> {
                         child: Text(
                           widget.email,
                           style: TextStyle(
-                            fontSize: 15.0,
+                            fontSize: MediaQuery.of(context).size.width * 0.025,
                             fontWeight: FontWeight.bold,
                             color: Colors.grey,
                           ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                       SizedBox(
@@ -291,7 +292,8 @@ class _ContainerPageState extends State<ContainerPage> {
                           child: Text(
                             PHONE,
                             style: TextStyle(
-                              fontSize: 16.0,
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.03,
                               fontWeight: FontWeight.bold,
                               // color: Color.fromARGB(255, 243, 103, 9),
                             ),
@@ -305,10 +307,11 @@ class _ContainerPageState extends State<ContainerPage> {
                         child: Text(
                           widget.phone,
                           style: TextStyle(
-                            fontSize: 15.0,
+                            fontSize: MediaQuery.of(context).size.width * 0.025,
                             fontWeight: FontWeight.bold,
                             color: Colors.grey,
                           ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                       SizedBox(

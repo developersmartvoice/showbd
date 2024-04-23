@@ -82,7 +82,7 @@ class _HourlyRateSettingsPageState extends State<HourlyRateSettingsPage> {
                 'Save',
                 style: GoogleFonts.robotoCondensed(
                   color: Colors.black,
-                  fontSize: 20,
+                  fontSize: MediaQuery.of(context).size.width * 0.03,
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -112,7 +112,8 @@ class _HourlyRateSettingsPageState extends State<HourlyRateSettingsPage> {
                                 TextAlign.justify, // Align text to center
                             style: TextStyle(
                               color: Colors.black,
-                              fontSize: 12,
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.025,
                               fontWeight: FontWeight.w900,
                             ),
                           ),
@@ -139,7 +140,7 @@ class _HourlyRateSettingsPageState extends State<HourlyRateSettingsPage> {
                         controller: _controller,
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 16,
+                          fontSize: MediaQuery.of(context).size.width * 0.025,
                           fontWeight: FontWeight.w200,
                         ),
                         onChanged: (value) {

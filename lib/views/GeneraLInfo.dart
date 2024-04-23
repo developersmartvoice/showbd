@@ -311,7 +311,7 @@ class _ContainerPageState extends State<ContainerPage> {
                         child: Text(
                           NAME,
                           style: TextStyle(
-                            fontSize: 16.0,
+                            fontSize: MediaQuery.of(context).size.width * 0.025,
                             fontWeight: FontWeight.bold,
                             // color: Color.fromARGB(255, 243, 103, 9),
                           ),
@@ -326,10 +326,11 @@ class _ContainerPageState extends State<ContainerPage> {
                         child: Text(
                           widget.name,
                           style: TextStyle(
-                            fontSize: 15.0,
+                            fontSize: MediaQuery.of(context).size.width * 0.025,
                             fontWeight: FontWeight.bold,
                             color: Colors.grey,
                           ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                       SizedBox(
@@ -397,7 +398,8 @@ class _ContainerPageState extends State<ContainerPage> {
                           child: Text(
                             ABOUT,
                             style: TextStyle(
-                              fontSize: 16.0,
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.025,
                               fontWeight: FontWeight.bold,
                               // color: Color.fromARGB(255, 243, 103, 9),
                             ),
@@ -413,10 +415,11 @@ class _ContainerPageState extends State<ContainerPage> {
                               ? widget.aboutMe
                               : "Add About me",
                           style: TextStyle(
-                            fontSize: 15.0,
+                            fontSize: MediaQuery.of(context).size.width * 0.025,
                             fontWeight: FontWeight.bold,
                             color: Colors.grey,
                           ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                       SizedBox(
@@ -484,7 +487,7 @@ class _ContainerPageState extends State<ContainerPage> {
                         child: Text(
                           'Photos',
                           style: TextStyle(
-                            fontSize: 16.0,
+                            fontSize: MediaQuery.of(context).size.width * 0.025,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -562,7 +565,8 @@ class _ContainerPageState extends State<ContainerPage> {
                           child: Text(
                             LOCATION,
                             style: TextStyle(
-                              fontSize: 16.0,
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.025,
                               fontWeight: FontWeight.bold,
                               // color: Color.fromARGB(255, 243, 103, 9),
                             ),
@@ -576,10 +580,11 @@ class _ContainerPageState extends State<ContainerPage> {
                         child: Text(
                           widget.city != 'null' ? widget.city : "Add your city",
                           style: TextStyle(
-                            fontSize: 15.0,
+                            fontSize: MediaQuery.of(context).size.width * 0.025,
                             fontWeight: FontWeight.bold,
                             color: Colors.grey,
                           ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                       SizedBox(
