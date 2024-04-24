@@ -725,9 +725,11 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
                       Text(
                         widget.userName ?? "",
                         style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w600,
-                            color: WHITE,
-                            fontSize: 22),
+                          fontWeight: FontWeight.w600,
+                          color: WHITE,
+                          fontSize: MediaQuery.of(context).size.width * 0.04,
+                        ),
+                        overflow: TextOverflow.ellipsis,
                       )
                     ],
                   ),

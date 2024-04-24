@@ -465,7 +465,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                         'View Profile',
                         style: TextStyle(
                           fontSize: MediaQuery.of(context).size.width *
-                              0.03, // Adjust font size dynamically
+                              0.04, // Adjust font size dynamically
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -603,9 +603,9 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                               .subtitle1
                               ?.copyWith(
                                 color: Color.fromARGB(255, 243, 103, 9),
-                                fontSize: MediaQuery.of(context).size.width *
-                                    0.05 /
-                                    1.5,
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.05,
+                                overflow: TextOverflow.ellipsis,
                               ),
                         ),
                       ),
@@ -677,9 +677,10 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                               ?.copyWith(
                                 color: Color.fromARGB(255, 243, 103, 9),
                                 fontSize: MediaQuery.of(context).size.width *
-                                    0.05 /
-                                    1.5, // Adjust this value as needed
+                                    0.9, // Adjust this value as needed
+                                // overflow: TextOverflow.ellipsis,
                               ),
+                          // overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ),
@@ -742,7 +743,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      width: MediaQuery.of(context).size.width * 0.25,
+                      width: MediaQuery.of(context).size.width * 0.3,
                       alignment: Alignment.centerLeft,
                       child: FittedBox(
                         fit: BoxFit.scaleDown,
@@ -753,9 +754,10 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                               .subtitle1
                               ?.copyWith(
                                 color: Color.fromARGB(255, 243, 103, 9),
-                                fontSize: MediaQuery.of(context).size.width *
-                                    0.05 /
-                                    1.5, // Adjust this value as needed
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.05,
+                                overflow: TextOverflow
+                                    .ellipsis, // Adjust this value as needed
                               ),
                         ),
                       ),
@@ -766,7 +768,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                     ),
 
                     Container(
-                      width: MediaQuery.of(context).size.width * 0.4,
+                      width: MediaQuery.of(context).size.width * 0.3,
                       alignment: Alignment.centerRight,
                       child: FittedBox(
                         fit: BoxFit.scaleDown,
@@ -775,7 +777,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                                 "Member",
                                 style: GoogleFonts.robotoCondensed(
                                   fontSize:
-                                      MediaQuery.of(context).size.width * 0.025,
+                                      MediaQuery.of(context).size.width * 0.04,
                                   fontWeight: FontWeight.w800,
                                   color: Colors.green,
                                 ),
@@ -893,9 +895,9 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                               .subtitle1
                               ?.copyWith(
                                 color: Color.fromARGB(255, 243, 103, 9),
-                                fontSize: MediaQuery.of(context).size.width *
-                                    0.05 /
-                                    1.5,
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.04,
+                                overflow: TextOverflow.ellipsis,
                               ),
                         ),
                       ),
@@ -1033,7 +1035,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      width: MediaQuery.of(context).size.width * 0.25,
+                      width: MediaQuery.of(context).size.width * 0.3,
                       alignment: Alignment.centerLeft,
                       child: FittedBox(
                         fit: BoxFit.scaleDown,
@@ -1044,9 +1046,9 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                               .subtitle1
                               ?.copyWith(
                                 color: Color.fromARGB(255, 243, 103, 9),
-                                fontSize: MediaQuery.of(context).size.width *
-                                    0.05 /
-                                    1.5,
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.04,
+                                overflow: TextOverflow.ellipsis,
                               ),
                         ),
                       ),
@@ -1055,14 +1057,14 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                       width: MediaQuery.sizeOf(context).width * .05,
                     ),
                     Container(
-                      width: MediaQuery.of(context).size.width * 0.4,
+                      width: MediaQuery.of(context).size.width * 0.3,
                       alignment: Alignment.centerRight,
                       child: FittedBox(
                         fit: BoxFit.scaleDown,
                         child: Text(
                           selectedCurrency,
                           style: GoogleFonts.robotoCondensed(
-                            fontSize: MediaQuery.of(context).size.width * 0.025,
+                            fontSize: MediaQuery.of(context).size.width * 0.04,
                             fontWeight: FontWeight.w600,
                             color: Color.fromARGB(197, 1, 50, 3),
                           ),
@@ -1531,9 +1533,9 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                               .subtitle1
                               ?.copyWith(
                                 color: Color.fromARGB(255, 243, 103, 9),
-                                fontSize: MediaQuery.of(context).size.width *
-                                    0.05 /
-                                    1.5,
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.04,
+                                overflow: TextOverflow.ellipsis,
                               ),
                         ),
                       ),
