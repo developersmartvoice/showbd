@@ -100,7 +100,7 @@ class _GenderSettingsPageState extends State<GenderSettingsPage> {
                   textAlign: TextAlign.justify, // Align text to center
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: 12,
+                    fontSize: MediaQuery.of(context).size.width * 0.025,
                     fontWeight: FontWeight.w900,
                   ),
                 ),

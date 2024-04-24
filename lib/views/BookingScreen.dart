@@ -159,7 +159,8 @@ class _BookingScreenState extends State<BookingScreen> {
                           child: Text(
                             'Select Date',
                             style: GoogleFonts.robotoCondensed(
-                              fontSize: 20,
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.04,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -254,7 +255,10 @@ class _BookingScreenState extends State<BookingScreen> {
                                       child: Text(
                                         'Tour Duration',
                                         style: GoogleFonts.robotoCondensed(
-                                          fontSize: 20,
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.04,
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
@@ -302,8 +306,8 @@ class _BookingScreenState extends State<BookingScreen> {
                               padding:
                                   const EdgeInsets.all(8.0), // Add padding here
                               child: Container(
-                                height:
-                                    50, // Set a fixed height or adjust according to your design
+                                height: MediaQuery.of(context).size.width *
+                                    0.025, // Set a fixed height or adjust according to your design
                                 child: Column(
                                   children: [
                                     Align(
@@ -311,9 +315,13 @@ class _BookingScreenState extends State<BookingScreen> {
                                       child: Text(
                                         'Preferred Meeting Time',
                                         style: GoogleFonts.robotoCondensed(
-                                          fontSize: 20,
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.04,
                                           fontWeight: FontWeight.w500,
                                         ),
+                                        overflow: TextOverflow.ellipsis,
                                       ),
                                     ),
                                     SizedBox(
@@ -370,7 +378,10 @@ class _BookingScreenState extends State<BookingScreen> {
                                       child: Text(
                                         'Number of People',
                                         style: GoogleFonts.robotoCondensed(
-                                          fontSize: 20,
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.04,
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
@@ -431,7 +442,8 @@ class _BookingScreenState extends State<BookingScreen> {
                               Text(
                                 WHAT_BRING_YOU_HERE,
                                 style: GoogleFonts.robotoCondensed(
-                                  fontSize: 20,
+                                  fontSize:
+                                      MediaQuery.of(context).size.width * 0.04,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -478,10 +490,15 @@ class _BookingScreenState extends State<BookingScreen> {
                                       directBooking();
                                     }
                                   },
-                                  child: Text('REQUEST TO BOOK'),
+                                  child: Text(
+                                    'REQUEST TO BOOK',
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                   style: ElevatedButton.styleFrom(
                                     textStyle: GoogleFonts.robotoCondensed(
-                                      fontSize: 20.0,
+                                      fontSize:
+                                          MediaQuery.of(context).size.width *
+                                              0.03,
                                       fontWeight: FontWeight.w700,
                                     ),
                                     padding:

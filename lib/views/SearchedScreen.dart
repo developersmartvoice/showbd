@@ -477,7 +477,7 @@ class _SearchedScreenState extends State<SearchedScreen> {
                     style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w600,
                         color: WHITE,
-                        fontSize: 22),
+                        fontSize: MediaQuery.of(context).size.width * 0.04),
                   ),
                   SizedBox(
                     width: 20,
@@ -506,9 +506,10 @@ class _SearchedScreenState extends State<SearchedScreen> {
                       child: Text(
                         "Apply",
                         style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w600,
-                            color: const Color.fromARGB(255, 12, 88, 150),
-                            fontSize: 18),
+                          fontWeight: FontWeight.w600,
+                          color: const Color.fromARGB(255, 12, 88, 150),
+                          fontSize: MediaQuery.of(context).size.width * 0.03,
+                        ),
                       )),
                 ],
               ),
@@ -606,9 +607,11 @@ class _SearchedScreenState extends State<SearchedScreen> {
             child: Text(
               label,
               style: GoogleFonts.robotoCondensed(
-                  fontWeight: FontWeight.w600,
-                  color: Colors.grey,
-                  fontSize: 25),
+                fontWeight: FontWeight.w600,
+                color: Colors.grey,
+                fontSize: MediaQuery.of(context).size.width * 0.04,
+              ),
+              overflow: TextOverflow.ellipsis,
             ),
           ),
           SizedBox(
@@ -631,11 +634,12 @@ class _SearchedScreenState extends State<SearchedScreen> {
                       child: Text(
                         'Free',
                         style: GoogleFonts.robotoCondensed(
-                            fontSize: 20, fontWeight: FontWeight.w500),
+                            fontSize: MediaQuery.of(context).size.width * 0.04,
+                            fontWeight: FontWeight.w500),
                       ),
                     ),
                     SizedBox(
-                      width: 312,
+                      width: MediaQuery.of(context).size.width * 0.65,
                     ),
                     Text(
                       '100',
@@ -820,9 +824,10 @@ class _SearchedScreenState extends State<SearchedScreen> {
                       child: Text(
                         label,
                         style: GoogleFonts.robotoCondensed(
-                            fontWeight: FontWeight.w600,
-                            color: Colors.grey,
-                            fontSize: 25),
+                          fontWeight: FontWeight.w600,
+                          color: Colors.grey,
+                          fontSize: MediaQuery.of(context).size.width * 0.04,
+                        ),
                       ),
                     ),
                   ],
@@ -918,9 +923,10 @@ class _SearchedScreenState extends State<SearchedScreen> {
             child: Text(
               label,
               style: GoogleFonts.robotoCondensed(
-                  fontWeight: FontWeight.w600,
-                  color: Colors.grey,
-                  fontSize: 25),
+                fontWeight: FontWeight.w600,
+                color: Colors.grey,
+                fontSize: MediaQuery.of(context).size.width * 0.04,
+              ),
             ),
           ),
           Container(
@@ -981,7 +987,17 @@ class _SearchedScreenState extends State<SearchedScreen> {
           },
           activeColor: Color.fromARGB(190, 255, 115, 0),
         ),
-        Text(label),
+        Flexible(
+          child: Text(
+            label,
+            style: GoogleFonts.robotoCondensed(
+              fontWeight: FontWeight.w600,
+              color: Colors.grey,
+              fontSize: MediaQuery.of(context).size.width * 0.035,
+            ),
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
       ],
     );
   }
