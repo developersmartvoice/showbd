@@ -2,11 +2,15 @@ import 'dart:convert';
 
 import 'package:appcode3/en.dart';
 import 'package:appcode3/main.dart';
+import 'package:appcode3/modals/CheckAcceptBookingClass.dart';
 import 'package:appcode3/modals/DoctorDetailsClass.dart';
 import 'package:appcode3/views/BookingScreen.dart';
+import 'package:appcode3/views/ChatScreen.dart';
 import 'package:appcode3/views/ChoosePlan.dart';
 import 'package:appcode3/views/CreateTrip.dart';
 import 'package:appcode3/views/MakeAppointment.dart';
+import 'package:appcode3/views/PendingScreen.dart';
+import 'package:appcode3/views/RejectedScreen.dart';
 import 'package:appcode3/views/loginAsUser.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +34,7 @@ class DetailsPage extends StatefulWidget {
 
 class _DetailsPageState extends State<DetailsPage> {
   DoctorDetailsClass? doctorDetailsClass;
+  ApiResponse? apiResponse;
   bool isLoading = true;
   bool? isLoggedIn;
   bool isErrorInLoading = false;
@@ -39,8 +44,12 @@ class _DetailsPageState extends State<DetailsPage> {
   String? city;
   List<String>? imgs;
   int currentPage = 0;
-  String? senderId;
+  String? selfId;
   bool isMember = false;
+  bool isDirectBooking = false;
+  bool sender = false;
+  bool isAcceptBooking = false;
+  bool isRejectBooking = false;
 
   // String? get consultationFee => null;
 
@@ -53,24 +62,104 @@ class _DetailsPageState extends State<DetailsPage> {
     SharedPreferences.getInstance().then((pref) {
       setState(() {
         isLoggedIn = pref.getBool("isLoggedInAsDoctor") ?? false;
-        senderId = pref.getString("userId");
+        selfId = pref.getString("userId");
         checkIsMember();
+        checkDirectBooking();
+        checkAcceptBooking();
+        checkRejectBooking();
       });
     });
   }
 
   checkIsMember() async {
     final response = await get(
-        Uri.parse("$SERVER_ADDRESS/api/check_membership?id=${senderId}"));
+        Uri.parse("$SERVER_ADDRESS/api/check_membership?id=${selfId}"));
     if (response.statusCode == 200) {
       final jsonResponse = jsonDecode(response.body);
-      if (jsonResponse['is_member'] == 0) {
-        isMember = false;
-      } else {
-        isMember = true;
-      }
+      setState(() {
+        if (jsonResponse['is_member'] == 0) {
+          isMember = false;
+        } else {
+          isMember = true;
+        }
+      });
     } else {
       print("Api is not call properly");
+    }
+  }
+
+  checkDirectBooking() async {
+    final response = await get(Uri.parse(
+        "$SERVER_ADDRESS/api/check_direct_booking?sender_id=${selfId}&recipient_id=${widget.id}"));
+    print(
+        "$SERVER_ADDRESS/api/check_direct_booking?sender_id=${selfId}&recipient_id=${widget.id}");
+    if (response.statusCode == 200) {
+      final jsonResponse = jsonDecode(response.body);
+      if (jsonResponse['value'] == true) {
+        setState(() {
+          isDirectBooking = true;
+          if (jsonResponse['msg1'] == "sender is sender") {
+            sender = true;
+          } else {
+            sender = false;
+          }
+        });
+      } else {
+        setState(() {
+          isDirectBooking = false;
+        });
+      }
+    }
+  }
+
+  checkAcceptBooking() async {
+    final response = await get(Uri.parse(
+        "$SERVER_ADDRESS/api/check_accept_booking?sender_id=${selfId}&recipient_id=${widget.id}"));
+    print(
+        "$SERVER_ADDRESS/api/check_accept_booking?sender_id=${selfId}&recipient_id=${widget.id}");
+    if (response.statusCode == 200) {
+      final jsonResponse = jsonDecode(response.body);
+
+      apiResponse = ApiResponse.fromJson(jsonResponse);
+      print(apiResponse!.message);
+      // print(apiResponse!.message);
+      if (apiResponse!.value == true) {
+        setState(() {
+          isAcceptBooking = true;
+          if (apiResponse!.msg1 == "sender is sender") {
+            sender = true;
+          } else {
+            sender = false;
+          }
+        });
+      } else {
+        setState(() {
+          isAcceptBooking = false;
+        });
+      }
+    }
+  }
+
+  checkRejectBooking() async {
+    final response = await get(Uri.parse(
+        "$SERVER_ADDRESS/api/check_reject_booking?sender_id=${selfId}&recipient_id=${widget.id}"));
+
+    if (response.statusCode == 200) {
+      final jsonResponse = jsonDecode(response.body);
+      if (jsonResponse['value'] == true) {
+        setState(() {
+          isRejectBooking = true;
+          if (jsonResponse['msg1'] == "sender is sender") {
+            sender = true;
+          } else {
+            sender = false;
+          }
+        });
+      } else {
+        setState(() {
+          isRejectBooking = false;
+        });
+      }
     }
   }
 
@@ -115,6 +204,9 @@ class _DetailsPageState extends State<DetailsPage> {
 
   @override
   Widget build(BuildContext context) {
+    print("Is this Direct Booking: $isDirectBooking");
+    print("Is this Accept Booking: $isAcceptBooking");
+    print("Is this Reject Booking: $isRejectBooking");
     return SafeArea(
       child: Scaffold(
         backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
@@ -693,13 +785,109 @@ class _DetailsPageState extends State<DetailsPage> {
                                                   ChoosePlan(),
                                             ),
                                           )
-                                        : Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  BookingScreen(widget.id,
-                                                      senderId!, guideName!),
-                                            ),
-                                          );
+                                        : isDirectBooking
+                                            ? sender
+                                                ? Navigator.of(context).push(
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          PendingScreen(
+                                                              fromSender: true),
+                                                    ),
+                                                  )
+                                                : Navigator.of(context).push(
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          PendingScreen(
+                                                              fromSender:
+                                                                  false),
+                                                    ),
+                                                  )
+                                            : isAcceptBooking
+                                                ? sender
+                                                    ? Navigator.of(context)
+                                                        .push(
+                                                        MaterialPageRoute(
+                                                          builder: (context) => ChatScreen(
+                                                              apiResponse!
+                                                                  .recipientInfo
+                                                                  .recipientName,
+                                                              "100" +
+                                                                  apiResponse!
+                                                                      .recipientInfo
+                                                                      .recipientId
+                                                                      .toString(),
+                                                              apiResponse!
+                                                                  .recipientInfo
+                                                                  .recipientConnectycubeId,
+                                                              true,
+                                                              apiResponse!
+                                                                  .recipientInfo
+                                                                  .recipientDeviceTokens,
+                                                              apiResponse!
+                                                                  .recipientInfo
+                                                                  .recipientImage,
+                                                              apiResponse!
+                                                                  .senderInfo
+                                                                  .senderImage),
+                                                        ),
+                                                      )
+                                                    : Navigator.of(context)
+                                                        .push(
+                                                        MaterialPageRoute(
+                                                          builder: (context) => ChatScreen(
+                                                              apiResponse!
+                                                                  .senderInfo
+                                                                  .senderName,
+                                                              "100" +
+                                                                  apiResponse!
+                                                                      .senderInfo
+                                                                      .senderId
+                                                                      .toString(),
+                                                              apiResponse!
+                                                                  .senderInfo
+                                                                  .senderConnectycubeId,
+                                                              true,
+                                                              apiResponse!
+                                                                  .senderInfo
+                                                                  .senderDeviceTokens,
+                                                              apiResponse!
+                                                                  .senderInfo
+                                                                  .senderImage,
+                                                              apiResponse!
+                                                                  .recipientInfo
+                                                                  .recipientImage),
+                                                        ),
+                                                      )
+                                                : isRejectBooking
+                                                    ? sender
+                                                        ? Navigator.of(context)
+                                                            .push(
+                                                            MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  RejectedScreen(
+                                                                      fromSender:
+                                                                          true),
+                                                            ),
+                                                          )
+                                                        : Navigator.of(context)
+                                                            .push(
+                                                            MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  RejectedScreen(
+                                                                      fromSender:
+                                                                          false),
+                                                            ),
+                                                          )
+                                                    : Navigator.of(context)
+                                                        .push(
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              BookingScreen(
+                                                                  widget.id,
+                                                                  selfId!,
+                                                                  guideName!),
+                                                        ),
+                                                      );
                                   },
                                   icon: Icon(
                                     Icons.connect_without_contact_sharp,

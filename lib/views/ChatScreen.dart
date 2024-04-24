@@ -1148,9 +1148,12 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
                                                             myUid
                                                         ? LinearGradient(
                                                             colors: [
-                                                                Colors.blue,
+                                                                // Colors.blue,
+                                                                // Colors
+                                                                //     .lightBlueAccent
+                                                                Colors.orange,
                                                                 Colors
-                                                                    .lightBlueAccent
+                                                                    .orangeAccent
                                                               ],
                                                             stops: [
                                                                 0.3,
@@ -2062,8 +2065,11 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
             message!,
             style: GoogleFonts.ubuntu(
                 fontSize: isURL(message) ? 18 : 15,
-                color: uid == myUid ? Colors.white : Colors.black,
+                color: uid == myUid
+                    ? Colors.white
+                    : Color.fromARGB(255, 243, 103, 9),
                 fontWeight: isURL(message) ? FontWeight.w300 : FontWeight.w400,
+                // backgroundColor: Color.fromARGB(255, 243, 103, 9),
                 decoration: isURL(message)
                     ? TextDecoration.underline
                     : TextDecoration.none),
@@ -2231,7 +2237,8 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
                     ),
                     hintText: "Type a message here...",
                     filled: true,
-                    hintStyle: TextStyle(fontSize: 15),
+                    hintStyle: TextStyle(
+                        fontSize: 15, color: Color.fromARGB(255, 243, 103, 9)),
                     prefixIcon: IconButton(
                       icon:
                           // Icon(Icons.emoji_emotions_outlined),
@@ -2306,6 +2313,7 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
                       angle: 5.5,
                       child: Icon(
                         Icons.send,
+                        color: Color.fromARGB(255, 243, 103, 9),
                       ),
                     ),
                   )
