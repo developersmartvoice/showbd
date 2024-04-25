@@ -166,7 +166,7 @@ class _TourState extends State<Tour> {
                       style: GoogleFonts.poppins(
                           fontWeight: FontWeight.w500,
                           color: BLACK,
-                          fontSize: MediaQuery.of(context).size.width * 0.03),
+                          fontSize: MediaQuery.of(context).size.width * 0.05),
                     )
                   : Container(
                       alignment: Alignment.center,
