@@ -454,7 +454,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                                 style: GoogleFonts.poppins(
                                   color: LIGHT_GREY_TEXT,
                                   fontSize:
-                                      MediaQuery.of(context).size.width * 0.018,
+                                      MediaQuery.of(context).size.width * 0.025,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),

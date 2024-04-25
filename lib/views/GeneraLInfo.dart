@@ -311,10 +311,11 @@ class _ContainerPageState extends State<ContainerPage> {
                         child: Text(
                           NAME,
                           style: TextStyle(
-                            fontSize: MediaQuery.of(context).size.width * 0.025,
+                            fontSize: MediaQuery.of(context).size.width * 0.04,
                             fontWeight: FontWeight.bold,
                             // color: Color.fromARGB(255, 243, 103, 9),
                           ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                       SizedBox(
@@ -326,7 +327,7 @@ class _ContainerPageState extends State<ContainerPage> {
                         child: Text(
                           widget.name,
                           style: TextStyle(
-                            fontSize: MediaQuery.of(context).size.width * 0.025,
+                            fontSize: MediaQuery.of(context).size.width * 0.04,
                             fontWeight: FontWeight.bold,
                             color: Colors.grey,
                           ),
@@ -399,10 +400,11 @@ class _ContainerPageState extends State<ContainerPage> {
                             ABOUT,
                             style: TextStyle(
                               fontSize:
-                                  MediaQuery.of(context).size.width * 0.025,
+                                  MediaQuery.of(context).size.width * 0.04,
                               fontWeight: FontWeight.bold,
                               // color: Color.fromARGB(255, 243, 103, 9),
                             ),
+                            overflow: TextOverflow.ellipsis,
                           )),
                       SizedBox(
                         width: MediaQuery.sizeOf(context).width * .1,
@@ -415,7 +417,7 @@ class _ContainerPageState extends State<ContainerPage> {
                               ? widget.aboutMe
                               : "Add About me",
                           style: TextStyle(
-                            fontSize: MediaQuery.of(context).size.width * 0.025,
+                            fontSize: MediaQuery.of(context).size.width * 0.04,
                             fontWeight: FontWeight.bold,
                             color: Colors.grey,
                           ),
@@ -487,9 +489,10 @@ class _ContainerPageState extends State<ContainerPage> {
                         child: Text(
                           'Photos',
                           style: TextStyle(
-                            fontSize: MediaQuery.of(context).size.width * 0.025,
+                            fontSize: MediaQuery.of(context).size.width * 0.04,
                             fontWeight: FontWeight.bold,
                           ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                       SizedBox(
@@ -566,10 +569,11 @@ class _ContainerPageState extends State<ContainerPage> {
                             LOCATION,
                             style: TextStyle(
                               fontSize:
-                                  MediaQuery.of(context).size.width * 0.025,
+                                  MediaQuery.of(context).size.width * 0.04,
                               fontWeight: FontWeight.bold,
                               // color: Color.fromARGB(255, 243, 103, 9),
                             ),
+                            overflow: TextOverflow.ellipsis,
                           )),
                       SizedBox(
                         width: MediaQuery.sizeOf(context).width * .1,
@@ -580,7 +584,7 @@ class _ContainerPageState extends State<ContainerPage> {
                         child: Text(
                           widget.city != 'null' ? widget.city : "Add your city",
                           style: TextStyle(
-                            fontSize: MediaQuery.of(context).size.width * 0.025,
+                            fontSize: MediaQuery.of(context).size.width * 0.04,
                             fontWeight: FontWeight.bold,
                             color: Colors.grey,
                           ),

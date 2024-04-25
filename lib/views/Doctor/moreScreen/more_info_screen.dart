@@ -605,8 +605,9 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                                 color: Color.fromARGB(255, 243, 103, 9),
                                 fontSize:
                                     MediaQuery.of(context).size.width * 0.05,
-                                overflow: TextOverflow.ellipsis,
+                                // overflow: TextOverflow.ellipsis,
                               ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ),
@@ -759,6 +760,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                                 overflow: TextOverflow
                                     .ellipsis, // Adjust this value as needed
                               ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ),
@@ -899,6 +901,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                                     MediaQuery.of(context).size.width * 0.04,
                                 overflow: TextOverflow.ellipsis,
                               ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ),

@@ -205,10 +205,11 @@ class _ContainerPageState extends State<ContainerPage> {
                           "Email",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: MediaQuery.of(context).size.width * 0.03,
+                            fontSize: MediaQuery.of(context).size.width * 0.04,
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
                           ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                       SizedBox(
@@ -220,7 +221,7 @@ class _ContainerPageState extends State<ContainerPage> {
                         child: Text(
                           widget.email,
                           style: TextStyle(
-                            fontSize: MediaQuery.of(context).size.width * 0.025,
+                            fontSize: MediaQuery.of(context).size.width * 0.035,
                             fontWeight: FontWeight.bold,
                             color: Colors.grey,
                           ),
@@ -293,10 +294,11 @@ class _ContainerPageState extends State<ContainerPage> {
                             PHONE,
                             style: TextStyle(
                               fontSize:
-                                  MediaQuery.of(context).size.width * 0.03,
+                                  MediaQuery.of(context).size.width * 0.04,
                               fontWeight: FontWeight.bold,
                               // color: Color.fromARGB(255, 243, 103, 9),
                             ),
+                            overflow: TextOverflow.ellipsis,
                           )),
                       SizedBox(
                         width: MediaQuery.sizeOf(context).width * .1,
@@ -307,7 +309,7 @@ class _ContainerPageState extends State<ContainerPage> {
                         child: Text(
                           widget.phone,
                           style: TextStyle(
-                            fontSize: MediaQuery.of(context).size.width * 0.025,
+                            fontSize: MediaQuery.of(context).size.width * 0.035,
                             fontWeight: FontWeight.bold,
                             color: Colors.grey,
                           ),
