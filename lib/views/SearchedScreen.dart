@@ -26,7 +26,7 @@ class _SearchedScreenState extends State<SearchedScreen> {
   int? currentId;
   FilterClass? _filterClass;
   SearchDoctorClass? searchDoctorClass;
-  List<DoctorData> _newData = [];
+  // List<DoctorData> _newData = [];
   String nextUrl = "";
   bool isLoadingMore = false;
   String searchKeyword = "";
@@ -109,7 +109,8 @@ class _SearchedScreenState extends State<SearchedScreen> {
         'services': selectedActivities,
       };
       print(jsonEncode(requestBody));
-      return jsonEncode(requestBody);
+      // return jsonEncode(requestBody);
+      return requestBody.toString();
     } else if (isFeesSelected && isLanguageSelected && isActivitiesSelected) {
       Map<String, dynamic> requestBody = {
         'consultation_fees': filterFees,
@@ -117,7 +118,8 @@ class _SearchedScreenState extends State<SearchedScreen> {
         'services': selectedActivities,
       };
       print(jsonEncode(requestBody));
-      return jsonEncode(requestBody);
+      // return jsonEncode(requestBody);
+      return requestBody.toString();
     } else if (isFeesSelected && isLanguageSelected && isGenderSelected) {
       Map<String, dynamic> requestBody = {
         'consultation_fees': filterFees,
@@ -125,7 +127,8 @@ class _SearchedScreenState extends State<SearchedScreen> {
         'languages': selectedLanguages,
       };
       print(jsonEncode(requestBody));
-      return jsonEncode(requestBody);
+      // return jsonEncode(requestBody);
+      return requestBody.toString();
     } else if (isFeesSelected && isActivitiesSelected && isGenderSelected) {
       Map<String, dynamic> requestBody = {
         'consultation_fees': filterFees,
@@ -133,7 +136,8 @@ class _SearchedScreenState extends State<SearchedScreen> {
         'services': selectedActivities,
       };
       print(jsonEncode(requestBody));
-      return jsonEncode(requestBody);
+      // return jsonEncode(requestBody);
+      return requestBody.toString();
     } else if (isLanguageSelected && isActivitiesSelected && isGenderSelected) {
       Map<String, dynamic> requestBody = {
         'gender': filterGender,
@@ -141,73 +145,84 @@ class _SearchedScreenState extends State<SearchedScreen> {
         'services': selectedActivities,
       };
       print(jsonEncode(requestBody));
-      return jsonEncode(requestBody);
+      // return jsonEncode(requestBody);
+      return requestBody.toString();
     } else if (isFeesSelected && isLanguageSelected) {
       Map<String, dynamic> requestBody = {
         'consultation_fees': filterFees,
         'languages': selectedLanguages,
       };
       print(jsonEncode(requestBody));
-      return jsonEncode(requestBody);
+      // return jsonEncode(requestBody);
+      return requestBody.toString();
     } else if (isFeesSelected && isActivitiesSelected) {
       Map<String, dynamic> requestBody = {
         'consultation_fees': filterFees,
         'services': selectedActivities,
       };
       print(jsonEncode(requestBody));
-      return jsonEncode(requestBody);
+      // return jsonEncode(requestBody);
+      return requestBody.toString();
     } else if (isFeesSelected && isGenderSelected) {
       Map<String, dynamic> requestBody = {
         'consultation_fees': filterFees,
         'gender': filterGender,
       };
       print(jsonEncode(requestBody));
-      return jsonEncode(requestBody);
+      // return jsonEncode(requestBody);
+      return requestBody.toString();
     } else if (isLanguageSelected && isActivitiesSelected) {
       Map<String, dynamic> requestBody = {
         'languages': selectedLanguages,
         'services': selectedActivities,
       };
       print(jsonEncode(requestBody));
-      return jsonEncode(requestBody);
+      // return jsonEncode(requestBody);
+      return requestBody.toString();
     } else if (isLanguageSelected && isGenderSelected) {
       Map<String, dynamic> requestBody = {
         'gender': filterGender,
         'languages': selectedLanguages,
       };
       print(jsonEncode(requestBody));
-      return jsonEncode(requestBody);
+      // return jsonEncode(requestBody);
+      return requestBody.toString();
     } else if (isActivitiesSelected && isGenderSelected) {
       Map<String, dynamic> requestBody = {
         'gender': filterGender,
         'services': selectedActivities,
       };
       print(jsonEncode(requestBody));
-      return jsonEncode(requestBody);
+      // return jsonEncode(requestBody);
+      return requestBody.toString();
     } else if (isFeesSelected) {
       Map<String, dynamic> requestBody = {
         'consultation_fees': filterFees,
       };
       print(jsonEncode(requestBody));
-      return jsonEncode(requestBody);
+      // return jsonEncode(requestBody);
+      return requestBody.toString();
     } else if (isLanguageSelected) {
       Map<String, dynamic> requestBody = {
         'languages': selectedLanguages,
       };
-      print(jsonEncode(requestBody));
-      return jsonEncode(requestBody);
+      // print(jsonEncode(requestBody));
+      print(requestBody.toString());
+      return requestBody.toString();
     } else if (isActivitiesSelected) {
       Map<String, dynamic> requestBody = {
         'services': selectedActivities,
       };
       print(jsonEncode(requestBody));
-      return jsonEncode(requestBody);
+      // return jsonEncode(requestBody);
+      return requestBody.toString();
     } else if (isGenderSelected) {
       Map<String, dynamic> requestBody = {
         'gender': filterGender,
       };
       print(jsonEncode(requestBody));
-      return jsonEncode(requestBody);
+      // return jsonEncode(requestBody);
+      return requestBody.toString();
     } else {
       return '';
     }
@@ -536,6 +551,15 @@ class _SearchedScreenState extends State<SearchedScreen> {
                 ['English', 'Bengali', 'Hindi', 'Urdu'], (value) {
               setState(() {
                 selectedLanguages = value;
+                if (selectedLanguages.isNotEmpty) {
+                  setState(() {
+                    isLanguageSelected = true;
+                  });
+                } else {
+                  setState(() {
+                    isLanguageSelected = false;
+                  });
+                }
               });
             }),
             SizedBox(height: 16),
@@ -552,6 +576,15 @@ class _SearchedScreenState extends State<SearchedScreen> {
             ], (value) {
               setState(() {
                 selectedActivities = value;
+                if (selectedActivities.isNotEmpty) {
+                  setState(() {
+                    isActivitiesSelected = true;
+                  });
+                } else {
+                  setState(() {
+                    isActivitiesSelected = false;
+                  });
+                }
               });
             }),
             SizedBox(height: 16),
@@ -733,76 +766,6 @@ class _SearchedScreenState extends State<SearchedScreen> {
     );
   }
 
-  // Widget _buildMultiSelect(String label, List<String> selectedValues,
-  //     List<String> options, ValueChanged<List<String>> onChanged) {
-  //   return Container(
-  //       child: Column(
-  //           // crossAxisAlignment: CrossAxisAlignment.start,
-  //           //mainAxisAlignment: MainAxisAlignment.start,
-
-  //           children: [
-  //         Column(
-  //           children: [
-  //             Container(
-  //               color: LIGHT_GREY_SCREEN_BACKGROUND,
-  //               child: Row(
-  //                 crossAxisAlignment: CrossAxisAlignment.start,
-  //                 children: [
-  //                   Padding(
-  //                     padding: EdgeInsets.only(
-  //                         left: 18.0), // Adjust the left padding as needed
-  //                     child: Text(
-  //                       label,
-  //                       style: GoogleFonts.robotoCondensed(
-  //                           fontWeight: FontWeight.w600,
-  //                           color: Colors.grey,
-  //                           fontSize: 25),
-  //                     ),
-  //                   ),
-  //                 ],
-  //               ),
-  //             ),
-  //             SizedBox(
-  //               height: 5,
-  //             ),
-  //             Wrap(
-  //               spacing: 12.0,
-  //               children: options.map((option) {
-  //                 return FilterChip(
-  //                   label: Text(option),
-  //                   selected: selectedValues.contains(option),
-  //                   onSelected: (selected) {
-  //                     List<String> newSelectedValues =
-  //                         List.from(selectedValues);
-  //                     if (selected) {
-  //                       newSelectedValues.add(option);
-  //                     } else {
-  //                       newSelectedValues.remove(option);
-  //                     }
-  //                     onChanged(newSelectedValues);
-  //                     if (selectedLanguages.isNotEmpty) {
-  //                       isActivitiesSelected = true;
-  //                     } else {
-  //                       isActivitiesSelected = false;
-  //                     }
-  //                   },
-  //                   selectedColor: Color.fromARGB(190, 255, 115, 0),
-  //                   labelStyle: TextStyle(
-  //                     color: selectedValues.contains(option)
-  //                         ? Colors.white
-  //                         : Colors.black, // Set font color based on selection
-  //                   ),
-  //                 );
-  //               }).toList(),
-  //             ),
-  //             Divider(
-  //               height: 20,
-  //               color: Colors.grey,
-  //             ),
-  //           ],
-  //         )
-  //       ]));
-  // }
   Widget _buildMultiSelect(String label, List<String> selectedValues,
       List<String> options, ValueChanged<List<String>> onChanged) {
     return Container(
@@ -853,11 +816,11 @@ class _SearchedScreenState extends State<SearchedScreen> {
                         newSelectedValues.remove(mappedOption);
                       }
                       onChanged(newSelectedValues);
-                      if (selectedLanguages.isNotEmpty) {
-                        isLanguageSelected = true;
-                      } else {
-                        isLanguageSelected = false;
-                      }
+                      // if (selectedLanguages.isNotEmpty) {
+                      //   isLanguageSelected = true;
+                      // } else {
+                      //   isLanguageSelected = false;
+                      // }
                     },
                     selectedColor: Color.fromARGB(190, 255, 115, 0),
                     labelStyle: TextStyle(
@@ -1016,11 +979,11 @@ class _SearchedScreenState extends State<SearchedScreen> {
     });
   }
 
-  // _onChanged(String value) async {
+  // _onSubmit(String value) async {
   //   if (value.length == 0) {
   //     setState(() {
   //       _newData.clear();
-  //       isErrorInLoading = false;
+
   //       isSearching = false;
   //       print("length 0");
   //       print(_newData);
@@ -1031,89 +994,20 @@ class _SearchedScreenState extends State<SearchedScreen> {
   //       isSearching = true;
   //     });
   //     final response =
-  //         await get(Uri.parse("$SERVER_ADDRESS/api/searchdoctor?term=$value"))
-  //             .catchError((e) {
+  //         await get(Uri.parse("$SERVER_ADDRESS/api/searchdoctor?term=$value"));
+  //     if (response.statusCode == 200) {
+  //       final jsonResponse = jsonDecode(response.body);
+  //       searchDoctorClass = SearchDoctorClass.fromJson(jsonResponse);
+  //       //print([0].name);
   //       setState(() {
+  //         _newData.clear();
+  //         //print(searchDoctorClass.data.doctorData);
+  //         _newData.addAll(searchDoctorClass!.data!.doctorData!);
+  //         nextUrl = searchDoctorClass!.data!.links!.last.url!;
+  //         print(nextUrl);
   //         isLoading = false;
-  //         isErrorInLoading = true;
-  //       });
-  //     });
-  //     try {
-  //       if (response.statusCode == 200) {
-  //         final jsonResponse = jsonDecode(response.body);
-  //         searchDoctorClass = SearchDoctorClass.fromJson(jsonResponse);
-  //         //print([0].name);
-  //         setState(() {
-  //           _newData.clear();
-  //           //print(searchDoctorClass.data.doctorData);
-  //           _newData.addAll(searchDoctorClass!.data!.doctorData!);
-  //           _newData.removeWhere((element) => element.id == currentId);
-  //           nextUrl = searchDoctorClass!.data!.links!.last.url!;
-  //           print(nextUrl);
-  //           isLoading = false;
-  //         });
-  //       }
-  //     } catch (e) {
-  //       setState(() {
-  //         isLoading = false;
-  //         isErrorInLoading = true;
   //       });
   //     }
   //   }
   // }
-
-  // _loadMoreFunc() async {
-  //   if (nextUrl == null) {
-  //     return;
-  //   }
-  //   setState(() {
-  //     isLoadingMore = true;
-  //   });
-  //   print(searchKeyword);
-  //   final response = await get(Uri.parse("$nextUrl&term=$searchKeyword"));
-  //   if (response.statusCode == 200) {
-  //     final jsonResponse = jsonDecode(response.body);
-  //     searchDoctorClass = SearchDoctorClass.fromJson(jsonResponse);
-  //     //print([0].name);
-  //     setState(() {
-  //       //print(searchDoctorClass.data.doctorData);
-  //       _newData.addAll(searchDoctorClass!.data!.doctorData!);
-  //       isLoadingMore = false;
-  //       nextUrl = searchDoctorClass!.data!.links!.last.url!;
-  //       print(nextUrl);
-  //     });
-  //   }
-  // }
-
-  _onSubmit(String value) async {
-    if (value.length == 0) {
-      setState(() {
-        _newData.clear();
-
-        isSearching = false;
-        print("length 0");
-        print(_newData);
-      });
-    } else {
-      setState(() {
-        isLoading = true;
-        isSearching = true;
-      });
-      final response =
-          await get(Uri.parse("$SERVER_ADDRESS/api/searchdoctor?term=$value"));
-      if (response.statusCode == 200) {
-        final jsonResponse = jsonDecode(response.body);
-        searchDoctorClass = SearchDoctorClass.fromJson(jsonResponse);
-        //print([0].name);
-        setState(() {
-          _newData.clear();
-          //print(searchDoctorClass.data.doctorData);
-          _newData.addAll(searchDoctorClass!.data!.doctorData!);
-          nextUrl = searchDoctorClass!.data!.links!.last.url!;
-          print(nextUrl);
-          isLoading = false;
-        });
-      }
-    }
-  }
 }
