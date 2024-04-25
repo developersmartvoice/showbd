@@ -19,13 +19,37 @@ class _PendingScreenState extends State<PendingScreen> {
 
     return SafeArea(
       child: Scaffold(
+        // appBar: AppBar(
+        //   centerTitle: true,
+        //   title: Text('Pending Approval'),
+        //   leading: IconButton(
+        //     icon: Icon(Icons.arrow_back),
+        //     onPressed: () {
+        //       Navigator.of(context).pop();
+        //     },
+        //   ),
+        // ),
+
         appBar: AppBar(
-          title: Text('Pending Approval'),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () {
               Navigator.of(context).pop();
             },
+          ),
+          title: Text("Pending Approval",
+              style: Theme.of(context).textTheme.headline5!.apply(
+                  color: Theme.of(context).backgroundColor,
+                  fontWeightDelta: 5)),
+          centerTitle: true,
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(
+                    "assets/moreScreenImages/header_bg.png"), // Add your background image path
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
         ),
         body: Center(
@@ -36,7 +60,7 @@ class _PendingScreenState extends State<PendingScreen> {
               children: [
                 Text(
                   widget.fromSender
-                      ? 'Your sent request to this user. Wait for user\'s approval.'
+                      ? 'Your request sent to this user. Wait for user\'s approval.'
                       : 'Check your inbox. This user sent you a booking request.',
                   style: TextStyle(
                     fontSize: fontSize,
