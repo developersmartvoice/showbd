@@ -564,7 +564,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     left: MediaQuery.of(context).size.width * .02),
                 width: MediaQuery.sizeOf(context).width * 1,
                 margin: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * .36),
+                    top: MediaQuery.of(context).size.height * .33),
                 child: Text(
                   guideName.toString().toUpperCase(),
                   maxLines: 2,
@@ -585,7 +585,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     left: MediaQuery.of(context).size.width * .02),
                 width: MediaQuery.sizeOf(context).width * 1,
                 margin: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * .41),
+                    top: MediaQuery.of(context).size.height * .37),
                 child: doctorDetailsClass!.data!.city == null
                     ? Container()
                     : Text(
