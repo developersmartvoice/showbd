@@ -174,7 +174,7 @@ class _SendOffersScreenState extends State<SendOffersScreen> {
               itemBuilder: (context, index) {
                 NotifiedGuides guide = widget.notifyGuides![index];
                 return SizedBox(
-                  height: 400,
+                  height: MediaQuery.of(context).size.width * 1.5,
                   child: Card(
                     elevation: 3,
                     margin: EdgeInsets.all(8),
@@ -191,7 +191,7 @@ class _SendOffersScreenState extends State<SendOffersScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
-                            height: 150,
+                            height: MediaQuery.of(context).size.height * 0.3,
                             width: 175,
                             child: guide.imageURL != null
                                 ? CachedNetworkImage(
@@ -287,9 +287,11 @@ class _SendOffersScreenState extends State<SendOffersScreen> {
                               child: Text(
                                 'Looking for a local between',
                                 style: TextStyle(
-                                  fontSize: 14.0,
+                                  fontSize:
+                                      MediaQuery.of(context).size.width * 0.04,
                                   color: Colors.grey,
                                 ),
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                           ),
@@ -371,9 +373,11 @@ class _SendOffersScreenState extends State<SendOffersScreen> {
                                     ' ' +
                                     ('${guide.end_date ?? ''}'),
                                 style: TextStyle(
-                                  fontSize: 15,
+                                  fontSize:
+                                      MediaQuery.of(context).size.width * 0.028,
                                   fontWeight: FontWeight.bold,
                                 ),
+                                overflow: TextOverflow.ellipsis,
                               ),
 
                               // child: Text(
@@ -387,7 +391,7 @@ class _SendOffersScreenState extends State<SendOffersScreen> {
                           //],
 
                           SizedBox(
-                            height: 15,
+                            height: MediaQuery.of(context).size.width * 0.01,
                           ),
 
                           ElevatedButton(
@@ -404,7 +408,8 @@ class _SendOffersScreenState extends State<SendOffersScreen> {
                             child: Text('SEND OFFER'),
                             style: ElevatedButton.styleFrom(
                               textStyle: GoogleFonts.poppins(
-                                fontSize: 19.0,
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.025,
                                 fontWeight: FontWeight.w500,
                                 color: Colors.blue,
                               ),
