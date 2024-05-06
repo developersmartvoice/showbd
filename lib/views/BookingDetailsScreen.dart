@@ -143,99 +143,194 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                     color: Color.fromARGB(255, 243, 103, 9),
                   ),
                 )
-              : Card(
-                  elevation: 3,
-                  margin: EdgeInsets.all(10),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
+              : Container(
+                  height: MediaQuery.of(context).size.height * 0.7,
+                  child: Card(
+                    elevation: 3,
+                    margin: EdgeInsets.all(10),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            CircleAvatar(
-                              radius: 30,
-                              backgroundImage: NetworkImage(
-                                  widget.booking.senderImage ?? ''),
+                            Container(
+                              padding: EdgeInsets.all(15),
+                              margin: EdgeInsets.symmetric(vertical: 10),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.2),
+                                    spreadRadius: 2,
+                                    blurRadius: 5,
+                                    offset: Offset(0, 3),
+                                  ),
+                                ],
+                              ),
+                              child: Row(
+                                children: [
+                                  CircleAvatar(
+                                    radius: 30,
+                                    backgroundImage: NetworkImage(
+                                        widget.booking.senderImage ?? ''),
+                                  ),
+                                  SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.03),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          widget.booking.senderName ?? '',
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black87,
+                                          ),
+                                        ),
+                                        SizedBox(height: 5),
+                                        Text(
+                                          'Date: ${widget.booking.date ?? ''}',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.grey[600],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                            SizedBox(width: 10),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            SizedBox(height: 10),
+                            Container(
+                              padding: EdgeInsets.all(15),
+                              margin: EdgeInsets.symmetric(vertical: 10),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.2),
+                                    spreadRadius: 2,
+                                    blurRadius: 5,
+                                    offset: Offset(0, 3),
+                                  ),
+                                ],
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Duration: ${widget.booking.duration ?? ''} hours',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color:
+                                          const Color.fromARGB(255, 4, 11, 22),
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(height: 10),
+                                  Text(
+                                    'Timing: ${widget.booking.timing ?? ''}',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color:
+                                          const Color.fromARGB(255, 6, 31, 8),
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(height: 10),
+                                  Text(
+                                    'Number of People: ${widget.booking.numPeople ?? ''}',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color:
+                                          const Color.fromARGB(255, 14, 8, 39),
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(height: 10),
+                                  Text(
+                                    'Message: ${widget.booking.message ?? ''}',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Color.fromARGB(255, 169, 163, 163),
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 30),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Text(
-                                  widget.booking.senderName ?? '',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
+                                Flexible(
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        loading = true;
+                                      });
+                                      acceptBooking();
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 30, vertical: 15),
+                                      backgroundColor: Colors.green,
+                                      foregroundColor: Colors.white,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                    ),
+                                    child: Text('Accept',
+                                        style: TextStyle(
+                                          fontSize:
+                                              MediaQuery.sizeOf(context).width *
+                                                  .04,
+                                        )),
                                   ),
                                 ),
-                                SizedBox(height: 5),
-                                Text(
-                                  'Date: ${widget.booking.date ?? ''}',
-                                  style: TextStyle(fontSize: 14),
+                                SizedBox(width: 10),
+                                Flexible(
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        loading = true;
+                                      });
+                                      rejectBooking();
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 30, vertical: 15),
+                                      backgroundColor: Colors.red,
+                                      foregroundColor: Colors.white,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                    ),
+                                    child: Text('Reject',
+                                        style: TextStyle(
+                                          fontSize:
+                                              MediaQuery.sizeOf(context).width *
+                                                  .04,
+                                        )),
+                                  ),
                                 ),
                               ],
                             ),
                           ],
                         ),
-                        SizedBox(height: 10),
-                        Text(
-                          'Duration: ${widget.booking.duration ?? ''} h',
-                          style: TextStyle(fontSize: 14),
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                          'Timing: ${widget.booking.timing ?? ''}',
-                          style: TextStyle(fontSize: 14),
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                          'Number of People: ${widget.booking.numPeople ?? ''}',
-                          style: TextStyle(fontSize: 14),
-                        ),
-                        SizedBox(height: 10),
-                        Text(
-                          'Message: ${widget.booking.message ?? ''}',
-                          style: TextStyle(fontSize: 14),
-                        ),
-                        SizedBox(height: 20), // Add some spacing
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            ElevatedButton(
-                              onPressed: () {
-                                // Handle accept action
-                                setState(() {
-                                  loading = true;
-                                });
-                                acceptBooking();
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.green,
-                                foregroundColor: Colors.white,
-                              ),
-                              child: Text('Accept'),
-                            ),
-                            ElevatedButton(
-                              onPressed: () {
-                                // Handle reject action
-                                setState(() {
-                                  loading = true;
-                                });
-                                rejectBooking();
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.red,
-                                foregroundColor: Colors.white,
-                              ),
-                              child: Text('Reject'),
-                            ),
-                          ],
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ),

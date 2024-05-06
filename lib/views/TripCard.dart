@@ -112,96 +112,134 @@ class TripCard extends StatelessWidget {
     String formattedEndDate = formatDate(trip.endDate ?? '');
 
     return Container(
-      padding: EdgeInsets.fromLTRB(14, 5, 14, 5),
+      // padding: EdgeInsets.fromLTRB(14, 5, 14, 5),
       alignment: Alignment.center,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
-              Icon(
-                CupertinoIcons.location_circle_fill,
-                size: MediaQuery.of(context).size.width * 0.06,
+              Flexible(
+                child: FittedBox(
+                  child: Icon(
+                    CupertinoIcons.location_circle_fill,
+                    size: MediaQuery.of(context).size.width * 0.07,
+                  ),
+                ),
               ),
               SizedBox(width: MediaQuery.of(context).size.width * 0.01),
-              Text(
-                'Trip to ${trip.destination ?? ''}',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: MediaQuery.of(context).size.width * 0.05 / 1.2,
+              Expanded(
+                flex: 9,
+                child: Text(
+                  'Trip to ${trip.destination ?? ''}',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: MediaQuery.of(context).size.width * 0.05 / 1.2,
+                  ),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
               Spacer(),
-              // SizedBox(
-              //   width: MediaQuery.of(context).size.width * 0.2,
-              // ),
-              IconButton(
-                icon: Icon(
-                  Icons.delete,
-                  size: MediaQuery.of(context).size.width * 0.06,
-                ),
-                onPressed: () {
-                  showDeleteConfirmationDialog((id) {
-                    deleteTrip(id); // Call deleteTrip with the trip ID
-                  });
-                },
-              ),
-            ],
-          ),
-          SizedBox(height: 8.0),
-          Row(
-            children: [
-              Icon(Icons.calendar_month_sharp,
-                  size: MediaQuery.of(context).size.width * 0.05),
-              SizedBox(width: 10),
-              Text(
-                '$formattedStartDate to $formattedEndDate',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: MediaQuery.of(context).size.width * 0.035,
-                ),
-                overflow: TextOverflow.ellipsis,
-              ),
-            ],
-          ),
-          SizedBox(height: 8.0),
-          Row(
-            children: [
-              Icon(
-                CupertinoIcons.person_3_fill,
-                size: MediaQuery.of(context).size.width * 0.05,
-              ),
-              SizedBox(width: MediaQuery.of(context).size.width * 0.01),
-              Text(
-                'Number of People: ${getNumberString(trip.peopleQuantity)}',
-                style: TextStyle(
-                  fontSize: MediaQuery.of(context).size.width * 0.03,
-                ),
-                overflow: TextOverflow.ellipsis,
-              ),
-              Spacer(),
-              // SizedBox(
-              //   width: MediaQuery.of(context).size.width * 0.2,
-              // ),
-              trip.endDate!.compareTo(DateTime.now().toString()) < 0
-                  ? Text(
-                      'Expired',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: MediaQuery.of(context).size.width * 0.03,
-                        color: Colors.red,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                    )
-                  : Text(
-                      'Active',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: MediaQuery.of(context).size.width * 0.03,
-                        color: Colors.green,
-                      ),
-                      overflow: TextOverflow.ellipsis,
+              Flexible(
+                child: FittedBox(
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.delete,
+                      size: MediaQuery.of(context).size.width * 0.1,
                     ),
+                    onPressed: () {
+                      showDeleteConfirmationDialog((id) {
+                        deleteTrip(id); // Call deleteTrip with the trip ID
+                      });
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 8.0),
+          Row(
+            children: [
+              Flexible(
+                child: FittedBox(
+                  child: Icon(Icons.calendar_month_sharp,
+                      size: MediaQuery.of(context).size.width * 0.07),
+                ),
+              ),
+              SizedBox(width: 10),
+              Expanded(
+                flex: 10,
+                child: Text(
+                  '$formattedStartDate to $formattedEndDate',
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: MediaQuery.of(context).size.width * 0.04,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 8.0),
+          Row(
+            children: [
+              Container(
+                child: Flexible(
+                  child: FittedBox(
+                    child: Icon(
+                      CupertinoIcons.person_3_fill,
+                      size: MediaQuery.of(context).size.width * 0.06,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(width: MediaQuery.of(context).size.width * 0.01),
+              Container(
+                child: Expanded(
+                  flex: 5,
+                  child: Text(
+                    'Number of People: ${getNumberString(trip.peopleQuantity)}',
+                    style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.width * 0.032,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ),
+              Spacer(),
+              // SizedBox(width: MediaQuery.of(context).size.width * 0.09),
+
+              Container(
+                alignment: Alignment.centerRight,
+                child: Flexible(
+                  flex: 1,
+                  child: FittedBox(
+                    child: trip.endDate!.compareTo(DateTime.now().toString()) <
+                            0
+                        ? Text(
+                            'Expired',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.04,
+                              color: Colors.red,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          )
+                        : Text(
+                            'Active',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: MediaQuery.of(context).size.width * 0.1,
+                              color: Colors.green,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                  ),
+                ),
+              ),
             ],
           ),
         ],

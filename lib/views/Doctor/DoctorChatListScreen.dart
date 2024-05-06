@@ -1305,10 +1305,38 @@ class _ChatListScreenState extends State<ChatListScreen> {
                             ),
                             title: Text(booking.senderName ?? ''),
                             subtitle: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text('Wants to book you'),
-                                Text("See details >")
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  width: MediaQuery.sizeOf(context).width * .41,
+                                  child: Text(
+                                    'Wants to book you',
+                                    style: TextStyle(
+                                      fontSize:
+                                          MediaQuery.of(context).size.width *
+                                              0.03,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color.fromARGB(255, 126, 120, 120),
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                Container(
+                                  alignment: Alignment.centerRight,
+                                  width: MediaQuery.sizeOf(context).width * .35,
+                                  child: Text(
+                                    "See details >",
+                                    style: TextStyle(
+                                      fontSize:
+                                          MediaQuery.of(context).size.width *
+                                              0.025,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color.fromARGB(255, 126, 120, 120),
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                )
                               ],
                             ),
                             onTap: () {
@@ -1388,8 +1416,13 @@ class _ChatListScreenState extends State<ChatListScreen> {
                                                             0
                                                         ? FontWeight.bold
                                                         : FontWeight.normal,
-                                                    fontSize: 20,
+                                                    fontSize: MediaQuery.sizeOf(
+                                                                context)
+                                                            .width *
+                                                        .04,
                                                   ),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                 ),
                                                 leading: ClipRRect(
                                                   borderRadius:
@@ -1499,8 +1532,14 @@ class _ChatListScreenState extends State<ChatListScreen> {
                                                       style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.w500,
-                                                        fontSize: 10,
+                                                        fontSize:
+                                                            MediaQuery.sizeOf(
+                                                                        context)
+                                                                    .width *
+                                                                .025,
                                                       ),
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
                                                     ),
                                                   ],
                                                 ),
