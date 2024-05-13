@@ -5,7 +5,7 @@ import 'package:appcode3/en.dart';
 import 'package:appcode3/views/HomeScreen.dart';
 import 'package:appcode3/views/incoming_call_image_name.dart';
 import 'package:appcode3/main.dart';
-import 'package:appcode3/modals/DoctorAppointmentClass.dart';
+// import 'package:appcode3/modals/DoctorAppointmentClass.dart';
 import 'package:appcode3/modals/DoctorPastAppointmentsClass.dart';
 import 'package:appcode3/views/Doctor/DoctorAllAppointments.dart';
 import 'package:appcode3/views/Doctor/DoctorAppointmentDetails.dart';
@@ -17,14 +17,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 //import 'package:flutter_native_admob/flutter_native_admob.dart';
-import 'package:google_fonts/google_fonts.dart';
+// import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../VideoCall/managers/call_manager.dart';
 import '../../notificationHelper.dart';
-import '../AllAppointments.dart';
-import '../UserAppointmentDetails.dart';
+// import '../AllAppointments.dart';
+// import '../UserAppointmentDetails.dart';
 import 'DoctorChooseYourPlan.dart';
 
 class DoctorDashboard extends StatefulWidget {
@@ -154,8 +154,8 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
             '${message.data['notificationType']}:${message.data['ccId']}';
         if (message.data['order_id'] != null) {
           notificationHelper.showNotification(
-            title: message.notification!.title,
-            body: message.notification!.body,
+            title: message.notification!.title!,
+            body: message.notification!.body!,
             payload: "${message.data['type']}:${message.data['order_id']}",
             id: "124",
             // context2: context
@@ -163,7 +163,7 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
         } else if (payloadData.split(":")[0].toString() == '3') {
           notificationHelper.showNotification(
             title: 'Call Rejected',
-            body: message.notification!.body,
+            body: message.notification!.body!,
             payload: payloadData,
             id: "124",
           );
@@ -182,8 +182,8 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
               message.data['$PARAM_CALLER_NAME'], message.data['image']);
         } else {
           notificationHelper.showNotification(
-              title: message.notification!.title,
-              body: message.notification!.body,
+              title: message.notification!.title!,
+              body: message.notification!.body!,
               payload: payloadData,
               id: "124",
               context2: context);

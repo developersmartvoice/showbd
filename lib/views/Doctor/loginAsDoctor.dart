@@ -449,7 +449,7 @@ class _LoginAsDoctorState extends State<LoginAsDoctor> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ForgetPassword("2")));
+                            builder: (context) => ForgetPassword()));
                   },
                   child: Text(
                     FORGET_PASSWORD,

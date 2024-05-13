@@ -517,7 +517,7 @@ class _LoginAsUserState extends State<LoginAsUser> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ForgetPassword("1")));
+                              builder: (context) => ForgetPassword()));
                     },
                     child: Text(
                       FORGET_PASSWORD,

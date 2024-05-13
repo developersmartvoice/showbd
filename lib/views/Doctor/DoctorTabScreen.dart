@@ -51,8 +51,8 @@ class _DoctorTabsScreenState extends State<DoctorTabsScreen> {
       print("onMessage: $message");
       print("\n\n" + message.toString());
       notificationHelper.showNotification(
-          title: message.notification!.title,
-          body: message.notification!.body,
+          title: message.notification!.title!,
+          body: message.notification!.body!,
           payload: "${message.data['type']}:${message.data['order_id']}",
           id: "124",
           context2: context);

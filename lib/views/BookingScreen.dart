@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:appcode3/en.dart';
 import 'package:appcode3/main.dart';
+import 'package:appcode3/notificationHelper.dart';
 // import 'package:appcode3/modals/OffersClassSender.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_search/dropdown_search.dart';
@@ -9,6 +10,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
+
+import '../modals/DirectBookingClass.dart';
 
 class BookingScreen extends StatefulWidget {
   final String receiver_id;
@@ -22,6 +25,8 @@ class BookingScreen extends StatefulWidget {
 }
 
 class _BookingScreenState extends State<BookingScreen> {
+  final NotificationHelper notificationHelper = NotificationHelper();
+  DirectBookingClass? directBookingClass;
   DateTime? selectedDate;
   String? selectedDatePost;
   String selectedDuration = "";
@@ -39,6 +44,12 @@ class _BookingScreenState extends State<BookingScreen> {
   // String? receipent_image;
   // String? sender_image;
   // List<DeviceToken>? deviceToken;
+
+  @override
+  void initState() {
+    super.initState();
+    notificationHelper.initialize();
+  }
 
   directBooking() async {
     Map<String, dynamic> postData = {
@@ -65,7 +76,15 @@ class _BookingScreenState extends State<BookingScreen> {
         loading = false;
       });
       final jsonResponse = jsonDecode(response.body);
-      if (jsonResponse['message'] == 'Direct booking created successfully') {
+      directBookingClass = DirectBookingClass.fromJson(jsonResponse);
+
+      if (directBookingClass!.message ==
+          'Direct booking created successfully') {
+        // Send notifications to both sender and receiver
+        // await sendNotificationToSender(directBookingClass!.senderDeviceTokens);
+        // await sendNotificationToReceiver(
+        //     directBookingClass!.recipientDeviceTokens);
+
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -110,6 +129,33 @@ class _BookingScreenState extends State<BookingScreen> {
         },
       );
     }
+  }
+
+  Future<void> sendNotificationToSender(List<DeviceToken> deviceTokens) async {
+    // for (var deviceToken in deviceTokens) {
+    await notificationHelper.showNotification(
+      title: 'Booking Notification',
+      body: 'Your booking request has been sent.',
+      payload: 'booking_request:${widget.receiver_id}',
+      id: 'booking_notification',
+      // receiverDeviceToken: deviceToken.token,
+      context2: context,
+    );
+    // }
+  }
+
+  Future<void> sendNotificationToReceiver(
+      List<DeviceToken> deviceTokens) async {
+    // for (var deviceToken in deviceTokens) {
+    await notificationHelper.showNotification(
+      title: 'Booking Notification',
+      body: 'You have a new booking request.',
+      payload: 'booking_request:${widget.sender_id}',
+      id: 'booking_notification',
+      // receiverDeviceToken: deviceToken.token,
+      context2: context,
+    );
+    // }
   }
 
   @override

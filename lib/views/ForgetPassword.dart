@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:appcode3/main.dart';
-import 'package:appcode3/views/loginAsUser.dart';
+import 'package:appcode3/views/VerifyCodePage.dart';
+import 'package:connectycube_sdk/connectycube_core.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,18 +10,20 @@ import 'package:http/http.dart';
 import '../en.dart';
 
 class ForgetPassword extends StatefulWidget {
-  String id;
-  ForgetPassword(this.id);
+  // String id;
+  // ForgetPassword(this.id);
 
   @override
   _ForgetPasswordState createState() => _ForgetPasswordState();
 }
 
 class _ForgetPasswordState extends State<ForgetPassword> {
+  String id = "2";
   String email = "";
   final formKey = GlobalKey<FormState>();
   String? animationName;
   String? error;
+  // String? code;
 
   @override
   Widget build(BuildContext context) {
@@ -183,6 +186,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
             if (formKey.currentState!.validate()) {
               formKey.currentState!.save();
               sendEmail();
+              // sendCcReset();
             }
           },
           child: Stack(
@@ -210,10 +214,14 @@ class _ForgetPasswordState extends State<ForgetPassword> {
     );
   }
 
+  sendCcReset() async {
+    resetPassword(email).then((voidResult) {}).catchError((error) {});
+  }
+
   sendEmail() async {
     processingDialog(PLEASE_WAIT_WHILE_PROCESSING);
     final response = await get(Uri.parse(
-            "$SERVER_ADDRESS/api/forgotpassword?type=${widget.id}&email=$email"))
+            "$SERVER_ADDRESS/api/forgotpassword?type=${id}&email=$email"))
         .catchError((e) {
       Navigator.pop(context);
       messageDialog(ERROR, e.toString(), 0);
@@ -223,6 +231,10 @@ class _ForgetPasswordState extends State<ForgetPassword> {
     print(response.body);
     final jsonResponse = jsonDecode(response.body);
     if (response.statusCode == 200 && jsonResponse['success'] == 1) {
+      // setState(() {
+      //   code = jsonResponse['code'].toString();
+      //   print(code);
+      // });
       print("if");
       Navigator.pop(context);
       messageDialog(SUCCESSFUL, jsonResponse['msg'], 1);
@@ -290,20 +302,26 @@ class _ForgetPasswordState extends State<ForgetPassword> {
               TextButton(
                 onPressed: () async {
                   // Navigator.pop(context);
-                  if (i == 1 && widget.id == "1") {
+                  if (i == 1 && id == "1") {
                     // Navigator.pushReplacement(context,
                     //     MaterialPageRoute(builder: (context) => LoginAsUser()
                     //     )
                     // );
                     Navigator.pop(context);
                     Navigator.pop(context);
-                  } else if (i == 1 && widget.id == "2") {
+                  } else if (i == 1 && id == "2") {
                     // Navigator.pushReplacement(context,
                     //     MaterialPageRoute(builder: (context) => LoginAsUser()
                     //     )
                     // );
                     Navigator.pop(context);
-                    Navigator.pop(context);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => VerifyCodePage(
+                                  email: email,
+                                  // code: code!,
+                                )));
                   } else {
                     Navigator.pop(context);
                   }
