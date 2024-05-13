@@ -195,170 +195,176 @@ class _SeeAllOffersState extends State<SeeAllOffers> {
               isDataFetch && isSenderSelected && chatShowDataSender != null
                   ? Expanded(
                       child: ListView.builder(
-                      itemCount: chatShowDataSender!.length,
-                      itemBuilder: (context, index) {
-                        final item = chatShowDataSender![index];
-                        return Card(
-                          elevation: 10.0,
-                          margin: EdgeInsets.symmetric(vertical: 8.0),
-                          color: getColorForTiming(
-                              chatShowDataSender![index].timing),
-                          child: ListTile(
-                            contentPadding: EdgeInsets.all(25),
-                            title: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Title(
-                                  color: Colors.black,
-                                  child: Text(
-                                    item.recipientName,
-                                    style: TextStyle(
-                                      fontFamily: 'Roboto',
-                                      fontSize: 20,
-                                      color: const Color.fromARGB(255, 0, 0, 0),
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 8,
-                                ), // Adding some space between the title and details
-                                Container(
-                                  width: MediaQuery.of(context).size.width - 32,
-                                  height: 110, // Adjust the height as needed
-                                  child: SingleChildScrollView(
-                                    child: RichText(
-                                      text: TextSpan(
-                                        children: [
-                                          TextSpan(
-                                            text: 'Date: ',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors
-                                                  .black, // Adjust color as needed
-                                            ),
-                                          ),
-                                          TextSpan(
-                                            text:
-                                                '${chatShowDataSender![index].date},\n',
-                                            style: TextStyle(
-                                              fontFamily: 'Roboto',
-                                              fontSize: 15,
-                                              color: Colors.grey[800],
-                                            ),
-                                          ),
-                                          // Bold text for Duration
-                                          TextSpan(
-                                            text: 'Duration: ',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors
-                                                  .black, // Adjust color as needed
-                                            ),
-                                          ),
-                                          TextSpan(
-                                            text:
-                                                '${chatShowDataSender![index].duration},\n',
-                                            style: TextStyle(
-                                              fontFamily: 'Roboto',
-                                              fontSize: 15,
-                                              color: Colors.grey[800],
-                                            ),
-                                          ),
-                                          // Bold text for Timing
-                                          TextSpan(
-                                            text: 'Timing: ',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors
-                                                  .black, // Adjust color as needed
-                                            ),
-                                          ),
-                                          TextSpan(
-                                            text:
-                                                '${chatShowDataSender![index].timing},\n',
-                                            style: TextStyle(
-                                              fontFamily: 'Roboto',
-                                              fontSize: 15,
-                                              color: Colors.grey[800],
-                                            ),
-                                          ),
-                                          // Bold text for Message
-                                          TextSpan(
-                                            text: 'Message: ',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors
-                                                  .black, // Adjust color as needed
-                                            ),
-                                          ),
-                                          TextSpan(
-                                            text:
-                                                '${chatShowDataSender![index].message},\n',
-                                            style: TextStyle(
-                                              fontFamily: 'Roboto',
-                                              fontSize: 15,
-                                              color: Colors.grey[800],
-                                            ),
-                                          ),
-                                          // Bold text for Destination
-                                          TextSpan(
-                                            text: 'Destination: ',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors
-                                                  .black, // Adjust color as needed
-                                            ),
-                                          ),
-                                          TextSpan(
-                                            text:
-                                                '${chatShowDataSender![index].Destination}\n',
-                                            style: TextStyle(
-                                              fontFamily: 'Roboto',
-                                              fontSize: 15,
-                                              color: Colors.grey[800],
-                                            ),
-                                          ),
-                                        ],
+                        itemCount: chatShowDataSender!.length,
+                        itemBuilder: (context, index) {
+                          final item = chatShowDataSender![index];
+                          return Card(
+                            elevation: 10.0,
+                            margin: EdgeInsets.symmetric(vertical: 8.0),
+                            color: getColorForTiming(
+                                chatShowDataSender![index].timing),
+                            child: ListTile(
+                              contentPadding: EdgeInsets.all(25),
+                              title: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Title(
+                                    color: Colors.black,
+                                    child: Text(
+                                      item.recipientName,
+                                      style: TextStyle(
+                                        fontFamily: 'Roboto',
+                                        fontSize: 20,
+                                        color:
+                                            const Color.fromARGB(255, 0, 0, 0),
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            onTap: () {
-                              setState(() {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ChatScreen(
-                                      chatDataSender![index].name,
-                                      "100" +
-                                          chatDataSender![index].uid.toString(),
-                                      chatDataSender![index].connectycubeUserId,
-                                      false,
-                                      chatDataSender![index].deviceToken,
-                                      chatDataSender![index].recipientImage,
-                                      chatDataSender![index].senderImage,
+                                  SizedBox(
+                                    height: 8,
+                                  ), // Adding some space between the title and details
+                                  Container(
+                                    width:
+                                        MediaQuery.of(context).size.width - 32,
+                                    height: 110, // Adjust the height as needed
+                                    child: SingleChildScrollView(
+                                      child: RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            TextSpan(
+                                              text: 'Date: ',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors
+                                                    .black, // Adjust color as needed
+                                              ),
+                                            ),
+                                            TextSpan(
+                                              text:
+                                                  '${chatShowDataSender![index].date},\n',
+                                              style: TextStyle(
+                                                fontFamily: 'Roboto',
+                                                fontSize: 15,
+                                                color: Colors.grey[800],
+                                              ),
+                                            ),
+                                            // Bold text for Duration
+                                            TextSpan(
+                                              text: 'Duration: ',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors
+                                                    .black, // Adjust color as needed
+                                              ),
+                                            ),
+                                            TextSpan(
+                                              text:
+                                                  '${chatShowDataSender![index].duration},\n',
+                                              style: TextStyle(
+                                                fontFamily: 'Roboto',
+                                                fontSize: 15,
+                                                color: Colors.grey[800],
+                                              ),
+                                            ),
+                                            // Bold text for Timing
+                                            TextSpan(
+                                              text: 'Timing: ',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors
+                                                    .black, // Adjust color as needed
+                                              ),
+                                            ),
+                                            TextSpan(
+                                              text:
+                                                  '${chatShowDataSender![index].timing},\n',
+                                              style: TextStyle(
+                                                fontFamily: 'Roboto',
+                                                fontSize: 15,
+                                                color: Colors.grey[800],
+                                              ),
+                                            ),
+                                            // Bold text for Message
+                                            TextSpan(
+                                              text: 'Message: ',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors
+                                                    .black, // Adjust color as needed
+                                              ),
+                                            ),
+                                            TextSpan(
+                                              text:
+                                                  '${chatShowDataSender![index].message},\n',
+                                              style: TextStyle(
+                                                fontFamily: 'Roboto',
+                                                fontSize: 15,
+                                                color: Colors.grey[800],
+                                              ),
+                                            ),
+                                            // Bold text for Destination
+                                            TextSpan(
+                                              text: 'Destination: ',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors
+                                                    .black, // Adjust color as needed
+                                              ),
+                                            ),
+                                            TextSpan(
+                                              text:
+                                                  '${chatShowDataSender![index].Destination}\n',
+                                              style: TextStyle(
+                                                fontFamily: 'Roboto',
+                                                fontSize: 15,
+                                                color: Colors.grey[800],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                );
-                              });
-                            },
-                            subtitle: Center(
-                              child: Text(
-                                'Tap to chat',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w900,
+                                ],
+                              ),
+                              onTap: () {
+                                setState(() {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ChatScreen(
+                                        chatDataSender![index].name,
+                                        "100" +
+                                            chatDataSender![index]
+                                                .uid
+                                                .toString(),
+                                        chatDataSender![index]
+                                            .connectycubeUserId,
+                                        false,
+                                        chatDataSender![index].deviceToken,
+                                        chatDataSender![index].recipientImage,
+                                        chatDataSender![index].senderImage,
+                                      ),
+                                    ),
+                                  );
+                                });
+                              },
+                              subtitle: Center(
+                                child: Text(
+                                  'Tap to chat',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w900,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        );
-                      },
-                    ))
+                          );
+                        },
+                      ),
+                    )
                   : // Container(
                   // child: Text("No Data Found!"),
                   //),

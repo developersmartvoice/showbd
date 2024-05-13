@@ -9,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:image_cropper/image_cropper.dart';
 
 // ignore: must_be_immutable
 class PhotoSettingsPage extends StatefulWidget {
@@ -31,78 +32,167 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
   bool isImagesChanged = false;
   bool isDeletePressed = false;
 
+  // Future<void> _getImageFromGallery(int index) async {
+  //   final pickedFile =
+  //       await ImagePicker().getImage(source: ImageSource.gallery);
+  //   if (pickedFile != null) {
+  //     switch (index) {
+  //       case 0:
+  //         setState(() {
+  //           _images[0] = File(pickedFile.path);
+  //           isImagesChanged = true;
+  //         });
+  //         break;
+  //       case 1:
+  //         setState(() {
+  //           _images[1] = File(pickedFile.path);
+  //           isImagesChanged = true;
+  //         });
+  //         break;
+  //       case 2:
+  //         setState(() {
+  //           _images[2] = File(pickedFile.path);
+  //           isImagesChanged = true;
+  //         });
+  //         break;
+  //       case 3:
+  //         setState(() {
+  //           _images[3] = File(pickedFile.path);
+  //           isImagesChanged = true;
+  //         });
+  //         break;
+  //       default:
+  //         setState(() {
+  //           _image = File(pickedFile.path);
+  //           isImageChanged = true;
+  //         });
+  //     }
+  //   }
+  // }
+
+  // Future<void> _getImageFromCamera(int index) async {
+  //   final pickedFile = await ImagePicker().getImage(source: ImageSource.camera);
+  //   if (pickedFile != null) {
+  //     switch (index) {
+  //       case 0:
+  //         setState(() {
+  //           _images[0] = File(pickedFile.path);
+  //           isImagesChanged = true;
+  //         });
+  //         break;
+  //       case 1:
+  //         setState(() {
+  //           _images[1] = File(pickedFile.path);
+  //           isImagesChanged = true;
+  //         });
+  //         break;
+  //       case 2:
+  //         setState(() {
+  //           _images[2] = File(pickedFile.path);
+  //           isImagesChanged = true;
+  //         });
+  //         break;
+  //       case 3:
+  //         setState(() {
+  //           _images[3] = File(pickedFile.path);
+  //           isImagesChanged = true;
+  //         });
+  //         break;
+  //       default:
+  //         setState(() {
+  //           _image = File(pickedFile.path);
+  //           isImageChanged = true;
+  //         });
+  //     }
+  //   }
+  // }
+
   Future<void> _getImageFromGallery(int index) async {
     final pickedFile =
         await ImagePicker().getImage(source: ImageSource.gallery);
+
     if (pickedFile != null) {
-      switch (index) {
-        case 0:
-          setState(() {
-            _images[0] = File(pickedFile.path);
-            isImagesChanged = true;
-          });
-          break;
-        case 1:
-          setState(() {
-            _images[1] = File(pickedFile.path);
-            isImagesChanged = true;
-          });
-          break;
-        case 2:
-          setState(() {
-            _images[2] = File(pickedFile.path);
-            isImagesChanged = true;
-          });
-          break;
-        case 3:
-          setState(() {
-            _images[3] = File(pickedFile.path);
-            isImagesChanged = true;
-          });
-          break;
-        default:
-          setState(() {
-            _image = File(pickedFile.path);
-            isImageChanged = true;
-          });
+      File? croppedFile = await _cropImage(pickedFile.path);
+
+      if (croppedFile != null) {
+        setState(() {
+          switch (index) {
+            case 0:
+              _images[0] = croppedFile;
+              isImagesChanged = true;
+              break;
+            case 1:
+              _images[1] = croppedFile;
+              isImagesChanged = true;
+              break;
+            case 2:
+              _images[2] = croppedFile;
+              isImagesChanged = true;
+              break;
+            case 3:
+              _images[3] = croppedFile;
+              isImagesChanged = true;
+              break;
+            default:
+              _image = croppedFile;
+              isImageChanged = true;
+          }
+        });
       }
     }
   }
 
   Future<void> _getImageFromCamera(int index) async {
     final pickedFile = await ImagePicker().getImage(source: ImageSource.camera);
+
     if (pickedFile != null) {
-      switch (index) {
-        case 0:
-          setState(() {
-            _images[0] = File(pickedFile.path);
-            isImagesChanged = true;
-          });
-          break;
-        case 1:
-          setState(() {
-            _images[1] = File(pickedFile.path);
-            isImagesChanged = true;
-          });
-          break;
-        case 2:
-          setState(() {
-            _images[2] = File(pickedFile.path);
-            isImagesChanged = true;
-          });
-          break;
-        case 3:
-          setState(() {
-            _images[3] = File(pickedFile.path);
-            isImagesChanged = true;
-          });
-          break;
-        default:
-          setState(() {
-            _image = File(pickedFile.path);
-            isImageChanged = true;
-          });
+      File? croppedFile = await _cropImage(pickedFile.path);
+
+      if (croppedFile != null) {
+        setState(() {
+          switch (index) {
+            case 0:
+              _images[0] = croppedFile;
+              isImagesChanged = true;
+              break;
+            case 1:
+              _images[1] = croppedFile;
+              isImagesChanged = true;
+              break;
+            case 2:
+              _images[2] = croppedFile;
+              isImagesChanged = true;
+              break;
+            case 3:
+              _images[3] = croppedFile;
+              isImagesChanged = true;
+              break;
+            default:
+              _image = croppedFile;
+              isImageChanged = true;
+          }
+        });
       }
+    }
+  }
+
+  Future<File?> _cropImage(String imagePath) async {
+    final imageCropper = ImageCropper();
+    CroppedFile? croppedFile = await imageCropper.cropImage(
+      sourcePath: imagePath,
+      aspectRatioPresets: [
+        CropAspectRatioPreset.square,
+        // CropAspectRatioPreset.ratio3x2,
+        // CropAspectRatioPreset.original,
+        // CropAspectRatioPreset.ratio4x3,
+        // CropAspectRatioPreset.ratio16x9
+      ],
+    );
+
+    if (croppedFile != null) {
+      return File(croppedFile.path);
+    } else {
+      return null;
     }
   }
 
