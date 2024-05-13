@@ -211,7 +211,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
       child: Scaffold(
         backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
         appBar: AppBar(
-          title: Text('ACCOUNT INORMATION',
+          title: Text('ACCOUNT INFORMATION',
               style: Theme.of(context).textTheme.headline5!.apply(
                   color: Theme.of(context).backgroundColor,
                   fontWeightDelta: 5)),

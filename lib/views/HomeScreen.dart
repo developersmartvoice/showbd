@@ -133,15 +133,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
       if (message.data['order_id'] != null) {
         notificationHelper.showNotification(
-            title: message.notification!.title,
-            body: message.notification!.body,
+            title: message.notification!.title!,
+            body: message.notification!.body!,
             payload: "${message.data['type']}:${message.data['order_id']}",
             id: "124",
             context2: context);
       } else if (payloadData.split(":")[0].toString() == '3') {
         notificationHelper.showNotification(
           title: 'Call Rejected',
-          body: message.notification!.body,
+          body: message.notification!.body!,
           payload: payloadData,
           id: "124",
         );
@@ -159,8 +159,8 @@ class _HomeScreenState extends State<HomeScreen> {
             message.data['$PARAM_CALLER_NAME'], message.data['image'] ?? "");
       } else {
         notificationHelper.showNotification(
-          title: message.notification!.title,
-          body: message.notification!.body,
+          title: message.notification!.title!,
+          body: message.notification!.body!,
           payload: payloadData,
           id: "124",
           // context2: context

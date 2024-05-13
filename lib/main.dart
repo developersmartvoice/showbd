@@ -41,7 +41,7 @@ const String SERVER_ADDRESS = "https://localguide.celibritychatbd.com";
 // const String IMAGE =
 //     "http://192.168.68.26/local-guide-backend/public/upload/banner/";
 const String IMAGE =
-    "http://localguide.celibritychatbd.com/public/upload/banner/";
+    "https://localguide.celibrxitychatbd.com/public/upload/banner/";
 
 /// new url
 // const String SERVER_ADDRESS = "https://hairitgestione.eu";
@@ -103,8 +103,12 @@ Future main() async {
   ConnectycubeFlutterCallKit.onCallRejectedWhenTerminated =
       onCallRejectedWhenTerminated;
   initForegroundService();
-  SystemChrome.setPreferredOrientations(
-      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  // Set up background message handler
+  FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler);
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   runApp(App());
 }
 
@@ -338,8 +342,8 @@ Future myBackgroundMessageHandler(RemoteMessage event) async {
   } else if (payloadData.split(":")[0].toString() == '3') {
     notificationHelper.showNotification(
       title: 'Call Rejected',
-      body: event.notification!.body,
-      // payload: "${message.data['ccId']}:${message.data['myid']}:${message.data['myUserName']}:",
+      body: event.notification!.body!,
+
       payload: payloadData,
       id: "124",
       // context2: context
