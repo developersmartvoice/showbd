@@ -194,8 +194,14 @@ class _FilteredGuidesScreenState extends State<FilteredGuidesScreen> {
         child: Column(
           children: [
             Container(
+              padding: EdgeInsets.only(
+                top: 8,
+                left: 3,
+                right: 3,
+              ),
               height: MediaQuery.of(context).size.height *
                   0.35, // Adjusted height to accommodate additional content
+              width: MediaQuery.of(context).size.height * 0.43,
               child: Stack(
                 alignment: Alignment.topRight,
                 children: [
@@ -219,7 +225,8 @@ class _FilteredGuidesScreenState extends State<FilteredGuidesScreen> {
                                   .5,
                               child: CachedNetworkImage(
                                 imageUrl: img,
-                                fit: BoxFit.fill, // Make the image responsive
+                                fit: BoxFit
+                                    .fitWidth, // Make the image responsive
                                 placeholder: (context, url) => Container(
                                   color: Theme.of(context).primaryColorLight,
                                   child: Center(
@@ -259,7 +266,7 @@ class _FilteredGuidesScreenState extends State<FilteredGuidesScreen> {
                                 .5,
                             child: CachedNetworkImage(
                               imageUrl: imgs[imgIndex],
-                              fit: BoxFit.fill,
+                              fit: BoxFit.fitWidth,
                               placeholder: (context, url) => Container(
                                 color: Theme.of(context).primaryColorLight,
                                 child: Center(
@@ -317,7 +324,7 @@ class _FilteredGuidesScreenState extends State<FilteredGuidesScreen> {
                         child: FittedBox(
                           fit: BoxFit.scaleDown,
                           child: Text(
-                            '\$' + consultationFee + "/h",
+                            '\৳' + consultationFee + "/h",
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -445,12 +452,16 @@ class _FilteredGuidesScreenState extends State<FilteredGuidesScreen> {
                                 style: GoogleFonts.poppins(
                                   color: LIGHT_GREY_TEXT,
                                   fontSize:
-                                      MediaQuery.of(context).size.width * 0.018,
+                                      // MediaQuery.of(context).size.width * 0.035,
+                                      16,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
                             ),
                           ),
+                          SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.001),
                           Flexible(
                             child: FittedBox(
                               fit: BoxFit.scaleDown,
@@ -459,7 +470,8 @@ class _FilteredGuidesScreenState extends State<FilteredGuidesScreen> {
                                 style: GoogleFonts.poppins(
                                   color: BLACK,
                                   fontSize:
-                                      MediaQuery.of(context).size.width * 0.035,
+                                      // MediaQuery.of(context).size.width * 0.035,
+                                      14,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -482,8 +494,8 @@ class _FilteredGuidesScreenState extends State<FilteredGuidesScreen> {
                                 "Ratings",
                                 style: GoogleFonts.poppins(
                                   color: LIGHT_GREY_TEXT,
-                                  fontSize:
-                                      MediaQuery.of(context).size.width * 0.035,
+                                  fontSize: 16,
+                                  // MediaQuery.of(context).size.width * 0.035,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -491,7 +503,7 @@ class _FilteredGuidesScreenState extends State<FilteredGuidesScreen> {
                           ),
                           SizedBox(
                               height:
-                                  MediaQuery.of(context).size.width * 0.035),
+                                  MediaQuery.of(context).size.height * 0.008),
                           avgRating != 'null'
                               ? StarRating(double.parse(avgRating))
                               : StarRating(0),
