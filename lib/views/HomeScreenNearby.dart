@@ -346,7 +346,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                         child: FittedBox(
                           fit: BoxFit.scaleDown,
                           child: Text(
-                            '\$' + consultationFee + "/h",
+                            '\৳' + consultationFee + "/h",
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,

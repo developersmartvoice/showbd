@@ -474,7 +474,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      width: MediaQuery.of(context).size.width * 0.68,
+                      width: MediaQuery.of(context).size.width * 0.65,
                       alignment: Alignment.centerLeft,
                       child: FittedBox(
                         fit: BoxFit.scaleDown,
@@ -485,7 +485,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                                     color: Color.fromARGB(255, 243, 103, 9),
                                     fontSize:
                                         // MediaQuery.of(context).size.width * 0.05,
-                                        16,
+                                        14,
                                     overflow: TextOverflow.ellipsis,
                                   ),
                           overflow: TextOverflow.ellipsis,
@@ -547,7 +547,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      width: MediaQuery.of(context).size.width * 0.73,
+                      width: MediaQuery.of(context).size.width * 0.7,
                       alignment: Alignment.centerLeft,
                       child: FittedBox(
                         fit: BoxFit.scaleDown,
@@ -558,7 +558,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                                     color: Color.fromARGB(255, 243, 103, 9),
                                     // fontSize: MediaQuery.of(context).size.width *
                                     //     0.9, // Adjust this value as needed
-                                    fontSize: 16, // Adjust this value as needed
+                                    fontSize: 14, // Adjust this value as needed
                                     overflow: TextOverflow.ellipsis,
                                   ),
                           // overflow: TextOverflow.ellipsis,
@@ -624,7 +624,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      width: MediaQuery.of(context).size.width * 0.45,
+                      width: MediaQuery.of(context).size.width * 0.4,
                       alignment: Alignment.centerLeft,
                       child: FittedBox(
                         fit: BoxFit.scaleDown,
@@ -633,7 +633,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                           style:
                               Theme.of(context).textTheme.subtitle1?.copyWith(
                                     color: Color.fromARGB(255, 243, 103, 9),
-                                    fontSize: 16,
+                                    fontSize: 14,
                                     // fontSize:
                                     //     MediaQuery.of(context).size.width * 0.05,
                                     overflow: TextOverflow
@@ -766,7 +766,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      width: MediaQuery.of(context).size.width * 0.4,
+                      width: MediaQuery.of(context).size.width * 0.35,
                       alignment: Alignment.centerLeft,
                       child: FittedBox(
                         fit: BoxFit.scaleDown,
@@ -777,7 +777,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                                     color: Color.fromARGB(255, 243, 103, 9),
                                     fontSize:
                                         // MediaQuery.of(context).size.width * 0.04,
-                                        16,
+                                        14,
                                     overflow: TextOverflow.ellipsis,
                                   ),
                           overflow: TextOverflow.ellipsis,
@@ -893,7 +893,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                                     color: Color.fromARGB(255, 243, 103, 9),
                                     fontSize:
                                         // MediaQuery.of(context).size.width * 0.04,
-                                        16,
+                                        14,
                                     overflow: TextOverflow.ellipsis,
                                   ),
                         ),
@@ -988,7 +988,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      width: MediaQuery.of(context).size.width * 0.5,
+                      width: MediaQuery.of(context).size.width * 0.45,
                       alignment: Alignment.centerLeft,
                       child: FittedBox(
                         fit: BoxFit.scaleDown,
@@ -999,7 +999,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                                     color: Color.fromARGB(255, 243, 103, 9),
                                     fontSize:
                                         // MediaQuery.of(context).size.width * 0.04,
-                                        16,
+                                        14,
                                     overflow: TextOverflow.ellipsis,
                                   ),
                         ),
