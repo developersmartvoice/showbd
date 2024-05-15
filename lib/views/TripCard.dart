@@ -214,29 +214,30 @@ class TripCard extends StatelessWidget {
                 child: Flexible(
                   flex: 1,
                   child: FittedBox(
-                    child: trip.endDate!.compareTo(DateTime.now().toString()) <
-                            0
-                        ? Text(
-                            'Expired',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize:
-                                  MediaQuery.of(context).size.width * 0.04,
-                              color: Colors.red,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                          )
-                        : Text(
-                            'Active',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: MediaQuery.of(context).size.width * 0.1,
-                              color: Colors.green,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                          ),
+                    child:
+                        trip.endDate!.compareTo(DateTime.now().toString()) < 0
+                            ? Text(
+                                'Expired',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize:
+                                      MediaQuery.of(context).size.width * 0.04,
+                                  color: Colors.red,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              )
+                            : Text(
+                                'Active',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize:
+                                      MediaQuery.of(context).size.width * 0.04,
+                                  color: Colors.green,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
                   ),
                 ),
               ),
