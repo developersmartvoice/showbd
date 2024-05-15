@@ -219,47 +219,47 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
                     SizedBox(
                       width: 10,
                     ),
-                    Container(
-                      height: 50,
-                      width: MediaQuery.of(context).size.width / 4,
-                      child: InkWell(
-                        onTap: () {
-                          pickFile();
-                          Navigator.pop(context);
-                          // CallManager.instance.startNewCall(
-                          //     context, CallType.VIDEO_CALL, {callId});
-                          // Navigator.pop(context);
-                        },
-                        child: Stack(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(25),
-                              child: Image.asset(
-                                "assets/moreScreenImages/header_bg.png",
-                                width: MediaQuery.of(context).size.width / 4,
-                                height: 50,
-                                fit: BoxFit.fill,
-                                // width: MediaQuery.of(context).size.width,
-                              ),
-                            ),
-                            Center(
-                              child:
-                                  // Text(
-                                  //     'Video Call',
-                                  //     style: Theme.of(context).textTheme.bodyText1!.apply(
-                                  //         color: Theme.of(context).backgroundColor,
-                                  //         fontSizeDelta: 2
-                                  //     )
-                                  // ),
-                                  Icon(
-                                Icons.file_present,
-                                color: Colors.white,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    )
+                    // Container(
+                    //   height: 50,
+                    //   width: MediaQuery.of(context).size.width / 4,
+                    //   child: InkWell(
+                    //     onTap: () {
+                    //       pickFile();
+                    //       Navigator.pop(context);
+                    //       // CallManager.instance.startNewCall(
+                    //       //     context, CallType.VIDEO_CALL, {callId});
+                    //       // Navigator.pop(context);
+                    //     },
+                    //     child: Stack(
+                    //       children: [
+                    //         ClipRRect(
+                    //           borderRadius: BorderRadius.circular(25),
+                    //           child: Image.asset(
+                    //             "assets/moreScreenImages/header_bg.png",
+                    //             width: MediaQuery.of(context).size.width / 4,
+                    //             height: 50,
+                    //             fit: BoxFit.fill,
+                    //             // width: MediaQuery.of(context).size.width,
+                    //           ),
+                    //         ),
+                    //         Center(
+                    //           child:
+                    //               // Text(
+                    //               //     'Video Call',
+                    //               //     style: Theme.of(context).textTheme.bodyText1!.apply(
+                    //               //         color: Theme.of(context).backgroundColor,
+                    //               //         fontSizeDelta: 2
+                    //               //     )
+                    //               // ),
+                    //               Icon(
+                    //             Icons.file_present,
+                    //             color: Colors.white,
+                    //           ),
+                    //         )
+                    //       ],
+                    //     ),
+                    //   ),
+                    // )
                   ],
                 )
                 // Text('This is a demo alert dialog.'),
