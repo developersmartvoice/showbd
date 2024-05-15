@@ -191,7 +191,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
         decoration: BoxDecoration(
             // shape: BoxShape.rectangle,
             color: WHITE,
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.circular(10),
             boxShadow: [
               BoxShadow(
                 color: Colors.grey.withOpacity(0.25),
@@ -204,7 +204,11 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
           children: [
             Container(
               // margin: EdgeInsets.only(top: 10),
-              // padding: EdgeInsets.only(top: 10),
+              padding: EdgeInsets.only(
+                top: 8,
+                left: 3,
+                right: 3,
+              ),
               height: MediaQuery.of(context).size.height *
                   0.35, // Adjusted height to accommodate additional content
               width: MediaQuery.of(context).size.height * 0.43,
@@ -470,12 +474,16 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                                 style: GoogleFonts.poppins(
                                   color: LIGHT_GREY_TEXT,
                                   fontSize:
-                                      MediaQuery.of(context).size.width * 0.025,
+                                      // MediaQuery.of(context).size.width * 0.035,
+                                      16,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
                             ),
                           ),
+                          SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.006),
                           Flexible(
                             child: FittedBox(
                               fit: BoxFit.scaleDown,
@@ -484,7 +492,8 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                                 style: GoogleFonts.poppins(
                                   color: BLACK,
                                   fontSize:
-                                      MediaQuery.of(context).size.width * 0.035,
+                                      // MediaQuery.of(context).size.width * 0.035,
+                                      14,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -508,7 +517,8 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                                 style: GoogleFonts.poppins(
                                   color: LIGHT_GREY_TEXT,
                                   fontSize:
-                                      MediaQuery.of(context).size.width * 0.035,
+                                      // MediaQuery.of(context).size.width * 0.03,
+                                      16,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -516,7 +526,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                           ),
                           SizedBox(
                               height:
-                                  MediaQuery.of(context).size.width * 0.035),
+                                  MediaQuery.of(context).size.height * 0.008),
                           avgRating != 'null'
                               ? StarRating(double.parse(avgRating))
                               : StarRating(0),
@@ -545,7 +555,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
         Icon(
           iconData,
           color: iconColor,
-          size: MediaQuery.of(context).size.width * 0.035,
+          size: MediaQuery.of(context).size.width * 0.04,
         ),
       );
     }
