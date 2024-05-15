@@ -203,8 +203,11 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
         child: Column(
           children: [
             Container(
+              // margin: EdgeInsets.only(top: 10),
+              padding: EdgeInsets.only(top: 10),
               height: MediaQuery.of(context).size.height *
                   0.35, // Adjusted height to accommodate additional content
+              width: MediaQuery.of(context).size.height * 0.41,
               child: Stack(
                 alignment: Alignment.topRight,
                 children: [
@@ -234,8 +237,13 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                                   child: Center(
                                     child: Image.asset(
                                       "assets/homeScreenImages/user_unactive.png",
-                                      height: 50,
-                                      width: 50,
+                                      height: MediaQuery.of(context)
+                                              .size
+                                              .height *
+                                          0.35, // Adjusted height to accommodate additional content
+                                      width:
+                                          MediaQuery.of(context).size.height *
+                                              0.41,
                                     ),
                                   ),
                                 ),
@@ -244,8 +252,13 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                                   child: Center(
                                     child: Image.asset(
                                       "assets/homeScreenImages/user_unactive.png",
-                                      height: 50,
-                                      width: 50,
+                                      height: MediaQuery.of(context)
+                                              .size
+                                              .height *
+                                          0.35, // Adjusted height to accommodate additional content
+                                      width:
+                                          MediaQuery.of(context).size.height *
+                                              0.41,
                                     ),
                                   ),
                                 ),
@@ -268,14 +281,16 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                                 .5,
                             child: CachedNetworkImage(
                               imageUrl: imgs[imgIndex],
-                              fit: BoxFit.fill,
+                              fit: BoxFit.fitWidth,
                               placeholder: (context, url) => Container(
                                 color: Theme.of(context).primaryColorLight,
                                 child: Center(
                                   child: Image.asset(
                                     "assets/homeScreenImages/user_unactive.png",
-                                    height: 50,
-                                    width: 50,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.35, // Adjusted height to accommodate additional content
+                                    width: MediaQuery.of(context).size.height *
+                                        0.41,
                                   ),
                                 ),
                               ),

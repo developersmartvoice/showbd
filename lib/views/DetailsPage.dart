@@ -519,6 +519,7 @@ class _DetailsPageState extends State<DetailsPage> {
       children: [
         Container(
           height: 400, // Adjust the height as needed
+          width: 400, // Set the width to the same as height
           child: Stack(
             alignment: Alignment.topRight,
             children: [
@@ -548,7 +549,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     } else {
                       return CachedNetworkImage(
                         imageUrl: doctorDetailsClass!.data!.images![index - 1],
-                        fit: BoxFit.fill,
+                        fit: BoxFit.fitWidth,
                         placeholder: (context, url) => Center(
                             child: CircularProgressIndicator(
                           color: const Color.fromARGB(255, 243, 103, 9),
@@ -575,7 +576,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     //     .withOpacity(0.8),
                     color: Colors.white,
                     backgroundColor: Color.fromARGB(94, 194, 191, 191),
-                    fontSize: 20,
+                    fontSize: MediaQuery.of(context).size.height * .02,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -598,7 +599,7 @@ class _DetailsPageState extends State<DetailsPage> {
                           //     .withOpacity(0.8),
                           color: Colors.white,
                           backgroundColor: Color.fromARGB(94, 194, 191, 191),
-                          fontSize: 15,
+                          fontSize: MediaQuery.of(context).size.height * .015,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
