@@ -34,7 +34,7 @@ class _SearchedScreenState extends State<SearchedScreen> {
   // TextEditingController _textController = TextEditingController();
   SpecialityClass? specialityClass;
   List<String> departmentList = [];
-  double priceRange = 100;
+  double priceRange = 0;
   List<String> selectedLanguages = [];
   List<String> selectedActivities = [];
   int selectedGender = 0; // 0: None, 1: Male, 2: Female
@@ -200,29 +200,30 @@ class _SearchedScreenState extends State<SearchedScreen> {
         'consultation_fees': filterFees,
       };
       print(jsonEncode(requestBody));
-      // return jsonEncode(requestBody);
-      return requestBody.toString();
+      return jsonEncode(requestBody);
+      // return requestBody.toString();
     } else if (isLanguageSelected) {
       Map<String, dynamic> requestBody = {
         'languages': selectedLanguages,
       };
       // print(jsonEncode(requestBody));
       print(requestBody.toString());
-      return requestBody.toString();
+      // return requestBody.toString();
+      return jsonEncode(requestBody);
     } else if (isActivitiesSelected) {
       Map<String, dynamic> requestBody = {
         'services': selectedActivities,
       };
       print(jsonEncode(requestBody));
-      // return jsonEncode(requestBody);
-      return requestBody.toString();
+      return jsonEncode(requestBody);
+      // return requestBody.toString();
     } else if (isGenderSelected) {
       Map<String, dynamic> requestBody = {
         'gender': filterGender,
       };
-      print(jsonEncode(requestBody));
-      // return jsonEncode(requestBody);
-      return requestBody.toString();
+      print(requestBody.toString());
+      return jsonEncode(requestBody);
+      // return requestBody.toString();
     } else {
       return '';
     }
@@ -971,7 +972,7 @@ class _SearchedScreenState extends State<SearchedScreen> {
       isGenderSelected = false;
       isLanguageSelected = false;
       isActivitiesSelected = false;
-      priceRange = 100;
+      priceRange = 0;
       selectedLanguages = [];
       selectedActivities = [];
       selectedGender = 0;
