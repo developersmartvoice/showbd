@@ -180,6 +180,7 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
     final imageCropper = ImageCropper();
     CroppedFile? croppedFile = await imageCropper.cropImage(
       sourcePath: imagePath,
+      // aspectRatio: CropAspectRatio(ratioX: 2, ratioY: 3), // Custom aspect ratio
       aspectRatioPresets: [
         CropAspectRatioPreset.square,
         // CropAspectRatioPreset.ratio3x2,
