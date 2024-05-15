@@ -74,8 +74,8 @@ android {
             // keyPassword keystoreProperties['showbd@@##']
             keyPassword 'showbd@@##'
             // storeFile keystoreProperties['showbd.jks'] ? file(keystoreProperties['D:\\Flutter Projects\\showbd\\showbd.jks']) : null
-            // storeFile file('D:\\Flutter Projects\\showbd\\showbd.jks')
-            storeFile file('D:\\showbd\\showbd.jks')
+            storeFile file('D:\\Flutter Projects\\showbd\\showbd.jks')
+            // storeFile file('D:\\showbd\\showbd.jks')
             storePassword 'showbd@@##'
         }
     }
