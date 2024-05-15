@@ -48,6 +48,14 @@ class NotificationHelper {
     //     iOS: initializationSettingsIOS);
     // flutterLocalNotificationsPlugin!.initialize(initializationSettings,
     //     onSelectNotification: onSelectNotification);
+
+    flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    const AndroidInitializationSettings initializationSettingsAndroid =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
+    final InitializationSettings initializationSettings =
+        InitializationSettings(android: initializationSettingsAndroid);
+    await flutterLocalNotificationsPlugin!.initialize(initializationSettings,
+        onSelectNotification: onSelectNotification);
   }
 
   showNotification(
@@ -67,8 +75,13 @@ class NotificationHelper {
     );
     NotificationDetails platformChannelSpecifics =
         NotificationDetails(android: androidPlatformChannelSpecifics);
-    await flutterLocalNotificationsPlugin!
-        .show(0, title, body, platformChannelSpecifics, payload: payload);
+    await flutterLocalNotificationsPlugin!.show(
+      0,
+      title,
+      body,
+      platformChannelSpecifics,
+      payload: payload,
+    );
   }
 
   Future onSelectNotification(String? payload) async {
