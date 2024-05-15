@@ -1309,7 +1309,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                               children: [
                                 Container(
                                   alignment: Alignment.centerLeft,
-                                  width: MediaQuery.sizeOf(context).width * .41,
+                                  width: MediaQuery.sizeOf(context).width * .4,
                                   child: Text(
                                     'Wants to book you',
                                     style: TextStyle(

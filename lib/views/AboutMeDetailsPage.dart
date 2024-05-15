@@ -251,6 +251,8 @@ class _AboutMeDetailsPageState extends State<AboutMeDetailsPage> {
               Container(
                 color: Colors.white,
                 child: TextField(
+                  maxLines: 10,
+                  minLines: 1,
                   controller: _controller,
                   style: TextStyle(
                     color: Colors.black,
