@@ -661,10 +661,13 @@ class _SearchedScreenState extends State<SearchedScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Padding(
                       padding: EdgeInsets.only(
-                          left: 17.0), // Adjust the left padding as needed
+                        left: 18,
+                        right: 18,
+                      ), // Adjust the left padding as needed
                       child: Text(
                         'Free',
                         style: GoogleFonts.robotoCondensed(
@@ -672,9 +675,9 @@ class _SearchedScreenState extends State<SearchedScreen> {
                             fontWeight: FontWeight.w500),
                       ),
                     ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.65,
-                    ),
+                    // SizedBox(
+                    //   width: MediaQuery.of(context).size.width * 0.65,
+                    // ),
                     Text(
                       '100',
                       style: GoogleFonts.robotoCondensed(
