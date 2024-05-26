@@ -9,6 +9,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -51,6 +52,7 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
           await post(Uri.parse("$SERVER_ADDRESS/api/savetoken"), body: {
         "token": token,
         "type": "1",
+        // ignore: body_might_complete_normally_catch_error
       }).catchError((e) {
         Navigator.pop(context);
         messageDialog(ERROR, UNABLE_TO_LOAD_DATA_FORM_SERVER);
@@ -102,7 +104,7 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
       setState(() {
         isPassError = true;
       });
-    } else if (token == null || token.isEmpty) {
+    } else if (token.isEmpty) {
       storeToken();
     } else {
       dialog();
@@ -121,6 +123,7 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
         'phone': phoneNumber,
         'password': password,
         'token': token
+        // ignore: body_might_complete_normally_catch_error
       }).catchError((e) {
         Navigator.pop(context);
         messageDialog(ERROR, UNABLE_TO_LOAD_DATA_FORM_SERVER);
@@ -262,23 +265,29 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Stack(
-          children: [
-            bottom(),
-            SingleChildScrollView(
+    return Stack(
+      children: [
+        Image.asset(
+          "assets/moreScreenImages/header_bg.png",
+          height: 140,
+          fit: BoxFit.fill,
+          width: MediaQuery.of(context).size.width,
+        ),
+        // bottom(),
+        SafeArea(
+          child: Scaffold(
+            body: SingleChildScrollView(
               child: Column(
                 children: [
-                  header(),
+                  // header(),
                   registerForm(),
                 ],
               ),
             ),
-            header(),
-          ],
+          ),
         ),
-      ),
+        // header(),
+      ],
     );
   }
 
@@ -342,246 +351,635 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
                 fontWeight: FontWeight.w400,
               ),
             ),
+            SizedBox(
+              width: 5,
+            ),
             GestureDetector(
               onTap: () {
                 Navigator.pop(context);
               },
               child: Text(
-                " $LOGIN_NOW",
+                LOGIN_NOW,
                 style: GoogleFonts.poppins(
-                  color: AMBER,
-                  fontSize: MediaQuery.of(context).size.width * 0.025,
+                  color: Color.fromARGB(255, 243, 103, 9),
+                  fontSize: MediaQuery.of(context).size.width * 0.03,
                   fontWeight: FontWeight.w500,
                 ),
               ),
             ),
           ],
         ),
-        SizedBox(
-          height: 20,
-        )
+        // SizedBox(
+        //   height: 20,
+        // )
       ],
     );
   }
 
   Widget registerForm() {
     return Container(
-      height: MediaQuery.of(context).size.height - 280,
+      height: MediaQuery.of(context).size.height,
       decoration: BoxDecoration(
-          color: WHITE,
-          borderRadius: BorderRadius.only(
-              bottomRight: Radius.circular(20),
-              bottomLeft: Radius.circular(20))),
+        color: WHITE,
+        // borderRadius: BorderRadius.only(
+        //   bottomRight: Radius.circular(20),
+        //   bottomLeft: Radius.circular(20),
+        // ),
+      ),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
         child: Form(
           key: _formKey,
           child: Column(
             children: [
-              TextField(
-                decoration: InputDecoration(
-                  labelText: ENTER_NAME,
-                  labelStyle: GoogleFonts.poppins(
-                      color: LIGHT_GREY_TEXT, fontWeight: FontWeight.w400),
-                  border: UnderlineInputBorder(),
-                  focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: LIGHT_GREY_TEXT)),
-                  errorText: isNameError ? ENTER_NAME : null,
-                ),
-                style: GoogleFonts.poppins(
-                    color: BLACK, fontWeight: FontWeight.w500),
-                onChanged: (val) {
-                  setState(() {
-                    name = val;
-                    isNameError = false;
-                  });
-                },
-              ),
-              SizedBox(
-                height: 3,
-              ),
-              TextField(
-                keyboardType: TextInputType.phone,
-                decoration: InputDecoration(
-                    labelText: ENTER_MOBILE_NUMBER,
-                    labelStyle: GoogleFonts.poppins(
-                        color: LIGHT_GREY_TEXT, fontWeight: FontWeight.w400),
-                    errorText: isPhoneNumberError ? phnNumberError : null,
-                    border: UnderlineInputBorder(),
-                    focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: LIGHT_GREY_TEXT))),
-                style: GoogleFonts.poppins(
-                    color: BLACK, fontWeight: FontWeight.w500),
-                onChanged: (val) {
-                  setState(() {
-                    phoneNumber = val;
-                    isPhoneNumberError = false;
-                  });
-                },
-              ),
-              SizedBox(
-                height: 3,
-              ),
-              TextField(
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                    labelText: ENTER_YOUR_EMAIL,
-                    labelStyle: GoogleFonts.poppins(
-                        color: LIGHT_GREY_TEXT, fontWeight: FontWeight.w400),
-                    errorText: isEmailError ? ENTER_VALID_EMAIL_ADDRESS : null,
-                    border: UnderlineInputBorder(),
-                    focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: LIGHT_GREY_TEXT))),
-                style: GoogleFonts.poppins(
-                    color: BLACK, fontWeight: FontWeight.w500),
-                onChanged: (val) {
-                  setState(() {
-                    email = val;
-                    isEmailError = false;
-                  });
-                },
-              ),
-              SizedBox(
-                height: 3,
-              ),
-              TextFormField(
-                obscureText: _passwordVisible,
-                decoration: InputDecoration(
-                  labelText: PASSWORD_STR,
-                  labelStyle: GoogleFonts.poppins(
-                      color: Colors.grey.shade600, fontWeight: FontWeight.w400),
-                  errorText: isPassError ? PASSWORD_DOES_NOT_MATCH : null,
-                  border: UnderlineInputBorder(),
-                  focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey)),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      // Based on passwordVisible state choose the icon
-                      _passwordVisible
-                          ? Icons.visibility
-                          : Icons.visibility_off,
-                      color: Theme.of(context).primaryColorDark,
-                    ),
-                    onPressed: () {
-                      // Update the state i.e. toogle the state of passwordVisible variable
-                      setState(() {
-                        _passwordVisible = !_passwordVisible;
-                      });
-                    },
+              Container(
+                width: MediaQuery.of(context).size.width,
+                child: Text(
+                  "Create an Account",
+                  textAlign: TextAlign.start,
+                  style: GoogleFonts.poppins(
+                    color: Color.fromARGB(255, 243, 103, 9),
+                    fontWeight: FontWeight.w700,
+                    fontSize: 30,
                   ),
                 ),
-                validator: (value) {
-                  setState(() {
-                    password = value!;
-                  });
-                  if (password.isEmpty) {
-                    return 'Please Enter Confirm Password';
-                  } else if (password.length < 6) {
-                    return 'Please Enter atleast 6 characters';
-                  }
-                  return null;
-                },
-                style: GoogleFonts.poppins(
-                    color: Colors.black, fontWeight: FontWeight.w500),
-                onChanged: (val) {
-                  setState(() {
-                    password = val;
-                    isPassError = false;
-                  });
-                },
               ),
               SizedBox(
-                height: 3,
+                height: 30,
               ),
-              TextFormField(
-                obscureText: _passwordVisible1,
-                decoration: InputDecoration(
-                  labelText: CONFIRM_PASSWORD,
-                  labelStyle: GoogleFonts.poppins(
-                      color: LIGHT_GREY_TEXT, fontWeight: FontWeight.w400),
-                  errorText: isPassError ? PASSWORD_DOES_NOT_MATCH : null,
-                  border: UnderlineInputBorder(),
-                  focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: LIGHT_GREY_TEXT)),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      // Based on passwordVisible state choose the icon
-                      _passwordVisible1
-                          ? Icons.visibility
-                          : Icons.visibility_off,
-                      color: Theme.of(context).primaryColorDark,
-                    ),
-                    onPressed: () {
-                      // Update the state i.e. toogle the state of passwordVisible variable
-                      setState(() {
-                        _passwordVisible1 = !_passwordVisible1;
-                      });
-                    },
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    width: 2,
+                    color: Color.fromARGB(255, 243, 103, 9),
+                    style: BorderStyle.solid,
                   ),
                 ),
-                validator: (value) {
-                  setState(() {
-                    confirmPassword = value!;
-                  });
-                  if (confirmPassword.isEmpty) {
-                    return 'Please Enter Confirm Password';
-                  } else if (confirmPassword.length < 6) {
-                    return 'Please Enter atleast 6 characters';
-                  }
-                  return null;
-                },
-                style: GoogleFonts.poppins(
-                    color: BLACK, fontWeight: FontWeight.w500),
-                onChanged: (val) {
-                  setState(() {
-                    confirmPassword = val;
-                    isPassError = false;
-                  });
-                },
+                width: MediaQuery.of(context).size.width - 30,
+                height: 60,
+                child: Row(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          right: BorderSide(
+                            width: 3,
+                            color: Color.fromARGB(255, 243, 103, 9),
+                          ),
+                        ),
+                      ),
+                      width: 80,
+                      child: Image.asset(
+                        "assets/user.png",
+                        height: 30,
+                        width: 30,
+                      ),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width - 130,
+                      padding: EdgeInsets.only(left: 8),
+                      child: TextField(
+                        // keyboardType: TextInputType.emailAddress,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: ENTER_NAME,
+                          hintStyle: GoogleFonts.poppins(
+                            color: Color.fromARGB(255, 243, 103, 9),
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                          ),
+                          errorText: isNameError ? ENTER_NAME : null,
+                        ),
+                        style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w500,
+                          color: Color.fromARGB(255, 243, 103, 9),
+                          fontSize: 16,
+                        ),
+                        onChanged: (val) {
+                          setState(() {
+                            name = val;
+                            // isPhoneNumberError = false;
+                            isNameError = false;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
               SizedBox(
-                height: 3,
+                height: 5,
               ),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    width: 2,
+                    color: Color.fromARGB(255, 243, 103, 9),
+                    style: BorderStyle.solid,
+                  ),
+                ),
+                width: MediaQuery.of(context).size.width - 30,
+                height: 60,
+                child: Row(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          right: BorderSide(
+                            width: 3,
+                            color: Color.fromARGB(255, 243, 103, 9),
+                          ),
+                        ),
+                      ),
+                      width: 80,
+                      child: Image.asset(
+                        "assets/phone-call.png",
+                        height: 30,
+                        width: 30,
+                      ),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width - 130,
+                      padding: EdgeInsets.only(left: 8),
+                      child: TextField(
+                        keyboardType: TextInputType.phone,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: ENTER_MOBILE_NUMBER,
+                          hintStyle: GoogleFonts.poppins(
+                            color: Color.fromARGB(255, 243, 103, 9),
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                          ),
+                          errorText: isPhoneNumberError ? phnNumberError : null,
+                        ),
+                        style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w500,
+                          color: Color.fromARGB(255, 243, 103, 9),
+                          fontSize: 16,
+                        ),
+                        onChanged: (val) {
+                          setState(() {
+                            phoneNumber = val;
+                            isPhoneNumberError = false;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              // TextField(
+              //   keyboardType: TextInputType.phone,
+              //   decoration: InputDecoration(
+              //       labelText: ENTER_MOBILE_NUMBER,
+              //       labelStyle: GoogleFonts.poppins(
+              //           color: LIGHT_GREY_TEXT, fontWeight: FontWeight.w400),
+              //       errorText: isPhoneNumberError ? phnNumberError : null,
+              //       border: UnderlineInputBorder(),
+              //       focusedBorder: UnderlineInputBorder(
+              //           borderSide: BorderSide(color: LIGHT_GREY_TEXT))),
+              //   style: GoogleFonts.poppins(
+              //       color: BLACK, fontWeight: FontWeight.w500),
+              //   onChanged: (val) {
+              //     setState(() {
+              //       phoneNumber = val;
+              //       isPhoneNumberError = false;
+              //     });
+              //   },
+              // ),
+              SizedBox(
+                height: 5,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    width: 2,
+                    color: Color.fromARGB(255, 243, 103, 9),
+                    style: BorderStyle.solid,
+                  ),
+                ),
+                width: MediaQuery.of(context).size.width - 30,
+                height: 60,
+                child: Row(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          right: BorderSide(
+                            width: 3,
+                            color: Color.fromARGB(255, 243, 103, 9),
+                          ),
+                        ),
+                      ),
+                      width: 80,
+                      child: Image.asset(
+                        "assets/email.png",
+                        height: 30,
+                        width: 30,
+                      ),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width - 130,
+                      padding: EdgeInsets.only(left: 8),
+                      child: TextField(
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: ENTER_YOUR_EMAIL,
+                          hintStyle: GoogleFonts.poppins(
+                            color: Color.fromARGB(255, 243, 103, 9),
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                          ),
+                          errorText:
+                              isEmailError ? ENTER_VALID_EMAIL_ADDRESS : null,
+                        ),
+                        style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w500,
+                          color: Color.fromARGB(255, 243, 103, 9),
+                          fontSize: 16,
+                        ),
+                        onChanged: (val) {
+                          setState(() {
+                            email = val;
+                            isEmailError = false;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              // TextField(
+              //   keyboardType: TextInputType.emailAddress,
+              //   decoration: InputDecoration(
+              //       labelText: ENTER_YOUR_EMAIL,
+              //       labelStyle: GoogleFonts.poppins(
+              //           color: LIGHT_GREY_TEXT, fontWeight: FontWeight.w400),
+              //       errorText: isEmailError ? ENTER_VALID_EMAIL_ADDRESS : null,
+              //       border: UnderlineInputBorder(),
+              //       focusedBorder: UnderlineInputBorder(
+              //           borderSide: BorderSide(color: LIGHT_GREY_TEXT))),
+              //   style: GoogleFonts.poppins(
+              //       color: BLACK, fontWeight: FontWeight.w500),
+              //   onChanged: (val) {
+              //     setState(() {
+              //       email = val;
+              //       isEmailError = false;
+              //     });
+              //   },
+              // ),
+              SizedBox(
+                height: 5,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    width: 2,
+                    color: Color.fromARGB(255, 243, 103, 9),
+                    style: BorderStyle.solid,
+                  ),
+                ),
+                width: MediaQuery.of(context).size.width - 30,
+                height: 60,
+                child: Row(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          right: BorderSide(
+                            width: 3,
+                            color: Color.fromARGB(255, 243, 103, 9),
+                          ),
+                        ),
+                      ),
+                      width: 80,
+                      child: Image.asset(
+                        "assets/key_confirm.png",
+                        height: 30,
+                        width: 30,
+                      ),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width - 130,
+                      padding: EdgeInsets.only(left: 8),
+                      child: TextFormField(
+                        obscureText: _passwordVisible,
+                        // keyboardType: TextInputType.text,
+
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: PASSWORD_STR,
+                          hintStyle: GoogleFonts.poppins(
+                            color: Color.fromARGB(255, 243, 103, 9),
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                          ),
+
+                          errorText:
+                              isPassError ? PASSWORD_DOES_NOT_MATCH : null,
+                          // errorStyle: TextStyle(),
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              // Update the state i.e. toogle the state of passwordVisible variable
+                              setState(() {
+                                _passwordVisible = !_passwordVisible;
+                              });
+                            },
+                            icon: Icon(
+                              _passwordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: Color.fromARGB(255, 243, 103, 9),
+                            ),
+                          ),
+                        ),
+                        validator: (value) {
+                          setState(() {
+                            password = value!;
+                          });
+                          if (password.isEmpty) {
+                            return 'Please Enter Confirm Password';
+                          } else if (password.length < 6) {
+                            return 'Please Enter atleast 6 characters';
+                          }
+                          return null;
+                        },
+                        style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                          color: Color.fromARGB(255, 243, 103, 9),
+                        ),
+                        onChanged: (val) {
+                          setState(() {
+                            password = val;
+                            isPassError = false;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              // TextFormField(
+              //   obscureText: _passwordVisible,
+              //   decoration: InputDecoration(
+              //     labelText: PASSWORD_STR,
+              //     labelStyle: GoogleFonts.poppins(
+              //         color: Colors.grey.shade600, fontWeight: FontWeight.w400),
+              //     errorText: isPassError ? PASSWORD_DOES_NOT_MATCH : null,
+              //     border: UnderlineInputBorder(),
+              //     focusedBorder: UnderlineInputBorder(
+              //         borderSide: BorderSide(color: Colors.grey)),
+              //     suffixIcon: IconButton(
+              //       icon: Icon(
+              //         // Based on passwordVisible state choose the icon
+              //         _passwordVisible
+              //             ? Icons.visibility
+              //             : Icons.visibility_off,
+              //         color: Theme.of(context).primaryColorDark,
+              //       ),
+              //       onPressed: () {
+              //         // Update the state i.e. toogle the state of passwordVisible variable
+              //         setState(() {
+              //           _passwordVisible = !_passwordVisible;
+              //         });
+              //       },
+              //     ),
+              //   ),
+              //   validator: (value) {
+              //     setState(() {
+              //       password = value!;
+              //     });
+              //     if (password.isEmpty) {
+              //       return 'Please Enter Confirm Password';
+              //     } else if (password.length < 6) {
+              //       return 'Please Enter atleast 6 characters';
+              //     }
+              //     return null;
+              //   },
+              //   style: GoogleFonts.poppins(
+              //       color: Colors.black, fontWeight: FontWeight.w500),
+              //   onChanged: (val) {
+              //     setState(() {
+              //       password = val;
+              //       isPassError = false;
+              //     });
+              //   },
+              // ),
+              SizedBox(
+                height: 5,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    width: 2,
+                    color: Color.fromARGB(255, 243, 103, 9),
+                    style: BorderStyle.solid,
+                  ),
+                ),
+                width: MediaQuery.of(context).size.width - 30,
+                height: 60,
+                child: Row(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          right: BorderSide(
+                            width: 3,
+                            color: Color.fromARGB(255, 243, 103, 9),
+                          ),
+                        ),
+                      ),
+                      width: 80,
+                      child: Image.asset(
+                        "assets/key.png",
+                        height: 30,
+                        width: 30,
+                      ),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width - 130,
+                      padding: EdgeInsets.only(left: 8),
+                      child: TextFormField(
+                        obscureText: _passwordVisible1,
+                        // keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: CONFIRM_PASSWORD,
+                          hintStyle: GoogleFonts.poppins(
+                            color: Color.fromARGB(255, 243, 103, 9),
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                          ),
+
+                          errorText:
+                              isPassError ? PASSWORD_DOES_NOT_MATCH : null,
+                          // errorStyle: TextStyle(),
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              // Update the state i.e. toogle the state of passwordVisible variable
+                              setState(() {
+                                _passwordVisible1 = !_passwordVisible1;
+                              });
+                            },
+                            icon: Icon(
+                              _passwordVisible1
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: Color.fromARGB(255, 243, 103, 9),
+                            ),
+                          ),
+                        ),
+                        validator: (value) {
+                          setState(() {
+                            confirmPassword = value!;
+                          });
+                          if (confirmPassword.isEmpty) {
+                            return 'Please Enter Confirm Password';
+                          } else if (confirmPassword.length < 6) {
+                            return 'Please Enter atleast 6 characters';
+                          }
+                          return null;
+                        },
+                        style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                          color: Color.fromARGB(255, 243, 103, 9),
+                        ),
+                        onChanged: (val) {
+                          setState(() {
+                            confirmPassword = val;
+                            isPassError = false;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              // TextFormField(
+              //   obscureText: _passwordVisible1,
+              //   decoration: InputDecoration(
+              //     labelText: CONFIRM_PASSWORD,
+              //     labelStyle: GoogleFonts.poppins(
+              //         color: LIGHT_GREY_TEXT, fontWeight: FontWeight.w400),
+              //     errorText: isPassError ? PASSWORD_DOES_NOT_MATCH : null,
+              //     border: UnderlineInputBorder(),
+              //     focusedBorder: UnderlineInputBorder(
+              //         borderSide: BorderSide(color: LIGHT_GREY_TEXT)),
+              //     suffixIcon: IconButton(
+              //       icon: Icon(
+              //         // Based on passwordVisible state choose the icon
+              //         _passwordVisible1
+              //             ? Icons.visibility
+              //             : Icons.visibility_off,
+              //         color: Theme.of(context).primaryColorDark,
+              //       ),
+              //       onPressed: () {
+              //         // Update the state i.e. toogle the state of passwordVisible variable
+              //         setState(() {
+              //           _passwordVisible1 = !_passwordVisible1;
+              //         });
+              //       },
+              //     ),
+              //   ),
+              //   validator: (value) {
+              //     setState(() {
+              //       confirmPassword = value!;
+              //     });
+              //     if (confirmPassword.isEmpty) {
+              //       return 'Please Enter Confirm Password';
+              //     } else if (confirmPassword.length < 6) {
+              //       return 'Please Enter atleast 6 characters';
+              //     }
+              //     return null;
+              //   },
+              //   style: GoogleFonts.poppins(
+              //       color: BLACK, fontWeight: FontWeight.w500),
+              //   onChanged: (val) {
+              //     setState(() {
+              //       confirmPassword = val;
+              //       isPassError = false;
+              //     });
+              //   },
+              // ),
+              // SizedBox(
+              //   height: 3,
+              // ),
               SizedBox(
                 height: 20,
               ),
+              // Container(
+              //   height: 50,
+              //   //width: MediaQuery.of(context).size.width,
+              //   child: InkWell(
+              //     onTap: () {
+              //       if (_formKey.currentState!.validate()) {
+              //         registerUser();
+              //       }
+              //     },
+              //     child: Stack(
+              //       children: [
+              //         ClipRRect(
+              //           borderRadius: BorderRadius.circular(25),
+              //           child: Image.asset(
+              //             "assets/moreScreenImages/header_bg.png",
+              //             height: 50,
+              //             fit: BoxFit.fill,
+              //             width: MediaQuery.of(context).size.width,
+              //           ),
+              //         ),
+              //         Center(
+              //           child: Text(
+              //             REGISTER,
+              //             style: GoogleFonts.poppins(
+              //                 fontWeight: FontWeight.w500,
+              //                 color: WHITE,
+              //                 fontSize:
+              //                     MediaQuery.of(context).size.width * 0.04),
+              //           ),
+              //         )
+              //       ],
+              //     ),
+              //   ),
+              // ),
               Container(
                 height: 50,
-                //width: MediaQuery.of(context).size.width,
-                child: InkWell(
-                  onTap: () {
+                child: TextButton(
+                  onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       registerUser();
                     }
                   },
-                  child: Stack(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(25),
-                        child: Image.asset(
-                          "assets/moreScreenImages/header_bg.png",
-                          height: 50,
-                          fit: BoxFit.fill,
-                          width: MediaQuery.of(context).size.width,
-                        ),
-                      ),
-                      Center(
-                        child: Text(
-                          REGISTER,
-                          style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w500,
-                              color: WHITE,
-                              fontSize:
-                                  MediaQuery.of(context).size.width * 0.04),
-                        ),
-                      )
-                    ],
+                  child: Text(
+                    "REGISTER",
+                    style: TextStyle(
+                      color: WHITE,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 2,
+                    ),
                   ),
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStatePropertyAll(
+                        Color.fromARGB(255, 243, 103, 9),
+                      ),
+                      shape: MaterialStatePropertyAll(BeveledRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                        side: BorderSide(
+                            width: 1,
+                            color: WHITE,
+                            strokeAlign: BorderSide.strokeAlignCenter,
+                            style: BorderStyle.solid),
+                      ))),
                 ),
               ),
               SizedBox(
-                height: 10,
+                height: 20,
               ),
+              bottom(),
             ],
           ),
         ),

@@ -1,11 +1,11 @@
-import 'dart:io';
+// import 'dart:io';
 
 import 'package:appcode3/en.dart';
 import 'package:appcode3/main.dart';
 import 'package:appcode3/notificationHelper.dart';
 import 'package:appcode3/views/Doctor/DoctorChatListScreen.dart';
-import 'package:appcode3/views/Doctor/DoctorDashboard.dart';
 import 'package:appcode3/views/Doctor/Tour.dart';
+import 'package:appcode3/views/HomeScreen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -22,7 +22,8 @@ class DoctorTabsScreen extends StatefulWidget {
 
 class _DoctorTabsScreenState extends State<DoctorTabsScreen> {
   List<Widget> screens = [
-    DoctorDashboard(),
+    // DoctorDashboard(),
+    HomeScreen(),
     // DoctorPastAppointments(),
     Tour(),
     // DoctorProfile(),
@@ -36,7 +37,16 @@ class _DoctorTabsScreenState extends State<DoctorTabsScreen> {
   FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
 
   Future<bool> willPopScope() async {
-    exit(0);
+    // exit(0);
+    if (index != 0) {
+      setState(() {
+        index = 0;
+      });
+      return false;
+    } else {
+      // exit(0);
+      return true;
+    }
   }
 
   @override
@@ -105,17 +115,6 @@ class _DoctorTabsScreenState extends State<DoctorTabsScreen> {
                   ),
                   label: "Home",
                 ),
-                // BottomNavigationBarItem(
-                //   icon: Image.asset(
-                //     index == 1
-                //         ? "assets/homeScreenImages/appointment_active.png"
-                //         : "assets/homeScreenImages/appointment_unactive.png",
-                //     height: 25,
-                //     width: 25,
-                //     fit: BoxFit.cover,
-                //   ),
-                //   label: "Appointment",
-                // ),
                 BottomNavigationBarItem(
                   icon: Image.asset(
                     index == 1
@@ -127,17 +126,6 @@ class _DoctorTabsScreenState extends State<DoctorTabsScreen> {
                   ),
                   label: "Tour",
                 ),
-                // BottomNavigationBarItem(
-                //   icon: Image.asset(
-                //     index == 2
-                //         ? "assets/homeScreenImages/user_active.png"
-                //         : "assets/homeScreenImages/user_unactive.png",
-                //     height: 25,
-                //     width: 25,
-                //     fit: BoxFit.cover,
-                //   ),
-                //   label: "Edit profile",
-                // ),
                 BottomNavigationBarItem(
                   icon: Image.asset(
                     index == 2
@@ -154,8 +142,6 @@ class _DoctorTabsScreenState extends State<DoctorTabsScreen> {
                     index == 3
                         ? "assets/homeScreenImages/profile_active.png"
                         : "assets/homeScreenImages/profile_unactive.png",
-                    // ? "assets/loginScreenImages/logout-(1).png"
-                    // : "assets/loginScreenImages/logout.png",
                     height: 25,
                     width: 25,
                     fit: BoxFit.cover,

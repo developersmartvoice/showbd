@@ -36,7 +36,7 @@ const String EITHER_EMAIL_OR_PASSWORD_IS_INCORRECT =
     "Either email or password is incorrect";
 const String LOGIN = "Login";
 const String DO_NOT_HAVE_AN_ACCOUNT = "Don't have an account?";
-const String REGISTER_NOW = "Register Now";
+const String REGISTER_NOW = "Register Now!";
 const String ENTER_YOUR_EMAIL = "Enter your email";
 const String ENTER_VALID_EMAIL_ADDRESS = "Enter valid email address";
 const String PASSWORD = "Password";

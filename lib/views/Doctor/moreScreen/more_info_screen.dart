@@ -1097,11 +1097,6 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                     pref.setBool("isLoggedInAsDoctor", false);
                     pref.setBool("isLoggedIn", false);
                     pref.clear();
-                    // pref.setString("userId", null);
-                    // pref.setString("name", null);
-                    // pref.setString("phone", null);
-                    // pref.setString("email", null);
-                    // pref.setString("token", null);
                   });
                   // Navigator.of(context).popUntil((route) => route.isFirst);
                   Navigator.pushReplacement(
@@ -1109,13 +1104,6 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                       MaterialPageRoute(
                         builder: (context) => LoginAsDoctor(),
                       ));
-                  // Navigator.of(context)
-                  //     .pushReplacement(MaterialPageRoute(
-                  //         builder: (context) => LoginAsDoctor()))
-                  //     .then((_) {
-                  //   // After pushing the new route, remove the previous route from the stack
-                  //   Navigator.of(context).popUntil((route) => route.isFirst);
-                  // });
                 },
                 style: TextButton.styleFrom(
                   backgroundColor: Theme.of(context).hintColor,

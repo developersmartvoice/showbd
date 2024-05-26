@@ -115,9 +115,9 @@ class _HomeScreenState extends State<HomeScreen> {
       userId = pref.getString("userId") ?? "";
       currentId = int.parse(pref.getString("userId").toString());
 
-      setState(() {
-        call_3in1_api();
-      });
+      // setState(() {
+      //   call_3in1_api();
+      // });
     });
 
     FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler);
@@ -305,11 +305,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               return InkWell(
                                 onTap: () {
                                   Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => DetailsPage(
-                                              _newData[index].id.toString(),
-                                              true)));
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => DetailsPage(
+                                          _newData[index].id.toString(), true),
+                                    ),
+                                  );
                                 },
                                 child: Column(
                                   children: [
@@ -365,22 +366,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ],
                                 ),
                               );
-                              // return ListTile(
-                              //   title: Text(
-                              //     _newData[index].name,
-                              //     style: GoogleFonts.poppins(
-                              //         color: Theme.of(context).primaryColorDark,
-                              //         fontSize: 14
-                              //     ),
-                              //   ),
-                              //   trailing: Icon(
-                              //     Icons.search,
-                              //     size: 18,
-                              //   ),
-                              //   onTap: (){
-                              //     Navigator.push(context, MaterialPageRoute(builder: (context) => DetailsPage(_newData[index].id.toString())));
-                              //   },
-                              // );
                             }),
                       ),
                     ],
@@ -391,20 +376,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.13,
+                        height: MediaQuery.of(context).size.height * 0.1,
                       ),
-                      // isLoad
-                      //     ? slider()
-                      //     : Container(
-                      //         height: Get.height * 0.07,
-                      //         alignment: Alignment.center,
-                      //         child: CircularProgressIndicator()),
-                      // isLoad
-                      //     ? isLoggedIn
-                      //         ? upCommingAppointments()
-                      //         : Container()
-                      //     : Container(),
-                      // isLoad ? Container() : Container(),
                       HomeScreenNearby(_scrollController2),
                     ],
                   ),
@@ -672,23 +645,6 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.fromLTRB(16, 10, 16, 0),
             child: Column(
               children: [
-                // Row(
-                //   //crossAxisAlignment: CrossAxisAlignment.baseline,
-                //   children: [
-                //     Text("$WELCOME, ",
-                //         style: Theme.of(context).textTheme.caption!.apply(
-                //               color: Theme.of(context).backgroundColor,
-                //               fontSizeDelta: 4,
-                //             )),
-                //     Text(userName,
-                //         style: Theme.of(context).textTheme.headline5!.apply(
-                //             color: Theme.of(context).backgroundColor,
-                //             fontWeightDelta: 2)),
-                //   ],
-                // ),
-                // SizedBox(
-                //   height: 10,
-                // ),
                 Row(
                   children: [
                     Expanded(

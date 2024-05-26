@@ -29,6 +29,7 @@ class _LoginAsDoctorState extends State<LoginAsDoctor> {
   String passErrorText = "";
   String token = "";
   bool isTokenPresent = false;
+  bool passView = true;
 
   getToken() async {
     await SharedPreferences.getInstance().then((pref) async {
@@ -275,18 +276,9 @@ class _LoginAsDoctorState extends State<LoginAsDoctor> {
         ),
         SafeArea(
           child: Scaffold(
-            body: Stack(
-              children: [
-                SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      header(),
-                      loginForm(),
-                    ],
-                  ),
-                ),
-                // header(),
-              ],
+            backgroundColor: WHITE,
+            body: SingleChildScrollView(
+              child: loginForm(),
             ),
           ),
         )
@@ -310,16 +302,6 @@ class _LoginAsDoctorState extends State<LoginAsDoctor> {
               SizedBox(
                 width: 15,
               ),
-              // InkWell(
-              //   onTap: (){
-              //     Navigator.pop(context);
-              //   },
-              //   child: Image.asset("assets/moreScreenImages/back.png",
-              //     height: 25,
-              //     width: 22,
-              //   ),
-              // ),
-              // SizedBox(width: 10,),
               Center(
                 child: Text(
                   GUIDE_LOGIN,
@@ -352,6 +334,9 @@ class _LoginAsDoctorState extends State<LoginAsDoctor> {
                 fontWeight: FontWeight.w400,
               ),
             ),
+            SizedBox(
+              width: 5,
+            ),
             GestureDetector(
               onTap: () {
                 Navigator.push(
@@ -362,17 +347,15 @@ class _LoginAsDoctorState extends State<LoginAsDoctor> {
               child: Text(
                 " $REGISTER_NOW",
                 style: GoogleFonts.poppins(
-                  color: AMBER,
+                  // color: AMBER,
+                  color: Color.fromARGB(255, 243, 103, 9),
                   fontSize: MediaQuery.of(context).size.width *
-                      0.025, // Adjust font size dynamically
+                      0.03, // Adjust font size dynamically
                   fontWeight: FontWeight.w500,
                 ),
               ),
             ),
           ],
-        ),
-        SizedBox(
-          height: 20,
         ),
       ],
     );
@@ -380,65 +363,156 @@ class _LoginAsDoctorState extends State<LoginAsDoctor> {
 
   Widget loginForm() {
     return Container(
+      alignment: Alignment.bottomCenter,
       decoration: BoxDecoration(
-          color: WHITE,
-          borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(20),
-              bottomRight: Radius.circular(20))),
-      height: MediaQuery.of(context).size.height - 100,
+        color: WHITE,
+      ),
+      height: MediaQuery.of(context).size.height,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+        padding: const EdgeInsets.fromLTRB(20, 130, 20, 0),
         child: Column(
           children: [
-            //SizedBox(height: 10,),
             Image.asset(
-              "assets/loginScreenImages/guide-image.jpg",
+              "assets/login_image.png",
               height: 180,
               width: 180,
             ),
             SizedBox(height: 20),
-            TextField(
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                  labelText: ENTER_YOUR_EMAIL,
-                  labelStyle: GoogleFonts.poppins(
-                      color: LIGHT_GREY_TEXT, fontWeight: FontWeight.w400),
-                  errorText:
-                      isPhoneNumberError ? ENTER_VALID_EMAIL_ADDRESS : null,
-                  focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                    color: LIGHT_GREY_TEXT,
-                  ))),
-              style: GoogleFonts.poppins(fontWeight: FontWeight.w500),
-              onChanged: (val) {
-                setState(() {
-                  emailAddress = val;
-                  isPhoneNumberError = false;
-                  isPasswordError = false;
-                });
-              },
+            Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  width: 2,
+                  color: Color.fromARGB(255, 243, 103, 9),
+                  style: BorderStyle.solid,
+                ),
+              ),
+              width: MediaQuery.of(context).size.width - 30,
+              height: 60,
+              child: Row(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        right: BorderSide(
+                          width: 3,
+                          color: Color.fromARGB(255, 243, 103, 9),
+                        ),
+                      ),
+                    ),
+                    width: 80,
+                    child: Image.asset(
+                      "assets/email.png",
+                      height: 30,
+                      width: 30,
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width - 130,
+                    padding: EdgeInsets.only(left: 8),
+                    child: TextField(
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: ENTER_YOUR_EMAIL,
+                        hintStyle: GoogleFonts.poppins(
+                          color: Color.fromARGB(255, 243, 103, 9),
+                          fontWeight: FontWeight.w400,
+                          fontSize: 14,
+                        ),
+                        errorText: isPhoneNumberError
+                            ? ENTER_VALID_EMAIL_ADDRESS
+                            : null,
+                      ),
+                      style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w500,
+                        color: Color.fromARGB(255, 243, 103, 9),
+                        fontSize: 16,
+                      ),
+                      onChanged: (val) {
+                        setState(() {
+                          emailAddress = val;
+                          isPhoneNumberError = false;
+                          isPasswordError = false;
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
             SizedBox(height: 10),
-            TextField(
-              obscureText: true,
-              keyboardType: TextInputType.text,
-              decoration: InputDecoration(
-                labelText: PASSWORD_STR,
-                labelStyle: GoogleFonts.poppins(
-                    color: LIGHT_GREY_TEXT, fontWeight: FontWeight.w400),
-                errorText: isPasswordError ? passErrorText : null,
-                focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                  color: LIGHT_GREY_TEXT,
-                )),
+            Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  width: 2,
+                  color: Color.fromARGB(255, 243, 103, 9),
+                  style: BorderStyle.solid,
+                ),
               ),
-              style: GoogleFonts.poppins(fontWeight: FontWeight.w500),
-              onChanged: (val) {
-                setState(() {
-                  pass = val;
-                  isPasswordError = false;
-                });
-              },
+              width: MediaQuery.of(context).size.width - 30,
+              height: 60,
+              child: Row(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        right: BorderSide(
+                          width: 3,
+                          color: Color.fromARGB(255, 243, 103, 9),
+                        ),
+                      ),
+                    ),
+                    width: 80,
+                    child: Image.asset(
+                      "assets/key.png",
+                      height: 30,
+                      width: 30,
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width - 130,
+                    padding: EdgeInsets.only(left: 8),
+                    child: TextField(
+                      obscureText: passView,
+                      keyboardType: TextInputType.text,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: PASSWORD_STR,
+                        hintStyle: GoogleFonts.poppins(
+                          color: Color.fromARGB(255, 243, 103, 9),
+                          fontWeight: FontWeight.w400,
+                          fontSize: 14,
+                        ),
+
+                        errorText: isPasswordError ? passErrorText : null,
+                        // errorStyle: TextStyle(),
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              passView = !passView;
+                            });
+                          },
+                          icon: Icon(
+                            passView ? Icons.visibility : Icons.visibility_off,
+                            color: Color.fromARGB(255, 243, 103, 9),
+                          ),
+                        ),
+                      ),
+                      style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16,
+                        color: Color.fromARGB(255, 243, 103, 9),
+                      ),
+                      onChanged: (val) {
+                        setState(() {
+                          pass = val;
+                          isPasswordError = false;
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
             SizedBox(height: 10),
             Row(
@@ -447,9 +521,9 @@ class _LoginAsDoctorState extends State<LoginAsDoctor> {
                 InkWell(
                   onTap: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ForgetPassword()));
+                      context,
+                      MaterialPageRoute(builder: (context) => ForgetPassword()),
+                    );
                   },
                   child: Text(
                     FORGET_PASSWORD,
@@ -461,57 +535,14 @@ class _LoginAsDoctorState extends State<LoginAsDoctor> {
                 ),
               ],
             ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.end,
-            //   children: [
-            //     InkWell(
-            //       child: Text("Forget password ?",
-            //         style: GoogleFonts.comfortaa(
-            //             color: Colors.black,
-            //             fontSize: 13,
-            //             fontWeight: FontWeight.w900
-            //         ),
-            //       ),
-            //       onTap: (){
-            //         // Navigator.push(context,
-            //         //   MaterialPageRoute(
-            //         //     builder: (context) => ForgetPassword(),
-            //         //   ),
-            //         // );
-            //       },
-            //     ),
-            //   ],
-            // ),
             SizedBox(height: 20),
             Container(
-              height: 50,
-              //width: MediaQuery.of(context).size.width,
+              height: 100,
               child: InkWell(
                 onTap: () {
                   isTokenPresent ? loginInto() : storeToken();
                 },
-                child: Stack(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(25),
-                      child: Image.asset(
-                        "assets/moreScreenImages/header_bg.png",
-                        height: 50,
-                        fit: BoxFit.fill,
-                        width: MediaQuery.of(context).size.width,
-                      ),
-                    ),
-                    Center(
-                      child: Text(
-                        LOGIN,
-                        style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w500,
-                            color: WHITE,
-                            fontSize: MediaQuery.of(context).size.width * 0.04),
-                      ),
-                    )
-                  ],
-                ),
+                child: Image.asset("assets/login.png"),
               ),
             ),
             SizedBox(height: 20),
