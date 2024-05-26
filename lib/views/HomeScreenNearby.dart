@@ -53,15 +53,12 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    // print("Loadmore here 62");
     _getLocationStart();
     SharedPreferences.getInstance().then((pref) {
       setState(() {
         isLoggedIn = pref.getBool("isLoggedInAsDoctor") ?? false;
         currentId = int.parse(pref.getString("userId").toString());
-        // print("this is to see the keys");
         print("ID: ${currentId}");
-        // print("keysss: ${pref.getString("userId")}");
       });
     });
     widget.scrollController.addListener(() {
@@ -579,7 +576,6 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
       ].request();
     }
     status = await Permission.location.status;
-    setState(() {});
 
     print("Here status ${status}");
 
@@ -588,7 +584,9 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
       Position position = await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.high);
 
-      callApi(latitude: position.latitude, longitude: position.longitude);
+      setState(() {
+        callApi(latitude: position.latitude, longitude: position.longitude);
+      });
       // for (int i = 0; i < list2.length; i++) {
       //   fetchDoctorDetails(list2[i].id);
       // }

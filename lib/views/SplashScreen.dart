@@ -3,7 +3,8 @@ import 'dart:convert';
 
 import 'package:appcode3/main.dart';
 import 'package:appcode3/views/Doctor/DoctorTabScreen.dart';
-import 'package:appcode3/views/Doctor/loginAsDoctor.dart';
+// import 'package:appcode3/views/Doctor/loginAsDoctor.dart';
+import 'package:appcode3/views/UnRegisteredHomePage.dart';
 import 'package:connectycube_sdk/connectycube_chat.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -26,8 +27,10 @@ class _SplashScreenState extends State<SplashScreen> {
       if (pref.getBool("isTokenExist") ?? false) {
         Timer(Duration(seconds: 2), () {
           if (pref.getBool("isLoggedInAsDoctor") ?? false) {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => DoctorTabsScreen()));
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => DoctorTabsScreen()),
+            );
           }
           // else if(pref.getBool("isLoggedIn") ?? false) {
           //   Navigator.pushReplacement(context,
@@ -35,15 +38,21 @@ class _SplashScreenState extends State<SplashScreen> {
           //   );
           // }
           else {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => LoginAsDoctor()));
+            Navigator.pushReplacement(
+              context,
+              // MaterialPageRoute(builder: (context) => LoginAsDoctor()),
+              MaterialPageRoute(builder: (context) => UnRegisteredHomePage()),
+            );
           }
         });
       } else {
         print("value is null");
         Timer(Duration(seconds: 2), () {
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => LoginAsDoctor()));
+          Navigator.pushReplacement(
+            context,
+            // MaterialPageRoute(builder: (context) => LoginAsDoctor()),
+            MaterialPageRoute(builder: (context) => UnRegisteredHomePage()),
+          );
         });
       }
     });
