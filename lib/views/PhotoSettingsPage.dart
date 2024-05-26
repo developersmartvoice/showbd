@@ -215,10 +215,13 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Photos',
-              style: Theme.of(context).textTheme.headline5!.apply(
-                  color: Theme.of(context).backgroundColor,
-                  fontWeightDelta: 5)),
+          title: Text(
+            'Photos',
+            style: GoogleFonts.poppins(
+              textStyle: Theme.of(context).textTheme.headline5!.apply(
+                  color: Theme.of(context).backgroundColor, fontWeightDelta: 1),
+            ),
+          ),
           backgroundColor: const Color.fromARGB(255, 243, 103, 9),
           centerTitle: true,
           actions: [
@@ -260,7 +263,7 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
               },
               child: Text(
                 'Save',
-                style: GoogleFonts.robotoCondensed(
+                style: GoogleFonts.poppins(
                   color: Colors.black,
                   fontSize: MediaQuery.of(context).size.width * 0.03,
                   fontWeight: FontWeight.w700,
@@ -297,11 +300,11 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                             PHOTOS_PAGE,
                             textAlign:
                                 TextAlign.justify, // Align text to center
-                            style: TextStyle(
+                            style: GoogleFonts.poppins(
                               color: Colors.black,
                               fontSize:
-                                  MediaQuery.of(context).size.width * 0.025,
-                              fontWeight: FontWeight.w900,
+                                  MediaQuery.of(context).size.width * 0.035,
+                              fontWeight: FontWeight.w400,
                             ),
                           ),
                           SizedBox(
@@ -311,11 +314,11 @@ class _PhotoSettingsPageState extends State<PhotoSettingsPage> {
                             PHOTOS_PAGE_1,
                             textAlign:
                                 TextAlign.justify, // Align text to center
-                            style: TextStyle(
+                            style: GoogleFonts.poppins(
                               color: Colors.black,
                               fontSize:
-                                  MediaQuery.of(context).size.width * 0.025,
-                              fontWeight: FontWeight.w900,
+                                  MediaQuery.of(context).size.width * 0.035,
+                              fontWeight: FontWeight.w400,
                             ),
                           ),
                           SizedBox(

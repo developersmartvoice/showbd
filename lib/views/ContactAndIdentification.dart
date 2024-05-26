@@ -6,6 +6,7 @@ import 'dart:convert';
 
 import 'package:appcode3/en.dart';
 import 'package:appcode3/main.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 
 class ContactAndIdentification extends StatefulWidget {
@@ -79,10 +80,17 @@ class _GeneraLInfoState extends State<ContactAndIdentification> {
           appBar: AppBar(
             backgroundColor: const Color.fromARGB(255, 243, 103, 9),
             centerTitle: true,
-            title: Text('Contact & Identification',
-                style: Theme.of(context).textTheme.headline5!.apply(
-                    color: Theme.of(context).backgroundColor,
-                    fontWeightDelta: 5)),
+            title: Text(
+              'Contact & Identification',
+              style: GoogleFonts.poppins(
+                textStyle: TextStyle(
+                  color: Colors.white,
+                  fontSize: MediaQuery.of(context).size.width * 0.05,
+                  fontWeight: FontWeight.w600,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
             leading: IconButton(
               icon: Icon(
                 Icons.arrow_back,
@@ -204,7 +212,7 @@ class _ContainerPageState extends State<ContainerPage> {
                         child: Text(
                           "Email",
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: GoogleFonts.poppins(
                             fontSize: MediaQuery.of(context).size.width * 0.04,
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
@@ -220,7 +228,7 @@ class _ContainerPageState extends State<ContainerPage> {
                         width: MediaQuery.sizeOf(context).width * .4,
                         child: Text(
                           widget.email,
-                          style: TextStyle(
+                          style: GoogleFonts.poppins(
                             fontSize: MediaQuery.of(context).size.width * 0.035,
                             fontWeight: FontWeight.bold,
                             color: Colors.grey,
@@ -292,7 +300,7 @@ class _ContainerPageState extends State<ContainerPage> {
                           width: MediaQuery.sizeOf(context).width * .25,
                           child: Text(
                             PHONE,
-                            style: TextStyle(
+                            style: GoogleFonts.poppins(
                               fontSize:
                                   MediaQuery.of(context).size.width * 0.04,
                               fontWeight: FontWeight.bold,
@@ -308,7 +316,7 @@ class _ContainerPageState extends State<ContainerPage> {
                         width: MediaQuery.sizeOf(context).width * .4,
                         child: Text(
                           widget.phone,
-                          style: TextStyle(
+                          style: GoogleFonts.poppins(
                             fontSize: MediaQuery.of(context).size.width * 0.035,
                             fontWeight: FontWeight.bold,
                             color: Colors.grey,

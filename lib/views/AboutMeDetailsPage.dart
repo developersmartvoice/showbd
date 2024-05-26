@@ -51,15 +51,18 @@ class _AboutMeDetailsPageState extends State<AboutMeDetailsPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('About Me',
-              // style: GoogleFonts.robotoCondensed(
-              //   color: Colors.white,
-              //   fontSize: 25,
-              //   fontWeight: FontWeight.w700,
-              // ),
-              style: Theme.of(context).textTheme.headline5!.apply(
-                  color: Theme.of(context).backgroundColor,
-                  fontWeightDelta: 5)),
+          title: Text(
+            'About Me',
+            // style: GoogleFonts.robotoCondensed(
+            //   color: Colors.white,
+            //   fontSize: 25,
+            //   fontWeight: FontWeight.w700,
+            // ),
+            style: GoogleFonts.poppins(
+              textStyle: Theme.of(context).textTheme.headline5!.apply(
+                  color: Theme.of(context).backgroundColor, fontWeightDelta: 1),
+            ),
+          ),
           backgroundColor: const Color.fromARGB(255, 243, 103, 9),
           centerTitle: true,
           actions: [
@@ -87,7 +90,7 @@ class _AboutMeDetailsPageState extends State<AboutMeDetailsPage> {
               },
               child: Text(
                 'Save',
-                style: GoogleFonts.robotoCondensed(
+                style: GoogleFonts.poppins(
                   color: Colors.black,
                   fontSize: MediaQuery.of(context).size.width * 0.03,
                   fontWeight: FontWeight.w700,
@@ -225,10 +228,10 @@ class _AboutMeDetailsPageState extends State<AboutMeDetailsPage> {
                       Text(
                         ABOUT_ME_COL1,
                         textAlign: TextAlign.justify, // Align text to center
-                        style: TextStyle(
+                        style: GoogleFonts.poppins(
                           color: Colors.black,
-                          fontSize: MediaQuery.of(context).size.width * 0.025,
-                          fontWeight: FontWeight.w900,
+                          fontSize: MediaQuery.of(context).size.width * 0.035,
+                          fontWeight: FontWeight.w400,
                         ),
                       ),
                       SizedBox(
@@ -237,10 +240,10 @@ class _AboutMeDetailsPageState extends State<AboutMeDetailsPage> {
                       Text(
                         ABOUT_ME_COL2,
                         textAlign: TextAlign.justify, // Align text to center
-                        style: TextStyle(
+                        style: GoogleFonts.poppins(
                           color: Colors.black,
-                          fontSize: MediaQuery.of(context).size.width * 0.025,
-                          fontWeight: FontWeight.w900,
+                          fontSize: MediaQuery.of(context).size.width * 0.035,
+                          fontWeight: FontWeight.w400,
                         ),
                       ),
                     ],
@@ -254,10 +257,10 @@ class _AboutMeDetailsPageState extends State<AboutMeDetailsPage> {
                   maxLines: 10,
                   minLines: 1,
                   controller: _controller,
-                  style: TextStyle(
+                  style: GoogleFonts.poppins(
                     color: Colors.black,
-                    fontSize: MediaQuery.of(context).size.width * 0.025,
-                    fontWeight: FontWeight.w200,
+                    fontSize: MediaQuery.of(context).size.width * 0.035,
+                    fontWeight: FontWeight.w400,
                   ),
                   onChanged: (value) {
                     setState(() {

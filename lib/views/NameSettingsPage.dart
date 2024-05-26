@@ -51,10 +51,13 @@ class _NameSettingsPageState extends State<NameSettingsPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Name',
-              style: Theme.of(context).textTheme.headline5!.apply(
-                  color: Theme.of(context).backgroundColor,
-                  fontWeightDelta: 5)),
+          title: Text(
+            'Name',
+            style: GoogleFonts.poppins(
+              textStyle: Theme.of(context).textTheme.headline5!.apply(
+                  color: Theme.of(context).backgroundColor, fontWeightDelta: 1),
+            ),
+          ),
           backgroundColor: const Color.fromARGB(255, 243, 103, 9),
           centerTitle: true,
           actions: [
@@ -85,7 +88,7 @@ class _NameSettingsPageState extends State<NameSettingsPage> {
               },
               child: Text(
                 'Save',
-                style: GoogleFonts.robotoCondensed(
+                style: GoogleFonts.poppins(
                   color: Colors.black,
                   fontSize: MediaQuery.of(context).size.width * 0.03,
                   fontWeight: FontWeight.w700,
@@ -112,10 +115,10 @@ class _NameSettingsPageState extends State<NameSettingsPage> {
                       child: Text(
                         NAME_PAGE,
                         textAlign: TextAlign.justify, // Align text to center
-                        style: TextStyle(
+                        style: GoogleFonts.poppins(
                           color: Colors.black,
-                          fontSize: MediaQuery.of(context).size.width * 0.025,
-                          fontWeight: FontWeight.w900,
+                          fontSize: MediaQuery.of(context).size.width * 0.035,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
@@ -126,11 +129,13 @@ class _NameSettingsPageState extends State<NameSettingsPage> {
                       color: Colors.white,
                       child: TextField(
                         controller: _controller,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: MediaQuery.of(context).size.width * 0.025,
-                          fontWeight: FontWeight.w200,
-                          overflow: TextOverflow.ellipsis,
+                        style: GoogleFonts.poppins(
+                          textStyle: TextStyle(
+                            color: Colors.black,
+                            fontSize: MediaQuery.of(context).size.width * 0.035,
+                            fontWeight: FontWeight.w400,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                         onChanged: (value) {
                           setState(

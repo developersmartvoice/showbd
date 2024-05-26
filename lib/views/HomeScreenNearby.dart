@@ -347,7 +347,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
                           fit: BoxFit.scaleDown,
                           child: Text(
                             '\৳' + consultationFee + "/h",
-                            style: TextStyle(
+                            style: GoogleFonts.poppins(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                             ),

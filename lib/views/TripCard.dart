@@ -347,6 +347,7 @@ import 'dart:convert';
 import 'package:appcode3/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:appcode3/modals/TripsClass.dart';
 
@@ -474,7 +475,7 @@ class TripCard extends StatelessWidget {
                 flex: 9,
                 child: Text(
                   'Trip to ${trip.destination ?? ''}',
-                  style: TextStyle(
+                  style: GoogleFonts.poppins(
                     fontWeight: FontWeight.bold,
                     fontSize: MediaQuery.of(context).size.width * 0.05 / 1.2,
                   ),
@@ -509,7 +510,7 @@ class TripCard extends StatelessWidget {
                 flex: 10,
                 child: Text(
                   '$formattedStartDate to $formattedEndDate',
-                  style: TextStyle(
+                  style: GoogleFonts.poppins(
                     color: Colors.grey,
                     fontSize: MediaQuery.of(context).size.width * 0.04,
                   ),
@@ -534,7 +535,7 @@ class TripCard extends StatelessWidget {
                 flex: 5,
                 child: Text(
                   'Number of People: ${getNumberString(trip.peopleQuantity)}',
-                  style: TextStyle(
+                  style: GoogleFonts.poppins(
                     fontSize: MediaQuery.of(context).size.width * 0.032,
                   ),
                   overflow: TextOverflow.ellipsis,
@@ -549,7 +550,7 @@ class TripCard extends StatelessWidget {
                       trip.endDate!.compareTo(DateTime.now().toString()) < 0
                           ? 'Expired'
                           : 'Active',
-                      style: TextStyle(
+                      style: GoogleFonts.poppins(
                         fontWeight: FontWeight.bold,
                         fontSize: MediaQuery.of(context).size.width * 0.006,
                         color:
@@ -557,7 +558,7 @@ class TripCard extends StatelessWidget {
                                     0
                                 ? Colors.red
                                 : Colors.green,
-                        overflow: TextOverflow.ellipsis,
+                        // overflow: TextOverflow.ellipsis,
                       ),
                       overflow: TextOverflow.ellipsis,
                     ),

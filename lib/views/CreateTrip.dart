@@ -174,10 +174,13 @@ class _CreateTripState extends State<CreateTrip> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Create Trip',
-              style: Theme.of(context).textTheme.headline5!.apply(
-                  color: Theme.of(context).backgroundColor,
-                  fontWeightDelta: 5)),
+          title: Text(
+            'Create Trip',
+            style: GoogleFonts.poppins(
+              textStyle: Theme.of(context).textTheme.headline5!.apply(
+                  color: Theme.of(context).backgroundColor, fontWeightDelta: 1),
+            ),
+          ),
           centerTitle: true,
           flexibleSpace: Container(
             decoration: BoxDecoration(
@@ -220,7 +223,7 @@ class _CreateTripState extends State<CreateTrip> {
                           children: [
                             Text(
                               'Destination :  ',
-                              style: TextStyle(
+                              style: GoogleFonts.poppins(
                                 color: Colors.grey,
                                 fontSize: 18.0,
                                 fontWeight: FontWeight.w700,

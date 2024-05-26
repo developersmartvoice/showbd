@@ -898,7 +898,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                   label: Flexible(
                                     child: Text(
                                       "Contact",
-                                      style: TextStyle(
+                                      style: GoogleFonts.poppins(
                                         fontSize:
                                             MediaQuery.of(context).size.width *
                                                 0.04,
@@ -942,7 +942,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                   label: Flexible(
                                     child: Text(
                                       "Create A Trip",
-                                      style: TextStyle(
+                                      style: GoogleFonts.poppins(
                                         fontSize:
                                             MediaQuery.of(context).size.width *
                                                 0.04,
@@ -1343,7 +1343,7 @@ class _DetailsPageState extends State<DetailsPage> {
                   doctorDetailsClass!.data!.services == null
                       ? Text(
                           "No Activities",
-                          style: TextStyle(
+                          style: GoogleFonts.poppins(
                               fontSize: MediaQuery.of(context).size.width *
                                   0.05 /
                                   1.5),
@@ -1403,7 +1403,7 @@ class _DetailsPageState extends State<DetailsPage> {
 
                                         Expanded(
                                           child: Text(serviceData['text'],
-                                              style: TextStyle(
+                                              style: GoogleFonts.poppins(
                                                 fontSize: MediaQuery.of(context)
                                                         .size
                                                         .width *
@@ -1452,7 +1452,7 @@ class _DetailsPageState extends State<DetailsPage> {
                           children: doctorDetailsClass!.data!.languages!
                               .map((language) {
                             // Customize text size
-                            TextStyle textStyle = TextStyle(
+                            TextStyle textStyle = GoogleFonts.poppins(
                                 fontSize: MediaQuery.of(context).size.width *
                                     0.05 /
                                     1.5,
@@ -1474,7 +1474,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                       style: textStyle,
                                     )
                                   : Text('$displayText',
-                                      style: TextStyle(
+                                      style: GoogleFonts.poppins(
                                         fontSize:
                                             MediaQuery.of(context).size.width *
                                                 0.05 /
@@ -1534,10 +1534,10 @@ class _DetailsPageState extends State<DetailsPage> {
               //                         count - 1
               //                     ? Text(
               //                         '$displayText,',
-              //                         style: textStyle,
+              //                         style: GoogleFonts.poppins,
               //                       )
               //                     : Text('$displayText',
-              //                         style: TextStyle(
+              //                         style: GoogleFonts.poppins(
               //                           fontSize: 15,
               //                           fontWeight: FontWeight.w500,
               //                           color: Colors.black,
@@ -1856,7 +1856,8 @@ class _DetailsPageState extends State<DetailsPage> {
           return AlertDialog(
             title: Text(
               s1,
-              style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+              style: GoogleFonts.poppins(
+                  fontSize: 17, fontWeight: FontWeight.bold),
             ),
             content: Column(
               mainAxisSize: MainAxisSize.min,
@@ -1899,7 +1900,7 @@ class _DetailsPageState extends State<DetailsPage> {
 //     child: Center(
 //       child: Text(
 //         '\$' + consultationFee + "/h",
-//         style: TextStyle(
+//         style:GoogleFonts.poppins(
 //           color: Colors.white,
 //           fontSize: 14.0,
 //           fontWeight: FontWeight.bold,

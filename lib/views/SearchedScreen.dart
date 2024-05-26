@@ -493,7 +493,7 @@ class _SearchedScreenState extends State<SearchedScreen> {
                     style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w600,
                         color: WHITE,
-                        fontSize: MediaQuery.of(context).size.width * 0.04),
+                        fontSize: MediaQuery.of(context).size.width * 0.06),
                   ),
                   SizedBox(
                     width: 20,
@@ -640,8 +640,8 @@ class _SearchedScreenState extends State<SearchedScreen> {
                 left: 18.0), // Adjust the left padding as needed
             child: Text(
               label,
-              style: GoogleFonts.robotoCondensed(
-                fontWeight: FontWeight.w600,
+              style: GoogleFonts.poppins(
+                fontWeight: FontWeight.w400,
                 color: Colors.grey,
                 fontSize: MediaQuery.of(context).size.width * 0.04,
               ),
@@ -670,7 +670,7 @@ class _SearchedScreenState extends State<SearchedScreen> {
                       ), // Adjust the left padding as needed
                       child: Text(
                         'Free',
-                        style: GoogleFonts.robotoCondensed(
+                        style: GoogleFonts.poppins(
                             fontSize: MediaQuery.of(context).size.width * 0.04,
                             fontWeight: FontWeight.w500),
                       ),
