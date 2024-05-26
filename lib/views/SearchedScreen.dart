@@ -1016,10 +1016,7 @@ class _SearchedScreenState extends State<SearchedScreen> {
                       "Apply",
                       style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w600,
-                        color: const Color.fromARGB(255, 12, 88, 150),
-                        fontSize: MediaQuery.of(context).size.width * 0.03,
                       ),
-                    ),
                   ),
                 ],
               ),
@@ -1157,47 +1154,143 @@ class _SearchedScreenState extends State<SearchedScreen> {
     );
   }
 
-  Widget _buildRadioButtons(String title, int selectedValue,
-      List<String> options, Function(int) onChanged) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          padding: EdgeInsets.only(left: 16),
-          child: Text(
-            title,
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
+  Widget _buildSlider(String label, double value, ValueChanged<int> onChanged) {
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(
+                left: 18.0), // Adjust the left padding as needed
+            child: Text(
+              label,
+              style: GoogleFonts.robotoCondensed(
+                fontWeight: FontWeight.w600,
+                color: Colors.grey,
+                fontSize: MediaQuery.of(context).size.width * 0.04,
+              ),
+              overflow: TextOverflow.ellipsis,
             ),
           ),
-        ),
-        SizedBox(height: 8),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: options.asMap().entries.map((entry) {
-            int idx = entry.key;
-            String option = entry.value;
-            return Expanded(
-              child: Row(
-                children: [
-                  Radio<int>(
-                    value: idx,
-                    groupValue: selectedValue,
-                    onChanged: (value) => onChanged(value!),
-                    activeColor: Color.fromARGB(255, 243, 103, 9),
-                  ),
-                  if (option == 'All') Image.asset('assets/fm.png'),
-                  if (option == 'Male') Image.asset('assets/male-user.png'),
-                  if (option == 'Female') Image.asset('assets/female.png'),
-                  SizedBox(width: 4),
-                  Text(option),
-                ],
-              ),
-            );
-          }).toList(),
-        ),
-      ],
+          SizedBox(
+            height: 10,
+          ),
+          // Divider(
+          //   height: 10,
+          //   color: Colors.grey,
+          // ),
+          Container(
+            color: Colors.white,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: 18,
+                        right: 18,
+                      ), // Adjust the left padding as needed
+                      child: Text(
+                        'Free',
+                        style: GoogleFonts.robotoCondensed(
+                            fontSize: MediaQuery.of(context).size.width * 0.04,
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                    // SizedBox(
+                    //   width: MediaQuery.of(context).size.width * 0.65,
+                    // ),
+                    Text(
+                      '100',
+                      style: GoogleFonts.robotoCondensed(
+                          fontSize: 20, fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+                // SliderTheme(
+                //   data: SliderThemeData(
+                //     //trackHeight: 5, // Change the height of the track
+                //     thumbShape: RoundSliderThumbShape(
+                //       enabledThumbRadius: 10, // Change the size of the thumb
+                //     ),
+                //   ),
+                //   child: Slider(
+                //     value: value,
+                //     min: 0,
+                //     max: 100,
+                //     onChanged: (double newValue) {
+                //       onChanged(
+                //           newValue.round()); // Round the double value to an integer
+                //     },
+                //     activeColor: Color.fromARGB(190, 255, 115, 0),
+                //   ),
+                // ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.end,
+                //   children: [
+                //     Text(
+                //       '100',
+                //       style: GoogleFonts.robotoCondensed(
+                //           fontSize: 20, fontWeight: FontWeight.w500),
+                //     ),
+                //   ],
+                // ),
+                Column(
+                  children: [
+                    SliderTheme(
+                      data: SliderThemeData(
+                        //trackHeight: 5, // Change the height of the track
+                        thumbShape: RoundSliderThumbShape(
+                          enabledThumbRadius:
+                              10, // Change the size of the thumb
+                        ),
+                      ),
+                      child: Slider(
+                        value: value,
+                        min: 0,
+                        max: 100,
+                        onChanged: (double newValue) {
+                          onChanged(newValue
+                              .round()); // Round the double value to an integer
+                          setState(() {
+                            filterFees = newValue.round();
+                            print("filter Fees are: $filterFees");
+                            if (filterFees != null) {
+                              isFeesSelected = true;
+                            } else {
+                              isFeesSelected = false;
+                            }
+                          });
+                        },
+                        activeColor: Color.fromARGB(190, 255, 115, 0),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          Container(
+            color: Colors.white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Selected Fees: ${value.round()}',
+                  style: GoogleFonts.robotoCondensed(
+                      fontSize: 18, fontWeight: FontWeight.w500),
+                ),
+              ],
+            ),
+          ),
+          // Divider(
+          //   height: 10,
+          //   color: Colors.grey,
+          // ),
+        ],
+      ),
     );
   }
 

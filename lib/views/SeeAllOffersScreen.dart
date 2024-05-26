@@ -129,7 +129,7 @@ class _SeeAllOffersState extends State<SeeAllOffers> {
                           // ),
                           child: Text(
                             'Sent',
-                            style: GoogleFonts.robotoCondensed(
+                            style: GoogleFonts.poppins(
                                 color: isSenderSelected
                                     ? Colors.white
                                     : Colors.orange),
@@ -177,7 +177,7 @@ class _SeeAllOffersState extends State<SeeAllOffers> {
                           // ),
                           child: Text(
                             'Received',
-                            style: GoogleFonts.robotoCondensed(
+                            style: GoogleFonts.poppins(
                                 color: !isSenderSelected
                                     ? Colors.white
                                     : Colors.orange),
@@ -212,8 +212,8 @@ class _SeeAllOffersState extends State<SeeAllOffers> {
                                     color: Colors.black,
                                     child: Text(
                                       item.recipientName,
-                                      style: TextStyle(
-                                        fontFamily: 'Roboto',
+                                      style: GoogleFonts.poppins(
+                                        // fontFamily: 'Roboto',
                                         fontSize: 20,
                                         color:
                                             const Color.fromARGB(255, 0, 0, 0),
@@ -234,7 +234,7 @@ class _SeeAllOffersState extends State<SeeAllOffers> {
                                           children: [
                                             TextSpan(
                                               text: 'Date: ',
-                                              style: TextStyle(
+                                              style: GoogleFonts.poppins(
                                                 fontWeight: FontWeight.bold,
                                                 color: Colors
                                                     .black, // Adjust color as needed
@@ -353,10 +353,10 @@ class _SeeAllOffersState extends State<SeeAllOffers> {
                               subtitle: Center(
                                 child: Text(
                                   'Tap to chat',
-                                  style: TextStyle(
+                                  style: GoogleFonts.poppins(
                                     color: Colors.white,
                                     fontSize: 16,
-                                    fontWeight: FontWeight.w900,
+                                    fontWeight: FontWeight.w500,
                                   ),
                                 ),
                               ),
@@ -581,10 +581,14 @@ class _SeeAllOffersState extends State<SeeAllOffers> {
               ),
               Title(
                 color: BLACK,
-                child: Text(ALL_OFFERS,
-                    style: Theme.of(context).textTheme.headline5!.apply(
+                child: Text(
+                  ALL_OFFERS,
+                  style: GoogleFonts.poppins(
+                    textStyle: Theme.of(context).textTheme.headline5!.apply(
                         color: Theme.of(context).backgroundColor,
-                        fontWeightDelta: 5)),
+                        fontWeightDelta: 1),
+                  ),
+                ),
               ),
               SizedBox(width: 48), // Adjust the space for the back button
             ],

@@ -567,7 +567,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                   label: Flexible(
                                     child: Text(
                                       "Contact",
-                                      style: TextStyle(
+                                      style: GoogleFonts.poppins(
                                         fontSize:
                                             MediaQuery.of(context).size.width *
                                                 0.04,
@@ -591,50 +591,50 @@ class _DetailsPageState extends State<DetailsPage> {
                                   ),
                                 ),
                               ),
-                              // SizedBox(
-                              //   width: 10,
-                              // ),
-                              // Expanded(
-                              //   child: ElevatedButton.icon(
-                              //     onPressed: () {
-                              //       Navigator.of(context).push(
-                              //         MaterialPageRoute(
-                              //           builder: (context) => CreateTrip(),
-                              //         ),
-                              //       );
-                              //     },
-                              //     icon: Icon(
-                              //       Icons.airplane_ticket_sharp,
-                              //       size: MediaQuery.of(context).size.width *
-                              //           0.05,
-                              //     ),
-                              //     label: Flexible(
-                              //       child: Text(
-                              //         "Create A Trip",
-                              //         style: TextStyle(
-                              //           fontSize:
-                              //               MediaQuery.of(context).size.width *
-                              //                   0.04,
-                              //         ),
-                              //         overflow: TextOverflow.ellipsis,
-                              //       ),
-                              //     ),
-                              //     style: ElevatedButton.styleFrom(
-                              //       backgroundColor:
-                              //           Color.fromARGB(255, 243, 103, 9),
-                              //       foregroundColor: Colors.white,
-                              //       shape: RoundedRectangleBorder(
-                              //         borderRadius: BorderRadius.circular(10.0),
-                              //         side: BorderSide(
-                              //           color: Colors.white,
-                              //         ),
-                              //       ),
-                              //       padding: EdgeInsets.all(10.0),
-                              //       elevation: 5.0,
-                              //       shadowColor: Colors.grey,
-                              //     ),
-                              //   ),
-                              // ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Expanded(
+                                child: ElevatedButton.icon(
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => CreateTrip(),
+                                      ),
+                                    );
+                                  },
+                                  icon: Icon(
+                                    Icons.airplane_ticket_sharp,
+                                    size: MediaQuery.of(context).size.width *
+                                        0.05,
+                                  ),
+                                  label: Flexible(
+                                    child: Text(
+                                      "Create A Trip",
+                                      style: TextStyle(
+                                        fontSize:
+                                            MediaQuery.of(context).size.width *
+                                                0.04,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor:
+                                        Color.fromARGB(255, 243, 103, 9),
+                                    foregroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      side: BorderSide(
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    padding: EdgeInsets.all(10.0),
+                                    elevation: 5.0,
+                                    shadowColor: Colors.grey,
+                                  ),
+                                ),
+                              ),
                             ],
                           )
                         : Container(),
@@ -779,7 +779,7 @@ class _DetailsPageState extends State<DetailsPage> {
                   doctorDetailsClass!.data!.services == null
                       ? Text(
                           "No Activities",
-                          style: TextStyle(
+                          style: GoogleFonts.poppins(
                               fontSize: MediaQuery.of(context).size.width *
                                   0.05 /
                                   1.5),
@@ -839,7 +839,7 @@ class _DetailsPageState extends State<DetailsPage> {
 
                                         Expanded(
                                           child: Text(serviceData['text'],
-                                              style: TextStyle(
+                                              style: GoogleFonts.poppins(
                                                 fontSize: MediaQuery.of(context)
                                                         .size
                                                         .width *
@@ -885,7 +885,7 @@ class _DetailsPageState extends State<DetailsPage> {
                           children: doctorDetailsClass!.data!.languages!
                               .map((language) {
                             // Customize text size
-                            TextStyle textStyle = TextStyle(
+                            TextStyle textStyle = GoogleFonts.poppins(
                                 fontSize: MediaQuery.of(context).size.width *
                                     0.05 /
                                     1.5,
@@ -907,7 +907,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                       style: textStyle,
                                     )
                                   : Text('$displayText',
-                                      style: TextStyle(
+                                      style: GoogleFonts.poppins(
                                         fontSize:
                                             MediaQuery.of(context).size.width *
                                                 0.05 /
@@ -923,6 +923,62 @@ class _DetailsPageState extends State<DetailsPage> {
               SizedBox(
                 height: 10,
               ),
+              // Divider(
+              //   height: 35.0,
+              //   color: Colors.grey[500],
+              // ),
+              // Column(
+              //   crossAxisAlignment: CrossAxisAlignment.start,
+              //   children: [
+              //     Text(
+              //       // doctorDetailsClass!.data!.aboutme == null
+              //       //     ? " "
+              //       //     :
+              //       ABOUT_GUIDE,
+              //       style: GoogleFonts.poppins(
+              //           fontWeight: FontWeight.w600,
+              //           color: BLACK,
+              //           fontSize: 20),
+              //     ),
+              //     SizedBox(
+              //       height: 5,
+              //     ),
+              //     doctorDetailsClass!.data!.aboutme == null
+              //         ? Text("No Data Found")
+              //         : Row(
+              //             children:
+              //                 doctorDetailsClass!.data!.aboutme!.map((aboutme) {
+              //               // Customize text size
+              //               TextStyle textStyle = TextStyle(
+              //                   fontSize: 12.0,
+              //                   //color: LIGHT_GREY_TEXT,
+              //                   fontWeight: FontWeight.w500);
+
+              //               // Map language to display text
+              //               String displayText =
+              //                   getDisplayTextForAboutMe(aboutme);
+
+              //               return Container(
+              //                 // padding: EdgeInsets.zero,
+              //                 margin: EdgeInsets.only(left: 0, right: 8.0),
+              //                 child: doctorDetailsClass!.data!.aboutme!
+              //                             .indexOf(aboutme) !=
+              //                         count - 1
+              //                     ? Text(
+              //                         '$displayText,',
+              //                         style: textStyle,
+              //                       )
+              //                     : Text('$displayText',
+              //                         style: TextStyle(
+              //                           fontSize: 15,
+              //                           fontWeight: FontWeight.w500,
+              //                           color: Colors.black,
+              //                         )),
+              //               );
+              //             }).toList(),
+              //           )
+              //   ],
+              // ),
             ],
           ),
         ),
@@ -1076,7 +1132,8 @@ class _DetailsPageState extends State<DetailsPage> {
           return AlertDialog(
             title: Text(
               s1,
-              style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+              style: GoogleFonts.poppins(
+                  fontSize: 17, fontWeight: FontWeight.bold),
             ),
             content: Column(
               mainAxisSize: MainAxisSize.min,
@@ -1104,3 +1161,27 @@ class _DetailsPageState extends State<DetailsPage> {
         });
   }
 }
+
+// Widget consultationFee(String consultationFee) {
+//   return Container(
+//     width: 80.0, // Fixed width
+//     height: 40.0, // Fixed height
+//     margin: EdgeInsets.only(top: 20),
+//     decoration: BoxDecoration(
+//         color: Color.fromARGB(255, 255, 94, 0).withOpacity(0.8),
+//         borderRadius: BorderRadius.only(
+//           topLeft: Radius.circular(5),
+//           bottomLeft: Radius.circular(5),
+//         )),
+//     child: Center(
+//       child: Text(
+//         '\$' + consultationFee + "/h",
+//         style: TextStyle(
+//           color: Colors.white,
+//           fontSize: 14.0,
+//           fontWeight: FontWeight.bold,
+//         ),
+//       ),
+//     ),
+//   );
+// }

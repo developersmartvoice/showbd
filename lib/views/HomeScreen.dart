@@ -665,12 +665,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                 borderRadius: BorderRadius.circular(15),
                               ),
                               hintText: SEARCH_DOCTOR_BY_NAME,
-                              hintStyle:
-                                  Theme.of(context).textTheme.bodyText2!.apply(
-                                        color: Theme.of(context)
-                                            .primaryColorDark
-                                            .withOpacity(0.4),
-                                      ),
+                              hintStyle: GoogleFonts.poppins(
+                                textStyle: Theme.of(context)
+                                    .textTheme
+                                    .bodyText2!
+                                    .apply(
+                                      color: Theme.of(context)
+                                          .primaryColorDark
+                                          .withOpacity(0.4),
+                                    ),
+                              ),
                               prefixIcon: Icon(Icons.search,
                                   color: Theme.of(context)
                                       .primaryColorDark
