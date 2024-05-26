@@ -1154,10 +1154,12 @@ class _ChatListScreenState extends State<ChatListScreen> {
         appBar: AppBar(
           title: Text(
             INBOX,
-            style: Theme.of(context).textTheme.headline5!.apply(
-                  color: Theme.of(context).backgroundColor,
-                  fontWeightDelta: 5,
-                ),
+            style: GoogleFonts.poppins(
+              textStyle: Theme.of(context).textTheme.headline5!.apply(
+                    color: Theme.of(context).backgroundColor,
+                    fontWeightDelta: 1,
+                  ),
+            ),
           ),
           centerTitle: true,
           flexibleSpace: Container(
@@ -1200,14 +1202,14 @@ class _ChatListScreenState extends State<ChatListScreen> {
                                   children: [
                                     Text(
                                       'MeetLocal',
-                                      style: GoogleFonts.robotoCondensed(
+                                      style: GoogleFonts.poppins(
                                         fontSize: 25,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                     Text(
                                       '$tripCount person${tripCount > 1 ? 's' : ''} is looking for a local in your place.',
-                                      style: GoogleFonts.robotoCondensed(
+                                      style: GoogleFonts.poppins(
                                         fontSize: 18,
                                         fontWeight: FontWeight.w500,
                                       ),
@@ -1271,7 +1273,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                                 Flexible(
                                   child: Text(
                                     "Click to View Your Sent and Received Offers!",
-                                    style: TextStyle(
+                                    style: GoogleFonts.poppins(
                                       color: Colors.white,
                                       fontSize: 14 *
                                           MediaQuery.of(context)
@@ -1489,7 +1491,8 @@ class _ChatListScreenState extends State<ChatListScreen> {
                                                                     index]
                                                                 .messageCount
                                                                 .toString(),
-                                                            style: TextStyle(
+                                                            style: GoogleFonts
+                                                                .poppins(
                                                               color:
                                                                   Colors.black,
                                                               fontWeight:
@@ -1529,7 +1532,8 @@ class _ChatListScreenState extends State<ChatListScreen> {
                                                                           index]
                                                                       .time)
                                                               .toLocal()),
-                                                      style: TextStyle(
+                                                      style:
+                                                          GoogleFonts.poppins(
                                                         fontWeight:
                                                             FontWeight.w500,
                                                         fontSize:

@@ -210,22 +210,22 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
-        appBar: AppBar(
-          title: Text('ACCOUNT INFORMATION',
-              style: Theme.of(context).textTheme.headline5!.apply(
-                  color: Theme.of(context).backgroundColor,
-                  fontWeightDelta: 5)),
-          centerTitle: true,
-          flexibleSpace: Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(
-                    "assets/moreScreenImages/header_bg.png"), // Add your background image path
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-        ),
+        // appBar: AppBar(
+        //   title: Text('ACCOUNT INFORMATION',
+        //       style: Theme.of(context).textTheme.headline5!.apply(
+        //           color: Theme.of(context).backgroundColor,
+        //           fontWeightDelta: 5)),
+        //   centerTitle: true,
+        //   flexibleSpace: Container(
+        //     decoration: BoxDecoration(
+        //       image: DecorationImage(
+        //         image: AssetImage(
+        //             "assets/moreScreenImages/header_bg.png"), // Add your background image path
+        //         fit: BoxFit.cover,
+        //       ),
+        //     ),
+        //   ),
+        // ),
         // appBar: AppBar(
         //   automaticallyImplyLeading: false,
         //   flexibleSpace: header(),
@@ -307,99 +307,133 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                       strokeWidth: 2,
                     )));
               }
-              return Container(
-                height: MediaQuery.sizeOf(context).height * .30,
-                width: MediaQuery.sizeOf(context).width * 1,
-                padding: EdgeInsets.all(10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(50),
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    DetailsPage(doctorId.toString(), false)),
-                          );
-                        },
-                        child: CachedNetworkImage(
-                          //alignment: Alignment.topCenter,
-                          imageUrl: doctorProfileWithRating!.data!.image!,
-                          height: 85,
-                          width: 85,
-                          fit: BoxFit.cover,
-                          placeholder: (context, url) => Container(
-                            color: Theme.of(context).primaryColorLight,
-                            child: Padding(
-                              padding: const EdgeInsets.all(20.0),
-                              child: Image.asset(
-                                "assets/homeScreenImages/user_unactive.png",
-                                height: 20,
-                                width: 20,
+              return Stack(
+                children: [
+                  // Background image
+                  Container(
+                    height: MediaQuery.sizeOf(context).height * .30,
+                    width: MediaQuery.sizeOf(context).width,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage(
+                            'assets/bg.jpg'), // Replace with your image asset path
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  // Semi-transparent overlay
+                  Container(
+                    height: MediaQuery.sizeOf(context).height * .30,
+                    width: MediaQuery.sizeOf(context).width,
+                    color: Color.fromARGB(255, 175, 117, 62)
+                        .withOpacity(0.5), // Adjust opacity as needed
+                  ),
+                  // Foreground content
+                  Container(
+                    height: MediaQuery.sizeOf(context).height * .30,
+                    width: MediaQuery.sizeOf(context).width,
+                    padding: EdgeInsets.all(10),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            color: WHITE,
+                            shape: BoxShape.circle,
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(50),
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        DetailsPage(doctorId.toString(), false),
+                                  ),
+                                );
+                              },
+                              child: CachedNetworkImage(
+                                imageUrl: doctorProfileWithRating!.data!.image!,
+                                height: 110,
+                                width: 110,
+                                fit: BoxFit.cover,
+                                placeholder: (context, url) => Container(
+                                  color: Theme.of(context).primaryColorLight,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: Image.asset(
+                                      "assets/homeScreenImages/user_unactive.png",
+                                      height: 20,
+                                      width: 20,
+                                    ),
+                                  ),
+                                ),
+                                errorWidget: (context, url, err) => Container(
+                                  color: Theme.of(context).primaryColorLight,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: Image.asset(
+                                      "assets/homeScreenImages/user_unactive.png",
+                                      height: 20,
+                                      width: 20,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                           ),
-                          errorWidget: (context, url, err) => Container(
-                              color: Theme.of(context).primaryColorLight,
-                              child: Padding(
-                                padding: const EdgeInsets.all(20.0),
-                                child: Image.asset(
-                                  "assets/homeScreenImages/user_unactive.png",
-                                  height: 20,
-                                  width: 20,
-                                ),
-                              )),
                         ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Text(
-                      doctorProfileWithRating!.data!.name!.toUpperCase(),
-                      style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.width *
-                            0.035, // Adjust font size dynamically
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black, // Adjust color as needed
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                DetailsPage(doctorId.toString(), false),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Text(
+                          doctorProfileWithRating!.data!.name!.toUpperCase(),
+                          style: GoogleFonts.poppins(
+                            fontSize: MediaQuery.of(context).size.width * 0.05,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
                           ),
-                        );
-                      },
-                      child: Text(
-                        'View Profile',
-                        style: TextStyle(
-                          fontSize: MediaQuery.of(context).size.width *
-                              0.04, // Adjust font size dynamically
-                          fontWeight: FontWeight.w500,
                         ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        backgroundColor: Color.fromARGB(255, 243, 103, 9),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          side: BorderSide(
-                              color: Colors.white), // Set border radius
+                        SizedBox(
+                          height: 10,
                         ),
-                      ),
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    DetailsPage(doctorId.toString(), false),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            'View Profile',
+                            style: GoogleFonts.poppins(
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.04,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white, // Ensure text color is white
+                            ),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.white,
+                            backgroundColor: Color.fromARGB(255, 175, 117, 62)
+                                .withOpacity(0.5), // Adjust opacity as needed
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              side: BorderSide(color: Colors.white),
+                            ),
+                            elevation:
+                                0, // Remove shadow to enhance transparency effect
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               );
             });
   }
@@ -417,26 +451,50 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
           //----------- Edit Profile -------------
 
           SizedBox(
-            height: 20,
+            height: 2,
           ),
 
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 0, 30, 0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 40,
-                  child: Text(
-                    'PROFILE SETTINGS',
-                    style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.width * 0.04,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 243, 103, 9),
+          // Padding(
+          //   padding: const EdgeInsets.fromLTRB(16, 0, 30, 0),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.start,
+          //     children: [
+          //       SizedBox(
+          //         height: 40,
+          //         child: Text(
+          //           'PROFILE SETTINGS',
+          //           style: GoogleFonts.poppins(
+          //             fontSize: MediaQuery.of(context).size.width * 0.04,
+          //             fontWeight: FontWeight.bold,
+          //             color: Color.fromARGB(255, 243, 103, 9),
+          //           ),
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
+
+          Container(
+            color: Color.fromARGB(
+                255, 235, 239, 241), // Set your desired background color here
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 10, 30, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 40,
+                    child: Text(
+                      'PROFILE SETTINGS',
+                      style: GoogleFonts.poppins(
+                        fontSize: MediaQuery.of(context).size.width * 0.04,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 243, 103, 9),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
 
@@ -457,16 +515,16 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                 // color: Color.fromARGB(255, 243, 103, 9),
                 color: WHITE,
                 borderRadius: BorderRadius.circular(10),
-                border: Border(
-                  bottom: BorderSide(
-                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                  top: BorderSide(
-                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                  right: BorderSide(
-                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                  left: BorderSide(
-                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                ),
+                // border: Border(
+                //   bottom: BorderSide(
+                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                //   top: BorderSide(
+                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                //   right: BorderSide(
+                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                //   left: BorderSide(
+                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                // ),
               ),
               child: Container(
                 margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
@@ -480,14 +538,16 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                         fit: BoxFit.scaleDown,
                         child: Text(
                           GENERAL_INFORMATION,
-                          style:
-                              Theme.of(context).textTheme.subtitle1?.copyWith(
-                                    color: Color.fromARGB(255, 243, 103, 9),
-                                    fontSize:
-                                        // MediaQuery.of(context).size.width * 0.05,
-                                        14,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
+                          style: GoogleFonts.poppins(
+                            textStyle:
+                                Theme.of(context).textTheme.subtitle1?.copyWith(
+                                      color: Color.fromARGB(255, 243, 103, 9),
+                                      fontSize:
+                                          // MediaQuery.of(context).size.width * 0.05,
+                                          14,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                          ),
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
@@ -530,16 +590,16 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
               decoration: BoxDecoration(
                 color: WHITE,
                 borderRadius: BorderRadius.circular(10),
-                border: Border(
-                  bottom: BorderSide(
-                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                  top: BorderSide(
-                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                  right: BorderSide(
-                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                  left: BorderSide(
-                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                ),
+                // border: Border(
+                //   bottom: BorderSide(
+                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                //   top: BorderSide(
+                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                //   right: BorderSide(
+                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                //   left: BorderSide(
+                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                // ),
               ),
               child: Container(
                 margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
@@ -553,14 +613,16 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                         fit: BoxFit.scaleDown,
                         child: Text(
                           CONTACT_AND_IDENTIFICATION,
-                          style:
-                              Theme.of(context).textTheme.subtitle1?.copyWith(
-                                    color: Color.fromARGB(255, 243, 103, 9),
-                                    // fontSize: MediaQuery.of(context).size.width *
-                                    //     0.9, // Adjust this value as needed
-                                    fontSize: 14, // Adjust this value as needed
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
+                          style: GoogleFonts.poppins(
+                            textStyle: Theme.of(context)
+                                .textTheme
+                                .subtitle1
+                                ?.copyWith(
+                                  color: Color.fromARGB(255, 243, 103, 9),
+                                  fontSize: 14, // Adjust this value as needed
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                          ),
                           // overflow: TextOverflow.ellipsis,
                         ),
                       ),
@@ -607,16 +669,16 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
               decoration: BoxDecoration(
                 color: WHITE,
                 borderRadius: BorderRadius.circular(10),
-                border: Border(
-                  bottom: BorderSide(
-                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                  top: BorderSide(
-                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                  right: BorderSide(
-                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                  left: BorderSide(
-                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                ),
+                // border: Border(
+                //   bottom: BorderSide(
+                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                //   top: BorderSide(
+                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                //   right: BorderSide(
+                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                //   left: BorderSide(
+                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                // ),
               ),
               child: Container(
                 margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
@@ -630,15 +692,17 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                         fit: BoxFit.scaleDown,
                         child: Text(
                           MEMBERSHIP,
-                          style:
-                              Theme.of(context).textTheme.subtitle1?.copyWith(
-                                    color: Color.fromARGB(255, 243, 103, 9),
-                                    fontSize: 14,
-                                    // fontSize:
-                                    //     MediaQuery.of(context).size.width * 0.05,
-                                    overflow: TextOverflow
-                                        .ellipsis, // Adjust this value as needed
-                                  ),
+                          style: GoogleFonts.poppins(
+                            textStyle:
+                                Theme.of(context).textTheme.subtitle1?.copyWith(
+                                      color: Color.fromARGB(255, 243, 103, 9),
+                                      fontSize: 14,
+                                      // fontSize:
+                                      //     MediaQuery.of(context).size.width * 0.05,
+                                      overflow: TextOverflow
+                                          .ellipsis, // Adjust this value as needed
+                                    ),
+                          ),
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
@@ -656,7 +720,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                         child: isMember
                             ? Text(
                                 "Member",
-                                style: GoogleFonts.robotoCondensed(
+                                style: GoogleFonts.poppins(
                                   // fontSize:
                                   //     MediaQuery.of(context).size.width * 0.04,
                                   fontSize: 14,
@@ -666,7 +730,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                               )
                             : Text(
                                 "Waiting for payment!",
-                                style: GoogleFonts.robotoCondensed(
+                                style: GoogleFonts.poppins(
                                   fontSize: MediaQuery.of(context).size.width *
                                       0.05 /
                                       1.5,
@@ -713,23 +777,27 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
             height: 15,
           ),
 
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 0, 30, 0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 40,
-                  child: Text(
-                    'LOCAL HOST',
-                    style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.width * 0.04,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 243, 103, 9),
+          Container(
+            color: Color.fromARGB(
+                255, 235, 239, 241), // Set your desired background color here
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 10, 30, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 40,
+                    child: Text(
+                      'LOCAL HOST',
+                      style: GoogleFonts.poppins(
+                        fontSize: MediaQuery.of(context).size.width * 0.04,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 243, 103, 9),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
 
@@ -749,16 +817,16 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
               decoration: BoxDecoration(
                 color: WHITE,
                 borderRadius: BorderRadius.circular(10),
-                border: Border(
-                  bottom: BorderSide(
-                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                  top: BorderSide(
-                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                  right: BorderSide(
-                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                  left: BorderSide(
-                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                ),
+                // border: Border(
+                //   bottom: BorderSide(
+                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                //   top: BorderSide(
+                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                //   right: BorderSide(
+                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                //   left: BorderSide(
+                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                // ),
               ),
               child: Container(
                 margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
@@ -772,14 +840,16 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                         fit: BoxFit.scaleDown,
                         child: Text(
                           ABOUT_HOST,
-                          style:
-                              Theme.of(context).textTheme.subtitle1?.copyWith(
-                                    color: Color.fromARGB(255, 243, 103, 9),
-                                    fontSize:
-                                        // MediaQuery.of(context).size.width * 0.04,
-                                        14,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
+                          style: GoogleFonts.poppins(
+                            textStyle:
+                                Theme.of(context).textTheme.subtitle1?.copyWith(
+                                      color: Color.fromARGB(255, 243, 103, 9),
+                                      fontSize:
+                                          // MediaQuery.of(context).size.width * 0.04,
+                                          14,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                          ),
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
@@ -815,7 +885,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                     title: Center(
                       child: Text(
                         "Select Currency".toUpperCase(),
-                        style: TextStyle(
+                        style: GoogleFonts.poppins(
                           color: const Color.fromARGB(255, 243, 103, 9),
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
@@ -843,7 +913,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                         child: Center(
                           child: Text(
                             'BDT',
-                            style: TextStyle(
+                            style: GoogleFonts.poppins(
                               color: Color.fromARGB(197, 1, 50, 3),
                               fontSize: 17,
                               fontWeight: selectedCurrency == 'BDT'
@@ -865,16 +935,16 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
               decoration: BoxDecoration(
                 color: WHITE,
                 borderRadius: BorderRadius.circular(10),
-                border: Border(
-                  bottom: BorderSide(
-                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                  top: BorderSide(
-                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                  right: BorderSide(
-                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                  left: BorderSide(
-                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                ),
+                // border: Border(
+                //   bottom: BorderSide(
+                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                //   top: BorderSide(
+                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                //   right: BorderSide(
+                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                //   left: BorderSide(
+                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                // ),
               ),
               child: Container(
                 margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
@@ -888,14 +958,16 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                         fit: BoxFit.scaleDown,
                         child: Text(
                           CURRENCY_EXCHANGE,
-                          style:
-                              Theme.of(context).textTheme.subtitle1?.copyWith(
-                                    color: Color.fromARGB(255, 243, 103, 9),
-                                    fontSize:
-                                        // MediaQuery.of(context).size.width * 0.04,
-                                        14,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
+                          style: GoogleFonts.poppins(
+                            textStyle:
+                                Theme.of(context).textTheme.subtitle1?.copyWith(
+                                      color: Color.fromARGB(255, 243, 103, 9),
+                                      fontSize:
+                                          // MediaQuery.of(context).size.width * 0.04,
+                                          14,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                          ),
                         ),
                       ),
                     ),
@@ -909,7 +981,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                         fit: BoxFit.scaleDown,
                         child: Text(
                           selectedCurrency,
-                          style: GoogleFonts.robotoCondensed(
+                          style: GoogleFonts.poppins(
                             fontSize: 14,
                             // MediaQuery.of(context).size.width * 0.04,
                             fontWeight: FontWeight.w600,
@@ -941,24 +1013,29 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
           SizedBox(
             height: 15,
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 0, 30, 0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 40,
-                  child: Text(
-                    'OTHERS',
-                    style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.width *
-                          0.04, // Adjust font size dynamically
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 243, 103, 9),
+
+          Container(
+            color: Color.fromARGB(
+                255, 235, 239, 241), // Set your desired background color here
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 10, 30, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 40,
+                    child: Text(
+                      'OTHERS',
+                      style: GoogleFonts.poppins(
+                        fontSize: MediaQuery.of(context).size.width *
+                            0.04, // Adjust font size dynamically
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 243, 103, 9),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           GestureDetector(
@@ -971,16 +1048,16 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
               decoration: BoxDecoration(
                 color: WHITE,
                 borderRadius: BorderRadius.circular(10),
-                border: Border(
-                  bottom: BorderSide(
-                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                  top: BorderSide(
-                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                  right: BorderSide(
-                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                  left: BorderSide(
-                      width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                ),
+                // border: Border(
+                //   bottom: BorderSide(
+                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                //   top: BorderSide(
+                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                //   right: BorderSide(
+                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                //   left: BorderSide(
+                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
+                // ),
               ),
               child: Container(
                 margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
@@ -994,14 +1071,16 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                         fit: BoxFit.scaleDown,
                         child: Text(
                           DELETE_ACCOUNT,
-                          style:
-                              Theme.of(context).textTheme.subtitle1?.copyWith(
-                                    color: Color.fromARGB(255, 243, 103, 9),
-                                    fontSize:
-                                        // MediaQuery.of(context).size.width * 0.04,
-                                        14,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
+                          style: GoogleFonts.poppins(
+                            textStyle:
+                                Theme.of(context).textTheme.subtitle1?.copyWith(
+                                      color: Color.fromARGB(255, 243, 103, 9),
+                                      fontSize:
+                                          // MediaQuery.of(context).size.width * 0.04,
+                                          14,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                          ),
                         ),
                       ),
                     ),
@@ -1035,7 +1114,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                 child: Text(
                   'Logout',
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
+                  style: GoogleFonts.poppins(
                     fontSize: MediaQuery.of(context).size.width * 0.04,
                     fontWeight: FontWeight.w500,
                     color: Colors.white,

@@ -314,10 +314,14 @@ class _AboutHostState extends State<AboutHost> {
             backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
             appBar: AppBar(
               backgroundColor: const Color.fromARGB(255, 243, 103, 9),
-              title: Text('About host',
-                  style: Theme.of(context).textTheme.headline5!.apply(
+              title: Text(
+                'About host',
+                style: GoogleFonts.poppins(
+                  textStyle: Theme.of(context).textTheme.headline5!.apply(
                       color: Theme.of(context).backgroundColor,
-                      fontWeightDelta: 5)),
+                      fontWeightDelta: 1),
+                ),
+              ),
               centerTitle: true,
               leading: IconButton(
                 icon: Icon(Icons.arrow_back),
@@ -567,7 +571,7 @@ class _ContainerPageState extends State<ContainerPage> {
                       width: MediaQuery.sizeOf(context).width * .25,
                       child: Text(
                         'Motto',
-                        style: GoogleFonts.robotoCondensed(
+                        style: GoogleFonts.poppins(
                           fontSize: MediaQuery.of(context).size.width * 0.04,
                           fontWeight: FontWeight.w500,
                           // color: Color.fromARGB(255, 243, 103, 9),
@@ -585,7 +589,7 @@ class _ContainerPageState extends State<ContainerPage> {
                         widget.motto != 'null'
                             ? widget.motto
                             : "Add your motto",
-                        style: TextStyle(
+                        style: GoogleFonts.poppins(
                           fontSize: MediaQuery.of(context).size.width * 0.035,
                           fontWeight: FontWeight.bold,
                           color: Colors.grey,
@@ -665,7 +669,7 @@ class _ContainerPageState extends State<ContainerPage> {
                       width: MediaQuery.sizeOf(context).width * .25,
                       child: Text(
                         'I will show you',
-                        style: GoogleFonts.robotoCondensed(
+                        style: GoogleFonts.poppins(
                           fontSize: MediaQuery.of(context).size.width * 0.04,
                           fontWeight: FontWeight.w500,
                           // color: Color.fromARGB(255, 243, 103, 9),
@@ -685,7 +689,7 @@ class _ContainerPageState extends State<ContainerPage> {
                         widget.iwillshowyou != 'null'
                             ? widget.iwillshowyou
                             : "Add what you can show",
-                        style: TextStyle(
+                        style: GoogleFonts.poppins(
                           fontSize: MediaQuery.of(context).size.width * 0.035,
                           fontWeight: FontWeight.bold,
                           color: Colors.grey,
@@ -769,7 +773,7 @@ class _ContainerPageState extends State<ContainerPage> {
                       width: MediaQuery.sizeOf(context).width * .25,
                       child: Text(
                         'Activities',
-                        style: GoogleFonts.robotoCondensed(
+                        style: GoogleFonts.poppins(
                           fontSize: MediaQuery.of(context).size.width * 0.04,
                           fontWeight: FontWeight.w500,
                           // color: Color.fromARGB(255, 243, 103, 9),
@@ -788,7 +792,7 @@ class _ContainerPageState extends State<ContainerPage> {
                         'See your activities...',
                         //widget.services.toString(),
                         //'${selectedActivities}',
-                        style: TextStyle(
+                        style: GoogleFonts.poppins(
                           fontSize: MediaQuery.of(context).size.width * 0.035,
                           fontWeight: FontWeight.bold,
                           color: Colors.grey,
@@ -863,7 +867,7 @@ class _ContainerPageState extends State<ContainerPage> {
                       width: MediaQuery.sizeOf(context).width * .25,
                       child: Text(
                         'Hourly rate',
-                        style: GoogleFonts.robotoCondensed(
+                        style: GoogleFonts.poppins(
                           fontSize: MediaQuery.of(context).size.width * 0.04,
                           fontWeight: FontWeight.w500,
                           // color: Color.fromARGB(255, 243, 103, 9),
@@ -881,7 +885,7 @@ class _ContainerPageState extends State<ContainerPage> {
                         widget.consultationfees != '0'
                             ? widget.consultationfees
                             : "Free",
-                        style: TextStyle(
+                        style: GoogleFonts.poppins(
                           fontSize: MediaQuery.of(context).size.width * 0.035,
                           fontWeight: FontWeight.bold,
                           color: Colors.grey,
@@ -954,7 +958,7 @@ class _ContainerPageState extends State<ContainerPage> {
                       width: MediaQuery.sizeOf(context).width * .25,
                       child: Text(
                         'Photos',
-                        style: GoogleFonts.robotoCondensed(
+                        style: GoogleFonts.poppins(
                           fontSize: MediaQuery.of(context).size.width * 0.04,
                           fontWeight: FontWeight.w500,
                           // color: Color.fromARGB(255, 243, 103, 9),
@@ -1037,7 +1041,7 @@ class _ContainerPageState extends State<ContainerPage> {
                       width: MediaQuery.sizeOf(context).width * .25,
                       child: Text(
                         LOCATION,
-                        style: GoogleFonts.robotoCondensed(
+                        style: GoogleFonts.poppins(
                           fontSize: MediaQuery.of(context).size.width * 0.04,
                           fontWeight: FontWeight.w500,
                           // color: Color.fromARGB(255, 243, 103, 9),
@@ -1053,7 +1057,7 @@ class _ContainerPageState extends State<ContainerPage> {
                       width: MediaQuery.sizeOf(context).width * .4,
                       child: Text(
                         widget.city != 'null' ? widget.city : "Add your city",
-                        style: TextStyle(
+                        style: GoogleFonts.poppins(
                           fontSize: MediaQuery.of(context).size.width * 0.035,
                           fontWeight: FontWeight.bold,
                           color: Colors.grey,
@@ -1131,7 +1135,7 @@ class _ContainerPageState extends State<ContainerPage> {
                       width: MediaQuery.sizeOf(context).width * .25,
                       child: Text(
                         ABOUT,
-                        style: GoogleFonts.robotoCondensed(
+                        style: GoogleFonts.poppins(
                           fontSize: MediaQuery.of(context).size.width * 0.04,
                           fontWeight: FontWeight.w500,
                           // color: Color.fromARGB(255, 243, 103, 9),
@@ -1149,7 +1153,7 @@ class _ContainerPageState extends State<ContainerPage> {
                         widget.aboutMe != 'null'
                             ? widget.aboutMe
                             : "Add About me",
-                        style: TextStyle(
+                        style: GoogleFonts.poppins(
                           fontSize: MediaQuery.of(context).size.width * 0.035,
                           fontWeight: FontWeight.bold,
                           color: Colors.grey,
@@ -1228,7 +1232,7 @@ class _ContainerPageState extends State<ContainerPage> {
                       width: MediaQuery.sizeOf(context).width * .25,
                       child: Text(
                         'Gender',
-                        style: GoogleFonts.robotoCondensed(
+                        style: GoogleFonts.poppins(
                           fontSize: MediaQuery.of(context).size.width * 0.04,
                           fontWeight: FontWeight.w500,
                           // color: Color.fromARGB(255, 243, 103, 9),
@@ -1247,7 +1251,7 @@ class _ContainerPageState extends State<ContainerPage> {
                         widget.gender != 'null'
                             ? widget.gender.capitalize.toString()
                             : "Add your gender",
-                        style: TextStyle(
+                        style: GoogleFonts.poppins(
                           fontSize: MediaQuery.of(context).size.width * 0.035,
                           fontWeight: FontWeight.bold,
                           color: Colors.grey,
@@ -1328,7 +1332,7 @@ class _ContainerPageState extends State<ContainerPage> {
                       width: MediaQuery.sizeOf(context).width * .25,
                       child: Text(
                         LANGUAGES,
-                        style: GoogleFonts.robotoCondensed(
+                        style: GoogleFonts.poppins(
                           fontSize: MediaQuery.of(context).size.width * 0.04,
                           fontWeight: FontWeight.w500,
                         ),
@@ -1347,7 +1351,7 @@ class _ContainerPageState extends State<ContainerPage> {
                             .map((language) => language.capitalize)
                             .join(
                                 ', '), // Join the list elements with a comma and space
-                        style: TextStyle(
+                        style: GoogleFonts.poppins(
                           fontSize: MediaQuery.of(context).size.width * 0.035,
                           fontWeight: FontWeight.bold,
                           color: Colors.grey,

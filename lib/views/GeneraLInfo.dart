@@ -8,6 +8,7 @@ import 'dart:convert';
 
 import 'package:appcode3/en.dart';
 import 'package:appcode3/main.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 
 class GeneraLInfo extends StatefulWidget {
@@ -165,10 +166,14 @@ class _GeneraLInfoState extends State<GeneraLInfo> {
           appBar: AppBar(
             backgroundColor: const Color.fromARGB(255, 243, 103, 9),
             centerTitle: true,
-            title: Text('General information',
-                style: Theme.of(context).textTheme.headline5!.apply(
+            title: Text(
+              'General information',
+              style: GoogleFonts.poppins(
+                textStyle: Theme.of(context).textTheme.headline5!.apply(
                     color: Theme.of(context).backgroundColor,
-                    fontWeightDelta: 5)),
+                    fontWeightDelta: 1),
+              ),
+            ),
             leading: IconButton(
               icon: Icon(
                 Icons.arrow_back,
@@ -310,7 +315,7 @@ class _ContainerPageState extends State<ContainerPage> {
                         width: MediaQuery.sizeOf(context).width * .25,
                         child: Text(
                           NAME,
-                          style: TextStyle(
+                          style: GoogleFonts.poppins(
                             fontSize: MediaQuery.of(context).size.width * 0.04,
                             fontWeight: FontWeight.bold,
                             // color: Color.fromARGB(255, 243, 103, 9),
@@ -326,7 +331,7 @@ class _ContainerPageState extends State<ContainerPage> {
                         width: MediaQuery.sizeOf(context).width * .4,
                         child: Text(
                           widget.name,
-                          style: TextStyle(
+                          style: GoogleFonts.poppins(
                             fontSize: MediaQuery.of(context).size.width * 0.04,
                             fontWeight: FontWeight.bold,
                             color: Colors.grey,
@@ -398,7 +403,7 @@ class _ContainerPageState extends State<ContainerPage> {
                           width: MediaQuery.sizeOf(context).width * .25,
                           child: Text(
                             ABOUT,
-                            style: TextStyle(
+                            style: GoogleFonts.poppins(
                               fontSize:
                                   MediaQuery.of(context).size.width * 0.04,
                               fontWeight: FontWeight.bold,
@@ -416,7 +421,7 @@ class _ContainerPageState extends State<ContainerPage> {
                           widget.aboutMe != 'null'
                               ? widget.aboutMe
                               : "Add About me",
-                          style: TextStyle(
+                          style: GoogleFonts.poppins(
                             fontSize: MediaQuery.of(context).size.width * 0.04,
                             fontWeight: FontWeight.bold,
                             color: Colors.grey,
@@ -488,7 +493,7 @@ class _ContainerPageState extends State<ContainerPage> {
                         width: MediaQuery.sizeOf(context).width * .25,
                         child: Text(
                           'Photos',
-                          style: TextStyle(
+                          style: GoogleFonts.poppins(
                             fontSize: MediaQuery.of(context).size.width * 0.04,
                             fontWeight: FontWeight.bold,
                           ),
@@ -567,7 +572,7 @@ class _ContainerPageState extends State<ContainerPage> {
                           width: MediaQuery.sizeOf(context).width * .25,
                           child: Text(
                             LOCATION,
-                            style: TextStyle(
+                            style: GoogleFonts.poppins(
                               fontSize:
                                   MediaQuery.of(context).size.width * 0.04,
                               fontWeight: FontWeight.bold,
@@ -583,7 +588,7 @@ class _ContainerPageState extends State<ContainerPage> {
                         width: MediaQuery.sizeOf(context).width * .4,
                         child: Text(
                           widget.city != 'null' ? widget.city : "Add your city",
-                          style: TextStyle(
+                          style: GoogleFonts.poppins(
                             fontSize: MediaQuery.of(context).size.width * 0.04,
                             fontWeight: FontWeight.bold,
                             color: Colors.grey,

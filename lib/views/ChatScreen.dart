@@ -1054,7 +1054,7 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
                                                                           ? "0" +
                                                                               DateTime.parse(snapshot.data!.docs[index]['time'].toString()).add(DateTime.now().timeZoneOffset).minute.toString()
                                                                           : DateTime.parse(snapshot.data!.docs[index]['time'].toString()).add(DateTime.now().timeZoneOffset).minute.toString()),
-                                                                  style: TextStyle(
+                                                                  style: GoogleFonts.poppins(
                                                                       color: Colors
                                                                           .grey,
                                                                       fontSize:
@@ -2065,7 +2065,7 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
           padding: const EdgeInsets.all(5.0),
           child: Text(
             message!,
-            style: GoogleFonts.ubuntu(
+            style: GoogleFonts.poppins(
                 fontSize: isURL(message) ? 18 : 15,
                 color: uid == myUid
                     ? Colors.white
@@ -2239,7 +2239,7 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
                     ),
                     hintText: "Type a message here...",
                     filled: true,
-                    hintStyle: TextStyle(
+                    hintStyle: GoogleFonts.poppins(
                         fontSize: 15, color: Color.fromARGB(255, 243, 103, 9)),
                     prefixIcon: IconButton(
                       icon:

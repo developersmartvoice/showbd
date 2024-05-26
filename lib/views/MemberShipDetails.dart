@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:appcode3/main.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 
@@ -66,8 +67,10 @@ class _MemberShipDetails extends State<MemberShipDetails> {
         appBar: AppBar(
           title: Text(
             "Membership Details",
-            style: Theme.of(context).textTheme.headline5!.apply(
-                color: Theme.of(context).backgroundColor, fontWeightDelta: 5),
+            style: GoogleFonts.poppins(
+              textStyle: Theme.of(context).textTheme.headline5!.apply(
+                  color: Theme.of(context).backgroundColor, fontWeightDelta: 1),
+            ),
           ),
           centerTitle: true,
           backgroundColor: const Color.fromARGB(255, 243, 103, 9),
@@ -94,8 +97,8 @@ class _MemberShipDetails extends State<MemberShipDetails> {
                         children: [
                           Text(
                             "You subscribed for 1 month.",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold, // Making text bold
+                            style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w400, // Making text bold
                               fontSize: MediaQuery.of(context).size.width *
                                   0.04, // Adjusting font size
                             ),
@@ -105,15 +108,15 @@ class _MemberShipDetails extends State<MemberShipDetails> {
                           ),
                           Text(
                             "Your subscription will end on :",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold, // Making text bold
+                            style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w400, // Making text bold
                               fontSize: 18, // Adjusting font size
                             ),
                           ),
                           Text(
                             formattedEndDate!,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold, // Making text bold
+                            style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w400, // Making text bold
                               fontSize: MediaQuery.of(context).size.width *
                                   0.04, // Adjusting font size
                               color: Colors.blue, // Changing text color to blue

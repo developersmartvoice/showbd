@@ -75,10 +75,13 @@ class _TourState extends State<Tour> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(TOUR,
-              style: Theme.of(context).textTheme.headline5!.apply(
-                  color: Theme.of(context).backgroundColor,
-                  fontWeightDelta: 5)),
+          title: Text(
+            TOUR,
+            style: GoogleFonts.poppins(
+              textStyle: Theme.of(context).textTheme.headline5!.apply(
+                  color: Theme.of(context).backgroundColor, fontWeightDelta: 1),
+            ),
+          ),
           centerTitle: true,
           flexibleSpace: Container(
             decoration: BoxDecoration(

@@ -53,10 +53,10 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
         appBar: AppBar(
           title: Text(
             'Phone',
-            style: GoogleFonts.robotoCondensed(
+            style: GoogleFonts.poppins(
               color: Colors.white,
               fontSize: 25,
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w600,
             ),
           ),
           backgroundColor: const Color.fromARGB(255, 243, 103, 9),
@@ -75,10 +75,10 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
               },
               child: Text(
                 'Save',
-                style: GoogleFonts.robotoCondensed(
+                style: GoogleFonts.poppins(
                   color: Color.fromARGB(255, 0, 0, 0),
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ),
@@ -107,10 +107,10 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
                             PHONE_PAGE,
                             textAlign:
                                 TextAlign.justify, // Align text to center
-                            style: TextStyle(
+                            style: GoogleFonts.poppins(
                               color: Colors.black,
                               fontSize: 12,
-                              fontWeight: FontWeight.w900,
+                              fontWeight: FontWeight.w400,
                             ),
                           ),
                         ),
@@ -124,10 +124,10 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
                       color: Colors.white,
                       child: TextField(
                         controller: _controller,
-                        style: TextStyle(
+                        style: GoogleFonts.poppins(
                           color: Colors.black,
                           fontSize: 16,
-                          fontWeight: FontWeight.w200,
+                          fontWeight: FontWeight.w400,
                         ),
                         onChanged: (value) {
                           setState(() {

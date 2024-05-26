@@ -119,10 +119,13 @@ class _LocationSearchPageInfoState extends State<LocationSearchPageInfo> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Search Location',
-              style: Theme.of(context).textTheme.headline5!.apply(
-                  color: Theme.of(context).backgroundColor,
-                  fontWeightDelta: 5)),
+          title: Text(
+            'Search Location',
+            style: GoogleFonts.poppins(
+              textStyle: Theme.of(context).textTheme.headline5!.apply(
+                  color: Theme.of(context).backgroundColor, fontWeightDelta: 1),
+            ),
+          ),
           flexibleSpace: Container(
             decoration: BoxDecoration(
               image: DecorationImage(
@@ -148,7 +151,7 @@ class _LocationSearchPageInfoState extends State<LocationSearchPageInfo> {
               },
               child: Text(
                 'Save',
-                style: GoogleFonts.robotoCondensed(
+                style: GoogleFonts.poppins(
                   color: Colors.black,
                   fontSize: MediaQuery.of(context).size.width * 0.03,
                   fontWeight: FontWeight.w700,
