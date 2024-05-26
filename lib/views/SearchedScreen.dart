@@ -1017,11 +1017,57 @@ class _SearchedScreenState extends State<SearchedScreen> {
                       style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w600,
                       ),
+                    ),
                   ),
                 ],
               ),
             ),
           ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildRadioButtons(String title, int selectedValue,
+      List<String> options, Function(int) onChanged) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          padding: EdgeInsets.only(left: 16),
+          child: Text(
+            title,
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+        SizedBox(height: 8),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: options.asMap().entries.map((entry) {
+            int idx = entry.key;
+            String option = entry.value;
+            return Expanded(
+              child: Row(
+                children: [
+                  Radio<int>(
+                    value: idx,
+                    groupValue: selectedValue,
+                    onChanged: (value) => onChanged(value!),
+                    activeColor: Color.fromARGB(255, 12, 88, 150),
+                  ),
+                  if (option == 'Male')
+                    Icon(Icons.male, color: Color.fromARGB(255, 12, 88, 150)),
+                  if (option == 'Female')
+                    Icon(Icons.female, color: Color.fromARGB(255, 12, 88, 150)),
+                  SizedBox(width: 4),
+                  Text(option),
+                ],
+              ),
+            );
+          }).toList(),
         ),
       ],
     );
@@ -1294,32 +1340,32 @@ class _SearchedScreenState extends State<SearchedScreen> {
     );
   }
 
-  Widget _buildSlider(String title, double value, Function(double) onChanged) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          padding: EdgeInsets.only(left: 16),
-          child: Text(
-            title,
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ),
-        Slider(
-          value: value,
-          onChanged: (value) => onChanged(value),
-          activeColor: Color.fromARGB(255, 243, 103, 9),
-          min: 0,
-          max: 100,
-          divisions: 100,
-          label: value.round().toString(),
-        ),
-      ],
-    );
-  }
+  // Widget _buildSlider(String title, double value, Function(double) onChanged) {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       Container(
+  //         padding: EdgeInsets.only(left: 16),
+  //         child: Text(
+  //           title,
+  //           style: TextStyle(
+  //             fontSize: 16,
+  //             fontWeight: FontWeight.w600,
+  //           ),
+  //         ),
+  //       ),
+  //       Slider(
+  //         value: value,
+  //         onChanged: (value) => onChanged(value),
+  //         activeColor: Color.fromARGB(255, 243, 103, 9),
+  //         min: 0,
+  //         max: 100,
+  //         divisions: 100,
+  //         label: value.round().toString(),
+  //       ),
+  //     ],
+  //   );
+  // }
 
   Widget _buildMultiSelect(String title, List<String> selectedValues,
       List<String> options, Function(List<String>) onChanged) {

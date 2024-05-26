@@ -594,47 +594,47 @@ class _DetailsPageState extends State<DetailsPage> {
                               SizedBox(
                                 width: 10,
                               ),
-                              Expanded(
-                                child: ElevatedButton.icon(
-                                  onPressed: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) => CreateTrip(),
-                                      ),
-                                    );
-                                  },
-                                  icon: Icon(
-                                    Icons.airplane_ticket_sharp,
-                                    size: MediaQuery.of(context).size.width *
-                                        0.05,
-                                  ),
-                                  label: Flexible(
-                                    child: Text(
-                                      "Create A Trip",
-                                      style: TextStyle(
-                                        fontSize:
-                                            MediaQuery.of(context).size.width *
-                                                0.04,
-                                      ),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor:
-                                        Color.fromARGB(255, 243, 103, 9),
-                                    foregroundColor: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      side: BorderSide(
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    padding: EdgeInsets.all(10.0),
-                                    elevation: 5.0,
-                                    shadowColor: Colors.grey,
-                                  ),
-                                ),
-                              ),
+                              // Expanded(
+                              //   child: ElevatedButton.icon(
+                              //     onPressed: () {
+                              //       Navigator.of(context).push(
+                              //         MaterialPageRoute(
+                              //           builder: (context) => CreateTrip(),
+                              //         ),
+                              //       );
+                              //     },
+                              //     icon: Icon(
+                              //       Icons.airplane_ticket_sharp,
+                              //       size: MediaQuery.of(context).size.width *
+                              //           0.05,
+                              //     ),
+                              //     label: Flexible(
+                              //       child: Text(
+                              //         "Create A Trip",
+                              //         style: TextStyle(
+                              //           fontSize:
+                              //               MediaQuery.of(context).size.width *
+                              //                   0.04,
+                              //         ),
+                              //         overflow: TextOverflow.ellipsis,
+                              //       ),
+                              //     ),
+                              //     style: ElevatedButton.styleFrom(
+                              //       backgroundColor:
+                              //           Color.fromARGB(255, 243, 103, 9),
+                              //       foregroundColor: Colors.white,
+                              //       shape: RoundedRectangleBorder(
+                              //         borderRadius: BorderRadius.circular(10.0),
+                              //         side: BorderSide(
+                              //           color: Colors.white,
+                              //         ),
+                              //       ),
+                              //       padding: EdgeInsets.all(10.0),
+                              //       elevation: 5.0,
+                              //       shadowColor: Colors.grey,
+                              //     ),
+                              //   ),
+                              // ),
                             ],
                           )
                         : Container(),
