@@ -18,10 +18,9 @@ String lat = "";
 String lon = "";
 String nextUrl = "";
 
-List<NearbyData> list2 = [];
 // List<DetailsClass.Data> list3 = [];
 // List<dynamic> list3 = [];
-bool hasApiBeenCalled = false;
+
 NearbyDoctorsClass? nearbyDoctorsClass;
 // DoctorDetailsClass? doctorDetailsClass;
 
@@ -44,6 +43,8 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
   bool isLoadingMore = false;
   int? currentId;
   int currentPage = 0;
+  bool hasApiBeenCalled = false;
+  List<NearbyData> list2 = [];
   CarouselController sliderController = CarouselController();
 
   int maxPosition = 0;

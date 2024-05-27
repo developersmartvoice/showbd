@@ -1148,452 +1148,491 @@ class _ChatListScreenState extends State<ChatListScreen> {
   // }
 
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
-        appBar: AppBar(
-          title: Text(
-            INBOX,
-            style: GoogleFonts.poppins(
-              textStyle: Theme.of(context).textTheme.headline5!.apply(
-                    color: Theme.of(context).backgroundColor,
-                    fontWeightDelta: 1,
+    return Stack(
+      children: [
+        Image.asset(
+          "assets/moreScreenImages/header_bg.png",
+          height: 140,
+          fit: BoxFit.fill,
+          width: MediaQuery.of(context).size.width,
+        ),
+        SafeArea(
+          child: Scaffold(
+            backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
+            appBar: AppBar(
+              title: Text(
+                INBOX,
+                style: GoogleFonts.poppins(
+                  textStyle: Theme.of(context).textTheme.headline5!.apply(
+                        color: Theme.of(context).backgroundColor,
+                        fontWeightDelta: 1,
+                      ),
+                ),
+              ),
+              centerTitle: true,
+              flexibleSpace: Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("assets/moreScreenImages/header_bg.png"),
+                    fit: BoxFit.cover,
                   ),
-            ),
-          ),
-          centerTitle: true,
-          flexibleSpace: Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/moreScreenImages/header_bg.png"),
-                fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-        ),
-        body: isLoading
-            ? Center(
-                child: CircularProgressIndicator(
-                  color: const Color.fromARGB(255, 243, 103, 9),
-                ),
-              )
-            : SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        check();
-                      },
-                      child: Card(
-                        child: Row(
-                          children: [
-                            CircleAvatar(
-                              radius: 35,
-                              backgroundImage:
-                                  AssetImage('assets/people 6.png'),
-                              backgroundColor: Colors.blue,
-                            ),
-                            Expanded(
-                              child: Container(
-                                padding: EdgeInsets.all(16),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'MeetLocal',
-                                      style: GoogleFonts.poppins(
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+            body: isLoading
+                ? Center(
+                    child: CircularProgressIndicator(
+                      color: const Color.fromARGB(255, 243, 103, 9),
+                    ),
+                  )
+                : SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            check();
+                          },
+                          child: Card(
+                            child: Row(
+                              children: [
+                                CircleAvatar(
+                                  radius: 35,
+                                  backgroundImage:
+                                      AssetImage('assets/people 6.png'),
+                                  backgroundColor: Colors.blue,
+                                ),
+                                Expanded(
+                                  child: Container(
+                                    padding: EdgeInsets.all(16),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'MeetLocal',
+                                          style: GoogleFonts.poppins(
+                                            fontSize: 25,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text(
+                                          '$tripCount person${tripCount > 1 ? 's' : ''} is looking for a local in your place.',
+                                          style: GoogleFonts.poppins(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    Text(
-                                      '$tripCount person${tripCount > 1 ? 's' : ''} is looking for a local in your place.',
-                                      style: GoogleFonts.poppins(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                IconButton(
+                                  icon: Icon(Icons.arrow_forward_ios_sharp),
+                                  onPressed: () {
+                                    check();
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Colors.orange,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                offset: Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          alignment: Alignment.center,
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => SeeAllOffers(
+                                      id: id!,
+                                    ),
+                                  ),
+                                );
+                              },
+                              borderRadius: BorderRadius.circular(10),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.touch_app,
+                                      color: Colors.white,
+                                      size: 24,
+                                    ),
+                                    SizedBox(width: 8),
+                                    Flexible(
+                                      child: Text(
+                                        "Click to View Your Sent and Received Offers!",
+                                        style: GoogleFonts.poppins(
+                                          color: Colors.white,
+                                          fontSize: 14 *
+                                              MediaQuery.of(context)
+                                                  .textScaleFactor,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 3,
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
                             ),
-                            IconButton(
-                              icon: Icon(Icons.arrow_forward_ios_sharp),
-                              onPressed: () {
-                                check();
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Colors.orange,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 2,
-                            blurRadius: 5,
-                            offset: Offset(0, 3),
-                          ),
-                        ],
-                      ),
-                      alignment: Alignment.center,
-                      child: Material(
-                        color: Colors.transparent,
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => SeeAllOffers(
-                                  id: id!,
-                                ),
-                              ),
-                            );
-                          },
-                          borderRadius: BorderRadius.circular(10),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.touch_app,
-                                  color: Colors.white,
-                                  size: 24,
-                                ),
-                                SizedBox(width: 8),
-                                Flexible(
-                                  child: Text(
-                                    "Click to View Your Sent and Received Offers!",
-                                    style: GoogleFonts.poppins(
-                                      color: Colors.white,
-                                      fontSize: 14 *
-                                          MediaQuery.of(context)
-                                              .textScaleFactor,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 3,
-                                  ),
-                                ),
-                              ],
-                            ),
                           ),
                         ),
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    if (reqCount > 0)
-                      ListView.builder(
-                        shrinkWrap: true,
-                        itemCount:
-                            directBookingClass?.directBookings?.length ?? 0,
-                        itemBuilder: (context, index) {
-                          final booking =
-                              directBookingClass!.directBookings![index];
-                          return ListTile(
-                            leading: CircleAvatar(
-                              backgroundImage:
-                                  NetworkImage(booking.senderImage ?? ''),
-                            ),
-                            title: Text(booking.senderName ?? ''),
-                            subtitle: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  alignment: Alignment.centerLeft,
-                                  width: MediaQuery.sizeOf(context).width * .4,
-                                  child: Text(
-                                    'Wants to book you',
-                                    style: TextStyle(
-                                      fontSize:
-                                          MediaQuery.of(context).size.width *
+                        SizedBox(height: 10),
+                        if (reqCount > 0)
+                          ListView.builder(
+                            shrinkWrap: true,
+                            itemCount:
+                                directBookingClass?.directBookings?.length ?? 0,
+                            itemBuilder: (context, index) {
+                              final booking =
+                                  directBookingClass!.directBookings![index];
+                              return ListTile(
+                                leading: CircleAvatar(
+                                  backgroundImage:
+                                      NetworkImage(booking.senderImage ?? ''),
+                                ),
+                                title: Text(booking.senderName ?? ''),
+                                subtitle: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      alignment: Alignment.centerLeft,
+                                      width:
+                                          MediaQuery.sizeOf(context).width * .4,
+                                      child: Text(
+                                        'Wants to book you',
+                                        style: TextStyle(
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
                                               0.03,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color.fromARGB(255, 126, 120, 120),
+                                          fontWeight: FontWeight.bold,
+                                          color: Color.fromARGB(
+                                              255, 126, 120, 120),
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
                                     ),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                                Container(
-                                  alignment: Alignment.centerRight,
-                                  width: MediaQuery.sizeOf(context).width * .35,
-                                  child: Text(
-                                    "See details >",
-                                    style: TextStyle(
-                                      fontSize:
-                                          MediaQuery.of(context).size.width *
+                                    Container(
+                                      alignment: Alignment.centerRight,
+                                      width: MediaQuery.sizeOf(context).width *
+                                          .35,
+                                      child: Text(
+                                        "See details >",
+                                        style: TextStyle(
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
                                               0.025,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color.fromARGB(255, 126, 120, 120),
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                )
-                              ],
-                            ),
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      BookingDetailsScreen(booking: booking),
+                                          fontWeight: FontWeight.bold,
+                                          color: Color.fromARGB(
+                                              255, 126, 120, 120),
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    )
+                                  ],
                                 ),
-                              ).then((dataUpdated) =>
-                                  handleDataReload(dataUpdated ?? false));
-                            },
-                          );
-                        },
-                      ),
-                    SizedBox(height: 10),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                      child: st
-                          ? chatListDetails.isEmpty
-                              ? Center(
-                                  child: Text(
-                                    "No recent chats",
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 22,
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          BookingDetailsScreen(
+                                              booking: booking),
                                     ),
-                                  ),
-                                )
-                              : ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: chatListDetails.length,
-                                  itemBuilder: (context, index) {
-                                    return StreamBuilder(
-                                      stream: FirebaseDatabase.instance
-                                          .reference()
-                                          .child(chatListDetails[index].userUid)
-                                          .onValue,
-                                      builder:
-                                          (context, AsyncSnapshot snapshot) {
-                                        if (snapshot.hasData) {
-                                          return Card(
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(15),
-                                            ),
-                                            child: Container(
-                                              margin: EdgeInsets.all(1),
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(15),
-                                                gradient: chatListDetails[index]
-                                                            .messageCount >
-                                                        0
-                                                    ? LinearGradient(
-                                                        colors: [
-                                                          Colors.lightBlueAccent
-                                                              .withOpacity(0.2),
-                                                          Colors.lightBlueAccent
-                                                              .withOpacity(0.05)
-                                                        ],
-                                                        stops: [0.1, 0.6],
-                                                        begin: Alignment
-                                                            .centerLeft,
-                                                        end: Alignment
-                                                            .centerRight,
-                                                      )
-                                                    : null,
-                                              ),
-                                              child: ListTile(
-                                                title: Text(
-                                                  snapshot.data!.snapshot
-                                                      .value['name'],
-                                                  style: GoogleFonts.poppins(
-                                                    fontWeight: chatListDetails[
+                                  ).then((dataUpdated) =>
+                                      handleDataReload(dataUpdated ?? false));
+                                },
+                              );
+                            },
+                          ),
+                        SizedBox(height: 10),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                          child: st
+                              ? chatListDetails.isEmpty
+                                  ? Center(
+                                      child: Text(
+                                        "No recent chats",
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 22,
+                                        ),
+                                      ),
+                                    )
+                                  : ListView.builder(
+                                      shrinkWrap: true,
+                                      itemCount: chatListDetails.length,
+                                      itemBuilder: (context, index) {
+                                        return StreamBuilder(
+                                          stream: FirebaseDatabase.instance
+                                              .reference()
+                                              .child(chatListDetails[index]
+                                                  .userUid)
+                                              .onValue,
+                                          builder: (context,
+                                              AsyncSnapshot snapshot) {
+                                            if (snapshot.hasData) {
+                                              return Card(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                ),
+                                                child: Container(
+                                                  margin: EdgeInsets.all(1),
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15),
+                                                    gradient: chatListDetails[
                                                                     index]
                                                                 .messageCount >
                                                             0
-                                                        ? FontWeight.bold
-                                                        : FontWeight.normal,
-                                                    fontSize: MediaQuery.sizeOf(
-                                                                context)
-                                                            .width *
-                                                        .04,
-                                                  ),
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                ),
-                                                leading: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(30),
-                                                  child: InkWell(
-                                                    onTap: () {
-                                                      // Navigator.push(context,
-                                                      // MaterialPageRoute(
-                                                      //   builder: (context) => MyPhotoViewer(SERVER_ADDRESS + '/public/upload/profile/'+snapshot.data.snapshot.value['profile']),
-                                                      // )
-                                                      // );
-                                                    },
-                                                    child: Container(
-                                                      height: 55,
-                                                      width: 55,
-                                                      color:
-                                                          Colors.grey.shade300,
-                                                      child: CachedNetworkImage(
-                                                        imageUrl: snapshot
-                                                                        .data!
-                                                                        .snapshot
-                                                                        .value[
-                                                                    'profile'] ==
-                                                                null
-                                                            ? " "
-                                                            : SERVER_ADDRESS +
-                                                                '/public/upload/profile/' +
-                                                                snapshot
-                                                                        .data!
-                                                                        .snapshot
-                                                                        .value[
-                                                                    'profile'],
-                                                        fit: BoxFit.cover,
-                                                        placeholder:
-                                                            (context, string) =>
-                                                                Container(
-                                                          height: 55,
-                                                          width: 55,
-                                                        ),
-                                                        errorWidget:
-                                                            (context, err, f) =>
-                                                                Icon(
-                                                          Icons.account_circle,
-                                                          size: 50,
-                                                          color: Colors
-                                                              .grey.shade400,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                trailing: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceEvenly,
-                                                  children: [
-                                                    if (chatListDetails[index]
-                                                            .messageCount >
-                                                        0)
-                                                      Container(
-                                                        child: Center(
-                                                          child: Text(
-                                                            chatListDetails[
-                                                                    index]
-                                                                .messageCount
-                                                                .toString(),
-                                                            style: GoogleFonts
-                                                                .poppins(
-                                                              color:
-                                                                  Colors.black,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          gradient:
-                                                              LinearGradient(
+                                                        ? LinearGradient(
                                                             colors: [
-                                                              Colors.greenAccent
-                                                                  .withOpacity(
-                                                                      0.6),
                                                               Colors
                                                                   .lightBlueAccent
+                                                                  .withOpacity(
+                                                                      0.2),
+                                                              Colors
+                                                                  .lightBlueAccent
+                                                                  .withOpacity(
+                                                                      0.05)
                                                             ],
-                                                            stops: [0.3, 1],
+                                                            stops: [0.1, 0.6],
                                                             begin: Alignment
-                                                                .topCenter,
+                                                                .centerLeft,
                                                             end: Alignment
-                                                                .bottomCenter,
-                                                          ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(12),
-                                                        ),
-                                                        height: 23,
-                                                        width: 23,
-                                                      ),
-                                                    Text(
-                                                      messageTiming(
-                                                          DateTime.parse(
-                                                                  chatListDetails[
-                                                                          index]
-                                                                      .time)
-                                                              .toLocal()),
+                                                                .centerRight,
+                                                          )
+                                                        : null,
+                                                  ),
+                                                  child: ListTile(
+                                                    title: Text(
+                                                      snapshot.data!.snapshot
+                                                          .value['name'],
                                                       style:
                                                           GoogleFonts.poppins(
-                                                        fontWeight:
-                                                            FontWeight.w500,
+                                                        fontWeight: chatListDetails[
+                                                                        index]
+                                                                    .messageCount >
+                                                                0
+                                                            ? FontWeight.bold
+                                                            : FontWeight.normal,
                                                         fontSize:
                                                             MediaQuery.sizeOf(
                                                                         context)
                                                                     .width *
-                                                                .025,
+                                                                .04,
                                                       ),
                                                       overflow:
                                                           TextOverflow.ellipsis,
                                                     ),
-                                                  ],
-                                                ),
-                                                subtitle: typeToWidget(
-                                                  chatListDetails[index].type,
-                                                  chatListDetails[index]
-                                                      .message,
-                                                  chatListDetails[index]
-                                                      .messageCount,
-                                                ),
-                                                tileColor: Colors.transparent,
-                                                onTap: () {
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          ChatScreen(
-                                                        snapshot.data!.snapshot
-                                                            .value['name'],
-                                                        chatListDetails[index]
-                                                            .userUid,
-                                                        2165201,
-                                                        true,
-                                                        null,
-                                                        "",
-                                                        "",
+                                                    leading: ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              30),
+                                                      child: InkWell(
+                                                        onTap: () {
+                                                          // Navigator.push(context,
+                                                          // MaterialPageRoute(
+                                                          //   builder: (context) => MyPhotoViewer(SERVER_ADDRESS + '/public/upload/profile/'+snapshot.data.snapshot.value['profile']),
+                                                          // )
+                                                          // );
+                                                        },
+                                                        child: Container(
+                                                          height: 55,
+                                                          width: 55,
+                                                          color: Colors
+                                                              .grey.shade300,
+                                                          child:
+                                                              CachedNetworkImage(
+                                                            imageUrl: snapshot
+                                                                            .data!
+                                                                            .snapshot
+                                                                            .value[
+                                                                        'profile'] ==
+                                                                    null
+                                                                ? " "
+                                                                : SERVER_ADDRESS +
+                                                                    '/public/upload/profile/' +
+                                                                    snapshot
+                                                                        .data!
+                                                                        .snapshot
+                                                                        .value['profile'],
+                                                            fit: BoxFit.cover,
+                                                            placeholder: (context,
+                                                                    string) =>
+                                                                Container(
+                                                              height: 55,
+                                                              width: 55,
+                                                            ),
+                                                            errorWidget:
+                                                                (context, err,
+                                                                        f) =>
+                                                                    Icon(
+                                                              Icons
+                                                                  .account_circle,
+                                                              size: 50,
+                                                              color: Colors.grey
+                                                                  .shade400,
+                                                            ),
+                                                          ),
+                                                        ),
                                                       ),
                                                     ),
-                                                  );
-                                                },
-                                              ),
-                                            ),
-                                          );
-                                        } else {
-                                          return Container();
-                                        }
+                                                    trailing: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceEvenly,
+                                                      children: [
+                                                        if (chatListDetails[
+                                                                    index]
+                                                                .messageCount >
+                                                            0)
+                                                          Container(
+                                                            child: Center(
+                                                              child: Text(
+                                                                chatListDetails[
+                                                                        index]
+                                                                    .messageCount
+                                                                    .toString(),
+                                                                style:
+                                                                    GoogleFonts
+                                                                        .poppins(
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              gradient:
+                                                                  LinearGradient(
+                                                                colors: [
+                                                                  Colors
+                                                                      .greenAccent
+                                                                      .withOpacity(
+                                                                          0.6),
+                                                                  Colors
+                                                                      .lightBlueAccent
+                                                                ],
+                                                                stops: [0.3, 1],
+                                                                begin: Alignment
+                                                                    .topCenter,
+                                                                end: Alignment
+                                                                    .bottomCenter,
+                                                              ),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          12),
+                                                            ),
+                                                            height: 23,
+                                                            width: 23,
+                                                          ),
+                                                        Text(
+                                                          messageTiming(DateTime.parse(
+                                                                  chatListDetails[
+                                                                          index]
+                                                                      .time)
+                                                              .toLocal()),
+                                                          style: GoogleFonts
+                                                              .poppins(
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            fontSize: MediaQuery
+                                                                        .sizeOf(
+                                                                            context)
+                                                                    .width *
+                                                                .025,
+                                                          ),
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    subtitle: typeToWidget(
+                                                      chatListDetails[index]
+                                                          .type,
+                                                      chatListDetails[index]
+                                                          .message,
+                                                      chatListDetails[index]
+                                                          .messageCount,
+                                                    ),
+                                                    tileColor:
+                                                        Colors.transparent,
+                                                    onTap: () {
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              ChatScreen(
+                                                            snapshot
+                                                                .data!
+                                                                .snapshot
+                                                                .value['name'],
+                                                            chatListDetails[
+                                                                    index]
+                                                                .userUid,
+                                                            2165201,
+                                                            true,
+                                                            null,
+                                                            "",
+                                                            "",
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
+                                                  ),
+                                                ),
+                                              );
+                                            } else {
+                                              return Container();
+                                            }
+                                          },
+                                        );
                                       },
-                                    );
-                                  },
-                                )
-                          : Center(
-                              child: CircularProgressIndicator(
-                                color: const Color.fromARGB(255, 243, 103, 9),
-                              ),
-                            ),
+                                    )
+                              : Center(
+                                  child: CircularProgressIndicator(
+                                    color:
+                                        const Color.fromARGB(255, 243, 103, 9),
+                                  ),
+                                ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-      ),
+                  ),
+          ),
+        ),
+      ],
     );
   }
 

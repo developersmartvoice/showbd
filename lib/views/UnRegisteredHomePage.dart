@@ -7,7 +7,9 @@ import 'package:appcode3/modals/NearbyDoctorClass.dart';
 import 'package:appcode3/views/Doctor/loginAsDoctor.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
@@ -49,89 +51,155 @@ class _UnRegisteredHomePageState extends State<UnRegisteredHomePage>
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Image.asset(
-          "assets/moreScreenImages/header_bg.png",
-          height: 140,
-          fit: BoxFit.fill,
-          width: MediaQuery.of(context).size.width,
-        ),
-        SafeArea(
-          child: Scaffold(
-            floatingActionButton: FloatingActionButton.extended(
-              onPressed: () {
-                scrollController!.animateTo(
-                  0.0,
-                  duration: Duration(milliseconds: 500),
-                  curve: Curves.easeInOut,
-                );
-              },
-              label: Column(
+    return WillPopScope(
+      onWillPop: () async {
+        // Add your custom logic here, for example, showing a confirmation dialog
+        bool shouldPop = await showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text("Are you sure?"),
+            content: Text("Do you want to exit the app?"),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: Text("No"),
+              ),
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: Text("Yes"),
+              ),
+            ],
+          ),
+        );
+        return shouldPop;
+      },
+      child: Stack(
+        children: [
+          Image.asset(
+            "assets/moreScreenImages/header_bg.png",
+            height: 140,
+            fit: BoxFit.fill,
+            width: MediaQuery.of(context).size.width,
+          ),
+          SafeArea(
+            child: Scaffold(
+              floatingActionButton: Stack(
+                // mainAxisAlignment: MainAxisAlignment.end,
+                alignment: Alignment.bottomRight,
                 children: [
-                  Icon(
-                    Icons.arrow_upward_sharp,
-                    color: Colors.white,
+                  Positioned(
+                    bottom: 80,
+                    child: Container(
+                      height: 50,
+                      width: 50,
+                      child: FloatingActionButton.extended(
+                        onPressed: () {
+                          scrollController!.animateTo(
+                            0.0,
+                            duration: Duration(milliseconds: 500),
+                            curve: Curves.easeInOut,
+                          );
+                          // _getLocationStart();
+                          print("THIS IS LAT: $lat and LON: $lon");
+                          setState(() {
+                            isNearbyLoading = true;
+                            list2.clear();
+                          });
+                          callApi(
+                              latitude: double.parse(lat!),
+                              longitude: double.parse(lat!));
+                        },
+                        label: Icon(
+                          Icons.arrow_upward_sharp,
+                          color: Colors.white,
+                        ),
+                        backgroundColor: Color.fromARGB(255, 243, 103, 9),
+                        shape: BeveledRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                    ),
                   ),
-                  Text(
-                    "TOP",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w400,
-                        letterSpacing: 5,
-                        fontSize: 12),
-                  ),
-                ],
-              ),
-              backgroundColor: Color.fromARGB(255, 243, 103, 9),
-              shape: BeveledRectangleBorder(
-                borderRadius: BorderRadius.circular(5),
-              ),
-            ),
-            backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
-            appBar: AppBar(
-              backgroundColor: Color.fromARGB(255, 243, 103, 9),
-              title: Text(
-                "MEET LOCAL",
-                style: TextStyle(
-                  color: WHITE,
-                  fontWeight: FontWeight.w900,
-                  letterSpacing: 5,
-                ),
-              ),
-            ),
-            body: isNearbyLoading
-                ? Center(
-                    child: CircularProgressIndicator(
-                    color: Color.fromARGB(255, 243, 103, 9),
-                  ))
-                : list2.isNotEmpty
-                    ? ListView.builder(
-                        controller: scrollController,
-                        itemCount: list2.length,
-                        itemBuilder: (context, index) {
-                          final item = list2[index];
-                          return nearByGridWidget(
-                            item.image,
-                            item.name,
-                            item.departmentName,
-                            item.id,
-                            item.consultationFee,
-                            item.aboutme,
-                            item.motto,
-                            item.avgrating,
-                            item.city,
-                            item.images,
-                            item.totalreview.toString(),
+                  Positioned(
+                    bottom: 20,
+                    right: 80,
+                    child: Container(
+                      height: 50,
+                      // width: MediaQuery.of(context).size.width,
+                      child: FloatingActionButton.extended(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (builder) => LoginAsDoctor(),
+                            ),
                           );
                         },
-                      )
-                    : Center(
-                        child: Text("No nearby doctors found."),
+                        label: Text(
+                          "LOGIN / REGISTER",
+                          style: TextStyle(
+                            color: WHITE,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                            letterSpacing: 4,
+                          ),
+                        ),
+                        backgroundColor: Color.fromARGB(255, 243, 103, 9),
+                        shape: BeveledRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
                       ),
+                    ),
+                  )
+                ],
+              ),
+              backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
+              appBar: AppBar(
+                backgroundColor: Color.fromARGB(255, 243, 103, 9),
+                automaticallyImplyLeading: false,
+                title: Text(
+                  "MEET LOCAL",
+                  style: TextStyle(
+                    color: WHITE,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: 5,
+                  ),
+                ),
+              ),
+              body: isNearbyLoading
+                  ? Center(
+                      child: CircularProgressIndicator(
+                        color: Color.fromARGB(255, 243, 103, 9),
+                      ),
+                    )
+                  : list2.isNotEmpty
+                      ? ListView.builder(
+                          controller: scrollController,
+                          itemCount: list2.length,
+                          itemBuilder: (context, index) {
+                            final item = list2[index];
+                            return nearByGridWidget(
+                              item.image,
+                              item.name,
+                              item.departmentName,
+                              item.id,
+                              item.consultationFee,
+                              item.aboutme,
+                              item.motto,
+                              item.avgrating,
+                              item.city,
+                              item.images,
+                              item.totalreview.toString(),
+                            );
+                          },
+                        )
+                      : Center(
+                          child: Text("No nearby doctors found."),
+                        ),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
