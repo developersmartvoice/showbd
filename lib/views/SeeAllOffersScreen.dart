@@ -390,8 +390,8 @@ class _SeeAllOffersState extends State<SeeAllOffers> {
                                       color: Colors.black,
                                       child: Text(
                                         item.senderName,
-                                        style: TextStyle(
-                                          fontFamily: 'Roboto',
+                                        style: GoogleFonts.poppins(
+                                          // fontFamily: 'Roboto',
                                           fontSize: 20,
                                           color: const Color.fromARGB(
                                               255, 0, 0, 0),
@@ -413,7 +413,7 @@ class _SeeAllOffersState extends State<SeeAllOffers> {
                                             children: [
                                               TextSpan(
                                                 text: 'Date: ',
-                                                style: TextStyle(
+                                                style: GoogleFonts.poppins(
                                                   fontWeight: FontWeight.bold,
                                                   color: Colors
                                                       .black, // Adjust color as needed
@@ -532,10 +532,10 @@ class _SeeAllOffersState extends State<SeeAllOffers> {
                                 subtitle: Center(
                                   child: Text(
                                     'Tap to chat',
-                                    style: TextStyle(
+                                    style: GoogleFonts.poppins(
                                       color: Colors.white,
                                       fontSize: 16,
-                                      fontWeight: FontWeight.w900,
+                                      fontWeight: FontWeight.w500,
                                     ),
                                   ),
                                 ),
@@ -586,7 +586,8 @@ class _SeeAllOffersState extends State<SeeAllOffers> {
                   style: GoogleFonts.poppins(
                     textStyle: Theme.of(context).textTheme.headline5!.apply(
                         color: Theme.of(context).backgroundColor,
-                        fontWeightDelta: 1),
+                        fontWeightDelta: 1,
+                        fontSizeFactor: .8),
                   ),
                 ),
               ),

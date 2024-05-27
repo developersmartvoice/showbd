@@ -323,14 +323,14 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                   ),
                   // Semi-transparent overlay
                   Container(
-                    height: MediaQuery.sizeOf(context).height * .30,
+                    height: MediaQuery.sizeOf(context).height * .31,
                     width: MediaQuery.sizeOf(context).width,
                     color: Color.fromARGB(255, 175, 117, 62)
                         .withOpacity(0.5), // Adjust opacity as needed
                   ),
                   // Foreground content
                   Container(
-                    height: MediaQuery.sizeOf(context).height * .30,
+                    height: MediaQuery.sizeOf(context).height * .31,
                     width: MediaQuery.sizeOf(context).width,
                     padding: EdgeInsets.all(10),
                     child: Column(
@@ -887,7 +887,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                         "Select Currency".toUpperCase(),
                         style: GoogleFonts.poppins(
                           color: const Color.fromARGB(255, 243, 103, 9),
-                          fontSize: 25,
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

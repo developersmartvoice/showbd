@@ -7,6 +7,7 @@ import 'package:appcode3/modals/DoctorDetailsClass.dart';
 import 'package:appcode3/views/BookingScreen.dart';
 import 'package:appcode3/views/ChatScreen.dart';
 import 'package:appcode3/views/ChoosePlan.dart';
+import 'package:appcode3/views/CreateTrip.dart';
 // import 'package:appcode3/views/CreateTrip.dart';
 import 'package:appcode3/views/MakeAppointment.dart';
 import 'package:appcode3/views/PendingScreen.dart';
@@ -14,7 +15,7 @@ import 'package:appcode3/views/RejectedScreen.dart';
 import 'package:appcode3/views/loginAsUser.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+// import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
@@ -295,7 +296,7 @@ class _DetailsPageState extends State<DetailsPage> {
                 child: Text(
                   guideName!.capitalize.toString(),
                   style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.w600, color: WHITE, fontSize: 22),
+                      fontWeight: FontWeight.w600, color: WHITE, fontSize: 20),
                 ),
               )
             ],
@@ -594,47 +595,47 @@ class _DetailsPageState extends State<DetailsPage> {
                               SizedBox(
                                 width: 10,
                               ),
-                              // Expanded(
-                              //   child: ElevatedButton.icon(
-                              //     onPressed: () {
-                              //       Navigator.of(context).push(
-                              //         MaterialPageRoute(
-                              //           builder: (context) => CreateTrip(),
-                              //         ),
-                              //       );
-                              //     },
-                              //     icon: Icon(
-                              //       Icons.airplane_ticket_sharp,
-                              //       size: MediaQuery.of(context).size.width *
-                              //           0.05,
-                              //     ),
-                              //     label: Flexible(
-                              //       child: Text(
-                              //         "Create A Trip",
-                              //         style: TextStyle(
-                              //           fontSize:
-                              //               MediaQuery.of(context).size.width *
-                              //                   0.04,
-                              //         ),
-                              //         overflow: TextOverflow.ellipsis,
-                              //       ),
-                              //     ),
-                              //     style: ElevatedButton.styleFrom(
-                              //       backgroundColor:
-                              //           Color.fromARGB(255, 243, 103, 9),
-                              //       foregroundColor: Colors.white,
-                              //       shape: RoundedRectangleBorder(
-                              //         borderRadius: BorderRadius.circular(10.0),
-                              //         side: BorderSide(
-                              //           color: Colors.white,
-                              //         ),
-                              //       ),
-                              //       padding: EdgeInsets.all(10.0),
-                              //       elevation: 5.0,
-                              //       shadowColor: Colors.grey,
-                              //     ),
-                              //   ),
-                              // ),
+                              Expanded(
+                                child: ElevatedButton.icon(
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => CreateTrip(),
+                                      ),
+                                    );
+                                  },
+                                  icon: Icon(
+                                    Icons.airplane_ticket_sharp,
+                                    size: MediaQuery.of(context).size.width *
+                                        0.05,
+                                  ),
+                                  label: Flexible(
+                                    child: Text(
+                                      "Create A Trip",
+                                      style: TextStyle(
+                                        fontSize:
+                                            MediaQuery.of(context).size.width *
+                                                0.04,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor:
+                                        Color.fromARGB(255, 243, 103, 9),
+                                    foregroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      side: BorderSide(
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    padding: EdgeInsets.all(10.0),
+                                    elevation: 5.0,
+                                    shadowColor: Colors.grey,
+                                  ),
+                                ),
+                              ),
                             ],
                           )
                         : Container(),

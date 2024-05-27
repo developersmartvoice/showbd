@@ -85,7 +85,7 @@ class _GeneraLInfoState extends State<ContactAndIdentification> {
               style: GoogleFonts.poppins(
                 textStyle: TextStyle(
                   color: Colors.white,
-                  fontSize: MediaQuery.of(context).size.width * 0.05,
+                  fontSize: MediaQuery.of(context).size.width * 0.045,
                   fontWeight: FontWeight.w600,
                   overflow: TextOverflow.ellipsis,
                 ),
