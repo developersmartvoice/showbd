@@ -79,7 +79,9 @@ class _TourState extends State<Tour> {
             TOUR,
             style: GoogleFonts.poppins(
               textStyle: Theme.of(context).textTheme.headline5!.apply(
-                  color: Theme.of(context).backgroundColor, fontWeightDelta: 1),
+                  color: Theme.of(context).backgroundColor,
+                  fontWeightDelta: 1,
+                  fontSizeFactor: .8),
             ),
           ),
           centerTitle: true,

@@ -55,7 +55,9 @@ class _NameSettingsPageState extends State<NameSettingsPage> {
             'Name',
             style: GoogleFonts.poppins(
               textStyle: Theme.of(context).textTheme.headline5!.apply(
-                  color: Theme.of(context).backgroundColor, fontWeightDelta: 1),
+                  color: Theme.of(context).backgroundColor,
+                  fontWeightDelta: 1,
+                  fontSizeFactor: .8),
             ),
           ),
           backgroundColor: const Color.fromARGB(255, 243, 103, 9),

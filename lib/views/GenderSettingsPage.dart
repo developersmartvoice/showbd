@@ -48,10 +48,15 @@ class _GenderSettingsPageState extends State<GenderSettingsPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Gender',
-              style: Theme.of(context).textTheme.headline5!.apply(
+          title: Text(
+            'Gender',
+            style: GoogleFonts.poppins(
+              textStyle: Theme.of(context).textTheme.headline5!.apply(
                   color: Theme.of(context).backgroundColor,
-                  fontWeightDelta: 5)),
+                  fontWeightDelta: 1,
+                  fontSizeFactor: .8),
+            ),
+          ),
           backgroundColor: const Color.fromARGB(255, 243, 103, 9),
           centerTitle: true,
           actions: [
@@ -98,10 +103,10 @@ class _GenderSettingsPageState extends State<GenderSettingsPage> {
                 child: Text(
                   GENDER_PAGE,
                   textAlign: TextAlign.justify, // Align text to center
-                  style: TextStyle(
+                  style: GoogleFonts.poppins(
                     color: Colors.black,
-                    fontSize: MediaQuery.of(context).size.width * 0.025,
-                    fontWeight: FontWeight.w900,
+                    fontSize: MediaQuery.of(context).size.width * 0.035,
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
               ),

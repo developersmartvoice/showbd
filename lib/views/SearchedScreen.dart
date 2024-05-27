@@ -988,7 +988,7 @@ class _SearchedScreenState extends State<SearchedScreen> {
                     style: GoogleFonts.poppins(
                       fontWeight: FontWeight.w600,
                       color: WHITE,
-                      fontSize: MediaQuery.of(context).size.width * 0.04,
+                      fontSize: MediaQuery.of(context).size.width * 0.05,
                     ),
                   ),
                   SizedBox(width: 20),

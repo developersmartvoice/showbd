@@ -71,10 +71,15 @@ class _ServicesSettingsPageState extends State<ServicesSettingsPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Activities',
-              style: Theme.of(context).textTheme.headline5!.apply(
+          title: Text(
+            'Activities',
+            style: GoogleFonts.poppins(
+              textStyle: Theme.of(context).textTheme.headline5!.apply(
                   color: Theme.of(context).backgroundColor,
-                  fontWeightDelta: 5)),
+                  fontWeightDelta: 1,
+                  fontSizeFactor: .8),
+            ),
+          ),
           backgroundColor: const Color.fromARGB(255, 243, 103, 9),
           centerTitle: true,
           actions: [

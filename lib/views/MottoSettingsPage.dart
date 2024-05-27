@@ -54,15 +54,20 @@ class _MottoSettingsPageState extends State<MottoSettingsPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Motto',
-              // style: GoogleFonts.robotoCondensed(
-              //   color: Colors.white,
-              //   fontSize: 25,
-              //   fontWeight: FontWeight.w700,
-              // ),
-              style: Theme.of(context).textTheme.headline5!.apply(
+          title: Text(
+            'Motto',
+            // style: GoogleFonts.robotoCondensed(
+            //   color: Colors.white,
+            //   fontSize: 25,
+            //   fontWeight: FontWeight.w700,
+            // ),
+            style: GoogleFonts.poppins(
+              textStyle: Theme.of(context).textTheme.headline5!.apply(
                   color: Theme.of(context).backgroundColor,
-                  fontWeightDelta: 5)),
+                  fontWeightDelta: 1,
+                  fontSizeFactor: .8),
+            ),
+          ),
           backgroundColor: const Color.fromARGB(255, 243, 103, 9),
           centerTitle: true,
           actions: [
@@ -123,11 +128,11 @@ class _MottoSettingsPageState extends State<MottoSettingsPage> {
                             MOTTO_PAGE_1,
                             textAlign:
                                 TextAlign.justify, // Align text to center
-                            style: TextStyle(
+                            style: GoogleFonts.poppins(
                               color: Colors.black,
                               fontSize:
-                                  MediaQuery.of(context).size.width * 0.025,
-                              fontWeight: FontWeight.w900,
+                                  MediaQuery.of(context).size.width * 0.035,
+                              fontWeight: FontWeight.w400,
                             ),
                           ),
                           SizedBox(
@@ -137,11 +142,11 @@ class _MottoSettingsPageState extends State<MottoSettingsPage> {
                             MOTTO_PAGE_2,
                             textAlign:
                                 TextAlign.justify, // Align text to center
-                            style: TextStyle(
+                            style: GoogleFonts.poppins(
                               color: Colors.black,
                               fontSize:
-                                  MediaQuery.of(context).size.width * 0.025,
-                              fontWeight: FontWeight.w900,
+                                  MediaQuery.of(context).size.width * 0.035,
+                              fontWeight: FontWeight.w400,
                             ),
                           ),
                         ],
@@ -154,9 +159,9 @@ class _MottoSettingsPageState extends State<MottoSettingsPage> {
                       color: Colors.white,
                       child: TextField(
                         controller: _controller,
-                        style: TextStyle(
+                        style: GoogleFonts.poppins(
                           color: Colors.black,
-                          fontSize: MediaQuery.of(context).size.width * 0.025,
+                          fontSize: MediaQuery.of(context).size.width * 0.035,
                           fontWeight: FontWeight.w200,
                         ),
                         onChanged: (value) {

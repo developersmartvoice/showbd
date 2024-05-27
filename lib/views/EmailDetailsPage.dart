@@ -87,7 +87,7 @@ class _EmailDetailsPageState extends State<EmailDetailsPage> {
                 child: Column(
                   children: [
                     Container(
-                      height: 70,
+                      height: 100,
                       //color: Colors.white,
                       child: Stack(children: [
                         Positioned(
@@ -98,15 +98,16 @@ class _EmailDetailsPageState extends State<EmailDetailsPage> {
                           child: InkWell(),
                         ),
                         Container(
-                          padding: EdgeInsets.all(16),
-                          alignment: Alignment.bottomCenter,
+                          height: 100,
+                          padding: EdgeInsets.all(2),
+                          alignment: Alignment.center,
                           child: Text(
                             EMAIL_PAGE,
                             textAlign:
                                 TextAlign.justify, // Align text to center
                             style: GoogleFonts.poppins(
                               color: Colors.black,
-                              fontSize: 12,
+                              fontSize: 14,
                               fontWeight: FontWeight.w400,
                             ),
                           ),

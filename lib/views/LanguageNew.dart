@@ -90,10 +90,13 @@ class _LanguageNewState extends State<LanguageNew> {
         appBar: AppBar(
           title: Text(
             'Languages',
-            style: Theme.of(context).textTheme.headline5!.apply(
-                  color: Theme.of(context).backgroundColor,
-                  fontWeightDelta: 5,
-                ),
+            style: GoogleFonts.poppins(
+              textStyle: Theme.of(context).textTheme.headline5!.apply(
+                    color: Theme.of(context).backgroundColor,
+                    fontWeightDelta: 1,
+                    fontSizeFactor: .8,
+                  ),
+            ),
           ),
           backgroundColor: const Color.fromARGB(255, 243, 103, 9),
           centerTitle: true,
@@ -151,8 +154,8 @@ class _LanguageNewState extends State<LanguageNew> {
                       child: Center(
                         child: Text(
                           'Select Your Preferred Language',
-                          style: GoogleFonts.robotoCondensed(
-                            fontSize: MediaQuery.of(context).size.width * 0.03,
+                          style: GoogleFonts.poppins(
+                            fontSize: MediaQuery.of(context).size.width * 0.035,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

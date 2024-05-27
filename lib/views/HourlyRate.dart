@@ -55,15 +55,20 @@ class _HourlyRateSettingsPageState extends State<HourlyRateSettingsPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Hourly Rate',
-              // style: GoogleFonts.robotoCondensed(
-              //   color: Colors.white,
-              //   fontSize: 25,
-              //   fontWeight: FontWeight.w700,
-              // ),
-              style: Theme.of(context).textTheme.headline5!.apply(
+          title: Text(
+            'Hourly Rate',
+            // style: GoogleFonts.robotoCondensed(
+            //   color: Colors.white,
+            //   fontSize: 25,
+            //   fontWeight: FontWeight.w700,
+            // ),
+            style: GoogleFonts.poppins(
+              textStyle: Theme.of(context).textTheme.headline5!.apply(
                   color: Theme.of(context).backgroundColor,
-                  fontWeightDelta: 5)),
+                  fontWeightDelta: 1,
+                  fontSizeFactor: .8),
+            ),
+          ),
           backgroundColor: const Color.fromARGB(255, 243, 103, 9),
           centerTitle: true,
           actions: [
