@@ -106,7 +106,10 @@ class _FilteredGuidesScreenState extends State<FilteredGuidesScreen> {
                   ),
                 );
               },
-              icon: Icon(Icons.home_sharp),
+              icon: Icon(
+                Icons.home_sharp,
+                color: WHITE,
+              ),
             )
           ],
         ),
