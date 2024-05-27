@@ -3,9 +3,10 @@ import 'package:appcode3/views/AboutHost.dart';
 import 'package:appcode3/views/ChoosePlan.dart';
 import 'package:appcode3/views/ContactAndIdentification.dart';
 import 'package:appcode3/views/DetailsPage.dart';
-import 'package:appcode3/views/Doctor/loginAsDoctor.dart';
+// import 'package:appcode3/views/Doctor/loginAsDoctor.dart';
 import 'package:appcode3/views/GeneraLInfo.dart';
 import 'package:appcode3/views/MemberShipDetails.dart';
+import 'package:appcode3/views/UnRegisteredHomePage.dart';
 import 'package:connectycube_sdk/connectycube_chat.dart';
 
 import 'package:appcode3/en.dart';
@@ -207,38 +208,48 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
-        // appBar: AppBar(
-        //   title: Text('ACCOUNT INFORMATION',
-        //       style: Theme.of(context).textTheme.headline5!.apply(
-        //           color: Theme.of(context).backgroundColor,
-        //           fontWeightDelta: 5)),
-        //   centerTitle: true,
-        //   flexibleSpace: Container(
-        //     decoration: BoxDecoration(
-        //       image: DecorationImage(
-        //         image: AssetImage(
-        //             "assets/moreScreenImages/header_bg.png"), // Add your background image path
-        //         fit: BoxFit.cover,
-        //       ),
-        //     ),
-        //   ),
-        // ),
-        // appBar: AppBar(
-        //   automaticallyImplyLeading: false,
-        //   flexibleSpace: header(),
-        // ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              doctorProfile(),
-              upCommingAppointments(),
-            ],
+    return Stack(
+      children: [
+        Image.asset(
+          "assets/moreScreenImages/header_bg.png",
+          height: 140,
+          fit: BoxFit.fill,
+          width: MediaQuery.of(context).size.width,
+        ),
+        SafeArea(
+          child: Scaffold(
+            backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
+            // appBar: AppBar(
+            //   title: Text('ACCOUNT INFORMATION',
+            //       style: Theme.of(context).textTheme.headline5!.apply(
+            //           color: Theme.of(context).backgroundColor,
+            //           fontWeightDelta: 5)),
+            //   centerTitle: true,
+            //   flexibleSpace: Container(
+            //     decoration: BoxDecoration(
+            //       image: DecorationImage(
+            //         image: AssetImage(
+            //             "assets/moreScreenImages/header_bg.png"), // Add your background image path
+            //         fit: BoxFit.cover,
+            //       ),
+            //     ),
+            //   ),
+            // ),
+            // appBar: AppBar(
+            //   automaticallyImplyLeading: false,
+            //   flexibleSpace: header(),
+            // ),
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  doctorProfile(),
+                  upCommingAppointments(),
+                ],
+              ),
+            ),
           ),
         ),
-      ),
+      ],
     );
   }
 
@@ -1181,7 +1192,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => LoginAsDoctor(),
+                        builder: (context) => UnRegisteredHomePage(),
                       ));
                 },
                 style: TextButton.styleFrom(
@@ -1260,7 +1271,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      LoginAsDoctor()));
+                                                      UnRegisteredHomePage()));
                                         },
                                         child: Text(
                                           "OK",
