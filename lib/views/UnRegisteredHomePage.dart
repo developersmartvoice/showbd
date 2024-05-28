@@ -168,8 +168,13 @@ class _UnRegisteredHomePageState extends State<UnRegisteredHomePage>
               ),
               body: isNearbyLoading
                   ? Center(
-                      child: CircularProgressIndicator(
-                        color: Color.fromARGB(255, 243, 103, 9),
+                      // child: CircularProgressIndicator(
+                      //   color: Color.fromARGB(255, 243, 103, 9),
+                      // ),
+                      child: Container(
+                        height: 100,
+                        width: 100,
+                        child: Image.asset("assets/loading.gif"),
                       ),
                     )
                   : list2.isNotEmpty
