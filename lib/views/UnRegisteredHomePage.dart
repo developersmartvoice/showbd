@@ -90,9 +90,10 @@ class _UnRegisteredHomePageState extends State<UnRegisteredHomePage>
                   Positioned(
                     bottom: 80,
                     child: Container(
-                      height: 50,
-                      width: 50,
+                      height: 40,
+                      width: 40,
                       child: FloatingActionButton.extended(
+                        heroTag: "ScrolToTop",
                         onPressed: () {
                           scrollController!.animateTo(
                             0.0,
@@ -114,8 +115,13 @@ class _UnRegisteredHomePageState extends State<UnRegisteredHomePage>
                           color: Colors.white,
                         ),
                         backgroundColor: Color.fromARGB(255, 243, 103, 9),
-                        shape: BeveledRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
+                        shape: CircleBorder(
+                          // borderRadius: BorderRadius.circular(5),
+                          side: BorderSide(
+                            width: 1,
+                            style: BorderStyle.solid,
+                            color: WHITE,
+                          ),
                         ),
                       ),
                     ),
@@ -127,6 +133,7 @@ class _UnRegisteredHomePageState extends State<UnRegisteredHomePage>
                       height: 50,
                       // width: MediaQuery.of(context).size.width,
                       child: FloatingActionButton.extended(
+                        heroTag: "Login/Register",
                         onPressed: () {
                           Navigator.push(
                             context,
@@ -167,14 +174,32 @@ class _UnRegisteredHomePageState extends State<UnRegisteredHomePage>
                 ),
               ),
               body: isNearbyLoading
-                  ? Center(
-                      // child: CircularProgressIndicator(
-                      //   color: Color.fromARGB(255, 243, 103, 9),
-                      // ),
+                  // ? Center(
+                  //     // child: CircularProgressIndicator(
+                  //     //   color: Color.fromARGB(255, 243, 103, 9),
+                  //     // ),
+                  //     child: Container(
+                  //       height: 100,
+                  //       width: 100,
+                  //       child: Image.asset("assets/loading.gif"),
+                  //     ),
+                  //   )
+                  ? Dialog(
+                      backgroundColor: Colors.transparent,
                       child: Container(
-                        height: 100,
-                        width: 100,
-                        child: Image.asset("assets/loading.gif"),
+                        height: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width,
+                        color: Colors.transparent,
+                        // decoration: BoxDecoration(
+                        //   // borderRadius: BorderRadius.circular(20.0),
+                        //   color: Colors.transparent,
+                        // ),
+                        // padding: EdgeInsets.all(16),
+                        child: Image.asset(
+                          'assets/loading.gif', // Example image URL
+                          width: 80,
+                          height: 80,
+                        ),
                       ),
                     )
                   : list2.isNotEmpty
@@ -335,6 +360,28 @@ class _UnRegisteredHomePageState extends State<UnRegisteredHomePage>
         });
       }
     }
+  }
+
+  void dialog() {
+    showDialog(
+        context: context,
+        builder: (builder) {
+          return Dialog(
+            backgroundColor: Colors.transparent,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20.0),
+                color: Colors.transparent,
+              ),
+              padding: EdgeInsets.all(16),
+              child: Image.asset(
+                'assets/loading.gif', // Example image URL
+                width: 120,
+                height: 120,
+              ),
+            ),
+          );
+        });
   }
 
   Widget nearByGridWidget(

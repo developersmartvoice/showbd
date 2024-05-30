@@ -74,42 +74,52 @@ class _GeneraLInfoState extends State<ContactAndIdentification> {
     setState(() {
       print("This is form Contact page: ${widget.id}");
     });
-    return SafeArea(
-      child: Scaffold(
-          backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
-          appBar: AppBar(
-            backgroundColor: const Color.fromARGB(255, 243, 103, 9),
-            centerTitle: true,
-            title: Text(
-              'Contact & Identification',
-              style: GoogleFonts.poppins(
-                textStyle: TextStyle(
-                  color: Colors.white,
-                  fontSize: MediaQuery.of(context).size.width * 0.045,
-                  fontWeight: FontWeight.w600,
-                  overflow: TextOverflow.ellipsis,
+    return Stack(
+      children: [
+        Image.asset(
+          "assets/moreScreenImages/header_bg.png",
+          height: 140,
+          fit: BoxFit.fill,
+          width: MediaQuery.of(context).size.width,
+        ),
+        SafeArea(
+          child: Scaffold(
+              backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
+              appBar: AppBar(
+                backgroundColor: const Color.fromARGB(255, 243, 103, 9),
+                centerTitle: true,
+                title: Text(
+                  'Contact & Identification',
+                  style: GoogleFonts.poppins(
+                    textStyle: TextStyle(
+                      color: Colors.white,
+                      fontSize: MediaQuery.of(context).size.width * 0.045,
+                      fontWeight: FontWeight.w600,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ),
+                leading: IconButton(
+                  icon: Icon(
+                    Icons.arrow_back,
+                    color: WHITE, // Back button color
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
                 ),
               ),
-            ),
-            leading: IconButton(
-              icon: Icon(
-                Icons.arrow_back,
-                color: Colors.black, // Back button color
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ),
-          body: email != null && phone != null
-              ? ContainerPage(widget.id, email!, phone!, _handleDataReload)
-              : Container(
-                  alignment: Alignment.center,
-                  transformAlignment: Alignment.center,
-                  child: CircularProgressIndicator(
-                    color: const Color.fromARGB(255, 243, 103, 9),
-                  ),
-                )),
+              body: email != null && phone != null
+                  ? ContainerPage(widget.id, email!, phone!, _handleDataReload)
+                  : Container(
+                      alignment: Alignment.center,
+                      transformAlignment: Alignment.center,
+                      child: CircularProgressIndicator(
+                        color: const Color.fromARGB(255, 243, 103, 9),
+                      ),
+                    )),
+        ),
+      ],
     );
   }
 

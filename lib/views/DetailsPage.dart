@@ -7,7 +7,7 @@ import 'package:appcode3/modals/DoctorDetailsClass.dart';
 import 'package:appcode3/views/BookingScreen.dart';
 import 'package:appcode3/views/ChatScreen.dart';
 import 'package:appcode3/views/ChoosePlan.dart';
-import 'package:appcode3/views/CreateTrip.dart';
+// import 'package:appcode3/views/CreateTrip.dart';
 // import 'package:appcode3/views/CreateTrip.dart';
 import 'package:appcode3/views/MakeAppointment.dart';
 import 'package:appcode3/views/PendingScreen.dart';
@@ -208,56 +208,66 @@ class _DetailsPageState extends State<DetailsPage> {
     print("Is this Direct Booking: $isDirectBooking");
     print("Is this Accept Booking: $isAcceptBooking");
     print("Is this Reject Booking: $isRejectBooking");
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
-        body: Stack(
-          children: [
-            isErrorInLoading
-                ? Container(
-                    child: Center(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.search_off_rounded,
-                            size: 100,
-                            color: LIGHT_GREY_TEXT,
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text(
-                            UNABLE_TO_LOAD_DATA_FORM_SERVER,
-                          )
-                        ],
-                      ),
-                    ),
-                  )
-                : !isLoading
-                    ? Column(
-                        children: [
-                          header(),
-                          Expanded(
-                            child: SingleChildScrollView(
-                              child: Column(
-                                children: [
-                                  doctorDetails(),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      )
-                    : Center(
-                        child: CircularProgressIndicator(
-                            color: const Color.fromARGB(255, 243, 103, 9)),
-                      ),
-            // header(),
-          ],
+    return Stack(
+      children: [
+        Image.asset(
+          "assets/moreScreenImages/header_bg.png",
+          height: 140,
+          fit: BoxFit.fill,
+          width: MediaQuery.of(context).size.width,
         ),
-      ),
+        SafeArea(
+          child: Scaffold(
+            backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
+            body: Stack(
+              children: [
+                isErrorInLoading
+                    ? Container(
+                        child: Center(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.search_off_rounded,
+                                size: 100,
+                                color: LIGHT_GREY_TEXT,
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Text(
+                                UNABLE_TO_LOAD_DATA_FORM_SERVER,
+                              )
+                            ],
+                          ),
+                        ),
+                      )
+                    : !isLoading
+                        ? Column(
+                            children: [
+                              header(),
+                              Expanded(
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    children: [
+                                      doctorDetails(),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                        : Center(
+                            child: CircularProgressIndicator(
+                                color: const Color.fromARGB(255, 243, 103, 9)),
+                          ),
+                // header(),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -592,50 +602,50 @@ class _DetailsPageState extends State<DetailsPage> {
                                   ),
                                 ),
                               ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Expanded(
-                                child: ElevatedButton.icon(
-                                  onPressed: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) => CreateTrip(),
-                                      ),
-                                    );
-                                  },
-                                  icon: Icon(
-                                    Icons.airplane_ticket_sharp,
-                                    size: MediaQuery.of(context).size.width *
-                                        0.05,
-                                  ),
-                                  label: Flexible(
-                                    child: Text(
-                                      "Create A Trip",
-                                      style: TextStyle(
-                                        fontSize:
-                                            MediaQuery.of(context).size.width *
-                                                0.04,
-                                      ),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor:
-                                        Color.fromARGB(255, 243, 103, 9),
-                                    foregroundColor: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      side: BorderSide(
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    padding: EdgeInsets.all(10.0),
-                                    elevation: 5.0,
-                                    shadowColor: Colors.grey,
-                                  ),
-                                ),
-                              ),
+                              // SizedBox(
+                              //   width: 10,
+                              // ),
+                              // Expanded(
+                              //   child: ElevatedButton.icon(
+                              //     onPressed: () {
+                              //       Navigator.of(context).push(
+                              //         MaterialPageRoute(
+                              //           builder: (context) => CreateTrip(),
+                              //         ),
+                              //       );
+                              //     },
+                              //     icon: Icon(
+                              //       Icons.airplane_ticket_sharp,
+                              //       size: MediaQuery.of(context).size.width *
+                              //           0.05,
+                              //     ),
+                              //     label: Flexible(
+                              //       child: Text(
+                              //         "Create A Trip",
+                              //         style: TextStyle(
+                              //           fontSize:
+                              //               MediaQuery.of(context).size.width *
+                              //                   0.04,
+                              //         ),
+                              //         overflow: TextOverflow.ellipsis,
+                              //       ),
+                              //     ),
+                              //     style: ElevatedButton.styleFrom(
+                              //       backgroundColor:
+                              //           Color.fromARGB(255, 243, 103, 9),
+                              //       foregroundColor: Colors.white,
+                              //       shape: RoundedRectangleBorder(
+                              //         borderRadius: BorderRadius.circular(10.0),
+                              //         side: BorderSide(
+                              //           color: Colors.white,
+                              //         ),
+                              //       ),
+                              //       padding: EdgeInsets.all(10.0),
+                              //       elevation: 5.0,
+                              //       shadowColor: Colors.grey,
+                              //     ),
+                              //   ),
+                              // ),
                             ],
                           )
                         : Container(),

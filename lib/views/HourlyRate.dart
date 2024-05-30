@@ -21,8 +21,10 @@ class HourlyRateSettingsPage extends StatefulWidget {
 class _HourlyRateSettingsPageState extends State<HourlyRateSettingsPage> {
   late TextEditingController _controller;
   String enteredValue = '';
+  String? postValue;
   bool isValueChanged = false;
   bool loading = false;
+  bool correctValue = true;
   void updatingConsultationFees() async {
     final response = await post(
         Uri.parse("$SERVER_ADDRESS/api/updateConsultationFees"),
@@ -75,10 +77,12 @@ class _HourlyRateSettingsPageState extends State<HourlyRateSettingsPage> {
             TextButton(
               onPressed: () {
                 if (isValueChanged) {
-                  setState(() {
-                    loading = true;
-                  });
-                  updatingConsultationFees();
+                  if (correctValue) {
+                    setState(() {
+                      loading = true;
+                    });
+                    updatingConsultationFees();
+                  }
                 } else {
                   // Navigator.pop(context);
                 }
@@ -143,6 +147,7 @@ class _HourlyRateSettingsPageState extends State<HourlyRateSettingsPage> {
                       color: Colors.white,
                       child: TextField(
                         controller: _controller,
+                        keyboardType: TextInputType.number,
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: MediaQuery.of(context).size.width * 0.025,
@@ -154,6 +159,12 @@ class _HourlyRateSettingsPageState extends State<HourlyRateSettingsPage> {
                               enteredValue = value;
                               if (enteredValue != widget.consultationfees) {
                                 isValueChanged = true;
+                                if (double.parse(enteredValue) <= 5000) {
+                                  correctValue = true;
+                                  postValue = enteredValue;
+                                } else {
+                                  correctValue = false;
+                                }
                               } else {
                                 isValueChanged = false;
                               }
@@ -164,6 +175,9 @@ class _HourlyRateSettingsPageState extends State<HourlyRateSettingsPage> {
                           border: OutlineInputBorder(),
                           hintText: "Add your hourly fees",
                           hintStyle: TextStyle(color: Colors.grey),
+                          errorText: correctValue
+                              ? null
+                              : "Fees can't be greater than 5000৳",
                         ),
                       ),
                     )

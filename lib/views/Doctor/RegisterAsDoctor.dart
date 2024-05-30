@@ -38,6 +38,164 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
   bool _passwordVisible1 = true;
   final _formKey = GlobalKey<FormState>();
 
+  // storeToken() async {
+  //   dialog();
+  //   print('Saving token');
+  //   await FirebaseMessaging.instance.getToken().then((value) async {
+  //     //Toast.show(value, context, duration: 2);
+  //     print(value);
+  //     setState(() {
+  //       token = value!;
+  //     });
+
+  //     final response =
+  //         await post(Uri.parse("$SERVER_ADDRESS/api/savetoken"), body: {
+  //       "token": token,
+  //       "type": "1",
+  //       // ignore: body_might_complete_normally_catch_error
+  //     }).catchError((e) {
+  //       Navigator.pop(context);
+  //       messageDialog(ERROR, UNABLE_TO_LOAD_DATA_FORM_SERVER);
+  //     });
+  //     if (response.statusCode == 200) {
+  //       Navigator.pop(context);
+  //       final jsonResponse = jsonDecode(response.body);
+  //       if (jsonResponse['success'].toString() == "1") {
+  //         SharedPreferences.getInstance().then((pref) {
+  //           pref.setBool("isTokenExist", true);
+  //           print("token stored");
+  //         });
+  //         //Navigator.pop(context);
+  //         registerUser();
+  //       }
+  //     } else {
+  //       Navigator.pop(context);
+  //       print("token not stored");
+  //       messageDialog(ERROR, response.body.toString());
+  //       // Navigator.pushReplacement(context,
+  //       //     MaterialPageRoute(builder: (context) => TabsScreen())
+  //       // );
+  //     }
+  //   }).catchError((e) {
+  //     Navigator.pop(context);
+  //     print("token not accessed");
+  //     messageDialog(ERROR, UNABLE_TO_SAVE_TOKEN_TO_SERVER);
+  //   });
+  //   setState(() {
+  //     token = "";
+  //   });
+  // }
+
+  // registerUser() async {
+  //   if (name.isEmpty) {
+  //     setState(() {
+  //       isNameError = true;
+  //     });
+  //   } else if (phoneNumber.length < PHONE_NUMBER_LENGTH) {
+  //     setState(() {
+  //       isPhoneNumberError = true;
+  //       phnNumberError = ENTER_VALID_MOBILE_NUMBER;
+  //     });
+  //   } else if (EmailValidator.validate(email) == false) {
+  //     setState(() {
+  //       isEmailError = true;
+  //     });
+  //   } else if (password != confirmPassword || password.length == 0) {
+  //     setState(() {
+  //       isPassError = true;
+  //     });
+  //   } else if (token.isEmpty) {
+  //     storeToken();
+  //   } else {
+  //     dialog();
+  //     //Toast.show("Creating account please wait", context);
+  //     String url =
+  //         "$SERVER_ADDRESS/api/doctorregister?name=$name&email=$email&phone=$phoneNumber&password=$password&token=$token";
+  //     print(url);
+  //     print(name);
+  //     print(email);
+  //     print(phoneNumber);
+  //     print(password);
+  //     print(token);
+  //     var response = await post(Uri.parse(url), body: {
+  //       'name': name,
+  //       'email': email,
+  //       'phone': phoneNumber,
+  //       'password': password,
+  //       'token': token
+  //       // ignore: body_might_complete_normally_catch_error
+  //     }).catchError((e) {
+  //       Navigator.pop(context);
+  //       messageDialog(ERROR, UNABLE_TO_LOAD_DATA_FORM_SERVER);
+  //     });
+  //     try {
+  //       print(response.statusCode);
+  //       print(response.body);
+  //       var jsonResponse = await jsonDecode(response.body);
+  //       if (jsonResponse['success'].toString() == "0") {
+  //         setState(() {
+  //           Navigator.pop(context);
+  //           error = jsonResponse['register'];
+  //           messageDialog(ERROR, error);
+  //           //isPhoneNumberError = true;
+  //         });
+  //       } else {
+  //         String? token = await firebaseMessaging.getToken();
+  //         FirebaseDatabase.instance
+  //             .reference()
+  //             .child('100' + jsonResponse['register']['user_id'].toString())
+  //             .update({
+  //           "name": jsonResponse['register']['name'],
+  //           "image": jsonResponse['register']['image'],
+  //         }).then((value) async {
+  //           FirebaseDatabase.instance
+  //               .reference()
+  //               .child("100" + jsonResponse['register']['user_id'].toString())
+  //               .child("TokenList")
+  //               .set({
+  //             "device": token.toString(),
+  //           }).then((value) async {
+  //             print('then call');
+  //             await SharedPreferences.getInstance().then((pref) {
+  //               pref.setBool("isLoggedInAsDoctor", true);
+  //               pref.setString(
+  //                   "userId", jsonResponse['register']['user_id'].toString());
+  //               pref.setString("name", jsonResponse['register']['name']);
+  //               pref.setString(
+  //                   "phone", jsonResponse['register']['phone'].toString());
+  //               pref.setString("email", jsonResponse['register']['email']);
+  //               pref.setString("token", token.toString());
+  //               pref.setString(
+  //                   'myCCID',
+  //                   jsonResponse['register']['connectycube_user_id']
+  //                       .toString());
+  //               pref.setString("userIdWithAscii",
+  //                   '100' + jsonResponse['register']['user_id'].toString());
+  //             });
+  //             CubeUser user = CubeUser(
+  //               id: jsonResponse['register']['connectycube_user_id'],
+  //               login: jsonResponse['register']['login_id'],
+  //               fullName: jsonResponse['register']['name']
+  //                   .toString()
+  //                   .replaceAll(" ", ""),
+  //               password: password,
+  //             );
+  //             _loginToCC(context, user);
+
+  //             // Navigator.of(context).popUntil((route) => route.isFirst);
+  //             // Navigator.pushReplacement(context,
+  //             //     MaterialPageRoute(builder: (context) => DoctorTabsScreen())
+  //             // );
+  //           });
+  //         });
+  //       }
+  //     } catch (e) {
+  //       Navigator.pop(context);
+  //       messageDialog(ERROR, UNABLE_TO_LOAD_DATA_FORM_SERVER);
+  //     }
+  //   }
+  // }
+
   storeToken() async {
     dialog();
     print('Saving token');
@@ -57,6 +215,7 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
         Navigator.pop(context);
         messageDialog(ERROR, UNABLE_TO_LOAD_DATA_FORM_SERVER);
       });
+
       if (response.statusCode == 200) {
         Navigator.pop(context);
         final jsonResponse = jsonDecode(response.body);
@@ -65,16 +224,12 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
             pref.setBool("isTokenExist", true);
             print("token stored");
           });
-          //Navigator.pop(context);
           registerUser();
         }
       } else {
         Navigator.pop(context);
         print("token not stored");
         messageDialog(ERROR, response.body.toString());
-        // Navigator.pushReplacement(context,
-        //     MaterialPageRoute(builder: (context) => TabsScreen())
-        // );
       }
     }).catchError((e) {
       Navigator.pop(context);
@@ -117,6 +272,7 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
       print(phoneNumber);
       print(password);
       print(token);
+
       var response = await post(Uri.parse(url), body: {
         'name': name,
         'email': email,
@@ -128,6 +284,7 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
         Navigator.pop(context);
         messageDialog(ERROR, UNABLE_TO_LOAD_DATA_FORM_SERVER);
       });
+
       try {
         print(response.statusCode);
         print(response.body);
@@ -137,7 +294,6 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
             Navigator.pop(context);
             error = jsonResponse['register'];
             messageDialog(ERROR, error);
-            //isPhoneNumberError = true;
           });
         } else {
           String? token = await firebaseMessaging.getToken();
@@ -165,27 +321,13 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
                     "phone", jsonResponse['register']['phone'].toString());
                 pref.setString("email", jsonResponse['register']['email']);
                 pref.setString("token", token.toString());
-                pref.setString(
-                    'myCCID',
-                    jsonResponse['register']['connectycube_user_id']
-                        .toString());
                 pref.setString("userIdWithAscii",
                     '100' + jsonResponse['register']['user_id'].toString());
               });
-              CubeUser user = CubeUser(
-                id: jsonResponse['register']['connectycube_user_id'],
-                login: jsonResponse['register']['login_id'],
-                fullName: jsonResponse['register']['name']
-                    .toString()
-                    .replaceAll(" ", ""),
-                password: password,
-              );
-              _loginToCC(context, user);
 
-              // Navigator.of(context).popUntil((route) => route.isFirst);
-              // Navigator.pushReplacement(context,
-              //     MaterialPageRoute(builder: (context) => DoctorTabsScreen())
-              // );
+              Navigator.of(context).popUntil((route) => route.isFirst);
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => DoctorTabsScreen()));
             });
           });
         }
@@ -361,7 +503,7 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
               child: Text(
                 LOGIN_NOW,
                 style: GoogleFonts.poppins(
-                  color: Color.fromARGB(255, 243, 103, 9),
+                  color: Color(0xFFF36709),
                   fontSize: MediaQuery.of(context).size.width * 0.03,
                   fontWeight: FontWeight.w500,
                 ),

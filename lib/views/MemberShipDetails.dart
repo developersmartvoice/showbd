@@ -62,80 +62,94 @@ class _MemberShipDetails extends State<MemberShipDetails> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            "Membership Details",
-            style: GoogleFonts.poppins(
-              textStyle: Theme.of(context).textTheme.headline5!.apply(
-                  color: Theme.of(context).backgroundColor,
-                  fontWeightDelta: 1,
-                  fontSizeFactor: .8),
+    return Stack(
+      children: [
+        Image.asset(
+          "assets/moreScreenImages/header_bg.png",
+          height: 140,
+          fit: BoxFit.fill,
+          width: MediaQuery.of(context).size.width,
+        ),
+        SafeArea(
+          child: Scaffold(
+            appBar: AppBar(
+              title: Text(
+                "Membership Details",
+                style: GoogleFonts.poppins(
+                  textStyle: Theme.of(context).textTheme.headline5!.apply(
+                      color: Theme.of(context).backgroundColor,
+                      fontWeightDelta: 1,
+                      fontSizeFactor: .8),
+                ),
+              ),
+              centerTitle: true,
+              backgroundColor: const Color.fromARGB(255, 243, 103, 9),
+              leading: IconButton(
+                icon: Icon(Icons.arrow_back),
+                color: Colors.white,
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
             ),
-          ),
-          centerTitle: true,
-          backgroundColor: const Color.fromARGB(255, 243, 103, 9),
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            color: Colors.white,
-            onPressed: () {
-              Navigator.pop(context);
-            },
+            body: SingleChildScrollView(
+                padding: EdgeInsets.all(16.0),
+                child: isEndDateFetched
+                    ? Center(
+                        child: Container(
+                          alignment: Alignment.center,
+                          transformAlignment: Alignment.center,
+                          padding: EdgeInsets.all(
+                              20), // Adding padding for better appearance
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment
+                                .center, // Centering vertically
+                            children: [
+                              Text(
+                                "You subscribed for 1 month.",
+                                style: GoogleFonts.poppins(
+                                  fontWeight:
+                                      FontWeight.w400, // Making text bold
+                                  fontSize: MediaQuery.of(context).size.width *
+                                      0.04, // Adjusting font size
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                "Your subscription will end on :",
+                                style: GoogleFonts.poppins(
+                                  fontWeight:
+                                      FontWeight.w400, // Making text bold
+                                  fontSize: 18, // Adjusting font size
+                                ),
+                              ),
+                              Text(
+                                formattedEndDate!,
+                                style: GoogleFonts.poppins(
+                                  fontWeight:
+                                      FontWeight.w400, // Making text bold
+                                  fontSize: MediaQuery.of(context).size.width *
+                                      0.04, // Adjusting font size
+                                  color: Colors
+                                      .blue, // Changing text color to blue
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      )
+                    : Container(
+                        alignment: Alignment.center,
+                        transformAlignment: Alignment.center,
+                        child: CircularProgressIndicator(
+                          color: const Color.fromARGB(255, 243, 103, 9),
+                        ),
+                      )),
           ),
         ),
-        body: SingleChildScrollView(
-            padding: EdgeInsets.all(16.0),
-            child: isEndDateFetched
-                ? Center(
-                    child: Container(
-                      alignment: Alignment.center,
-                      transformAlignment: Alignment.center,
-                      padding: EdgeInsets.all(
-                          20), // Adding padding for better appearance
-                      child: Column(
-                        mainAxisAlignment:
-                            MainAxisAlignment.center, // Centering vertically
-                        children: [
-                          Text(
-                            "You subscribed for 1 month.",
-                            style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w400, // Making text bold
-                              fontSize: MediaQuery.of(context).size.width *
-                                  0.04, // Adjusting font size
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            "Your subscription will end on :",
-                            style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w400, // Making text bold
-                              fontSize: 18, // Adjusting font size
-                            ),
-                          ),
-                          Text(
-                            formattedEndDate!,
-                            style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w400, // Making text bold
-                              fontSize: MediaQuery.of(context).size.width *
-                                  0.04, // Adjusting font size
-                              color: Colors.blue, // Changing text color to blue
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  )
-                : Container(
-                    alignment: Alignment.center,
-                    transformAlignment: Alignment.center,
-                    child: CircularProgressIndicator(
-                      color: const Color.fromARGB(255, 243, 103, 9),
-                    ),
-                  )),
-      ),
+      ],
     );
   }
 }
