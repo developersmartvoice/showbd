@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:appcode3/en.dart';
 import 'package:appcode3/main.dart';
 import 'package:appcode3/views/Doctor/DoctorTabScreen.dart';
-import 'package:connectycube_sdk/connectycube_chat.dart';
+// import 'package:connectycube_sdk/connectycube_chat.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -12,7 +12,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../VideoCall/utils/pref_util.dart';
+// import '../../VideoCall/utils/pref_util.dart';
 import '../ForgetPassword.dart';
 import 'RegisterAsDoctor.dart';
 
@@ -30,6 +30,178 @@ class _LoginAsDoctorState extends State<LoginAsDoctor> {
   String token = "";
   bool isTokenPresent = false;
   bool passView = true;
+
+  // getToken() async {
+  //   await SharedPreferences.getInstance().then((pref) async {
+  //     if (pref.getBool("isTokenExist") ?? false) {
+  //       String? tokenLocal = await FirebaseMessaging.instance.getToken();
+  //       setState(() {
+  //         print("1-> token retrieved");
+  //         token = tokenLocal!;
+  //         print("Is token created?: $token");
+  //       });
+  //     }
+  //   });
+  // }
+
+  // storeToken() async {
+  //   setState(() {
+  //     print("Stored token is called this mean no token fetched!");
+  //   });
+  //   dialog();
+  //   await FirebaseMessaging.instance.getToken().then((value) async {
+  //     //Toast.show(value, context, duration: 2);
+  //     print("This is value from FirebaseMessaging instance!: $value");
+  //     setState(() {
+  //       token = value!;
+  //       print("Seeing the token which is same as value: $token");
+  //     });
+
+  //     final response =
+  //         await post(Uri.parse("$SERVER_ADDRESS/api/savetoken"), body: {
+  //       "token": token,
+  //       "type": "1",
+  //       // ignore: body_might_complete_normally_catch_error
+  //     }).catchError((e) {
+  //       Navigator.pop(context);
+  //       messageDialog(ERROR, UNABLE_TO_SAVE_TOKEN_TO_SERVER);
+  //     });
+  //     print('return code');
+  //     print(response.statusCode);
+  //     if (response.statusCode == 200) {
+  //       Navigator.pop(context);
+  //       final jsonResponse = jsonDecode(response.body);
+  //       print('toek body response ${response.body}');
+  //       if (jsonResponse['success'].toString() == "1") {
+  //         SharedPreferences.getInstance().then((pref) {
+  //           pref.setBool("isTokenExist", true);
+  //           print("token stored");
+  //         });
+  //         //Navigator.pop(context);
+  //         loginInto();
+  //       }
+  //     } else {
+  //       print('token response status code -> ${response.statusCode}');
+  //       print('token response body -> ${response.body}');
+  //       Navigator.pop(context);
+  //       print("token not stored");
+  //       messageDialog(ERROR, response.body.toString());
+  //       // Navigator.pushReplacement(context,
+  //       //     MaterialPageRoute(builder: (context) => TabsScreen())
+  //       // );
+  //     }
+  //   }).catchError((e) {
+  //     Navigator.pop(context);
+  //     print("token not accessed");
+  //     messageDialog(ERROR, UNABLE_TO_SAVE_TOKEN_TO_SERVER);
+  //   });
+  //   setState(() {
+  //     token = "";
+  //   });
+  // }
+
+  // loginInto() async {
+  //   setState(() {
+  //     print("LoginInto is called that means no need to store any token!");
+  //   });
+  //   if (EmailValidator.validate(emailAddress) == false) {
+  //     setState(() {
+  //       isPhoneNumberError = true;
+  //     });
+  //   } else {
+  //     dialog();
+  //     //Toast.show("Logging in..", context, duration: 2);
+  //     String url =
+  //         "$SERVER_ADDRESS/api/doctorlogin?email=$emailAddress&password=$pass&token=$token";
+  //     var response = await post(Uri.parse(url), body: {
+  //       'email': emailAddress,
+  //       'password': pass,
+  //       'token': token,
+  //       // ignore: body_might_complete_normally_catch_error
+  //     }).catchError((e) {
+  //       Navigator.pop(context);
+  //       messageDialog(ERROR, UNABLE_TO_LOAD_DATA_FORM_SERVER);
+  //     });
+  //     try {
+  //       print(response.statusCode);
+  //       print(response.body);
+  //       print('print response success');
+
+  //       var jsonResponse = await jsonDecode(response.body);
+  //       if (jsonResponse['success'].toString() == "0") {
+  //         setState(() {
+  //           Navigator.pop(context);
+  //           isPasswordError = true;
+  //           passErrorText = EITHER_MOBILE_NUMBER_OR_PASSWORD_IS_INCORRECT;
+  //         });
+  //       } else {
+  //         print('success coming else');
+  //         String? token = await firebaseMessaging.getToken();
+  //         FirebaseDatabase.instance
+  //             .ref()
+  //             .child('100' + jsonResponse['register']['doctor_id'].toString())
+  //             .update({
+  //           "name": jsonResponse['register']['name'],
+  //           "image": jsonResponse['register']['image'],
+  //         }).then((value) async {
+  //           FirebaseDatabase.instance
+  //               .ref()
+  //               .child("100" + jsonResponse['register']['doctor_id'].toString())
+  //               .child("TokenList")
+  //               .set({
+  //             "device": token.toString(),
+  //           }).then((value) async {
+  //             print('then call');
+  //             await SharedPreferences.getInstance().then((pref) {
+  //               pref.setBool("isLoggedInAsDoctor", true);
+  //               pref.setString(
+  //                   "userId", jsonResponse['register']['doctor_id'].toString());
+  //               pref.setString("name", jsonResponse['register']['name']);
+  //               pref.setString(
+  //                   "phone",
+  //                   jsonResponse['register']['phone'] == null
+  //                       ? ""
+  //                       : jsonResponse['register']['phone'].toString());
+  //               pref.setString("email", jsonResponse['register']['email']);
+  //               pref.setString("token", token.toString());
+  //               pref.setString(
+  //                   "myCCID",
+  //                   jsonResponse['register']['connectycube_user_id']
+  //                       .toString());
+  //               pref.setString("userIdWithAscii",
+  //                   '100' + jsonResponse['register']['doctor_id'].toString());
+  //             });
+  //             Navigator.of(context).popUntil((route) => route.isFirst);
+  //             Navigator.pushReplacement(context,
+  //                 MaterialPageRoute(builder: (context) => DoctorTabsScreen()));
+
+  //             CubeUser user = CubeUser(
+  //               id: int.tryParse(
+  //                   jsonResponse['register']['connectycube_user_id']),
+  //               login: jsonResponse['register']['login_id'],
+  //               fullName: jsonResponse['register']['name']
+  //                   .toString()
+  //                   .replaceAll(" ", ""),
+  //               password: pass,
+  //             );
+  //             _loginToCC(context, user);
+  //           }).catchError((onError) {
+  //             print('firebasse db error $onError');
+  //           });
+  //         }).catchError((onError) {
+  //           print('firebasse db error $onError');
+  //         });
+  //       }
+  //       // setState(() {
+  //       //   Navigator.push(context,
+  //       //       MaterialPageRoute(builder: (context) => DoctorTabsScreen()));
+  //       // });
+  //     } catch (e) {
+  //       Navigator.pop(context);
+  //       messageDialog(ERROR, UNABLE_TO_LOAD_DATA_FORM_SERVER);
+  //     }
+  //   }
+  // }
 
   getToken() async {
     await SharedPreferences.getInstance().then((pref) async {
@@ -71,13 +243,13 @@ class _LoginAsDoctorState extends State<LoginAsDoctor> {
       if (response.statusCode == 200) {
         Navigator.pop(context);
         final jsonResponse = jsonDecode(response.body);
-        print('toek body response ${response.body}');
+        print('token body response ${response.body}');
         if (jsonResponse['success'].toString() == "1") {
           SharedPreferences.getInstance().then((pref) {
             pref.setBool("isTokenExist", true);
             print("token stored");
           });
-          //Navigator.pop(context);
+          // Navigator.pop(context);
           loginInto();
         }
       } else {
@@ -86,9 +258,6 @@ class _LoginAsDoctorState extends State<LoginAsDoctor> {
         Navigator.pop(context);
         print("token not stored");
         messageDialog(ERROR, response.body.toString());
-        // Navigator.pushReplacement(context,
-        //     MaterialPageRoute(builder: (context) => TabsScreen())
-        // );
       }
     }).catchError((e) {
       Navigator.pop(context);
@@ -102,7 +271,7 @@ class _LoginAsDoctorState extends State<LoginAsDoctor> {
 
   loginInto() async {
     setState(() {
-      print("LoginInto is called that means no need to store any token!");
+      print("loginInto is called that means no need to store any token!");
     });
     if (EmailValidator.validate(emailAddress) == false) {
       setState(() {
@@ -164,38 +333,19 @@ class _LoginAsDoctorState extends State<LoginAsDoctor> {
                         : jsonResponse['register']['phone'].toString());
                 pref.setString("email", jsonResponse['register']['email']);
                 pref.setString("token", token.toString());
-                pref.setString(
-                    "myCCID",
-                    jsonResponse['register']['connectycube_user_id']
-                        .toString());
                 pref.setString("userIdWithAscii",
                     '100' + jsonResponse['register']['doctor_id'].toString());
               });
               Navigator.of(context).popUntil((route) => route.isFirst);
               Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (context) => DoctorTabsScreen()));
-
-              CubeUser user = CubeUser(
-                id: int.tryParse(
-                    jsonResponse['register']['connectycube_user_id']),
-                login: jsonResponse['register']['login_id'],
-                fullName: jsonResponse['register']['name']
-                    .toString()
-                    .replaceAll(" ", ""),
-                password: pass,
-              );
-              _loginToCC(context, user);
             }).catchError((onError) {
-              print('firebasse db error $onError');
+              print('firebase db error $onError');
             });
           }).catchError((onError) {
-            print('firebasse db error $onError');
+            print('firebase db error $onError');
           });
         }
-        // setState(() {
-        //   Navigator.push(context,
-        //       MaterialPageRoute(builder: (context) => DoctorTabsScreen()));
-        // });
       } catch (e) {
         Navigator.pop(context);
         messageDialog(ERROR, UNABLE_TO_LOAD_DATA_FORM_SERVER);
@@ -204,52 +354,52 @@ class _LoginAsDoctorState extends State<LoginAsDoctor> {
   }
 
   // login cc
-  _loginToCC(BuildContext context, CubeUser user) {
-    if (CubeSessionManager.instance.isActiveSessionValid() &&
-        CubeSessionManager.instance.activeSession!.user != null) {
-      if (CubeChatConnection.instance.isAuthenticated()) {
-        SharedPrefs.getUser().then((value) async {
-          try {
-            if (value!.id != null) {
-              Navigator.of(context).popUntil((route) => route.isFirst);
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => DoctorTabsScreen()));
-            }
-          } catch (e) {
-            await deleteSession();
-            Navigator.pop(context);
-            messageDialog(ERROR, PLEASE_TRY_AGAIN);
-          }
-        });
-      } else {
-        _loginToCubeChat(context, user);
-      }
-    } else {
-      createSession(user).then((cubeSession) {
-        _loginToCubeChat(context, user);
-      }).catchError((exception) {
-        print(exception);
-        messageDialog(ERROR, PLEASE_TRY_AGAIN);
-      });
-    }
-  }
+  // _loginToCC(BuildContext context, CubeUser user) {
+  //   if (CubeSessionManager.instance.isActiveSessionValid() &&
+  //       CubeSessionManager.instance.activeSession!.user != null) {
+  //     if (CubeChatConnection.instance.isAuthenticated()) {
+  //       SharedPrefs.getUser().then((value) async {
+  //         try {
+  //           if (value!.id != null) {
+  //             Navigator.of(context).popUntil((route) => route.isFirst);
+  //             Navigator.pushReplacement(context,
+  //                 MaterialPageRoute(builder: (context) => DoctorTabsScreen()));
+  //           }
+  //         } catch (e) {
+  //           await deleteSession();
+  //           Navigator.pop(context);
+  //           messageDialog(ERROR, PLEASE_TRY_AGAIN);
+  //         }
+  //       });
+  //     } else {
+  //       _loginToCubeChat(context, user);
+  //     }
+  //   } else {
+  //     createSession(user).then((cubeSession) {
+  //       _loginToCubeChat(context, user);
+  //     }).catchError((exception) {
+  //       print(exception);
+  //       messageDialog(ERROR, PLEASE_TRY_AGAIN);
+  //     });
+  //   }
+  // }
 
-  void _loginToCubeChat(BuildContext context, CubeUser user) {
-    CubeChatConnection.instance.login(user).then((cubeUser) {
-      SharedPrefs.saveNewUser(user);
-      SharedPrefs.getUser().then((value) {
-        if (value!.id != null) {
-          Navigator.of(context).popUntil((route) => route.isFirst);
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => DoctorTabsScreen()));
-        }
-      });
+  // void _loginToCubeChat(BuildContext context, CubeUser user) {
+  //   CubeChatConnection.instance.login(user).then((cubeUser) {
+  //     SharedPrefs.saveNewUser(user);
+  //     SharedPrefs.getUser().then((value) {
+  //       if (value!.id != null) {
+  //         Navigator.of(context).popUntil((route) => route.isFirst);
+  //         Navigator.pushReplacement(context,
+  //             MaterialPageRoute(builder: (context) => DoctorTabsScreen()));
+  //       }
+  //     });
 
-      // _goSelectOpponentsScreen(context, cubeUser);
-    }).catchError((exception) {
-      print(exception);
-    });
-  }
+  //     // _goSelectOpponentsScreen(context, cubeUser);
+  //   }).catchError((exception) {
+  //     print(exception);
+  //   });
+  // }
 
   @override
   void initState() {
@@ -553,32 +703,54 @@ class _LoginAsDoctorState extends State<LoginAsDoctor> {
     );
   }
 
+  // dialog() {
+  //   return showDialog(
+  //       context: context,
+  //       builder: (context) {
+  //         return AlertDialog(
+  //           title: Text(
+  //             LOGGING_IN,
+  //             style: GoogleFonts.poppins(),
+  //           ),
+  //           content: Container(
+  //             margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
+  //             child: Row(
+  //               children: [
+  //                 CircularProgressIndicator(
+  //                   color: const Color.fromARGB(255, 243, 103, 9),
+  //                 ),
+  //                 SizedBox(
+  //                   width: 15,
+  //                 ),
+  //                 Expanded(
+  //                   child: Text(
+  //                     PLEASE_WAIT_LOGGING_IN,
+  //                     style: GoogleFonts.poppins(fontSize: 12),
+  //                   ),
+  //                 )
+  //               ],
+  //             ),
+  //           ),
+  //         );
+  //       });
+  // }
+
   dialog() {
-    return showDialog(
+    showDialog(
         context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text(
-              LOGGING_IN,
-              style: GoogleFonts.poppins(),
-            ),
-            content: Container(
-              margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
-              child: Row(
-                children: [
-                  CircularProgressIndicator(
-                    color: const Color.fromARGB(255, 243, 103, 9),
-                  ),
-                  SizedBox(
-                    width: 15,
-                  ),
-                  Expanded(
-                    child: Text(
-                      PLEASE_WAIT_LOGGING_IN,
-                      style: GoogleFonts.poppins(fontSize: 12),
-                    ),
-                  )
-                ],
+        builder: (builder) {
+          return Dialog(
+            backgroundColor: Colors.transparent,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20.0),
+                color: Colors.transparent,
+              ),
+              padding: EdgeInsets.all(16),
+              child: Image.asset(
+                'assets/loading.gif', // Example image URL
+                width: 120,
+                height: 120,
               ),
             ),
           );

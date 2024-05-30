@@ -7,7 +7,7 @@ import 'package:appcode3/views/DetailsPage.dart';
 import 'package:appcode3/views/GeneraLInfo.dart';
 import 'package:appcode3/views/MemberShipDetails.dart';
 import 'package:appcode3/views/UnRegisteredHomePage.dart';
-import 'package:connectycube_sdk/connectycube_chat.dart';
+// import 'package:connectycube_sdk/connectycube_chat.dart';
 
 import 'package:appcode3/en.dart';
 import 'package:appcode3/main.dart';
@@ -1180,9 +1180,9 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
             actions: [
               TextButton(
                 onPressed: () async {
-                  try {
-                    CubeChatConnection.instance.logout();
-                  } catch (e) {}
+                  // try {
+                  //   CubeChatConnection.instance.logout();
+                  // } catch (e) {}
                   await SharedPreferences.getInstance().then((pref) {
                     pref.setBool("isLoggedInAsDoctor", false);
                     pref.setBool("isLoggedIn", false);

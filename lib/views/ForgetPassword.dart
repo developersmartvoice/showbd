@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:appcode3/main.dart';
 import 'package:appcode3/views/VerifyCodePage.dart';
 import 'package:connectycube_sdk/connectycube_core.dart';
-import 'package:email_validator/email_validator.dart';
+// import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
@@ -23,20 +23,37 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   final formKey = GlobalKey<FormState>();
   String? animationName;
   String? error;
+  bool isEmailCorrect = true;
+  bool isLoading = false;
   // String? code;
+  bool validateEmail(String email) {
+    // Regular expression for email validation
+    final RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    return emailRegex.hasMatch(email);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          flexibleSpace: header(),
-          leading: Container(),
-          elevation: 0,
+    return Stack(
+      children: [
+        Image.asset(
+          "assets/moreScreenImages/header_bg.png",
+          height: 140,
+          fit: BoxFit.fill,
+          width: MediaQuery.of(context).size.width,
         ),
-        body: body(),
-      ),
+        SafeArea(
+          child: Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.white,
+              flexibleSpace: header(),
+              leading: Container(),
+              elevation: 0,
+            ),
+            body: body(),
+          ),
+        ),
+      ],
     );
   }
 
@@ -51,9 +68,9 @@ class _ForgetPasswordState extends State<ForgetPassword> {
               height: 40,
             ),
             Image.asset(
-              "assets/loginScreenImages/forgetIcon.png",
-              height: 170,
-              width: 170,
+              "assets/forget.gif",
+              height: 200,
+              width: 200,
             ),
             SizedBox(
               height: 20,
@@ -64,7 +81,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   child: Text(
                     ENTER_THE_EMAIL_ADDRESS_ASSOCIATED_WITH_YOUR_ACCOUNT,
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 16,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -72,54 +89,42 @@ class _ForgetPasswordState extends State<ForgetPassword> {
               ],
             ),
             SizedBox(
-              height: 40,
+              height: 60,
             ),
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    WE_WILL_EMAIL_YOU_A_LINK_TO_RESET_YOUR_PASSWORD,
-                    style: TextStyle(fontSize: 16, color: Colors.grey.shade600),
-                    textAlign: TextAlign.center,
-                  ),
-                )
-              ],
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Form(
-              key: formKey,
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: TextFormField(
-                  validator: (val) {
-                    if (val!.isEmpty) {
-                      return EMAIL_ADDRESS;
-                    } else if (!EmailValidator.validate(val)) {
-                      return THIS_FIELD_IS_REQUIRED;
-                    }
-                    return null;
-                  },
-                  onSaved: (val) => email = val!,
-                  decoration: InputDecoration(
-                    isCollapsed: true,
-                    contentPadding: EdgeInsets.all(5),
-                    border: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey, width: 0.5)),
-                    enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey, width: 0.5)),
-                    focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey, width: 0.5)),
-                    disabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey, width: 0.5)),
-                  ),
-                  onChanged: (val) {
-                    setState(() {
-                      email = val;
-                    });
-                  },
+            Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  width: 2,
+                  color: Color.fromARGB(255, 243, 103, 9),
+                  style: BorderStyle.solid,
                 ),
+              ),
+              child: TextField(
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(
+                  contentPadding: EdgeInsets.only(
+                    left: 10,
+                  ),
+                  border: InputBorder.none,
+                  hintText: ENTER_YOUR_EMAIL,
+                  hintStyle: GoogleFonts.poppins(
+                    color: Color.fromARGB(255, 243, 103, 9),
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14,
+                  ),
+                  errorText: !isEmailCorrect ? ENTER_VALID_EMAIL_ADDRESS : null,
+                ),
+                style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14,
+                  color: Color.fromARGB(255, 243, 103, 9),
+                ),
+                onChanged: (val) {
+                  setState(() {
+                    isEmailCorrect = true;
+                    email = val;
+                  });
+                },
               ),
             ),
             SizedBox(
@@ -183,11 +188,20 @@ class _ForgetPasswordState extends State<ForgetPassword> {
         child: InkWell(
           onTap: () {
             //print(date);
-            if (formKey.currentState!.validate()) {
-              formKey.currentState!.save();
+
+            // if (formKey.currentState!.validate()) {
+            //   formKey.currentState!.save();
+            //   sendEmail();
+            //   // sendCcReset();
+            // }
+            setState(() {
+              isEmailCorrect = validateEmail(email);
+              isLoading = true;
+            });
+            if (isEmailCorrect) {
               sendEmail();
-              // sendCcReset();
             }
+            isLoading ? dialog() : null;
           },
           child: Stack(
             children: [
@@ -214,15 +228,41 @@ class _ForgetPasswordState extends State<ForgetPassword> {
     );
   }
 
+  void dialog() {
+    showDialog(
+        context: context,
+        builder: (builder) {
+          return Dialog(
+            backgroundColor: Colors.transparent,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20.0),
+                color: Colors.transparent,
+              ),
+              padding: EdgeInsets.all(16),
+              child: Image.asset(
+                'assets/loading.gif', // Example image URL
+                width: 120,
+                height: 120,
+              ),
+            ),
+          );
+        });
+  }
+
   sendCcReset() async {
     resetPassword(email).then((voidResult) {}).catchError((error) {});
   }
 
   sendEmail() async {
-    processingDialog(PLEASE_WAIT_WHILE_PROCESSING);
+    // processingDialog(PLEASE_WAIT_WHILE_PROCESSING);
     final response = await get(Uri.parse(
             "$SERVER_ADDRESS/api/forgotpassword?type=${id}&email=$email"))
+        // ignore: body_might_complete_normally_catch_error
         .catchError((e) {
+      setState(() {
+        isLoading = false;
+      });
       Navigator.pop(context);
       messageDialog(ERROR, e.toString(), 0);
       print("e $e");
@@ -230,6 +270,9 @@ class _ForgetPasswordState extends State<ForgetPassword> {
     print(response.request);
     print(response.body);
     final jsonResponse = jsonDecode(response.body);
+    setState(() {
+      isLoading = false;
+    });
     if (response.statusCode == 200 && jsonResponse['success'] == 1) {
       // setState(() {
       //   code = jsonResponse['code'].toString();
@@ -241,7 +284,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
     } else {
       print("else");
       Navigator.pop(context);
-      messageDialog(SUCCESSFUL, jsonResponse['msg'], 0);
+      messageDialog("UNSUCCESSFUL", jsonResponse['msg'], 0);
     }
   }
 

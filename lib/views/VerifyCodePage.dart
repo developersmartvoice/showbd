@@ -1,8 +1,11 @@
 import 'dart:convert';
 
+// import 'package:appcode3/en.dart';
 import 'package:appcode3/main.dart';
 import 'package:appcode3/views/ChangePasswordPage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 
 class VerifyCodePage extends StatefulWidget {
@@ -70,48 +73,142 @@ class _VerifyCodePageState extends State<VerifyCodePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Verify Code'),
-      ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+    return Stack(
+      children: [
+        Image.asset(
+          "assets/moreScreenImages/header_bg.png",
+          height: 140,
+          fit: BoxFit.fill,
+          width: MediaQuery.of(context).size.width,
+        ),
+        SafeArea(
+          child: Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.white,
+              flexibleSpace: header(),
+              leading: Container(),
+              elevation: 0,
+            ),
+            body: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Please enter the verification code sent to ${widget.email}',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 20.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: List.generate(
+                        6,
+                        (index) => _buildCodeDigitField(index),
+                      ),
+                    ),
+                    SizedBox(height: 40),
+                    // ElevatedButton(
+                    //   onPressed: () {
+                    //     setState(() {
+                    //       _isLoading = true;
+                    //       _verifyCode();
+                    //     });
+                    //   },
+                    //   child: _isLoading
+                    //       ? CircularProgressIndicator()
+                    //       : Text('Verify Code'),
+                    // ),
+                    Container(
+                      height: 50,
+                      child: TextButton(
+                        onPressed: () {
+                          // if (_formKey.currentState!.validate()) {
+                          //   registerUser();
+                          // }
+                          setState(() {
+                            _isLoading = true;
+                            _verifyCode();
+                          });
+                          _isLoading ? dialog() : null;
+                        },
+                        child: Text(
+                          "VERIFY",
+                          style: TextStyle(
+                            color: WHITE,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                            letterSpacing: 2,
+                          ),
+                        ),
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStatePropertyAll(
+                              Color.fromARGB(255, 243, 103, 9),
+                            ),
+                            shape:
+                                MaterialStatePropertyAll(BeveledRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5)),
+                              side: BorderSide(
+                                  width: 1,
+                                  color: WHITE,
+                                  strokeAlign: BorderSide.strokeAlignCenter,
+                                  style: BorderStyle.solid),
+                            ))),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget header() {
+    return Stack(
+      children: [
+        Image.asset(
+          "assets/moreScreenImages/header_bg.png",
+          height: 60,
+          fit: BoxFit.fill,
+          width: MediaQuery.of(context).size.width,
+        ),
+        Container(
+          height: 60,
+          child: Row(
             children: [
-              Text(
-                'Please enter the verification code sent to ${widget.email}',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                ),
+              SizedBox(
+                width: 15,
               ),
-              SizedBox(height: 20.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: List.generate(
-                  6,
-                  (index) => _buildCodeDigitField(index),
-                ),
-              ),
-              SizedBox(height: 20.0),
-              ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    _isLoading = true;
-                    _verifyCode();
-                  });
+              InkWell(
+                onTap: () {
+                  Navigator.pop(context);
                 },
-                child: _isLoading
-                    ? CircularProgressIndicator()
-                    : Text('Verify Code'),
+                child: Image.asset(
+                  "assets/moreScreenImages/back.png",
+                  height: 25,
+                  width: 22,
+                ),
               ),
+              SizedBox(
+                width: 10,
+              ),
+              Text(
+                "Verification",
+                style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w600, color: WHITE, fontSize: 22),
+              )
             ],
           ),
         ),
-      ),
+      ],
     );
   }
 
@@ -179,6 +276,28 @@ class _VerifyCodePageState extends State<VerifyCodePage> {
         duration: Duration(seconds: 2),
       ),
     );
+  }
+
+  void dialog() {
+    showDialog(
+        context: context,
+        builder: (builder) {
+          return Dialog(
+            backgroundColor: Colors.transparent,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20.0),
+                color: Colors.transparent,
+              ),
+              padding: EdgeInsets.all(16),
+              child: Image.asset(
+                'assets/loading.gif', // Example image URL
+                width: 120,
+                height: 120,
+              ),
+            ),
+          );
+        });
   }
 
   @override

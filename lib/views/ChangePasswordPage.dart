@@ -1,16 +1,16 @@
 import 'dart:convert';
-
 import 'package:appcode3/main.dart';
 import 'package:appcode3/views/Doctor/loginAsDoctor.dart';
-import 'package:connectycube_sdk/connectycube_sdk.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
+// import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
 
-// ignore: must_be_immutable
 class ChangePasswordPage extends StatefulWidget {
-  String email;
+  final String email;
 
   ChangePasswordPage({required this.email});
+
   @override
   _ChangePasswordPageState createState() => _ChangePasswordPageState();
 }
@@ -22,153 +22,317 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   String? newPassword;
   String? confirmNewPassword;
 
-  String? ccId;
-  String? ccIdint;
-  String? ccOldPass;
-
-  bool ccPassChanged = false;
   bool dbPassChanged = false;
+  bool passView = true;
+  bool passViewConfirm = true;
+  bool isLoading = false;
 
-  getCcIdandPass() async {
-    final response = await get(Uri.parse(
-        "$SERVER_ADDRESS/api/get_connectcube_id?email=${widget.email}"));
-    if (response.statusCode == 200) {
-      final jsonResponse = jsonDecode(response.body);
-      if (jsonResponse['status'] == 1) {
-        setState(() {
-          ccId = jsonResponse['login_id'].toString();
-          ccIdint = jsonResponse['connectycube_user_id'].toString();
-          ccOldPass = jsonResponse['connectycube_password'].toString();
-          print("here is ccId: $ccId and ccOldPass: $ccOldPass");
-        });
-      }
-    } else {
-      print("Can't able to get the old password");
-    }
-  }
+  // changePassword() async {
+  //   final response = await get(Uri.parse(
+  //       "$SERVER_ADDRESS/api/change_password_email?email=${widget.email}&new_password=$newPassword"));
+  //   if (response.statusCode == 200) {
+  //     final jsonResponse = jsonDecode(response.body);
+  //     if (jsonResponse['status'] == 1) {
+  //       setState(() {
+  //         dbPassChanged = true;
+  //         isLoading = false;
+  //       });
+  //       print(jsonResponse['message']);
+  //       showDialog(
+  //         context: context,
+  //         builder: (BuildContext context) {
+  //           return AlertDialog(
+  //             title: Text("Success"),
+  //             content: Text("Password Updated Successfully!"),
+  //             actions: [
+  //               TextButton(
+  //                 onPressed: () {
+  //                   Navigator.of(context).popUntil((route) => route.isFirst);
+  //                   Navigator.pushReplacement(
+  //                     context,
+  //                     MaterialPageRoute(builder: (context) => LoginAsDoctor()),
+  //                   );
+  //                 },
+  //                 child: Text("OK"),
+  //               )
+  //             ],
+  //           );
+  //         },
+  //       );
+  //     } else {
+  //       print("Error in changing password: ${jsonResponse['error']}");
+  //     }
+  //   } else {
+  //     print("Failed to change the password");
+  //   }
+  // }
 
-  changePassword() async {
-    final response = await get(Uri.parse(
-        "$SERVER_ADDRESS/api/change_password_email?email=${widget.email}&new_password=$newPassword"));
+  Future<void> changePassword() async {
+    final response = await http.post(
+      Uri.parse("$SERVER_ADDRESS/api/change_password_email"),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'email': widget.email,
+        'new_password': newPassword,
+      }),
+    );
+
     if (response.statusCode == 200) {
       final jsonResponse = jsonDecode(response.body);
       if (jsonResponse['status'] == 1) {
         setState(() {
           dbPassChanged = true;
+          isLoading = false;
         });
         print(jsonResponse['message']);
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text("Success"),
+              content: Text("Password Updated Successfully!"),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).popUntil((route) => route.isFirst);
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginAsDoctor()),
+                    );
+                  },
+                  child: Text("OK"),
+                )
+              ],
+            );
+          },
+        );
       } else {
-        print("You got error in changing password: ${jsonResponse['error']}");
+        print("Error in changing password: ${jsonResponse['error']}");
       }
+    } else {
+      print("Failed to change the password");
     }
-  }
-
-  updateCcPassword() async {
-    createSession().then((cubeSession) {
-      CubeUser user = CubeUser(
-          login: ccIdint, password: newPassword, oldPassword: ccOldPass);
-
-      updateUser(user).then((updatedUser) {
-        setState(() {
-          ccPassChanged = true;
-        });
-        changePassword();
-      }).catchError((error) {
-        print(
-            "ConnectyCube got some errors on password changing for you! $error");
-      });
-    }).catchError((error) {
-      print(
-          "ConnectyCube got some errors on creating a session for you! $error");
-    });
-
-    // -----------------------
-    // CubeUser user =
-    //     CubeUser(login: ccId, password: newPassword, oldPassword: ccOldPass);
-
-    // updateUser(user).then((updatedUser) {
-    //   setState(() {
-    //     ccPassChanged = true;
-    //   });
-    //   changePassword();
-    // }).catchError((error) {
-    //   print(
-    //       "ConnectyCube got some errors on password changing for you! $error");
-    // });
-    // ------------------
-
-    // resetPassword(widget.email).then((voidResult) {
-    //   print("Mail sent to your email!");
-    // }).catchError((error) {
-    //   print("ConnectyCube got some errors on reseting! $error");
-    // });
-
-    // CubeUser user = CubeUser(login: ccId, password: ccOldPass);
-
-    // createSession(user).then((cubeSession) {
-    //   print("What is inside the cubeSession: ${cubeSession}");
-    //   print("This is from cubeSession: ${cubeSession.userId}");
-    //   CubeUser user =
-    //       CubeUser(login: ccId, password: newPassword, oldPassword: ccOldPass);
-
-    //   updateUser(user).then((updatedUser) {
-    //     setState(() {
-    //       ccPassChanged = true;
-    //     });
-    //     changePassword();
-    //   }).catchError((error) {
-    //     print(
-    //         "ConnectyCube got some errors on password changing for you! $error");
-    //   });
-    // }).catchError((error) {
-    //   print(
-    //       "ConnectyCube got some errors on creating a session for you! $error");
-    // });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getCcIdandPass();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Change Password'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+    return Stack(
+      children: [
+        Image.asset(
+          "assets/moreScreenImages/header_bg.png",
+          height: 140,
+          fit: BoxFit.fill,
+          width: MediaQuery.of(context).size.width,
+        ),
+        SafeArea(
+          child: Scaffold(
+            backgroundColor: WHITE,
+            appBar: AppBar(
+              backgroundColor: Colors.white,
+              flexibleSpace: header(),
+              leading: Container(),
+              elevation: 0,
+            ),
+            body: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Image.asset(
+                      "assets/secure.gif",
+                      height: 200,
+                      width: 200,
+                    ),
+                    SizedBox(height: 40),
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          width: 2,
+                          color: Color.fromARGB(255, 243, 103, 9),
+                          style: BorderStyle.solid,
+                        ),
+                      ),
+                      child: TextField(
+                        controller: _newPasswordController,
+                        obscureText: passView,
+                        keyboardType: TextInputType.text,
+                        textAlignVertical: TextAlignVertical.center,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.only(
+                            left: 10,
+                          ),
+                          hintText: 'New Password',
+                          // hintTextDirection: ,
+                          hintStyle: GoogleFonts.poppins(
+                            color: Color.fromARGB(255, 243, 103, 9),
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                          ),
+                          border: InputBorder.none,
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                passView = !passView;
+                              });
+                            },
+                            icon: Icon(
+                              passView
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: Color.fromARGB(255, 243, 103, 9),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          width: 2,
+                          color: Color.fromARGB(255, 243, 103, 9),
+                          style: BorderStyle.solid,
+                        ),
+                      ),
+                      child: TextField(
+                        controller: _confirmNewPasswordController,
+                        obscureText: passViewConfirm,
+                        keyboardType: TextInputType.text,
+                        textAlignVertical: TextAlignVertical.center,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.only(
+                            left: 10,
+                          ),
+                          hintText: 'Confirm New Password',
+                          // hintTextDirection: ,
+                          hintStyle: GoogleFonts.poppins(
+                            color: Color.fromARGB(255, 243, 103, 9),
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                          ),
+                          border: InputBorder.none,
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                passViewConfirm = !passViewConfirm;
+                              });
+                            },
+                            icon: Icon(
+                              passViewConfirm
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: Color.fromARGB(255, 243, 103, 9),
+                            ),
+                          ),
+                        ),
+                        style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14,
+                          color: Color.fromARGB(255, 243, 103, 9),
+                        ),
+                      ),
+                    ),
+                    // TextField(
+                    //   controller: _confirmNewPasswordController,
+                    //   obscureText: true,
+                    //   decoration: InputDecoration(
+                    //     labelText: 'Confirm New Password',
+                    //   ),
+                    // ),
+                    SizedBox(height: 40),
+                    // ElevatedButton(
+                    //   onPressed: _changePassword,
+                    //   child: Text('Change Password'),
+                    // ),
+                    Container(
+                      height: 50,
+                      child: TextButton(
+                        onPressed: () {
+                          setState(() {
+                            isLoading = true;
+                          });
+                          isLoading ? dialog() : null;
+                          _changePassword();
+                        },
+                        child: Text(
+                          "Change Password",
+                          style: TextStyle(
+                            color: WHITE,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            // letterSpacing: 2,
+                          ),
+                        ),
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStatePropertyAll(
+                            Color.fromARGB(255, 243, 103, 9),
+                          ),
+                          shape: MaterialStatePropertyAll(
+                            BeveledRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5)),
+                              side: BorderSide(
+                                  width: 1,
+                                  color: WHITE,
+                                  strokeAlign: BorderSide.strokeAlignCenter,
+                                  style: BorderStyle.solid),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget header() {
+    return Stack(
+      children: [
+        Image.asset(
+          "assets/moreScreenImages/header_bg.png",
+          height: 60,
+          fit: BoxFit.fill,
+          width: MediaQuery.of(context).size.width,
+        ),
+        Container(
+          height: 60,
+          child: Row(
             children: [
-              SizedBox(height: 20),
-              TextField(
-                controller: _newPasswordController,
-                obscureText: true,
-                decoration: InputDecoration(
-                  labelText: 'New Password',
+              SizedBox(
+                width: 15,
+              ),
+              InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Image.asset(
+                  "assets/moreScreenImages/back.png",
+                  height: 25,
+                  width: 22,
                 ),
               ),
-              SizedBox(height: 20),
-              TextField(
-                controller: _confirmNewPasswordController,
-                obscureText: true,
-                decoration: InputDecoration(
-                  labelText: 'Confirm New Password',
-                ),
+              SizedBox(
+                width: 10,
               ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _changePassword,
-                child: Text('Change Password'),
-              ),
+              Text(
+                "Change Password",
+                style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w600, color: WHITE, fontSize: 22),
+              )
             ],
           ),
         ),
-      ),
+      ],
     );
   }
 
@@ -178,41 +342,17 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
 
     // Check if both passwords match
     if (newPassword != confirmNewPassword) {
+      print("Not Matched");
+      setState(() {
+        isLoading = false;
+      });
       _showMessageDialog('error', 'Passwords do not match.');
       return;
     } else {
-      _showMessageDialog('Progessing', 'Please wait for a moment!');
-      // changePassword();
-      updateCcPassword();
-      if (ccPassChanged && dbPassChanged) {
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: Text("Success"),
-                content: Text("Password Updated Successfully!"),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).popUntil((route) => route.isFirst);
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => LoginAsDoctor()));
-                    },
-                    child: Text("OK"),
-                  )
-                ],
-              );
-            });
-      }
+      // _showMessageDialog('Progressing', 'Please wait for a moment!');
+      print("Pass Matched");
+      changePassword();
     }
-
-    // Perform the password change logic here
-    // For example, call an API to change the password
-
-    // After changing the password, you can navigate to a different screen
-    // Navigator.pushReplacementNamed(context, '/home');
   }
 
   void _showMessageDialog(String title, String message) {
@@ -235,6 +375,28 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
         );
       },
     );
+  }
+
+  void dialog() {
+    showDialog(
+        context: context,
+        builder: (builder) {
+          return Dialog(
+            backgroundColor: Colors.transparent,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20.0),
+                color: Colors.transparent,
+              ),
+              padding: EdgeInsets.all(16),
+              child: Image.asset(
+                'assets/loading.gif', // Example image URL
+                width: 120,
+                height: 120,
+              ),
+            ),
+          );
+        });
   }
 
   @override
