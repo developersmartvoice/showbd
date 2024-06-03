@@ -259,8 +259,21 @@ class _DetailsPageState extends State<DetailsPage> {
                             ],
                           )
                         : Center(
-                            child: CircularProgressIndicator(
-                                color: const Color.fromARGB(255, 243, 103, 9)),
+                            child: Container(
+                              width: 200,
+                              // width: MediaQuery.of(context).size.width,
+                              // height: MediaQuery.of(context).size.height,
+                              height: 200,
+                              color: Colors.transparent,
+                              child: Dialog(
+                                backgroundColor: Colors.transparent,
+                                child: Image.asset(
+                                  'assets/loading.gif', // Example image URL
+                                  width: 100,
+                                  height: 100,
+                                ),
+                              ),
+                            ),
                           ),
                 // header(),
               ],

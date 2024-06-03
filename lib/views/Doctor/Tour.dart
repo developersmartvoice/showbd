@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:appcode3/en.dart';
 import 'package:appcode3/main.dart';
 import 'package:appcode3/modals/TripsClass.dart';
+import 'package:appcode3/views/ChoosePlan.dart';
 import 'package:appcode3/views/CreateTrip.dart';
 import 'package:appcode3/views/TripCard.dart';
 import 'package:flutter/cupertino.dart';
@@ -24,6 +25,7 @@ class _TourState extends State<Tour> {
   Future? future1;
   Future? future2;
   bool isTripsAvailable = false;
+  bool isMember = false;
 
   void handleDeleteSuccess(int deletedTripId) {
     // Remove the deleted trip from tripsClass.data
@@ -56,6 +58,23 @@ class _TourState extends State<Tour> {
     }
   }
 
+  checkIsMember() async {
+    final response = await get(
+        Uri.parse("$SERVER_ADDRESS/api/check_membership?id=${doctorId}"));
+    if (response.statusCode == 200) {
+      final jsonResponse = jsonDecode(response.body);
+      setState(() {
+        if (jsonResponse['is_member'] == 0) {
+          isMember = false;
+        } else {
+          isMember = true;
+        }
+      });
+    } else {
+      print("Api is not call properly");
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -63,6 +82,10 @@ class _TourState extends State<Tour> {
       setState(() {
         doctorId = pref.getString("userId");
         print(doctorId);
+        if (doctorId != null) {
+          print("Check Member called");
+          checkIsMember();
+        }
         print("fetchTrips function is calling");
         future1 = fetchTrips(int.parse(doctorId!));
         print("This is future: $future1");
@@ -82,6 +105,7 @@ class _TourState extends State<Tour> {
         ),
         SafeArea(
           child: Scaffold(
+            backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
             appBar: AppBar(
               title: Text(
                 TOUR,
@@ -138,11 +162,17 @@ class _TourState extends State<Tour> {
                           onPressed: () {
                             // Handle the create trip button click
                             // You can navigate to a new screen or perform other actions
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => CreateTrip()),
-                            );
+                            isMember
+                                ? Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => CreateTrip()),
+                                  )
+                                : Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (builder) => ChoosePlan()),
+                                  );
                           },
                           icon: Icon(CupertinoIcons.plus_circle_fill),
                           label: Text(
@@ -224,7 +254,7 @@ class _TourState extends State<Tour> {
                   SizedBox(
                     height: MediaQuery.of(context).size.height * .01,
                   ),
-                  buildTripList()
+                  Flexible(child: buildTripList())
                 ],
               ),
             ),
@@ -236,19 +266,18 @@ class _TourState extends State<Tour> {
 
   Widget buildTripList() {
     if (isTripsAvailable && tripsClass != null && tripsClass!.data != null) {
-      return Expanded(
-        child: ListView.builder(
-          itemCount: tripsClass!.data!.length,
-          itemBuilder: (context, index) {
-            Trip trip = tripsClass!.data![index];
+      return ListView.builder(
+        shrinkWrap: true,
+        itemCount: tripsClass!.data!.length,
+        itemBuilder: (context, index) {
+          Trip trip = tripsClass!.data![index];
 
-            return TripCard(
-              trip: trip,
-              context: context, // Pass the context here
-              onDeleteSuccess: handleDeleteSuccess, // Pass callback function
-            );
-          },
-        ),
+          return TripCard(
+            trip: trip,
+            context: context, // Pass the context here
+            onDeleteSuccess: handleDeleteSuccess, // Pass callback function
+          );
+        },
       );
     } else {
       return Container();

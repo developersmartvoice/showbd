@@ -8,7 +8,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -71,105 +71,105 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
     });
   }
 
+  Future<void> _updateLocation({double? latitude, double? longitude}) async {
+    final String url = "$SERVER_ADDRESS/api/set_lat_lon";
+
+    final Map<String, dynamic> data = {
+      'id': currentId,
+      'lat': latitude,
+      'lon': longitude,
+    };
+
+    try {
+      // final http.Response response = await http.post(
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(data),
+      );
+
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   SnackBar(content: Text('Success: ${responseData['message']}')),
+        print(responseData['message']);
+        // );
+      } else {
+        final responseData = jsonDecode(response.body);
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   SnackBar(content: Text('Error: ${responseData['message']}')),
+        // );
+        print(responseData['message']);
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('An error occurred: $e')),
+      );
+    }
+  }
+
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
   }
 
-  Widget _getAdContainer() {
-    return Container(
-        // height: 60,
-        // margin: EdgeInsets.all(10),
-        // child: NativeAdmob(
-        //   // Your ad unit id
-        //   adUnitID: ADMOB_ID,
-        //   controller: nativeAdController,
-        //   type: NativeAdmobType.banner,
-        // ),
-        );
-  }
-
   @override
   Widget build(BuildContext context) {
-    return isErrorInNearby
-        ? Container()
-        : SafeArea(
-            child: Stack(
-              children: [
-                Column(
-                  children: [
-                    nearByDoctors(),
-                  ],
+    return isNearbyLoading
+        ? Center(
+            child: Container(
+              margin: EdgeInsets.only(top: 350),
+              width: 150,
+              // width: MediaQuery.of(context).size.width,
+              // height: MediaQuery.of(context).size.height,
+              height: 150,
+              color: Colors.transparent,
+              child: Dialog(
+                backgroundColor: Colors.transparent,
+                child: Image.asset(
+                  'assets/loading.gif', // Example image URL
+                  width: 100,
+                  height: 100,
                 ),
-              ],
+              ),
             ),
-          );
+          )
+        : list2.isNotEmpty
+            ? nearByDoctors()
+            : Center(
+                child: Text("No nearby guides found."),
+              );
   }
 
   Widget nearByDoctors() {
-    return SafeArea(
-      child: Container(
-        margin: EdgeInsets.fromLTRB(14, 0, 14, 0),
-        // margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.0),
-        child: Column(
-          children: [
-            /// New For Spacing Issue
+    return ListView.builder(
+      // controller: widget.scrollController,
+      shrinkWrap: true,
+      physics: ScrollPhysics(),
+      itemCount: list2.length,
+      itemBuilder: (BuildContext ctx, index) {
+        var data = list2[index];
 
-            GridView.builder(
-              shrinkWrap: true,
-              // physics: ClampingScrollPhysics(),
-              physics: ScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 1,
-                  childAspectRatio: .92,
-                  crossAxisSpacing: 0,
-                  mainAxisSpacing: 15),
-              itemCount: list2.length,
-              itemBuilder: (BuildContext ctx, index) {
-                var data = list2[index];
+        print(
+            'Name is ${list2[index].name} and ratings are ${list2[index].avgrating}');
+        print(list2[index].images);
+        print("Watching all citys! ${list2[index].city}");
 
-                print(
-                    'Name is ${list2[index].name} and ratings are ${list2[index].avgrating}');
-                print(list2[index].images);
-                print("Watching all citys! ${list2[index].city}");
-
-                return nearByGridWidget(
-                  data.image,
-                  data.name,
-                  data.departmentName,
-                  data.id,
-                  data.consultationFee,
-                  data.aboutme,
-                  data.motto,
-                  data.avgrating,
-                  data.city,
-                  data.images,
-                  data.totalreview,
-                );
-              },
-            ),
-
-            nextUrl == "null"
-                ? Container()
-                : Padding(
-                    padding: const EdgeInsets.only(top: 15),
-                    child: CircularProgressIndicator(
-                      color: const Color.fromARGB(255, 243, 103, 9),
-                    ),
-                  ),
-            isLoadingMore
-                ? Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: LinearProgressIndicator(),
-                  )
-                : Container(
-                    // height: 50,
-                    height: 10,
-                  )
-          ],
-        ),
-      ),
+        return nearByGridWidget(
+          data.image,
+          data.name,
+          data.departmentName,
+          data.id,
+          data.consultationFee,
+          data.aboutme,
+          data.motto,
+          data.avgrating,
+          data.city,
+          data.images,
+          data.totalreview,
+        );
+      },
     );
   }
 
@@ -186,6 +186,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
       },
       child: Container(
         // height: 900,
+        margin: EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
         decoration: BoxDecoration(
             // shape: BoxShape.rectangle,
             color: WHITE,
@@ -586,6 +587,10 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
           desiredAccuracy: LocationAccuracy.high);
 
       setState(() {
+        // lat = position.latitude.toString();
+        // lon = position.longitude.toString();
+        _updateLocation(
+            latitude: position.latitude, longitude: position.longitude);
         callApi(latitude: position.latitude, longitude: position.longitude);
       });
       // for (int i = 0; i < list2.length; i++) {
@@ -615,7 +620,8 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
   callApi({double? latitude, double? longitude}) async {
     print("lat is : $latitude");
     print("lon is : $longitude");
-    final response = await get(Uri.parse(
+    final response = await http
+        .get(Uri.parse(
             "$SERVER_ADDRESS/api/nearbydoctor?lat=${latitude}&lon=${longitude}"))
         // ignore: body_might_complete_normally_catch_error
         .catchError((e) {
@@ -656,6 +662,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
     } else {
       setState(() {
         isErrorInNearby = true;
+        isNearbyLoading = false;
       });
       messageDialog(ERROR, UNABLE_TO_LOAD_DATA_FORM_SERVER);
     }
@@ -727,7 +734,8 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
       print("$nextUrl&lat=${lat}&lon=${lon}");
       print("object   === $nextUrl&lat=${lat}&lon=${lon}");
 
-      final response = await get(Uri.parse("$nextUrl&lat=${lat}&lon=${lon}"));
+      final response =
+          await http.get(Uri.parse("$nextUrl&lat=${lat}&lon=${lon}"));
 
       if (response.statusCode == 200) {
         final jsonResponse = jsonDecode(response.body);
@@ -738,7 +746,16 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
           print("Finished");
           nextUrl = nearbyDoctorsClass!.data!.nextPageUrl!;
           print(nextUrl);
+
           list2.addAll(nearbyDoctorsClass!.data!.nearbyData!);
+          // Add new items conditionally
+          // List<NearbyData> newDoctors = nearbyDoctorsClass!.data!.nearbyData!;
+          // for (NearbyData newDoctor in nearbyDoctorsClass!.data!.nearbyData!) {
+          //   if (!list2
+          //       .any((existingDoctor) => existingDoctor.id == newDoctor.id)) {
+          //     list2.add(newDoctor);
+          //   }
+          // }
           list2.removeWhere((element) => element.id == currentId);
           // list3.clear();
           // for (int i = 0; i < list2.length; i++) {

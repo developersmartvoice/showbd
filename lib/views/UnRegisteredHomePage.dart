@@ -174,31 +174,20 @@ class _UnRegisteredHomePageState extends State<UnRegisteredHomePage>
                 ),
               ),
               body: isNearbyLoading
-                  // ? Center(
-                  //     // child: CircularProgressIndicator(
-                  //     //   color: Color.fromARGB(255, 243, 103, 9),
-                  //     // ),
-                  //     child: Container(
-                  //       height: 100,
-                  //       width: 100,
-                  //       child: Image.asset("assets/loading.gif"),
-                  //     ),
-                  //   )
-                  ? Dialog(
-                      backgroundColor: Colors.transparent,
+                  ? Center(
                       child: Container(
-                        height: MediaQuery.of(context).size.height,
-                        width: MediaQuery.of(context).size.width,
+                        width: 200,
+                        // width: MediaQuery.of(context).size.width,
+                        // height: MediaQuery.of(context).size.height,
+                        height: 200,
                         color: Colors.transparent,
-                        // decoration: BoxDecoration(
-                        //   // borderRadius: BorderRadius.circular(20.0),
-                        //   color: Colors.transparent,
-                        // ),
-                        // padding: EdgeInsets.all(16),
-                        child: Image.asset(
-                          'assets/loading.gif', // Example image URL
-                          width: 80,
-                          height: 80,
+                        child: Dialog(
+                          backgroundColor: Colors.transparent,
+                          child: Image.asset(
+                            'assets/loading.gif', // Example image URL
+                            width: 100,
+                            height: 100,
+                          ),
                         ),
                       ),
                     )
@@ -224,7 +213,7 @@ class _UnRegisteredHomePageState extends State<UnRegisteredHomePage>
                           },
                         )
                       : Center(
-                          child: Text("No nearby doctors found."),
+                          child: Text("No nearby guides found."),
                         ),
             ),
           ),
