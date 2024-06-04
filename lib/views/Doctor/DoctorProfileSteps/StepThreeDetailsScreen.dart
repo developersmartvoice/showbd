@@ -1,21 +1,17 @@
 import 'dart:convert';
 
-import 'package:appcode3/views/Doctor/DoctorProfile.dart';
-
 import '../../../../en.dart';
 import '../../../../main.dart';
 import '../../../../modals/DoctorProfileSetails.dart';
 import '../../../../modals/DoctorSlotDetails.dart';
 import '../../../../modals/SpecialityClass.dart';
-import '../../../../modals/Test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 // import 'package:masked_text_input_formatter/masked_text_input_formatter.dart';
-import 'package:toast/toast.dart';
 
+// ignore: must_be_immutable
 class StepThreeDetailsScreen extends StatefulWidget {
   String id;
   MyData myData;
@@ -160,6 +156,7 @@ class _StepThreeDetailsScreenState extends State<StepThreeDetailsScreen> {
   fetchDoctorSlots() async {
     final response = await get(Uri.parse(
             "$SERVER_ADDRESS/api/getdoctorschedule?doctor_id=${widget.doctorId}"))
+        // ignore: body_might_complete_normally_catch_error
         .catchError((e) {
       setState(() {
         isErrorInLoading = true;
@@ -878,153 +875,100 @@ class _StepThreeDetailsScreenState extends State<StepThreeDetailsScreen> {
     print(widget.myData.facebookUrl);
     print(widget.myData.twitterUrl);
     print(widget.base64image);
-    if (widget.base64image == null) {
-      final response =
-          await post(Uri.parse("$SERVER_ADDRESS/api/doctoreditprofile"), body: {
-        "doctor_id": widget.doctorId,
-        "name": widget.myData.name,
-        "password": widget.myData.password,
-        "email": widget.myData.email,
-        "consultation_fees": widget.myData.consultationFees,
-        "aboutus": widget.myData.aboutus,
-        "working_time": widget.myData.workingTime,
-        "address": widget.myData.address,
-        "lat": widget.myData.lat,
-        "lon": widget.myData.lon,
-        "phoneno": widget.myData.phoneno,
-        "services": widget.myData.services?.join(", "),
-        "languages": widget.myData.languages?.join(", "),
-        //widget.base64image == null ? "doctor_id" : widget.doctorId : "image" : widget.base64image,
-        "department_id": departmentId.toString(),
-        "facebook_url": widget.myData.facebookUrl,
-        "twitter_url": widget.myData.twitterUrl,
-        "time_json": x,
-      }).catchError((e) {
+    final response =
+        await post(Uri.parse("$SERVER_ADDRESS/api/doctoreditprofile"), body: {
+      "doctor_id": widget.doctorId,
+      "name": widget.myData.name,
+      "password": widget.myData.password,
+      "email": widget.myData.email,
+      "consultation_fees": widget.myData.consultationFees,
+      "aboutus": widget.myData.aboutus,
+      "working_time": widget.myData.workingTime,
+      "address": widget.myData.address,
+      "lat": widget.myData.lat,
+      "lon": widget.myData.lon,
+      "phoneno": widget.myData.phoneno,
+      "services": widget.myData.services?.join(", "),
+      "languages": widget.myData.languages?.join(", "),
+      "image": widget.base64image,
+      "department_id": departmentId.toString(),
+      "facebook_url": widget.myData.facebookUrl,
+      "twitter_url": widget.myData.twitterUrl,
+      "time_json": x,
+      // ignore: body_might_complete_normally_catch_error
+    }).catchError((e) {
+      Navigator.pop(context);
+      messageDialog(ERROR, UNABLE_TO_LOAD_DATA_FORM_SERVER);
+      print(e);
+    });
+    if (response.statusCode == 200) {
+      final jsonResponse = jsonDecode(response.body);
+      print(jsonResponse);
+      if (jsonResponse['success'].toString() == "1") {
         Navigator.pop(context);
-        messageDialog(ERROR, UNABLE_TO_LOAD_DATA_FORM_SERVER);
-        print(e);
-      });
-      if (response.statusCode == 200) {
-        final jsonResponse = jsonDecode(response.body);
-        print(jsonResponse);
-        if (jsonResponse['success'].toString() == "1") {
-          // Navigator.pop(context);
-          setState(() {
-            isError.clear();
-            errorMessage.clear();
-            selectedvValue.clear();
-            startTime.clear();
-            endTime.clear();
-            slotsList.clear();
-            doctorSlotsDetails!.data!.clear();
-            textEditingControllerEndTime.clear();
-            textEditingControllerStartTime.clear();
-            _future = fetchDoctorSlots();
-            //fetchDoctorSlots();
-            areChangesMade = true;
-          });
-          Navigator.pop(context, areChangesMade);
-          return false;
-        } else {
-          Navigator.pop(context);
-          messageDialog(ERROR, jsonResponse['register']);
-        }
-      }
-    } else {
-      final response =
-          await post(Uri.parse("$SERVER_ADDRESS/api/doctoreditprofile"), body: {
-        "doctor_id": widget.doctorId,
-        "name": widget.myData.name,
-        "password": widget.myData.password,
-        "email": widget.myData.email,
-        "consultation_fees": widget.myData.consultationFees,
-        "aboutus": widget.myData.aboutus,
-        "working_time": widget.myData.workingTime,
-        "address": widget.myData.address,
-        "lat": widget.myData.lat,
-        "lon": widget.myData.lon,
-        "phoneno": widget.myData.phoneno,
-        "services": widget.myData.services?.join(", "),
-        "languages": widget.myData.languages?.join(", "),
-        "image": widget.base64image,
-        "department_id": departmentId.toString(),
-        "facebook_url": widget.myData.facebookUrl,
-        "twitter_url": widget.myData.twitterUrl,
-        "time_json": x,
-      }).catchError((e) {
-        Navigator.pop(context);
-        messageDialog(ERROR, UNABLE_TO_LOAD_DATA_FORM_SERVER);
-        print(e);
-      });
-      if (response.statusCode == 200) {
-        final jsonResponse = jsonDecode(response.body);
-        print(jsonResponse);
-        if (jsonResponse['success'].toString() == "1") {
-          Navigator.pop(context);
-          print("test");
-          showDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  title: Text(
-                    SUCCESSFUL,
-                    style: GoogleFonts.comfortaa(
-                      fontWeight: FontWeight.bold,
-                    ),
+        print("test");
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Text(
+                  SUCCESSFUL,
+                  style: GoogleFonts.comfortaa(
+                    fontWeight: FontWeight.bold,
                   ),
-                  content: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        SUCCESSFUL_TIME_SLOT,
-                        style: GoogleFonts.poppins(
-                          fontSize: 14,
-                        ),
-                      )
-                    ],
-                  ),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        setState(() {
-                          isError.clear();
-                          errorMessage.clear();
-                          selectedvValue.clear();
-                          startTime.clear();
-                          endTime.clear();
-                          slotsList.clear();
-                          doctorSlotsDetails!.data!.clear();
-                          textEditingControllerEndTime.clear();
-                          textEditingControllerStartTime.clear();
-                          _future = fetchDoctorSlots();
-                          //fetchDoctorSlots();
-                          areChangesMade = true;
-                        });
-                        Navigator.pop(context, areChangesMade);
-                        Navigator.pop(context, areChangesMade);
-                      },
-                      style: TextButton.styleFrom(
-                        backgroundColor: Theme.of(context).primaryColor,
+                ),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      SUCCESSFUL_TIME_SLOT,
+                      style: GoogleFonts.poppins(
+                        fontSize: 14,
                       ),
-                      // color: Theme.of(context).primaryColor,
-                      child: Text(
-                        OK,
-                        style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w500,
-                          color: BLACK,
-                        ),
-                      ),
-                    ),
+                    )
                   ],
-                );
-              });
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      setState(() {
+                        isError.clear();
+                        errorMessage.clear();
+                        selectedvValue.clear();
+                        startTime.clear();
+                        endTime.clear();
+                        slotsList.clear();
+                        doctorSlotsDetails!.data!.clear();
+                        textEditingControllerEndTime.clear();
+                        textEditingControllerStartTime.clear();
+                        _future = fetchDoctorSlots();
+                        //fetchDoctorSlots();
+                        areChangesMade = true;
+                      });
+                      Navigator.pop(context, areChangesMade);
+                      Navigator.pop(context, areChangesMade);
+                    },
+                    style: TextButton.styleFrom(
+                      backgroundColor: Theme.of(context).primaryColor,
+                    ),
+                    // color: Theme.of(context).primaryColor,
+                    child: Text(
+                      OK,
+                      style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w500,
+                        color: BLACK,
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            });
 
-          // Navigator.push(context, MaterialPageRoute(builder: (context)=>DoctorProfile()));
-        } else {
-          Navigator.pop(context);
-          messageDialog(ERROR, jsonResponse['register']);
-        }
+        // Navigator.push(context, MaterialPageRoute(builder: (context)=>DoctorProfile()));
+      } else {
+        Navigator.pop(context);
+        messageDialog(ERROR, jsonResponse['register']);
       }
     }
   }

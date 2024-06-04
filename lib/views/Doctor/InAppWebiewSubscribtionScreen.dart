@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:collection';
 // import 'dart:convert';
 import 'dart:io';
@@ -13,18 +12,18 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../en.dart';
 import '../UserAppointmentDetails.dart';
-import 'DoctorDashboard.dart';
-import 'DoctorTabScreen.dart';
 
+// ignore: must_be_immutable
 class InAppWebViewScreen extends StatefulWidget {
   final String url;
   int isDoctor;
   String? AppointmentId;
 
-  InAppWebViewScreen({Key? key, required this.url,required this.isDoctor,this.AppointmentId}) : super(key: key);
+  InAppWebViewScreen(
+      {Key? key, required this.url, required this.isDoctor, this.AppointmentId})
+      : super(key: key);
   @override
-  _InAppWebViewScreenState createState() =>
-      new _InAppWebViewScreenState();
+  _InAppWebViewScreenState createState() => new _InAppWebViewScreenState();
 }
 
 class _InAppWebViewScreenState extends State<InAppWebViewScreen> {
@@ -105,16 +104,16 @@ class _InAppWebViewScreenState extends State<InAppWebViewScreen> {
     );
   }
 
-
   @override
   void dispose() {
     super.dispose();
   }
 
-  Widget header(){
+  Widget header() {
     return Stack(
       children: [
-        Image.asset("assets/moreScreenImages/header_bg.png",
+        Image.asset(
+          "assets/moreScreenImages/header_bg.png",
           height: 60,
           fit: BoxFit.fill,
           width: MediaQuery.of(context).size.width,
@@ -123,13 +122,13 @@ class _InAppWebViewScreenState extends State<InAppWebViewScreen> {
           height: 60,
           child: Row(
             children: [
-              SizedBox(width: 15,),
-              Text(
-                  '',
-                  style: Theme.of(context).textTheme.headline5!.apply(color: Theme.of(context).backgroundColor,
-                      fontWeightDelta: 5
-                  )
-              )
+              SizedBox(
+                width: 15,
+              ),
+              Text('',
+                  style: Theme.of(context).textTheme.headline5!.apply(
+                      color: Theme.of(context).backgroundColor,
+                      fontWeightDelta: 5))
             ],
           ),
         ),
@@ -147,177 +146,178 @@ class _InAppWebViewScreenState extends State<InAppWebViewScreen> {
           // drawer: myDrawer(context: context),
           body: SafeArea(
               child: Column(children: <Widget>[
-                // TextField(
-                //   decoration: InputDecoration(prefixIcon: Icon(Icons.search)),
-                //   controller: urlController,
-                //   keyboardType: TextInputType.url,
-                //   onSubmitted: (value) {
-                //     var url = Uri.parse(value);
-                //     if (url.scheme.isEmpty) {
-                //       url = Uri.parse("https://www.google.com/search?q=" + value);
-                //     }
-                //     webViewController?.loadUrl(urlRequest: URLRequest(url: url));
-                //   },
-                // ),
-                Expanded(
-                  child: Stack(
-                    children: [
-                      InAppWebView(
-                        key: webViewKey,
-                        // contextMenu: contextMenu,
-                        initialUrlRequest:
+            // TextField(
+            //   decoration: InputDecoration(prefixIcon: Icon(Icons.search)),
+            //   controller: urlController,
+            //   keyboardType: TextInputType.url,
+            //   onSubmitted: (value) {
+            //     var url = Uri.parse(value);
+            //     if (url.scheme.isEmpty) {
+            //       url = Uri.parse("https://www.google.com/search?q=" + value);
+            //     }
+            //     webViewController?.loadUrl(urlRequest: URLRequest(url: url));
+            //   },
+            // ),
+            Expanded(
+              child: Stack(
+                children: [
+                  InAppWebView(
+                    key: webViewKey,
+                    // contextMenu: contextMenu,
+                    initialUrlRequest:
                         // URLRequest(url: Uri.parse("https://github.com/flutter")),
                         URLRequest(url: Uri.parse("${widget.url}")),
-                        // initialFile: "assets/index.html",
-                        initialUserScripts: UnmodifiableListView<UserScript>([]),
-                        initialOptions: options,
-                        pullToRefreshController: pullToRefreshController,
-                        onWebViewCreated: (controller) {
-                          webViewController = controller;
+                    // initialFile: "assets/index.html",
+                    initialUserScripts: UnmodifiableListView<UserScript>([]),
+                    initialOptions: options,
+                    pullToRefreshController: pullToRefreshController,
+                    onWebViewCreated: (controller) {
+                      webViewController = controller;
 
-                          webViewController!.addJavaScriptHandler(handlerName:'handlerFoo', callback: (args) {
+                      webViewController!.addJavaScriptHandler(
+                          handlerName: 'handlerFoo',
+                          callback: (args) {
                             // return data to JavaScript side!
-                            return {
-                              'bar': 'bar_value', 'baz': 'baz_value'
-                            };
+                            return {'bar': 'bar_value', 'baz': 'baz_value'};
                           });
 
-                          webViewController!.addJavaScriptHandler(handlerName: 'handlerFooWithArgs', callback: (args) {
+                      webViewController!.addJavaScriptHandler(
+                          handlerName: 'handlerFooWithArgs',
+                          callback: (args) {
                             print(args);
                             // it will print: [1, true, [bar, 5], {foo: baz}, {bar: bar_value, baz: baz_value}]
                           });
+                    },
+                    onLoadStart: (controller, url) {
+                      setState(() {
+                        this.url = url.toString();
+                        urlController.text = this.url;
+                      });
+                    },
+                    androidOnPermissionRequest:
+                        (controller, origin, resources) async {
+                      return PermissionRequestResponse(
+                          resources: resources,
+                          action: PermissionRequestResponseAction.GRANT);
+                    },
+                    shouldOverrideUrlLoading:
+                        (controller, navigationAction) async {
+                      var uri = navigationAction.request.url!;
 
-                        },
-                        onLoadStart: (controller, url) {
-                          setState(() {
-                            this.url = url.toString();
-                            urlController.text = this.url;
-                          });
-                        },
-                        androidOnPermissionRequest:
-                            (controller, origin, resources) async {
-                          return PermissionRequestResponse(
-                              resources: resources,
-                              action: PermissionRequestResponseAction.GRANT);
-                        },
-                        shouldOverrideUrlLoading:
-                            (controller, navigationAction) async {
-                          var uri = navigationAction.request.url!;
+                      if (![
+                        "http",
+                        "https",
+                        "file",
+                        "chrome",
+                        "data",
+                        "javascript",
+                        "about"
+                      ].contains(uri.scheme)) {
+                        if (await canLaunch(url)) {
+                          // Launch the App
+                          await launch(
+                            url,
+                          );
+                          // and cancel the request
+                          return NavigationActionPolicy.CANCEL;
+                        }
+                      }
 
-                          if (![
-                            "http",
-                            "https",
-                            "file",
-                            "chrome",
-                            "data",
-                            "javascript",
-                            "about"
-                          ].contains(uri.scheme)) {
-                            if (await canLaunch(url)) {
-                              // Launch the App
-                              await launch(
-                                url,
-                              );
-                              // and cancel the request
-                              return NavigationActionPolicy.CANCEL;
-                            }
-                          }
+                      return NavigationActionPolicy.ALLOW;
+                    },
+                    onLoadStop: (controller, url) async {
+                      print(
+                          'on load stop url success url ------------**************-----------> $url');
 
-                          return NavigationActionPolicy.ALLOW;
-                        },
-                        onLoadStop: (controller, url) async {
-                          print('on load stop url success url ------------**************-----------> $url');
+                      pullToRefreshController.endRefreshing();
+                      print('success payment url  1---------------------$url');
+                      setState(() {
+                        print(
+                            'success payment url  =2---------------------$url');
+                        this.url = url.toString();
+                        urlController.text = this.url;
+                      });
+                      print(
+                          'success payment url  3---------------------${urlController.text}');
+                      if (url.toString() == SUCCESS_PAYMENT_URL) {
+                        print('success payment link ---------------');
+                        if (widget.isDoctor == 0) {
+                          print("widget.isDoctor ${widget.isDoctor}");
+                          Navigator.pop(context, 'success');
+                        } else {
+                          Navigator.pop(context);
+                          messageDialog1('Success', 'Your payment success');
+                        }
 
-                          pullToRefreshController.endRefreshing();
-                          print('success payment url  1---------------------$url');
-                          setState(() {
-                            print('success payment url  =2---------------------$url');
-                            this.url = url.toString();
-                            urlController.text = this.url;
-                          });
-                          print('success payment url  3---------------------${urlController.text}');
-                          if(url.toString() == SUCCESS_PAYMENT_URL){
-                            print('success payment link ---------------');
-                            if(widget.isDoctor == 0){
-                              print("widget.isDoctor ${widget.isDoctor}");
-                              Navigator.pop(context,'success');
-                            }
-                            else{
-                              Navigator.pop(context);
-                              messageDialog1('Success', 'Your payment success');
-                            }
-
-                            // Timer(Duration(seconds: 1),(){
-                            //   Navigator.pop(context,'success');
-                            // });
-                            // Navigator.pop(context,'Success');
-                            // Navigator.push(context, MaterialPageRoute (builder: (context)=>TabsScreen()));
-                            // Navigator.popUntil(context, (route) => route.isFirst);
-
-                          }else if(url.toString() == FAIL_PAYMENT_URL){
-                            print("url.toString() == FAIL_PAYMENT_URL");
-                            Navigator.pop(context,'fail');
-                            // Timer(Duration(seconds: 1),(){
-                            //   Navigator.pop(context,'fail');
-                            // });
-                            print('fail payment link');
-                          }
-                          else{
-                            print("Else");
-                          }
-                        },
-                        onLoadError: (controller, url, code, message) {
-                          pullToRefreshController.endRefreshing();
-                        },
-                        onProgressChanged: (controller, progress) {
-                          if (progress == 100) {
-                            pullToRefreshController.endRefreshing();
-                          }
-                          setState(() {
-                            this.progress = progress / 100;
-                            urlController.text = this.url;
-                          });
-                        },
-                        onUpdateVisitedHistory: (controller, url, androidIsReload) {
-                          setState(() {
-                            this.url = url.toString();
-                            urlController.text = this.url;
-                          });
-                        },
-                        onConsoleMessage: (controller, consoleMessage) {
-                          print(consoleMessage);
-                        },
-                      ),
-                      progress < 1.0
-                          ? LinearProgressIndicator(value: progress)
-                          : Container(),
-                    ],
+                        // Timer(Duration(seconds: 1),(){
+                        //   Navigator.pop(context,'success');
+                        // });
+                        // Navigator.pop(context,'Success');
+                        // Navigator.push(context, MaterialPageRoute (builder: (context)=>TabsScreen()));
+                        // Navigator.popUntil(context, (route) => route.isFirst);
+                      } else if (url.toString() == FAIL_PAYMENT_URL) {
+                        print("url.toString() == FAIL_PAYMENT_URL");
+                        Navigator.pop(context, 'fail');
+                        // Timer(Duration(seconds: 1),(){
+                        //   Navigator.pop(context,'fail');
+                        // });
+                        print('fail payment link');
+                      } else {
+                        print("Else");
+                      }
+                    },
+                    onLoadError: (controller, url, code, message) {
+                      pullToRefreshController.endRefreshing();
+                    },
+                    onProgressChanged: (controller, progress) {
+                      if (progress == 100) {
+                        pullToRefreshController.endRefreshing();
+                      }
+                      setState(() {
+                        this.progress = progress / 100;
+                        urlController.text = this.url;
+                      });
+                    },
+                    onUpdateVisitedHistory: (controller, url, androidIsReload) {
+                      setState(() {
+                        this.url = url.toString();
+                        urlController.text = this.url;
+                      });
+                    },
+                    onConsoleMessage: (controller, consoleMessage) {
+                      print(consoleMessage);
+                    },
                   ),
-                ),
-                // ButtonBar(
-                //   alignment: MainAxisAlignment.center,
-                //   children: <Widget>[
-                //     ElevatedButton(
-                //       child: Icon(Icons.arrow_back),
-                //       onPressed: () {
-                //         webViewController?.goBack();
-                //       },
-                //     ),
-                //     ElevatedButton(
-                //       child: Icon(Icons.arrow_forward),
-                //       onPressed: () {
-                //         webViewController?.goForward();
-                //       },
-                //     ),
-                //     ElevatedButton(
-                //       child: Icon(Icons.refresh),
-                //       onPressed: () {
-                //         webViewController?.reload();
-                //       },
-                //     ),
-                //   ],
-                // ),
-              ]))),
+                  progress < 1.0
+                      ? LinearProgressIndicator(value: progress)
+                      : Container(),
+                ],
+              ),
+            ),
+            // ButtonBar(
+            //   alignment: MainAxisAlignment.center,
+            //   children: <Widget>[
+            //     ElevatedButton(
+            //       child: Icon(Icons.arrow_back),
+            //       onPressed: () {
+            //         webViewController?.goBack();
+            //       },
+            //     ),
+            //     ElevatedButton(
+            //       child: Icon(Icons.arrow_forward),
+            //       onPressed: () {
+            //         webViewController?.goForward();
+            //       },
+            //     ),
+            //     ElevatedButton(
+            //       child: Icon(Icons.refresh),
+            //       onPressed: () {
+            //         webViewController?.reload();
+            //       },
+            //     ),
+            //   ],
+            // ),
+          ]))),
     );
   }
 

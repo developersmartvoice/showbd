@@ -14,6 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'UserAppointmentDetails.dart';
 
+// ignore: must_be_immutable
 class AllAppointments extends StatefulWidget {
   List<Appointment> userAppointmentsClass;
 

@@ -57,11 +57,30 @@ class _SearchedScreenState extends State<SearchedScreen> {
   }
 
   getFiltersDoctors() async {
-    String body = getBodyParameter();
-    if (body.isNotEmpty) {
+    Map<String, dynamic> filters = {};
+
+    if (filterGender != null) {
+      filters['gender'] = filterGender;
+    }
+
+    if (filterFees != null) {
+      filters['consultation_fees'] = filterFees;
+    }
+
+    if (selectedLanguages.isNotEmpty) {
+      filters['languages'] = selectedLanguages.join(',');
+    }
+
+    if (selectedActivities.isNotEmpty) {
+      filters['services'] = selectedActivities.join(',');
+    }
+
+    // String body = getBodyParameter();
+    if (filters.isNotEmpty) {
       print("This body is from Inside the condition!: $body");
       final response = await post(Uri.parse("$SERVER_ADDRESS/api/filterdoctor"),
-          headers: {'Content-Type': 'application/json'}, body: body);
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode(filters));
       if (response.statusCode == 200) {
         final jsonResponse = jsonDecode(response.body);
         print("Total Found: ${jsonResponse['data']['total']}");
@@ -71,7 +90,8 @@ class _SearchedScreenState extends State<SearchedScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: ((context) => FilteredGuidesScreen(_filterClass!, body)),
+              builder: ((context) =>
+                  FilteredGuidesScreen(_filterClass!, filters.toString())),
             ),
           );
         });
@@ -79,137 +99,137 @@ class _SearchedScreenState extends State<SearchedScreen> {
     }
   }
 
-  String getBodyParameter() {
-    if (isFeesSelected &&
-        isActivitiesSelected &&
-        isLanguageSelected &&
-        isGenderSelected) {
-      Map<String, dynamic> requestBody = {
-        'consultation_fees': filterFees,
-        'gender': filterGender,
-        'languages': selectedLanguages,
-        'services': selectedActivities,
-      };
-      print(jsonEncode(requestBody));
-      // return jsonEncode(requestBody);
-      return requestBody.toString();
-    } else if (isFeesSelected && isLanguageSelected && isActivitiesSelected) {
-      Map<String, dynamic> requestBody = {
-        'consultation_fees': filterFees,
-        'languages': selectedLanguages,
-        'services': selectedActivities,
-      };
-      print(jsonEncode(requestBody));
-      // return jsonEncode(requestBody);
-      return requestBody.toString();
-    } else if (isFeesSelected && isLanguageSelected && isGenderSelected) {
-      Map<String, dynamic> requestBody = {
-        'consultation_fees': filterFees,
-        'gender': filterGender,
-        'languages': selectedLanguages,
-      };
-      print(jsonEncode(requestBody));
-      // return jsonEncode(requestBody);
-      return requestBody.toString();
-    } else if (isFeesSelected && isActivitiesSelected && isGenderSelected) {
-      Map<String, dynamic> requestBody = {
-        'consultation_fees': filterFees,
-        'gender': filterGender,
-        'services': selectedActivities,
-      };
-      print(jsonEncode(requestBody));
-      // return jsonEncode(requestBody);
-      return requestBody.toString();
-    } else if (isLanguageSelected && isActivitiesSelected && isGenderSelected) {
-      Map<String, dynamic> requestBody = {
-        'gender': filterGender,
-        'languages': selectedLanguages,
-        'services': selectedActivities,
-      };
-      print(jsonEncode(requestBody));
-      // return jsonEncode(requestBody);
-      return requestBody.toString();
-    } else if (isFeesSelected && isLanguageSelected) {
-      Map<String, dynamic> requestBody = {
-        'consultation_fees': filterFees,
-        'languages': selectedLanguages,
-      };
-      print(jsonEncode(requestBody));
-      // return jsonEncode(requestBody);
-      return requestBody.toString();
-    } else if (isFeesSelected && isActivitiesSelected) {
-      Map<String, dynamic> requestBody = {
-        'consultation_fees': filterFees,
-        'services': selectedActivities,
-      };
-      print(jsonEncode(requestBody));
-      // return jsonEncode(requestBody);
-      return requestBody.toString();
-    } else if (isFeesSelected && isGenderSelected) {
-      Map<String, dynamic> requestBody = {
-        'consultation_fees': filterFees,
-        'gender': filterGender,
-      };
-      print(jsonEncode(requestBody));
-      // return jsonEncode(requestBody);
-      return requestBody.toString();
-    } else if (isLanguageSelected && isActivitiesSelected) {
-      Map<String, dynamic> requestBody = {
-        'languages': selectedLanguages,
-        'services': selectedActivities,
-      };
-      print(jsonEncode(requestBody));
-      // return jsonEncode(requestBody);
-      return requestBody.toString();
-    } else if (isLanguageSelected && isGenderSelected) {
-      Map<String, dynamic> requestBody = {
-        'gender': filterGender,
-        'languages': selectedLanguages,
-      };
-      print(jsonEncode(requestBody));
-      // return jsonEncode(requestBody);
-      return requestBody.toString();
-    } else if (isActivitiesSelected && isGenderSelected) {
-      Map<String, dynamic> requestBody = {
-        'gender': filterGender,
-        'services': selectedActivities,
-      };
-      print(jsonEncode(requestBody));
-      // return jsonEncode(requestBody);
-      return requestBody.toString();
-    } else if (isFeesSelected) {
-      Map<String, dynamic> requestBody = {
-        'consultation_fees': filterFees,
-      };
-      print(jsonEncode(requestBody));
-      return jsonEncode(requestBody);
-      // return requestBody.toString();
-    } else if (isLanguageSelected) {
-      Map<String, dynamic> requestBody = {
-        'languages': selectedLanguages,
-      };
-      // print(jsonEncode(requestBody));
-      print(requestBody.toString());
-      // return requestBody.toString();
-      return jsonEncode(requestBody);
-    } else if (isActivitiesSelected) {
-      Map<String, dynamic> requestBody = {
-        'services': selectedActivities,
-      };
-      print(jsonEncode(requestBody));
-      return jsonEncode(requestBody);
-      // return requestBody.toString();
-    } else if (isGenderSelected) {
-      Map<String, dynamic> requestBody = {
-        'gender': filterGender,
-      };
-      print(requestBody.toString());
-      return jsonEncode(requestBody);
-      // return requestBody.toString();
-    } else {
-      return '';
-    }
-  }
+  // String getBodyParameter() {
+  //   if (isFeesSelected &&
+  //       isActivitiesSelected &&
+  //       isLanguageSelected &&
+  //       isGenderSelected) {
+  //     Map<String, dynamic> requestBody = {
+  //       'consultation_fees': filterFees,
+  //       'gender': filterGender,
+  //       'languages': selectedLanguages,
+  //       'services': selectedActivities,
+  //     };
+  //     print(jsonEncode(requestBody));
+  //     // return jsonEncode(requestBody);
+  //     return requestBody.toString();
+  //   } else if (isFeesSelected && isLanguageSelected && isActivitiesSelected) {
+  //     Map<String, dynamic> requestBody = {
+  //       'consultation_fees': filterFees,
+  //       'languages': selectedLanguages,
+  //       'services': selectedActivities,
+  //     };
+  //     print(jsonEncode(requestBody));
+  //     // return jsonEncode(requestBody);
+  //     return requestBody.toString();
+  //   } else if (isFeesSelected && isLanguageSelected && isGenderSelected) {
+  //     Map<String, dynamic> requestBody = {
+  //       'consultation_fees': filterFees,
+  //       'gender': filterGender,
+  //       'languages': selectedLanguages,
+  //     };
+  //     print(jsonEncode(requestBody));
+  //     // return jsonEncode(requestBody);
+  //     return requestBody.toString();
+  //   } else if (isFeesSelected && isActivitiesSelected && isGenderSelected) {
+  //     Map<String, dynamic> requestBody = {
+  //       'consultation_fees': filterFees,
+  //       'gender': filterGender,
+  //       'services': selectedActivities,
+  //     };
+  //     print(jsonEncode(requestBody));
+  //     // return jsonEncode(requestBody);
+  //     return requestBody.toString();
+  //   } else if (isLanguageSelected && isActivitiesSelected && isGenderSelected) {
+  //     Map<String, dynamic> requestBody = {
+  //       'gender': filterGender,
+  //       'languages': selectedLanguages,
+  //       'services': selectedActivities,
+  //     };
+  //     print(jsonEncode(requestBody));
+  //     // return jsonEncode(requestBody);
+  //     return requestBody.toString();
+  //   } else if (isFeesSelected && isLanguageSelected) {
+  //     Map<String, dynamic> requestBody = {
+  //       'consultation_fees': filterFees,
+  //       'languages': selectedLanguages,
+  //     };
+  //     print(jsonEncode(requestBody));
+  //     // return jsonEncode(requestBody);
+  //     return requestBody.toString();
+  //   } else if (isFeesSelected && isActivitiesSelected) {
+  //     Map<String, dynamic> requestBody = {
+  //       'consultation_fees': filterFees,
+  //       'services': selectedActivities,
+  //     };
+  //     print(jsonEncode(requestBody));
+  //     // return jsonEncode(requestBody);
+  //     return requestBody.toString();
+  //   } else if (isFeesSelected && isGenderSelected) {
+  //     Map<String, dynamic> requestBody = {
+  //       'consultation_fees': filterFees,
+  //       'gender': filterGender,
+  //     };
+  //     print(jsonEncode(requestBody));
+  //     // return jsonEncode(requestBody);
+  //     return requestBody.toString();
+  //   } else if (isLanguageSelected && isActivitiesSelected) {
+  //     Map<String, dynamic> requestBody = {
+  //       'languages': selectedLanguages,
+  //       'services': selectedActivities,
+  //     };
+  //     print(jsonEncode(requestBody));
+  //     // return jsonEncode(requestBody);
+  //     return requestBody.toString();
+  //   } else if (isLanguageSelected && isGenderSelected) {
+  //     Map<String, dynamic> requestBody = {
+  //       'gender': filterGender,
+  //       'languages': selectedLanguages,
+  //     };
+  //     print(jsonEncode(requestBody));
+  //     // return jsonEncode(requestBody);
+  //     return requestBody.toString();
+  //   } else if (isActivitiesSelected && isGenderSelected) {
+  //     Map<String, dynamic> requestBody = {
+  //       'gender': filterGender,
+  //       'services': selectedActivities,
+  //     };
+  //     print(jsonEncode(requestBody));
+  //     // return jsonEncode(requestBody);
+  //     return requestBody.toString();
+  //   } else if (isFeesSelected) {
+  //     Map<String, dynamic> requestBody = {
+  //       'consultation_fees': filterFees,
+  //     };
+  //     print(jsonEncode(requestBody));
+  //     return jsonEncode(requestBody);
+  //     // return requestBody.toString();
+  //   } else if (isLanguageSelected) {
+  //     Map<String, dynamic> requestBody = {
+  //       'languages': selectedLanguages,
+  //     };
+  //     // print(jsonEncode(requestBody));
+  //     print(requestBody.toString());
+  //     // return requestBody.toString();
+  //     return jsonEncode(requestBody);
+  //   } else if (isActivitiesSelected) {
+  //     Map<String, dynamic> requestBody = {
+  //       'services': selectedActivities,
+  //     };
+  //     print(jsonEncode(requestBody));
+  //     return jsonEncode(requestBody);
+  //     // return requestBody.toString();
+  //   } else if (isGenderSelected) {
+  //     Map<String, dynamic> requestBody = {
+  //       'gender': filterGender,
+  //     };
+  //     print(requestBody.toString());
+  //     return jsonEncode(requestBody);
+  //     // return requestBody.toString();
+  //   } else {
+  //     return '';
+  //   }
+  // }
 
   @override
   void dispose() {

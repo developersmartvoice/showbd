@@ -6,7 +6,7 @@ import 'package:appcode3/modals/SpecialityDoctorClass.dart';
 import 'package:appcode3/views/DetailsPage.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
+// import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 // import 'package:loadmore/loadmore.dart';
@@ -297,39 +297,6 @@ class _SpecialityDoctorsScreenState extends State<SpecialityDoctorsScreen> {
       isErrorInLoading = false;
     });
     if (Platform.isAndroid) {
-      Position? position = await Geolocator.getCurrentPosition(
-              desiredAccuracy: LocationAccuracy.high)
-          .then((value) async {
-        final response = await get(Uri.parse(
-            "$SERVER_ADDRESS/api/getlistofdoctorbyspecialty?department_id=${widget.id}&lat=${value.latitude}&lon=${value.longitude}"));
-        if (response.statusCode == 200) {
-          final jsonResponse = jsonDecode(response.body);
-          //print([0].name);
-          setState(() {
-            lat = value.latitude;
-            long = value.longitude;
-            specialityDoctorsClass =
-                SpecialityDoctorsClass.fromJson(jsonResponse);
-            print("Finished");
-            if (specialityDoctorsClass!.data != null) {
-              nextUrl = specialityDoctorsClass!.data!.nextPageUrl!;
-              print(nextUrl);
-              list.addAll(specialityDoctorsClass!.data!.doctorData!);
-            }
-            isNearbyLoading = false;
-          });
-        }
-      }).catchError((e) {
-        //Toast.show(e.toString(), context,duration: 3);
-        print(e);
-        messageDialog(ERROR, UNABLE_TO_LOAD_DATA_FORM_SERVER);
-        if (mounted) {
-          setState(() {
-            isErrorInLoading = true;
-            isErrorInNearby = true;
-          });
-        }
-      });
     } else {
       final response = await get(Uri.parse(
           "$SERVER_ADDRESS/api/getlistofdoctorbyspecialty?department_id=${widget.id}&lat=${0.0}&lon=${0.0}"));
@@ -399,10 +366,6 @@ class _SpecialityDoctorsScreenState extends State<SpecialityDoctorsScreen> {
                   onPressed: () async {
                     var status = await Permission.location.status;
                     if (!status.isGranted) {
-                      Map<Permission, PermissionStatus> statuses = await [
-                        Permission.location,
-                        Permission.storage,
-                      ].request();
                       print(
                           "status.isPermanentlyDenied ${status.isPermanentlyDenied}");
                       if (status.isPermanentlyDenied == false) {

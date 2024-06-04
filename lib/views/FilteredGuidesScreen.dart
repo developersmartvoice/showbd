@@ -81,82 +81,94 @@ class _FilteredGuidesScreenState extends State<FilteredGuidesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            "Filtered Result",
-            style: Theme.of(context).textTheme.headline5!.apply(
-                  color: Theme.of(context).backgroundColor,
-                  fontWeightDelta: 5,
-                ),
-          ),
-          backgroundColor: const Color.fromARGB(255, 243, 103, 9),
-          centerTitle: true,
-          actions: [
-            IconButton(
-              onPressed: () {
-                setState(() {
-                  list2.clear();
-                });
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => DoctorTabsScreen(),
-                  ),
-                );
-              },
-              icon: Icon(
-                Icons.home_sharp,
-                color: WHITE,
-              ),
-            )
-          ],
+    return Stack(
+      children: [
+        Image.asset(
+          "assets/moreScreenImages/header_bg.png",
+          height: 140,
+          fit: BoxFit.fill,
+          width: MediaQuery.of(context).size.width,
         ),
-        body: SingleChildScrollView(
-          controller: _scrollController, // Step 7
-          child: Column(
-            children: [
-              list2.isEmpty
-                  ? Container(
-                      alignment: Alignment.center,
-                      transformAlignment: Alignment.center,
-                      child: Text("No Filtered Value Found!"),
-                    )
-                  : Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: GridView.builder(
-                        shrinkWrap: true,
-                        physics: ScrollPhysics(),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 1,
-                          childAspectRatio: .92,
-                          crossAxisSpacing: 0,
-                          mainAxisSpacing: 15,
-                        ),
-                        itemCount: list2.length,
-                        itemBuilder: (BuildContext ctx, index) {
-                          var data = list2[index];
-                          return nearByGridWidget(
-                            data.image,
-                            data.name,
-                            data.departmentName,
-                            data.id,
-                            data.consultationFee,
-                            data.aboutme,
-                            data.motto,
-                            data.avgrating,
-                            data.city,
-                            data.totalreview,
-                            data.images,
-                          );
-                        },
-                      ),
+        SafeArea(
+          child: Scaffold(
+            backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
+            appBar: AppBar(
+              title: Text(
+                "Filtered Result",
+                style: Theme.of(context).textTheme.headline5!.apply(
+                      color: Theme.of(context).backgroundColor,
+                      fontWeightDelta: 5,
                     ),
-            ],
+              ),
+              backgroundColor: const Color.fromARGB(255, 243, 103, 9),
+              centerTitle: true,
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      list2.clear();
+                    });
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DoctorTabsScreen(),
+                      ),
+                    );
+                  },
+                  icon: Icon(
+                    Icons.home_sharp,
+                    color: WHITE,
+                  ),
+                )
+              ],
+            ),
+            body: SingleChildScrollView(
+              controller: _scrollController, // Step 7
+              child: Column(
+                children: [
+                  list2.isEmpty
+                      ? Container(
+                          alignment: Alignment.center,
+                          transformAlignment: Alignment.center,
+                          child: Text("No Filtered Value Found!"),
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: GridView.builder(
+                            shrinkWrap: true,
+                            physics: ScrollPhysics(),
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 1,
+                              childAspectRatio: .92,
+                              crossAxisSpacing: 0,
+                              mainAxisSpacing: 15,
+                            ),
+                            itemCount: list2.length,
+                            itemBuilder: (BuildContext ctx, index) {
+                              var data = list2[index];
+                              return nearByGridWidget(
+                                data.image,
+                                data.name,
+                                data.departmentName,
+                                data.id,
+                                data.consultationFee,
+                                data.aboutme,
+                                data.motto,
+                                data.avgrating,
+                                data.city,
+                                data.totalreview,
+                                data.images,
+                              );
+                            },
+                          ),
+                        ),
+                ],
+              ),
+            ),
           ),
         ),
-      ),
+      ],
     );
   }
 

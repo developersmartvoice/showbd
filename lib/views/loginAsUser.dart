@@ -35,7 +35,7 @@ class _LoginAsUserState extends State<LoginAsUser> {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   String? name, email, image = "";
   FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
-  String _message = "";
+  // String _message = "";
 
   storeToken(type) async {
     dialog();
@@ -50,6 +50,7 @@ class _LoginAsUserState extends State<LoginAsUser> {
           await post(Uri.parse("$SERVER_ADDRESS/api/savetoken"), body: {
         "token": token,
         "type": "1",
+        // ignore: body_might_complete_normally_catch_error
       }).catchError((e) {
         messageDialog(ERROR, UNABLE_TO_SAVE_TOKEN_TO_SERVER);
       });
@@ -87,6 +88,7 @@ class _LoginAsUserState extends State<LoginAsUser> {
     await SharedPreferences.getInstance().then((pref) async {
       if (pref.getBool("isTokenExist") ?? false) {
         String? tokenLocal =
+            // ignore: body_might_complete_normally_catch_error
             await FirebaseMessaging.instance.getToken().catchError((e) {
           messageDialog(ERROR, UNABLE_TO_SAVE_TOKEN_TO_SERVER);
         });
@@ -103,7 +105,7 @@ class _LoginAsUserState extends State<LoginAsUser> {
       setState(() {
         isPhoneNumberError = true;
       });
-    } else if (token == null || token.isEmpty && Platform.isAndroid) {
+    } else if (token.isEmpty && Platform.isAndroid) {
       storeToken(type);
     } else {
       dialog();
@@ -114,6 +116,7 @@ class _LoginAsUserState extends State<LoginAsUser> {
       print("Heree  id type :-   ${type}");
       print("Heree  id url for call api :-   ${url}");
 
+      // ignore: body_might_complete_normally_catch_error
       var response = await post(Uri.parse(url)).catchError((e) {
         print("Error ${e.toString()}");
         Navigator.pop(context);
@@ -1032,7 +1035,7 @@ class _LoginAsUserState extends State<LoginAsUser> {
   //
   void _showMessage(String message) {
     setState(() {
-      _message = message;
+      // _message = message;
     });
   }
 
