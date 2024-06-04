@@ -103,7 +103,6 @@ class _LanguagesSettingsPageState extends State<LanguagesSettingsPage> {
     });
   }
 
-  late TextEditingController _controller;
   String enteredValue = '';
   //bool isValueChanged = false;
   Future<void> updatingLanguages() async {
@@ -243,7 +242,7 @@ class _LanguagesSettingsPageState extends State<LanguagesSettingsPage> {
                   physics: NeverScrollableScrollPhysics(),
                   children: languageMap.keys.map((key) {
                     return buildCheckboxListTile(
-                        key, languageMap[key]!, selectedLanguages!);
+                        key, languageMap[key]!, selectedLanguages);
                   }).toList(),
                 ),
               ),

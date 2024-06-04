@@ -404,16 +404,10 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
       final snapshot = event.snapshot.value as Map;
       // print("----------> " + value.value.toString());
       // print("----------> " + snapshot.toString());
-      if (snapshot != null) {
-        // value;
-        setState(() {
-          requestStatus = snapshot['status'] ?? 1;
-        });
-      } else {
-        setState(() {
-          requestStatus = 1;
-        });
-      }
+      // value;
+      setState(() {
+        requestStatus = snapshot['status'] ?? 1;
+      });
     });
   }
 
@@ -469,6 +463,7 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
                   : 2,
           // ignore: unnecessary_null_comparison
           "messageCount":
+              // ignore: unnecessary_null_comparison
               snapshot.isEmpty == null ? 1 : snapshot['messageCount'] + 1,
           "status": 0,
           "channelId": channelId
@@ -1352,7 +1347,7 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
   }
 
   scrollToBottom() {
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       _lvScrollCtrl.animateTo(0.0,
           duration: const Duration(milliseconds: 200), curve: Curves.easeIn);
     });
@@ -2015,7 +2010,7 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
               ),
             );
     } else if (type == 3 && uid == myUid) {
-      final uploader = FlutterUploader();
+      // final uploader = FlutterUploader();
       return InkWell(
         onLongPress: () {},
         child: Container(
@@ -2055,7 +2050,7 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
     } else if (type == 0) {
       return InkWell(
         onTap: () async {
-          if (isURL(message!)) {
+          if (isURL(message)) {
             if (await canLaunch(message)) {
               await launch(message);
             }

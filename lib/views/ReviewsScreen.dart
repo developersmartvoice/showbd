@@ -10,8 +10,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+// ignore: must_be_immutable
 class ReviewsScreen extends StatefulWidget {
-
   String id;
 
   ReviewsScreen(this.id);
@@ -21,7 +21,6 @@ class ReviewsScreen extends StatefulWidget {
 }
 
 class _ReviewsScreenState extends State<ReviewsScreen> {
-
   int starCount = 0;
   String message = "";
   String? user_id = "";
@@ -34,20 +33,24 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
   bool isReviewExist = false;
   bool isLoggedIn = false;
 
-  fertchReviews() async{
-    final response = await get(Uri.parse("$SERVER_ADDRESS/api/reviewlistbydoctor?doctor_id=${widget.id}")).catchError((e){
+  fertchReviews() async {
+    // ignore: body_might_complete_normally_catch_error
+    final response = await get(Uri.parse(
+            "$SERVER_ADDRESS/api/reviewlistbydoctor?doctor_id=${widget.id}"))
+        // ignore: body_might_complete_normally_catch_error
+        .catchError((e) {
       setState(() {
         isReviewExist = false;
       });
     });
-    if(response.statusCode == 200) {
+    if (response.statusCode == 200) {
       final jsonResponse = jsonDecode(response.body);
       if (jsonResponse['success'] == 1) {
         setState(() {
           reviewsClass = ReviewsClass.fromJson(jsonResponse);
           isReviewExist = true;
         });
-      }else{
+      } else {
         setState(() {
           isReviewExist = false;
         });
@@ -59,7 +62,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    SharedPreferences.getInstance().then((pref){
+    SharedPreferences.getInstance().then((pref) {
       setState(() {
         isLoggedIn = pref.getBool("isLoggedIn") ?? false;
         user_id = pref.getString("userId");
@@ -81,24 +84,27 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
             SingleChildScrollView(
               child: FutureBuilder(
                   future: _future,
-                  builder: (context, snapshot){
-                    if(snapshot.connectionState == ConnectionState.waiting){
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
                       return Container(
-                        height: MediaQuery.of(context).size.height - 100 ,
+                        height: MediaQuery.of(context).size.height - 100,
                         width: MediaQuery.of(context).size.width,
                         child: Center(
                           child: CircularProgressIndicator(),
                         ),
                       );
                     }
-                    if(snapshot.connectionState == ConnectionState.done && isReviewExist){
+                    if (snapshot.connectionState == ConnectionState.done &&
+                        isReviewExist) {
                       return Column(
                         children: [
                           reviewsList(),
-                          SizedBox(height: 80,),
+                          SizedBox(
+                            height: 80,
+                          ),
                         ],
                       );
-                    }else{
+                    } else {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Center(
@@ -108,16 +114,18 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                     }
                   }),
             ),
-            showSheet ? InkWell(
-              onTap: (){
-                setState(() {
-                  showSheet = false;
-                });
-              },
-                  child: Container(
-              color: Colors.black38,
-            ),
-                ) : Container(),
+            showSheet
+                ? InkWell(
+                    onTap: () {
+                      setState(() {
+                        showSheet = false;
+                      });
+                    },
+                    child: Container(
+                      color: Colors.black38,
+                    ),
+                  )
+                : Container(),
             button(),
             bottomSheet(),
           ],
@@ -126,10 +134,11 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
     );
   }
 
-  Widget header(){
+  Widget header() {
     return Stack(
       children: [
-        Image.asset("assets/moreScreenImages/header_bg.png",
+        Image.asset(
+          "assets/moreScreenImages/header_bg.png",
           height: 60,
           fit: BoxFit.fill,
           width: MediaQuery.of(context).size.width,
@@ -138,24 +147,26 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
           height: 60,
           child: Row(
             children: [
-              SizedBox(width: 15,),
+              SizedBox(
+                width: 15,
+              ),
               InkWell(
-                onTap: (){
+                onTap: () {
                   Navigator.pop(context);
                 },
-                child: Image.asset("assets/moreScreenImages/back.png",
+                child: Image.asset(
+                  "assets/moreScreenImages/back.png",
                   height: 25,
                   width: 22,
                 ),
               ),
-              SizedBox(width: 10,),
+              SizedBox(
+                width: 10,
+              ),
               Text(
                 REVIEW,
                 style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w600,
-                    color: WHITE,
-                    fontSize: 22
-                ),
+                    fontWeight: FontWeight.w600, color: WHITE, fontSize: 22),
               ),
             ],
           ),
@@ -164,7 +175,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
     );
   }
 
-  Widget button(){
+  Widget button() {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
@@ -172,24 +183,24 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
         margin: EdgeInsets.fromLTRB(20, 10, 20, 20),
         //width: MediaQuery.of(context).size.width,
         child: InkWell(
-          onTap: (){
-            if(isLoggedIn) {
+          onTap: () {
+            if (isLoggedIn) {
               setState(() {
                 showSheet = true;
               });
-            }else{
-              Navigator.push(context, MaterialPageRoute(
-                builder: (context) => LoginAsUser()
-              ));
+            } else {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => LoginAsUser()));
             }
-           // bottomSheet();
+            // bottomSheet();
             //Navigator.push(context, MaterialPageRoute(builder: (context) => MakeAppointment(widget.id, doctorDetailsClass.data.name)));
           },
           child: Stack(
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(25),
-                child: Image.asset("assets/moreScreenImages/header_bg.png",
+                child: Image.asset(
+                  "assets/moreScreenImages/header_bg.png",
                   height: 50,
                   fit: BoxFit.fill,
                   width: MediaQuery.of(context).size.width,
@@ -199,10 +210,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                 child: Text(
                   isLoggedIn ? ADD_A_REVIEW : LOGIN_TO_ADD_REVIEW,
                   style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.w500,
-                      color: WHITE,
-                      fontSize: 18
-                  ),
+                      fontWeight: FontWeight.w500, color: WHITE, fontSize: 18),
                 ),
               )
             ],
@@ -212,12 +220,12 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
     );
   }
 
-  Widget reviewsList(){
+  Widget reviewsList() {
     return ListView.builder(
         itemCount: reviewsClass!.data!.length,
         shrinkWrap: true,
         physics: ClampingScrollPhysics(),
-        itemBuilder: (context, index){
+        itemBuilder: (context, index) {
           return appointmentListWidget(
             index,
             reviewsClass!.data![index].name,
@@ -230,7 +238,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
 
   Widget appointmentListWidget(i, name, rating, description, image) {
     return Container(
-      margin: EdgeInsets.fromLTRB(10,10,10,10),
+      margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
       //padding: EdgeInsets.all(8),
       child: Column(
         children: [
@@ -241,17 +249,33 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                 child: CachedNetworkImage(
                   imageUrl: image,
                   height: 50,
-                  width: 50,placeholder: (context, url) => Container(color: Theme.of(context).primaryColorLight, child: Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Image.asset("assets/homeScreenImages/user_unactive.png",height: 30, width: 30,),
-                ),),
-                  errorWidget: (context,url,err) => Container(color: Theme.of(context).primaryColorLight, child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Image.asset("assets/homeScreenImages/user_unactive.png",height: 30, width: 30,),
-                  )),
+                  width: 50,
+                  placeholder: (context, url) => Container(
+                    color: Theme.of(context).primaryColorLight,
+                    child: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Image.asset(
+                        "assets/homeScreenImages/user_unactive.png",
+                        height: 30,
+                        width: 30,
+                      ),
+                    ),
+                  ),
+                  errorWidget: (context, url, err) => Container(
+                      color: Theme.of(context).primaryColorLight,
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Image.asset(
+                          "assets/homeScreenImages/user_unactive.png",
+                          height: 30,
+                          width: 30,
+                        ),
+                      )),
                 ),
               ),
-              SizedBox(width: 10,),
+              SizedBox(
+                width: 10,
+              ),
               Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -261,12 +285,12 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(name,
+                          Text(
+                            name,
                             style: GoogleFonts.poppins(
                                 color: BLACK,
                                 fontSize: 16,
-                                fontWeight: FontWeight.w500
-                            ),
+                                fontWeight: FontWeight.w500),
                           ),
                           Row(
                             children: [
@@ -313,20 +337,24 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                   ],
                 ),
               ),
-              SizedBox(width: 10,),
+              SizedBox(
+                width: 10,
+              ),
             ],
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Expanded(
-                child: Text(description,
-                   style: GoogleFonts.poppins(
+                child: Text(
+                  description,
+                  style: GoogleFonts.poppins(
                       color: LIGHT_GREY_TEXT,
                       fontSize: 11,
-                      fontWeight: FontWeight.w400
-                  ),
+                      fontWeight: FontWeight.w400),
                 ),
               ),
             ],
@@ -341,20 +369,21 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
     );
   }
 
-  Widget submitReview(){
+  Widget submitReview() {
     return Container(
       height: 50,
       margin: EdgeInsets.fromLTRB(0, 30, 20, 0),
       //width: MediaQuery.of(context).size.width,
       child: InkWell(
-        onTap: (){
+        onTap: () {
           uploadReview();
         },
         child: Stack(
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(25),
-              child: Image.asset("assets/moreScreenImages/header_bg.png",
+              child: Image.asset(
+                "assets/moreScreenImages/header_bg.png",
                 height: 50,
                 fit: BoxFit.fill,
                 width: MediaQuery.of(context).size.width,
@@ -364,10 +393,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
               child: Text(
                 SUBMIT,
                 style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w500,
-                    color: WHITE,
-                    fontSize: 18
-                ),
+                    fontWeight: FontWeight.w500, color: WHITE, fontSize: 18),
               ),
             )
           ],
@@ -376,24 +402,25 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
     );
   }
 
-  uploadReview() async{
+  uploadReview() async {
     dialog();
-    final response = await post(Uri.parse("$SERVER_ADDRESS/api/addreview"),
-      body: {
-        "user_id" : user_id,
-        "rating" : starCount.toString(),
-        "doc_id" : widget.id,
-        "description" : message,
-      }
-    ).catchError((e){
+    final response =
+        await post(Uri.parse("$SERVER_ADDRESS/api/addreview"), body: {
+      "user_id": user_id,
+      "rating": starCount.toString(),
+      "doc_id": widget.id,
+      "description": message,
+    }
+            // ignore: body_might_complete_normally_catch_error
+            ).catchError((e) {
       Navigator.pop(context);
       messageDialog(ERROR, UNABLE_TO_LOAD_DATA_FORM_SERVER);
       print(e);
     });
-    if(response.statusCode == 200){
+    if (response.statusCode == 200) {
       final jsonResponse = jsonDecode(response.body);
       print(response.body);
-      if(jsonResponse["success"] == 1){
+      if (jsonResponse["success"] == 1) {
         Navigator.pop(context);
         setState(() {
           textEditingController.text = "";
@@ -401,21 +428,21 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
           showSheet = false;
           _future = fertchReviews();
         });
-      }else{
+      } else {
         Navigator.pop(context);
         messageDialog(ERROR, jsonResponse["register"]);
       }
     }
   }
 
-  bottomSheet(){
+  bottomSheet() {
     return Visibility(
       visible: showSheet,
       child: DraggableScrollableSheet(
-          initialChildSize: 350/MediaQuery.of(context).size.height,
-          maxChildSize: 350/MediaQuery.of(context).size.height,
-          minChildSize: 350/MediaQuery.of(context).size.height,
-          builder: (context, scrollController){
+        initialChildSize: 350 / MediaQuery.of(context).size.height,
+        maxChildSize: 350 / MediaQuery.of(context).size.height,
+        minChildSize: 350 / MediaQuery.of(context).size.height,
+        builder: (context, scrollController) {
           return SingleChildScrollView(
             controller: scrollController,
             child: Container(
@@ -427,31 +454,32 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    ADD_A_REVIEW ,
+                    ADD_A_REVIEW,
                     style: GoogleFonts.poppins(
                         color: BLACK,
                         fontSize: 15,
-                        fontWeight: FontWeight.w500
-                    ),
+                        fontWeight: FontWeight.w500),
                   ),
-                  SizedBox(height: 15,),
+                  SizedBox(
+                    height: 15,
+                  ),
                   Text(
-                    YOUR_RATING ,
+                    YOUR_RATING,
                     style: GoogleFonts.poppins(
                         color: BLACK,
                         fontSize: 18,
-                        fontWeight: FontWeight.w500
-                    ),
+                        fontWeight: FontWeight.w500),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(
+                    height: 5,
+                  ),
                   Row(
                     children: [
                       InkWell(
-                        onTap: (){
+                        onTap: () {
                           setState(() {
                             starCount = 1;
                             print(starCount);
-
                           });
                         },
                         child: Image.asset(
@@ -462,9 +490,11 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                           width: 25,
                         ),
                       ),
-                      SizedBox(width: 3,),
+                      SizedBox(
+                        width: 3,
+                      ),
                       InkWell(
-                        onTap: (){
+                        onTap: () {
                           setState(() {
                             starCount = 2;
                             print(starCount);
@@ -478,9 +508,11 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                           width: 25,
                         ),
                       ),
-                      SizedBox(width: 3,),
+                      SizedBox(
+                        width: 3,
+                      ),
                       InkWell(
-                        onTap: (){
+                        onTap: () {
                           setState(() {
                             starCount = 3;
                             print(starCount);
@@ -494,9 +526,11 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                           width: 25,
                         ),
                       ),
-                      SizedBox(width: 3,),
+                      SizedBox(
+                        width: 3,
+                      ),
                       InkWell(
-                        onTap: (){
+                        onTap: () {
                           setState(() {
                             starCount = 4;
                             print(starCount);
@@ -510,9 +544,11 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                           width: 25,
                         ),
                       ),
-                      SizedBox(width: 3,),
+                      SizedBox(
+                        width: 3,
+                      ),
                       InkWell(
-                        onTap: (){
+                        onTap: () {
                           setState(() {
                             starCount = 5;
                             print(starCount);
@@ -526,29 +562,25 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                           width: 25,
                         ),
                       ),
-
                     ],
                   ),
-                  SizedBox(height: 10,),
+                  SizedBox(
+                    height: 10,
+                  ),
                   TextField(
                     controller: textEditingController,
                     decoration: InputDecoration(
                       labelText: ENTER_YOUR_MESSAGE,
                       labelStyle: GoogleFonts.poppins(
-                          color: LIGHT_GREY_TEXT,
-                          fontWeight: FontWeight.w400
-                      ),
+                          color: LIGHT_GREY_TEXT, fontWeight: FontWeight.w400),
                       border: UnderlineInputBorder(),
                       focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: LIGHT_GREY_TEXT)
-                      ),
+                          borderSide: BorderSide(color: LIGHT_GREY_TEXT)),
                       //errorText: isNameError ? "Enter your name" : null,
                     ),
                     style: GoogleFonts.poppins(
-                        color: BLACK,
-                        fontWeight: FontWeight.w500
-                    ),
-                    onChanged: (val){
+                        color: BLACK, fontWeight: FontWeight.w500),
+                    onChanged: (val) {
                       setState(() {
                         message = val;
                         //isNameError = false;
@@ -560,17 +592,18 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
               ),
             ),
           );
-          },
+        },
       ),
     );
   }
 
-  dialog(){
+  dialog() {
     return showDialog(
         context: context,
-        builder: (context){
+        builder: (context) {
           return AlertDialog(
-            title: Text(UPLOADING_REVIEW,
+            title: Text(
+              UPLOADING_REVIEW,
               style: GoogleFonts.poppins(),
             ),
             content: Container(
@@ -578,59 +611,64 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
               child: Row(
                 children: [
                   CircularProgressIndicator(),
-                  SizedBox(width: 15,),
+                  SizedBox(
+                    width: 15,
+                  ),
                   Expanded(
-                    child: Text(WAIT_FOR_A_WHILE,
-                      style: GoogleFonts.poppins(
-                          fontSize: 12
-                      ),
+                    child: Text(
+                      WAIT_FOR_A_WHILE,
+                      style: GoogleFonts.poppins(fontSize: 12),
                     ),
                   )
                 ],
               ),
             ),
           );
-        }
-    );
+        });
   }
 
-  messageDialog(String s1, String s2){
+  messageDialog(String s1, String s2) {
     return showDialog(
         context: context,
-        builder: (context){
+        builder: (context) {
           return AlertDialog(
-            title: Text(s1,style: GoogleFonts.comfortaa(
-              fontWeight: FontWeight.bold,
-            ),),
+            title: Text(
+              s1,
+              style: GoogleFonts.comfortaa(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(s2,style: GoogleFonts.poppins(
-                  fontSize: 14,
-                ),)
+                Text(
+                  s2,
+                  style: GoogleFonts.poppins(
+                    fontSize: 14,
+                  ),
+                )
               ],
             ),
             actions: [
               TextButton(
-                onPressed: (){
+                onPressed: () {
                   Navigator.pop(context);
                 },
                 style: TextButton.styleFrom(
                   backgroundColor: Theme.of(context).primaryColor,
                 ),
                 // color: Theme.of(context).primaryColor,
-                child: Text(OK,style: GoogleFonts.poppins(
-                  fontWeight: FontWeight.w500,
-                  color: BLACK,
-                ),),
+                child: Text(
+                  OK,
+                  style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w500,
+                    color: BLACK,
+                  ),
+                ),
               ),
             ],
           );
-        }
-    );
+        });
   }
-
-
-
 }

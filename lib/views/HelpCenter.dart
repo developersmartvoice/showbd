@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:appcode3/en.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,18 +8,15 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../main.dart';
 
-
 class HelpCenter extends StatefulWidget {
   @override
   _HelpCenterState createState() => _HelpCenterState();
 }
 
 class _HelpCenterState extends State<HelpCenter> {
-
   //WebViewController _controller;
   String fileText = "";
   bool isLoading = true;
-
 
   @override
   void initState() {
@@ -42,22 +37,26 @@ class _HelpCenterState extends State<HelpCenter> {
           body: SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(10.0),
-              child: isLoading?Center(child: CircularProgressIndicator(),):Html(
-                data: """$fileText""",
-                onLinkTap: (url,_,__,___){
-                    launch(url!);
-                },
-              ),
+              child: isLoading
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : Html(
+                      data: """$fileText""",
+                      onLinkTap: (url, _, __, ___) {
+                        launch(url!);
+                      },
+                    ),
             ),
-          )
-      ),
+          )),
     );
   }
 
-  Widget header(){
+  Widget header() {
     return Stack(
       children: [
-        Image.asset("assets/moreScreenImages/header_bg.png",
+        Image.asset(
+          "assets/moreScreenImages/header_bg.png",
           height: 60,
           fit: BoxFit.fill,
           width: MediaQuery.of(context).size.width,
@@ -66,24 +65,26 @@ class _HelpCenterState extends State<HelpCenter> {
           height: 60,
           child: Row(
             children: [
-              SizedBox(width: 15,),
+              SizedBox(
+                width: 15,
+              ),
               InkWell(
-                onTap: (){
+                onTap: () {
                   Navigator.pop(context);
                 },
-                child: Image.asset("assets/moreScreenImages/back.png",
+                child: Image.asset(
+                  "assets/moreScreenImages/back.png",
                   height: 25,
                   width: 22,
                 ),
               ),
-              SizedBox(width: 10,),
+              SizedBox(
+                width: 10,
+              ),
               Text(
                 HELP_CENTER,
                 style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w600,
-                    color: WHITE,
-                    fontSize: 22
-                ),
+                    fontWeight: FontWeight.w600, color: WHITE, fontSize: 22),
               )
             ],
           ),
@@ -106,4 +107,3 @@ class _HelpCenterState extends State<HelpCenter> {
     // ).toString());
   }
 }
-

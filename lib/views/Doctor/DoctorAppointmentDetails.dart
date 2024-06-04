@@ -685,6 +685,7 @@ class _DoctorAppointmentDetailsState extends State<DoctorAppointmentDetails> {
       case 5:
         return REJECTED;
     }
+    return null;
   }
 
   Widget button() {
@@ -1426,16 +1427,17 @@ class _DoctorAppointmentDetailsState extends State<DoctorAppointmentDetails> {
     );
   }
 
-  Future<Map<String, dynamic>> sendCallNotification(String token,int type,Data data) async {
-
+  Future<Map<String, dynamic>> sendCallNotification(
+      String token, int type, Data data) async {
     print('send notification call');
 
-    String sessionId = "${DateTime.now().millisecondsSinceEpoch}${Random().nextInt(9999999)}";
+    String sessionId =
+        "${DateTime.now().millisecondsSinceEpoch}${Random().nextInt(9999999)}";
 
     String? mytoken;
     String? myconnectCubId;
     String? myName;
-    SharedPreferences.getInstance().then((value){
+    SharedPreferences.getInstance().then((value) {
       value.setString("currentCallToken", token);
       value.setString("currentCallSessionId", sessionId);
       mytoken = value.getString('token');
@@ -1447,8 +1449,8 @@ class _DoctorAppointmentDetailsState extends State<DoctorAppointmentDetails> {
     await FirebaseMessaging.instance.requestPermission(
         sound: true, badge: true, alert: true, provisional: false);
 
-
-    await http.post(
+    await http
+        .post(
       Uri.parse('https://fcm.googleapis.com/fcm/send'),
       headers: <String, String>{
         'Content-Type': 'application/json',
@@ -1457,9 +1459,8 @@ class _DoctorAppointmentDetailsState extends State<DoctorAppointmentDetails> {
       body: jsonEncode(
         <String, dynamic>{
           'priority': 'high',
-          'notification' : <String, dynamic>{
-            'android' : <String,String>{
-            },
+          'notification': <String, dynamic>{
+            'android': <String, String>{},
             // 'title' : "Call Notification",
             // 'body' : '',
             // 'title' : "$userName calling you",
@@ -1485,15 +1486,16 @@ class _DoctorAppointmentDetailsState extends State<DoctorAppointmentDetails> {
           'to': token,
         },
       ),
-    ).then((value){
+    )
+        .then((value) {
       print("\n\nMessage sent : ${value.body}");
       print('send token $token');
-    }).catchError((onError){
+    }).catchError((onError) {
       print('\n\n Catch Error on notification $onError');
     });
 
     final Completer<Map<String, dynamic>> completer =
-    Completer<Map<String, dynamic>>();
+        Completer<Map<String, dynamic>>();
 
     return completer.future;
   }

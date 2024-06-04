@@ -1,9 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+// ignore: must_be_immutable
 class MapWidget extends StatefulWidget {
-
   double lat;
   double lan;
 
@@ -14,7 +13,6 @@ class MapWidget extends StatefulWidget {
 }
 
 class _MapWidgetState extends State<MapWidget> {
-
   GoogleMapController? mapController;
   final Map<String, Marker> _markers = {};
 
@@ -22,7 +20,7 @@ class _MapWidgetState extends State<MapWidget> {
     mapController = controller;
   }
 
-  locateMarker() async{
+  locateMarker() async {
     final marker = Marker(
       markerId: MarkerId("curr_loc"),
       position: LatLng(widget.lat, widget.lan),
@@ -51,7 +49,7 @@ class _MapWidgetState extends State<MapWidget> {
           target: LatLng(widget.lat, widget.lan),
           zoom: 16.0,
         ),
-        onTap: (latLang){
+        onTap: (latLang) {
           //Toast.show(latLang.toString(), context,duration: 2);
           setState(() {
             //_getLocation(latLang);
@@ -63,5 +61,4 @@ class _MapWidgetState extends State<MapWidget> {
       ),
     );
   }
-
 }

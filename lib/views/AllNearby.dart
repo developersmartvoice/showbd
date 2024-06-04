@@ -325,17 +325,13 @@ class _AllNearbyState extends State<AllNearby> {
     Platform.isIOS ? callApi(latitude: 0.0, longitude: 0.0) : null;
     Position position = await Geolocator.getCurrentPosition(
             desiredAccuracy: LocationAccuracy.high)
+        // ignore: body_might_complete_normally_catch_error
         .catchError((e) {
       //Toast.show(e.toString(), context,duration: 3);
       print("e :$e");
     });
 
-    if (position == null) {
-      print("position : $position");
-      callApi(latitude: 0.0, longitude: 0.0);
-    } else {
-      callApi(latitude: position.latitude, longitude: position.longitude);
-    }
+    callApi(latitude: position.latitude, longitude: position.longitude);
   }
 
   callApi({double? latitude, double? longitude}) async {
@@ -392,10 +388,6 @@ class _AllNearbyState extends State<AllNearby> {
                   onPressed: () async {
                     var status = await Permission.location.status;
                     if (!status.isGranted && s1 == PERMISSION_NOT_GRANTED) {
-                      Map<Permission, PermissionStatus> statuses = await [
-                        Permission.location,
-                        Permission.storage,
-                      ].request();
                       _getLocationStart();
                       // We didn't ask for permission yet or the permission has been denied before but not permanently.
                     }

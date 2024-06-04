@@ -16,6 +16,7 @@ import 'package:toast/toast.dart';
 
 import 'Doctor/InAppWebiewSubscribtionScreen.dart';
 
+// ignore: must_be_immutable
 class MakeAppointment extends StatefulWidget {
   String id;
   String name;
@@ -675,10 +676,9 @@ class _MakeAppointmentState extends State<MakeAppointment> {
 
   processPayment() async {
     //print("Fee : ${int.parse(widget.consultationFee)}");
-    if (slotId == null || slotId.length == 0) {
+    if (slotId.length == 0) {
       messageDialog(ERROR, PLEASE_SELECT_APPOINTMENT_TIME);
-    } else if (textEditingController.text == null ||
-        textEditingController.text.isEmpty ||
+    } else if (textEditingController.text.isEmpty ||
         textEditingController.text.length < PHONE_NUMBER_LENGTH) {
       setState(() {
         isPhoneError = true;
@@ -1502,8 +1502,6 @@ class _MakeAppointmentState extends State<MakeAppointment> {
     await Future.delayed(Duration(seconds: 2));
     String token = await Navigator.push(
         context, MaterialPageRoute(builder: (context) => MyCardDetails(false)));
-    if (token != null) {
-      bookAppointment(nonce: token, type: "2");
-    }
+    bookAppointment(nonce: token, type: "2");
   }
 }

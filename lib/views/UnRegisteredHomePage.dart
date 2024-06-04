@@ -279,6 +279,7 @@ class _UnRegisteredHomePageState extends State<UnRegisteredHomePage>
           lon = longitude.toString();
           nearbyDoctorsClass = NearbyDoctorsClass.fromJson(jsonResponse);
           list2.addAll(nearbyDoctorsClass!.data!.nearbyData!);
+          list2.shuffle();
           nextUrl = nearbyDoctorsClass!.data!.nextPageUrl!;
           isNearbyLoading = false;
         });

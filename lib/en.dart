@@ -31,7 +31,7 @@ const String INBOX = "Inbox";
 const String ALL_OFFERS = "All Offers";
 const String APPOINTMENTS = "Bookings";
 const String EITHER_MOBILE_NUMBER_OR_PASSWORD_IS_INCORRECT =
-    "Either mobile number or password is incorrect";
+    "Either email or password is incorrect";
 const String EITHER_EMAIL_OR_PASSWORD_IS_INCORRECT =
     "Either email or password is incorrect";
 const String LOGIN = "Login";

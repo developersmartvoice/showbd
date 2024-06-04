@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
+// ignore: must_be_immutable
 class MyVideoThumbNail extends StatefulWidget {
-
   String url;
-
 
   MyVideoThumbNail(this.url);
 
@@ -13,11 +12,11 @@ class MyVideoThumbNail extends StatefulWidget {
 }
 
 class _MyVideoThumbNailState extends State<MyVideoThumbNail> {
-
   late VideoPlayerController _videoPlayerController1;
 
   Future<void> initializePlayer() async {
-    _videoPlayerController1 = VideoPlayerController.networkUrl(Uri.parse(widget.url));
+    _videoPlayerController1 =
+        VideoPlayerController.networkUrl(Uri.parse(widget.url));
     await _videoPlayerController1.initialize();
   }
 

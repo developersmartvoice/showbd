@@ -551,7 +551,7 @@ class _IncomeReportState extends State<IncomeReport> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "${incomeReport.data!.incomeRecord![index].date.toString().substring(8,10)}/${incomeReport.data!.incomeRecord![index].date.toString().substring(5,7)}/${incomeReport.data!.incomeRecord![index].date.toString().substring(0,4)}",
+                                    "${incomeReport.data!.incomeRecord![index].date.toString().substring(8, 10)}/${incomeReport.data!.incomeRecord![index].date.toString().substring(5, 7)}/${incomeReport.data!.incomeRecord![index].date.toString().substring(0, 4)}",
                                     style: TextStyle(
                                         color: Color(0xFF757575), fontSize: 16),
                                   ),
@@ -652,6 +652,7 @@ class _IncomeReportState extends State<IncomeReport> {
   }
 }
 
+// ignore: must_be_immutable
 class CustomOptionTile extends StatelessWidget {
   VoidCallback _callback;
   String text;

@@ -645,6 +645,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
           print(nearbyDoctorsClass!.data!.nearbyData![0].city);
           print("Finished");
           list2.addAll(nearbyDoctorsClass!.data!.nearbyData!);
+          list2.shuffle();
           list2.removeWhere((element) => element.id == currentId);
 
           // list3.clear();
