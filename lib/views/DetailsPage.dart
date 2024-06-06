@@ -249,11 +249,7 @@ class _DetailsPageState extends State<DetailsPage> {
                               header(),
                               Expanded(
                                 child: SingleChildScrollView(
-                                  child: Column(
-                                    children: [
-                                      doctorDetails(),
-                                    ],
-                                  ),
+                                  child: doctorDetails(),
                                 ),
                               ),
                             ],
@@ -689,20 +685,18 @@ class _DetailsPageState extends State<DetailsPage> {
               SizedBox(
                 height: 5,
               ),
-              SizedBox(
-                height: 5,
-              ),
-              Container(
-                color: Colors.grey,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: 50,
-                    ),
-                  ],
-                ),
-              ),
+
+              // Container(
+              //   color: Colors.grey,
+              //   child: Row(
+              //     crossAxisAlignment: CrossAxisAlignment.start,
+              //     children: [
+              //       SizedBox(
+              //         width: 50,
+              //       ),
+              //     ],
+              //   ),
+              // ),
               doctorDetailsClass!.data!.iwillshowyou == null
                   ? Container()
                   : Container(
@@ -724,36 +718,48 @@ class _DetailsPageState extends State<DetailsPage> {
                           SizedBox(
                             height: 5,
                           ),
-                          doctorDetailsClass!.data!.iwillshowyou == null
-                              ? Text("")
-                              : Text(
-                                  style: GoogleFonts.poppins(
-                                      // fontWeight: FontWeight.w400,
-                                      color: Colors.blueGrey,
-                                      fontSize:
-                                          MediaQuery.of(context).size.width *
-                                              0.03),
-                                  doctorDetailsClass!.data!.iwillshowyou
-                                      .toString(),
-                                )
+                          Text(
+                            style: GoogleFonts.poppins(
+                                // fontWeight: FontWeight.w400,
+                                color: Colors.blueGrey,
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.03),
+                            doctorDetailsClass!.data!.iwillshowyou.toString(),
+                          ),
+                          // doctorDetailsClass!.data!.iwillshowyou == null
+                          //     ? Text("")
+                          //     : Text(
+                          //         style: GoogleFonts.poppins(
+                          //             // fontWeight: FontWeight.w400,
+                          //             color: Colors.blueGrey,
+                          //             fontSize:
+                          //                 MediaQuery.of(context).size.width *
+                          //                     0.03),
+                          //         doctorDetailsClass!.data!.iwillshowyou
+                          //             .toString(),
+                          //       )
                         ],
                       ),
                     ),
               SizedBox(
                 height: 10,
               ),
-              doctorDetailsClass!.data!.iwillshowyou == null
-                  ? Container()
-                  : Divider(
-                      height: 35.0,
-                      color: Colors.grey[500],
-                    ),
+              // doctorDetailsClass!.data!.iwillshowyou == null
+              //     ? Container()
+              //     : Divider(
+              //         height: 35.0,
+              //         color: Colors.grey[500],
+              //       ),
               doctorDetailsClass!.data!.aboutus == null
                   ? Container()
                   : Container(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Divider(
+                            height: 35.0,
+                            color: Colors.grey[500],
+                          ),
                           Text(
                             ABOUT_GUIDE,
                             style: GoogleFonts.poppins(
@@ -764,51 +770,38 @@ class _DetailsPageState extends State<DetailsPage> {
                           SizedBox(
                             height: 5,
                           ),
-                          doctorDetailsClass!.data!.aboutus == null
-                              ? Text("")
-                              : Text(
-                                  doctorDetailsClass!.data!.aboutus.toString(),
-                                  style: GoogleFonts.poppins(
-                                      // fontWeight: FontWeight.w400,
-                                      color: Colors.blueGrey,
-                                      fontSize:
-                                          MediaQuery.of(context).size.width *
-                                              0.03),
-                                )
+                          Text(
+                            doctorDetailsClass!.data!.aboutus.toString(),
+                            style: GoogleFonts.poppins(
+                                // fontWeight: FontWeight.w400,
+                                color: Colors.blueGrey,
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.03),
+                          ),
                         ],
                       ),
                     ),
               SizedBox(
                 height: 10,
               ),
-              doctorDetailsClass!.data!.aboutus == null
+              doctorDetailsClass!.data!.services == null
                   ? Container()
-                  : Divider(
-                      height: 35.0,
-                      color: Colors.grey[500],
-                    ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    doctorDetailsClass!.data!.services == null ? " " : SERVICES,
-                    style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w400,
-                        color: BLACK,
-                        fontSize: MediaQuery.of(context).size.width * 0.045),
-                  ),
-                  SizedBox(
-                    width: 0,
-                  ),
-                  doctorDetailsClass!.data!.services == null
-                      ? Text(
-                          "No Activities",
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Divider(
+                          height: 35.0,
+                          color: Colors.grey[500],
+                        ),
+                        Text(
+                          SERVICES,
                           style: GoogleFonts.poppins(
-                              fontSize: MediaQuery.of(context).size.width *
-                                  0.05 /
-                                  1.5),
-                        )
-                      : Column(
+                              fontWeight: FontWeight.w400,
+                              color: BLACK,
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.045),
+                        ),
+                        Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             ListView.builder(
@@ -881,31 +874,34 @@ class _DetailsPageState extends State<DetailsPage> {
                               },
                             ),
                           ],
-                        )
-                ],
-              ),
-              Divider(
-                height: 35.0,
-                color: Colors.grey[500],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    doctorDetailsClass!.data!.languages == null
-                        ? " "
-                        : HEALTH_CARE,
-                    style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.bold,
-                        color: BLACK,
-                        fontSize: MediaQuery.of(context).size.width * 0.045),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  doctorDetailsClass!.data!.languages == null
-                      ? Container()
-                      : Row(
+                        ),
+                      ],
+                    ),
+              // Divider(
+              //   height: 35.0,
+              //   color: Colors.grey[500],
+              // ),
+              doctorDetailsClass!.data!.languages == null
+                  ? Container()
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Divider(
+                          height: 35.0,
+                          color: Colors.grey[500],
+                        ),
+                        Text(
+                          HEALTH_CARE,
+                          style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.bold,
+                              color: BLACK,
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.045),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Row(
                           children: doctorDetailsClass!.data!.languages!
                               .map((language) {
                             // Customize text size
@@ -913,7 +909,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                 fontSize: MediaQuery.of(context).size.width *
                                     0.05 /
                                     1.5,
-                                //color: LIGHT_GREY_TEXT,
+                                color: Colors.blueGrey,
                                 fontWeight: FontWeight.w500);
 
                             // Map language to display text
@@ -937,72 +933,16 @@ class _DetailsPageState extends State<DetailsPage> {
                                                 0.05 /
                                                 1.5,
                                         fontWeight: FontWeight.w500,
-                                        color: Colors.black,
+                                        color: Colors.blueGrey,
                                       )),
                             );
                           }).toList(),
-                        )
-                ],
-              ),
+                        ),
+                      ],
+                    ),
               SizedBox(
                 height: 10,
               ),
-              // Divider(
-              //   height: 35.0,
-              //   color: Colors.grey[500],
-              // ),
-              // Column(
-              //   crossAxisAlignment: CrossAxisAlignment.start,
-              //   children: [
-              //     Text(
-              //       // doctorDetailsClass!.data!.aboutme == null
-              //       //     ? " "
-              //       //     :
-              //       ABOUT_GUIDE,
-              //       style: GoogleFonts.poppins(
-              //           fontWeight: FontWeight.w600,
-              //           color: BLACK,
-              //           fontSize: 20),
-              //     ),
-              //     SizedBox(
-              //       height: 5,
-              //     ),
-              //     doctorDetailsClass!.data!.aboutme == null
-              //         ? Text("No Data Found")
-              //         : Row(
-              //             children:
-              //                 doctorDetailsClass!.data!.aboutme!.map((aboutme) {
-              //               // Customize text size
-              //               TextStyle textStyle = TextStyle(
-              //                   fontSize: 12.0,
-              //                   //color: LIGHT_GREY_TEXT,
-              //                   fontWeight: FontWeight.w500);
-
-              //               // Map language to display text
-              //               String displayText =
-              //                   getDisplayTextForAboutMe(aboutme);
-
-              //               return Container(
-              //                 // padding: EdgeInsets.zero,
-              //                 margin: EdgeInsets.only(left: 0, right: 8.0),
-              //                 child: doctorDetailsClass!.data!.aboutme!
-              //                             .indexOf(aboutme) !=
-              //                         count - 1
-              //                     ? Text(
-              //                         '$displayText,',
-              //                         style: textStyle,
-              //                       )
-              //                     : Text('$displayText',
-              //                         style: TextStyle(
-              //                           fontSize: 15,
-              //                           fontWeight: FontWeight.w500,
-              //                           color: Colors.black,
-              //                         )),
-              //               );
-              //             }).toList(),
-              //           )
-              //   ],
-              // ),
             ],
           ),
         ),
