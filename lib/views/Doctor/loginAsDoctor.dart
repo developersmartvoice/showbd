@@ -529,13 +529,13 @@ class _LoginAsDoctorState extends State<LoginAsDoctor> {
             ),
             SizedBox(height: 20),
             Container(
-              decoration: BoxDecoration(
-                border: Border.all(
-                  width: 2,
-                  color: Color.fromARGB(255, 243, 103, 9),
-                  style: BorderStyle.solid,
-                ),
-              ),
+              // decoration: BoxDecoration(
+              //   border: Border.all(
+              //     width: 2,
+              //     color: Color.fromARGB(255, 243, 103, 9),
+              //     style: BorderStyle.solid,
+              //   ),
+              // ),
               width: MediaQuery.of(context).size.width - 30,
               height: 60,
               child: Row(
@@ -576,7 +576,7 @@ class _LoginAsDoctorState extends State<LoginAsDoctor> {
                       style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w500,
                         color: Color.fromARGB(255, 243, 103, 9),
-                        fontSize: 16,
+                        fontSize: 12,
                       ),
                       onChanged: (val) {
                         setState(() {
@@ -592,13 +592,13 @@ class _LoginAsDoctorState extends State<LoginAsDoctor> {
             ),
             SizedBox(height: 10),
             Container(
-              decoration: BoxDecoration(
-                border: Border.all(
-                  width: 2,
-                  color: Color.fromARGB(255, 243, 103, 9),
-                  style: BorderStyle.solid,
-                ),
-              ),
+              // decoration: BoxDecoration(
+              //   border: Border.all(
+              //     width: 2,
+              //     color: Color.fromARGB(255, 243, 103, 9),
+              //     style: BorderStyle.solid,
+              //   ),
+              // ),
               width: MediaQuery.of(context).size.width - 30,
               height: 60,
               child: Row(
@@ -650,7 +650,7 @@ class _LoginAsDoctorState extends State<LoginAsDoctor> {
                       ),
                       style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w500,
-                        fontSize: 16,
+                        fontSize: 12,
                         color: Color.fromARGB(255, 243, 103, 9),
                       ),
                       onChanged: (val) {

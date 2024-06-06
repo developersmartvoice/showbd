@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:appcode3/en.dart';
 import 'package:appcode3/main.dart';
@@ -65,7 +66,10 @@ class _UnRegisteredHomePageState extends State<UnRegisteredHomePage>
                 child: Text("No"),
               ),
               TextButton(
-                onPressed: () => Navigator.of(context).pop(true),
+                // onPressed: () => Navigator.of(context).pop(true),
+                onPressed: () {
+                  exit(0);
+                },
                 child: Text("Yes"),
               ),
             ],

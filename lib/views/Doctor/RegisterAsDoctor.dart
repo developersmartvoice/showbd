@@ -550,13 +550,13 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
                 height: 30,
               ),
               Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    width: 2,
-                    color: Color.fromARGB(255, 243, 103, 9),
-                    style: BorderStyle.solid,
-                  ),
-                ),
+                // decoration: BoxDecoration(
+                //   border: Border.all(
+                //     width: 2,
+                //     color: Color.fromARGB(255, 243, 103, 9),
+                //     style: BorderStyle.solid,
+                //   ),
+                // ),
                 width: MediaQuery.of(context).size.width - 30,
                 height: 60,
                 child: Row(
@@ -595,7 +595,7 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
                         style: GoogleFonts.poppins(
                           fontWeight: FontWeight.w500,
                           color: Color.fromARGB(255, 243, 103, 9),
-                          fontSize: 16,
+                          fontSize: 12,
                         ),
                         onChanged: (val) {
                           setState(() {
@@ -613,13 +613,13 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
                 height: 5,
               ),
               Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    width: 2,
-                    color: Color.fromARGB(255, 243, 103, 9),
-                    style: BorderStyle.solid,
-                  ),
-                ),
+                // decoration: BoxDecoration(
+                //   border: Border.all(
+                //     width: 2,
+                //     color: Color.fromARGB(255, 243, 103, 9),
+                //     style: BorderStyle.solid,
+                //   ),
+                // ),
                 width: MediaQuery.of(context).size.width - 30,
                 height: 60,
                 child: Row(
@@ -658,7 +658,7 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
                         style: GoogleFonts.poppins(
                           fontWeight: FontWeight.w500,
                           color: Color.fromARGB(255, 243, 103, 9),
-                          fontSize: 16,
+                          fontSize: 12,
                         ),
                         onChanged: (val) {
                           setState(() {
@@ -694,13 +694,13 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
                 height: 5,
               ),
               Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    width: 2,
-                    color: Color.fromARGB(255, 243, 103, 9),
-                    style: BorderStyle.solid,
-                  ),
-                ),
+                // decoration: BoxDecoration(
+                //   border: Border.all(
+                //     width: 2,
+                //     color: Color.fromARGB(255, 243, 103, 9),
+                //     style: BorderStyle.solid,
+                //   ),
+                // ),
                 width: MediaQuery.of(context).size.width - 30,
                 height: 60,
                 child: Row(
@@ -740,7 +740,7 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
                         style: GoogleFonts.poppins(
                           fontWeight: FontWeight.w500,
                           color: Color.fromARGB(255, 243, 103, 9),
-                          fontSize: 16,
+                          fontSize: 12,
                         ),
                         onChanged: (val) {
                           setState(() {
@@ -776,13 +776,13 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
                 height: 5,
               ),
               Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    width: 2,
-                    color: Color.fromARGB(255, 243, 103, 9),
-                    style: BorderStyle.solid,
-                  ),
-                ),
+                // decoration: BoxDecoration(
+                //   border: Border.all(
+                //     width: 2,
+                //     color: Color.fromARGB(255, 243, 103, 9),
+                //     style: BorderStyle.solid,
+                //   ),
+                // ),
                 width: MediaQuery.of(context).size.width - 30,
                 height: 60,
                 child: Row(
@@ -850,7 +850,7 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
                         },
                         style: GoogleFonts.poppins(
                           fontWeight: FontWeight.w500,
-                          fontSize: 16,
+                          fontSize: 12,
                           color: Color.fromARGB(255, 243, 103, 9),
                         ),
                         onChanged: (val) {
@@ -914,13 +914,13 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
                 height: 5,
               ),
               Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    width: 2,
-                    color: Color.fromARGB(255, 243, 103, 9),
-                    style: BorderStyle.solid,
-                  ),
-                ),
+                // decoration: BoxDecoration(
+                //   border: Border.all(
+                //     width: 2,
+                //     color: Color.fromARGB(255, 243, 103, 9),
+                //     style: BorderStyle.solid,
+                //   ),
+                // ),
                 width: MediaQuery.of(context).size.width - 30,
                 height: 60,
                 child: Row(
@@ -987,7 +987,7 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
                         },
                         style: GoogleFonts.poppins(
                           fontWeight: FontWeight.w500,
-                          fontSize: 16,
+                          fontSize: 12,
                           color: Color.fromARGB(255, 243, 103, 9),
                         ),
                         onChanged: (val) {
@@ -1051,7 +1051,7 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
               //   height: 3,
               // ),
               SizedBox(
-                height: 20,
+                height: 40,
               ),
               // Container(
               //   height: 50,
@@ -1119,7 +1119,7 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: 30,
               ),
               bottom(),
             ],
