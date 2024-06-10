@@ -654,7 +654,8 @@ class _ContainerPageState extends State<ContainerPage> {
                           height: 25,
                           decoration: BoxDecoration(
                             //color: _boxColor, // Color of the button
-                            color: widget.iwillshowyou.isNotEmpty
+                            color: widget.iwillshowyou.isNotEmpty ||
+                                    widget.iwillshowyou.length > 0
                                 ? Colors.green
                                 : Colors.white,
                             shape: BoxShape.circle,

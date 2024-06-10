@@ -68,117 +68,144 @@ class _ServicesSettingsPageState extends State<ServicesSettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'Activities',
-            style: GoogleFonts.poppins(
-              textStyle: Theme.of(context).textTheme.headline5!.apply(
-                  color: Theme.of(context).backgroundColor,
-                  fontWeightDelta: 1,
-                  fontSizeFactor: .8),
-            ),
-          ),
-          backgroundColor: const Color.fromARGB(255, 243, 103, 9),
-          centerTitle: true,
-          actions: [
-            TextButton(
-              onPressed: () {
-                print("Checking isServiceSelected: $isServiceSelected");
-                if (isServiceSelected) {
-                  print(selectedServices);
-                  setState(() {
-                    loading = true;
-                  });
-                  updatingServices();
-                } else {
-                  // Navigator.pop(context);
-                }
-              },
-              child: Text(
-                'Save',
-                style: GoogleFonts.robotoCondensed(
-                  color: Colors.black,
-                  fontSize: MediaQuery.of(context).size.width * 0.03,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-          ],
+    return Stack(
+      children: [
+        Image.asset(
+          "assets/moreScreenImages/header_bg.png",
+          height: 140,
+          fit: BoxFit.fill,
+          width: MediaQuery.of(context).size.width,
         ),
-        body: loading
-            ? Container(
-                alignment: Alignment.center,
-                transformAlignment: Alignment.center,
-                child: CircularProgressIndicator(
-                  color: const Color.fromARGB(255, 243, 103, 9),
-                ),
-              )
-            : Container(
-                padding: EdgeInsets.all(10),
-                child: ListView(
-                  children: serviceMap.keys.map((key) {
-                    bool isSelected = selectedServices.contains(key);
-                    IconData iconData;
-                    switch (key) {
-                      case 'translation':
-                        iconData = Icons.translate;
-                        break;
-                      case 'shopping':
-                        iconData = Icons.shopping_bag_outlined;
-                        break;
-                      case 'food':
-                        iconData = Icons.restaurant;
-                        break;
-                      case 'art':
-                        iconData = Icons.museum_outlined;
-                        break;
-                      case 'history':
-                        iconData = Icons.music_video;
-                        break;
-                      case 'exploration':
-                        iconData = Icons.explore_outlined;
-                        break;
-                      case 'pick':
-                        iconData = Icons.drive_eta_outlined;
-                        break;
-                      case 'nightlife':
-                        iconData = Icons.local_bar_outlined;
-                        break;
-                      case 'sports':
-                        iconData = Icons.sports_kabaddi_outlined;
-                        break;
-                      default:
-                        iconData = Icons
-                            .error_outline; // Default icon if key not found
-                    }
-
-                    return ListTile(
-                      dense: true,
-                      leading: Icon(iconData),
-                      title: Text(serviceMap[key]!),
-                      selected: isSelected,
-                      onTap: () {
-                        setState(() {
-                          if (isSelected) {
-                            selectedServices.remove(key);
-                            print(
-                                "Checking selectedServices: $selectedServices");
-                          } else {
-                            selectedServices.add(key);
-                            print(
-                                "Checking selectedServices: $selectedServices");
-                          }
-                          isServiceSelected = selectedServices.isNotEmpty;
-                        });
-                      },
-                      trailing: isSelected ? Icon(Icons.check) : null,
-                    );
-                  }).toList(),
+        SafeArea(
+          child: Scaffold(
+            appBar: AppBar(
+              title: Text(
+                'Activities',
+                style: GoogleFonts.poppins(
+                  textStyle: Theme.of(context).textTheme.headline5!.apply(
+                      color: Theme.of(context).backgroundColor,
+                      fontWeightDelta: 1,
+                      fontSizeFactor: .8),
                 ),
               ),
-      ),
+              backgroundColor: const Color.fromARGB(255, 243, 103, 9),
+              centerTitle: true,
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    print("Checking isServiceSelected: $isServiceSelected");
+                    if (isServiceSelected) {
+                      print(selectedServices);
+                      setState(() {
+                        loading = true;
+                      });
+                      updatingServices();
+                    } else {
+                      // Navigator.pop(context);
+                    }
+                  },
+                  child: Text(
+                    'Save',
+                    style: GoogleFonts.robotoCondensed(
+                      color: Colors.black,
+                      fontSize: MediaQuery.of(context).size.width * 0.03,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            body: loading
+                ? Container(
+                    alignment: Alignment.center,
+                    transformAlignment: Alignment.center,
+                    child: CircularProgressIndicator(
+                      color: const Color.fromARGB(255, 243, 103, 9),
+                    ),
+                  )
+                : Container(
+                    padding: EdgeInsets.all(10),
+                    child: ListView(
+                      children: serviceMap.keys.map((key) {
+                        bool isSelected = selectedServices.contains(key);
+                        IconData iconData;
+                        switch (key) {
+                          case 'translation':
+                            iconData = Icons.translate;
+                            break;
+                          case 'shopping':
+                            iconData = Icons.shopping_bag_outlined;
+                            break;
+                          case 'food':
+                            iconData = Icons.restaurant;
+                            break;
+                          case 'art':
+                            iconData = Icons.museum_outlined;
+                            break;
+                          case 'history':
+                            iconData = Icons.music_video;
+                            break;
+                          case 'exploration':
+                            iconData = Icons.explore_outlined;
+                            break;
+                          case 'pick':
+                            iconData = Icons.drive_eta_outlined;
+                            break;
+                          case 'nightlife':
+                            iconData = Icons.local_bar_outlined;
+                            break;
+                          case 'sports':
+                            iconData = Icons.sports_kabaddi_outlined;
+                            break;
+                          default:
+                            iconData = Icons
+                                .error_outline; // Default icon if key not found
+                        }
+
+                        return ListTile(
+                          dense: true,
+                          leading: Icon(
+                            iconData,
+                            color: isSelected
+                                ? Color.fromARGB(255, 243, 103, 9)
+                                : null,
+                          ),
+                          title: Text(
+                            serviceMap[key]!,
+                            style: TextStyle(
+                              color: isSelected
+                                  ? Color.fromARGB(255, 243, 103, 9)
+                                  : null,
+                            ),
+                          ),
+                          selected: isSelected,
+                          onTap: () {
+                            setState(() {
+                              if (isSelected) {
+                                selectedServices.remove(key);
+                                print(
+                                    "Checking selectedServices: $selectedServices");
+                              } else {
+                                selectedServices.add(key);
+                                print(
+                                    "Checking selectedServices: $selectedServices");
+                              }
+                              isServiceSelected = selectedServices.isNotEmpty;
+                            });
+                          },
+                          trailing: isSelected
+                              ? Icon(
+                                  Icons.check,
+                                  color: Color.fromARGB(255, 243, 103, 9),
+                                )
+                              : null,
+                        );
+                      }).toList(),
+                    ),
+                  ),
+          ),
+        ),
+      ],
     );
   }
 }

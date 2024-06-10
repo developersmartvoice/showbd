@@ -322,7 +322,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                 children: [
                   // Background image
                   Container(
-                    height: MediaQuery.sizeOf(context).height * .30,
+                    height: MediaQuery.sizeOf(context).height * .33,
                     width: MediaQuery.sizeOf(context).width,
                     decoration: BoxDecoration(
                       image: DecorationImage(
@@ -334,21 +334,24 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                   ),
                   // Semi-transparent overlay
                   Container(
-                    height: MediaQuery.sizeOf(context).height * .31,
+                    height: MediaQuery.sizeOf(context).height * .33,
                     width: MediaQuery.sizeOf(context).width,
                     color: Color.fromARGB(255, 175, 117, 62)
                         .withOpacity(0.5), // Adjust opacity as needed
                   ),
                   // Foreground content
                   Container(
-                    height: MediaQuery.sizeOf(context).height * .31,
+                    height: MediaQuery.sizeOf(context).height * .33,
                     width: MediaQuery.sizeOf(context).width,
                     padding: EdgeInsets.all(10),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        SizedBox(
+                          height: 4,
+                        ),
                         Container(
-                          padding: EdgeInsets.all(5),
+                          padding: EdgeInsets.all(4),
                           decoration: BoxDecoration(
                             color: WHITE,
                             shape: BoxShape.circle,
@@ -1212,6 +1215,33 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
         });
   }
 
+  void showErrorDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("Error occurred! Please try again later."),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.green,
+              ),
+              child: Text(
+                "OK",
+                style: GoogleFonts.poppins(
+                  fontSize: 14,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   deleteAccount(String msg1, String msg2) async {
     return showDialog(
       context: context,
@@ -1236,97 +1266,159 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
             ],
           ),
           actions: [
+            // TextButton(
+            //   onPressed: () async {
+            //     int id = int.parse(doctorId!);
+            //     final response = await get(
+            //         Uri.parse("$SERVER_ADDRESS/api/deletedoctor?id=$id"));
+            //     try {
+            //       if (response.statusCode == 200) {
+            //         final jsonResponse = jsonDecode(response.body);
+            //         if (jsonResponse['delete'].toString() ==
+            //             "User deleted successfully") {
+            //           setState(() async {
+            //             isErrorInLoading = false;
+            //             await SharedPreferences.getInstance().then((pref) {
+            //               pref.setBool("isLoggedInAsDoctor", false);
+            //               pref.setBool("isLoggedIn", false);
+            //               pref.clear();
+            //             });
+            //             showDialog(
+            //                 context: context,
+            //                 builder: (context) {
+            //                   return AlertDialog(
+            //                     title:
+            //                         Text("User Account deleted successfully"),
+            //                     actions: [
+            //                       TextButton(
+            //                           onPressed: () {
+            //                             Navigator.pushReplacement(
+            //                                 context,
+            //                                 MaterialPageRoute(
+            //                                     builder: (context) =>
+            //                                         UnRegisteredHomePage()));
+            //                           },
+            //                           child: Text(
+            //                             "OK",
+            //                             style: GoogleFonts.poppins(
+            //                               fontSize: 14,
+            //                             ),
+            //                           ))
+            //                     ],
+            //                   );
+            //                 });
+            //           } as Null Function());
+            //         } else {
+            //           setState(() {
+            //             isErrorInLoading = false;
+            //             showDialog(
+            //                 context: context,
+            //                 builder: (context) {
+            //                   return AlertDialog(
+            //                     title: Text("Error arise!, Try again Later"),
+            //                     actions: [
+            //                       TextButton(
+            //                           onPressed: () {
+            //                             Navigator.pop(context);
+            //                           },
+            //                           style: TextButton.styleFrom(
+            //                             backgroundColor: Colors.green,
+            //                           ),
+            //                           child: Text(
+            //                             "OK",
+            //                             style: GoogleFonts.poppins(
+            //                               fontSize: 14,
+            //                             ),
+            //                           ))
+            //                     ],
+            //                   );
+            //                 });
+            //           });
+            //         }
+            //       } else {
+            //         isErrorInLoading = true;
+            //       }
+            //     } catch (e) {
+            //       isErrorInLoading = true;
+            //     }
+            //   },
+            //   style: TextButton.styleFrom(
+            //     backgroundColor: Colors.red,
+            //   ),
+            //   child: Text(
+            //     YES,
+            //     style: GoogleFonts.poppins(
+            //       fontWeight: FontWeight.w500,
+            //       color: BLACK,
+            //     ),
+            //   ),
+            // ),
             TextButton(
-                onPressed: () async {
-                  int id = int.parse(doctorId!);
+              onPressed: () async {
+                int id = int.parse(doctorId!);
+                try {
                   final response = await get(
-                      Uri.parse("$SERVER_ADDRESS/api/deletedoctor?id=$id"));
-                  try {
-                    if (response.statusCode == 200) {
-                      final jsonResponse = jsonDecode(response.body);
-                      if (jsonResponse['delete'].toString() ==
-                          "User deleted successfully") {
-                        setState(() async {
-                          isErrorInLoading = false;
-                          await SharedPreferences.getInstance().then((pref) {
-                            pref.setBool("isLoggedInAsDoctor", false);
-                            pref.setBool("isLoggedIn", false);
-                            pref.clear();
-                            // pref.setString("userId", null);
-                            // pref.setString("name", null);
-                            // pref.setString("phone", null);
-                            // pref.setString("email", null);
-                            // pref.setString("token", null);
-                          });
-                          showDialog(
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  title:
-                                      Text("User Account deleted successfully"),
-                                  actions: [
-                                    TextButton(
-                                        onPressed: () {
-                                          Navigator.pushReplacement(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      UnRegisteredHomePage()));
-                                        },
-                                        child: Text(
-                                          "OK",
-                                          style: GoogleFonts.poppins(
-                                            fontSize: 14,
-                                          ),
-                                        ))
-                                  ],
-                                );
-                              });
-                        } as Null Function());
-                      } else {
-                        setState(() {
-                          isErrorInLoading = false;
-                          showDialog(
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  title: Text("Error arise!, Try again Later"),
-                                  actions: [
-                                    TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        style: TextButton.styleFrom(
-                                          backgroundColor: Colors.green,
-                                        ),
-                                        child: Text(
-                                          "OK",
-                                          style: GoogleFonts.poppins(
-                                            fontSize: 14,
-                                          ),
-                                        ))
-                                  ],
-                                );
-                              });
-                        });
-                      }
+                    Uri.parse("$SERVER_ADDRESS/api/deletedoctor?id=$id"),
+                  );
+
+                  if (response.statusCode == 200) {
+                    final jsonResponse = jsonDecode(response.body);
+                    if (jsonResponse['delete'].toString() ==
+                        "User deleted successfully") {
+                      await SharedPreferences.getInstance().then((pref) {
+                        pref.setBool("isLoggedInAsDoctor", false);
+                        pref.setBool("isLoggedIn", false);
+                        pref.clear();
+                      });
+
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text("User Account deleted successfully"),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          UnRegisteredHomePage(),
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  "OK",
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      );
                     } else {
-                      isErrorInLoading = true;
+                      showErrorDialog(context);
                     }
-                  } catch (e) {
-                    isErrorInLoading = true;
+                  } else {
+                    showErrorDialog(context);
                   }
-                },
-                style: TextButton.styleFrom(
-                  backgroundColor: Colors.red,
+                } catch (e) {
+                  showErrorDialog(context);
+                }
+              },
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.red,
+              ),
+              child: Text(
+                YES,
+                style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.w500,
+                  color: BLACK,
                 ),
-                child: Text(
-                  YES,
-                  style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w500,
-                    color: BLACK,
-                  ),
-                )),
+              ),
+            ),
             SizedBox(
               width: 5,
             ),
