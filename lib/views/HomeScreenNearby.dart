@@ -119,7 +119,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
     return isNearbyLoading
         ? Center(
             child: Container(
-              margin: EdgeInsets.only(top: 350),
+              margin: EdgeInsets.only(top: 300),
               width: 150,
               // width: MediaQuery.of(context).size.width,
               // height: MediaQuery.of(context).size.height,
