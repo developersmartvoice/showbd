@@ -1362,7 +1362,9 @@ class _ChatListScreenState extends State<ChatListScreen> {
                                     MaterialPageRoute(
                                       builder: (context) =>
                                           BookingDetailsScreen(
-                                              booking: booking),
+                                        booking: booking,
+                                        recip_id: booking.senderId.toString(),
+                                      ),
                                     ),
                                   ).then((dataUpdated) =>
                                       handleDataReload(dataUpdated ?? false));
