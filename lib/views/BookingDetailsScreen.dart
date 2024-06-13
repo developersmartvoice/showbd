@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:appcode3/views/DetailsPage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:appcode3/main.dart';
@@ -8,8 +9,9 @@ import 'package:appcode3/views/ChatScreen.dart';
 
 class BookingDetailsScreen extends StatefulWidget {
   final DirectBooking booking;
+  final String recip_id;
 
-  BookingDetailsScreen({required this.booking});
+  BookingDetailsScreen({required this.booking, required this.recip_id});
 
   @override
   State<BookingDetailsScreen> createState() => _BookingDetailsScreenState();
@@ -19,11 +21,14 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
   int? booking_id;
   bool loading = false;
   AcceptBookingClass? acceptBookingClass;
+  // String? recip_id;
 
   @override
   void initState() {
     super.initState();
+    notificationHelper.initialize();
     booking_id = widget.booking.bookingId;
+    // recip_id = widget.booking.
     print("This is booking ID: $booking_id");
   }
 
@@ -34,9 +39,19 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
     if (response.statusCode == 200) {
       final jsonResponse = jsonDecode(response.body);
       acceptBookingClass = AcceptBookingClass.fromJson(jsonResponse);
+
       setState(() {
         loading = false;
       });
+
+      // Send notifications
+      notificationHelper.showNotification(
+        title: 'Request Accepted!',
+        body: '${acceptBookingClass!.recipientName} has sent you a booking.',
+        payload: 'user_id:${acceptBookingClass!.recipientId}',
+        id: acceptBookingClass!.recipientId.toString(),
+      );
+
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -165,47 +180,59 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Hero(
-                            tag: 'profile-pic',
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  child: CircleAvatar(
-                                    radius: 40,
-                                    backgroundImage: NetworkImage(
-                                        widget.booking.senderImage!),
+                          Center(
+                            child: Hero(
+                              tag: 'profile-pic',
+                              child: Container(
+                                child: CircleAvatar(
+                                  radius: 40,
+                                  backgroundImage:
+                                      NetworkImage(widget.booking.senderImage!),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Center(
+                            child: TextButton.icon(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (builder) =>
+                                        DetailsPage(widget.recip_id, false),
+                                  ),
+                                );
+                              },
+                              icon: Icon(Icons.badge),
+                              label: Text("View Profile"),
+                              style: ButtonStyle(
+                                elevation: MaterialStatePropertyAll(5),
+                                iconSize: MaterialStatePropertyAll(15),
+                                textStyle: MaterialStatePropertyAll(
+                                  TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                foregroundColor:
+                                    MaterialStatePropertyAll(WHITE),
+                                backgroundColor: MaterialStatePropertyAll(
+                                  Color.fromARGB(255, 243, 103, 9),
+                                ),
+                                minimumSize:
+                                    MaterialStatePropertyAll(Size(15, 15)),
+                                shape: MaterialStatePropertyAll(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(10),
+                                    ),
+                                    side: BorderSide(
+                                      width: .5,
+                                      color: Color.fromARGB(255, 243, 103, 9),
+                                    ),
                                   ),
                                 ),
-                                // Container(
-                                //   child: ElevatedButton(
-                                //       style: ButtonStyle(
-                                //         shape: MaterialStatePropertyAll(
-                                //           BeveledRectangleBorder(
-                                //             borderRadius:
-                                //                 BorderRadius.horizontal(
-                                //               left: Radius.circular(5),
-                                //               right: Radius.circular(5),
-                                //             ),
-                                //           ),
-                                //         ),
-                                //         padding: MaterialStatePropertyAll(
-                                //           EdgeInsets.all(12),
-                                //         ),
-                                //         backgroundColor:
-                                //             MaterialStatePropertyAll(
-                                //           Color.fromARGB(255, 243, 103, 9),
-                                //         ),
-                                //       ),
-                                //       onPressed: () {},
-                                //       child: Text(
-                                //         "View Profile",
-                                //         style: TextStyle(
-                                //           color: Colors.white,
-                                //         ),
-                                //       )),
-                                // ),
-                              ],
+                              ),
                             ),
                           ),
                           SizedBox(height: 16),

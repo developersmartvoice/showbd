@@ -8,6 +8,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,7 +22,8 @@ class LoginAsDoctor extends StatefulWidget {
   _LoginAsDoctorState createState() => _LoginAsDoctorState();
 }
 
-class _LoginAsDoctorState extends State<LoginAsDoctor> {
+class _LoginAsDoctorState extends State<LoginAsDoctor>
+    with SingleTickerProviderStateMixin {
   String emailAddress = "";
   String pass = "";
   bool isPhoneNumberError = false;
@@ -30,6 +32,9 @@ class _LoginAsDoctorState extends State<LoginAsDoctor> {
   String token = "";
   bool isTokenPresent = false;
   bool passView = true;
+
+  AnimationController? _controller;
+  Animation<double>? _animation;
 
   // getToken() async {
   //   await SharedPreferences.getInstance().then((pref) async {
@@ -412,6 +417,23 @@ class _LoginAsDoctorState extends State<LoginAsDoctor> {
         print("See what this printing true or false? $isTokenPresent");
       });
     });
+    _controller = AnimationController(
+      duration: const Duration(seconds: 5),
+      vsync: this,
+    )..repeat();
+
+    _animation = CurvedAnimation(
+      parent: _controller!,
+      curve: Curves.easeInOut,
+    );
+
+    // _controller!.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller!.dispose();
+    super.dispose();
   }
 
   @override
@@ -519,23 +541,57 @@ class _LoginAsDoctorState extends State<LoginAsDoctor> {
       ),
       height: MediaQuery.of(context).size.height,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 130, 20, 0),
+        padding: const EdgeInsets.fromLTRB(20, 100, 20, 0),
         child: Column(
           children: [
-            Image.asset(
-              "assets/login_image.png",
-              height: 180,
-              width: 180,
+            AnimatedBuilder(
+              animation: _animation!,
+              builder: (context, child) {
+                return Opacity(
+                  opacity: _animation!.value,
+                  child: Transform.translate(
+                    offset: Offset(
+                      0,
+                      50 * (1 - _animation!.value),
+                    ),
+                    child: Image.asset(
+                      "assets/login_new.png",
+                      height: 180,
+                      width: 180,
+                    ),
+                  ),
+                );
+              },
             ),
-            SizedBox(height: 20),
+            SizedBox(
+              height: 20,
+            ),
+            AnimatedBuilder(
+              animation: _animation!,
+              builder: (context, child) {
+                return Opacity(
+                  opacity: _animation!.value,
+                  child: Transform.translate(
+                    offset: Offset(
+                      0,
+                      50 * (1 - _animation!.value),
+                    ),
+                    child: Text(
+                      "Login to connect with locals!",
+                      softWrap: true,
+                      maxLines: 2,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w800,
+                        color: Color.fromARGB(255, 243, 103, 9),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+            SizedBox(height: 50),
             Container(
-              // decoration: BoxDecoration(
-              //   border: Border.all(
-              //     width: 2,
-              //     color: Color.fromARGB(255, 243, 103, 9),
-              //     style: BorderStyle.solid,
-              //   ),
-              // ),
               width: MediaQuery.of(context).size.width - 30,
               height: 60,
               child: Row(
@@ -703,102 +759,72 @@ class _LoginAsDoctorState extends State<LoginAsDoctor> {
     );
   }
 
-  // dialog() {
-  //   return showDialog(
-  //       context: context,
-  //       builder: (context) {
-  //         return AlertDialog(
-  //           title: Text(
-  //             LOGGING_IN,
-  //             style: GoogleFonts.poppins(),
-  //           ),
-  //           content: Container(
-  //             margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
-  //             child: Row(
-  //               children: [
-  //                 CircularProgressIndicator(
-  //                   color: const Color.fromARGB(255, 243, 103, 9),
-  //                 ),
-  //                 SizedBox(
-  //                   width: 15,
-  //                 ),
-  //                 Expanded(
-  //                   child: Text(
-  //                     PLEASE_WAIT_LOGGING_IN,
-  //                     style: GoogleFonts.poppins(fontSize: 12),
-  //                   ),
-  //                 )
-  //               ],
-  //             ),
-  //           ),
-  //         );
-  //       });
-  // }
-
   dialog() {
     showDialog(
-        context: context,
-        builder: (builder) {
-          return Dialog(
-            backgroundColor: Colors.transparent,
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20.0),
-                color: Colors.transparent,
-              ),
-              padding: EdgeInsets.all(16),
-              child: Image.asset(
-                'assets/loading.gif', // Example image URL
-                width: 120,
-                height: 120,
-              ),
+      context: context,
+      builder: (builder) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20.0),
+              color: Colors.transparent,
             ),
-          );
-        });
+            padding: EdgeInsets.all(16),
+            child: Image.asset(
+              'assets/loading.gif', // Example image URL
+              width: 120,
+              height: 120,
+            ),
+          ),
+        );
+      },
+    );
   }
 
   messageDialog(String s1, String s2) {
     Navigator.pop(context);
     return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text(
-              s1,
-              style: GoogleFonts.comfortaa(
-                fontWeight: FontWeight.bold,
-              ),
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(
+            s1,
+            style: GoogleFonts.comfortaa(
+              fontWeight: FontWeight.bold,
             ),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  s2,
-                  style: GoogleFonts.poppins(
-                    fontSize: 14,
-                  ),
-                )
-              ],
-            ),
-            actions: [
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).hintColor,
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                s2,
+                style: GoogleFonts.poppins(
+                  fontSize: 14,
                 ),
-                child: Text(
-                  OK,
-                  style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w500,
-                    color: BLACK,
-                  ),
-                ),
-              ),
+              )
             ],
-          );
-        });
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Theme.of(context).hintColor,
+              ),
+              child: Text(
+                OK,
+                style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.w500,
+                  color: BLACK,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
