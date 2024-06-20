@@ -48,8 +48,8 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
       notificationHelper.showNotification(
         title: 'Request Accepted!',
         body: '${acceptBookingClass!.recipientName} has sent you a booking.',
-        payload: 'user_id:${acceptBookingClass!.recipientId}',
-        id: acceptBookingClass!.recipientId.toString(),
+        payload: 'user_id:${acceptBookingClass!.senderId}',
+        id: acceptBookingClass!.senderId.toString(),
       );
 
       Navigator.push(

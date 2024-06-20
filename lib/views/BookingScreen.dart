@@ -671,15 +671,16 @@ class _BookingScreenState extends State<BookingScreen> {
         notificationHelper.showNotification(
           title: 'Booking request sent',
           body: 'You have successfully sent a request to ${widget.guideName}.',
-          payload: 'user_id:${widget.sender_id}',
+          payload: 'user_id:${int.parse(widget.sender_id)}',
           id: widget.sender_id,
         );
 
         notificationHelper.showNotification(
           title: 'New Booking Request',
-          body: '${widget.guideName} has sent you a booking.',
+          body:
+              'You have received a booking request from ${directBookingClass!.senderName}.',
           payload: 'user_id:${widget.receiver_id}',
-          id: widget.receiver_id,
+          id: widget.receiver_id, // Send notification to recipient
         );
       }
     } else {

@@ -84,11 +84,15 @@ class DeviceToken {
 
 class DirectBookingClass {
   final String message;
+  final String senderName;
+  final String recipientName;
   final List<DeviceToken> senderDeviceTokens;
   final List<DeviceToken> recipientDeviceTokens;
 
   DirectBookingClass({
     required this.message,
+    required this.senderName,
+    required this.recipientName,
     required this.senderDeviceTokens,
     required this.recipientDeviceTokens,
   });
@@ -96,6 +100,8 @@ class DirectBookingClass {
   factory DirectBookingClass.fromJson(Map<String, dynamic> json) {
     return DirectBookingClass(
       message: json['message'],
+      senderName: json['sender_name'],
+      recipientName: json['recipient_name'],
       senderDeviceTokens: (json['sender_device_token'] as List<dynamic>)
           .map((token) => DeviceToken.fromJson(token))
           .toList(),
