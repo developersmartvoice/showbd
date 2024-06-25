@@ -197,6 +197,7 @@ import 'package:connectycube_sdk/connectycube_chat.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../VideoCall/utils/pref_util.dart';
 
@@ -213,6 +214,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     requestNotificationPermission();
+    _checkPermission();
     getToken();
   }
 
@@ -357,6 +359,53 @@ class _SplashScreenState extends State<SplashScreen> {
             MaterialPageRoute(builder: (context) => UnRegisteredHomePage()));
       });
     }
+  }
+
+  Future<void> _checkPermission() async {
+    PermissionStatus status = await Permission.location.status;
+    if (status.isDenied || status.isRestricted || status.isPermanentlyDenied) {
+      _showPermissionDialog();
+    } else if (status.isGranted) {
+      // Proceed with your logic when permission is granted
+      print("Permission granted");
+    }
+  }
+
+  Future<void> _requestPermission() async {
+    PermissionStatus status = await Permission.location.request();
+    if (status.isDenied || status.isRestricted || status.isPermanentlyDenied) {
+      _showPermissionDialog();
+    } else if (status.isGranted) {
+      // Proceed with your logic when permission is granted
+      print("Permission granted");
+    }
+  }
+
+  void _showPermissionDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text("Location Permission Required"),
+        content: Text(
+            "This app needs location permission to proceed. Please grant the permission."),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              _requestPermission();
+            },
+            child: Text("Grant Permission"),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              _checkPermission(); // Recheck permission when the dialog is closed
+            },
+            child: Text("Cancel"),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
