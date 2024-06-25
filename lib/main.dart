@@ -231,7 +231,9 @@ class _TabsScreenState extends State<TabsScreen> {
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.only(
-              topRight: Radius.circular(15), topLeft: Radius.circular(15)),
+            topRight: Radius.circular(15),
+            topLeft: Radius.circular(15),
+          ),
           child: BottomNavigationBar(
             items: [
               BottomNavigationBarItem(
