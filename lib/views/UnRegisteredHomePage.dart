@@ -172,8 +172,9 @@ class _UnRegisteredHomePageState extends State<UnRegisteredHomePage>
                   "MEET LOCAL",
                   style: TextStyle(
                     color: WHITE,
-                    fontWeight: FontWeight.w900,
-                    letterSpacing: 5,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 2,
                   ),
                 ),
               ),
