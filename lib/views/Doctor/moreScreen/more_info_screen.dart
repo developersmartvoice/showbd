@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:appcode3/ReferralPage.dart';
 import 'package:appcode3/views/AboutHost.dart';
 import 'package:appcode3/views/ChoosePlan.dart';
 import 'package:appcode3/views/ContactAndIdentification.dart';
@@ -1054,6 +1055,63 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
           ),
           GestureDetector(
             onTap: () {
+              // deleteAccount(DELETE_ACCOUNT, DELETE_MESSAGE);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (builder) => ReferralPage(userId: doctorId!)));
+            },
+            child: Container(
+              height: MediaQuery.of(context).size.height * .06,
+              margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
+              decoration: BoxDecoration(
+                color: WHITE,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Container(
+                margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.45,
+                      alignment: Alignment.centerLeft,
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          "Get Referral Code",
+                          style: GoogleFonts.poppins(
+                            textStyle:
+                                Theme.of(context).textTheme.subtitle1?.copyWith(
+                                      color: Color.fromARGB(255, 243, 103, 9),
+                                      fontSize:
+                                          // MediaQuery.of(context).size.width * 0.04,
+                                          14,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: MediaQuery.sizeOf(context).width * .1,
+                    ),
+                    Container(
+                      width: MediaQuery.sizeOf(context).width * .05,
+                      alignment: Alignment.centerRight,
+                      child: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 20,
+                        color: Color.fromARGB(255, 243, 103, 9),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
               deleteAccount(DELETE_ACCOUNT, DELETE_MESSAGE);
             },
             child: Container(
@@ -1062,16 +1120,6 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
               decoration: BoxDecoration(
                 color: WHITE,
                 borderRadius: BorderRadius.circular(10),
-                // border: Border(
-                //   bottom: BorderSide(
-                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                //   top: BorderSide(
-                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                //   right: BorderSide(
-                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                //   left: BorderSide(
-                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                // ),
               ),
               child: Container(
                 margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
