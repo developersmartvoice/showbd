@@ -54,137 +54,134 @@ class _HourlyRateSettingsPageState extends State<HourlyRateSettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'Hourly Rate',
-            // style: GoogleFonts.robotoCondensed(
-            //   color: Colors.white,
-            //   fontSize: 25,
-            //   fontWeight: FontWeight.w700,
-            // ),
-            style: GoogleFonts.poppins(
-              textStyle: Theme.of(context).textTheme.headline5!.apply(
-                  color: Theme.of(context).backgroundColor,
-                  fontWeightDelta: 1,
-                  fontSizeFactor: .8),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Hourly Rate',
+          // style: GoogleFonts.robotoCondensed(
+          //   color: Colors.white,
+          //   fontSize: 25,
+          //   fontWeight: FontWeight.w700,
+          // ),
+          style: GoogleFonts.poppins(
+            textStyle: Theme.of(context).textTheme.headline5!.apply(
+                color: Theme.of(context).backgroundColor,
+                fontWeightDelta: 1,
+                fontSizeFactor: .8),
+          ),
+        ),
+        backgroundColor: const Color.fromARGB(255, 243, 103, 9),
+        foregroundColor: WHITE,
+        centerTitle: true,
+        actions: [
+          TextButton(
+            onPressed: () {
+              if (isValueChanged) {
+                if (correctValue) {
+                  setState(() {
+                    loading = true;
+                  });
+                  updatingConsultationFees();
+                }
+              } else {
+                // Navigator.pop(context);
+              }
+            },
+            child: Text(
+              'Save',
+              style: GoogleFonts.robotoCondensed(
+                color: Colors.black,
+                fontSize: MediaQuery.of(context).size.width * 0.03,
+                fontWeight: FontWeight.w700,
+              ),
             ),
           ),
-          backgroundColor: const Color.fromARGB(255, 243, 103, 9),
-          centerTitle: true,
-          actions: [
-            TextButton(
-              onPressed: () {
-                if (isValueChanged) {
-                  if (correctValue) {
-                    setState(() {
-                      loading = true;
-                    });
-                    updatingConsultationFees();
-                  }
-                } else {
-                  // Navigator.pop(context);
-                }
-              },
-              child: Text(
-                'Save',
-                style: GoogleFonts.robotoCondensed(
-                  color: Colors.black,
-                  fontSize: MediaQuery.of(context).size.width * 0.03,
-                  fontWeight: FontWeight.w700,
-                ),
+        ],
+      ),
+      body: loading
+          ? Container(
+              alignment: Alignment.center,
+              transformAlignment: Alignment.center,
+              child: CircularProgressIndicator(
+                color: const Color.fromARGB(255, 243, 103, 9),
+              ),
+            )
+          : Container(
+              color: LIGHT_GREY_SCREEN_BACKGROUND,
+              child: Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(16),
+                    alignment: Alignment.topLeft,
+                    child: Column(
+                      children: [
+                        Text(
+                          HOURLY_RATE_PAGE,
+                          textAlign: TextAlign.justify, // Align text to center
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: MediaQuery.of(context).size.width * 0.025,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        // Text(
+                        //   MOTTO_PAGE_2,
+                        //   style: TextStyle(
+                        //     color: Colors.black,
+                        //     fontSize: 12,
+                        //     fontWeight: FontWeight.w200,
+                        //   ),
+                        // ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    color: Colors.white,
+                    child: TextField(
+                      controller: _controller,
+                      keyboardType: TextInputType.number,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: MediaQuery.of(context).size.width * 0.025,
+                        fontWeight: FontWeight.w200,
+                      ),
+                      onChanged: (value) {
+                        setState(
+                          () {
+                            enteredValue = value;
+                            if (enteredValue != widget.consultationfees) {
+                              isValueChanged = true;
+                              if (double.parse(enteredValue) <= 5000) {
+                                correctValue = true;
+                                postValue = enteredValue;
+                              } else {
+                                correctValue = false;
+                              }
+                            } else {
+                              isValueChanged = false;
+                            }
+                          },
+                        );
+                      },
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: "Add your hourly fees",
+                        hintStyle: TextStyle(color: Colors.grey),
+                        errorText: correctValue
+                            ? null
+                            : "Fees can't be greater than 5000৳",
+                      ),
+                    ),
+                  )
+                ],
               ),
             ),
-          ],
-        ),
-        body: loading
-            ? Container(
-                alignment: Alignment.center,
-                transformAlignment: Alignment.center,
-                child: CircularProgressIndicator(
-                  color: const Color.fromARGB(255, 243, 103, 9),
-                ),
-              )
-            : Container(
-                color: LIGHT_GREY_SCREEN_BACKGROUND,
-                child: Column(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(16),
-                      alignment: Alignment.topLeft,
-                      child: Column(
-                        children: [
-                          Text(
-                            HOURLY_RATE_PAGE,
-                            textAlign:
-                                TextAlign.justify, // Align text to center
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize:
-                                  MediaQuery.of(context).size.width * 0.025,
-                              fontWeight: FontWeight.w900,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          // Text(
-                          //   MOTTO_PAGE_2,
-                          //   style: TextStyle(
-                          //     color: Colors.black,
-                          //     fontSize: 12,
-                          //     fontWeight: FontWeight.w200,
-                          //   ),
-                          // ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      color: Colors.white,
-                      child: TextField(
-                        controller: _controller,
-                        keyboardType: TextInputType.number,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: MediaQuery.of(context).size.width * 0.025,
-                          fontWeight: FontWeight.w200,
-                        ),
-                        onChanged: (value) {
-                          setState(
-                            () {
-                              enteredValue = value;
-                              if (enteredValue != widget.consultationfees) {
-                                isValueChanged = true;
-                                if (double.parse(enteredValue) <= 5000) {
-                                  correctValue = true;
-                                  postValue = enteredValue;
-                                } else {
-                                  correctValue = false;
-                                }
-                              } else {
-                                isValueChanged = false;
-                              }
-                            },
-                          );
-                        },
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: "Add your hourly fees",
-                          hintStyle: TextStyle(color: Colors.grey),
-                          errorText: correctValue
-                              ? null
-                              : "Fees can't be greater than 5000৳",
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-      ),
     );
   }
 }

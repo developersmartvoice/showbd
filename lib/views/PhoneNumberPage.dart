@@ -57,6 +57,7 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
           ),
         ),
         backgroundColor: const Color.fromARGB(255, 243, 103, 9),
+        foregroundColor: WHITE,
         centerTitle: true,
         actions: [
           TextButton(

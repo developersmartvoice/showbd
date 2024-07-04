@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:appcode3/ReferralPage.dart';
 import 'package:appcode3/views/AboutHost.dart';
+import 'package:appcode3/views/BalanceDashboard.dart';
 import 'package:appcode3/views/ChoosePlan.dart';
 import 'package:appcode3/views/ContactAndIdentification.dart';
 import 'package:appcode3/views/DetailsPage.dart';
@@ -469,26 +470,6 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
             height: 2,
           ),
 
-          // Padding(
-          //   padding: const EdgeInsets.fromLTRB(16, 0, 30, 0),
-          //   child: Row(
-          //     mainAxisAlignment: MainAxisAlignment.start,
-          //     children: [
-          //       SizedBox(
-          //         height: 40,
-          //         child: Text(
-          //           'PROFILE SETTINGS',
-          //           style: GoogleFonts.poppins(
-          //             fontSize: MediaQuery.of(context).size.width * 0.04,
-          //             fontWeight: FontWeight.bold,
-          //             color: Color.fromARGB(255, 243, 103, 9),
-          //           ),
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),
-
           Container(
             color: Color.fromARGB(
                 255, 235, 239, 241), // Set your desired background color here
@@ -527,19 +508,8 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
               height: MediaQuery.of(context).size.height * .06,
               margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
               decoration: BoxDecoration(
-                // color: Color.fromARGB(255, 243, 103, 9),
                 color: WHITE,
                 borderRadius: BorderRadius.circular(10),
-                // border: Border(
-                //   bottom: BorderSide(
-                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                //   top: BorderSide(
-                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                //   right: BorderSide(
-                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                //   left: BorderSide(
-                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                // ),
               ),
               child: Container(
                 margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
@@ -589,7 +559,6 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
             height: 5,
           ),
 
-          ///---------  change password ----------
           GestureDetector(
             onTap: () {
               Navigator.push(
@@ -605,16 +574,6 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
               decoration: BoxDecoration(
                 color: WHITE,
                 borderRadius: BorderRadius.circular(10),
-                // border: Border(
-                //   bottom: BorderSide(
-                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                //   top: BorderSide(
-                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                //   right: BorderSide(
-                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                //   left: BorderSide(
-                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                // ),
               ),
               child: Container(
                 margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
@@ -664,7 +623,6 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
             height: 5,
           ),
 
-          // /--------- subscription ------------
           GestureDetector(
             onTap: () {
               isMember
@@ -684,16 +642,6 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
               decoration: BoxDecoration(
                 color: WHITE,
                 borderRadius: BorderRadius.circular(10),
-                // border: Border(
-                //   bottom: BorderSide(
-                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                //   top: BorderSide(
-                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                //   right: BorderSide(
-                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                //   left: BorderSide(
-                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                // ),
               ),
               child: Container(
                 margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
@@ -722,11 +670,9 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                         ),
                       ),
                     ),
-
                     SizedBox(
                       width: MediaQuery.sizeOf(context).width * .01,
                     ),
-
                     Container(
                       width: MediaQuery.of(context).size.width * 0.2,
                       alignment: Alignment.centerRight,
@@ -755,7 +701,6 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                               ),
                       ),
                     ),
-
                     SizedBox(
                       width: MediaQuery.sizeOf(context).width * .01,
                     ),
@@ -768,20 +713,6 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                         color: Color.fromARGB(255, 243, 103, 9),
                       ),
                     ),
-                    // TextButton(
-                    //   onPressed: () {
-                    //     Navigator.push(
-                    //       context,
-                    //       MaterialPageRoute(
-                    //           builder: (context) => DoctorAllAppointments()),
-                    //     );
-                    //   },
-                    //   child: Text(SEE_ALL,
-                    //       style: Theme.of(context).textTheme.bodyText2!.apply(
-                    //             color: Theme.of(context).hintColor,
-                    //             fontWeightDelta: 5,
-                    //           )),
-                    // )
                   ],
                 ),
               ),
@@ -815,8 +746,6 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
               ),
             ),
           ),
-
-          ///--------- subscription ------------
           GestureDetector(
             onTap: () {
               Navigator.push(
@@ -832,16 +761,6 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
               decoration: BoxDecoration(
                 color: WHITE,
                 borderRadius: BorderRadius.circular(10),
-                // border: Border(
-                //   bottom: BorderSide(
-                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                //   top: BorderSide(
-                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                //   right: BorderSide(
-                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                //   left: BorderSide(
-                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                // ),
               ),
               child: Container(
                 margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
@@ -950,16 +869,6 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
               decoration: BoxDecoration(
                 color: WHITE,
                 borderRadius: BorderRadius.circular(10),
-                // border: Border(
-                //   bottom: BorderSide(
-                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                //   top: BorderSide(
-                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                //   right: BorderSide(
-                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                //   left: BorderSide(
-                //       width: 2, color: Color.fromARGB(255, 243, 103, 9)),
-                // ),
               ),
               child: Container(
                 margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
@@ -1022,9 +931,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
               ),
             ),
           ),
-          SizedBox(
-            height: 5,
-          ),
+
           SizedBox(
             height: 15,
           ),
@@ -1040,7 +947,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                   SizedBox(
                     height: 40,
                     child: Text(
-                      'OTHERS',
+                      'EARNINGS',
                       style: GoogleFonts.poppins(
                         fontSize: MediaQuery.of(context).size.width *
                             0.04, // Adjust font size dynamically
@@ -1052,6 +959,66 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                 ],
               ),
             ),
+          ),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (builder) =>
+                          BalanceDashboard(userId: doctorId!)));
+            },
+            child: Container(
+              height: MediaQuery.of(context).size.height * .06,
+              margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
+              decoration: BoxDecoration(
+                color: WHITE,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Container(
+                margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.45,
+                      alignment: Alignment.centerLeft,
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          "Balance",
+                          style: GoogleFonts.poppins(
+                            textStyle:
+                                Theme.of(context).textTheme.subtitle1?.copyWith(
+                                      color: Color.fromARGB(255, 243, 103, 9),
+                                      fontSize:
+                                          // MediaQuery.of(context).size.width * 0.04,
+                                          14,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: MediaQuery.sizeOf(context).width * .1,
+                    ),
+                    Container(
+                      width: MediaQuery.sizeOf(context).width * .05,
+                      alignment: Alignment.centerRight,
+                      child: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 20,
+                        color: Color.fromARGB(255, 243, 103, 9),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 5,
           ),
           GestureDetector(
             onTap: () {
@@ -1110,6 +1077,31 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
               ),
             ),
           ),
+          Container(
+            color: Color.fromARGB(
+                255, 235, 239, 241), // Set your desired background color here
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 10, 30, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 40,
+                    child: Text(
+                      'OTHERS',
+                      style: GoogleFonts.poppins(
+                        fontSize: MediaQuery.of(context).size.width *
+                            0.04, // Adjust font size dynamically
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 243, 103, 9),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
           GestureDetector(
             onTap: () {
               deleteAccount(DELETE_ACCOUNT, DELETE_MESSAGE);

@@ -52,124 +52,118 @@ class _IwillShowYouSettingsPageState extends State<IwillShowYouSettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'I will show you',
-            // style: GoogleFonts.robotoCondensed(
-            //   color: Colors.white,
-            //   fontSize: 25,
-            //   fontWeight: FontWeight.w700,
-            // ),
-            style: GoogleFonts.poppins(
-              textStyle: Theme.of(context).textTheme.headline5!.apply(
-                  color: Theme.of(context).backgroundColor,
-                  fontWeightDelta: 1,
-                  fontSizeFactor: .8),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'I will show you',
+          style: GoogleFonts.poppins(
+            textStyle: Theme.of(context).textTheme.headline5!.apply(
+                color: Theme.of(context).backgroundColor,
+                fontWeightDelta: 1,
+                fontSizeFactor: .8),
+          ),
+        ),
+        backgroundColor: const Color.fromARGB(255, 243, 103, 9),
+        foregroundColor: WHITE,
+        centerTitle: true,
+        actions: [
+          TextButton(
+            onPressed: () {
+              if (isValueChanged) {
+                setState(() {
+                  loading = true;
+                });
+                updatingIWillShowYou();
+              } else {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: Text("You didn't change the anything!"),
+                      actions: <Widget>[
+                        TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text("OK"))
+                      ],
+                    );
+                  },
+                );
+              }
+            },
+            child: Text(
+              'Save',
+              style: GoogleFonts.robotoCondensed(
+                color: Colors.black,
+                fontSize: MediaQuery.of(context).size.width * 0.03,
+                fontWeight: FontWeight.w700,
+              ),
             ),
           ),
-          backgroundColor: const Color.fromARGB(255, 243, 103, 9),
-          centerTitle: true,
-          actions: [
-            TextButton(
-              onPressed: () {
-                if (isValueChanged) {
-                  setState(() {
-                    loading = true;
-                  });
-                  updatingIWillShowYou();
-                } else {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: Text("You didn't change the anything!"),
-                        actions: <Widget>[
-                          TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: Text("OK"))
-                        ],
-                      );
-                    },
-                  );
-                }
-              },
-              child: Text(
-                'Save',
-                style: GoogleFonts.robotoCondensed(
-                  color: Colors.black,
-                  fontSize: MediaQuery.of(context).size.width * 0.03,
-                  fontWeight: FontWeight.w700,
-                ),
+        ],
+      ),
+      body: loading
+          ? Container(
+              alignment: Alignment.center,
+              transformAlignment: Alignment.center,
+              child: CircularProgressIndicator(
+                color: const Color.fromARGB(255, 243, 103, 9),
+              ),
+            )
+          : Container(
+              color: LIGHT_GREY_SCREEN_BACKGROUND,
+              child: Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(16),
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      IWILLSHOWYOU_PAGE_1,
+                      textAlign: TextAlign.justify, // Align text to center
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: MediaQuery.of(context).size.width * 0.025,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    color: Colors.white,
+                    child: TextField(
+                      maxLines: 10,
+                      minLines: 1,
+                      controller: _controller,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: MediaQuery.of(context).size.width * 0.025,
+                        fontWeight: FontWeight.w200,
+                      ),
+                      onChanged: (value) {
+                        setState(
+                          () {
+                            enteredValue = value;
+                            if (enteredValue != widget.iwillshowyou) {
+                              isValueChanged = true;
+                            } else {
+                              isValueChanged = false;
+                            }
+                          },
+                        );
+                      },
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: "Add I will show you",
+                        hintStyle: TextStyle(color: Colors.grey),
+                      ),
+                    ),
+                  )
+                ],
               ),
             ),
-          ],
-        ),
-        body: loading
-            ? Container(
-                alignment: Alignment.center,
-                transformAlignment: Alignment.center,
-                child: CircularProgressIndicator(
-                  color: const Color.fromARGB(255, 243, 103, 9),
-                ),
-              )
-            : Container(
-                color: LIGHT_GREY_SCREEN_BACKGROUND,
-                child: Column(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(16),
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        IWILLSHOWYOU_PAGE_1,
-                        textAlign: TextAlign.justify, // Align text to center
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: MediaQuery.of(context).size.width * 0.025,
-                          fontWeight: FontWeight.w900,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      color: Colors.white,
-                      child: TextField(
-                        maxLines: 10,
-                        minLines: 1,
-                        controller: _controller,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: MediaQuery.of(context).size.width * 0.025,
-                          fontWeight: FontWeight.w200,
-                        ),
-                        onChanged: (value) {
-                          setState(
-                            () {
-                              enteredValue = value;
-                              if (enteredValue != widget.iwillshowyou) {
-                                isValueChanged = true;
-                              } else {
-                                isValueChanged = false;
-                              }
-                            },
-                          );
-                        },
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: "Add I will show you",
-                          hintStyle: TextStyle(color: Colors.grey),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-      ),
     );
   }
 }

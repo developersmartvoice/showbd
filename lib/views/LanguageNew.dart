@@ -85,101 +85,100 @@ class _LanguageNewState extends State<LanguageNew> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'Languages',
-            style: GoogleFonts.poppins(
-              textStyle: Theme.of(context).textTheme.headline5!.apply(
-                    color: Theme.of(context).backgroundColor,
-                    fontWeightDelta: 1,
-                    fontSizeFactor: .8,
-                  ),
-            ),
-          ),
-          backgroundColor: const Color.fromARGB(255, 243, 103, 9),
-          centerTitle: true,
-          actions: [
-            TextButton(
-              onPressed: () {
-                if (isLanguageSelected && selectedLanguages.isNotEmpty) {
-                  setState(() {
-                    loading = true;
-                  });
-                  updatingLanguages();
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    backgroundColor: Color.fromARGB(255, 224, 16, 1),
-                    content: Text(
-                      'Please select at least one language.',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
-                      textScaleFactor: 1.2,
-                    ),
-                  ));
-                }
-              },
-              child: Text(
-                'Save',
-                style: GoogleFonts.robotoCondensed(
-                  color: Colors.black,
-                  fontSize: MediaQuery.of(context).size.width * 0.03,
-                  fontWeight: FontWeight.w700,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Languages',
+          style: GoogleFonts.poppins(
+            textStyle: Theme.of(context).textTheme.headline5!.apply(
+                  color: Theme.of(context).backgroundColor,
+                  fontWeightDelta: 1,
+                  fontSizeFactor: .8,
                 ),
+          ),
+        ),
+        backgroundColor: const Color.fromARGB(255, 243, 103, 9),
+        foregroundColor: WHITE,
+        centerTitle: true,
+        actions: [
+          TextButton(
+            onPressed: () {
+              if (isLanguageSelected && selectedLanguages.isNotEmpty) {
+                setState(() {
+                  loading = true;
+                });
+                updatingLanguages();
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  backgroundColor: Color.fromARGB(255, 224, 16, 1),
+                  content: Text(
+                    'Please select at least one language.',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                    textScaleFactor: 1.2,
+                  ),
+                ));
+              }
+            },
+            child: Text(
+              'Save',
+              style: GoogleFonts.robotoCondensed(
+                color: Colors.black,
+                fontSize: MediaQuery.of(context).size.width * 0.03,
+                fontWeight: FontWeight.w700,
               ),
             ),
-          ],
-        ),
-        body: loading
-            ? Container(
-                alignment: Alignment.center,
-                transformAlignment: Alignment.center,
-                child: CircularProgressIndicator(
-                  color: const Color.fromARGB(255, 243, 103, 9),
-                ),
-              )
-            : Container(
-                color: LIGHT_GREY_SCREEN_BACKGROUND,
-                padding: EdgeInsets.all(10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10),
-                      child: Center(
-                        child: Text(
-                          'Select Your Preferred Language',
-                          style: GoogleFonts.poppins(
-                            fontSize: MediaQuery.of(context).size.width * 0.035,
-                            fontWeight: FontWeight.bold,
-                          ),
+          ),
+        ],
+      ),
+      body: loading
+          ? Container(
+              alignment: Alignment.center,
+              transformAlignment: Alignment.center,
+              child: CircularProgressIndicator(
+                color: const Color.fromARGB(255, 243, 103, 9),
+              ),
+            )
+          : Container(
+              color: LIGHT_GREY_SCREEN_BACKGROUND,
+              padding: EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    child: Center(
+                      child: Text(
+                        'Select Your Preferred Language',
+                        style: GoogleFonts.poppins(
+                          fontSize: MediaQuery.of(context).size.width * 0.035,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 15, right: 15),
-                      child: Divider(
-                        height: 2,
-                        color: Colors.black,
-                      ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 15, right: 15),
+                    child: Divider(
+                      height: 2,
+                      color: Colors.black,
                     ),
-                    Container(
-                      height: 370,
-                      child: ListView(
-                        children: languageMap.keys.map((key) {
-                          return buildLanguageItem(key, languageMap[key]!);
-                        }).toList(),
-                      ),
+                  ),
+                  Container(
+                    height: 370,
+                    child: ListView(
+                      children: languageMap.keys.map((key) {
+                        return buildLanguageItem(key, languageMap[key]!);
+                      }).toList(),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-      ),
+            ),
     );
   }
 }

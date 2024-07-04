@@ -59,6 +59,7 @@ class _EmailDetailsPageState extends State<EmailDetailsPage> {
             ),
           ),
           backgroundColor: const Color.fromARGB(255, 243, 103, 9),
+          foregroundColor: WHITE,
           centerTitle: true,
           actions: [
             TextButton(

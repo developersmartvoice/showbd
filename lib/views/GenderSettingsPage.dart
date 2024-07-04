@@ -45,102 +45,101 @@ class _GenderSettingsPageState extends State<GenderSettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'Gender',
-            style: GoogleFonts.poppins(
-              textStyle: Theme.of(context).textTheme.headline5!.apply(
-                  color: Theme.of(context).backgroundColor,
-                  fontWeightDelta: 1,
-                  fontSizeFactor: .8),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Gender',
+          style: GoogleFonts.poppins(
+            textStyle: Theme.of(context).textTheme.headline5!.apply(
+                color: Theme.of(context).backgroundColor,
+                fontWeightDelta: 1,
+                fontSizeFactor: .8),
+          ),
+        ),
+        backgroundColor: const Color.fromARGB(255, 243, 103, 9),
+        foregroundColor: WHITE,
+        centerTitle: true,
+        actions: [
+          TextButton(
+            onPressed: () {
+              if (isGenderSelected) {
+                updatingGender();
+              } else {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: Text("You didn't change the anything!"),
+                      actions: <Widget>[
+                        TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text("OK"))
+                      ],
+                    );
+                  },
+                );
+              }
+            },
+            child: Text(
+              'Save',
+              style: GoogleFonts.robotoCondensed(
+                color: Colors.black,
+                fontSize: MediaQuery.of(context).size.width * 0.03,
+                fontWeight: FontWeight.w700,
+              ),
             ),
           ),
-          backgroundColor: const Color.fromARGB(255, 243, 103, 9),
-          centerTitle: true,
-          actions: [
-            TextButton(
-              onPressed: () {
-                if (isGenderSelected) {
-                  updatingGender();
-                } else {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: Text("You didn't change the anything!"),
-                        actions: <Widget>[
-                          TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: Text("OK"))
-                        ],
-                      );
-                    },
-                  );
-                }
-              },
+        ],
+      ),
+      body: Container(
+        color: LIGHT_GREY_SCREEN_BACKGROUND,
+        child: Column(
+          children: [
+            Container(
+              padding: EdgeInsets.all(16),
+              alignment: Alignment.topLeft,
               child: Text(
-                'Save',
-                style: GoogleFonts.robotoCondensed(
+                GENDER_PAGE,
+                textAlign: TextAlign.justify, // Align text to center
+                style: GoogleFonts.poppins(
                   color: Colors.black,
-                  fontSize: MediaQuery.of(context).size.width * 0.03,
-                  fontWeight: FontWeight.w700,
+                  fontSize: MediaQuery.of(context).size.width * 0.035,
+                  fontWeight: FontWeight.w400,
                 ),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              color: Colors.white,
+              child: DropdownSearch<String>(
+                items: [
+                  'Male',
+                  'Female',
+                  'Other',
+                ],
+                onChanged: (value) {
+                  setState(() {
+                    selectedGender = value!.toLowerCase();
+                    if (selectedGender.isNotEmpty) {
+                      isGenderSelected = true;
+                      // if (selectedGender == 'Male') {}
+                    } else {
+                      isGenderSelected = false;
+                    }
+                  });
+                },
+                selectedItem: isGenderSelected
+                    ? selectedGender
+                    : widget.gender != 'null'
+                        ? widget.gender
+                        : "Select your gender",
               ),
             ),
           ],
-        ),
-        body: Container(
-          color: LIGHT_GREY_SCREEN_BACKGROUND,
-          child: Column(
-            children: [
-              Container(
-                padding: EdgeInsets.all(16),
-                alignment: Alignment.topLeft,
-                child: Text(
-                  GENDER_PAGE,
-                  textAlign: TextAlign.justify, // Align text to center
-                  style: GoogleFonts.poppins(
-                    color: Colors.black,
-                    fontSize: MediaQuery.of(context).size.width * 0.035,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                color: Colors.white,
-                child: DropdownSearch<String>(
-                  items: [
-                    'Male',
-                    'Female',
-                    'Other',
-                  ],
-                  onChanged: (value) {
-                    setState(() {
-                      selectedGender = value!.toLowerCase();
-                      if (selectedGender.isNotEmpty) {
-                        isGenderSelected = true;
-                        // if (selectedGender == 'Male') {}
-                      } else {
-                        isGenderSelected = false;
-                      }
-                    });
-                  },
-                  selectedItem: isGenderSelected
-                      ? selectedGender
-                      : widget.gender != 'null'
-                          ? widget.gender
-                          : "Select your gender",
-                ),
-              ),
-            ],
-          ),
         ),
       ),
     );
