@@ -48,241 +48,235 @@ class _AboutMeDetailsPageState extends State<AboutMeDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'About Me',
-            // style: GoogleFonts.robotoCondensed(
-            //   color: Colors.white,
-            //   fontSize: 25,
-            //   fontWeight: FontWeight.w700,
-            // ),
-            style: GoogleFonts.poppins(
-              textStyle: Theme.of(context).textTheme.headline5!.apply(
-                  color: Theme.of(context).backgroundColor,
-                  fontWeightDelta: 1,
-                  fontSizeFactor: .8),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'About Me',
+          style: GoogleFonts.poppins(
+            textStyle: Theme.of(context).textTheme.headline5!.apply(
+                color: Theme.of(context).backgroundColor,
+                fontWeightDelta: 1,
+                fontSizeFactor: .8),
+          ),
+        ),
+        backgroundColor: const Color.fromARGB(255, 243, 103, 9),
+        foregroundColor: WHITE,
+        centerTitle: true,
+        actions: [
+          TextButton(
+            onPressed: () {
+              if (isValueChanged) {
+                updatingAboutMe();
+              } else {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: Text("You didn't change anything!"),
+                      actions: <Widget>[
+                        TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text("OK"))
+                      ],
+                    );
+                  },
+                );
+              }
+            },
+            child: Text(
+              'Save',
+              style: GoogleFonts.poppins(
+                color: Colors.black,
+                fontSize: MediaQuery.of(context).size.width * 0.03,
+                fontWeight: FontWeight.w700,
+              ),
             ),
           ),
-          backgroundColor: const Color.fromARGB(255, 243, 103, 9),
-          centerTitle: true,
-          actions: [
-            TextButton(
-              onPressed: () {
-                if (isValueChanged) {
-                  updatingAboutMe();
-                } else {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: Text("You didn't change anything!"),
-                        actions: <Widget>[
-                          TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: Text("OK"))
-                        ],
-                      );
-                    },
-                  );
-                }
-              },
-              child: Text(
-                'Save',
+        ],
+      ),
+      body: Container(
+        color: LIGHT_GREY_SCREEN_BACKGROUND,
+        // height: MediaQuery.sizeOf(context).height * 1,
+        child: Column(
+          children: [
+            // Container(
+            //   color: Colors.white,
+            //   child: Stack(
+            //     children: [
+            //       Positioned(
+            //         left: 10, // Adjust the position of the button as needed
+            //         top: 20, // Adjust the position of the button as needed
+            //         child: InkWell(
+            //             //onTap: _changeColor,
+            //             // Add your logic for the selection button onTap event here
+
+            //             // child: Container(
+            //             //   width: 30,
+            //             //   height: 30,
+            //             //   decoration: BoxDecoration(
+            //             //     //color: _boxColor, // Color of the button
+            //             //     color: Colors.green,
+            //             //     shape: BoxShape.circle,
+            //             //     border: Border.all(
+            //             //       color: Colors.black, // Color of the border
+            //             //       width: 1.0, // Width of the border
+            //             //     ), // Circular shape
+            //             //   ),
+            //             //   child: Icon(
+            //             //     Icons.check,
+            //             //     //color: _isSelected ? Colors.green : Colors.white,
+            //             //     color: Colors.white, // Color of the icon
+            //             //     size: 25.0, // Size of the icon
+            //             //   ),
+            //             // ),
+            //             ),
+            //       ),
+            //       Container(
+            //         color: LIGHT_GREY_SCREEN_BACKGROUND,
+            //         height: 200,
+            //         child: Container(
+            //           height: 200,
+            //           child: Row(
+            //             children: [
+            //               Expanded(
+            //                 //child: Padding(
+            //                 //padding: const EdgeInsets.only(left: 15),
+            //                 child: Container(
+            //                   height: 200,
+            //                   child: Column(
+            //                     children: [
+            //                       Text(
+            //                         "Feel free to share your hobbies, interests, or anything else you'd like!",
+            //                         textAlign: TextAlign.center,
+            //                         style: GoogleFonts.robotoCondensed(
+            //                           fontSize: 15.0,
+            //                           color: Colors.black,
+            //                           fontWeight: FontWeight.w500,
+            //                         ),
+            //                       ),
+            //                       SizedBox(
+            //                         height: 1,
+            //                       ),
+            //                       Text(
+            //                         "Note: All languages preferable, but kindly fill out in English now",
+            //                         textAlign: TextAlign.center,
+            //                         style: GoogleFonts.robotoCondensed(
+            //                           fontSize: 15.0,
+            //                           color: Colors.black,
+            //                           fontWeight: FontWeight.w500,
+            //                         ),
+            //                       ),
+            //                     ],
+            //                   ),
+            //                 ),
+            //               ),
+            //             ],
+            //           ),
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            // Divider(
+            //   height: 5,
+            //   color: Colors.grey,
+            // ),
+            // Container(
+            //   color: Colors.white,
+            //   height: 50,
+            //   child: Row(
+            //     children: [
+            //       Expanded(
+            //         //child:
+            //         //Padding(
+            //         //padding: const EdgeInsets.only(right: 190.0),
+            //         child: TextField(
+            //           textAlign: TextAlign.center,
+            //           controller: TextEditingController(),
+            //           style: TextStyle(
+            //             color: Colors.black,
+            //             fontSize: 18,
+            //             fontWeight: FontWeight.w500,
+            //           ), // Use a TextEditingController
+            //           decoration: InputDecoration(
+            //             hintText: 'More about you',
+            //             border: OutlineInputBorder(),
+            //             hintStyle: TextStyle(
+            //                 color:
+            //                     Colors.grey), // Border around the input field
+            //           ),
+            //         ),
+            //       ),
+            //       //),
+            //     ],
+            //   ),
+            // ),
+            // Divider(
+            //   height: 2,
+            //   color: Colors.grey,
+            // ),
+            Container(
+                // margin: EdgeInsets.only(top: 5),
+                padding: EdgeInsets.all(16),
+                child: Column(
+                  children: [
+                    Text(
+                      ABOUT_ME_COL1,
+                      textAlign: TextAlign.justify, // Align text to center
+                      style: GoogleFonts.poppins(
+                        color: Colors.black,
+                        fontSize: MediaQuery.of(context).size.width * 0.035,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      ABOUT_ME_COL2,
+                      textAlign: TextAlign.justify, // Align text to center
+                      style: GoogleFonts.poppins(
+                        color: Colors.black,
+                        fontSize: MediaQuery.of(context).size.width * 0.035,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ],
+                )),
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              color: Colors.white,
+              child: TextField(
+                maxLines: 10,
+                minLines: 1,
+                controller: _controller,
                 style: GoogleFonts.poppins(
                   color: Colors.black,
-                  fontSize: MediaQuery.of(context).size.width * 0.03,
-                  fontWeight: FontWeight.w700,
+                  fontSize: MediaQuery.of(context).size.width * 0.035,
+                  fontWeight: FontWeight.w400,
+                ),
+                onChanged: (value) {
+                  setState(() {
+                    enteredValue = value;
+                    if (enteredValue != widget.aboutMe) {
+                      isValueChanged = true;
+                    } else {
+                      isValueChanged = false;
+                    }
+                  });
+                },
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: "Write about yourself",
+                  hintStyle: TextStyle(color: Colors.grey),
                 ),
               ),
-            ),
+            )
           ],
-        ),
-        body: Container(
-          color: LIGHT_GREY_SCREEN_BACKGROUND,
-          // height: MediaQuery.sizeOf(context).height * 1,
-          child: Column(
-            children: [
-              // Container(
-              //   color: Colors.white,
-              //   child: Stack(
-              //     children: [
-              //       Positioned(
-              //         left: 10, // Adjust the position of the button as needed
-              //         top: 20, // Adjust the position of the button as needed
-              //         child: InkWell(
-              //             //onTap: _changeColor,
-              //             // Add your logic for the selection button onTap event here
-
-              //             // child: Container(
-              //             //   width: 30,
-              //             //   height: 30,
-              //             //   decoration: BoxDecoration(
-              //             //     //color: _boxColor, // Color of the button
-              //             //     color: Colors.green,
-              //             //     shape: BoxShape.circle,
-              //             //     border: Border.all(
-              //             //       color: Colors.black, // Color of the border
-              //             //       width: 1.0, // Width of the border
-              //             //     ), // Circular shape
-              //             //   ),
-              //             //   child: Icon(
-              //             //     Icons.check,
-              //             //     //color: _isSelected ? Colors.green : Colors.white,
-              //             //     color: Colors.white, // Color of the icon
-              //             //     size: 25.0, // Size of the icon
-              //             //   ),
-              //             // ),
-              //             ),
-              //       ),
-              //       Container(
-              //         color: LIGHT_GREY_SCREEN_BACKGROUND,
-              //         height: 200,
-              //         child: Container(
-              //           height: 200,
-              //           child: Row(
-              //             children: [
-              //               Expanded(
-              //                 //child: Padding(
-              //                 //padding: const EdgeInsets.only(left: 15),
-              //                 child: Container(
-              //                   height: 200,
-              //                   child: Column(
-              //                     children: [
-              //                       Text(
-              //                         "Feel free to share your hobbies, interests, or anything else you'd like!",
-              //                         textAlign: TextAlign.center,
-              //                         style: GoogleFonts.robotoCondensed(
-              //                           fontSize: 15.0,
-              //                           color: Colors.black,
-              //                           fontWeight: FontWeight.w500,
-              //                         ),
-              //                       ),
-              //                       SizedBox(
-              //                         height: 1,
-              //                       ),
-              //                       Text(
-              //                         "Note: All languages preferable, but kindly fill out in English now",
-              //                         textAlign: TextAlign.center,
-              //                         style: GoogleFonts.robotoCondensed(
-              //                           fontSize: 15.0,
-              //                           color: Colors.black,
-              //                           fontWeight: FontWeight.w500,
-              //                         ),
-              //                       ),
-              //                     ],
-              //                   ),
-              //                 ),
-              //               ),
-              //             ],
-              //           ),
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
-              // Divider(
-              //   height: 5,
-              //   color: Colors.grey,
-              // ),
-              // Container(
-              //   color: Colors.white,
-              //   height: 50,
-              //   child: Row(
-              //     children: [
-              //       Expanded(
-              //         //child:
-              //         //Padding(
-              //         //padding: const EdgeInsets.only(right: 190.0),
-              //         child: TextField(
-              //           textAlign: TextAlign.center,
-              //           controller: TextEditingController(),
-              //           style: TextStyle(
-              //             color: Colors.black,
-              //             fontSize: 18,
-              //             fontWeight: FontWeight.w500,
-              //           ), // Use a TextEditingController
-              //           decoration: InputDecoration(
-              //             hintText: 'More about you',
-              //             border: OutlineInputBorder(),
-              //             hintStyle: TextStyle(
-              //                 color:
-              //                     Colors.grey), // Border around the input field
-              //           ),
-              //         ),
-              //       ),
-              //       //),
-              //     ],
-              //   ),
-              // ),
-              // Divider(
-              //   height: 2,
-              //   color: Colors.grey,
-              // ),
-              Container(
-                  // margin: EdgeInsets.only(top: 5),
-                  padding: EdgeInsets.all(16),
-                  child: Column(
-                    children: [
-                      Text(
-                        ABOUT_ME_COL1,
-                        textAlign: TextAlign.justify, // Align text to center
-                        style: GoogleFonts.poppins(
-                          color: Colors.black,
-                          fontSize: MediaQuery.of(context).size.width * 0.035,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        ABOUT_ME_COL2,
-                        textAlign: TextAlign.justify, // Align text to center
-                        style: GoogleFonts.poppins(
-                          color: Colors.black,
-                          fontSize: MediaQuery.of(context).size.width * 0.035,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ],
-                  )),
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                color: Colors.white,
-                child: TextField(
-                  maxLines: 10,
-                  minLines: 1,
-                  controller: _controller,
-                  style: GoogleFonts.poppins(
-                    color: Colors.black,
-                    fontSize: MediaQuery.of(context).size.width * 0.035,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  onChanged: (value) {
-                    setState(() {
-                      enteredValue = value;
-                      if (enteredValue != widget.aboutMe) {
-                        isValueChanged = true;
-                      } else {
-                        isValueChanged = false;
-                      }
-                    });
-                  },
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: "Write about yourself",
-                    hintStyle: TextStyle(color: Colors.grey),
-                  ),
-                ),
-              )
-            ],
-          ),
         ),
       ),
     );

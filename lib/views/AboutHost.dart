@@ -300,70 +300,58 @@ class _AboutHostState extends State<AboutHost> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Image.asset(
-          "assets/moreScreenImages/header_bg.png",
-          height: 140,
-          fit: BoxFit.fill,
-          width: MediaQuery.of(context).size.width,
-        ),
-        SafeArea(
-          child: WillPopScope(
-            onWillPop: () async {
-              // Pop the dialog if it's open
-              if (Navigator.of(context).canPop()) {
+    return WillPopScope(
+      onWillPop: () async {
+        // Pop the dialog if it's open
+        if (Navigator.of(context).canPop()) {
+          Navigator.of(context).pop(true);
+          return false; // Prevent default back button behavior
+        }
+        return true; // Allow default back button behavior
+      },
+      child: Scaffold(
+          backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
+          appBar: AppBar(
+            backgroundColor: const Color.fromARGB(255, 243, 103, 9),
+            title: Text(
+              'About host',
+              style: GoogleFonts.poppins(
+                textStyle: Theme.of(context).textTheme.headline5!.apply(
+                    color: Theme.of(context).backgroundColor,
+                    fontWeightDelta: 1,
+                    fontSizeFactor: .8),
+              ),
+            ),
+            centerTitle: true,
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              color: WHITE,
+              onPressed: () {
                 Navigator.of(context).pop(true);
-                return false; // Prevent default back button behavior
-              }
-              return true; // Allow default back button behavior
-            },
-            child: Scaffold(
-                backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
-                appBar: AppBar(
-                  backgroundColor: const Color.fromARGB(255, 243, 103, 9),
-                  title: Text(
-                    'About host',
-                    style: GoogleFonts.poppins(
-                      textStyle: Theme.of(context).textTheme.headline5!.apply(
-                          color: Theme.of(context).backgroundColor,
-                          fontWeightDelta: 1,
-                          fontSizeFactor: .8),
-                    ),
-                  ),
-                  centerTitle: true,
-                  leading: IconButton(
-                    icon: Icon(Icons.arrow_back),
-                    color: WHITE,
-                    onPressed: () {
-                      Navigator.of(context).pop(true);
-                    },
-                  ),
-                ),
-                body: services != null && languages != null
-                    ? ContainerPage(
-                        widget.doctorId,
-                        motto,
-                        iwillshowyou,
-                        services!,
-                        consultationfees,
-                        imageUrl1,
-                        imageUrls,
-                        location,
-                        about_me,
-                        gender,
-                        languages!,
-                        _handleDataReload)
-                    : Container(
-                        alignment: Alignment.center,
-                        transformAlignment: Alignment.center,
-                        child: CircularProgressIndicator(
-                          color: const Color.fromARGB(255, 243, 103, 9),
-                        ),
-                      )),
+              },
+            ),
           ),
-        ),
-      ],
+          body: services != null && languages != null
+              ? ContainerPage(
+                  widget.doctorId,
+                  motto,
+                  iwillshowyou,
+                  services!,
+                  consultationfees,
+                  imageUrl1,
+                  imageUrls,
+                  location,
+                  about_me,
+                  gender,
+                  languages!,
+                  _handleDataReload)
+              : Container(
+                  alignment: Alignment.center,
+                  transformAlignment: Alignment.center,
+                  child: CircularProgressIndicator(
+                    color: const Color.fromARGB(255, 243, 103, 9),
+                  ),
+                )),
     );
   }
 

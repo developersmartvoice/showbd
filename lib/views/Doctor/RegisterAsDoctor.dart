@@ -29,11 +29,14 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
   String confirmPassword = "";
   String phnNumberError = "";
   String referralCode = "";
+  String referredId = "";
+  String newRegId = "";
   bool isPhoneNumberError = false;
   bool isNameError = false;
   bool isEmailError = false;
   bool isPassError = false;
   bool referralError = false;
+  bool checkReferrerCall = false;
   String token = "";
   String error = "";
   bool _passwordVisible = true;
@@ -169,6 +172,14 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
                     '100' + jsonResponse['register']['user_id'].toString());
               });
 
+              setState(() {
+                newRegId = jsonResponse['register']['user_id'].toString();
+              });
+
+              if (referredId.isNotEmpty && newRegId.isNotEmpty) {
+                storeReferralInfo();
+              }
+
               Navigator.of(context).popUntil((route) => route.isFirst);
               Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (context) => DoctorTabsScreen()));
@@ -240,6 +251,57 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
         });
       }
     });
+  }
+
+  referralCodeValidation() async {
+    final response = await get(Uri.parse(
+        "$SERVER_ADDRESS/api/get_id_by_ref_code?referral_code=$referralCode"));
+    if (response.statusCode == 200) {
+      final jsonResponse = jsonDecode(response.body);
+      setState(() {
+        checkReferrerCall = false;
+        referredId = jsonResponse['doctor_id']!.toString();
+      });
+      registerUser();
+      Navigator.of(context).pop();
+    } else {
+      Navigator.of(context).pop();
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Error'),
+              content: Text('Invalid referral code. Not found.'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          });
+    }
+  }
+
+  storeReferralInfo() async {
+    final response = await post(
+      Uri.parse("$SERVER_ADDRESS/api/store_referral_info"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode({
+        "referred_id": referredId,
+        "new_register_id": newRegId,
+      }),
+    );
+    if (response.statusCode == 200) {
+      final jsonResponse = jsonDecode(response.body);
+      print(jsonResponse['message']);
+    } else {
+      print("Failed. Referral Info isn't stored successfully!");
+    }
   }
 
   @override
@@ -748,15 +810,6 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
                       padding: EdgeInsets.only(left: 8),
                       child: TextFormField(
                         keyboardType: TextInputType.number,
-                        onChanged: (value) {
-                          setState(() {
-                            referralCode = value;
-                            if (value.length != 6) {
-                              referralError = true;
-                            }
-                          });
-                          print("Referral Code: $referralCode");
-                        },
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: "Referral Code (Optional)",
@@ -765,12 +818,27 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
                             fontWeight: FontWeight.w400,
                             fontSize: 14,
                           ),
+                          errorText: referralError
+                              ? "Enter 6 - digits referral code!"
+                              : null,
                         ),
                         style: GoogleFonts.poppins(
                           fontWeight: FontWeight.w500,
                           fontSize: 12,
                           color: Color.fromARGB(255, 243, 103, 9),
                         ),
+                        onChanged: (value) {
+                          setState(() {
+                            referralCode = value;
+                            if (value.length > 6) {
+                              referralError = true;
+                            } else {
+                              referralError = false;
+                            }
+                          });
+
+                          print("Referral Code: $referralCode");
+                        },
                       ),
                     ),
                   ],
@@ -784,7 +852,39 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
                 child: TextButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      registerUser();
+                      if (referralCode.isEmpty) {
+                        registerUser();
+                      } else if (referralCode.length == 6) {
+                        setState(() {
+                          checkReferrerCall = true;
+                        });
+                        showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              content: Row(
+                                children: [
+                                  // CircularProgressIndicator(),
+                                  Dialog(
+                                    backgroundColor: Colors.transparent,
+                                    child: Image.asset(
+                                      "assets/loading.png",
+                                      width: 40,
+                                      height: 40,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                  Text("Checking referral code validity"),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                        referralCodeValidation();
+                      }
                     }
                   },
                   child: Text(

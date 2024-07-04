@@ -51,142 +51,132 @@ class _MottoSettingsPageState extends State<MottoSettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'Motto',
-            // style: GoogleFonts.robotoCondensed(
-            //   color: Colors.white,
-            //   fontSize: 25,
-            //   fontWeight: FontWeight.w700,
-            // ),
-            style: GoogleFonts.poppins(
-              textStyle: Theme.of(context).textTheme.headline5!.apply(
-                  color: Theme.of(context).backgroundColor,
-                  fontWeightDelta: 1,
-                  fontSizeFactor: .8),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Motto',
+          style: GoogleFonts.poppins(
+            textStyle: Theme.of(context).textTheme.headline5!.apply(
+                color: Theme.of(context).backgroundColor,
+                fontWeightDelta: 1,
+                fontSizeFactor: .8),
+          ),
+        ),
+        backgroundColor: const Color.fromARGB(255, 243, 103, 9),
+        foregroundColor: WHITE,
+        centerTitle: true,
+        actions: [
+          TextButton(
+            onPressed: () {
+              if (isValueChanged) {
+                setState(() {
+                  loading = true;
+                });
+                updatingMotto();
+              } else {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: Text("You didn't change the anything!"),
+                      actions: <Widget>[
+                        TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text("OK"))
+                      ],
+                    );
+                  },
+                );
+              }
+            },
+            child: Text(
+              'Save',
+              style: GoogleFonts.robotoCondensed(
+                color: Colors.black,
+                fontSize: MediaQuery.of(context).size.width * 0.03,
+                fontWeight: FontWeight.w700,
+              ),
             ),
           ),
-          backgroundColor: const Color.fromARGB(255, 243, 103, 9),
-          centerTitle: true,
-          actions: [
-            TextButton(
-              onPressed: () {
-                if (isValueChanged) {
-                  setState(() {
-                    loading = true;
-                  });
-                  updatingMotto();
-                } else {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: Text("You didn't change the anything!"),
-                        actions: <Widget>[
-                          TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: Text("OK"))
-                        ],
-                      );
-                    },
-                  );
-                }
-              },
-              child: Text(
-                'Save',
-                style: GoogleFonts.robotoCondensed(
-                  color: Colors.black,
-                  fontSize: MediaQuery.of(context).size.width * 0.03,
-                  fontWeight: FontWeight.w700,
-                ),
+        ],
+      ),
+      body: loading
+          ? Container(
+              alignment: Alignment.center,
+              transformAlignment: Alignment.center,
+              child: CircularProgressIndicator(
+                color: const Color.fromARGB(255, 243, 103, 9),
+              ),
+            )
+          : Container(
+              color: LIGHT_GREY_SCREEN_BACKGROUND,
+              child: Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(16),
+                    alignment: Alignment.topLeft,
+                    child: Column(
+                      children: [
+                        Text(
+                          MOTTO_PAGE_1,
+                          textAlign: TextAlign.justify, // Align text to center
+                          style: GoogleFonts.poppins(
+                            color: Colors.black,
+                            fontSize: MediaQuery.of(context).size.width * 0.035,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          MOTTO_PAGE_2,
+                          textAlign: TextAlign.justify, // Align text to center
+                          style: GoogleFonts.poppins(
+                            color: Colors.black,
+                            fontSize: MediaQuery.of(context).size.width * 0.035,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    color: Colors.white,
+                    child: TextField(
+                      controller: _controller,
+                      style: GoogleFonts.poppins(
+                        color: Colors.black,
+                        fontSize: MediaQuery.of(context).size.width * 0.035,
+                        fontWeight: FontWeight.w200,
+                      ),
+                      onChanged: (value) {
+                        setState(
+                          () {
+                            enteredValue = value;
+                            if (enteredValue != widget.motto) {
+                              isValueChanged = true;
+                            } else {
+                              isValueChanged = false;
+                            }
+                          },
+                        );
+                      },
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: "Add Your Motto",
+                        hintStyle: TextStyle(color: Colors.grey),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
-        body: loading
-            ? Container(
-                alignment: Alignment.center,
-                transformAlignment: Alignment.center,
-                child: CircularProgressIndicator(
-                  color: const Color.fromARGB(255, 243, 103, 9),
-                ),
-              )
-            : Container(
-                color: LIGHT_GREY_SCREEN_BACKGROUND,
-                child: Column(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(16),
-                      alignment: Alignment.topLeft,
-                      child: Column(
-                        children: [
-                          Text(
-                            MOTTO_PAGE_1,
-                            textAlign:
-                                TextAlign.justify, // Align text to center
-                            style: GoogleFonts.poppins(
-                              color: Colors.black,
-                              fontSize:
-                                  MediaQuery.of(context).size.width * 0.035,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            MOTTO_PAGE_2,
-                            textAlign:
-                                TextAlign.justify, // Align text to center
-                            style: GoogleFonts.poppins(
-                              color: Colors.black,
-                              fontSize:
-                                  MediaQuery.of(context).size.width * 0.035,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      color: Colors.white,
-                      child: TextField(
-                        controller: _controller,
-                        style: GoogleFonts.poppins(
-                          color: Colors.black,
-                          fontSize: MediaQuery.of(context).size.width * 0.035,
-                          fontWeight: FontWeight.w200,
-                        ),
-                        onChanged: (value) {
-                          setState(
-                            () {
-                              enteredValue = value;
-                              if (enteredValue != widget.motto) {
-                                isValueChanged = true;
-                              } else {
-                                isValueChanged = false;
-                              }
-                            },
-                          );
-                        },
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: "Add Your Motto",
-                          hintStyle: TextStyle(color: Colors.grey),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-      ),
     );
   }
 }

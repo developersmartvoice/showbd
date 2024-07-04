@@ -116,109 +116,108 @@ class _LocationSearchPageInfoState extends State<LocationSearchPageInfo> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'Search Location',
-            style: GoogleFonts.poppins(
-              textStyle: Theme.of(context).textTheme.headline5!.apply(
-                  color: Theme.of(context).backgroundColor,
-                  fontWeightDelta: 1,
-                  fontSizeFactor: .8),
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Search Location',
+          style: GoogleFonts.poppins(
+            textStyle: Theme.of(context).textTheme.headline5!.apply(
+                color: Theme.of(context).backgroundColor,
+                fontWeightDelta: 1,
+                fontSizeFactor: .8),
           ),
-          flexibleSpace: Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/moreScreenImages/header_bg.png"),
-                fit: BoxFit.cover,
+        ),
+        // flexibleSpace: Container(
+        //   decoration: BoxDecoration(
+        //     image: DecorationImage(
+        //       image: AssetImage("assets/moreScreenImages/header_bg.png"),
+        //       fit: BoxFit.cover,
+        //     ),
+        //   ),
+        // ),
+        backgroundColor: const Color.fromARGB(255, 243, 103, 9),
+        foregroundColor: WHITE,
+        centerTitle: true,
+        actions: [
+          TextButton(
+            onPressed: () {
+              if (isValueChanged) {
+                setState(() {
+                  enteredValue = _searchController
+                      .text; // Update enteredValue with the text from the search controller
+                });
+                updatingCity(); // Call updatingCity to update the city
+              } else {
+                // If there's no value change, you might want to handle this case
+                Navigator.pop(context);
+              }
+            },
+            child: Text(
+              'Save',
+              style: GoogleFonts.poppins(
+                color: Colors.black,
+                fontSize: MediaQuery.of(context).size.width * 0.03,
+                fontWeight: FontWeight.w700,
               ),
             ),
           ),
-          centerTitle: true,
-          actions: [
-            TextButton(
-              onPressed: () {
-                if (isValueChanged) {
-                  setState(() {
-                    enteredValue = _searchController
-                        .text; // Update enteredValue with the text from the search controller
-                  });
-                  updatingCity(); // Call updatingCity to update the city
-                } else {
-                  // If there's no value change, you might want to handle this case
-                  Navigator.pop(context);
-                }
+        ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
+        child: Column(
+          children: [
+            TextField(
+              controller: _searchController,
+              onChanged: (value) {
+                // Filter the cities based on the entered text
+                setState(() {
+                  filteredCities = suggestedCities
+                      .where((city) =>
+                          city.toLowerCase().contains(value.toLowerCase()))
+                      .toList();
+                });
               },
-              child: Text(
-                'Save',
-                style: GoogleFonts.poppins(
-                  color: Colors.black,
-                  fontSize: MediaQuery.of(context).size.width * 0.03,
-                  fontWeight: FontWeight.w700,
-                ),
+              decoration: InputDecoration(
+                prefixIcon: Icon(Icons.search_sharp),
+                prefixIconColor: Colors.lightBlue,
+                hintText: 'Search city...',
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: filteredCities.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(filteredCities[index]),
+                    onTap: () {
+                      // Store the selected value
+                      String selectedCity = filteredCities[index];
+
+                      // Update enteredValue with the selected city and clear suggestions
+                      setState(() {
+                        // Update enteredValue with the selected city
+                        enteredValue = selectedCity;
+
+                        isValueChanged = true;
+
+                        // Update text controller's text with the selected city
+                        _searchController.text = selectedCity;
+
+                        // Close the keyboard
+                        FocusScope.of(context).unfocus();
+                      });
+
+                      // Clear the suggestions list outside of setState
+                      filteredCities.clear();
+
+                      print('Entered value after tapping city: $enteredValue');
+                    },
+                  );
+                },
               ),
             ),
           ],
-        ),
-        body: Padding(
-          padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
-          child: Column(
-            children: [
-              TextField(
-                controller: _searchController,
-                onChanged: (value) {
-                  // Filter the cities based on the entered text
-                  setState(() {
-                    filteredCities = suggestedCities
-                        .where((city) =>
-                            city.toLowerCase().contains(value.toLowerCase()))
-                        .toList();
-                  });
-                },
-                decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.search_sharp),
-                  prefixIconColor: Colors.lightBlue,
-                  hintText: 'Search city...',
-                ),
-              ),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: filteredCities.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(filteredCities[index]),
-                      onTap: () {
-                        // Store the selected value
-                        String selectedCity = filteredCities[index];
-
-                        // Update enteredValue with the selected city and clear suggestions
-                        setState(() {
-                          // Update enteredValue with the selected city
-                          enteredValue = selectedCity;
-
-                          isValueChanged = true;
-
-                          // Update text controller's text with the selected city
-                          _searchController.text = selectedCity;
-
-                          // Close the keyboard
-                          FocusScope.of(context).unfocus();
-                        });
-
-                        // Clear the suggestions list outside of setState
-                        filteredCities.clear();
-
-                        print(
-                            'Entered value after tapping city: $enteredValue');
-                      },
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
         ),
       ),
     );
