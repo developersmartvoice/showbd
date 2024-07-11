@@ -36,6 +36,7 @@ class _ShurjoPayPaymentState extends State<ShurjoPayPayment> {
   int? postalCode;
   String? userId;
   String? orderId;
+  String? referredId;
 
   @override
   void initState() {
@@ -50,13 +51,26 @@ class _ShurjoPayPaymentState extends State<ShurjoPayPayment> {
         getName();
         getPhoneNo();
         getCity();
-        // do {
-        //   orderId = randomAlphaNumeric(8).toLowerCase();
-        // } while (!orderId!.contains(RegExp(r'\d')));
+        getReferredId();
         orderId = randomAlphaNumeric(8).toLowerCase();
         print("Order Id is: $orderId");
       });
     });
+  }
+
+  getReferredId() async {
+    final response = await get(
+        Uri.parse("$SERVER_ADDRESS/api/get_id_by_user_id?user_id=$userId"));
+    if (response.statusCode == 200) {
+      final jsonResponse = jsonDecode(response.body);
+      setState(() {
+        referredId = jsonResponse['referred_id'].toString();
+      });
+    } else {
+      setState(() {
+        referredId = "";
+      });
+    }
   }
 
   setMembershipStatus() async {
@@ -93,9 +107,6 @@ class _ShurjoPayPaymentState extends State<ShurjoPayPayment> {
       });
     }
   }
-  // getAddress() async{
-  //   final response = await get(Uri.parse("$SERVER_ADDRESS/api/"))
-  // }
 
   getCity() async {
     final response =
@@ -148,6 +159,22 @@ class _ShurjoPayPaymentState extends State<ShurjoPayPayment> {
     }
   }
 
+  storeReferreredBalance() async {
+    final response = await post(
+        Uri.parse("$SERVER_ADDRESS/api/set_referrered_balance"),
+        body: {
+          "referred_id": referredId,
+          "user_id": userId,
+          "currency": "BDT",
+        });
+    if (response.statusCode == 200) {
+      final jsonResponse = jsonDecode(response.body);
+      print(jsonResponse['success']);
+    } else {
+      print("Api did not call properly!");
+    }
+  }
+
   ShurjopayConfigs shurjopayConfigs = ShurjopayConfigs(
     prefix: "MT",
     userName: "smartlab",
@@ -164,264 +191,265 @@ class _ShurjoPayPaymentState extends State<ShurjoPayPayment> {
       ShurjopayVerificationModel();
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            "Payment",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 20.0,
-              fontWeight: FontWeight.bold,
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        foregroundColor: WHITE,
+        title: Text(
+          "Payment",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
           ),
-          centerTitle: true,
-          backgroundColor: Colors.blue, // Change app bar color
-          flexibleSpace: Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(
-                  "assets/moreScreenImages/header_bg.png",
-                ),
-                fit: BoxFit.cover,
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.blue, // Change app bar color
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(
+                "assets/moreScreenImages/header_bg.png",
               ),
+              fit: BoxFit.cover,
             ),
           ),
         ),
-        body: Container(
-          alignment: Alignment.center,
-          padding: EdgeInsets.all(16.0),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Container(
-                  child: Column(
-                    children: [
-                      Text(
-                        "MEET LOCAL SUBSCRIPTION",
-                        style: GoogleFonts.robotoCondensed(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                        ),
+      ),
+      body: Container(
+        alignment: Alignment.center,
+        padding: EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                child: Column(
+                  children: [
+                    Text(
+                      "MEET LOCAL SUBSCRIPTION",
+                      style: GoogleFonts.robotoCondensed(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
                       ),
-                      SizedBox(height: 10),
-                      Text(
-                        "for one month",
-                        style: GoogleFonts.robotoCondensed(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      "for one month",
+                      style: GoogleFonts.robotoCondensed(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                SizedBox(height: 20),
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      SizedBox(height: 20),
-                      TextFormField(
-                        controller: _nameController,
-                        // initialValue: name ?? "",
-                        decoration: InputDecoration(
-                          labelText: 'Name',
-                          border: OutlineInputBorder(),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your name';
-                          } else {
-                            setState(() {
-                              name = value.toString();
-                            });
-                          }
-                          return null;
-                        },
+              ),
+              SizedBox(height: 20),
+              Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SizedBox(height: 20),
+                    TextFormField(
+                      controller: _nameController,
+                      // initialValue: name ?? "",
+                      decoration: InputDecoration(
+                        labelText: 'Name',
+                        border: OutlineInputBorder(),
                       ),
-                      SizedBox(height: 20),
-                      TextFormField(
-                        controller: _phoneNumberController,
-                        decoration: InputDecoration(
-                          labelText: 'Phone Number',
-                          border: OutlineInputBorder(),
-                        ),
-                        validator: (value) {
-                          if (value == null ||
-                              value.isEmpty ||
-                              value.length != 11) {
-                            return 'Please enter your phone number and length must be 11';
-                          } else {
-                            setState(() {
-                              phoneNo = value;
-                            });
-                          }
-                          return null;
-                        },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your name';
+                        } else {
+                          setState(() {
+                            name = value.toString();
+                          });
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 20),
+                    TextFormField(
+                      controller: _phoneNumberController,
+                      decoration: InputDecoration(
+                        labelText: 'Phone Number',
+                        border: OutlineInputBorder(),
                       ),
-                      SizedBox(height: 20),
-                      // TextFormField(
-                      //   controller: _addressController,
-                      //   decoration: InputDecoration(
-                      //     labelText: 'Address',
-                      //     border: OutlineInputBorder(),
-                      //   ),
-                      //   validator: (value) {
-                      //     if (value == null || value.isEmpty) {
-                      //       return 'Please enter your address';
-                      //     } else {
-                      //       setState(() {
-                      //         address = value.toString();
-                      //       });
-                      //     }
-                      //     return null;
-                      //   },
-                      // ),
-                      // SizedBox(height: 20),
-                      TextFormField(
-                        controller: _cityController,
-                        decoration: InputDecoration(
-                          labelText: 'City',
-                          border: OutlineInputBorder(),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your city';
-                          } else {
-                            setState(() {
-                              city = value.toString();
-                            });
-                          }
-                          return null;
-                        },
+                      validator: (value) {
+                        if (value == null ||
+                            value.isEmpty ||
+                            value.length != 11) {
+                          return 'Please enter your phone number and length must be 11';
+                        } else {
+                          setState(() {
+                            phoneNo = value;
+                          });
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 20),
+                    // TextFormField(
+                    //   controller: _addressController,
+                    //   decoration: InputDecoration(
+                    //     labelText: 'Address',
+                    //     border: OutlineInputBorder(),
+                    //   ),
+                    //   validator: (value) {
+                    //     if (value == null || value.isEmpty) {
+                    //       return 'Please enter your address';
+                    //     } else {
+                    //       setState(() {
+                    //         address = value.toString();
+                    //       });
+                    //     }
+                    //     return null;
+                    //   },
+                    // ),
+                    // SizedBox(height: 20),
+                    TextFormField(
+                      controller: _cityController,
+                      decoration: InputDecoration(
+                        labelText: 'City',
+                        border: OutlineInputBorder(),
                       ),
-                      // SizedBox(height: 20),
-                      // TextFormField(
-                      //   controller: _postalCodeController,
-                      //   decoration: InputDecoration(
-                      //     labelText: 'Postal Code',
-                      //     border: OutlineInputBorder(),
-                      //   ),
-                      //   validator: (value) {
-                      //     if (value == null ||
-                      //         value.isEmpty ||
-                      //         (value.length != 4 && int.parse(value) < 0)) {
-                      //       return 'Please enter your postal code and length must be 4';
-                      //     } else {
-                      //       setState(() {
-                      //         postalCode = int.parse(value);
-                      //       });
-                      //     }
-                      //     return null;
-                      //   },
-                      // ),
-                      SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed: () async {
-                          if (_formKey.currentState!.validate()) {
-                            // Form is valid, proceed with submission
-                            // Add your logic here to handle form submission
-                            setState(() {
-                              print(
-                                  "Name: $name, Address: $address, Phone No: $phoneNo, City: $city, Postal Code: $postalCode");
-                            });
-                            print(shurjopayConfigs.clientIP);
-                            ShurjopayRequestModel shurjopayRequestModel =
-                                ShurjopayRequestModel(
-                              configs: shurjopayConfigs,
-                              currency: "BDT",
-                              amount: widget.amount,
-                              orderID: orderId!,
-                              discountAmount: 0,
-                              discountPercentage: 0,
-                              customerName: name!,
-                              // customerName: "Hello",
-                              customerPhoneNumber: phoneNo.toString(),
-                              // customerPhoneNumber: "01628734916",
-                              customerAddress: address,
-                              // customerAddress: "customer address",
-                              customerCity: city!,
-                              // customerCity: "customer city",
-                              // customerPostcode: postalCode.toString(),
-                              customerPostcode: "1212",
-                              // Live: https://www.engine.shurjopayment.com/return_url
-                              returnURL:
-                                  "https://www.engine.shurjopayment.com/return_url",
-                              // "https://www.sandbox.shurjopayment.com/return_url",
-                              // Live: https://www.engine.shurjopayment.com/cancel_url
-                              cancelURL:
-                                  "https://www.engine.shurjopayment.com/cancel_url",
-                              // "https://www.sandbox.shurjopayment.com/cancel_url",
-                            );
-
-                            shurjopayResponseModel =
-                                await shurjoPay.makePayment(
-                              context: context,
-                              shurjopayRequestModel: shurjopayRequestModel,
-                            );
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your city';
+                        } else {
+                          setState(() {
+                            city = value.toString();
+                          });
+                        }
+                        return null;
+                      },
+                    ),
+                    // SizedBox(height: 20),
+                    // TextFormField(
+                    //   controller: _postalCodeController,
+                    //   decoration: InputDecoration(
+                    //     labelText: 'Postal Code',
+                    //     border: OutlineInputBorder(),
+                    //   ),
+                    //   validator: (value) {
+                    //     if (value == null ||
+                    //         value.isEmpty ||
+                    //         (value.length != 4 && int.parse(value) < 0)) {
+                    //       return 'Please enter your postal code and length must be 4';
+                    //     } else {
+                    //       setState(() {
+                    //         postalCode = int.parse(value);
+                    //       });
+                    //     }
+                    //     return null;
+                    //   },
+                    // ),
+                    SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          // Form is valid, proceed with submission
+                          // Add your logic here to handle form submission
+                          setState(() {
                             print(
-                                "Checking status: ${shurjopayResponseModel.status}");
-                            print(shurjopayResponseModel.errorCode);
-                            if (shurjopayResponseModel.status == true) {
-                              // try {} catch (e) {}
-                              try {
-                                shurjopayVerificationModel =
-                                    await shurjoPay.verifyPayment(
-                                  orderID:
-                                      shurjopayResponseModel.shurjopayOrderID!,
-                                );
-                                print(
-                                    "This is shurjopay id: ${shurjopayVerificationModel.id}");
+                                "Name: $name, Address: $address, Phone No: $phoneNo, City: $city, Postal Code: $postalCode");
+                          });
+                          print(shurjopayConfigs.clientIP);
+                          ShurjopayRequestModel shurjopayRequestModel =
+                              ShurjopayRequestModel(
+                            configs: shurjopayConfigs,
+                            currency: "BDT",
+                            amount: widget.amount,
+                            orderID: orderId!,
+                            discountAmount: 0,
+                            discountPercentage: 0,
+                            customerName: name!,
+                            // customerName: "Hello",
+                            customerPhoneNumber: phoneNo.toString(),
+                            // customerPhoneNumber: "01628734916",
+                            customerAddress: address,
+                            // customerAddress: "customer address",
+                            customerCity: city!,
+                            // customerCity: "customer city",
+                            // customerPostcode: postalCode.toString(),
+                            customerPostcode: "1212",
+                            // Live: https://www.engine.shurjopayment.com/return_url
+                            returnURL:
+                                "https://www.engine.shurjopayment.com/return_url",
+                            // "https://www.sandbox.shurjopayment.com/return_url",
+                            // Live: https://www.engine.shurjopayment.com/cancel_url
+                            cancelURL:
+                                "https://www.engine.shurjopayment.com/cancel_url",
+                            // "https://www.sandbox.shurjopayment.com/cancel_url",
+                          );
 
-                                print(shurjopayVerificationModel.spCode);
-                                print(shurjopayVerificationModel.spMessage);
-                                if (shurjopayVerificationModel.spCode ==
-                                    "1000") {
-                                  print("Payment Varified");
-                                  print(
-                                      "This is shurjopay orderId from verification Model: ${shurjopayVerificationModel.orderId}");
-                                  storeOrderId(
-                                      shurjopayVerificationModel.orderId!);
-                                  storeMembershipDetails();
-                                  setMembershipStatus();
-                                  print(shurjopayVerificationModel
-                                      .customerOrderId);
-                                  // _nameController.clear();
-                                  // _addressController.clear();
-                                  // _phoneNumberController.clear();
-                                  // _cityController.clear();
-                                  // _postalCodeController.clear();
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => HomeScreen()));
+                          shurjopayResponseModel = await shurjoPay.makePayment(
+                            context: context,
+                            shurjopayRequestModel: shurjopayRequestModel,
+                          );
+                          print(
+                              "Checking status: ${shurjopayResponseModel.status}");
+                          print(shurjopayResponseModel.errorCode);
+                          if (shurjopayResponseModel.status == true) {
+                            // try {} catch (e) {}
+                            try {
+                              shurjopayVerificationModel =
+                                  await shurjoPay.verifyPayment(
+                                orderID:
+                                    shurjopayResponseModel.shurjopayOrderID!,
+                              );
+                              print(
+                                  "This is shurjopay id: ${shurjopayVerificationModel.id}");
+
+                              print(shurjopayVerificationModel.spCode);
+                              print(shurjopayVerificationModel.spMessage);
+                              if (shurjopayVerificationModel.spCode == "1000") {
+                                print("Payment Varified");
+                                print(
+                                    "This is shurjopay orderId from verification Model: ${shurjopayVerificationModel.orderId}");
+                                storeOrderId(
+                                    shurjopayVerificationModel.orderId!);
+                                storeMembershipDetails();
+                                setMembershipStatus();
+                                if (referredId != null ||
+                                    referredId!.isNotEmpty) {
+                                  storeReferreredBalance();
                                 }
-                              } catch (error) {
-                                print(error.toString());
+                                print(
+                                    shurjopayVerificationModel.customerOrderId);
+                                // _nameController.clear();
+                                // _addressController.clear();
+                                // _phoneNumberController.clear();
+                                // _cityController.clear();
+                                // _postalCodeController.clear();
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => HomeScreen()));
                               }
+                            } catch (error) {
+                              print(error.toString());
                             }
                           }
-                        },
-                        child: Text(
-                          'Confirm Your Subscription',
-                          style: TextStyle(fontSize: 18.0, color: Colors.white),
+                        }
+                      },
+                      child: Text(
+                        'Confirm Your Subscription',
+                        style: TextStyle(fontSize: 18.0, color: Colors.white),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.orange, // Change button color
+                        padding: EdgeInsets.symmetric(
+                          vertical: 15.0,
                         ),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.orange, // Change button color
-                          padding: EdgeInsets.symmetric(
-                            vertical: 15.0,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

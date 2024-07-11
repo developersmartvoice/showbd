@@ -240,13 +240,14 @@ class _ContainerPageState extends State<ContainerPage> {
       });
     }
 
-    if (widget.aboutMe.isNotEmpty) {
+    if (widget.aboutMe != "null") {
+      print("This is about me: ${widget.aboutMe}");
       setState(() {
         isAboutMeStored = true;
       });
     }
 
-    if (widget.city.isNotEmpty) {
+    if (widget.city != "null") {
       setState(() {
         isLocationStored = true;
       });
@@ -380,9 +381,10 @@ class _ContainerPageState extends State<ContainerPage> {
                             height: 25,
                             decoration: BoxDecoration(
                               //color: _boxColor, // Color of the button
-                              color: widget.aboutMe.isNotEmpty
+                              // color: widget.aboutMe.isNotEmpty
+                              color: widget.aboutMe != "null"
                                   ? Colors.green
-                                  : Colors.white,
+                                  : Colors.grey,
                               shape: BoxShape.circle,
                               border: Border.all(
                                 color: Colors.grey, // Color of the border
@@ -549,9 +551,9 @@ class _ContainerPageState extends State<ContainerPage> {
                             height: 25,
                             decoration: BoxDecoration(
                               //color: _boxColor, // Color of the button
-                              color: widget.city.isNotEmpty
+                              color: widget.city != "null"
                                   ? Colors.green
-                                  : Colors.white,
+                                  : Colors.grey,
                               shape: BoxShape.circle,
                               border: Border.all(
                                 color: Colors.grey, // Color of the border

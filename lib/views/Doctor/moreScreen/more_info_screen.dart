@@ -1023,10 +1023,105 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
           GestureDetector(
             onTap: () {
               // deleteAccount(DELETE_ACCOUNT, DELETE_MESSAGE);
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (builder) => ReferralPage(userId: doctorId!)));
+              isMember
+                  ? Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (builder) => ReferralPage(userId: doctorId!),
+                      ),
+                    )
+                  : showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          // contentPadding: EdgeInsets.zero,
+                          // insetPadding: EdgeInsets.all(20),
+                          content: Container(
+                            height: 200, // Customize the height of the dialog
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  Icons.warning_amber_rounded,
+                                  color: Colors.red,
+                                  size: 50,
+                                ),
+                                SizedBox(height: 20),
+                                Text(
+                                  "To receive a referral code, you need to be a member.",
+                                  textAlign: TextAlign.center,
+                                  maxLines: 3,
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(height: 20),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ChoosePlan()),
+                                        );
+                                      },
+                                      style: TextButton.styleFrom(
+                                        foregroundColor: Colors.white,
+                                        backgroundColor:
+                                            Color.fromARGB(255, 243, 103, 9),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 16, vertical: 8),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                      ),
+                                      child: Text(
+                                        "Be a Member!",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      style: TextButton.styleFrom(
+                                        foregroundColor: Colors.white,
+                                        backgroundColor: Colors.grey,
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 16, vertical: 8),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                      ),
+                                      child: Text(
+                                        "Later",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    );
             },
             child: Container(
               height: MediaQuery.of(context).size.height * .06,
