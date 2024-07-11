@@ -110,13 +110,14 @@ class _ReferralPageState extends State<ReferralPage> {
                             textAlign: TextAlign.center,
                             readOnly: true,
                             decoration: InputDecoration(
-                                // labelText: 'Your Referral Code',
-                                border: InputBorder.none,
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color.fromARGB(255, 243, 103, 9),
-                                  ),
-                                )),
+                              // labelText: 'Your Referral Code',
+                              border: InputBorder.none,
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color.fromARGB(255, 243, 103, 9),
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                         IconButton(

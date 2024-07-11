@@ -547,9 +547,9 @@ class _ContainerPageState extends State<ContainerPage> {
                           height: 25,
                           decoration: BoxDecoration(
                             //color: _boxColor, // Color of the button
-                            color: widget.motto.isNotEmpty
+                            color: widget.motto != "null"
                                 ? Colors.green
-                                : Colors.white,
+                                : Colors.grey,
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: Colors.grey, // Color of the border
@@ -642,10 +642,11 @@ class _ContainerPageState extends State<ContainerPage> {
                           height: 25,
                           decoration: BoxDecoration(
                             //color: _boxColor, // Color of the button
-                            color: widget.iwillshowyou.isNotEmpty ||
-                                    widget.iwillshowyou.length > 0
+                            // color: widget.iwillshowyou.isNotEmpty ||
+                            //         widget.iwillshowyou.length > 0
+                            color: widget.iwillshowyou != "null"
                                 ? Colors.green
-                                : Colors.white,
+                                : Colors.grey,
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: Colors.grey, // Color of the border
@@ -753,7 +754,7 @@ class _ContainerPageState extends State<ContainerPage> {
                             //color: _boxColor, // Color of the button
                             color: widget.services.isNotEmpty
                                 ? Colors.green
-                                : Colors.white,
+                                : Colors.grey,
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: Colors.grey, // Color of the border
@@ -845,9 +846,9 @@ class _ContainerPageState extends State<ContainerPage> {
                           height: 25,
                           decoration: BoxDecoration(
                             //color: Colors.white,
-                            color: widget.consultationfees.isNotEmpty
+                            color: widget.consultationfees != "0"
                                 ? Colors.green
-                                : Colors.white, // Color of the button
+                                : Colors.grey, // Color of the button
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: Colors.grey, // Color of the border
@@ -938,7 +939,7 @@ class _ContainerPageState extends State<ContainerPage> {
                             // color: _boxColor, // Color of the button
                             color: widget.imageUrl1!.isNotEmpty
                                 ? Colors.green
-                                : Colors.white,
+                                : Colors.grey,
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: Colors.grey, // Color of the border
@@ -1019,9 +1020,9 @@ class _ContainerPageState extends State<ContainerPage> {
                           height: 25,
                           decoration: BoxDecoration(
                             //color: _boxColor, // Color of the button
-                            color: widget.city.isNotEmpty
+                            color: widget.city != "null"
                                 ? Colors.green
-                                : Colors.white,
+                                : Colors.grey,
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: Colors.grey, // Color of the border
@@ -1110,9 +1111,9 @@ class _ContainerPageState extends State<ContainerPage> {
                           height: 25,
                           decoration: BoxDecoration(
                             //color: _boxColor, // Color of the button
-                            color: widget.aboutMe.isNotEmpty
+                            color: widget.aboutMe != "null"
                                 ? Colors.green
-                                : Colors.white,
+                                : Colors.grey,
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: Colors.grey, // Color of the border
@@ -1206,9 +1207,9 @@ class _ContainerPageState extends State<ContainerPage> {
                           height: 25,
                           decoration: BoxDecoration(
                             //color: _boxColor, // Color of the button
-                            color: widget.gender.isNotEmpty
+                            color: widget.gender != "null"
                                 ? Colors.green
-                                : Colors.white,
+                                : Colors.grey,
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: Colors.grey, // Color of the border
@@ -1309,7 +1310,7 @@ class _ContainerPageState extends State<ContainerPage> {
                             //color: _boxColor, // Color of the button
                             color: widget.languages.isNotEmpty
                                 ? Colors.green
-                                : Colors.white,
+                                : Colors.grey,
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: Colors.grey, // Color of the border

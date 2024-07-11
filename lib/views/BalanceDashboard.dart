@@ -1,144 +1,11 @@
-// import 'package:flutter/material.dart';
-
-// class BalanceDashboard extends StatefulWidget {
-//   final String userId;
-//   const BalanceDashboard({super.key, required this.userId});
-//   @override
-//   _BalanceDashboardState createState() => _BalanceDashboardState();
-// }
-
-// class _BalanceDashboardState extends State<BalanceDashboard>
-//     with SingleTickerProviderStateMixin {
-//   double currentMonthEarnings = 0.0;
-//   double totalEarnings = 0.0;
-//   double withdrawalBalance = 0.0;
-//   late AnimationController _controller;
-//   late Animation<double> _animation;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     _controller = AnimationController(
-//       duration: const Duration(seconds: 1),
-//       vsync: this,
-//     );
-//     _animation = CurvedAnimation(parent: _controller, curve: Curves.easeInOut);
-//     _controller.forward();
-//     fetchBalanceData();
-//   }
-
-//   @override
-//   void dispose() {
-//     _controller.dispose();
-//     super.dispose();
-//   }
-
-//   Future<void> fetchBalanceData() async {
-//     // Simulating API call
-//     await Future.delayed(Duration(seconds: 2));
-
-//     // Example data, replace with your API call and response handling
-//     setState(() {
-//       currentMonthEarnings = 1200.50;
-//       totalEarnings = 5000.75;
-//       withdrawalBalance = 300.25;
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Balance Dashboard'),
-//         backgroundColor: Colors.orange,
-//       ),
-//       body: FadeTransition(
-//         opacity: _animation,
-//         child: ListView(
-//           padding: EdgeInsets.all(16.0),
-//           children: [
-//             _buildBalanceCard(
-//               'Current Month\'s Earnings',
-//               currentMonthEarnings,
-//               Icons.calendar_today,
-//             ),
-//             _buildBalanceCard(
-//               'Total Earnings',
-//               totalEarnings,
-//               Icons.attach_money,
-//             ),
-//             _buildBalanceCard(
-//               'Withdrawal Balance',
-//               withdrawalBalance,
-//               Icons.account_balance_wallet,
-//             ),
-//             SizedBox(height: 20),
-//             ElevatedButton(
-//               onPressed: () {
-//                 // Handle button press
-//               },
-//               style: ElevatedButton.styleFrom(
-//                 backgroundColor: Colors.orange,
-//                 padding: EdgeInsets.symmetric(vertical: 15.0),
-//               ),
-//               child: Text(
-//                 'Withdraw',
-//                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-
-//   Widget _buildBalanceCard(String title, double amount, IconData icon) {
-//     return Card(
-//       shape: RoundedRectangleBorder(
-//         borderRadius: BorderRadius.circular(15),
-//       ),
-//       elevation: 5,
-//       margin: EdgeInsets.symmetric(vertical: 10),
-//       child: Padding(
-//         padding: EdgeInsets.all(20.0),
-//         child: Row(
-//           children: [
-//             CircleAvatar(
-//               radius: 30,
-//               backgroundColor: Colors.orange,
-//               child: Icon(icon, size: 30, color: Colors.white),
-//             ),
-//             SizedBox(width: 20),
-//             Column(
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 Text(
-//                   title,
-//                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-//                 ),
-//                 SizedBox(height: 10),
-//                 Text(
-//                   '\$${amount.toStringAsFixed(2)}',
-//                   style: TextStyle(
-//                     fontSize: 22,
-//                     fontWeight: FontWeight.w600,
-//                     color: Colors.green,
-//                   ),
-//                 ),
-//               ],
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
+import 'dart:convert';
 
 import 'package:appcode3/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart';
 
 class BalanceDashboard extends StatefulWidget {
   final String userId;
@@ -154,8 +21,25 @@ class _BalanceDashboardState extends State<BalanceDashboard> {
   double prevMonth = 0.00;
   double withdrawMoney = 0.00;
 
-  showMessage() {
-    // showLicensePage(context: context)
+  getAllBalances() async {
+    final response = await get(Uri.parse(
+        "$SERVER_ADDRESS/api/get_all_balances?referred_id=${widget.userId}"));
+    if (response.statusCode == 200) {
+      final jsonResponse = jsonDecode(response.body);
+      setState(() {
+        totalMoney = double.parse(jsonResponse['total_earnings']);
+        currentMotnth = double.parse(jsonResponse['current_month_earnings']);
+        prevMonth = double.parse(jsonResponse['previous_month_earnings']);
+        withdrawMoney = double.parse(jsonResponse['withdrawal_balance']);
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getAllBalances();
   }
 
   @override
@@ -212,7 +96,7 @@ class _BalanceDashboardState extends State<BalanceDashboard> {
 //                                 ),
 //                               ),
                               Text(
-                                "- To earn money, you need to take the membership first.",
+                                "1. To earn money, you need to take the membership first.",
                                 textAlign: TextAlign.justify,
                                 style: TextStyle(
                                     fontSize: 16.0,
@@ -222,7 +106,7 @@ class _BalanceDashboardState extends State<BalanceDashboard> {
                                 height: 20,
                               ),
                               Text(
-                                "- Then, you can refer your friends to register the app.",
+                                "2. Then, you can refer your friends to register the app.",
                                 textAlign: TextAlign.justify,
                                 style: TextStyle(
                                     fontSize: 16.0,
@@ -232,7 +116,7 @@ class _BalanceDashboardState extends State<BalanceDashboard> {
                                 height: 20,
                               ),
                               Text(
-                                "- If your referred friend takes membership of this app, you will get 15% of the fees.",
+                                "3. If your referred friend takes membership of this app, you will get 15% of the fees.",
                                 textAlign: TextAlign.justify,
                                 style: TextStyle(
                                     fontSize: 16.0,
@@ -242,7 +126,7 @@ class _BalanceDashboardState extends State<BalanceDashboard> {
                                 height: 20,
                               ),
                               Text(
-                                "- This money will be earned for a lifetime.",
+                                "4. This money will be earned for a lifetime.",
                                 textAlign: TextAlign.justify,
                                 style: TextStyle(
                                     fontSize: 16.0,
