@@ -20,6 +20,9 @@ class _BalanceDashboardState extends State<BalanceDashboard> {
   double currentMotnth = 0.00;
   double prevMonth = 0.00;
   double withdrawMoney = 0.00;
+  bool withdrawalAllowed = false;
+  String withdrawalMessage = "";
+  String nextWithdrawalDate = "";
 
   getAllBalances() async {
     final response = await get(Uri.parse(
@@ -31,6 +34,9 @@ class _BalanceDashboardState extends State<BalanceDashboard> {
         currentMotnth = double.parse(jsonResponse['current_month_earnings']);
         prevMonth = double.parse(jsonResponse['previous_month_earnings']);
         withdrawMoney = double.parse(jsonResponse['withdrawal_balance']);
+        withdrawalAllowed = jsonResponse['withdrawal_allowed'];
+        withdrawalMessage = jsonResponse['withdrawal_message'].toString();
+        nextWithdrawalDate = jsonResponse['next_withdrawal_date'].toString();
       });
     }
   }
@@ -44,6 +50,9 @@ class _BalanceDashboardState extends State<BalanceDashboard> {
 
   @override
   Widget build(BuildContext context) {
+    print(withdrawalMessage);
+    print(nextWithdrawalDate);
+    print(withdrawalAllowed);
     return Scaffold(
       // backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
       backgroundColor: WHITE,
@@ -76,6 +85,7 @@ class _BalanceDashboardState extends State<BalanceDashboard> {
                   return Stack(
                     children: <Widget>[
                       Dialog(
+                        backgroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         ),
@@ -231,53 +241,88 @@ class _BalanceDashboardState extends State<BalanceDashboard> {
                     SizedBox(
                       height: 15,
                     ),
-                    // TextButton.icon(
-                    //   onPressed: () {},
-                    //   icon: Icon(Icons.monetization_on),
-                    //   label: Text("Withdraw"),
-                    //   style: ButtonStyle(
-                    //     textStyle: MaterialStatePropertyAll(
-                    //       TextStyle(
-                    //         fontWeight: FontWeight.bold,
-                    //       ),
-                    //     ),
-                    //     foregroundColor: MaterialStatePropertyAll(
-                    //       Color.fromARGB(255, 243, 103, 9),
-                    //     ),
-                    //     elevation: MaterialStatePropertyAll(5),
-                    //     shape: MaterialStatePropertyAll(
-                    //       OvalBorder(
-                    //         side: BorderSide(
-                    //           width: 1.5,
-                    //           color: Color.fromARGB(255, 243, 103, 9),
-                    //         ),
-                    //       ),
-                    //     ),
-                    //     padding: MaterialStatePropertyAll(
-                    //       EdgeInsets.all(16),
-                    //     ),
-                    //   ),
-                    // ),
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: Text("Withdraw"),
-                      style: ButtonStyle(
-                        textStyle: MaterialStatePropertyAll(
-                          TextStyle(
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 2,
+                    Container(
+                      width: double
+                          .infinity, // Make the container take the full width
+                      child: Stack(
+                        children: [
+                          Align(
+                            alignment: Alignment.center,
+                            child: ElevatedButton(
+                              onPressed: withdrawalAllowed
+                                  ? () {
+                                      // Your onPressed logic here
+                                    }
+                                  : null,
+                              child: Text("Withdraw"),
+                              style: ButtonStyle(
+                                textStyle: MaterialStatePropertyAll(
+                                  TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: 2,
+                                  ),
+                                ),
+                                backgroundColor: MaterialStatePropertyAll(
+                                  withdrawalAllowed
+                                      ? Color.fromARGB(255, 243, 103, 9)
+                                      : Colors.grey,
+                                ),
+                                foregroundColor:
+                                    MaterialStatePropertyAll(Colors.white),
+                                elevation: MaterialStatePropertyAll(5),
+                                padding: MaterialStatePropertyAll(
+                                  EdgeInsets.all(16),
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
-                        backgroundColor: MaterialStatePropertyAll(
-                          Color.fromARGB(255, 243, 103, 9),
-                        ),
-                        foregroundColor: MaterialStatePropertyAll(WHITE),
-                        elevation: MaterialStatePropertyAll(5),
-                        padding: MaterialStatePropertyAll(
-                          EdgeInsets.all(16),
-                        ),
+                          Positioned(
+                            right: 0,
+                            child: IconButton.filled(
+                              onPressed: () {
+                                // Your onPressed logic here
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return Dialog(
+                                      alignment: Alignment.center,
+                                      child: Container(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(5),
+                                          ),
+                                        ),
+                                        padding: EdgeInsets.all(16.0),
+                                        child: Text(
+                                          withdrawalMessage,
+                                          textAlign: TextAlign.justify,
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                      ),
+                                      // insetPadding: EdgeInsets.all(50),
+                                    );
+                                  },
+                                );
+                              },
+                              icon: Icon(
+                                Icons.question_mark_sharp,
+                                size: 14,
+                              ),
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStatePropertyAll(Colors.grey),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
+                    )
                   ],
                 ),
               ),

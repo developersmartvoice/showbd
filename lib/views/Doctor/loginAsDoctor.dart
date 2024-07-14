@@ -513,7 +513,10 @@ class _LoginAsDoctorState extends State<LoginAsDoctor>
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => RegisterAsDoctor()),
+                  MaterialPageRoute(
+                      builder: (context) => RegisterAsDoctor(
+                            isFromChoosePlan: false,
+                          )),
                 );
               },
               child: Text(
