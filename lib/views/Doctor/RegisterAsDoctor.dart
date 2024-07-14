@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:appcode3/en.dart';
 import 'package:appcode3/main.dart';
+import 'package:appcode3/views/ChoosePlan.dart';
 import 'package:appcode3/views/Doctor/DoctorTabScreen.dart';
 import 'package:connectycube_sdk/connectycube_calls.dart';
 import 'package:connectycube_sdk/connectycube_chat.dart';
@@ -17,6 +18,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../VideoCall/utils/pref_util.dart';
 
 class RegisterAsDoctor extends StatefulWidget {
+  final bool isFromChoosePlan;
+
+  RegisterAsDoctor({required this.isFromChoosePlan});
   @override
   _RegisterAsDoctorState createState() => _RegisterAsDoctorState();
 }
@@ -180,9 +184,20 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
                 storeReferralInfo();
               }
 
-              Navigator.of(context).popUntil((route) => route.isFirst);
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => DoctorTabsScreen()));
+              if (!widget.isFromChoosePlan) {
+                Navigator.of(context).popUntil((route) => route.isFirst);
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => DoctorTabsScreen()));
+              } else {
+                Navigator.of(context).popUntil((route) => route.isFirst);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ChoosePlan(),
+                    ));
+              }
             });
           });
         }
@@ -913,7 +928,7 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
               SizedBox(
                 height: 30,
               ),
-              bottom(),
+              widget.isFromChoosePlan ? Container() : bottom(),
             ],
           ),
         ),

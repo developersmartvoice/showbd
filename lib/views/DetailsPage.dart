@@ -10,10 +10,10 @@ import 'package:appcode3/views/ChatScreen.dart';
 import 'package:appcode3/views/ChoosePlan.dart';
 // import 'package:appcode3/views/CreateTrip.dart';
 // import 'package:appcode3/views/CreateTrip.dart';
-import 'package:appcode3/views/MakeAppointment.dart';
+// import 'package:appcode3/views/MakeAppointment.dart';
 import 'package:appcode3/views/PendingScreen.dart';
 import 'package:appcode3/views/RejectedScreen.dart';
-import 'package:appcode3/views/loginAsUser.dart';
+// import 'package:appcode3/views/loginAsUser.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +22,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:url_launcher/url_launcher.dart';
+// import 'package:url_launcher/url_launcher.dart';
 
 // ignore: must_be_immutable
 class DetailsPage extends StatefulWidget {
@@ -71,11 +71,13 @@ class _DetailsPageState extends State<DetailsPage> {
     SharedPreferences.getInstance().then((pref) {
       setState(() {
         isLoggedIn = pref.getBool("isLoggedInAsDoctor") ?? false;
-        selfId = pref.getString("userId");
-        checkIsMember();
-        checkDirectBooking();
-        checkAcceptBooking();
-        checkRejectBooking();
+        if (isLoggedIn!) {
+          selfId = pref.getString("userId");
+          checkIsMember();
+          checkDirectBooking();
+          checkAcceptBooking();
+          checkRejectBooking();
+        }
       });
     });
   }
@@ -613,308 +615,344 @@ class _DetailsPageState extends State<DetailsPage> {
           decoration: BoxDecoration(
             color: WHITE,
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                alignment: Alignment.center,
-                child: widget.isSelf
-                    ? Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Expanded(
-                            child: ElevatedButton.icon(
-                              onPressed: () {
-                                !isMember
-                                    ? Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (context) => ChoosePlan(),
-                                        ),
-                                      )
-                                    : isDirectBooking
-                                        ? sender
-                                            ? Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      PendingScreen(
-                                                          fromSender: true),
-                                                ),
-                                              )
-                                            : Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      PendingScreen(
-                                                          fromSender: false),
-                                                ),
-                                              )
-                                        : isAcceptBooking
-                                            ? sender
-                                                ? Navigator.of(context).push(
-                                                    MaterialPageRoute(
-                                                      builder: (context) => ChatScreen(
-                                                          apiResponse!
-                                                              .recipientInfo
-                                                              .recipientName,
-                                                          "100" +
-                                                              apiResponse!
-                                                                  .recipientInfo
-                                                                  .recipientId
-                                                                  .toString(),
-                                                          apiResponse!
-                                                              .recipientInfo
-                                                              .recipientConnectycubeId,
-                                                          true,
-                                                          apiResponse!
-                                                              .recipientInfo
-                                                              .recipientDeviceTokens,
-                                                          apiResponse!
-                                                              .recipientInfo
-                                                              .recipientImage,
-                                                          apiResponse!
-                                                              .senderInfo
-                                                              .senderImage),
-                                                    ),
-                                                  )
-                                                : Navigator.of(context).push(
-                                                    MaterialPageRoute(
-                                                      builder: (context) => ChatScreen(
-                                                          apiResponse!
-                                                              .senderInfo
-                                                              .senderName,
-                                                          "100" +
-                                                              apiResponse!
-                                                                  .senderInfo
-                                                                  .senderId
-                                                                  .toString(),
-                                                          apiResponse!
-                                                              .senderInfo
-                                                              .senderConnectycubeId,
-                                                          true,
-                                                          apiResponse!
-                                                              .senderInfo
-                                                              .senderDeviceTokens,
-                                                          apiResponse!
-                                                              .senderInfo
-                                                              .senderImage,
-                                                          apiResponse!
-                                                              .recipientInfo
-                                                              .recipientImage),
-                                                    ),
-                                                  )
-                                            : isRejectBooking
-                                                ? sender
-                                                    ? Navigator.of(context)
-                                                        .push(
-                                                        MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              RejectedScreen(
-                                                                  fromSender:
-                                                                      true),
-                                                        ),
-                                                      )
-                                                    : Navigator.of(context)
-                                                        .push(
-                                                        MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              RejectedScreen(
-                                                                  fromSender:
-                                                                      false),
-                                                        ),
-                                                      )
-                                                : Navigator.of(context).push(
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          BookingScreen(
-                                                              widget.id,
-                                                              selfId!,
-                                                              guideName!),
-                                                    ),
-                                                  );
-                              },
-                              icon: Icon(
-                                Icons.connect_without_contact_sharp,
-                                size: MediaQuery.of(context).size.width * 0.05,
-                              ),
-                              label: Flexible(
-                                child: Text(
-                                  "Contact",
-                                  style: GoogleFonts.poppins(
-                                    fontSize:
-                                        MediaQuery.of(context).size.width *
-                                            0.04,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
+          child: Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  alignment: Alignment.center,
+                  child: widget.isSelf
+                      ? Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Expanded(
+                              child: ElevatedButton.icon(
+                                onPressed: () {
+                                  !isMember
+                                      ? Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) => ChoosePlan(),
+                                          ),
+                                        )
+                                      : isDirectBooking
+                                          ? sender
+                                              ? Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        PendingScreen(
+                                                            fromSender: true),
+                                                  ),
+                                                )
+                                              : Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        PendingScreen(
+                                                            fromSender: false),
+                                                  ),
+                                                )
+                                          : isAcceptBooking
+                                              ? sender
+                                                  ? Navigator.of(context).push(
+                                                      MaterialPageRoute(
+                                                        builder: (context) => ChatScreen(
+                                                            apiResponse!
+                                                                .recipientInfo
+                                                                .recipientName,
+                                                            "100" +
+                                                                apiResponse!
+                                                                    .recipientInfo
+                                                                    .recipientId
+                                                                    .toString(),
+                                                            apiResponse!
+                                                                .recipientInfo
+                                                                .recipientConnectycubeId,
+                                                            true,
+                                                            apiResponse!
+                                                                .recipientInfo
+                                                                .recipientDeviceTokens,
+                                                            apiResponse!
+                                                                .recipientInfo
+                                                                .recipientImage,
+                                                            apiResponse!
+                                                                .senderInfo
+                                                                .senderImage),
+                                                      ),
+                                                    )
+                                                  : Navigator.of(context).push(
+                                                      MaterialPageRoute(
+                                                        builder: (context) => ChatScreen(
+                                                            apiResponse!
+                                                                .senderInfo
+                                                                .senderName,
+                                                            "100" +
+                                                                apiResponse!
+                                                                    .senderInfo
+                                                                    .senderId
+                                                                    .toString(),
+                                                            apiResponse!
+                                                                .senderInfo
+                                                                .senderConnectycubeId,
+                                                            true,
+                                                            apiResponse!
+                                                                .senderInfo
+                                                                .senderDeviceTokens,
+                                                            apiResponse!
+                                                                .senderInfo
+                                                                .senderImage,
+                                                            apiResponse!
+                                                                .recipientInfo
+                                                                .recipientImage),
+                                                      ),
+                                                    )
+                                              : isRejectBooking
+                                                  ? sender
+                                                      ? Navigator.of(context)
+                                                          .push(
+                                                          MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                RejectedScreen(
+                                                                    fromSender:
+                                                                        true),
+                                                          ),
+                                                        )
+                                                      : Navigator.of(context)
+                                                          .push(
+                                                          MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                RejectedScreen(
+                                                                    fromSender:
+                                                                        false),
+                                                          ),
+                                                        )
+                                                  : Navigator.of(context).push(
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            BookingScreen(
+                                                                widget.id,
+                                                                selfId!,
+                                                                guideName!),
+                                                      ),
+                                                    );
+                                },
+                                icon: Icon(
+                                  Icons.connect_without_contact_sharp,
+                                  size:
+                                      MediaQuery.of(context).size.width * 0.05,
                                 ),
-                              ),
-                              style: ElevatedButton.styleFrom(
-                                foregroundColor: Colors.white,
-                                backgroundColor:
-                                    Color.fromARGB(255, 243, 103, 9),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  side: BorderSide(
-                                    color: Colors.white,
+                                label: Flexible(
+                                  child: Text(
+                                    "Contact",
+                                    style: GoogleFonts.poppins(
+                                      fontSize:
+                                          MediaQuery.of(context).size.width *
+                                              0.04,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
-                                padding: EdgeInsets.all(10.0),
-                                elevation: 5.0,
-                                shadowColor: Colors.grey,
+                                style: ElevatedButton.styleFrom(
+                                  foregroundColor: Colors.white,
+                                  backgroundColor:
+                                      Color.fromARGB(255, 243, 103, 9),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    side: BorderSide(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  padding: EdgeInsets.all(10.0),
+                                  elevation: 5.0,
+                                  shadowColor: Colors.grey,
+                                ),
                               ),
                             ),
-                          ),
-                          // SizedBox(
-                          //   width: 10,
-                          // ),
-                          // Expanded(
-                          //   child: ElevatedButton.icon(
-                          //     onPressed: () {
-                          //       Navigator.of(context).push(
-                          //         MaterialPageRoute(
-                          //           builder: (context) => CreateTrip(),
-                          //         ),
-                          //       );
-                          //     },
-                          //     icon: Icon(
-                          //       Icons.airplane_ticket_sharp,
-                          //       size: MediaQuery.of(context).size.width *
-                          //           0.05,
-                          //     ),
-                          //     label: Flexible(
-                          //       child: Text(
-                          //         "Create A Trip",
-                          //         style: TextStyle(
-                          //           fontSize:
-                          //               MediaQuery.of(context).size.width *
-                          //                   0.04,
-                          //         ),
-                          //         overflow: TextOverflow.ellipsis,
-                          //       ),
-                          //     ),
-                          //     style: ElevatedButton.styleFrom(
-                          //       backgroundColor:
-                          //           Color.fromARGB(255, 243, 103, 9),
-                          //       foregroundColor: Colors.white,
-                          //       shape: RoundedRectangleBorder(
-                          //         borderRadius: BorderRadius.circular(10.0),
-                          //         side: BorderSide(
-                          //           color: Colors.white,
-                          //         ),
-                          //       ),
-                          //       padding: EdgeInsets.all(10.0),
-                          //       elevation: 5.0,
-                          //       shadowColor: Colors.grey,
-                          //     ),
-                          //   ),
-                          // ),
-                        ],
-                      )
-                    : Container(),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              doctorDetailsClass!.data!.motto == null
-                  ? Container()
-                  : Column(
-                      children: [
-                        Divider(
-                          height: 10.0,
-                          color: Colors.grey[500],
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Container(
-                          child: Center(
-                            child: Text(
-                              doctorDetailsClass!.data!.motto.toString(),
-
-                              style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.bold,
-                                  //color: LIGHT_GREY_TEXT,
-                                  color: Color.fromARGB(255, 24, 18, 31),
-                                  fontSize:
-                                      MediaQuery.of(context).size.width * 0.04),
-                              textAlign: TextAlign.center,
-                              //textAlignVertical: TextAlignVertical.center,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-              SizedBox(
-                height: 5,
-              ),
-
-              // Container(
-              //   color: Colors.grey,
-              //   child: Row(
-              //     crossAxisAlignment: CrossAxisAlignment.start,
-              //     children: [
-              //       SizedBox(
-              //         width: 50,
-              //       ),
-              //     ],
-              //   ),
-              // ),
-              doctorDetailsClass!.data!.iwillshowyou == null
-                  ? Container()
-                  : Container(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                            // SizedBox(
+                            //   width: 10,
+                            // ),
+                            // Expanded(
+                            //   child: ElevatedButton.icon(
+                            //     onPressed: () {
+                            //       Navigator.of(context).push(
+                            //         MaterialPageRoute(
+                            //           builder: (context) => CreateTrip(),
+                            //         ),
+                            //       );
+                            //     },
+                            //     icon: Icon(
+                            //       Icons.airplane_ticket_sharp,
+                            //       size: MediaQuery.of(context).size.width *
+                            //           0.05,
+                            //     ),
+                            //     label: Flexible(
+                            //       child: Text(
+                            //         "Create A Trip",
+                            //         style: TextStyle(
+                            //           fontSize:
+                            //               MediaQuery.of(context).size.width *
+                            //                   0.04,
+                            //         ),
+                            //         overflow: TextOverflow.ellipsis,
+                            //       ),
+                            //     ),
+                            //     style: ElevatedButton.styleFrom(
+                            //       backgroundColor:
+                            //           Color.fromARGB(255, 243, 103, 9),
+                            //       foregroundColor: Colors.white,
+                            //       shape: RoundedRectangleBorder(
+                            //         borderRadius: BorderRadius.circular(10.0),
+                            //         side: BorderSide(
+                            //           color: Colors.white,
+                            //         ),
+                            //       ),
+                            //       padding: EdgeInsets.all(10.0),
+                            //       elevation: 5.0,
+                            //       shadowColor: Colors.grey,
+                            //     ),
+                            //   ),
+                            // ),
+                          ],
+                        )
+                      : Container(),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                doctorDetailsClass!.data!.motto == null
+                    ? Container()
+                    : Column(
                         children: [
                           Divider(
                             height: 10.0,
                             color: Colors.grey[500],
                           ),
-                          Text(
-                            I_WILL_SHOW_YOU,
-                            style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w400,
-                                color: BLACK,
-                                fontSize:
-                                    MediaQuery.of(context).size.width * 0.045),
-                          ),
                           SizedBox(
                             height: 5,
                           ),
-                          Text(
-                            style: GoogleFonts.poppins(
-                                // fontWeight: FontWeight.w400,
-                                color: Colors.blueGrey,
-                                fontSize:
-                                    MediaQuery.of(context).size.width * 0.03),
-                            doctorDetailsClass!.data!.iwillshowyou.toString(),
+                          Container(
+                            child: Center(
+                              child: Text(
+                                doctorDetailsClass!.data!.motto.toString(),
+
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.bold,
+                                    //color: LIGHT_GREY_TEXT,
+                                    color: Color.fromARGB(255, 24, 18, 31),
+                                    fontSize:
+                                        MediaQuery.of(context).size.width *
+                                            0.04),
+                                textAlign: TextAlign.center,
+                                //textAlignVertical: TextAlignVertical.center,
+                              ),
+                            ),
                           ),
-                          // doctorDetailsClass!.data!.iwillshowyou == null
-                          //     ? Text("")
-                          //     : Text(
-                          //         style: GoogleFonts.poppins(
-                          //             // fontWeight: FontWeight.w400,
-                          //             color: Colors.blueGrey,
-                          //             fontSize:
-                          //                 MediaQuery.of(context).size.width *
-                          //                     0.03),
-                          //         doctorDetailsClass!.data!.iwillshowyou
-                          //             .toString(),
-                          //       )
                         ],
                       ),
-                    ),
-              SizedBox(
-                height: 10,
-              ),
-              // doctorDetailsClass!.data!.iwillshowyou == null
-              //     ? Container()
-              //     : Divider(
-              //         height: 35.0,
-              //         color: Colors.grey[500],
-              //       ),
-              doctorDetailsClass!.data!.aboutus == null
-                  ? Container()
-                  : Container(
-                      child: Column(
+                SizedBox(
+                  height: 5,
+                ),
+
+                // Container(
+                //   color: Colors.grey,
+                //   child: Row(
+                //     crossAxisAlignment: CrossAxisAlignment.start,
+                //     children: [
+                //       SizedBox(
+                //         width: 50,
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                doctorDetailsClass!.data!.iwillshowyou == null
+                    ? Container()
+                    : Container(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Divider(
+                              height: 10.0,
+                              color: Colors.grey[500],
+                            ),
+                            Text(
+                              I_WILL_SHOW_YOU,
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w400,
+                                  color: BLACK,
+                                  fontSize: MediaQuery.of(context).size.width *
+                                      0.045),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              style: GoogleFonts.poppins(
+                                  // fontWeight: FontWeight.w400,
+                                  color: Colors.blueGrey,
+                                  fontSize:
+                                      MediaQuery.of(context).size.width * 0.03),
+                              doctorDetailsClass!.data!.iwillshowyou.toString(),
+                            ),
+                            // doctorDetailsClass!.data!.iwillshowyou == null
+                            //     ? Text("")
+                            //     : Text(
+                            //         style: GoogleFonts.poppins(
+                            //             // fontWeight: FontWeight.w400,
+                            //             color: Colors.blueGrey,
+                            //             fontSize:
+                            //                 MediaQuery.of(context).size.width *
+                            //                     0.03),
+                            //         doctorDetailsClass!.data!.iwillshowyou
+                            //             .toString(),
+                            //       )
+                          ],
+                        ),
+                      ),
+                SizedBox(
+                  height: 10,
+                ),
+                // doctorDetailsClass!.data!.iwillshowyou == null
+                //     ? Container()
+                //     : Divider(
+                //         height: 35.0,
+                //         color: Colors.grey[500],
+                //       ),
+                doctorDetailsClass!.data!.aboutus == null
+                    ? Container()
+                    : Container(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Divider(
+                              height: 35.0,
+                              color: Colors.grey[500],
+                            ),
+                            Text(
+                              ABOUT_GUIDE,
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w400,
+                                  color: BLACK,
+                                  fontSize: 20),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              doctorDetailsClass!.data!.aboutus.toString(),
+                              style: GoogleFonts.poppins(
+                                  // fontWeight: FontWeight.w400,
+                                  color: Colors.blueGrey,
+                                  fontSize:
+                                      MediaQuery.of(context).size.width * 0.03),
+                            ),
+                          ],
+                        ),
+                      ),
+                SizedBox(
+                  height: 10,
+                ),
+                doctorDetailsClass!.data!.services == null
+                    ? Container()
+                    : Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Divider(
@@ -922,177 +960,148 @@ class _DetailsPageState extends State<DetailsPage> {
                             color: Colors.grey[500],
                           ),
                           Text(
-                            ABOUT_GUIDE,
+                            SERVICES,
                             style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.w400,
                                 color: BLACK,
-                                fontSize: 20),
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.045),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ListView.builder(
+                                physics: NeverScrollableScrollPhysics(),
+                                shrinkWrap:
+                                    true, // This ensures that the ListView takes up as much space as needed within the Column
+                                itemCount:
+                                    doctorDetailsClass!.data!.services!.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  // Use the index to access each service in the list
+                                  String service = doctorDetailsClass!
+                                      .data!.services![index];
+
+                                  // Map service names to text and icons
+                                  Map<String, dynamic> serviceData =
+                                      getServiceData(service);
+
+                                  // Customize text size`
+                                  // Adjust the font size as needed
+                                  // Customize ListTile height
+                                  // double customListTileHeight = 0.0;
+                                  // Create a widget to represent each service with an icon
+                                  return Container(
+                                    // padding: EdgeInsets.only(left: 0),
+                                    // height: 25,
+                                    child: ListTile(
+                                      // contentPadding: EdgeInsets.symmetric(
+                                      //     vertical: customListTileHeight),
+                                      dense: true,
+                                      contentPadding: EdgeInsets
+                                          .zero, // Set contentPadding to zero
+                                      visualDensity: VisualDensity(
+                                          horizontal: 0,
+                                          vertical:
+                                              -4), // Adjust values as needed
+
+                                      title: Row(
+                                        children: [
+                                          // Add an icon before the text
+
+                                          Icon(serviceData['icon'],
+                                              size: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.05 /
+                                                  1.5), // Replace with the desired icon
+
+                                          // Add some spacing between the icon and text
+                                          SizedBox(width: 8.0),
+
+                                          // Display the text with customized style
+
+                                          Expanded(
+                                            child: Text(serviceData['text'],
+                                                style: GoogleFonts.poppins(
+                                                  fontSize:
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .width *
+                                                          0.05 /
+                                                          1.5,
+                                                  color: Colors.blueGrey,
+                                                  //fontWeight: FontWeight.w900,
+                                                )),
+                                          ),
+                                        ],
+                                      ),
+                                      // You can customize the ListTile further if needed
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                // Divider(
+                //   height: 35.0,
+                //   color: Colors.grey[500],
+                // ),
+                doctorDetailsClass!.data!.languages == null
+                    ? Container()
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Divider(
+                            height: 35.0,
+                            color: Colors.grey[500],
+                          ),
+                          Text(
+                            HEALTH_CARE,
+                            style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.bold,
+                              color: BLACK,
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.045,
+                            ),
                           ),
                           SizedBox(
                             height: 5,
                           ),
-                          Text(
-                            doctorDetailsClass!.data!.aboutus.toString(),
-                            style: GoogleFonts.poppins(
-                                // fontWeight: FontWeight.w400,
-                                color: Colors.blueGrey,
-                                fontSize:
-                                    MediaQuery.of(context).size.width * 0.03),
+                          Wrap(
+                            children: doctorDetailsClass!.data!.languages!
+                                .map((language) {
+                              // Map language to display text
+                              String displayText =
+                                  getDisplayTextForLanguage(language);
+                              bool isLast =
+                                  doctorDetailsClass!.data!.languages!.last ==
+                                      language;
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 4.0),
+                                child: Text(
+                                  isLast ? '$displayText.' : '$displayText,',
+                                  style: GoogleFonts.poppins(
+                                    fontSize:
+                                        MediaQuery.of(context).size.width *
+                                            0.033,
+                                    color: Colors.blueGrey,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              );
+                            }).toList(),
                           ),
                         ],
                       ),
-                    ),
-              SizedBox(
-                height: 10,
-              ),
-              doctorDetailsClass!.data!.services == null
-                  ? Container()
-                  : Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Divider(
-                          height: 35.0,
-                          color: Colors.grey[500],
-                        ),
-                        Text(
-                          SERVICES,
-                          style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w400,
-                              color: BLACK,
-                              fontSize:
-                                  MediaQuery.of(context).size.width * 0.045),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            ListView.builder(
-                              physics: NeverScrollableScrollPhysics(),
-                              shrinkWrap:
-                                  true, // This ensures that the ListView takes up as much space as needed within the Column
-                              itemCount:
-                                  doctorDetailsClass!.data!.services!.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                // Use the index to access each service in the list
-                                String service =
-                                    doctorDetailsClass!.data!.services![index];
 
-                                // Map service names to text and icons
-                                Map<String, dynamic> serviceData =
-                                    getServiceData(service);
-
-                                // Customize text size`
-                                // Adjust the font size as needed
-                                // Customize ListTile height
-                                // double customListTileHeight = 0.0;
-                                // Create a widget to represent each service with an icon
-                                return Container(
-                                  // padding: EdgeInsets.only(left: 0),
-                                  // height: 25,
-                                  child: ListTile(
-                                    // contentPadding: EdgeInsets.symmetric(
-                                    //     vertical: customListTileHeight),
-                                    dense: true,
-                                    contentPadding: EdgeInsets
-                                        .zero, // Set contentPadding to zero
-                                    visualDensity: VisualDensity(
-                                        horizontal: 0,
-                                        vertical:
-                                            -4), // Adjust values as needed
-
-                                    title: Row(
-                                      children: [
-                                        // Add an icon before the text
-
-                                        Icon(serviceData['icon'],
-                                            size: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.05 /
-                                                1.5), // Replace with the desired icon
-
-                                        // Add some spacing between the icon and text
-                                        SizedBox(width: 8.0),
-
-                                        // Display the text with customized style
-
-                                        Expanded(
-                                          child: Text(serviceData['text'],
-                                              style: GoogleFonts.poppins(
-                                                fontSize: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.05 /
-                                                    1.5,
-                                                color: Colors.blueGrey,
-                                                //fontWeight: FontWeight.w900,
-                                              )),
-                                        ),
-                                      ],
-                                    ),
-                                    // You can customize the ListTile further if needed
-                                  ),
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-              // Divider(
-              //   height: 35.0,
-              //   color: Colors.grey[500],
-              // ),
-              doctorDetailsClass!.data!.languages == null
-                  ? Container()
-                  : Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Divider(
-                          height: 35.0,
-                          color: Colors.grey[500],
-                        ),
-                        Text(
-                          HEALTH_CARE,
-                          style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.bold,
-                            color: BLACK,
-                            fontSize: MediaQuery.of(context).size.width * 0.045,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Wrap(
-                          children: doctorDetailsClass!.data!.languages!
-                              .map((language) {
-                            // Map language to display text
-                            String displayText =
-                                getDisplayTextForLanguage(language);
-                            bool isLast =
-                                doctorDetailsClass!.data!.languages!.last ==
-                                    language;
-                            return Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 4.0),
-                              child: Text(
-                                isLast ? '$displayText.' : '$displayText,',
-                                style: GoogleFonts.poppins(
-                                  fontSize:
-                                      MediaQuery.of(context).size.width * 0.033,
-                                  color: Colors.blueGrey,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                      ],
-                    ),
-
-              SizedBox(
-                height: 10,
-              ),
-            ],
+                SizedBox(
+                  height: 10,
+                ),
+              ],
+            ),
           ),
         ),
       ],
@@ -1197,46 +1206,28 @@ class _DetailsPageState extends State<DetailsPage> {
     }
   }
 
-  Future<void> openMap(double latitude, double longitude) async {
-    print("opening map");
-    String googleUrl =
-        'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
-    if (await canLaunch(googleUrl)) {
-      await launch(googleUrl);
-    } else {
-      print("Could not open the map");
-      throw 'Could not open the map.';
-    }
-  }
+  // Future<void> openMap(double latitude, double longitude) async {
+  //   print("opening map");
+  //   String googleUrl =
+  //       'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+  //   if (await canLaunch(googleUrl)) {
+  //     await launch(googleUrl);
+  //   } else {
+  //     print("Could not open the map");
+  //     throw 'Could not open the map.';
+  //   }
+  // }
 
-  _launchMaps() async {
-    print('launching maps');
-    String googleUrl =
-        'comgooglemaps://?center=${doctorDetailsClass!.data!.lat},${doctorDetailsClass!.data!.lon}';
-    String appleUrl =
-        'https://maps.apple.com/?sll=${doctorDetailsClass!.data!.lat},${doctorDetailsClass!.data!.lon}';
-    if (await canLaunch("comgooglemaps://")) {
-      print('launching com googleUrl');
-      await launch(googleUrl);
-    } else if (await canLaunch(appleUrl)) {
-      print('launching apple url');
-      await launch(appleUrl);
-    } else {
-      print('launching apple url');
-      throw 'Could not launch url';
-    }
-  }
-
-  processPayment() {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => isLoggedIn!
-                ? MakeAppointment(widget.id, doctorDetailsClass!.data!.name!,
-                    doctorDetailsClass!.data!.consultationFee!)
-                : LoginAsUser()));
-    //}
-  }
+  // processPayment() {
+  //   Navigator.push(
+  //       context,
+  //       MaterialPageRoute(
+  //           builder: (context) => isLoggedIn!
+  //               ? MakeAppointment(widget.id, doctorDetailsClass!.data!.name!,
+  //                   doctorDetailsClass!.data!.consultationFee!)
+  //               : LoginAsUser()));
+  //   //}
+  // }
 
   messageDialog(String s1, String s2) {
     return showDialog(

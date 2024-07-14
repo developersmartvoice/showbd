@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:appcode3/en.dart';
 import 'package:appcode3/main.dart';
 import 'package:appcode3/modals/NearbyDoctorClass.dart';
+import 'package:appcode3/views/DetailsPage.dart';
 // import 'package:appcode3/views/DetailsPage.dart';
 import 'package:appcode3/views/Doctor/loginAsDoctor.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -77,152 +78,142 @@ class _UnRegisteredHomePageState extends State<UnRegisteredHomePage>
         );
         return shouldPop;
       },
-      child: Stack(
-        children: [
-          Image.asset(
-            "assets/moreScreenImages/header_bg.png",
-            height: 140,
-            fit: BoxFit.fill,
-            width: MediaQuery.of(context).size.width,
-          ),
-          SafeArea(
-            child: Scaffold(
-              floatingActionButton: Stack(
-                // mainAxisAlignment: MainAxisAlignment.end,
-                alignment: Alignment.bottomRight,
-                children: [
-                  Positioned(
-                    bottom: 80,
-                    child: Container(
-                      height: 40,
-                      width: 40,
-                      child: FloatingActionButton.extended(
-                        heroTag: "ScrolToTop",
-                        onPressed: () {
-                          scrollController!.animateTo(
-                            0.0,
-                            duration: Duration(milliseconds: 500),
-                            curve: Curves.easeInOut,
-                          );
-                          // _getLocationStart();
-                          print("THIS IS LAT: $lat and LON: $lon");
-                          setState(() {
-                            isNearbyLoading = true;
-                            list2.clear();
-                          });
-                          callApi(
-                              latitude: double.parse(lat!),
-                              longitude: double.parse(lat!));
-                        },
-                        label: Icon(
-                          Icons.arrow_upward_sharp,
-                          color: Colors.white,
-                        ),
-                        backgroundColor: Color.fromARGB(255, 243, 103, 9),
-                        shape: CircleBorder(
-                          // borderRadius: BorderRadius.circular(5),
-                          side: BorderSide(
-                            width: 1,
-                            style: BorderStyle.solid,
-                            color: WHITE,
-                          ),
-                        ),
-                      ),
-                    ),
+      child: Scaffold(
+        floatingActionButton: Stack(
+          // mainAxisAlignment: MainAxisAlignment.end,
+          alignment: Alignment.bottomRight,
+          children: [
+            Positioned(
+              bottom: 80,
+              child: Container(
+                height: 40,
+                width: 40,
+                child: FloatingActionButton.extended(
+                  heroTag: "ScrolToTop",
+                  onPressed: () {
+                    scrollController!.animateTo(
+                      0.0,
+                      duration: Duration(milliseconds: 500),
+                      curve: Curves.easeInOut,
+                    );
+                    // _getLocationStart();
+                    print("THIS IS LAT: $lat and LON: $lon");
+                    setState(() {
+                      isNearbyLoading = true;
+                      list2.clear();
+                    });
+                    callApi(
+                        latitude: double.parse(lat!),
+                        longitude: double.parse(lat!));
+                  },
+                  label: Icon(
+                    Icons.arrow_upward_sharp,
+                    color: Colors.white,
                   ),
-                  Positioned(
-                    bottom: 20,
-                    right: 80,
-                    child: Container(
-                      height: 50,
-                      // width: MediaQuery.of(context).size.width,
-                      child: FloatingActionButton.extended(
-                        heroTag: "Login/Register",
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (builder) => LoginAsDoctor(),
-                            ),
-                          );
-                        },
-                        label: Text(
-                          "LOGIN / REGISTER",
-                          style: TextStyle(
-                            color: WHITE,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                            letterSpacing: 4,
-                          ),
-                        ),
-                        backgroundColor: Color.fromARGB(255, 243, 103, 9),
-                        shape: BeveledRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                      ),
+                  backgroundColor: Color.fromARGB(255, 243, 103, 9),
+                  shape: CircleBorder(
+                    // borderRadius: BorderRadius.circular(5),
+                    side: BorderSide(
+                      width: 1,
+                      style: BorderStyle.solid,
+                      color: WHITE,
                     ),
-                  )
-                ],
-              ),
-              backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
-              appBar: AppBar(
-                backgroundColor: Color.fromARGB(255, 243, 103, 9),
-                automaticallyImplyLeading: false,
-                title: Text(
-                  "MEET LOCAL",
-                  style: TextStyle(
-                    color: WHITE,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 2,
                   ),
                 ),
               ),
-              body: isNearbyLoading
-                  ? Center(
-                      child: Container(
-                        width: 200,
-                        // width: MediaQuery.of(context).size.width,
-                        // height: MediaQuery.of(context).size.height,
-                        height: 200,
-                        color: Colors.transparent,
-                        child: Dialog(
-                          backgroundColor: Colors.transparent,
-                          child: Image.asset(
-                            'assets/loading.gif', // Example image URL
-                            width: 100,
-                            height: 100,
-                          ),
-                        ),
+            ),
+            Positioned(
+              bottom: 20,
+              right: 80,
+              child: Container(
+                height: 50,
+                // width: MediaQuery.of(context).size.width,
+                child: FloatingActionButton.extended(
+                  heroTag: "Login/Register",
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (builder) => LoginAsDoctor(),
                       ),
-                    )
-                  : list2.isNotEmpty
-                      ? ListView.builder(
-                          controller: scrollController,
-                          itemCount: list2.length,
-                          itemBuilder: (context, index) {
-                            final item = list2[index];
-                            return nearByGridWidget(
-                              item.image,
-                              item.name,
-                              item.departmentName,
-                              item.id,
-                              item.consultationFee,
-                              item.aboutme,
-                              item.motto,
-                              item.avgrating,
-                              item.city,
-                              item.images,
-                              item.totalreview.toString(),
-                            );
-                          },
-                        )
-                      : Center(
-                          child: Text("No nearby guides found."),
-                        ),
+                    );
+                  },
+                  label: Text(
+                    "LOGIN / REGISTER",
+                    style: TextStyle(
+                      color: WHITE,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 4,
+                    ),
+                  ),
+                  backgroundColor: Color.fromARGB(255, 243, 103, 9),
+                  shape: BeveledRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+        backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
+        appBar: AppBar(
+          backgroundColor: Color.fromARGB(255, 243, 103, 9),
+          automaticallyImplyLeading: false,
+          title: Text(
+            "MEET LOCAL",
+            style: TextStyle(
+              color: WHITE,
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
+              letterSpacing: 2,
             ),
           ),
-        ],
+        ),
+        body: isNearbyLoading
+            ? Center(
+                child: Container(
+                  width: 200,
+                  // width: MediaQuery.of(context).size.width,
+                  // height: MediaQuery.of(context).size.height,
+                  height: 200,
+                  color: Colors.transparent,
+                  child: Dialog(
+                    backgroundColor: Colors.transparent,
+                    child: Image.asset(
+                      'assets/loading.gif', // Example image URL
+                      width: 100,
+                      height: 100,
+                    ),
+                  ),
+                ),
+              )
+            : list2.isNotEmpty
+                ? SafeArea(
+                    child: ListView.builder(
+                      controller: scrollController,
+                      itemCount: list2.length,
+                      itemBuilder: (context, index) {
+                        final item = list2[index];
+                        return nearByGridWidget(
+                          item.image,
+                          item.name,
+                          item.departmentName,
+                          item.id,
+                          item.consultationFee,
+                          item.aboutme,
+                          item.motto,
+                          item.avgrating,
+                          item.city,
+                          item.images,
+                          item.totalreview.toString(),
+                        );
+                      },
+                    ),
+                  )
+                : Center(
+                    child: Text("No nearby guides found."),
+                  ),
       ),
     );
   }
@@ -408,12 +399,12 @@ class _UnRegisteredHomePageState extends State<UnRegisteredHomePage>
         onTap: () {
           Navigator.push(
             context,
-            // MaterialPageRoute(
-            //   builder: (context) => DetailsPage(id.toString(), true),
-            // ),
             MaterialPageRoute(
-              builder: (builder) => LoginAsDoctor(),
+              builder: (context) => DetailsPage(id.toString(), true),
             ),
+            // MaterialPageRoute(
+            //   builder: (builder) => LoginAsDoctor(),
+            // ),
           );
         },
         child: Container(

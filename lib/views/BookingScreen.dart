@@ -709,286 +709,280 @@ class _BookingScreenState extends State<BookingScreen> {
   Widget build(BuildContext context) {
     String greetings = 'Hello ${widget.guideName.capitalize}, ';
     String hintText = greetings;
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'Booking ${widget.guideName.toString().capitalize}',
-            style: GoogleFonts.robotoCondensed(
-              color: Colors.white,
-              fontSize: 21,
-              fontWeight: FontWeight.bold,
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Booking ${widget.guideName.toString().capitalize}',
+          style: GoogleFonts.robotoCondensed(
+            color: Colors.white,
+            fontSize: 21,
+            fontWeight: FontWeight.bold,
           ),
-          centerTitle: true,
-          backgroundColor: Color.fromARGB(255, 243, 103, 9),
         ),
-        body: loading
-            ? Center(
-                child: CircularProgressIndicator(
-                  color: Color.fromARGB(255, 243, 103, 9),
-                ),
-              )
-            : SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(14.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Text(
-                          'Select Date',
-                          style: GoogleFonts.robotoCondensed(
-                            fontSize: MediaQuery.of(context).size.width * 0.04,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () => _selectDate(context),
-                        child: Container(
-                          padding: EdgeInsets.all(7),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Icon(Icons.calendar_today),
-                              ),
-                              selectedDate != null
-                                  ? Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        DateFormat('dd - MMM - yyyy')
-                                            .format(selectedDate!),
-                                        style: TextStyle(fontSize: 16),
-                                      ),
-                                    )
-                                  : Text('Select Date'),
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      SizedBox(
-                        height: 100,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: [
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  'Tour Duration',
-                                  style: GoogleFonts.robotoCondensed(
-                                    fontSize:
-                                        MediaQuery.of(context).size.width *
-                                            0.04,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 50),
-                              Expanded(
-                                child: DropdownSearch<String>(
-                                  items: ['1h', '2h', '3h'],
-                                  onChanged: (value) {
-                                    setState(() {
-                                      isTimeDurationPicked = true;
-                                      if (value == '1h') {
-                                        timeDuration = 1;
-                                      } else if (value == '2h') {
-                                        timeDuration = 2;
-                                      } else if (value == '3h') {
-                                        timeDuration = 3;
-                                      } else {
-                                        timeDuration = 0;
-                                        isTimeDurationPicked = false;
-                                      }
-                                      selectedDuration = value!;
-                                    });
-                                  },
-                                  selectedItem: selectedDuration,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      SizedBox(
-                        height: 100,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: [
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  'Preferred Meeting Time',
-                                  style: GoogleFonts.robotoCondensed(
-                                    fontSize:
-                                        MediaQuery.of(context).size.width *
-                                            0.04,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                              SizedBox(width: 50),
-                              Expanded(
-                                child: DropdownSearch<String>(
-                                  items: [
-                                    'Flexible',
-                                    'Earlier',
-                                    'Morning',
-                                    'Noon',
-                                    'Afternoon'
-                                  ],
-                                  onChanged: (value) {
-                                    setState(() {
-                                      if (value != null) {
-                                        isMeetingTimePicled = true;
-                                      } else {
-                                        isMeetingTimePicled = false;
-                                      }
-                                      selectedMeetingTime = value!;
-                                    });
-                                  },
-                                  selectedItem: selectedMeetingTime,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      SizedBox(
-                        height: 100,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: [
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  'Number of People',
-                                  style: GoogleFonts.robotoCondensed(
-                                    fontSize:
-                                        MediaQuery.of(context).size.width *
-                                            0.04,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 50),
-                              Expanded(
-                                child: DropdownSearch<String>(
-                                  items: [
-                                    'Just me',
-                                    'Two people',
-                                    'Three people',
-                                    'More than three people',
-                                  ],
-                                  onChanged: (value) {
-                                    setState(() {
-                                      isNumberofPeoplePicked = true;
-                                      if (value == 'Just me') {
-                                        people = 1;
-                                      } else if (value == 'Two people') {
-                                        people = 2;
-                                      } else if (value == 'Three people') {
-                                        people = 3;
-                                      } else if (value ==
-                                          'More than three people') {
-                                        people = 4;
-                                      } else {
-                                        people = 0;
-                                        isMeetingTimePicled = false;
-                                      }
-                                      selectedNumberOfPeople = value!;
-                                    });
-                                  },
-                                  selectedItem: selectedNumberOfPeople,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 16),
-                      Text(
-                        WHAT_BRING_YOU_HERE,
+        centerTitle: true,
+        backgroundColor: Color.fromARGB(255, 243, 103, 9),
+      ),
+      body: loading
+          ? Center(
+              child: CircularProgressIndicator(
+                color: Color.fromARGB(255, 243, 103, 9),
+              ),
+            )
+          : SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(14.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Text(
+                        'Select Date',
                         style: GoogleFonts.robotoCondensed(
                           fontSize: MediaQuery.of(context).size.width * 0.04,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      TextField(
-                        onChanged: (value) {
-                          setState(() {
-                            if (value.isNotEmpty) {
-                              isMessageGiven = true;
-                              specificInterest = greetings + value;
-                            } else {
-                              isMessageGiven = false;
-                              specificInterest = '';
-                            }
-                          });
-                        },
-                        decoration: InputDecoration(
-                          prefixText: hintText,
-                          hintStyle:
-                              TextStyle(color: Colors.black38, fontSize: 15),
+                    ),
+                    GestureDetector(
+                      onTap: () => _selectDate(context),
+                      child: Container(
+                        padding: EdgeInsets.all(7),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Icon(Icons.calendar_today),
+                            ),
+                            selectedDate != null
+                                ? Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      DateFormat('dd - MMM - yyyy')
+                                          .format(selectedDate!),
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                  )
+                                : Text('Select Date'),
+                          ],
                         ),
                       ),
-                      SizedBox(height: 50),
-                      Center(
-                        child: ElevatedButton(
-                          onPressed: () {
-                            if (isDatePicked &&
-                                isTimeDurationPicked &&
-                                isMeetingTimePicled &&
-                                isNumberofPeoplePicked &&
-                                isMessageGiven) {
-                              setState(() {
-                                loading = true;
-                              });
-                              directBooking();
-                            }
-                          },
-                          child: Text(
-                            'REQUEST TO BOOK',
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            textStyle: GoogleFonts.robotoCondensed(
-                              fontSize:
-                                  MediaQuery.of(context).size.width * 0.03,
-                              fontWeight: FontWeight.w700,
-                            ),
-                            padding: EdgeInsets.fromLTRB(112, 20, 114, 20),
-                            foregroundColor: Colors.white,
-                            backgroundColor: Color.fromARGB(255, 243, 103, 9),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              side: BorderSide(
-                                color: Colors.white,
+                    ),
+                    SizedBox(height: 10),
+                    SizedBox(
+                      height: 100,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Tour Duration',
+                                style: GoogleFonts.robotoCondensed(
+                                  fontSize:
+                                      MediaQuery.of(context).size.width * 0.04,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
                             ),
+                            SizedBox(width: 50),
+                            Expanded(
+                              child: DropdownSearch<String>(
+                                items: ['1h', '2h', '3h'],
+                                onChanged: (value) {
+                                  setState(() {
+                                    isTimeDurationPicked = true;
+                                    if (value == '1h') {
+                                      timeDuration = 1;
+                                    } else if (value == '2h') {
+                                      timeDuration = 2;
+                                    } else if (value == '3h') {
+                                      timeDuration = 3;
+                                    } else {
+                                      timeDuration = 0;
+                                      isTimeDurationPicked = false;
+                                    }
+                                    selectedDuration = value!;
+                                  });
+                                },
+                                selectedItem: selectedDuration,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    SizedBox(
+                      height: 100,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Preferred Meeting Time',
+                                style: GoogleFonts.robotoCondensed(
+                                  fontSize:
+                                      MediaQuery.of(context).size.width * 0.04,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            SizedBox(width: 50),
+                            Expanded(
+                              child: DropdownSearch<String>(
+                                items: [
+                                  'Flexible',
+                                  'Earlier',
+                                  'Morning',
+                                  'Noon',
+                                  'Afternoon'
+                                ],
+                                onChanged: (value) {
+                                  setState(() {
+                                    if (value != null) {
+                                      isMeetingTimePicled = true;
+                                    } else {
+                                      isMeetingTimePicled = false;
+                                    }
+                                    selectedMeetingTime = value!;
+                                  });
+                                },
+                                selectedItem: selectedMeetingTime,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    SizedBox(
+                      height: 100,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Number of People',
+                                style: GoogleFonts.robotoCondensed(
+                                  fontSize:
+                                      MediaQuery.of(context).size.width * 0.04,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 50),
+                            Expanded(
+                              child: DropdownSearch<String>(
+                                items: [
+                                  'Just me',
+                                  'Two people',
+                                  'Three people',
+                                  'More than three people',
+                                ],
+                                onChanged: (value) {
+                                  setState(() {
+                                    isNumberofPeoplePicked = true;
+                                    if (value == 'Just me') {
+                                      people = 1;
+                                    } else if (value == 'Two people') {
+                                      people = 2;
+                                    } else if (value == 'Three people') {
+                                      people = 3;
+                                    } else if (value ==
+                                        'More than three people') {
+                                      people = 4;
+                                    } else {
+                                      people = 0;
+                                      isMeetingTimePicled = false;
+                                    }
+                                    selectedNumberOfPeople = value!;
+                                  });
+                                },
+                                selectedItem: selectedNumberOfPeople,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 16),
+                    Text(
+                      WHAT_BRING_YOU_HERE,
+                      style: GoogleFonts.robotoCondensed(
+                        fontSize: MediaQuery.of(context).size.width * 0.04,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    TextField(
+                      onChanged: (value) {
+                        setState(() {
+                          if (value.isNotEmpty) {
+                            isMessageGiven = true;
+                            specificInterest = greetings + value;
+                          } else {
+                            isMessageGiven = false;
+                            specificInterest = '';
+                          }
+                        });
+                      },
+                      decoration: InputDecoration(
+                        prefixText: hintText,
+                        hintStyle:
+                            TextStyle(color: Colors.black38, fontSize: 15),
+                      ),
+                    ),
+                    SizedBox(height: 50),
+                    Center(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (isDatePicked &&
+                              isTimeDurationPicked &&
+                              isMeetingTimePicled &&
+                              isNumberofPeoplePicked &&
+                              isMessageGiven) {
+                            setState(() {
+                              loading = true;
+                            });
+                            directBooking();
+                          }
+                        },
+                        child: Text(
+                          'REQUEST TO BOOK',
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          textStyle: GoogleFonts.robotoCondensed(
+                            fontSize: MediaQuery.of(context).size.width * 0.03,
+                            fontWeight: FontWeight.w700,
+                          ),
+                          padding: EdgeInsets.fromLTRB(112, 20, 114, 20),
+                          foregroundColor: Colors.white,
+                          backgroundColor: Color.fromARGB(255, 243, 103, 9),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            side: BorderSide(
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-      ),
+            ),
     );
   }
 

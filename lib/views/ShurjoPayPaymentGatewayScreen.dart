@@ -1,7 +1,8 @@
 import 'dart:convert';
 
 import 'package:appcode3/main.dart';
-import 'package:appcode3/views/HomeScreen.dart';
+import 'package:appcode3/views/Doctor/DoctorTabScreen.dart';
+// import 'package:appcode3/views/HomeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:random_string/random_string.dart';
@@ -421,10 +422,17 @@ class _ShurjoPayPaymentState extends State<ShurjoPayPayment> {
                                 // _phoneNumberController.clear();
                                 // _cityController.clear();
                                 // _postalCodeController.clear();
-                                Navigator.push(
+                                // Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //         builder: (context) => HomeScreen()));
+                                Navigator.of(context)
+                                    .popUntil((route) => route.isFirst);
+                                Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => HomeScreen()));
+                                        builder: (context) =>
+                                            DoctorTabsScreen()));
                               }
                             } catch (error) {
                               print(error.toString());
