@@ -225,7 +225,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
   //       backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
   //       appBar: AppBar(
   //         title: Text(INBOX,
-  //             style: Theme.of(context).textTheme.headline5!.apply(
+  //             style: Theme.of(context).textTheme.headlineSmall!.apply(
   //                 color: Theme.of(context).backgroundColor,
   //                 fontWeightDelta: 5)),
   //         centerTitle: true,
@@ -729,7 +729,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
   //       appBar: AppBar(
   //         title: Text(
   //           INBOX,
-  //           style: Theme.of(context).textTheme.headline5!.apply(
+  //           style: Theme.of(context).textTheme.headlineSmall!.apply(
   //                 color: Theme.of(context).backgroundColor,
   //                 fontWeightDelta: 5,
   //               ),
@@ -1163,8 +1163,8 @@ class _ChatListScreenState extends State<ChatListScreen> {
               title: Text(
                 INBOX,
                 style: GoogleFonts.poppins(
-                  textStyle: Theme.of(context).textTheme.headline5!.apply(
-                        color: Theme.of(context).backgroundColor,
+                  textStyle: Theme.of(context).textTheme.headlineSmall!.apply(
+                        color: Theme.of(context).primaryColorDark,
                         fontWeightDelta: 1,
                       ),
                 ),
@@ -1724,10 +1724,12 @@ class _ChatListScreenState extends State<ChatListScreen> {
               ),
               Title(
                 color: BLACK,
-                child: Text(INBOX,
-                    style: Theme.of(context).textTheme.headline5!.apply(
-                        color: Theme.of(context).backgroundColor,
-                        fontWeightDelta: 5)),
+                child: Text(
+                  INBOX,
+                  // style: Theme.of(context).textTheme.headlineSmall!.apply(
+                  //     color: Theme.of(context).backgroundColor,
+                  //     fontWeightDelta: 5),
+                ),
               ),
             ],
           ),
@@ -2625,7 +2627,7 @@ class ChatListDetails {
 //                     //   fontWeight: FontWeight.w700,
 //                     //   color: WHITE,
 //                     // ),
-//                     style: Theme.of(context).textTheme.headline5!.apply(
+//                     style: Theme.of(context).textTheme.headlineSmall!.apply(
 //                         color: Theme.of(context).backgroundColor,
 //                         fontWeightDelta: 5)),
 //               ),

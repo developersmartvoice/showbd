@@ -400,8 +400,8 @@ class _LoginAsUserState extends State<LoginAsUser> {
                 width: 10,
               ),
               Text(LOGIN,
-                  style: Theme.of(context).textTheme.headline5!.apply(
-                      color: Theme.of(context).backgroundColor,
+                  style: Theme.of(context).textTheme.headlineSmall!.apply(
+                      color: Theme.of(context).primaryColorDark,
                       fontWeightDelta: 2))
             ],
           ),
@@ -418,14 +418,14 @@ class _LoginAsUserState extends State<LoginAsUser> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(DO_NOT_HAVE_AN_ACCOUNT,
-                style: Theme.of(context).textTheme.bodyText2),
+                style: Theme.of(context).textTheme.bodyMedium),
             GestureDetector(
               onTap: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => RegisterAsUser()));
               },
               child: Text(" $REGISTER_NOW",
-                  style: Theme.of(context).textTheme.bodyText1!.apply(
+                  style: Theme.of(context).textTheme.bodyMedium!.apply(
                         color: AMBER,
                       )),
             ),
@@ -441,7 +441,7 @@ class _LoginAsUserState extends State<LoginAsUser> {
   Widget loginForm() {
     return Container(
       decoration: BoxDecoration(
-          color: Theme.of(context).backgroundColor,
+          color: Theme.of(context).primaryColorDark,
           borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(20),
               bottomRight: Radius.circular(20))),
@@ -464,7 +464,7 @@ class _LoginAsUserState extends State<LoginAsUser> {
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                     labelText: ENTER_YOUR_EMAIL,
-                    labelStyle: Theme.of(context).textTheme.bodyText2!.apply(
+                    labelStyle: Theme.of(context).textTheme.bodyMedium!.apply(
                         fontSizeDelta: 2,
                         color: Theme.of(context).primaryColorDark),
                     errorText:
@@ -473,7 +473,7 @@ class _LoginAsUserState extends State<LoginAsUser> {
                         borderSide: BorderSide(
                       color: Theme.of(context).primaryColorDark,
                     ))),
-                style: Theme.of(context).textTheme.bodyText2!.apply(
+                style: Theme.of(context).textTheme.bodyMedium!.apply(
                       fontWeightDelta: 3,
                       fontSizeDelta: 2,
                     ),
@@ -491,7 +491,7 @@ class _LoginAsUserState extends State<LoginAsUser> {
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
                   labelText: 'Password',
-                  labelStyle: Theme.of(context).textTheme.bodyText2!.apply(
+                  labelStyle: Theme.of(context).textTheme.bodyMedium!.apply(
                       fontSizeDelta: 2,
                       color: Theme.of(context).primaryColorDark),
                   errorText: isPasswordError ? passErrorText : null,
@@ -500,7 +500,7 @@ class _LoginAsUserState extends State<LoginAsUser> {
                     color: Theme.of(context).primaryColorDark,
                   )),
                 ),
-                style: Theme.of(context).textTheme.bodyText2!.apply(
+                style: Theme.of(context).textTheme.bodyMedium!.apply(
                       fontWeightDelta: 3,
                       fontSizeDelta: 2,
                     ),
@@ -553,9 +553,12 @@ class _LoginAsUserState extends State<LoginAsUser> {
                       ),
                       Center(
                         child: Text(LOGIN,
-                            style: Theme.of(context).textTheme.bodyText1!.apply(
-                                fontSizeDelta: 5,
-                                color: Theme.of(context).backgroundColor)),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .apply(
+                                    fontSizeDelta: 5,
+                                    color: Theme.of(context).primaryColorDark)),
                       )
                     ],
                   ),
@@ -569,7 +572,7 @@ class _LoginAsUserState extends State<LoginAsUser> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(DO_NOT_HAVE_AN_ACCOUNT,
-                      style: Theme.of(context).textTheme.bodyText2),
+                      style: Theme.of(context).textTheme.bodyMedium),
                   GestureDetector(
                     onTap: () {
                       Navigator.push(
@@ -578,7 +581,7 @@ class _LoginAsUserState extends State<LoginAsUser> {
                               builder: (context) => RegisterAsUser()));
                     },
                     child: Text(" $REGISTER_NOW",
-                        style: Theme.of(context).textTheme.bodyText1!.apply(
+                        style: Theme.of(context).textTheme.bodyMedium!.apply(
                               color: AMBER,
                             )),
                   ),
@@ -661,7 +664,7 @@ class _LoginAsUserState extends State<LoginAsUser> {
                                             labelText: ENTER_MOBILE_NUMBER,
                                             labelStyle: Theme.of(context)
                                                 .textTheme
-                                                .bodyText2!
+                                                .bodyMedium!
                                                 .apply(
                                                     fontSizeDelta: 2,
                                                     color: Theme.of(context)
@@ -677,7 +680,7 @@ class _LoginAsUserState extends State<LoginAsUser> {
                                             ))),
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyText2!
+                                            .bodyMedium!
                                             .apply(
                                               fontWeightDelta: 3,
                                               fontSizeDelta: 2,
@@ -712,7 +715,7 @@ class _LoginAsUserState extends State<LoginAsUser> {
                                                 child: Text(CANCEL,
                                                     style: Theme.of(context)
                                                         .textTheme
-                                                        .bodyText1)),
+                                                        .bodyMedium)),
                                           ),
                                           SizedBox(
                                             width: 15,
@@ -744,7 +747,7 @@ class _LoginAsUserState extends State<LoginAsUser> {
                                                 child: Text(OK,
                                                     style: Theme.of(context)
                                                         .textTheme
-                                                        .bodyText1)),
+                                                        .bodyMedium)),
                                           ),
                                         ],
                                       ),
@@ -830,7 +833,7 @@ class _LoginAsUserState extends State<LoginAsUser> {
           return AlertDialog(
             title: Text(
               LOGGING_IN,
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
             content: Container(
               margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
@@ -843,7 +846,7 @@ class _LoginAsUserState extends State<LoginAsUser> {
                   Expanded(
                     child: Text(
                       PLEASE_WAIT_LOGGING_IN,
-                      style: Theme.of(context).textTheme.bodyText2,
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   )
                 ],
@@ -858,14 +861,14 @@ class _LoginAsUserState extends State<LoginAsUser> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text(s1, style: Theme.of(context).textTheme.bodyText1),
+            title: Text(s1, style: Theme.of(context).textTheme.bodyMedium),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   s2,
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyMedium,
                 )
               ],
             ),
@@ -879,7 +882,7 @@ class _LoginAsUserState extends State<LoginAsUser> {
                   ),
                   // color: Theme.of(context).primaryColor,
                   child:
-                      Text(OK, style: Theme.of(context).textTheme.bodyText1)),
+                      Text(OK, style: Theme.of(context).textTheme.bodyMedium)),
             ],
           );
         });

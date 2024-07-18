@@ -338,8 +338,8 @@ class _SendOfferScreenState extends State<SendOfferScreen> {
           backgroundColor: Color.fromARGB(255, 255, 94, 0).withOpacity(0.8),
           title: Text(
             'Send offer',
-            style: Theme.of(context).textTheme.headline5!.apply(
-                color: Theme.of(context).backgroundColor, fontWeightDelta: 5),
+            style: Theme.of(context).textTheme.headlineSmall!.apply(
+                color: Theme.of(context).primaryColorDark, fontWeightDelta: 5),
           ),
 
           // ElevatedButton(

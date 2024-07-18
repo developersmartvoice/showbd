@@ -268,7 +268,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Expanded(
               child: Text(
                 PLEASE_WAIT_CALL_ACCEPT,
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
             )
           ],
@@ -507,7 +507,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Text(
             SPECIALITY,
-            style: Theme.of(context).textTheme.bodyText2!.apply(
+            style: Theme.of(context).textTheme.bodyMedium!.apply(
                   fontWeightDelta: 3,
                 ),
           ),
@@ -653,7 +653,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         //margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
-                          color: Theme.of(context).backgroundColor,
+                          color: Theme.of(context).primaryColorDark,
                         ),
                         child: textField = TextField(
                           controller: _textController,
@@ -661,14 +661,14 @@ class _HomeScreenState extends State<HomeScreen> {
                               contentPadding: EdgeInsets.all(10),
                               border: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                    color: Theme.of(context).backgroundColor),
+                                    color: Theme.of(context).primaryColorDark),
                                 borderRadius: BorderRadius.circular(15),
                               ),
                               hintText: SEARCH_DOCTOR_BY_NAME,
                               hintStyle: GoogleFonts.poppins(
                                 textStyle: Theme.of(context)
                                     .textTheme
-                                    .bodyText2!
+                                    .bodyMedium!
                                     .apply(
                                       color: Theme.of(context)
                                           .primaryColorDark
@@ -700,17 +700,17 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                    color: Theme.of(context).backgroundColor),
+                                    color: Theme.of(context).primaryColorDark),
                                 borderRadius: BorderRadius.circular(15),
                               ),
                               disabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                    color: Theme.of(context).backgroundColor),
+                                    color: Theme.of(context).primaryColorDark),
                                 borderRadius: BorderRadius.circular(15),
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                    color: Theme.of(context).backgroundColor),
+                                    color: Theme.of(context).primaryColorDark),
                                 borderRadius: BorderRadius.circular(15),
                               )),
                           onChanged: (val) {
@@ -753,7 +753,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         width: 50,
                         height: 50,
                         decoration: BoxDecoration(
-                          color: Theme.of(context).backgroundColor,
+                          color: Theme.of(context).primaryColorDark,
                           borderRadius: BorderRadius.circular(15),
                         ),
                         child: Center(
@@ -784,7 +784,7 @@ class _HomeScreenState extends State<HomeScreen> {
   //         //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
   //         //   children: [
   //         //     Text(UPCOMING_APPOINTMENTS,
-  //         //         style: Theme.of(context).textTheme.bodyText2!.apply(
+  //         //         style: Theme.of(context).textTheme.bodyMedium!.apply(
   //         //               fontWeightDelta: 3,
   //         //               color: Colors.orange,
   //         //             )),
@@ -799,7 +799,7 @@ class _HomeScreenState extends State<HomeScreen> {
   //         //               );
   //         //             },
   //         //             child: Text(SEE_ALL,
-  //         //                 style: Theme.of(context).textTheme.bodyText1!.apply(
+  //         //                 style: Theme.of(context).textTheme.bodyMedium!.apply(
   //         //                       // color: Theme.of(context).hintColor,
   //         //                       color: Colors.orange,
   //         //                     )),
@@ -816,7 +816,7 @@ class _HomeScreenState extends State<HomeScreen> {
   //         //     ? Container(
   //         //         width: MediaQuery.of(context).size.width,
   //         //         decoration: BoxDecoration(
-  //         //             color: Theme.of(context).backgroundColor,
+  //         //             color: Theme.of(context).primaryColorDark,
   //         //             borderRadius: BorderRadius.circular(15)),
   //         //         child: Padding(
   //         //           padding: const EdgeInsets.all(30.0),
@@ -1120,14 +1120,14 @@ class _HomeScreenState extends State<HomeScreen> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text(s1, style: Theme.of(context).textTheme.bodyText1),
+            title: Text(s1, style: Theme.of(context).textTheme.bodyMedium),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   s2,
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyMedium,
                 )
               ],
             ),
@@ -1149,7 +1149,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Navigator.pop(context);
                   },
                   child:
-                      Text(OK, style: Theme.of(context).textTheme.bodyText1)),
+                      Text(OK, style: Theme.of(context).textTheme.bodyMedium)),
             ],
           );
         });

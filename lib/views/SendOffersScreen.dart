@@ -141,7 +141,7 @@ class _SendOffersScreenState extends State<SendOffersScreen> {
   //           backgroundColor: Color.fromARGB(255, 255, 94, 0).withOpacity(0.8),
   //           title: Text(
   //             'Send Offers',
-  //             style: Theme.of(context).textTheme.headline5!.apply(
+  //             style: Theme.of(context).textTheme.headlineSmall!.apply(
   //                 color: Theme.of(context).backgroundColor, fontWeightDelta: 5),
   //           ),
   //           centerTitle: true,
@@ -163,8 +163,8 @@ class _SendOffersScreenState extends State<SendOffersScreen> {
           backgroundColor: Color.fromARGB(255, 255, 94, 0).withOpacity(0.8),
           title: Text(
             'Send Offers',
-            style: Theme.of(context).textTheme.headline5!.apply(
-                color: Theme.of(context).backgroundColor, fontWeightDelta: 5),
+            style: Theme.of(context).textTheme.headlineSmall!.apply(
+                color: Theme.of(context).primaryColorDark, fontWeightDelta: 5),
           ),
           centerTitle: true,
         ),

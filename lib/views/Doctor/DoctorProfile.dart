@@ -395,10 +395,12 @@ class _DoctorProfileState extends State<DoctorProfile> {
                     ),
                   ),
                   SizedBox(width: 10),
-                  Text(PROFILE,
-                      style: Theme.of(context).textTheme.headline5!.apply(
-                          color: Theme.of(context).backgroundColor,
-                          fontWeightDelta: 5)),
+                  Text(
+                    PROFILE,
+                    // style: Theme.of(context).textTheme.headlineSmall!.apply(
+                    //     color: Theme.of(context).backgroundColor,
+                    //     fontWeightDelta: 5),
+                  ),
                 ],
               )
             ],
@@ -413,7 +415,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
       alignment: Alignment.bottomCenter,
       child: Container(
         height: 70,
-        color: Theme.of(context).backgroundColor,
+        // color: Theme.of(context).backgroundColor,
         padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
         //width: MediaQuery.of(context).size.width,
         child: InkWell(
@@ -1995,7 +1997,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
         padding: EdgeInsets.all(10),
         margin: EdgeInsets.fromLTRB(16, 5, 16, 5),
         decoration: BoxDecoration(
-            color: Theme.of(context).backgroundColor,
+            // color: Theme.of(context).backgroundColor,
             borderRadius: BorderRadius.circular(15)),
         child: Row(
           children: [

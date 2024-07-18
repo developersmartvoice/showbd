@@ -223,7 +223,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
             backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
             // appBar: AppBar(
             //   title: Text('ACCOUNT INFORMATION',
-            //       style: Theme.of(context).textTheme.headline5!.apply(
+            //       style: Theme.of(context).textTheme.headlineSmall!.apply(
             //           color: Theme.of(context).backgroundColor,
             //           fontWeightDelta: 5)),
             //   centerTitle: true,
@@ -273,8 +273,8 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
               //   width: 15,
               // ),
               Text(MORE_INFO,
-                  style: Theme.of(context).textTheme.headline5!.apply(
-                      color: Theme.of(context).backgroundColor,
+                  style: Theme.of(context).textTheme.headlineSmall!.apply(
+                      color: Theme.of(context).primaryColorDark,
                       fontWeightDelta: 5))
             ],
           ),
@@ -524,14 +524,16 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                         child: Text(
                           GENERAL_INFORMATION,
                           style: GoogleFonts.poppins(
-                            textStyle:
-                                Theme.of(context).textTheme.subtitle1?.copyWith(
-                                      color: Color.fromARGB(255, 243, 103, 9),
-                                      fontSize:
-                                          // MediaQuery.of(context).size.width * 0.05,
-                                          14,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
+                            textStyle: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.copyWith(
+                                  color: Color.fromARGB(255, 243, 103, 9),
+                                  fontSize:
+                                      // MediaQuery.of(context).size.width * 0.05,
+                                      14,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                           ),
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -590,7 +592,7 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                           style: GoogleFonts.poppins(
                             textStyle: Theme.of(context)
                                 .textTheme
-                                .subtitle1
+                                .titleMedium
                                 ?.copyWith(
                                   color: Color.fromARGB(255, 243, 103, 9),
                                   fontSize: 14, // Adjust this value as needed
@@ -656,15 +658,17 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                         child: Text(
                           MEMBERSHIP,
                           style: GoogleFonts.poppins(
-                            textStyle:
-                                Theme.of(context).textTheme.subtitle1?.copyWith(
-                                      color: Color.fromARGB(255, 243, 103, 9),
-                                      fontSize: 14,
-                                      // fontSize:
-                                      //     MediaQuery.of(context).size.width * 0.05,
-                                      overflow: TextOverflow
-                                          .ellipsis, // Adjust this value as needed
-                                    ),
+                            textStyle: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.copyWith(
+                                  color: Color.fromARGB(255, 243, 103, 9),
+                                  fontSize: 14,
+                                  // fontSize:
+                                  //     MediaQuery.of(context).size.width * 0.05,
+                                  overflow: TextOverflow
+                                      .ellipsis, // Adjust this value as needed
+                                ),
                           ),
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -775,14 +779,16 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                         child: Text(
                           ABOUT_HOST,
                           style: GoogleFonts.poppins(
-                            textStyle:
-                                Theme.of(context).textTheme.subtitle1?.copyWith(
-                                      color: Color.fromARGB(255, 243, 103, 9),
-                                      fontSize:
-                                          // MediaQuery.of(context).size.width * 0.04,
-                                          14,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
+                            textStyle: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.copyWith(
+                                  color: Color.fromARGB(255, 243, 103, 9),
+                                  fontSize:
+                                      // MediaQuery.of(context).size.width * 0.04,
+                                      14,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                           ),
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -883,14 +889,16 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                         child: Text(
                           CURRENCY_EXCHANGE,
                           style: GoogleFonts.poppins(
-                            textStyle:
-                                Theme.of(context).textTheme.subtitle1?.copyWith(
-                                      color: Color.fromARGB(255, 243, 103, 9),
-                                      fontSize:
-                                          // MediaQuery.of(context).size.width * 0.04,
-                                          14,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
+                            textStyle: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.copyWith(
+                                  color: Color.fromARGB(255, 243, 103, 9),
+                                  fontSize:
+                                      // MediaQuery.of(context).size.width * 0.04,
+                                      14,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                           ),
                         ),
                       ),
@@ -988,14 +996,16 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                         child: Text(
                           "Balance",
                           style: GoogleFonts.poppins(
-                            textStyle:
-                                Theme.of(context).textTheme.subtitle1?.copyWith(
-                                      color: Color.fromARGB(255, 243, 103, 9),
-                                      fontSize:
-                                          // MediaQuery.of(context).size.width * 0.04,
-                                          14,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
+                            textStyle: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.copyWith(
+                                  color: Color.fromARGB(255, 243, 103, 9),
+                                  fontSize:
+                                      // MediaQuery.of(context).size.width * 0.04,
+                                      14,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                           ),
                         ),
                       ),
@@ -1143,14 +1153,16 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                         child: Text(
                           "Get Referral Code",
                           style: GoogleFonts.poppins(
-                            textStyle:
-                                Theme.of(context).textTheme.subtitle1?.copyWith(
-                                      color: Color.fromARGB(255, 243, 103, 9),
-                                      fontSize:
-                                          // MediaQuery.of(context).size.width * 0.04,
-                                          14,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
+                            textStyle: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.copyWith(
+                                  color: Color.fromARGB(255, 243, 103, 9),
+                                  fontSize:
+                                      // MediaQuery.of(context).size.width * 0.04,
+                                      14,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                           ),
                         ),
                       ),
@@ -1221,14 +1233,16 @@ class _MoreInfoScreenState extends State<MoreInfoScreen> {
                         child: Text(
                           DELETE_ACCOUNT,
                           style: GoogleFonts.poppins(
-                            textStyle:
-                                Theme.of(context).textTheme.subtitle1?.copyWith(
-                                      color: Color.fromARGB(255, 243, 103, 9),
-                                      fontSize:
-                                          // MediaQuery.of(context).size.width * 0.04,
-                                          14,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
+                            textStyle: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.copyWith(
+                                  color: Color.fromARGB(255, 243, 103, 9),
+                                  fontSize:
+                                      // MediaQuery.of(context).size.width * 0.04,
+                                      14,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                           ),
                         ),
                       ),

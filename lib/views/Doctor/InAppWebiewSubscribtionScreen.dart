@@ -125,10 +125,12 @@ class _InAppWebViewScreenState extends State<InAppWebViewScreen> {
               SizedBox(
                 width: 15,
               ),
-              Text('',
-                  style: Theme.of(context).textTheme.headline5!.apply(
-                      color: Theme.of(context).backgroundColor,
-                      fontWeightDelta: 5))
+              Text(
+                '',
+                // style: Theme.of(context).textTheme.headlineSmall!.apply(
+                //     color: Theme.of(context).backgroundColor,
+                //     fontWeightDelta: 5),
+              )
             ],
           ),
         ),

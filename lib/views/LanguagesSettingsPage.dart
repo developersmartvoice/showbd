@@ -177,8 +177,8 @@ class _LanguagesSettingsPageState extends State<LanguagesSettingsPage> {
               //   fontSize: 25,
               //   fontWeight: FontWeight.w700,
               // ),
-              style: Theme.of(context).textTheme.headline5!.apply(
-                  color: Theme.of(context).backgroundColor,
+              style: Theme.of(context).textTheme.headlineSmall!.apply(
+                  color: Theme.of(context).primaryColorDark,
                   fontWeightDelta: 5)),
           backgroundColor: const Color.fromARGB(255, 243, 103, 9),
           centerTitle: true,

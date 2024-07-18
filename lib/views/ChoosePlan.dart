@@ -62,8 +62,8 @@ class _ChoosePlanState extends State<ChoosePlan> {
         title: Text(
           // "Two Steps to follow",
           "Choose Plan",
-          style: Theme.of(context).textTheme.headline5!.apply(
-                color: Theme.of(context).backgroundColor,
+          style: Theme.of(context).textTheme.headlineSmall!.apply(
+                color: Theme.of(context).primaryColorDark,
                 fontWeightDelta: 5,
               ),
         ),

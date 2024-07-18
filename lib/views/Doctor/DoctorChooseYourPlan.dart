@@ -188,10 +188,10 @@ class _DoctorChooseYourPlanState extends State<DoctorChooseYourPlan> {
                       ),
                       Text(
                         '$HELLO_DR$userName',
-                        style: Theme.of(context)
-                            .textTheme
-                            .subtitle1!
-                            .apply(fontSizeFactor: 1.2, color: Colors.black54),
+                        // style: Theme.of(context)
+                        //     .textTheme
+                        //     .subtitle1!
+                        //     .apply(fontSizeFactor: 1.2, color: Colors.black54),
                       ),
                     ],
                   ),
@@ -215,10 +215,11 @@ class _DoctorChooseYourPlanState extends State<DoctorChooseYourPlan> {
             ),
             Text(
               CHOOSE_YOUR_PLAN,
-              style: Theme.of(context).textTheme.subtitle1!.apply(
-                  fontSizeFactor: 1.2,
-                  fontWeightDelta: 2,
-                  color: Color(0xff030303)),
+              // style: Theme.of(context).textTheme.subtitle1!.apply(
+              //     fontSizeFactor: 1.2,
+              //     fontWeightDelta: 2,
+              //     color: Color(0xff030303),
+              //     ),
             ),
             SizedBox(
               height: 5,
@@ -515,19 +516,19 @@ class _DoctorChooseYourPlanState extends State<DoctorChooseYourPlan> {
                                                   text: TextSpan(
                                                     text: '\$${data.price}/',
                                                     // '${getSubscriptionPlanClass!.data!.currency}${data.price}/',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .subtitle1!
-                                                        .apply(
-                                                            color:
-                                                                selectedIndex ==
-                                                                        index
-                                                                    ? Colors
-                                                                        .white
-                                                                    : Colors
-                                                                        .black,
-                                                            fontSizeFactor: 1.6,
-                                                            fontWeightDelta: 2),
+                                                    // style: Theme.of(context)
+                                                    //     .textTheme
+                                                    //     .subtitle1!
+                                                    //     .apply(
+                                                    //         color:
+                                                    //             selectedIndex ==
+                                                    //                     index
+                                                    //                 ? Colors
+                                                    //                     .white
+                                                    //                 : Colors
+                                                    //                     .black,
+                                                    //         fontSizeFactor: 1.6,
+                                                    //         fontWeightDelta: 2),
                                                     children: <TextSpan>[
                                                       TextSpan(
                                                         text: index == 0
@@ -545,20 +546,20 @@ class _DoctorChooseYourPlanState extends State<DoctorChooseYourPlan> {
                                                                     : '${data.month} ' +
                                                                         Month
                                                                             .toLowerCase(),
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .subtitle1!
-                                                            .apply(
-                                                                color: selectedIndex ==
-                                                                        index
-                                                                    ? Colors
-                                                                        .white
-                                                                    : Colors
-                                                                        .black,
-                                                                fontSizeFactor:
-                                                                    1.0,
-                                                                fontWeightDelta:
-                                                                    9),
+                                                        // style: Theme.of(context)
+                                                        //     .textTheme
+                                                        //     .subtitle1!
+                                                        //     .apply(
+                                                        //         color: selectedIndex ==
+                                                        //                 index
+                                                        //             ? Colors
+                                                        //                 .white
+                                                        //             : Colors
+                                                        //                 .black,
+                                                        //         fontSizeFactor:
+                                                        //             1.0,
+                                                        //         fontWeightDelta:
+                                                        //             9),
                                                       ),
                                                     ],
                                                   ),
@@ -590,19 +591,19 @@ class _DoctorChooseYourPlanState extends State<DoctorChooseYourPlan> {
                                                           child: Text(
                                                             SavePercentage,
                                                             // maxLines: 2,
-                                                            style: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .subtitle1!
-                                                                .apply(
-                                                                    color: Colors
-                                                                        .black54,
-                                                                    // color:
-                                                                    // Color(0xffDDDDDD),
-                                                                    fontSizeFactor:
-                                                                        0.8,
-                                                                    fontWeightDelta:
-                                                                        1),
+                                                            // style: Theme.of(
+                                                            //         context)
+                                                            //     .textTheme
+                                                            //     .subtitle1!
+                                                            //     .apply(
+                                                            //         color: Colors
+                                                            //             .black54,
+                                                            //         // color:
+                                                            //         // Color(0xffDDDDDD),
+                                                            //         fontSizeFactor:
+                                                            //             0.8,
+                                                            //         fontWeightDelta:
+                                                            //             1),
                                                           ),
                                                         ),
                                                       ],
@@ -646,19 +647,19 @@ class _DoctorChooseYourPlanState extends State<DoctorChooseYourPlan> {
                                                               Text(
                                                                 Gett,
                                                                 // maxLines: 2,
-                                                                style: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .subtitle1!
-                                                                    .apply(
-                                                                        color: Colors
-                                                                            .black54,
-                                                                        // color:
-                                                                        // Color(0xffDDDDDD),
-                                                                        fontSizeFactor:
-                                                                            0.8,
-                                                                        fontWeightDelta:
-                                                                            1),
+                                                                // style: Theme.of(
+                                                                //         context)
+                                                                //     .textTheme
+                                                                //     .subtitle1!
+                                                                //     .apply(
+                                                                //         color: Colors
+                                                                //             .black54,
+                                                                //         // color:
+                                                                //         // Color(0xffDDDDDD),
+                                                                //         fontSizeFactor:
+                                                                //             0.8,
+                                                                //         fontWeightDelta:
+                                                                //             1),
                                                               ),
                                                               SizedBox(
                                                                 width: 5,
@@ -666,21 +667,21 @@ class _DoctorChooseYourPlanState extends State<DoctorChooseYourPlan> {
                                                               Text(
                                                                 Days,
                                                                 // maxLines: 2,
-                                                                style: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .subtitle1!
-                                                                    .apply(
-                                                                        color: selectedIndex ==
-                                                                                index
-                                                                            ? Colors
-                                                                                .white
-                                                                            : Colors
-                                                                                .black,
-                                                                        fontSizeFactor:
-                                                                            0.8,
-                                                                        fontWeightDelta:
-                                                                            6),
+                                                                // style: Theme.of(
+                                                                //         context)
+                                                                //     .textTheme
+                                                                //     .subtitle1!
+                                                                //     .apply(
+                                                                //         color: selectedIndex ==
+                                                                //                 index
+                                                                //             ? Colors
+                                                                //                 .white
+                                                                //             : Colors
+                                                                //                 .black,
+                                                                //         fontSizeFactor:
+                                                                //             0.8,
+                                                                //         fontWeightDelta:
+                                                                //             6),
                                                               ),
                                                               SizedBox(
                                                                 width: 5,
@@ -688,19 +689,19 @@ class _DoctorChooseYourPlanState extends State<DoctorChooseYourPlan> {
                                                               Text(
                                                                 Free,
                                                                 // maxLines: 2,
-                                                                style: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .subtitle1!
-                                                                    .apply(
-                                                                        color: Colors
-                                                                            .black54,
-                                                                        // color:
-                                                                        // Color(0xffDDDDDD),
-                                                                        fontSizeFactor:
-                                                                            0.8,
-                                                                        fontWeightDelta:
-                                                                            1),
+                                                                // style: Theme.of(
+                                                                //         context)
+                                                                //     .textTheme
+                                                                //     .subtitle1!
+                                                                //     .apply(
+                                                                //         color: Colors
+                                                                //             .black54,
+                                                                //         // color:
+                                                                //         // Color(0xffDDDDDD),
+                                                                //         fontSizeFactor:
+                                                                //             0.8,
+                                                                //         fontWeightDelta:
+                                                                //             1),
                                                               ),
                                                             ],
                                                           ),
@@ -736,19 +737,19 @@ class _DoctorChooseYourPlanState extends State<DoctorChooseYourPlan> {
                                                           child: Text(
                                                             Available,
                                                             // maxLines: 2,
-                                                            style: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .subtitle1!
-                                                                .apply(
-                                                                    color: Colors
-                                                                        .black54,
-                                                                    // color:
-                                                                    // Color(0xffDDDDDD),
-                                                                    fontSizeFactor:
-                                                                        0.8,
-                                                                    fontWeightDelta:
-                                                                        1),
+                                                            // style: Theme.of(
+                                                            //         context)
+                                                            //     .textTheme
+                                                            //     .subtitle1!
+                                                            //     .apply(
+                                                            //         color: Colors
+                                                            //             .black54,
+                                                            //         // color:
+                                                            //         // Color(0xffDDDDDD),
+                                                            //         fontSizeFactor:
+                                                            //             0.8,
+                                                            //         fontWeightDelta:
+                                                            //             1),
                                                           ),
                                                         ),
                                                       ],
@@ -857,12 +858,12 @@ class _DoctorChooseYourPlanState extends State<DoctorChooseYourPlan> {
               child: Text(
                 LongText,
                 // maxLines: 2,
-                style: Theme.of(context).textTheme.subtitle1!.apply(
-                    color: Colors.black54,
-                    // color:
-                    // Color(0xffA6A6A6),
-                    fontSizeFactor: 0.8,
-                    fontWeightDelta: 0),
+                // style: Theme.of(context).textTheme.subtitle1!.apply(
+                //     color: Colors.black54,
+                //     // color:
+                //     // Color(0xffA6A6A6),
+                //     fontSizeFactor: 0.8,
+                //     fontWeightDelta: 0),
               ),
             ),
 
@@ -1952,13 +1953,15 @@ class _DoctorChooseYourPlanState extends State<DoctorChooseYourPlan> {
                                     ),
                                   ),
                                   Center(
-                                    child: Text(REMOVE_PRESCRIPTION,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1!
-                                            .apply(
-                                                color: Colors.black,
-                                                fontSizeDelta: 2)),
+                                    child: Text(
+                                      REMOVE_PRESCRIPTION,
+                                      // style: Theme.of(context)
+                                      //     .textTheme
+                                      //     .bodyText1!
+                                      //     .apply(
+                                      //         color: Colors.black,
+                                      //         fontSizeDelta: 2),
+                                    ),
                                   )
                                 ],
                               ),
@@ -1992,14 +1995,15 @@ class _DoctorChooseYourPlanState extends State<DoctorChooseYourPlan> {
                             ),
                             Center(
                               child: Text(
-                                  _image != null ? UPLOAD_PRESCRIPTION : CANCEL,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1!
-                                      .apply(
-                                          color:
-                                              Theme.of(context).backgroundColor,
-                                          fontSizeDelta: 2)),
+                                _image != null ? UPLOAD_PRESCRIPTION : CANCEL,
+                                // style: Theme.of(context)
+                                //     .textTheme
+                                //     .bodyText1!
+                                //     .apply(
+                                //         color:
+                                //             Theme.of(context).backgroundColor,
+                                //         fontSizeDelta: 2),
+                              ),
                             )
                           ],
                         ),
@@ -2065,10 +2069,10 @@ class PackageBenifit extends StatelessWidget {
                 child: Text(
                   text,
                   // maxLines: 2,
-                  style: Theme.of(context).textTheme.subtitle1!.apply(
-                      color: Colors.black,
-                      fontSizeFactor: 0.7,
-                      fontWeightDelta: 1),
+                  // style: Theme.of(context).textTheme.subtitle1!.apply(
+                  //     color: Colors.black,
+                  //     fontSizeFactor: 0.7,
+                  //     fontWeightDelta: 1),
                 ),
               ),
             ],

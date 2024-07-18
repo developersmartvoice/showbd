@@ -313,8 +313,8 @@ class _StepThreeDetailsScreenState extends State<StepThreeDetailsScreen> {
                                     FloatingActionButton(
                                       child: Icon(
                                         Icons.add,
-                                        color:
-                                            Theme.of(context).backgroundColor,
+                                        // color:
+                                        //     Theme.of(context).backgroundColor,
                                       ),
                                       backgroundColor: AMBER,
                                       onPressed: () {
@@ -599,7 +599,7 @@ class _StepThreeDetailsScreenState extends State<StepThreeDetailsScreen> {
                     value: x,
                   );
                 }).toList(),
-                style: Theme.of(context).textTheme.bodyText1,
+                // style: Theme.of(context).textTheme.bodyText1,
                 onChanged: (val) {
                   print(val);
                   setState(() {
@@ -754,11 +754,13 @@ class _StepThreeDetailsScreenState extends State<StepThreeDetailsScreen> {
               SizedBox(
                 width: 10,
               ),
-              Text(PROFILE,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline5!
-                      .apply(color: Theme.of(context).backgroundColor))
+              Text(
+                PROFILE,
+                // style: Theme.of(context)
+                //     .textTheme
+                //     .headlineSmall!
+                //     .apply(color: Theme.of(context).backgroundColor),
+              )
             ],
           ),
         ),

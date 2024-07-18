@@ -293,14 +293,14 @@ class _UnRegisteredHomePageState extends State<UnRegisteredHomePage>
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text(s1, style: Theme.of(context).textTheme.bodyText1),
+            title: Text(s1, style: Theme.of(context).textTheme.bodyLarge),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   s2,
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 )
               ],
             ),
@@ -327,7 +327,7 @@ class _UnRegisteredHomePageState extends State<UnRegisteredHomePage>
                     backgroundColor: Theme.of(context).primaryColor,
                   ),
                   child:
-                      Text(OK, style: Theme.of(context).textTheme.bodyText1)),
+                      Text(OK, style: Theme.of(context).textTheme.bodyLarge)),
             ],
           );
         });

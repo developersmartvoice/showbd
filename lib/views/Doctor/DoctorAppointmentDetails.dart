@@ -150,10 +150,10 @@ class _DoctorAppointmentDetailsState extends State<DoctorAppointmentDetails> {
               Text(
                 APPOINTMENT,
                 style: TextStyle(
-                    color: Theme.of(context).backgroundColor,
+                    color: Theme.of(context).primaryColorDark,
                     fontSize: 22,
                     fontWeight: FontWeight.bold),
-                //style: Theme.of(context).textTheme.headline5.apply(color: Theme.of(context).backgroundColor)
+                //style: Theme.of(context).textTheme.headlineSmall.apply(color: Theme.of(context).backgroundColor)
               )
             ],
           ),
@@ -172,7 +172,7 @@ class _DoctorAppointmentDetailsState extends State<DoctorAppointmentDetails> {
                 margin: EdgeInsets.all(10),
                 padding: EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                    color: Theme.of(context).backgroundColor,
+                    color: Theme.of(context).primaryColorDark,
                     borderRadius: BorderRadius.circular(15)),
                 child: Row(
                   children: [
@@ -219,11 +219,11 @@ class _DoctorAppointmentDetailsState extends State<DoctorAppointmentDetails> {
                               children: [
                                 Text(
                                   list.userName!,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText2!
-                                      .apply(
-                                          fontWeightDelta: 5, fontSizeDelta: 2),
+                                  // style: Theme.of(context)
+                                  //     .textTheme
+                                  //     .bodyText2!
+                                  //     .apply(
+                                  //         fontWeightDelta: 5, fontSizeDelta: 2),
                                 ),
                               ],
                             ),
@@ -260,13 +260,13 @@ class _DoctorAppointmentDetailsState extends State<DoctorAppointmentDetails> {
                                                       ? COMPLETED
                                                       : REJECTED,
                                   // statusToString(list.status!)!,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .caption!
-                                      .apply(
-                                        fontSizeDelta: 0.5,
-                                        fontWeightDelta: 2,
-                                      ),
+                                  // style: Theme.of(context)
+                                  //     .textTheme
+                                  //     .caption!
+                                  //     .apply(
+                                  //       fontSizeDelta: 0.5,
+                                  //       fontWeightDelta: 2,
+                                  //     ),
                                 ),
                                 SizedBox(
                                   width: 5,
@@ -293,17 +293,20 @@ class _DoctorAppointmentDetailsState extends State<DoctorAppointmentDetails> {
                           height: 5,
                         ),
                         Text(
-                            list.date.toString().substring(8) +
-                                "-" +
-                                list.date.toString().substring(5, 7) +
-                                "-" +
-                                list.date.toString().substring(0, 4),
-                            style: Theme.of(context).textTheme.caption),
-                        Text(list.slot!,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText1!
-                                .apply(fontWeightDelta: 2)),
+                          list.date.toString().substring(8) +
+                              "-" +
+                              list.date.toString().substring(5, 7) +
+                              "-" +
+                              list.date.toString().substring(0, 4),
+                          // style: Theme.of(context).textTheme.caption,
+                        ),
+                        Text(
+                          list.slot!,
+                          // style: Theme.of(context)
+                          //     .textTheme
+                          //     .bodyText1!
+                          //     .apply(fontWeightDelta: 2),
+                        ),
                       ],
                     ),
                   ],
@@ -316,7 +319,7 @@ class _DoctorAppointmentDetailsState extends State<DoctorAppointmentDetails> {
                 child: Container(
                   margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
                   padding: EdgeInsets.all(8),
-                  color: Theme.of(context).backgroundColor,
+                  color: Theme.of(context).primaryColorDark,
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
@@ -328,27 +331,27 @@ class _DoctorAppointmentDetailsState extends State<DoctorAppointmentDetails> {
                               children: [
                                 Text(
                                   PHONE_NUMBER,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1!
-                                      .apply(
-                                          fontWeightDelta: 1,
-                                          fontSizeDelta: 1.5),
+                                  // style: Theme.of(context)
+                                  //     .textTheme
+                                  //     .bodyText1!
+                                  //     .apply(
+                                  //         fontWeightDelta: 1,
+                                  //         fontSizeDelta: 1.5),
                                 ),
                                 SizedBox(
                                   height: 5,
                                 ),
                                 Text(
                                   list.phone!.toString(),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .caption!
-                                      .apply(
-                                        fontWeightDelta: 2,
-                                        color: Theme.of(context)
-                                            .primaryColorDark
-                                            .withOpacity(0.5),
-                                      ),
+                                  // style: Theme.of(context)
+                                  //     .textTheme
+                                  //     .caption!
+                                  //     .apply(
+                                  //       fontWeightDelta: 2,
+                                  //       color: Theme.of(context)
+                                  //           .primaryColorDark
+                                  //           .withOpacity(0.5),
+                                  //     ),
                                 ),
                               ],
                             ),
@@ -375,27 +378,27 @@ class _DoctorAppointmentDetailsState extends State<DoctorAppointmentDetails> {
                               children: [
                                 Text(
                                   EMAIL_ADDRESS,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1!
-                                      .apply(
-                                          fontWeightDelta: 1,
-                                          fontSizeDelta: 1.5),
+                                  // style: Theme.of(context)
+                                  //     .textTheme
+                                  //     .bodyText1!
+                                  //     .apply(
+                                  //         fontWeightDelta: 1,
+                                  //         fontSizeDelta: 1.5),
                                 ),
                                 SizedBox(
                                   height: 5,
                                 ),
                                 Text(
                                   list.email!,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .caption!
-                                      .apply(
-                                        fontWeightDelta: 2,
-                                        color: Theme.of(context)
-                                            .primaryColorDark
-                                            .withOpacity(0.5),
-                                      ),
+                                  // style: Theme.of(context)
+                                  //     .textTheme
+                                  //     .caption!
+                                  //     .apply(
+                                  //       fontWeightDelta: 2,
+                                  //       color: Theme.of(context)
+                                  //           .primaryColorDark
+                                  //           .withOpacity(0.5),
+                                  //     ),
                                 ),
                               ],
                             ),
@@ -429,27 +432,27 @@ class _DoctorAppointmentDetailsState extends State<DoctorAppointmentDetails> {
                               children: [
                                 Text(
                                   DESCRIPTION,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1!
-                                      .apply(
-                                          fontWeightDelta: 1,
-                                          fontSizeDelta: 1.5),
+                                  // style: Theme.of(context)
+                                  //     .textTheme
+                                  //     .bodyText1!
+                                  //     .apply(
+                                  //         fontWeightDelta: 1,
+                                  //         fontSizeDelta: 1.5),
                                 ),
                                 SizedBox(
                                   height: 5,
                                 ),
                                 Text(
                                   list.description!,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .caption!
-                                      .apply(
-                                        fontWeightDelta: 2,
-                                        color: Theme.of(context)
-                                            .primaryColorDark
-                                            .withOpacity(0.5),
-                                      ),
+                                  // style: Theme.of(context)
+                                  //     .textTheme
+                                  //     .caption!
+                                  //     .apply(
+                                  //       fontWeightDelta: 2,
+                                  //       color: Theme.of(context)
+                                  //           .primaryColorDark
+                                  //           .withOpacity(0.5),
+                                  //     ),
                                 ),
                               ],
                             ),
@@ -568,12 +571,12 @@ class _DoctorAppointmentDetailsState extends State<DoctorAppointmentDetails> {
                                 children: [
                                   Text(
                                     PRESCRIPTION,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyText1!
-                                        .apply(
-                                            fontWeightDelta: 1,
-                                            fontSizeDelta: 1.5),
+                                    // style: Theme.of(context)
+                                    //     .textTheme
+                                    //     .bodyText1!
+                                    //     .apply(
+                                    //         fontWeightDelta: 1,
+                                    //         fontSizeDelta: 1.5),
                                   ),
                                   SizedBox(
                                     height: 5,
@@ -714,13 +717,15 @@ class _DoctorAppointmentDetailsState extends State<DoctorAppointmentDetails> {
                           ),
                         ),
                         Center(
-                          child: Text(ACCEPT,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1!
-                                  .apply(
-                                      color: Theme.of(context).backgroundColor,
-                                      fontSizeDelta: 2)),
+                          child: Text(
+                            ACCEPT,
+                            // style: Theme.of(context)
+                            //     .textTheme
+                            //     .bodyText1!
+                            //     .apply(
+                            //         color: Theme.of(context).backgroundColor,
+                            //         fontSizeDelta: 2),
+                          ),
                         )
                       ],
                     ),
@@ -748,13 +753,15 @@ class _DoctorAppointmentDetailsState extends State<DoctorAppointmentDetails> {
                           ),
                         ),
                         Center(
-                          child: Text(CANCEL,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1!
-                                  .apply(
-                                      color: Theme.of(context).backgroundColor,
-                                      fontSizeDelta: 2)),
+                          child: Text(
+                            CANCEL,
+                            // style: Theme.of(context)
+                            //     .textTheme
+                            //     .bodyText1!
+                            //     .apply(
+                            //         color: Theme.of(context).backgroundColor,
+                            //         fontSizeDelta: 2)
+                          ),
                         )
                       ],
                     ),
@@ -799,14 +806,16 @@ class _DoctorAppointmentDetailsState extends State<DoctorAppointmentDetails> {
                               ),
                             ),
                             Center(
-                              child: Text(COMPLETE,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1!
-                                      .apply(
-                                          color:
-                                              Theme.of(context).backgroundColor,
-                                          fontSizeDelta: 2)),
+                              child: Text(
+                                COMPLETE,
+                                // style: Theme.of(context)
+                                //     .textTheme
+                                //     .bodyText1!
+                                //     .apply(
+                                //         color:
+                                //             Theme.of(context).backgroundColor,
+                                //         fontSizeDelta: 2)
+                              ),
                             )
                           ],
                         ),
@@ -834,14 +843,16 @@ class _DoctorAppointmentDetailsState extends State<DoctorAppointmentDetails> {
                               ),
                             ),
                             Center(
-                              child: Text(ABSENT,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1!
-                                      .apply(
-                                          color:
-                                              Theme.of(context).backgroundColor,
-                                          fontSizeDelta: 2)),
+                              child: Text(
+                                ABSENT,
+                                // style: Theme.of(context)
+                                //     .textTheme
+                                //     .bodyText1!
+                                //     .apply(
+                                //         color:
+                                //             Theme.of(context).backgroundColor,
+                                //         fontSizeDelta: 2)
+                              ),
                             )
                           ],
                         ),
@@ -1243,13 +1254,15 @@ class _DoctorAppointmentDetailsState extends State<DoctorAppointmentDetails> {
                                   ),
                                 ),
                                 Center(
-                                  child: Text(REMOVE_PRESCRIPTION,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1!
-                                          .apply(
-                                              color: Colors.black,
-                                              fontSizeDelta: 2)),
+                                  child: Text(
+                                    REMOVE_PRESCRIPTION,
+                                    // style: Theme.of(context)
+                                    //     .textTheme
+                                    //     .bodyText1!
+                                    //     .apply(
+                                    //         color: Colors.black,
+                                    //         fontSizeDelta: 2),
+                                  ),
                                 )
                               ],
                             ),
@@ -1282,14 +1295,15 @@ class _DoctorAppointmentDetailsState extends State<DoctorAppointmentDetails> {
                           ),
                           Center(
                             child: Text(
-                                _image != null ? UPLOAD_PRESCRIPTION : CANCEL,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyText1!
-                                    .apply(
-                                        color:
-                                            Theme.of(context).backgroundColor,
-                                        fontSizeDelta: 2)),
+                              _image != null ? UPLOAD_PRESCRIPTION : CANCEL,
+                              // style: Theme.of(context)
+                              //     .textTheme
+                              //     .bodyText1!
+                              //     .apply(
+                              //         color:
+                              //             Theme.of(context).backgroundColor,
+                              //         fontSizeDelta: 2),
+                            ),
                           )
                         ],
                       ),

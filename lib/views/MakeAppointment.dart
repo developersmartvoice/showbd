@@ -594,12 +594,12 @@ class _MakeAppointmentState extends State<MakeAppointment> {
                       BorderSide(color: Theme.of(context).primaryColorDark)),
               labelText: PHONE_NUMBER,
               errorText: isPhoneError ? ENTER_VALID_MOBILE_NUMBER : null,
-              labelStyle: Theme.of(context).textTheme.bodyText2!.apply(
+              labelStyle: Theme.of(context).textTheme.bodyMedium!.apply(
                   fontSizeDelta: 3,
                   fontWeightDelta: 2,
                   color: Theme.of(context).primaryColorDark),
             ),
-            style: Theme.of(context).textTheme.bodyText1!.apply(
+            style: Theme.of(context).textTheme.bodyMedium!.apply(
                   fontSizeDelta: 3,
                   //color: Theme.of(context).primaryColorDark
                 ),
@@ -615,12 +615,12 @@ class _MakeAppointmentState extends State<MakeAppointment> {
                       BorderSide(color: Theme.of(context).primaryColorDark)),
               labelText: DESCRIPTION,
               errorText: isDescriptionEmpty ? THIS_FIELD_IS_REQUIRED : null,
-              labelStyle: Theme.of(context).textTheme.bodyText2!.apply(
+              labelStyle: Theme.of(context).textTheme.bodyMedium!.apply(
                   fontSizeDelta: 3,
                   fontWeightDelta: 2,
                   color: Theme.of(context).primaryColorDark),
             ),
-            style: Theme.of(context).textTheme.bodyText1!.apply(
+            style: Theme.of(context).textTheme.bodyMedium!.apply(
                   fontSizeDelta: 3,
                   //color: Theme.of(context).primaryColorDark
                 ),
@@ -1008,7 +1008,7 @@ class _MakeAppointmentState extends State<MakeAppointment> {
               children: [
                 Text(
                   s2,
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyMedium,
                 )
               ],
             ),
@@ -1021,8 +1021,8 @@ class _MakeAppointmentState extends State<MakeAppointment> {
                     backgroundColor: WHITE,
                   ),
                   // color: WHITE,
-                  child:
-                      Text(WAIT, style: Theme.of(context).textTheme.bodyText1)),
+                  child: Text(WAIT,
+                      style: Theme.of(context).textTheme.bodyMedium)),
               TextButton(
                   onPressed: () async {
                     Navigator.pop(context);
@@ -1032,7 +1032,7 @@ class _MakeAppointmentState extends State<MakeAppointment> {
                   ),
                   // color: Theme.of(context).primaryColor,
                   child:
-                      Text(YES, style: Theme.of(context).textTheme.bodyText1)),
+                      Text(YES, style: Theme.of(context).textTheme.bodyMedium)),
             ],
           );
         });

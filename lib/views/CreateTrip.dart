@@ -185,8 +185,8 @@ class _CreateTripState extends State<CreateTrip> {
               title: Text(
                 'Create Trip',
                 style: GoogleFonts.poppins(
-                  textStyle: Theme.of(context).textTheme.headline5!.apply(
-                      color: Theme.of(context).backgroundColor,
+                  textStyle: Theme.of(context).textTheme.headlineSmall!.apply(
+                      color: Theme.of(context).primaryColorDark,
                       fontWeightDelta: 1),
                 ),
               ),
@@ -778,8 +778,8 @@ class _LocationSearchPageState extends State<LocationSearchPage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Search Location',
-              style: Theme.of(context).textTheme.headline5!.apply(
-                  color: Theme.of(context).backgroundColor,
+              style: Theme.of(context).textTheme.headlineSmall!.apply(
+                  color: Theme.of(context).primaryColorDark,
                   fontWeightDelta: 5)),
           flexibleSpace: Container(
             decoration: BoxDecoration(
@@ -854,8 +854,8 @@ class _TypeSelectionPageState extends State<TypeSelectionPage> {
             },
           ),
           title: Text('Gender',
-              style: Theme.of(context).textTheme.headline5!.apply(
-                  color: Theme.of(context).backgroundColor,
+              style: Theme.of(context).textTheme.headlineSmall!.apply(
+                  color: Theme.of(context).primaryColorDark,
                   fontWeightDelta: 5)),
           backgroundColor: Color.fromARGB(255, 255, 84, 5),
         ),

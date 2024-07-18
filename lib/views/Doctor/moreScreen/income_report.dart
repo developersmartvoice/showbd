@@ -174,7 +174,7 @@ class _IncomeReportState extends State<IncomeReport> {
                       )),
                 ),
                 Text(INCOME_REPORT,
-                    style: Theme.of(context).textTheme.headline5!.apply(
+                    style: Theme.of(context).textTheme.headlineSmall!.apply(
                         color: Theme.of(context).backgroundColor,
                         fontWeightDelta: 5))
               ],
@@ -640,10 +640,12 @@ class _IncomeReportState extends State<IncomeReport> {
               //         color: Colors.white,
               //       )),
               // ),
-              Text(INCOME_REPORT,
-                  style: Theme.of(context).textTheme.headline5!.apply(
-                      color: Theme.of(context).backgroundColor,
-                      fontWeightDelta: 5))
+              Text(
+                INCOME_REPORT,
+                // style: Theme.of(context).textTheme.headlineSmall!.apply(
+                //     color: Theme.of(context).backgroundColor,
+                //     fontWeightDelta: 5),
+              )
             ],
           ),
         ),

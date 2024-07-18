@@ -67,8 +67,8 @@ class _MemberShipDetails extends State<MemberShipDetails> {
         title: Text(
           "Membership Details",
           style: GoogleFonts.poppins(
-            textStyle: Theme.of(context).textTheme.headline5!.apply(
-                color: Theme.of(context).backgroundColor,
+            textStyle: Theme.of(context).textTheme.headlineSmall!.apply(
+                color: Theme.of(context).primaryColorDark,
                 fontWeightDelta: 1,
                 fontSizeFactor: .8),
           ),

@@ -213,10 +213,10 @@ class _UserAppointmentDetailsState extends State<UserAppointmentDetails> {
               Text(
                 APPOINTMENT,
                 style: TextStyle(
-                    color: Theme.of(context).backgroundColor,
+                    color: Theme.of(context).primaryColorDark,
                     fontSize: 22,
                     fontWeight: FontWeight.bold),
-                //style: Theme.of(context).textTheme.headline5.apply(color: Theme.of(context).backgroundColor)
+                //style: Theme.of(context).textTheme.headlineSmall.apply(color: Theme.of(context).backgroundColor)
               )
             ],
           ),
@@ -232,7 +232,7 @@ class _UserAppointmentDetailsState extends State<UserAppointmentDetails> {
           margin: EdgeInsets.all(10),
           padding: EdgeInsets.all(8),
           decoration: BoxDecoration(
-              color: Theme.of(context).backgroundColor,
+              color: Theme.of(context).primaryColorDark,
               borderRadius: BorderRadius.circular(15)),
           child: Row(
             children: [
@@ -282,7 +282,7 @@ class _UserAppointmentDetailsState extends State<UserAppointmentDetails> {
                             list.doctorName!,
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText2!
+                                .bodyMedium!
                                 .apply(fontWeightDelta: 5, fontSizeDelta: 2),
                           ),
                         ],
@@ -320,7 +320,7 @@ class _UserAppointmentDetailsState extends State<UserAppointmentDetails> {
                                             : list.status! == 4
                                                 ? COMPLETED
                                                 : REJECTED,
-                            style: Theme.of(context).textTheme.caption!.apply(
+                            style: Theme.of(context).textTheme.bodySmall!.apply(
                                   fontSizeDelta: 0.5,
                                   fontWeightDelta: 2,
                                 ),
@@ -355,11 +355,11 @@ class _UserAppointmentDetailsState extends State<UserAppointmentDetails> {
                           list.date.toString().substring(5, 7) +
                           "-" +
                           list.date.toString().substring(0, 4),
-                      style: Theme.of(context).textTheme.caption),
+                      style: Theme.of(context).textTheme.bodySmall),
                   Text(list.slot!,
                       style: Theme.of(context)
                           .textTheme
-                          .bodyText1!
+                          .bodyMedium!
                           .apply(fontWeightDelta: 2)),
                 ],
               ),
@@ -372,7 +372,7 @@ class _UserAppointmentDetailsState extends State<UserAppointmentDetails> {
         Container(
           margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
           padding: EdgeInsets.all(8),
-          color: Theme.of(context).backgroundColor,
+          color: Theme.of(context).primaryColorDark,
           child: Column(
             children: [
               Row(
@@ -385,7 +385,7 @@ class _UserAppointmentDetailsState extends State<UserAppointmentDetails> {
                         PHONE_NUMBER,
                         style: Theme.of(context)
                             .textTheme
-                            .bodyText1!
+                            .bodyMedium!
                             .apply(fontWeightDelta: 1, fontSizeDelta: 1.5),
                       ),
                       SizedBox(
@@ -393,7 +393,7 @@ class _UserAppointmentDetailsState extends State<UserAppointmentDetails> {
                       ),
                       Text(
                         list.phone!.toString(),
-                        style: Theme.of(context).textTheme.caption!.apply(
+                        style: Theme.of(context).textTheme.bodySmall!.apply(
                               fontWeightDelta: 2,
                               color: Theme.of(context)
                                   .primaryColorDark
@@ -427,7 +427,7 @@ class _UserAppointmentDetailsState extends State<UserAppointmentDetails> {
                         EMAIL_ADDRESS,
                         style: Theme.of(context)
                             .textTheme
-                            .bodyText1!
+                            .bodyMedium!
                             .apply(fontWeightDelta: 1, fontSizeDelta: 1.5),
                       ),
                       SizedBox(
@@ -435,7 +435,7 @@ class _UserAppointmentDetailsState extends State<UserAppointmentDetails> {
                       ),
                       Text(
                         list.email!,
-                        style: Theme.of(context).textTheme.caption!.apply(
+                        style: Theme.of(context).textTheme.bodySmall!.apply(
                               fontWeightDelta: 2,
                               color: Theme.of(context)
                                   .primaryColorDark
@@ -476,7 +476,7 @@ class _UserAppointmentDetailsState extends State<UserAppointmentDetails> {
                         DESCRIPTION,
                         style: Theme.of(context)
                             .textTheme
-                            .bodyText1!
+                            .bodyMedium!
                             .apply(fontWeightDelta: 1, fontSizeDelta: 1.5),
                       ),
                       SizedBox(
@@ -484,7 +484,7 @@ class _UserAppointmentDetailsState extends State<UserAppointmentDetails> {
                       ),
                       Text(
                         list.description!,
-                        style: Theme.of(context).textTheme.caption!.apply(
+                        style: Theme.of(context).textTheme.bodySmall!.apply(
                               fontWeightDelta: 2,
                               color: Theme.of(context)
                                   .primaryColorDark
@@ -575,7 +575,7 @@ class _UserAppointmentDetailsState extends State<UserAppointmentDetails> {
                             PRESCRIPTION,
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText1!
+                                .bodyMedium!
                                 .apply(fontWeightDelta: 1, fontSizeDelta: 1.5),
                           ),
                           SizedBox(
@@ -958,7 +958,7 @@ class _UserAppointmentDetailsState extends State<UserAppointmentDetails> {
 //                 Center(
 //                   child: Text(
 //                     ACCEPT,
-//                     style: Theme.of(context).textTheme.bodyText1.apply(
+//                     style: Theme.of(context).textTheme.bodyMedium.apply(
 //                       color: Theme.of(context).backgroundColor,
 //                       fontSizeDelta: 2
 //                     )
@@ -989,7 +989,7 @@ class _UserAppointmentDetailsState extends State<UserAppointmentDetails> {
 //                 Center(
 //                   child: Text(
 //                       CANCEL,
-//                       style: Theme.of(context).textTheme.bodyText1.apply(
+//                       style: Theme.of(context).textTheme.bodyMedium.apply(
 //                         color: Theme.of(context).backgroundColor,
 //                         fontSizeDelta: 2
 //                       )

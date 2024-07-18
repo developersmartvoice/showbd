@@ -53,8 +53,8 @@ class _AboutMeDetailsPageState extends State<AboutMeDetailsPage> {
         title: Text(
           'About Me',
           style: GoogleFonts.poppins(
-            textStyle: Theme.of(context).textTheme.headline5!.apply(
-                color: Theme.of(context).backgroundColor,
+            textStyle: Theme.of(context).textTheme.headlineSmall!.apply(
+                color: Theme.of(context).primaryColorDark,
                 fontWeightDelta: 1,
                 fontSizeFactor: .8),
           ),

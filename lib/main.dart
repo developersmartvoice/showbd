@@ -155,28 +155,28 @@ class _AppState extends State<App> {
         ),
         hintColor: Colors.cyanAccent.shade700,
         primaryColor: Colors.cyanAccent,
-        backgroundColor: Colors.white,
         primaryColorDark: Colors.grey.shade700,
         primaryColorLight: Colors.grey.shade200,
         //highlightColor: Colors.amber.shade700,
         textTheme: TextTheme(
-          headline1: GoogleFonts.poppins(),
-          headline2: GoogleFonts.poppins(),
-          headline3: GoogleFonts.poppins(),
-          headline4: GoogleFonts.poppins(),
-          headline5: GoogleFonts.poppins(),
-          headline6: GoogleFonts.poppins(),
-          subtitle1: GoogleFonts.poppins(),
-          subtitle2: GoogleFonts.poppins(),
-          caption: GoogleFonts.poppins(
+          displayLarge: GoogleFonts.poppins(),
+          displayMedium: GoogleFonts.poppins(),
+          displaySmall: GoogleFonts.poppins(),
+          headlineMedium: GoogleFonts.poppins(),
+          headlineSmall: GoogleFonts.poppins(),
+          titleLarge: GoogleFonts.poppins(),
+          titleMedium: GoogleFonts.poppins(),
+          titleSmall: GoogleFonts.poppins(),
+          bodySmall: GoogleFonts.poppins(
             fontSize: 10,
           ),
-          bodyText1:
+          bodyLarge:
               GoogleFonts.poppins(fontSize: 13, fontWeight: FontWeight.w500),
-          bodyText2:
+          bodyMedium:
               GoogleFonts.poppins(fontSize: 13, fontWeight: FontWeight.w300),
-          button: GoogleFonts.poppins(),
+          labelLarge: GoogleFonts.poppins(),
         ),
+        // colorScheme: ColorScheme(background: Colors.white),
       ),
       localizationsDelegates: [
         // ... app-specific localization delegate[s] here

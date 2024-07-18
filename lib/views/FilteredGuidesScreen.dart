@@ -95,8 +95,8 @@ class _FilteredGuidesScreenState extends State<FilteredGuidesScreen> {
             appBar: AppBar(
               title: Text(
                 "Filtered Result",
-                style: Theme.of(context).textTheme.headline5!.apply(
-                      color: Theme.of(context).backgroundColor,
+                style: Theme.of(context).textTheme.headlineSmall!.apply(
+                      color: Theme.of(context).primaryColorDark,
                       fontWeightDelta: 5,
                     ),
               ),

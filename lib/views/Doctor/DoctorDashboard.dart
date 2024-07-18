@@ -239,7 +239,7 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
             Expanded(
               child: Text(
                 PLEASE_WAIT_CALL_ACCEPT,
-                style: Theme.of(context).textTheme.bodyText2,
+                // style: Theme.of(context).textTheme.bodyText2,
               ),
             )
           ],
@@ -287,10 +287,12 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
               SizedBox(
                 width: 15,
               ),
-              Text(DOCTOR_DASHBOARD,
-                  style: Theme.of(context).textTheme.headline5!.apply(
-                      color: Theme.of(context).backgroundColor,
-                      fontWeightDelta: 5))
+              Text(
+                DOCTOR_DASHBOARD,
+                // style: Theme.of(context).textTheme.headlineSmall!.apply(
+                //     color: Theme.of(context).backgroundColor,
+                //     fontWeightDelta: 5),
+              )
             ],
           ),
         ),
@@ -338,9 +340,9 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
                 //margin: EdgeInsets.all(8),
                 padding: EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  //borderRadius: BorderRadius.circular(10),
-                  color: Theme.of(context).backgroundColor,
-                ),
+                    //borderRadius: BorderRadius.circular(10),
+                    // color: Theme.of(context).backgroundColor,
+                    ),
                 child: Row(
                   children: [
                     ClipRRect(
@@ -390,10 +392,10 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
                               children: [
                                 Text(
                                   doctorProfileWithRating!.data!.name!,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .subtitle1!
-                                      .apply(fontWeightDelta: 2),
+                                  // style: Theme.of(context)
+                                  //     .textTheme
+                                  //     .subtitle1!
+                                  //     .apply(fontWeightDelta: 2),
                                 ),
                                 Row(
                                   children: [
@@ -403,12 +405,12 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
                                           ? SPECIALITY
                                           : doctorProfileWithRating!
                                               .data!.departmentName!,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1!
-                                          .apply(
-                                              color: Theme.of(context)
-                                                  .primaryColorDark),
+                                      // style: Theme.of(context)
+                                      //     .textTheme
+                                      //     .bodyText1!
+                                      //     .apply(
+                                      //         color: Theme.of(context)
+                                      //             .primaryColorDark),
                                     ),
                                     SizedBox(
                                       width: 10,
@@ -426,12 +428,12 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
                                               .data!.avgratting
                                               .toString())
                                           .toString(),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1!
-                                          .apply(
-                                              color: Theme.of(context)
-                                                  .primaryColorDark),
+                                      // style: Theme.of(context)
+                                      //     .textTheme
+                                      //     .bodyText1!
+                                      //     .apply(
+                                      //         color: Theme.of(context)
+                                      //             .primaryColorDark),
                                     ),
                                   ],
                                 ),
@@ -445,12 +447,12 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
                             child: Text(
                               doctorProfileWithRating!.data!.address ??
                                   ADDRESS_GOES_HERE,
-                              style: Theme.of(context).textTheme.caption!.apply(
-                                    color: Theme.of(context)
-                                        .primaryColorDark
-                                        .withOpacity(0.4),
-                                    fontSizeDelta: 0.1,
-                                  ),
+                              // style: Theme.of(context).textTheme.caption!.apply(
+                              //       color: Theme.of(context)
+                              //           .primaryColorDark
+                              //           .withOpacity(0.4),
+                              //       fontSizeDelta: 0.1,
+                              //     ),
                             ),
                           ),
                         ],
@@ -477,7 +479,7 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
             children: [
               Text(
                 APPOINTMENTS,
-                style: Theme.of(context).textTheme.subtitle1,
+                // style: Theme.of(context).textTheme.subtitle1,
               ),
               TextButton(
                 onPressed: () {
@@ -487,11 +489,13 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
                         builder: (context) => DoctorAllAppointments()),
                   );
                 },
-                child: Text(SEE_ALL,
-                    style: Theme.of(context).textTheme.bodyText2!.apply(
-                          color: Theme.of(context).hintColor,
-                          fontWeightDelta: 5,
-                        )),
+                child: Text(
+                  SEE_ALL,
+                  // style: Theme.of(context).textTheme.bodyText2!.apply(
+                  //       color: Theme.of(context).hintColor,
+                  //       fontWeightDelta: 5,
+                  //     ),
+                ),
               )
             ],
           ),
@@ -514,7 +518,7 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
                   height: 180,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                      color: Theme.of(context).backgroundColor,
+                      // color: Theme.of(context).backgroundColor,
                       borderRadius: BorderRadius.circular(15)),
                   child: Padding(
                     padding: const EdgeInsets.all(30.0),
@@ -597,7 +601,7 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
         padding: EdgeInsets.all(8),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: Theme.of(context).backgroundColor,
+          // color: Theme.of(context).backgroundColor,
         ),
         child: Row(
           children: [
@@ -644,19 +648,19 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
                       children: [
                         Text(
                           list[index].name,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText2!
-                              .apply(fontWeightDelta: 5),
+                          // style: Theme.of(context)
+                          //     .textTheme
+                          //     .bodyText2!
+                          //     .apply(fontWeightDelta: 5),
                         ),
                         Text(
                           list[index].phone,
-                          style: Theme.of(context).textTheme.caption!.apply(
-                                fontWeightDelta: 2,
-                                color: Theme.of(context)
-                                    .primaryColorDark
-                                    .withOpacity(0.5),
-                              ),
+                          // style: Theme.of(context).textTheme.caption!.apply(
+                          //       fontWeightDelta: 2,
+                          //       color: Theme.of(context)
+                          //           .primaryColorDark
+                          //           .withOpacity(0.5),
+                          //     ),
                         ),
                       ],
                     ),
@@ -682,10 +686,10 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
                         ),
                         Text(
                           list[index].status,
-                          style: Theme.of(context).textTheme.caption!.apply(
-                                fontSizeDelta: 0.5,
-                                fontWeightDelta: 2,
-                              ),
+                          // style: Theme.of(context).textTheme.caption!.apply(
+                          //       fontSizeDelta: 0.5,
+                          //       fontWeightDelta: 2,
+                          //     ),
                         ),
                         SizedBox(
                           width: 5,
@@ -712,17 +716,20 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
                   height: 5,
                 ),
                 Text(
-                    list[index].date.toString().substring(8) +
-                        "-" +
-                        list[index].date.toString().substring(5, 7) +
-                        "-" +
-                        list[index].date.toString().substring(0, 4),
-                    style: Theme.of(context).textTheme.caption),
-                Text(list[index].slot,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1!
-                        .apply(fontWeightDelta: 2)),
+                  list[index].date.toString().substring(8) +
+                      "-" +
+                      list[index].date.toString().substring(5, 7) +
+                      "-" +
+                      list[index].date.toString().substring(0, 4),
+                  // style: Theme.of(context).textTheme.caption,
+                ),
+                Text(
+                  list[index].slot,
+                  // style: Theme.of(context)
+                  //     .textTheme
+                  //     .bodyText1!
+                  //     .apply(fontWeightDelta: 2),
+                ),
               ],
             ),
           ],

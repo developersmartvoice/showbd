@@ -64,8 +64,8 @@ class _ReferralPageState extends State<ReferralPage> {
           title: Text(
             'Referral Code',
             style: GoogleFonts.poppins(
-              textStyle: Theme.of(context).textTheme.headline5!.apply(
-                  color: Theme.of(context).backgroundColor,
+              textStyle: Theme.of(context).textTheme.bodySmall!.apply(
+                  color: Theme.of(context).primaryColorDark,
                   fontWeightDelta: 1,
                   fontSizeFactor: .8),
             ),

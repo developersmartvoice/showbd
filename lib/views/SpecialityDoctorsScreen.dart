@@ -350,14 +350,14 @@ class _SpecialityDoctorsScreenState extends State<SpecialityDoctorsScreen> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text(s1, style: Theme.of(context).textTheme.bodyText1),
+            title: Text(s1, style: Theme.of(context).textTheme.bodyMedium),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   s2,
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyMedium,
                 )
               ],
             ),
@@ -380,7 +380,7 @@ class _SpecialityDoctorsScreenState extends State<SpecialityDoctorsScreen> {
                   ),
                   // color: Theme.of(context).primaryColor,
                   child:
-                      Text(OK, style: Theme.of(context).textTheme.bodyText1)),
+                      Text(OK, style: Theme.of(context).textTheme.bodyMedium)),
             ],
           );
         });

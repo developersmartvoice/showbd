@@ -143,13 +143,13 @@ class _SubScriptionScreenState extends State<SubScriptionScreen> {
                                     child: Text(
                                       '\$${info[index].price}',
                                       // '${getSubscriptionPlanClass!.data!.currency}${data.price}/',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .subtitle1!
-                                          .apply(
-                                              color: Colors.black,
-                                              fontSizeFactor: 1.6,
-                                              fontWeightDelta: 2),
+                                      // style: Theme.of(context)
+                                      //     .textTheme
+                                      //     .subtitle1!
+                                      //     .apply(
+                                      //         color: Colors.black,
+                                      //         fontSizeFactor: 1.6,
+                                      //         fontWeightDelta: 2),
                                     ),
                                   ),
                                 ),
@@ -166,13 +166,13 @@ class _SubScriptionScreenState extends State<SubScriptionScreen> {
                                         children: [
                                           Text(
                                             '${info[index].month} $Monthly',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .subtitle1!
-                                                .apply(
-                                                    color: Colors.black,
-                                                    fontSizeFactor: 0.9,
-                                                    fontWeightDelta: 1),
+                                            // style: Theme.of(context)
+                                            //     .textTheme
+                                            //     .subtitle1!
+                                            //     .apply(
+                                            //         color: Colors.black,
+                                            //         fontSizeFactor: 0.9,
+                                            //         fontWeightDelta: 1),
                                           ),
                                           SizedBox(
                                             width: 80,
@@ -221,32 +221,32 @@ class _SubScriptionScreenState extends State<SubScriptionScreen> {
                                                             ? 'Expire'
                                                             : 'Reject',
                                                 // maxLines: 2,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .subtitle1!
-                                                    .apply(
-                                                        color: info[index]
-                                                                    .status
-                                                                    .toString() ==
-                                                                '1'
-                                                            ? Colors.blue
-                                                            : info[index]
-                                                                        .status
-                                                                        .toString() ==
-                                                                    '2'
-                                                                ? Colors.green
-                                                                : info[index]
-                                                                            .status
-                                                                            .toString() ==
-                                                                        '3'
-                                                                    ? Colors
-                                                                        .grey
-                                                                    : Colors
-                                                                        .yellow,
-                                                        // color:
-                                                        // Color(0xffDDDDDD),
-                                                        fontSizeFactor: 0.8,
-                                                        fontWeightDelta: 2),
+                                                // style: Theme.of(context)
+                                                //     .textTheme
+                                                //     .subtitle1!
+                                                //     .apply(
+                                                //         color: info[index]
+                                                //                     .status
+                                                //                     .toString() ==
+                                                //                 '1'
+                                                //             ? Colors.blue
+                                                //             : info[index]
+                                                //                         .status
+                                                //                         .toString() ==
+                                                //                     '2'
+                                                //                 ? Colors.green
+                                                //                 : info[index]
+                                                //                             .status
+                                                //                             .toString() ==
+                                                //                         '3'
+                                                //                     ? Colors
+                                                //                         .grey
+                                                //                     : Colors
+                                                //                         .yellow,
+                                                //         // color:
+                                                //         // Color(0xffDDDDDD),
+                                                //         fontSizeFactor: 0.8,
+                                                //         fontWeightDelta: 2),
                                               ),
                                             ],
                                           )
@@ -295,10 +295,12 @@ class _SubScriptionScreenState extends State<SubScriptionScreen> {
               SizedBox(
                 width: 55,
               ),
-              Text('Subscription List',
-                  style: Theme.of(context).textTheme.headline5!.apply(
-                      color: Theme.of(context).backgroundColor,
-                      fontWeightDelta: 5))
+              Text(
+                'Subscription List',
+                // style: Theme.of(context).textTheme.headlineSmall!.apply(
+                //     color: Theme.of(context).backgroundColor,
+                //     fontWeightDelta: 5),
+              )
             ],
           ),
         ),

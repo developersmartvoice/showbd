@@ -34,8 +34,8 @@ class _RejectedScreenState extends State<RejectedScreen> {
             },
           ),
           title: Text("Rejected",
-              style: Theme.of(context).textTheme.headline5!.apply(
-                  color: Theme.of(context).backgroundColor,
+              style: Theme.of(context).textTheme.headlineSmall!.apply(
+                  color: Theme.of(context).primaryColorDark,
                   fontWeightDelta: 5)),
           centerTitle: true,
           flexibleSpace: Container(

@@ -210,7 +210,7 @@ class _UserPastAppointmentsState extends State<UserPastAppointments> {
                   return Container(
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
-                        color: Theme.of(context).backgroundColor,
+                        color: Theme.of(context).primaryColorDark,
                         borderRadius: BorderRadius.circular(15)),
                     child: Padding(
                       padding: const EdgeInsets.all(30.0),

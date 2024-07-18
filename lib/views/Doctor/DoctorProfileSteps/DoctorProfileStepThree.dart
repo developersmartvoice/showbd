@@ -40,7 +40,7 @@ class _DoctorProfileStepThreeState extends State<DoctorProfileStepThree> {
       padding: EdgeInsets.all(10),
       margin: EdgeInsets.fromLTRB(16, 5, 16, 5),
       decoration: BoxDecoration(
-          color: Theme.of(context).backgroundColor,
+          // color: Theme.of(context).backgroundColor,
           borderRadius: BorderRadius.circular(15)),
       child: Row(
         children: [
