@@ -5,6 +5,7 @@ import 'package:appcode3/en.dart';
 import 'package:appcode3/main.dart';
 import 'package:appcode3/modals/NearbyDoctorClass.dart';
 import 'package:appcode3/views/DetailsPage.dart';
+import 'package:appcode3/views/Doctor/UnRegisterFilterPage.dart';
 // import 'package:appcode3/views/DetailsPage.dart';
 import 'package:appcode3/views/Doctor/loginAsDoctor.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -169,6 +170,24 @@ class _UnRegisteredHomePageState extends State<UnRegisteredHomePage>
               letterSpacing: 2,
             ),
           ),
+          // actions: [
+          //   IconButton(
+          //     padding: EdgeInsets.only(right: 15),
+          //     onPressed: () {
+          //       Navigator.push(
+          //         context,
+          //         MaterialPageRoute(
+          //           builder: (context) => UnRegisterFilterPage(),
+          //         ),
+          //       );
+          //     },
+          //     icon: Icon(
+          //       Icons.filter_list_outlined,
+          //       color: Colors.white,
+          //       size: 30,
+          //     ),
+          //   ),
+          // ],
         ),
         body: isNearbyLoading
             ? Center(
