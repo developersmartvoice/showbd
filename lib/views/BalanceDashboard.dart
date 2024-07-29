@@ -61,7 +61,8 @@ class _BalanceDashboardState extends State<BalanceDashboard> {
           "Balance Dashboard",
           style: GoogleFonts.poppins(
             textStyle: Theme.of(context).textTheme.headlineSmall!.apply(
-                color: Theme.of(context).primaryColorDark,
+                // color: Theme.of(context).primaryColorDark,
+                color: WHITE,
                 fontWeightDelta: 1,
                 fontSizeFactor: .8),
           ),

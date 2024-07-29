@@ -653,66 +653,70 @@ class _HomeScreenState extends State<HomeScreen> {
                         //margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
-                          color: Theme.of(context).primaryColorDark,
+                          // color: Theme.of(context).primaryColorDark,
+                          color: WHITE,
                         ),
                         child: textField = TextField(
                           controller: _textController,
                           decoration: InputDecoration(
-                              contentPadding: EdgeInsets.all(10),
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Theme.of(context).primaryColorDark),
-                                borderRadius: BorderRadius.circular(15),
+                            contentPadding: EdgeInsets.all(10),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                // color: Theme.of(context).primaryColorDark,
+                                color: WHITE,
                               ),
-                              hintText: SEARCH_DOCTOR_BY_NAME,
-                              hintStyle: GoogleFonts.poppins(
-                                textStyle: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .apply(
-                                      color: Theme.of(context)
-                                          .primaryColorDark
-                                          .withOpacity(0.4),
-                                    ),
-                              ),
-                              prefixIcon: Icon(Icons.search,
-                                  color: Theme.of(context)
-                                      .primaryColorDark
-                                      .withOpacity(0.4)),
-                              suffixIcon: Container(
-                                height: 20,
-                                width: 20,
-                                child: Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(13),
-                                    child: CircularProgressIndicator(
-                                      color: const Color.fromARGB(
-                                          255, 243, 103, 9),
-                                      strokeWidth: 1.5,
-                                      valueColor: isLoading
-                                          ? AlwaysStoppedAnimation(
-                                              Theme.of(context).hintColor)
-                                          : AlwaysStoppedAnimation(
-                                              Colors.transparent),
-                                    ),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            hintText: SEARCH_DOCTOR_BY_NAME,
+                            hintStyle: GoogleFonts.poppins(
+                              textStyle:
+                                  Theme.of(context).textTheme.bodyMedium!.apply(
+                                        color: Theme.of(context)
+                                            .primaryColorDark
+                                            .withOpacity(0.4),
+                                      ),
+                            ),
+                            prefixIcon: Icon(Icons.search,
+                                color: Theme.of(context)
+                                    .primaryColorDark
+                                    .withOpacity(0.4)),
+                            suffixIcon: Container(
+                              height: 20,
+                              width: 20,
+                              child: Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(13),
+                                  child: CircularProgressIndicator(
+                                    color:
+                                        const Color.fromARGB(255, 243, 103, 9),
+                                    strokeWidth: 1.5,
+                                    valueColor: isLoading
+                                        ? AlwaysStoppedAnimation(
+                                            Theme.of(context).hintColor)
+                                        : AlwaysStoppedAnimation(
+                                            Colors.transparent),
                                   ),
                                 ),
                               ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Theme.of(context).primaryColorDark),
-                                borderRadius: BorderRadius.circular(15),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Theme.of(context).primaryColorDark,
                               ),
-                              disabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Theme.of(context).primaryColorDark),
-                                borderRadius: BorderRadius.circular(15),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            disabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Theme.of(context).primaryColorDark),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Theme.of(context).primaryColorDark,
                               ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Theme.of(context).primaryColorDark),
-                                borderRadius: BorderRadius.circular(15),
-                              )),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                          ),
                           onChanged: (val) {
                             setState(() {
                               searchKeyword = val;
@@ -753,7 +757,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         width: 50,
                         height: 50,
                         decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColorDark,
+                          // color: Theme.of(context).primaryColorDark,
+                          color: WHITE,
+
                           borderRadius: BorderRadius.circular(15),
                         ),
                         child: Center(

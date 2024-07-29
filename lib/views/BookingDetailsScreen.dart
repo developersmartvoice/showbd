@@ -118,47 +118,48 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: WillPopScope(
-        onWillPop: () async {
-          // Pop the dialog if it's open
-          if (Navigator.of(context).canPop()) {
-            Navigator.of(context).pop(true);
-            return false; // Prevent default back button behavior
-          }
-          return true; // Allow default back button behavior
-        },
-        child: Scaffold(
-          appBar: AppBar(
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back),
-              color: WHITE,
-              onPressed: () {
-                Navigator.of(context).pop(true);
-              },
-            ),
-            title: Text("BOOKING DETAILS",
-                style: Theme.of(context).textTheme.headlineSmall!.apply(
-                    color: Theme.of(context).primaryColorDark,
-                    fontWeightDelta: 5)),
-            centerTitle: true,
-            flexibleSpace: Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(
-                      "assets/moreScreenImages/header_bg.png"), // Add your background image path
-                  fit: BoxFit.cover,
-                ),
+    return WillPopScope(
+      onWillPop: () async {
+        // Pop the dialog if it's open
+        if (Navigator.of(context).canPop()) {
+          Navigator.of(context).pop(true);
+          return false; // Prevent default back button behavior
+        }
+        return true; // Allow default back button behavior
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            color: WHITE,
+            onPressed: () {
+              Navigator.of(context).pop(true);
+            },
+          ),
+          title: Text("BOOKING DETAILS",
+              style: Theme.of(context).textTheme.headlineSmall!.apply(
+                  // color: Theme.of(context).primaryColorDark,
+                  color: WHITE,
+                  fontWeightDelta: 5)),
+          centerTitle: true,
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(
+                    "assets/moreScreenImages/header_bg.png"), // Add your background image path
+                fit: BoxFit.cover,
               ),
             ),
           ),
-          body: loading
-              ? Center(
-                  child: CircularProgressIndicator(
-                    color: Color.fromARGB(255, 243, 103, 9),
-                  ),
-                )
-              : Padding(
+        ),
+        body: loading
+            ? Center(
+                child: CircularProgressIndicator(
+                  color: Color.fromARGB(255, 243, 103, 9),
+                ),
+              )
+            : SafeArea(
+                child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: AnimatedContainer(
                     duration: Duration(milliseconds: 500),
@@ -366,7 +367,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                     ),
                   ),
                 ),
-        ),
+              ),
       ),
     );
   }
