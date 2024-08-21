@@ -734,15 +734,23 @@ class _BookingScreenState extends State<BookingScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10),
-                      child: Text(
-                        'Select Date',
-                        style: GoogleFonts.robotoCondensed(
-                          fontSize: MediaQuery.of(context).size.width * 0.04,
-                          fontWeight: FontWeight.w500,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Select Date',
+                          style: GoogleFonts.robotoCondensed(
+                            fontSize: MediaQuery.of(context).size.width * 0.04,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
-                      ),
+                        !isDatePicked
+                            ? Icon(
+                                Icons.report,
+                                color: Colors.red,
+                              )
+                            : Text("")
+                      ],
                     ),
                     GestureDetector(
                       onTap: () => _selectDate(context),
@@ -773,16 +781,16 @@ class _BookingScreenState extends State<BookingScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 20),
                     SizedBox(
                       height: 100,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
                                 'Tour Duration',
                                 style: GoogleFonts.robotoCondensed(
                                   fontSize:
@@ -790,44 +798,50 @@ class _BookingScreenState extends State<BookingScreen> {
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
+                              !isTimeDurationPicked
+                                  ? Icon(
+                                      Icons.report,
+                                      color: Colors.red,
+                                    )
+                                  : Text("")
+                            ],
+                          ),
+                          // SizedBox(width: 50),
+                          Expanded(
+                            child: DropdownSearch<String>(
+                              items: ['1h', '2h', '3h'],
+                              onChanged: (value) {
+                                setState(() {
+                                  isTimeDurationPicked = true;
+                                  if (value == '1h') {
+                                    timeDuration = 1;
+                                  } else if (value == '2h') {
+                                    timeDuration = 2;
+                                  } else if (value == '3h') {
+                                    timeDuration = 3;
+                                  } else {
+                                    timeDuration = 0;
+                                    isTimeDurationPicked = false;
+                                  }
+                                  selectedDuration = value!;
+                                });
+                              },
+                              selectedItem: selectedDuration,
                             ),
-                            SizedBox(width: 50),
-                            Expanded(
-                              child: DropdownSearch<String>(
-                                items: ['1h', '2h', '3h'],
-                                onChanged: (value) {
-                                  setState(() {
-                                    isTimeDurationPicked = true;
-                                    if (value == '1h') {
-                                      timeDuration = 1;
-                                    } else if (value == '2h') {
-                                      timeDuration = 2;
-                                    } else if (value == '3h') {
-                                      timeDuration = 3;
-                                    } else {
-                                      timeDuration = 0;
-                                      isTimeDurationPicked = false;
-                                    }
-                                    selectedDuration = value!;
-                                  });
-                                },
-                                selectedItem: selectedDuration,
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                     SizedBox(height: 10),
                     SizedBox(
                       height: 100,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
                                 'Preferred Meeting Time',
                                 style: GoogleFonts.robotoCondensed(
                                   fontSize:
@@ -836,44 +850,50 @@ class _BookingScreenState extends State<BookingScreen> {
                                 ),
                                 overflow: TextOverflow.ellipsis,
                               ),
+                              !isMeetingTimePicled
+                                  ? Icon(
+                                      Icons.report,
+                                      color: Colors.red,
+                                    )
+                                  : Text("")
+                            ],
+                          ),
+                          // SizedBox(width: 50),
+                          Expanded(
+                            child: DropdownSearch<String>(
+                              items: [
+                                'Flexible',
+                                'Earlier',
+                                'Morning',
+                                'Noon',
+                                'Afternoon'
+                              ],
+                              onChanged: (value) {
+                                setState(() {
+                                  if (value != null) {
+                                    isMeetingTimePicled = true;
+                                  } else {
+                                    isMeetingTimePicled = false;
+                                  }
+                                  selectedMeetingTime = value!;
+                                });
+                              },
+                              selectedItem: selectedMeetingTime,
                             ),
-                            SizedBox(width: 50),
-                            Expanded(
-                              child: DropdownSearch<String>(
-                                items: [
-                                  'Flexible',
-                                  'Earlier',
-                                  'Morning',
-                                  'Noon',
-                                  'Afternoon'
-                                ],
-                                onChanged: (value) {
-                                  setState(() {
-                                    if (value != null) {
-                                      isMeetingTimePicled = true;
-                                    } else {
-                                      isMeetingTimePicled = false;
-                                    }
-                                    selectedMeetingTime = value!;
-                                  });
-                                },
-                                selectedItem: selectedMeetingTime,
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                     SizedBox(height: 10),
                     SizedBox(
                       height: 100,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
                                 'Number of People',
                                 style: GoogleFonts.robotoCondensed(
                                   fontSize:
@@ -881,49 +901,66 @@ class _BookingScreenState extends State<BookingScreen> {
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
+                              !isNumberofPeoplePicked
+                                  ? Icon(
+                                      Icons.report,
+                                      color: Colors.red,
+                                    )
+                                  : Text("")
+                            ],
+                          ),
+                          // SizedBox(width: 50),
+                          Expanded(
+                            child: DropdownSearch<String>(
+                              items: [
+                                'Just me',
+                                'Two people',
+                                'Three people',
+                                'More than three people',
+                              ],
+                              onChanged: (value) {
+                                setState(() {
+                                  isNumberofPeoplePicked = true;
+                                  if (value == 'Just me') {
+                                    people = 1;
+                                  } else if (value == 'Two people') {
+                                    people = 2;
+                                  } else if (value == 'Three people') {
+                                    people = 3;
+                                  } else if (value ==
+                                      'More than three people') {
+                                    people = 4;
+                                  } else {
+                                    people = 0;
+                                    isMeetingTimePicled = false;
+                                  }
+                                  selectedNumberOfPeople = value!;
+                                });
+                              },
+                              selectedItem: selectedNumberOfPeople,
                             ),
-                            SizedBox(width: 50),
-                            Expanded(
-                              child: DropdownSearch<String>(
-                                items: [
-                                  'Just me',
-                                  'Two people',
-                                  'Three people',
-                                  'More than three people',
-                                ],
-                                onChanged: (value) {
-                                  setState(() {
-                                    isNumberofPeoplePicked = true;
-                                    if (value == 'Just me') {
-                                      people = 1;
-                                    } else if (value == 'Two people') {
-                                      people = 2;
-                                    } else if (value == 'Three people') {
-                                      people = 3;
-                                    } else if (value ==
-                                        'More than three people') {
-                                      people = 4;
-                                    } else {
-                                      people = 0;
-                                      isMeetingTimePicled = false;
-                                    }
-                                    selectedNumberOfPeople = value!;
-                                  });
-                                },
-                                selectedItem: selectedNumberOfPeople,
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                     SizedBox(height: 16),
-                    Text(
-                      WHAT_BRING_YOU_HERE,
-                      style: GoogleFonts.robotoCondensed(
-                        fontSize: MediaQuery.of(context).size.width * 0.04,
-                        fontWeight: FontWeight.w500,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          WHAT_BRING_YOU_HERE,
+                          style: GoogleFonts.robotoCondensed(
+                            fontSize: MediaQuery.of(context).size.width * 0.04,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        !isMessageGiven
+                            ? Icon(
+                                Icons.report,
+                                color: Colors.red,
+                              )
+                            : Text("")
+                      ],
                     ),
                     TextField(
                       onChanged: (value) {

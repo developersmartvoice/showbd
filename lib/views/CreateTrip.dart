@@ -2,7 +2,8 @@ import 'dart:convert';
 
 import 'package:appcode3/en.dart';
 import 'package:appcode3/main.dart';
-import 'package:appcode3/views/Doctor/Tour.dart';
+import 'package:appcode3/views/Doctor/DoctorTabScreen.dart';
+// import 'package:appcode3/views/Doctor/Tour.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
@@ -171,415 +172,404 @@ class _CreateTripState extends State<CreateTrip> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Image.asset(
-          "assets/moreScreenImages/header_bg.png",
-          height: 140,
-          fit: BoxFit.fill,
-          width: MediaQuery.of(context).size.width,
+    return Scaffold(
+      appBar: AppBar(
+        foregroundColor: WHITE,
+        title: Text(
+          'Create Trip',
+          style: GoogleFonts.poppins(
+            textStyle: Theme.of(context).textTheme.headlineSmall!.apply(
+                // color: Theme.of(context).primaryColorDark,
+                color: WHITE,
+                fontWeightDelta: 1),
+          ),
         ),
-        SafeArea(
-          child: Scaffold(
-            appBar: AppBar(
-              foregroundColor: WHITE,
-              title: Text(
-                'Create Trip',
-                style: GoogleFonts.poppins(
-                  textStyle: Theme.of(context).textTheme.headlineSmall!.apply(
-                      // color: Theme.of(context).primaryColorDark,
-                      color: WHITE,
-                      fontWeightDelta: 1),
-                ),
-              ),
-              centerTitle: true,
-              flexibleSpace: Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(
-                        "assets/moreScreenImages/header_bg.png"), // Add your background image path
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
+        centerTitle: true,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(
+                  "assets/moreScreenImages/header_bg.png"), // Add your background image path
+              fit: BoxFit.cover,
             ),
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        // Navigate to the location search page
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => LocationSearchPage(),
-                          ),
-                        ).then((selectedLocation) {
-                          if (selectedLocation != null) {
-                            setState(() {
-                              location = selectedLocation;
-                              locationPicked = true;
-                            });
-                          }
+          ),
+        ),
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    // Navigate to the location search page
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LocationSearchPage(),
+                      ),
+                    ).then((selectedLocation) {
+                      if (selectedLocation != null) {
+                        setState(() {
+                          location = selectedLocation;
+                          locationPicked = true;
                         });
-                      },
-                      child: Container(
-                        padding: EdgeInsets.symmetric(vertical: 16.0),
-                        child: Column(
+                      }
+                    });
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                    child: Column(
+                      children: [
+                        Row(
                           children: [
-                            Row(
-                              children: [
-                                Text(
-                                  'Destination :  ',
-                                  style: GoogleFonts.poppins(
-                                    color: Colors.grey,
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                                // Expanded(
-                                //   child: Text(
-                                //     location.toUpperCase(),
-                                //     style: GoogleFonts.poppins(
-                                //         fontWeight: FontWeight.w500,
-                                //         color: location == 'Where are you going?'
-                                //             ? Colors.grey
-                                //             : Color.fromARGB(255, 255, 84, 5),
-                                //         fontSize: 20),
-                                //   ),
-                                // ),
-                                // Icon(Icons.location_searching_sharp,
-                                //     color: Colors.lightBlue),
-                              ],
+                            Text(
+                              'Destination :  ',
+                              style: GoogleFonts.poppins(
+                                color: Colors.grey,
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Row(
-                              children: [
-                                Icon(Icons.search_sharp,
-                                    color: location == 'Where are you going?'
-                                        ? Colors.lightBlue
-                                        : Color.fromARGB(255, 255, 84, 5)),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    location.toUpperCase(),
-                                    style: GoogleFonts.poppins(
-                                        fontWeight: FontWeight.w500,
-                                        color: location ==
-                                                'Where are you going?'
-                                            ? Colors.grey
-                                            : Color.fromARGB(255, 255, 84, 5),
-                                        fontSize: 20),
-                                  ),
-                                ),
-                                SizedBox(
-                                    width:
-                                        5), // Adjust the space between icon and text as needed
-                                // Expanded(
-                                //     child: Container(
-                                //         alignment: Alignment.centerLeft,
-                                //         child: !locationPicked
-                                //             ? Text("Enter location",
-                                //                 style: GoogleFonts.robotoCondensed(
-                                //                   fontSize: 18,
-                                //                   fontWeight: FontWeight.w500,
-                                //                 ))
-                                //             : Text(""))),
-                              ],
-                            ),
+                            // Expanded(
+                            //   child: Text(
+                            //     location.toUpperCase(),
+                            //     style: GoogleFonts.poppins(
+                            //         fontWeight: FontWeight.w500,
+                            //         color: location == 'Where are you going?'
+                            //             ? Colors.grey
+                            //             : Color.fromARGB(255, 255, 84, 5),
+                            //         fontSize: 20),
+                            //   ),
+                            // ),
+                            // Icon(Icons.location_searching_sharp,
+                            //     color: Colors.lightBlue),
                           ],
                         ),
-                      ),
-                    ),
-
-                    Divider(
-                      height: 2,
-                      color: Colors.grey,
-                    ),
-
-                    SizedBox(height: 30.0),
-                    Container(
-                      child: InkWell(
-                        onTap: () => _selectDate(context, true),
-                        child: InputDecorator(
-                          decoration: InputDecoration(
-                              labelText: DATE_FROM.toUpperCase(),
-                              labelStyle: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.w500,
-                                  color: datePickedStart
-                                      ? Color.fromARGB(255, 255, 84, 5)
-                                      : Colors.grey,
-                                  fontSize: 24),
-                              //),
-                              errorText: !datePickedStart
-                                  ? "Field cannot be empty!"
-                                  : ""),
-                          child: Text(
-                            '${startDate.day.toString().padLeft(2, '0')} ${_getMonthAbbreviation(startDate.month)} ${startDate.year}',
-                          ),
+                        SizedBox(
+                          height: 5,
                         ),
-                      ),
-                    ),
-
-                    // Divider(
-                    //   height: 50,
-                    //   color: Colors.grey,
-                    // ),
-                    SizedBox(height: 30.0),
-                    Container(
-                      child: InkWell(
-                        onTap: () => _selectDate(context, false),
-                        child: InputDecorator(
-                          decoration: InputDecoration(
-                              labelText: DATE_TO.toUpperCase(),
-                              // labelStyle: TextStyle(fontSize: 18)
-                              labelStyle: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.w500,
-                                  color: datePickedEnd
-                                      ? Color.fromARGB(255, 255, 84, 5)
-                                      : Colors.grey,
-                                  fontSize: 24),
-                              //),
-                              errorText: !datePickedEnd
-                                  ? "Field cannot be empty!"
-                                  : ""),
-                          child: Text(
-                            '${endDate.day.toString().padLeft(2, '0')} ${_getMonthAbbreviation(endDate.month)} ${endDate.year}',
-                          ),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.search_sharp,
+                              color: location == 'Where are you going?'
+                                  ? Colors.lightBlue
+                                  : Color.fromARGB(255, 255, 84, 5),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(
+                              child: Text(
+                                location.toUpperCase(),
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.w500,
+                                    color: location == 'Where are you going?'
+                                        ? Colors.grey
+                                        : Color.fromARGB(255, 255, 84, 5),
+                                    fontSize: 20),
+                              ),
+                            ),
+                            SizedBox(
+                                width:
+                                    5), // Adjust the space between icon and text as needed
+                            // Expanded(
+                            //     child: Container(
+                            //         alignment: Alignment.centerLeft,
+                            //         child: !locationPicked
+                            //             ? Text("Enter location",
+                            //                 style: GoogleFonts.robotoCondensed(
+                            //                   fontSize: 18,
+                            //                   fontWeight: FontWeight.w500,
+                            //                 ))
+                            //             : Text(""))),
+                          ],
                         ),
-                      ),
+                      ],
                     ),
+                  ),
+                ),
 
-                    // Divider(
-                    //   height: 20,
-                    //   color: Colors.grey,
-                    // ),
-                    SizedBox(height: 30.0),
-                    InkWell(
-                      onTap: () => _selectNumberOfPeople(context),
-                      child: InputDecorator(
-                        decoration: InputDecoration(
-                            labelText: PEOPLE.toUpperCase(),
-                            labelStyle: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w500,
-                                color: !peoplePicked
-                                    ? Colors.grey
-                                    : Color.fromARGB(255, 255, 84, 5),
-                                fontSize: 24),
-                            //),
-                            errorText:
-                                !peoplePicked ? "Field cannot be empty!" : ""),
-                        child: Text(numberOfPeople),
-                      ),
-                    ),
+                Divider(
+                  height: 2,
+                  color: Colors.grey,
+                ),
 
-                    // Divider(
-                    //   height: 20,
-                    //   color: Colors.grey,
-                    // ),
-
-                    SizedBox(height: 30.0),
-                    // Add the last input field and button here
-
-                    InkWell(
-                      onTap: ()
-                          //() {
-                          //   // Implement the logic for the last input field
-                          //   Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //       builder: (context)
-                          =>
-                          _lookingForLocals(context),
-
-                      //onTap: () => _selectNumberOfPeople(context),
-                      // onTap: () => TypeSelectionPage(
-                      //   onGenderSelected: (selectedGender) {
-                      //     if (selectedGender != null) {
-                      //       setState(() {
-                      //         gender = selectedGender;
-                      //         genderPicked = true;
-                      //       });
-                      //     }
-                      //   },
-                      // ),
-                      child: InputDecorator(
-                        decoration: InputDecoration(
-                            //labelText: PEOPLE.toUpperCase(),
-                            labelText: LOOKING_LOCAL.toUpperCase(),
-                            labelStyle: GoogleFonts.poppins(
+                SizedBox(height: 30.0),
+                Container(
+                  child: InkWell(
+                    onTap: () => _selectDate(context, true),
+                    child: InputDecorator(
+                      decoration: InputDecoration(
+                          labelText: DATE_FROM.toUpperCase(),
+                          labelStyle: GoogleFonts.poppins(
                               fontWeight: FontWeight.w500,
-                              color: genderPicked
+                              color: datePickedStart
                                   ? Color.fromARGB(255, 255, 84, 5)
                                   : Colors.grey,
-                              fontSize: 24,
-                            ),
-
-                            // labelStyle: GoogleFonts.poppins(
-                            //     fontWeight: FontWeight.w500,
-                            //     color: !peoplePicked
-                            //         ? Colors.grey
-                            //         : Color.fromARGB(255, 255, 84, 5),
-                            //     fontSize: 24),
-                            //),
-                            errorText:
-                                !genderPicked ? "Field cannot be empty!" : ""),
-                        child: Text(gender),
+                              fontSize: 24),
+                          //),
+                          errorText:
+                              !datePickedStart ? "Field cannot be empty!" : ""),
+                      child: Text(
+                        '${startDate.day.toString().padLeft(2, '0')} ${_getMonthAbbreviation(startDate.month)} ${startDate.year}',
                       ),
+                    ),
+                  ),
+                ),
 
-                      // onTap: () {
+                // Divider(
+                //   height: 50,
+                //   color: Colors.grey,
+                // ),
+                SizedBox(height: 30.0),
+                Container(
+                  child: InkWell(
+                    onTap: () => _selectDate(context, false),
+                    child: InputDecorator(
+                      decoration: InputDecoration(
+                          labelText: DATE_TO.toUpperCase(),
+                          // labelStyle: TextStyle(fontSize: 18)
+                          labelStyle: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w500,
+                              color: datePickedEnd
+                                  ? Color.fromARGB(255, 255, 84, 5)
+                                  : Colors.grey,
+                              fontSize: 24),
+                          //),
+                          errorText:
+                              !datePickedEnd ? "Field cannot be empty!" : ""),
+                      child: Text(
+                        '${endDate.day.toString().padLeft(2, '0')} ${_getMonthAbbreviation(endDate.month)} ${endDate.year}',
+                      ),
+                    ),
+                  ),
+                ),
+
+                // Divider(
+                //   height: 20,
+                //   color: Colors.grey,
+                // ),
+                SizedBox(height: 30.0),
+                InkWell(
+                  onTap: () => _selectNumberOfPeople(context),
+                  child: InputDecorator(
+                    decoration: InputDecoration(
+                        labelText: PEOPLE.toUpperCase(),
+                        labelStyle: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w500,
+                            color: !peoplePicked
+                                ? Colors.grey
+                                : Color.fromARGB(255, 255, 84, 5),
+                            fontSize: 24),
+                        //),
+                        errorText:
+                            !peoplePicked ? "Field cannot be empty!" : ""),
+                    child: Text(numberOfPeople),
+                  ),
+                ),
+
+                // Divider(
+                //   height: 20,
+                //   color: Colors.grey,
+                // ),
+
+                SizedBox(height: 30.0),
+                // Add the last input field and button here
+
+                InkWell(
+                  onTap: ()
+                      //() {
                       //   // Implement the logic for the last input field
                       //   Navigator.push(
                       //     context,
                       //     MaterialPageRoute(
-                      //     builder: (context) => TypeSelectionPage(
-                      //         onGenderSelected: (selectedGender) {
-                      //           if (selectedGender != null) {
-                      //             setState(() {
-                      //               gender = selectedGender;
-                      //               genderPicked = true;
-                      //             });
-                      //           }
-                      //         },
-                      //       ),
-                      //     ),
-                      //   );
-                      // },
-                      // child: InputDecorator(
-                      //   decoration: InputDecoration(
-                      //       labelText: LOOKING_LOCAL.toUpperCase(),
-                      //       labelStyle: GoogleFonts.poppins(
-                      //         fontWeight: FontWeight.w500,
-                      //         color: genderPicked
-                      //             ? Color.fromARGB(255, 255, 84, 5)
-                      //             : Colors.grey,
-                      //         fontSize: 24,
-                      //       ),
-                      //       //),
-                      //       errorText:
-                      //           !genderPicked ? "Field cannot be empty!" : ""),
-                      //   child: Row(
-                      //     //mainAxisAlignment: MainAxisAlignment.end,
-                      //     children: [
-                      //       SizedBox(
-                      //         height: 30,
-                      //         child: Text(
-                      //           gender,
-                      //           style: GoogleFonts.robotoCondensed(
-                      //             fontSize: 18,
-                      //             fontWeight: FontWeight.w500,
-                      //           ),
-                      //         ),
-                      //       ),
-                      //       Column(
-                      //         mainAxisAlignment: MainAxisAlignment.end,
-                      //         children: [
-                      //           IconButton(
-                      //             icon: Icon(Icons.arrow_forward_ios_sharp),
-                      //             onPressed: () {
-                      //               //     Navigator.push(
-                      //               //       context,
-                      //               //  MaterialPageRoute(
-                      //               //           builder: (context) =>
-                      //               //          SendOffersScreen()),
-                      //               //    );
-                      //               // Handle forward button press
-                      //             },
-                      //           ),
-                      //         ],
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
-                    ),
+                      //       builder: (context)
+                      =>
+                      _lookingForLocals(context),
 
-                    //SizedBox(height: MediaQuery.of(context).size.height * .09),
+                  //onTap: () => _selectNumberOfPeople(context),
+                  // onTap: () => TypeSelectionPage(
+                  //   onGenderSelected: (selectedGender) {
+                  //     if (selectedGender != null) {
+                  //       setState(() {
+                  //         gender = selectedGender;
+                  //         genderPicked = true;
+                  //       });
+                  //     }
+                  //   },
+                  // ),
+                  child: InputDecorator(
+                    decoration: InputDecoration(
+                        //labelText: PEOPLE.toUpperCase(),
+                        labelText: LOOKING_LOCAL.toUpperCase(),
+                        labelStyle: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w500,
+                          color: genderPicked
+                              ? Color.fromARGB(255, 255, 84, 5)
+                              : Colors.grey,
+                          fontSize: 24,
+                        ),
 
-                    SizedBox(
-                      height: 50,
-                    ),
+                        // labelStyle: GoogleFonts.poppins(
+                        //     fontWeight: FontWeight.w500,
+                        //     color: !peoplePicked
+                        //         ? Colors.grey
+                        //         : Color.fromARGB(255, 255, 84, 5),
+                        //     fontSize: 24),
+                        //),
+                        errorText:
+                            !genderPicked ? "Field cannot be empty!" : ""),
+                    child: Text(gender),
+                  ),
 
-                    // Update the ElevatedButton.icon widget
-                    ElevatedButton.icon(
-                      onPressed: () {
-                        // Handle the Create Trip button click
-                        // You can implement the logic to create the trip here
-                        if (locationPicked &&
+                  // onTap: () {
+                  //   // Implement the logic for the last input field
+                  //   Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //     builder: (context) => TypeSelectionPage(
+                  //         onGenderSelected: (selectedGender) {
+                  //           if (selectedGender != null) {
+                  //             setState(() {
+                  //               gender = selectedGender;
+                  //               genderPicked = true;
+                  //             });
+                  //           }
+                  //         },
+                  //       ),
+                  //     ),
+                  //   );
+                  // },
+                  // child: InputDecorator(
+                  //   decoration: InputDecoration(
+                  //       labelText: LOOKING_LOCAL.toUpperCase(),
+                  //       labelStyle: GoogleFonts.poppins(
+                  //         fontWeight: FontWeight.w500,
+                  //         color: genderPicked
+                  //             ? Color.fromARGB(255, 255, 84, 5)
+                  //             : Colors.grey,
+                  //         fontSize: 24,
+                  //       ),
+                  //       //),
+                  //       errorText:
+                  //           !genderPicked ? "Field cannot be empty!" : ""),
+                  //   child: Row(
+                  //     //mainAxisAlignment: MainAxisAlignment.end,
+                  //     children: [
+                  //       SizedBox(
+                  //         height: 30,
+                  //         child: Text(
+                  //           gender,
+                  //           style: GoogleFonts.robotoCondensed(
+                  //             fontSize: 18,
+                  //             fontWeight: FontWeight.w500,
+                  //           ),
+                  //         ),
+                  //       ),
+                  //       Column(
+                  //         mainAxisAlignment: MainAxisAlignment.end,
+                  //         children: [
+                  //           IconButton(
+                  //             icon: Icon(Icons.arrow_forward_ios_sharp),
+                  //             onPressed: () {
+                  //               //     Navigator.push(
+                  //               //       context,
+                  //               //  MaterialPageRoute(
+                  //               //           builder: (context) =>
+                  //               //          SendOffersScreen()),
+                  //               //    );
+                  //               // Handle forward button press
+                  //             },
+                  //           ),
+                  //         ],
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                ),
+
+                //SizedBox(height: MediaQuery.of(context).size.height * .09),
+
+                SizedBox(
+                  height: 50,
+                ),
+
+                // Update the ElevatedButton.icon widget
+                ElevatedButton.icon(
+                  onPressed: () {
+                    // Handle the Create Trip button click
+                    // You can implement the logic to create the trip here
+                    if (locationPicked &&
+                        datePickedStart &&
+                        datePickedEnd &&
+                        peoplePicked &&
+                        genderPicked) {
+                      setState(() {
+                        isLoading = true; // Set loading state to true
+                      });
+
+                      // Calculate duration in days
+                      durationInDays =
+                          calculateDurationInDays(startDate, endDate);
+                      print(durationInDays);
+
+                      // Call the createTrip function
+                      createTrip();
+                    } else {
+                      // Handle the case where some fields are not selected
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    backgroundColor: locationPicked &&
                             datePickedStart &&
                             datePickedEnd &&
                             peoplePicked &&
-                            genderPicked) {
-                          setState(() {
-                            isLoading = true; // Set loading state to true
-                          });
-
-                          // Calculate duration in days
-                          durationInDays =
-                              calculateDurationInDays(startDate, endDate);
-                          print(durationInDays);
-
-                          // Call the createTrip function
-                          createTrip();
-                        } else {
-                          // Handle the case where some fields are not selected
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                        backgroundColor: locationPicked &&
-                                datePickedStart &&
-                                datePickedEnd &&
-                                peoplePicked &&
-                                genderPicked
-                            ? Color.fromARGB(255, 255, 84, 5)
-                            : Color.fromARGB(255, 185, 199, 206),
-                        fixedSize: Size(
-                          MediaQuery.of(context).size.width * .5,
-                          50,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                      ),
-                      icon: isLoading
-                          ? SizedBox(
-                              width: 24,
-                              height: 24,
-                              child: CircularProgressIndicator(
-                                color: const Color.fromARGB(255, 243, 103, 9),
-                                valueColor:
-                                    AlwaysStoppedAnimation<Color>(Colors.white),
-                              ),
-                            )
-                          : Icon(
-                              Icons.travel_explore,
-                              color: Colors.white,
-                            ),
-                      label: isLoading
-                          ? SizedBox.shrink() // Hide label when loading
-                          : Text(
-                              'Create Trip',
-                              style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w700,
-                                color: WHITE,
-                                fontSize: 18,
-                              ),
-                            ),
+                            genderPicked
+                        ? Color.fromARGB(255, 255, 84, 5)
+                        : Color.fromARGB(255, 185, 199, 206),
+                    fixedSize: Size(
+                      MediaQuery.of(context).size.width * .5,
+                      50,
                     ),
-                  ],
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                  icon: isLoading
+                      ? SizedBox(
+                          width: 24,
+                          height: 24,
+                          child: CircularProgressIndicator(
+                            color: const Color.fromARGB(255, 243, 103, 9),
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(Colors.white),
+                          ),
+                        )
+                      : Icon(
+                          Icons.travel_explore,
+                          color: Colors.white,
+                        ),
+                  label: isLoading
+                      ? SizedBox.shrink() // Hide label when loading
+                      : Text(
+                          'Create Trip',
+                          style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w700,
+                            color: WHITE,
+                            fontSize: 18,
+                          ),
+                        ),
                 ),
-              ),
+              ],
             ),
           ),
         ),
-      ],
+      ),
     );
   }
 
@@ -630,7 +620,7 @@ class _CreateTripState extends State<CreateTrip> {
                 onPressed: () {
                   Navigator.of(context).pop(); // Close the dialog
                   Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => Tour()),
+                    MaterialPageRoute(builder: (context) => DoctorTabsScreen()),
                   );
                 },
                 child: Text('OK'),

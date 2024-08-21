@@ -95,173 +95,161 @@ class _TourState extends State<Tour> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Image.asset(
-          "assets/moreScreenImages/header_bg.png",
-          height: 140,
-          fit: BoxFit.fill,
-          width: MediaQuery.of(context).size.width,
+    return Scaffold(
+      backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
+      appBar: AppBar(
+        title: Text(
+          TOUR,
+          style: GoogleFonts.poppins(
+            textStyle: Theme.of(context).textTheme.headlineSmall!.apply(
+                // color: Theme.of(context).primaryColorDark,
+                color: WHITE,
+                fontWeightDelta: 1),
+          ),
         ),
-        SafeArea(
-          child: Scaffold(
-            backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
-            appBar: AppBar(
-              title: Text(
-                TOUR,
-                style: GoogleFonts.poppins(
-                  textStyle: Theme.of(context).textTheme.headlineSmall!.apply(
-                      // color: Theme.of(context).primaryColorDark,
-                      color: WHITE,
-                      fontWeightDelta: 1),
-                ),
-              ),
-              centerTitle: true,
-              flexibleSpace: Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(
-                        "assets/moreScreenImages/header_bg.png"), // Add your background image path
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-            ),
-            body: Padding(
-              padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(16.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 2,
-                          blurRadius: 5,
-                          offset: Offset(0, 3),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Save time by planning your trip and get offers from locals',
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black,
-                            fontSize: 15,
-                          ),
-                        ),
-                        SizedBox(height: 16.0),
-                        ElevatedButton.icon(
-                          onPressed: () {
-                            // Handle the create trip button click
-                            // You can navigate to a new screen or perform other actions
-                            isMember
-                                ? Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => CreateTrip()),
-                                  )
-                                : Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (builder) => ChoosePlan()),
-                                  );
-                          },
-                          icon: Icon(CupertinoIcons.plus_circle_fill),
-                          label: Text(
-                            'Create Trip',
-                            style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w700,
-                              fontSize: MediaQuery.of(context).size.width *
-                                  0.05 /
-                                  1.2,
-                            ),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 13,
-                                horizontal: 25), // Adjust padding dynamically
-                            backgroundColor: Color.fromARGB(255, 243, 103, 9),
-                            foregroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  // Add the column view for displaying trips here
-                  // You can use a ListView.builder or any other widget based on your data
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * .02,
-                  ),
-                  isTripsAvailable && tripsClass!.data!.isNotEmpty
-                      ? Text(
-                          "My Trips",
-                          style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w500,
-                              color: BLACK,
-                              fontSize:
-                                  MediaQuery.of(context).size.width * 0.05),
-                        )
-                      : Container(
-                          alignment: Alignment.center,
-                          child: Column(
-                            // mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                height: MediaQuery.of(context).size.height *
-                                    0.03, // Adjust the height dynamically
-                              ),
-                              Text(
-                                "My saved Trips!",
-                                style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black,
-                                  fontSize:
-                                      MediaQuery.of(context).size.width * 0.035,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Text(
-                                "You haven't created any Trips yet. Create your first Trip so available locals can send you offers.",
-                                style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.black,
-                                  fontSize:
-                                      MediaQuery.of(context).size.width * 0.025,
-                                ),
-                              ),
-                              SizedBox(
-                                height: MediaQuery.of(context).size.height *
-                                    0.01, // Adjust the height dynamically
-                              ),
-                              buildTripList(),
-                            ],
-                          ),
-                        ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * .01,
-                  ),
-                  Flexible(child: buildTripList())
-                ],
-              ),
+        centerTitle: true,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(
+                  "assets/moreScreenImages/header_bg.png"), // Add your background image path
+              fit: BoxFit.cover,
             ),
           ),
         ),
-      ],
+      ),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                padding: EdgeInsets.all(16.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Save time by planning your trip and get offers from locals',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                        fontSize: 15,
+                      ),
+                    ),
+                    SizedBox(height: 16.0),
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        // Handle the create trip button click
+                        // You can navigate to a new screen or perform other actions
+                        isMember
+                            ? Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CreateTrip()),
+                              )
+                            : Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (builder) => ChoosePlan()),
+                              );
+                      },
+                      icon: Icon(CupertinoIcons.plus_circle_fill),
+                      label: Text(
+                        'Create Trip',
+                        style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w700,
+                          fontSize:
+                              MediaQuery.of(context).size.width * 0.05 / 1.2,
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 13,
+                            horizontal: 25), // Adjust padding dynamically
+                        backgroundColor: Color.fromARGB(255, 243, 103, 9),
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              // Add the column view for displaying trips here
+              // You can use a ListView.builder or any other widget based on your data
+              SizedBox(
+                height: MediaQuery.of(context).size.height * .02,
+              ),
+              isTripsAvailable && tripsClass!.data!.isNotEmpty
+                  ? Text(
+                      "My Trips",
+                      style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w500,
+                          color: BLACK,
+                          fontSize: MediaQuery.of(context).size.width * 0.05),
+                    )
+                  : Container(
+                      alignment: Alignment.center,
+                      child: Column(
+                        // mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height *
+                                0.03, // Adjust the height dynamically
+                          ),
+                          Text(
+                            "My saved Trips!",
+                            style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black,
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.035,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            "You haven't created any Trips yet. Create your first Trip so available locals can send you offers.",
+                            style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.025,
+                            ),
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height *
+                                0.01, // Adjust the height dynamically
+                          ),
+                          buildTripList(),
+                        ],
+                      ),
+                    ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * .01,
+              ),
+              Flexible(child: buildTripList())
+            ],
+          ),
+        ),
+      ),
     );
   }
 

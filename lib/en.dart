@@ -27,6 +27,7 @@ const String MAKE_AN_SUBSCRIBE = "Make a subscribe";
 const String LOGIN_TO_BOOK_APPOINTMENT = "Login to book now";
 const String DOCTOR_DASHBOARD = "Guide dashboard";
 const String TOUR = "Trips";
+const String EVENTS = "Events";
 const String INBOX = "Inbox";
 const String ALL_OFFERS = "All Offers";
 const String APPOINTMENTS = "Bookings";
