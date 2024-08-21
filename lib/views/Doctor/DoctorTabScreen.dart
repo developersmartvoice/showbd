@@ -5,6 +5,7 @@ import 'package:appcode3/main.dart';
 import 'package:appcode3/notificationHelper.dart';
 import 'package:appcode3/views/Doctor/DoctorChatListScreen.dart';
 import 'package:appcode3/views/Doctor/Tour.dart';
+import 'package:appcode3/views/EventsScreen.dart';
 import 'package:appcode3/views/HomeScreen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,7 @@ class _DoctorTabsScreenState extends State<DoctorTabsScreen> {
     HomeScreen(),
     // DoctorPastAppointments(),
     Tour(),
+    EventsScreen(),
     // DoctorProfile(),
     ChatListScreen(),
     MoreInfoScreen(),
@@ -129,17 +131,28 @@ class _DoctorTabsScreenState extends State<DoctorTabsScreen> {
                 BottomNavigationBarItem(
                   icon: Image.asset(
                     index == 2
+                        ? "assets/events_active.png"
+                        : "assets/events_inactive.png",
+                    height: 25,
+                    width: 25,
+                    fit: BoxFit.cover,
+                  ),
+                  label: "Events",
+                ),
+                BottomNavigationBarItem(
+                  icon: Image.asset(
+                    index == 3
                         ? "assets/homeScreenImages/chat fill.png"
                         : "assets/homeScreenImages/chat unfill.png",
                     height: 25,
-                    width: 35,
+                    width: 25,
                     // fit: BoxFit.cover,
                   ),
                   label: RECENT_CHATS,
                 ),
                 BottomNavigationBarItem(
                   icon: Image.asset(
-                    index == 3
+                    index == 4
                         ? "assets/homeScreenImages/profile_active.png"
                         : "assets/homeScreenImages/profile_unactive.png",
                     height: 25,
