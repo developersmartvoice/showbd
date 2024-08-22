@@ -30,6 +30,7 @@ class _CreateEventState extends State<CreateEvent> {
   TimeOfDay _selectedTime = TimeOfDay.now();
   String? userId;
   bool isLoading = false;
+  bool isValidateCall = false;
 
   @override
   void initState() {
@@ -88,11 +89,15 @@ class _CreateEventState extends State<CreateEvent> {
   }
 
   Future<void> _submitEvent() async {
-    if (!_formKey.currentState!.validate()) {
+    if (!_formKey.currentState!.validate() || _eventImage == null) {
+      setState(() {
+        isValidateCall = true;
+      });
       return;
     } else {
       setState(() {
         isLoading = true;
+        isValidateCall = false;
       });
     }
 
@@ -298,10 +303,18 @@ class _CreateEventState extends State<CreateEvent> {
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: Center(
-                                  child: Text('Tap to select event image'),
+                                  child: Text(
+                                    'Tap to select event image',
+                                    style: TextStyle(
+                                      color: isValidateCall
+                                          ? Colors.red
+                                          : Colors.blueGrey,
+                                    ),
+                                  ),
                                 ),
                               ),
                       ),
+                      // Text("Event image is required!"),
                       const SizedBox(height: 16),
                       TextFormField(
                         controller: _startDateController,
@@ -336,8 +349,14 @@ class _CreateEventState extends State<CreateEvent> {
                         readOnly: true,
                         onTap: () => _selectDate(_endDateController),
                         validator: (value) {
-                          if (value == null || value.isEmpty) {
+                          if ((value == null || value.isEmpty)) {
                             return 'Please select end date';
+                          }
+                          // Check if end date is not before start date
+                          if (_startDateController.text.isNotEmpty &&
+                              DateTime.parse(value).isBefore(
+                                  DateTime.parse(_startDateController.text))) {
+                            return 'End date cannot be before start date';
                           }
                           return null;
                         },
