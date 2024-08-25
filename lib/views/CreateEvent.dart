@@ -1,17 +1,20 @@
 import 'dart:convert';
-
 import 'package:appcode3/main.dart';
+import 'package:appcode3/views/Doctor/DoctorTabScreen.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'dart:io';
-
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CreateEvent extends StatefulWidget {
-  const CreateEvent({super.key});
+  final Map<String, dynamic>?
+      eventData; // Accept event data as an optional parameter
+
+  const CreateEvent({super.key, this.eventData});
 
   @override
   State<CreateEvent> createState() => _CreateEventState();
@@ -27,7 +30,7 @@ class _CreateEventState extends State<CreateEvent> {
   final TextEditingController _timingController = TextEditingController();
   final TextEditingController _locationController = TextEditingController();
   File? _eventImage;
-  TimeOfDay _selectedTime = TimeOfDay.now();
+  int? eventId;
   String? userId;
   bool isLoading = false;
   bool isValidateCall = false;
@@ -35,131 +38,170 @@ class _CreateEventState extends State<CreateEvent> {
   @override
   void initState() {
     super.initState();
+
     SharedPreferences.getInstance().then((pref) {
       setState(() {
         userId = pref.getString("userId");
         print(userId);
       });
     });
-  }
 
-  Future<void> _selectImage() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-
-    setState(() {
-      if (pickedFile != null) {
-        _eventImage = File(pickedFile.path);
-      }
-    });
+    if (widget.eventData != null) {
+      // Populate fields with existing event data if available
+      eventId = widget.eventData!['id'] ?? null;
+      _eventNameController.text = widget.eventData!['eventName'] ?? '';
+      _eventDescriptionController.text =
+          widget.eventData!['eventDescription'] ?? '';
+      _locationController.text = widget.eventData!['location'] ?? '';
+      _startDateController.text = widget.eventData!['start_date'] ?? '';
+      _endDateController.text = widget.eventData!['end_date'] ?? '';
+      _timingController.text = widget.eventData!['start_date_time'] != null
+          ? widget.eventData!['start_date_time'].substring(0, 5) // HH:mm
+          : '';
+    }
   }
 
   Future<void> _selectTime(TextEditingController controller) async {
+    // Determine the initial time to be used in the time picker
+    String initialTimeString =
+        widget.eventData != null && _timingController.text.isNotEmpty
+            ? _timingController.text
+            : TimeOfDay.now().format(context);
+
+    // Ensure the time string is in the correct format (HH:mm)
+    TimeOfDay initialTime = TimeOfDay.now();
+    try {
+      if (initialTimeString.isNotEmpty) {
+        List<String> timeParts = initialTimeString.split(":");
+        if (timeParts.length == 2) {
+          int hour = int.parse(timeParts[0]);
+          int minute = int.parse(timeParts[1]);
+          initialTime = TimeOfDay(hour: hour, minute: minute);
+        }
+      }
+    } catch (e) {
+      print('Error parsing time: $e');
+      // Fall back to current time if parsing fails
+      initialTime = TimeOfDay.now();
+    }
+
+    // Show the time picker
     final TimeOfDay? picked = await showTimePicker(
       context: context,
-      initialTime: _selectedTime,
+      initialTime: initialTime,
     );
 
-    if (picked != null && picked != _selectedTime) {
+    if (picked != null) {
       setState(() {
-        // Format the time as HH:mm
         final now = DateTime.now();
         final selectedTime =
             DateTime(now.year, now.month, now.day, picked.hour, picked.minute);
         String formattedTime = DateFormat('HH:mm').format(selectedTime);
         controller.text = formattedTime;
-        _selectedTime = picked;
       });
     }
   }
 
   Future<void> _selectDate(TextEditingController controller) async {
+    DateTime initialDate =
+        widget.eventData != null && controller.text.isNotEmpty
+            ? DateTime.parse(controller.text)
+            : DateTime.now();
+
     DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
+      initialDate: initialDate,
       firstDate: DateTime(2000),
       lastDate: DateTime(2101),
     );
 
     if (pickedDate != null) {
       setState(() {
-        controller.text = "${pickedDate.toLocal()}".split(' ')[0];
+        controller.text = DateFormat('yyyy-MM-dd').format(pickedDate);
       });
     }
   }
 
   Future<void> _submitEvent() async {
-    if (!_formKey.currentState!.validate() || _eventImage == null) {
+    if (!_formKey.currentState!.validate()) {
       setState(() {
         isValidateCall = true;
       });
       return;
-    } else {
-      setState(() {
-        isLoading = true;
-        isValidateCall = false;
-      });
     }
 
-    print('Event Name: ${_eventNameController.text}');
-    print('Start Date: ${_startDateController.text}');
-    print('End Date: ${_endDateController.text}');
-    print('Location: ${_locationController.text}');
-    print('Timing: ${_timingController.text}');
+    setState(() {
+      isLoading = true;
+      isValidateCall = false;
+    });
 
-    final uri = Uri.parse('$SERVER_ADDRESS/api/store_event');
+    final uri = widget.eventData != null
+        ? Uri.parse('$SERVER_ADDRESS/api/update_event')
+        : Uri.parse('$SERVER_ADDRESS/api/store_event');
+
     final request = http.MultipartRequest('POST', uri);
 
-    if (_eventImage != null) {
-      request.files
-          .add(await http.MultipartFile.fromPath('image', _eventImage!.path));
+    if (_eventImage != null || widget.eventData != null) {
+      if (_eventImage != null) {
+        // Add new image if selected
+        request.files
+            .add(await http.MultipartFile.fromPath('image', _eventImage!.path));
+      } else if (widget.eventData != null) {
+        // Keep existing image if no new image is selected
+        request.fields['existing_image'] = widget.eventData!['imgUrl'] ?? '';
+      }
     }
 
-    request.fields['user_id'] =
-        userId!; // Example user_id; replace with actual value
+    request.fields['user_id'] = userId!;
     request.fields['name'] = _eventNameController.text;
     request.fields['description'] = _eventDescriptionController.text;
     request.fields['start_date'] = _startDateController.text;
     request.fields['start_date_time'] = _timingController.text;
     request.fields['end_date'] = _endDateController.text;
     request.fields['location'] = _locationController.text;
-    // request.fields['slider_view'] =
-    //     '0'; // Optional, set default if not provided
+
+    if (widget.eventData != null) {
+      request.fields['id'] = widget.eventData!['id'].toString();
+    }
 
     final response = await request.send();
-    print(response.statusCode);
+    final responseBody = await response.stream.bytesToString();
+    final data = jsonDecode(responseBody);
+    print(data);
+
+    setState(() {
+      isLoading = false;
+      _eventImage = null;
+      _eventNameController.text = '';
+      _eventDescriptionController.text = '';
+      _startDateController.text = '';
+      _timingController.text = '';
+      _endDateController.text = '';
+      _locationController.text = '';
+    });
 
     if (response.statusCode == 200) {
-      final responseBody = await response.stream.bytesToString();
-      final data = jsonDecode(responseBody);
-
-      setState(() {
-        print(data);
-        isLoading = false;
-        _eventImage = null;
-        _eventNameController.text = '';
-        _eventDescriptionController.text = '';
-        _startDateController.text = '';
-        _timingController.text = '';
-        _endDateController.text = '';
-        _locationController.text = '';
-      });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Event created successfully!'),
+          content: Text(widget.eventData != null
+              ? 'Event updated successfully!'
+              : 'Event created successfully!'),
         ),
       );
-      // Handle successful response
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DoctorTabsScreen(
+              index: 2,
+            ),
+          ));
     } else {
-      setState(() {
-        isLoading = false;
-      });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Failed to create event'),
+          content: Text(
+              'Failed to ${widget.eventData != null ? 'update' : 'create'} event'),
         ),
       );
-      // Handle error response
     }
   }
 
@@ -225,7 +267,7 @@ class _CreateEventState extends State<CreateEvent> {
       appBar: AppBar(
         foregroundColor: Colors.white,
         title: Text(
-          'Create Event',
+          widget.eventData != null ? 'Edit Event' : 'Create Event',
           style: GoogleFonts.poppins(
             textStyle: Theme.of(context)
                 .textTheme
@@ -279,114 +321,92 @@ class _CreateEventState extends State<CreateEvent> {
                           color: Colors.black87,
                           fontSize: 16,
                         ),
-                        maxLines: 5,
-                        // maxLength: 500,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter event description';
-                          } else if (value.split(' ').length > 200) {
-                            return 'Description cannot exceed 200 words';
                           }
                           return null;
                         },
+                        maxLines: 4,
                       ),
-                      const SizedBox(height: 16),
-                      GestureDetector(
-                        onTap: _selectImage,
-                        child: _eventImage != null
-                            ? Image.file(_eventImage!,
-                                height: 200, fit: BoxFit.cover)
-                            : Container(
-                                height: 200,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey[200],
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    'Tap to select event image',
-                                    style: TextStyle(
-                                      color: isValidateCall
-                                          ? Colors.red
-                                          : Colors.blueGrey,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                      ),
-                      // Text("Event image is required!"),
                       const SizedBox(height: 16),
                       TextFormField(
                         controller: _startDateController,
+                        onTap: () => _selectDate(_startDateController),
                         decoration: _inputDecoration(
                           hintText: 'Start Date',
-                          suffixIcon: Icon(Icons.calendar_today),
+                          // suffixIcon: IconButton(
+                          //   icon: Icon(Icons.calendar_today_outlined),
+                          //   onPressed: () => _selectDate(_startDateController),
+                          // ),
+                          prefixIconData: Icons.date_range,
                         ),
                         style: TextStyle(
                           color: Colors.black87,
                           fontSize: 16,
                         ),
-                        readOnly: true,
-                        onTap: () => _selectDate(_startDateController),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please select start date';
+                            return 'Please select a start date';
                           }
                           return null;
                         },
-                      ),
-                      const SizedBox(height: 16),
-                      TextFormField(
-                        controller: _endDateController,
-                        decoration: _inputDecoration(
-                          hintText: 'End Date',
-                          suffixIcon: Icon(Icons.calendar_today),
-                        ),
-                        style: TextStyle(
-                          color: Colors.black87,
-                          fontSize: 16,
-                        ),
                         readOnly: true,
-                        onTap: () => _selectDate(_endDateController),
-                        validator: (value) {
-                          if ((value == null || value.isEmpty)) {
-                            return 'Please select end date';
-                          }
-                          // Check if end date is not before start date
-                          if (_startDateController.text.isNotEmpty &&
-                              DateTime.parse(value).isBefore(
-                                  DateTime.parse(_startDateController.text))) {
-                            return 'End date cannot be before start date';
-                          }
-                          return null;
-                        },
                       ),
                       const SizedBox(height: 16),
                       TextFormField(
                         controller: _timingController,
+                        onTap: () => _selectTime(_timingController),
                         decoration: _inputDecoration(
-                          hintText: 'Select Time',
-                          suffixIcon: Icon(Icons.timer),
+                          hintText: 'Start Time',
+                          // suffixIcon: IconButton(
+                          //   icon: Icon(Icons.access_time),
+                          //   onPressed: () => _selectTime(_timingController),
+                          // ),
+                          prefixIconData: Icons.access_time,
                         ),
                         style: TextStyle(
                           color: Colors.black87,
                           fontSize: 16,
                         ),
-                        readOnly: true,
-                        onTap: () => _selectTime(_timingController),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please select end date';
+                            return 'Please select a start time';
                           }
                           return null;
                         },
+                        readOnly: true,
+                      ),
+                      const SizedBox(height: 16),
+                      TextFormField(
+                        controller: _endDateController,
+                        onTap: () => _selectDate(_endDateController),
+                        decoration: _inputDecoration(
+                          hintText: 'End Date',
+                          // suffixIcon: IconButton(
+                          //   icon: Icon(Icons.calendar_today_outlined),
+                          //   onPressed: () => _selectDate(_endDateController),
+                          // ),
+                          prefixIconData: Icons.date_range,
+                        ),
+                        style: TextStyle(
+                          color: Colors.black87,
+                          fontSize: 16,
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please select an end date';
+                          }
+                          return null;
+                        },
+                        readOnly: true,
                       ),
                       const SizedBox(height: 16),
                       TextFormField(
                         controller: _locationController,
                         decoration: _inputDecoration(
-                          hintText: 'Event Location',
-                          prefixIconData: Icons.location_on,
+                          hintText: 'Location',
+                          prefixIconData: Icons.location_on_outlined,
                         ),
                         style: TextStyle(
                           color: Colors.black87,
@@ -399,28 +419,56 @@ class _CreateEventState extends State<CreateEvent> {
                           return null;
                         },
                       ),
-                      const SizedBox(height: 24),
+                      const SizedBox(height: 16),
+                      if (_eventImage != null || widget.eventData != null) ...[
+                        Text(
+                          'Selected Image:',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(height: 8),
+                        _eventImage != null
+                            ? Image.file(
+                                _eventImage!,
+                                width: double.infinity,
+                                height: 200,
+                                fit: BoxFit.cover,
+                              )
+                            : widget.eventData != null &&
+                                    widget.eventData!['imgUrl'] != null
+                                ? CachedNetworkImage(
+                                    imageUrl: widget.eventData!['imgUrl'],
+                                    width: double.infinity,
+                                    height: 200,
+                                    fit: BoxFit.cover,
+                                  )
+                                : SizedBox.shrink(),
+                        const SizedBox(height: 16),
+                      ],
+                      ElevatedButton.icon(
+                        onPressed: _pickImage,
+                        icon: Icon(Icons.photo_camera),
+                        label: Text('Select Event Image'),
+                      ),
+                      const SizedBox(height: 16),
                       ElevatedButton(
-                        // onPressed: () {
-                        //   if (_formKey.currentState!.validate()) {
-                        //     // Handle form submission here
-                        //     print('Event Name: ${_eventNameController.text}');
-                        //     print('Start Date: ${_startDateController.text}');
-                        //     print('End Date: ${_endDateController.text}');
-                        //     print('Location: ${_locationController.text}');
-                        //     print('Timing: ${_timingController.text}');
-                        //     // You can also handle the event image (_eventImage) here
-                        //   }
-                        // },
                         onPressed: _submitEvent,
-                        child: Text('Create Event'),
                         style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.symmetric(vertical: 15),
+                          padding: EdgeInsets.symmetric(vertical: 16),
                           backgroundColor: Color.fromARGB(255, 255, 84, 5),
-                          foregroundColor: Colors.white,
-                          textStyle: TextStyle(fontSize: 16),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        child: Text(
+                          widget.eventData != null
+                              ? 'Update Event'
+                              : 'Create Event',
+                          style: GoogleFonts.poppins(
+                            textStyle: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
                           ),
                         ),
                       ),
@@ -429,11 +477,17 @@ class _CreateEventState extends State<CreateEvent> {
                 ),
               ),
             )
-          : Center(
-              child: CircularProgressIndicator(
-                color: Color.fromARGB(255, 255, 84, 5),
-              ),
-            ),
+          : Center(child: CircularProgressIndicator()),
     );
+  }
+
+  Future<void> _pickImage() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      setState(() {
+        _eventImage = File(image.path);
+      });
+    }
   }
 }

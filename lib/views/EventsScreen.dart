@@ -4,6 +4,7 @@ import 'package:appcode3/en.dart';
 import 'package:appcode3/main.dart';
 import 'package:appcode3/modals/EventsClass.dart';
 import 'package:appcode3/views/CreateEvent.dart';
+import 'package:appcode3/views/EventDetailsPage.dart';
 import 'package:appcode3/views/EventsCard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,7 @@ class _EventsScreenState extends State<EventsScreen>
   EventResponseClass? _eventResponseClass;
   late TabController _tabController;
   List<Event>? eventList;
+  List<Event>? myEventList;
   String? userId;
   int? userIntId;
   int status = 0;
@@ -39,6 +41,23 @@ class _EventsScreenState extends State<EventsScreen>
     } else {
       setState(() {
         eventList = [];
+      });
+    }
+  }
+
+  Future<void> fetchMyEvents() async {
+    final response =
+        await get(Uri.parse("$SERVER_ADDRESS/api/my_event?user_id=$userId"));
+    if (response.statusCode == 200) {
+      final jsonResponse = jsonDecode(response.body);
+      setState(() {
+        _eventResponseClass = EventResponseClass.fromJson(jsonResponse);
+        myEventList = _eventResponseClass!.events;
+        print(_eventResponseClass!.events);
+      });
+    } else {
+      setState(() {
+        myEventList = [];
       });
     }
   }
@@ -60,7 +79,7 @@ class _EventsScreenState extends State<EventsScreen>
   void initState() {
     super.initState();
 
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 2, vsync: this);
     SharedPreferences.getInstance().then((pref) {
       setState(() {
         userId = pref.getString("userId");
@@ -84,6 +103,7 @@ class _EventsScreenState extends State<EventsScreen>
           ),
         ),
         centerTitle: true,
+        automaticallyImplyLeading: false,
         flexibleSpace: Container(
           decoration: BoxDecoration(
             image: DecorationImage(
@@ -162,10 +182,16 @@ class _EventsScreenState extends State<EventsScreen>
               ),
               TabBar(
                 controller: _tabController,
+                onTap: (value) {
+                  print("Tab value is: $value");
+                  if (value == 1) {
+                    fetchMyEvents();
+                  }
+                },
                 tabs: [
                   Tab(text: "All Events"),
-                  Tab(text: "My Events"),
-                  Tab(text: "Interested"),
+                  Tab(text: "My Events")
+                  // Tab(text: "Interested"),
                 ],
               ),
               Expanded(
@@ -175,26 +201,61 @@ class _EventsScreenState extends State<EventsScreen>
                     _eventResponseClass != null
                         ? eventList!.isNotEmpty
                             ? ListView.builder(
-                                itemCount: _eventResponseClass!.events.length,
+                                itemCount: eventList!.length,
                                 itemBuilder: (context, index) {
-                                  final event =
-                                      _eventResponseClass!.events[index];
+                                  final event = eventList![index];
                                   final status = checkStatus(event);
 
-                                  return EventsCard(
-                                    imgUrl: event.image,
-                                    eventName: event.name,
-                                    location: event.location,
-                                    startDate: event.startDate,
-                                    endtDate: event.endDate,
-                                    time: event.startDateTime,
-                                    countInterested: event.interested != null
-                                        ? event.interested!.length.toString()
-                                        : "0",
-                                    countGoing: event.going != null
-                                        ? event.going!.length.toString()
-                                        : "0",
-                                    status: status.toString(),
+                                  return InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              EventDetailsPage(
+                                            eventId: event.id,
+                                            imgUrl: event.image,
+                                            eventName: event.name,
+                                            eventDescription: event.description,
+                                            location: event.location,
+                                            startDate: event.startDate,
+                                            endDate: event.endDate,
+                                            time: event.startDateTime,
+                                            countInterested:
+                                                event.interested != null
+                                                    ? event.interested!.length
+                                                        .toString()
+                                                    : "0",
+                                            countGoing: event.going != null
+                                                ? event.going!.length.toString()
+                                                : "0",
+                                            status: status.toString(),
+                                            self: event.userId == userIntId
+                                                ? true
+                                                : false,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    child: EventsCard(
+                                      eventId: event.id,
+                                      imgUrl: event.image,
+                                      eventName: event.name,
+                                      location: event.location,
+                                      startDate: event.startDate,
+                                      endtDate: event.endDate,
+                                      time: event.startDateTime,
+                                      countInterested: event.interested != null
+                                          ? event.interested!.length.toString()
+                                          : "0",
+                                      countGoing: event.going != null
+                                          ? event.going!.length.toString()
+                                          : "0",
+                                      status: status.toString(),
+                                      self: event.userId == userIntId
+                                          ? true
+                                          : false,
+                                    ),
                                   );
                                 },
                               )
@@ -202,8 +263,69 @@ class _EventsScreenState extends State<EventsScreen>
                         : Center(
                             child: CircularProgressIndicator(),
                           ),
-                    Center(child: Text("Create Your Events")),
-                    Center(child: Text("Past Events")),
+                    // Center(child: Text("Create Your Events")),
+                    myEventList != null
+                        ? myEventList!.isNotEmpty
+                            ? ListView.builder(
+                                itemCount: myEventList!.length,
+                                itemBuilder: (context, index) {
+                                  final event = myEventList![index];
+                                  final status = checkStatus(event);
+
+                                  return InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              EventDetailsPage(
+                                            eventId: event.id,
+                                            imgUrl: event.image,
+                                            eventName: event.name,
+                                            eventDescription: event.description,
+                                            location: event.location,
+                                            startDate: event.startDate,
+                                            endDate: event.endDate,
+                                            time: event.startDateTime,
+                                            countInterested:
+                                                event.interested != null
+                                                    ? event.interested!.length
+                                                        .toString()
+                                                    : "0",
+                                            countGoing: event.going != null
+                                                ? event.going!.length.toString()
+                                                : "0",
+                                            status: status.toString(),
+                                            self: true,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    child: EventsCard(
+                                      eventId: event.id,
+                                      imgUrl: event.image,
+                                      eventName: event.name,
+                                      location: event.location,
+                                      startDate: event.startDate,
+                                      endtDate: event.endDate,
+                                      time: event.startDateTime,
+                                      countInterested: event.interested != null
+                                          ? event.interested!.length.toString()
+                                          : "0",
+                                      countGoing: event.going != null
+                                          ? event.going!.length.toString()
+                                          : "0",
+                                      status: status.toString(),
+                                      self: true,
+                                    ),
+                                  );
+                                },
+                              )
+                            : Center(child: Text("No Events Upcoming"))
+                        : Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                    // Center(child: Text("Past Events")),
                   ],
                 ),
               ),

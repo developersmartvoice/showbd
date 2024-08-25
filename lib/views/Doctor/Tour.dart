@@ -108,6 +108,7 @@ class _TourState extends State<Tour> {
           ),
         ),
         centerTitle: true,
+        automaticallyImplyLeading: false,
         flexibleSpace: Container(
           decoration: BoxDecoration(
             image: DecorationImage(

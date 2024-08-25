@@ -17,6 +17,8 @@ import 'DoctorAppointmentDetails.dart';
 import 'moreScreen/more_info_screen.dart';
 
 class DoctorTabsScreen extends StatefulWidget {
+  final int? index;
+  const DoctorTabsScreen({this.index});
   @override
   _DoctorTabsScreenState createState() => _DoctorTabsScreenState();
 }
@@ -34,7 +36,7 @@ class _DoctorTabsScreenState extends State<DoctorTabsScreen> {
     // LogOutScreen(),
   ];
 
-  int index = 0;
+  int? index;
   NotificationHelper notificationHelper = NotificationHelper();
   FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
 
@@ -55,6 +57,15 @@ class _DoctorTabsScreenState extends State<DoctorTabsScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    if (widget.index != null) {
+      setState(() {
+        index = widget.index;
+      });
+    } else {
+      setState(() {
+        index = 0;
+      });
+    }
     notificationHelper.initialize();
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
@@ -96,7 +107,7 @@ class _DoctorTabsScreenState extends State<DoctorTabsScreen> {
     return WillPopScope(
       onWillPop: willPopScope,
       child: Scaffold(
-        body: screens[index],
+        body: screens[index!],
         bottomNavigationBar: Container(
           decoration: BoxDecoration(
             color: LIGHT_GREY_SCREEN_BACKGROUND,
@@ -178,7 +189,7 @@ class _DoctorTabsScreenState extends State<DoctorTabsScreen> {
                   index = i;
                 });
               },
-              currentIndex: index,
+              currentIndex: index!,
             ),
           ),
         ),

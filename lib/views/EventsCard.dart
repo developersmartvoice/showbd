@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 class EventsCard extends StatefulWidget {
   const EventsCard({
     super.key,
+    required this.eventId,
     required this.imgUrl,
     required this.eventName,
     required this.location,
@@ -14,8 +15,10 @@ class EventsCard extends StatefulWidget {
     required this.countInterested,
     required this.countGoing,
     required this.status,
+    required this.self,
   });
 
+  final int eventId;
   final String imgUrl;
   final String eventName;
   final String location;
@@ -25,6 +28,7 @@ class EventsCard extends StatefulWidget {
   final String countInterested;
   final String countGoing;
   final String status;
+  final bool self;
 
   @override
   State<EventsCard> createState() => _EventsCardState();
@@ -112,57 +116,59 @@ class _EventsCardState extends State<EventsCard> {
               style: TextStyle(color: Colors.grey),
             ),
             SizedBox(height: 8),
-            DropdownButton<String>(
-              value: _selectedValue,
-              hint: Center(
-                child: Text(
-                  'Interested?',
-                  style: TextStyle(
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              icon: Icon(Icons.arrow_drop_down),
-              isExpanded: true,
-              underline: SizedBox(),
-              items: _dropdownValues.map((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        value,
-                        style: TextStyle(fontSize: 14),
-                      ),
-                      if (_selectedValue == value)
-                        Icon(
-                          Icons.check,
-                          color: Colors.green,
+            !widget.self
+                ? DropdownButton<String>(
+                    value: _selectedValue,
+                    hint: Center(
+                      child: Text(
+                        'Interested?',
+                        style: TextStyle(
+                          color: Colors.black,
                         ),
-                    ],
-                  ),
-                );
-              }).toList(),
-              onChanged: (String? newValue) {
-                setState(() {
-                  _selectedValue = newValue;
-                });
-              },
-              selectedItemBuilder: (BuildContext context) {
-                return _dropdownValues.map<Widget>((String item) {
-                  return Center(
-                    child: Text(
-                      item,
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.black,
                       ),
                     ),
-                  );
-                }).toList();
-              },
-            )
+                    icon: Icon(Icons.arrow_drop_down),
+                    isExpanded: true,
+                    underline: SizedBox(),
+                    items: _dropdownValues.map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              value,
+                              style: TextStyle(fontSize: 14),
+                            ),
+                            if (_selectedValue == value)
+                              Icon(
+                                Icons.check,
+                                color: Colors.green,
+                              ),
+                          ],
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        _selectedValue = newValue;
+                      });
+                    },
+                    selectedItemBuilder: (BuildContext context) {
+                      return _dropdownValues.map<Widget>((String item) {
+                        return Center(
+                          child: Text(
+                            item,
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.black,
+                            ),
+                          ),
+                        );
+                      }).toList();
+                    },
+                  )
+                : Container()
           ],
         ),
       ),

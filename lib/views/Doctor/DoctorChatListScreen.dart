@@ -1171,6 +1171,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                 ),
               ),
               centerTitle: true,
+              automaticallyImplyLeading: false,
               flexibleSpace: Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
