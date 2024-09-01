@@ -638,21 +638,21 @@ class _DetailsPageState extends State<DetailsPage> {
                                           ? Navigator.of(context).push(
                                               MaterialPageRoute(
                                                 builder: (context) => ChatScreen(
-                                                    apiResponse!.recipientInfo
+                                                    apiResponse!.recipientInfo!
                                                         .recipientName,
                                                     "100" +
                                                         apiResponse!
-                                                            .recipientInfo
+                                                            .recipientInfo!
                                                             .recipientId
                                                             .toString(),
-                                                    apiResponse!.recipientInfo
+                                                    apiResponse!.recipientInfo!
                                                         .recipientConnectycubeId,
                                                     true,
-                                                    apiResponse!.recipientInfo
+                                                    apiResponse!.recipientInfo!
                                                         .recipientDeviceTokens,
-                                                    apiResponse!.recipientInfo
+                                                    apiResponse!.recipientInfo!
                                                         .recipientImage,
-                                                    apiResponse!.senderInfo
+                                                    apiResponse!.senderInfo!
                                                         .senderImage),
                                               ),
                                             )
@@ -660,19 +660,19 @@ class _DetailsPageState extends State<DetailsPage> {
                                               MaterialPageRoute(
                                                 builder: (context) => ChatScreen(
                                                     apiResponse!
-                                                        .senderInfo.senderName,
+                                                        .senderInfo!.senderName,
                                                     "100" +
-                                                        apiResponse!
-                                                            .senderInfo.senderId
+                                                        apiResponse!.senderInfo!
+                                                            .senderId
                                                             .toString(),
-                                                    apiResponse!.senderInfo
+                                                    apiResponse!.senderInfo!
                                                         .senderConnectycubeId,
                                                     true,
-                                                    apiResponse!.senderInfo
+                                                    apiResponse!.senderInfo!
                                                         .senderDeviceTokens,
-                                                    apiResponse!
-                                                        .senderInfo.senderImage,
-                                                    apiResponse!.recipientInfo
+                                                    apiResponse!.senderInfo!
+                                                        .senderImage,
+                                                    apiResponse!.recipientInfo!
                                                         .recipientImage),
                                               ),
                                             )

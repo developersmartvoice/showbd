@@ -150,8 +150,12 @@
 //   }
 // }
 
+import 'dart:convert';
+
+import 'package:appcode3/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:http/http.dart' as http;
 
 import 'views/Doctor/DoctorAppointmentDetails.dart';
 import 'views/UserAppointmentDetails.dart';
@@ -244,6 +248,42 @@ class NotificationHelper {
           );
         }
       }
+    }
+  }
+
+  Future<void> sendNotification({
+    required String? token,
+    required String title,
+    required String body,
+  }) async {
+    // const String serverKey = 'YOUR_SERVER_KEY';
+
+    if (token == null) return;
+
+    final response = await http.post(
+      Uri.parse('https://fcm.googleapis.com/fcm/send'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Authorization': 'key=$serverToken',
+      },
+      body: jsonEncode({
+        'to': token,
+        'notification': {
+          'title': title,
+          'body': body,
+        },
+        'data': {
+          'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+          'id': '1',
+          'status': 'done',
+        },
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      print('FCM request for device sent successfully!');
+    } else {
+      print('FCM request failed with status: ${response.statusCode}');
     }
   }
 

@@ -569,6 +569,8 @@ import 'dart:convert';
 import 'package:appcode3/en.dart';
 import 'package:appcode3/main.dart';
 import 'package:appcode3/notificationHelper.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 // import 'package:appcode3/modals/OffersClassSender.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_search/dropdown_search.dart';
@@ -607,11 +609,15 @@ class _BookingScreenState extends State<BookingScreen> {
   bool isNumberofPeoplePicked = false;
   bool isMessageGiven = false;
   bool loading = false;
+  String? selfToken;
+  String? oppToken;
 
   @override
   void initState() {
     super.initState();
     notificationHelper.initialize();
+    getFCMToken();
+    getOpponentDeviceToken();
   }
 
   directBooking() async {
@@ -631,6 +637,8 @@ class _BookingScreenState extends State<BookingScreen> {
 
     String postDataJson = jsonEncode(postData);
 
+    print("Here is the postData: $postData");
+
     final response = await post(
         Uri.parse("$SERVER_ADDRESS/api/updateDirectBooking"),
         body: postDataJson,
@@ -645,6 +653,7 @@ class _BookingScreenState extends State<BookingScreen> {
     if (response.statusCode == 200) {
       final jsonResponse = jsonDecode(response.body);
       directBookingClass = DirectBookingClass.fromJson(jsonResponse);
+      print(jsonResponse);
 
       if (directBookingClass!.message ==
           'Direct booking created successfully') {
@@ -667,21 +676,39 @@ class _BookingScreenState extends State<BookingScreen> {
           },
         );
 
-        // Send notifications
-        notificationHelper.showNotification(
-          title: 'Booking request sent',
-          body: 'You have successfully sent a request to ${widget.guideName}.',
-          payload: 'user_id:${int.parse(widget.sender_id)}',
-          id: widget.sender_id,
-        );
+        print(
+            "To check all notification info: \n Sender Name: ${widget.guideName}\n Sender Payload Value: ${widget.sender_id}\n Recipient Name: ${directBookingClass!.senderName}\n Recipient Payload: ${widget.receiver_id}\n");
+        directBookingClass!.senderDeviceTokens
+            .map((e) => print("Sender Device Token:${e.token}"));
+        directBookingClass!.recipientDeviceTokens
+            .map((e) => print("Recipient Device Token: ${e.token}"));
 
-        notificationHelper.showNotification(
-          title: 'New Booking Request',
-          body:
-              'You have received a booking request from ${directBookingClass!.senderName}.',
-          payload: 'user_id:${widget.receiver_id}',
-          id: widget.receiver_id, // Send notification to recipient
-        );
+        // Send notifications
+        // notificationHelper.showNotification(
+        //   title: 'Booking request sent',
+        //   body: 'You have successfully sent a request to ${widget.guideName}.',
+        //   payload: 'user_id:${int.parse(widget.sender_id)}',
+        //   id: widget.sender_id,
+        // );
+
+        notificationHelper.sendNotification(
+            token: selfToken,
+            title: 'Booking Request Sent',
+            body:
+                'You have successfully sent a request to ${widget.guideName}.');
+
+        // notificationHelper.showNotification(
+        //   title: 'New Booking Request',
+        //   body:
+        //       'You have received a booking request from ${directBookingClass!.senderName}.',
+        //   payload: 'user_id:${widget.receiver_id}',
+        //   id: widget.receiver_id, // Send notification to recipient
+        // );
+        notificationHelper.sendNotification(
+            token: oppToken,
+            title: 'New Booking Request',
+            body:
+                'You have received a booking request from ${directBookingClass!.senderName}.');
       }
     } else {
       showDialog(
@@ -705,6 +732,37 @@ class _BookingScreenState extends State<BookingScreen> {
     }
   }
 
+  Future<void> getFCMToken() async {
+    FirebaseMessaging.instance.getToken().then((fcmToken) {
+      setState(() {
+        selfToken = fcmToken;
+      });
+      print(selfToken);
+    }).catchError((e) {
+      print("Failed to get FCM token: $e");
+    });
+  }
+
+  Future<void> getOpponentDeviceToken() async {
+    DatabaseReference ref = FirebaseDatabase.instance
+        .ref('100${widget.receiver_id.toString()}/TokenList/device');
+    // .ref('users/100100/TokenList/device');
+
+    DataSnapshot snapshot = await ref.get();
+
+    if (snapshot.exists) {
+      String token = snapshot.value.toString();
+      print('Device Token: $token');
+      setState(() {
+        oppToken = token;
+      });
+      // return token;
+    } else {
+      print('No token found for UID: 100${widget.receiver_id}');
+      // return null;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     String greetings = 'Hello ${widget.guideName.capitalize}, ';
@@ -721,6 +779,7 @@ class _BookingScreenState extends State<BookingScreen> {
         ),
         centerTitle: true,
         backgroundColor: Color.fromARGB(255, 243, 103, 9),
+        foregroundColor: WHITE,
       ),
       body: loading
           ? Center(

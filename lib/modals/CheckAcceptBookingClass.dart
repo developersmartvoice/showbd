@@ -55,16 +55,16 @@ class RecipientInfo {
 class ApiResponse {
   final String message;
   final bool value;
-  final String msg1;
-  final SenderInfo senderInfo;
-  final RecipientInfo recipientInfo;
+  final String? msg1;
+  final SenderInfo? senderInfo;
+  final RecipientInfo? recipientInfo;
 
   ApiResponse({
     required this.message,
     required this.value,
-    required this.msg1,
-    required this.senderInfo,
-    required this.recipientInfo,
+    this.msg1,
+    this.senderInfo,
+    this.recipientInfo,
   });
 
   factory ApiResponse.fromJson(Map<String, dynamic> json) {

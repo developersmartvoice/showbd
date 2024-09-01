@@ -1,3 +1,4 @@
+import 'package:appcode3/main.dart';
 import 'package:intl/intl.dart';
 import 'package:appcode3/modals/SendOfferClass.dart';
 import 'package:appcode3/views/SendOfferScreen.dart';
@@ -161,6 +162,7 @@ class _SendOffersScreenState extends State<SendOffersScreen> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Color.fromARGB(255, 255, 94, 0).withOpacity(0.8),
+          foregroundColor: WHITE,
           title: Text(
             'Send Offers',
             style: Theme.of(context).textTheme.headlineSmall!.apply(
