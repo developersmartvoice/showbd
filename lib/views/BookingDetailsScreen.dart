@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:appcode3/views/DetailsPage.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:appcode3/main.dart';
@@ -22,11 +23,13 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
   bool loading = false;
   AcceptBookingClass? acceptBookingClass;
   // String? recip_id;
+  String? oppToken;
 
   @override
   void initState() {
     super.initState();
     notificationHelper.initialize();
+    getOpponentDeviceToken();
     booking_id = widget.booking.bookingId;
     // recip_id = widget.booking.
     print("This is booking ID: $booking_id");
@@ -45,12 +48,17 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
       });
 
       // Send notifications
-      notificationHelper.showNotification(
-        title: 'Request Accepted!',
-        body: '${acceptBookingClass!.recipientName} has sent you a booking.',
-        payload: 'user_id:${acceptBookingClass!.senderId}',
-        id: acceptBookingClass!.senderId.toString(),
-      );
+      // notificationHelper.showNotification(
+      //   title: 'Request Accepted!',
+      //   body: '${acceptBookingClass!.recipientName} has sent you a booking.',
+      //   payload: 'user_id:${acceptBookingClass!.senderId}',
+      //   id: acceptBookingClass!.senderId.toString(),
+      // );
+
+      notificationHelper.sendNotification(
+          token: oppToken,
+          title: 'Request Accepeted',
+          body: '${acceptBookingClass!.recipientName} accepted your booking.');
 
       Navigator.push(
         context,
@@ -95,6 +103,10 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
       setState(() {
         loading = false;
       });
+      notificationHelper.sendNotification(
+          token: oppToken,
+          title: 'Request Rejected',
+          body: '${acceptBookingClass!.recipientName} rejected your booking.');
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -113,6 +125,26 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
           );
         },
       );
+    }
+  }
+
+  Future<void> getOpponentDeviceToken() async {
+    DatabaseReference ref = FirebaseDatabase.instance
+        .ref('100${widget.recip_id.toString()}/TokenList/device');
+    // .ref('users/100100/TokenList/device');
+
+    DataSnapshot snapshot = await ref.get();
+
+    if (snapshot.exists) {
+      String token = snapshot.value.toString();
+      print('Device Token: $token');
+      setState(() {
+        oppToken = token;
+      });
+      // return token;
+    } else {
+      print('No token found for UID: 100${widget.recip_id}');
+      // return null;
     }
   }
 

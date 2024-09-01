@@ -71,13 +71,13 @@ class _BalanceDashboardState extends State<BalanceDashboard> {
         backgroundColor: Color.fromARGB(255, 243, 103, 9),
         foregroundColor: WHITE,
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.history_sharp),
-            style: ButtonStyle(
-              elevation: MaterialStatePropertyAll(5),
-            ),
-          ),
+          // IconButton(
+          //   onPressed: () {},
+          //   icon: Icon(Icons.history_sharp),
+          //   style: ButtonStyle(
+          //     elevation: MaterialStatePropertyAll(5),
+          //   ),
+          // ),
           IconButton(
             onPressed: () {
               showDialog(

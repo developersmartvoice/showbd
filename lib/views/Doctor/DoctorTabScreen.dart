@@ -29,7 +29,7 @@ class _DoctorTabsScreenState extends State<DoctorTabsScreen> {
     HomeScreen(),
     // DoctorPastAppointments(),
     Tour(),
-    EventsScreen(),
+    // EventsScreen(),
     // DoctorProfile(),
     ChatListScreen(),
     MoreInfoScreen(),
@@ -139,20 +139,21 @@ class _DoctorTabsScreenState extends State<DoctorTabsScreen> {
                   ),
                   label: "Tour",
                 ),
+                // BottomNavigationBarItem(
+                //   icon: Image.asset(
+                //     index == 2
+                //         ? "assets/events_active.png"
+                //         : "assets/events_inactive.png",
+                //     height: 25,
+                //     width: 25,
+                //     fit: BoxFit.cover,
+                //   ),
+                //   label: "Events",
+                // ),
                 BottomNavigationBarItem(
                   icon: Image.asset(
+                    // index == 3
                     index == 2
-                        ? "assets/events_active.png"
-                        : "assets/events_inactive.png",
-                    height: 25,
-                    width: 25,
-                    fit: BoxFit.cover,
-                  ),
-                  label: "Events",
-                ),
-                BottomNavigationBarItem(
-                  icon: Image.asset(
-                    index == 3
                         ? "assets/homeScreenImages/chat fill.png"
                         : "assets/homeScreenImages/chat unfill.png",
                     height: 25,
@@ -163,7 +164,8 @@ class _DoctorTabsScreenState extends State<DoctorTabsScreen> {
                 ),
                 BottomNavigationBarItem(
                   icon: Image.asset(
-                    index == 4
+                    // index == 4
+                    index == 3
                         ? "assets/homeScreenImages/profile_active.png"
                         : "assets/homeScreenImages/profile_unactive.png",
                     height: 25,

@@ -82,11 +82,24 @@ class _SeeAllOffersState extends State<SeeAllOffers> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'All Offers',
+            style: GoogleFonts.robotoCondensed(
+              color: Colors.white,
+              fontSize: 21,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          centerTitle: true,
+          backgroundColor: Color.fromARGB(255, 243, 103, 9),
+          foregroundColor: WHITE,
+        ),
         backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
         body: SafeArea(
           child: Column(
             children: [
-              header(),
+              // header(),
               Container(
                 padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                 child: Row(
