@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
+import 'package:intl/intl.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -149,7 +150,8 @@ class _ChatListScreenState extends State<ChatListScreen> {
                 message: values['last_msg'],
                 messageCount: values['messageCount'],
                 time: DateTime.parse(values['time'].toString())
-                    .add(DateTime.now().timeZoneOffset)
+                    .toLocal()
+                    // .add(DateTime.now().timeZoneOffset)
                     .toString(),
                 type: int.parse(values['type'].toString()),
                 userUid: key,
@@ -1561,6 +1563,26 @@ class _ChatListScreenState extends State<ChatListScreen> {
                                                             height: 23,
                                                             width: 23,
                                                           ),
+                                                        // Text(
+                                                        //   messageTiming(DateTime.parse(
+                                                        //           chatListDetails[
+                                                        //                   index]
+                                                        //               .time)
+                                                        //       .toLocal()),
+                                                        //   style: GoogleFonts
+                                                        //       .poppins(
+                                                        //     fontWeight:
+                                                        //         FontWeight.w500,
+                                                        //     fontSize: MediaQuery
+                                                        //                 .sizeOf(
+                                                        //                     context)
+                                                        //             .width *
+                                                        //         .025,
+                                                        //   ),
+                                                        //   overflow: TextOverflow
+                                                        //       .ellipsis,
+                                                        // ),
+
                                                         Text(
                                                           messageTiming(DateTime.parse(
                                                                   chatListDetails[
@@ -1640,14 +1662,43 @@ class _ChatListScreenState extends State<ChatListScreen> {
     );
   }
 
+  // String messageTiming(DateTime dateTime) {
+  //   if (DateTime.now().difference(dateTime).inDays == 0) {
+  //     return "${dateTime.hour} : ${dateTime.minute < 10 ? "0" + dateTime.minute.toString() : dateTime.minute}";
+  //   } else if (DateTime.now().difference(dateTime).inDays == 1) {
+  //     return "yesterday";
+  //   } else {
+  //     return DateTime.now().difference(dateTime).inDays.toString() +
+  //         " days ago";
+  //   }
+  // }
+
   String messageTiming(DateTime dateTime) {
-    if (DateTime.now().difference(dateTime).inDays == 0) {
-      return "${dateTime.hour} : ${dateTime.minute < 10 ? "0" + dateTime.minute.toString() : dateTime.minute}";
-    } else if (DateTime.now().difference(dateTime).inDays == 1) {
-      return "yesterday";
+    final now = DateTime.now();
+    final localDateTime = dateTime.toLocal(); // Convert to local time zone
+    final difference = now.difference(localDateTime);
+
+    if (difference.inDays == 0) {
+      // Same day
+      if (difference.inHours == 0) {
+        if (difference.inMinutes < 1) {
+          return 'Just now';
+        }
+        return '${difference.inMinutes} min ago';
+      } else if (difference.inHours == 1) {
+        return '1 hour ago';
+      } else {
+        return DateFormat('hh:mm a').format(localDateTime);
+      }
+    } else if (difference.inDays == 1) {
+      // Yesterday
+      return 'Yesterday';
+    } else if (difference.inDays <= 7) {
+      // Within the last 7 days
+      return '${difference.inDays} days ago';
     } else {
-      return DateTime.now().difference(dateTime).inDays.toString() +
-          " days ago";
+      // More than 7 days ago
+      return DateFormat('MM/dd/yyyy').format(localDateTime);
     }
   }
 
