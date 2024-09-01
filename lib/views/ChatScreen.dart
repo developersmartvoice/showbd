@@ -16,6 +16,7 @@ import 'package:flutter_uploader/flutter_uploader.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -1033,29 +1034,48 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
                                                                         5,
                                                                         0,
                                                                         0),
+                                                                // child: Text(
+                                                                //   DateTime.parse(snapshot
+                                                                //               .data!
+                                                                //               .docs[index][
+                                                                //                   'time']
+                                                                //               .toString())
+                                                                //           .add(DateTime.now()
+                                                                //               .timeZoneOffset)
+                                                                //           .hour
+                                                                //           .toString() +
+                                                                //       ":" +
+                                                                //       (DateTime.parse(snapshot.data!.docs[index]['time'].toString()).add(DateTime.now().timeZoneOffset).minute <
+                                                                //               10
+                                                                //           ? "0" +
+                                                                //               DateTime.parse(snapshot.data!.docs[index]['time'].toString()).add(DateTime.now().timeZoneOffset).minute.toString()
+                                                                //           : DateTime.parse(snapshot.data!.docs[index]['time'].toString()).add(DateTime.now().timeZoneOffset).minute.toString()),
+                                                                //   style: GoogleFonts.poppins(
+                                                                //       color: Colors
+                                                                //           .grey,
+                                                                //       fontSize:
+                                                                //           10),
+                                                                // ),
                                                                 child: Text(
-                                                                  DateTime.parse(snapshot
-                                                                              .data!
-                                                                              .docs[index][
-                                                                                  'time']
-                                                                              .toString())
-                                                                          .add(DateTime.now()
-                                                                              .timeZoneOffset)
-                                                                          .hour
-                                                                          .toString() +
-                                                                      ":" +
-                                                                      (DateTime.parse(snapshot.data!.docs[index]['time'].toString()).add(DateTime.now().timeZoneOffset).minute <
-                                                                              10
-                                                                          ? "0" +
-                                                                              DateTime.parse(snapshot.data!.docs[index]['time'].toString()).add(DateTime.now().timeZoneOffset).minute.toString()
-                                                                          : DateTime.parse(snapshot.data!.docs[index]['time'].toString()).add(DateTime.now().timeZoneOffset).minute.toString()),
-                                                                  style: GoogleFonts.poppins(
-                                                                      color: Colors
-                                                                          .grey,
-                                                                      fontSize:
-                                                                          10),
+                                                                  DateFormat(
+                                                                          'hh:mm a')
+                                                                      .format(
+                                                                    DateTime.parse(snapshot
+                                                                            .data!
+                                                                            .docs[index][
+                                                                                'time']
+                                                                            .toString())
+                                                                        .toLocal(),
+                                                                  ),
+                                                                  style: GoogleFonts
+                                                                      .poppins(
+                                                                    color: Colors
+                                                                        .grey,
+                                                                    fontSize:
+                                                                        10,
+                                                                  ),
                                                                 ),
-                                                              )
+                                                              ),
                                                   ],
                                                 ),
                                               ],
