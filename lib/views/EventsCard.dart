@@ -16,6 +16,7 @@ class EventsCard extends StatefulWidget {
     required this.countGoing,
     required this.status,
     required this.self,
+    required this.isMember,
   });
 
   final int eventId;
@@ -29,6 +30,7 @@ class EventsCard extends StatefulWidget {
   final String countGoing;
   final String status;
   final bool self;
+  final bool isMember;
 
   @override
   State<EventsCard> createState() => _EventsCardState();
@@ -149,11 +151,13 @@ class _EventsCardState extends State<EventsCard> {
                         ),
                       );
                     }).toList(),
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        _selectedValue = newValue;
-                      });
-                    },
+                    onChanged: widget.isMember
+                        ? (String? newValue) {
+                            setState(() {
+                              _selectedValue = newValue;
+                            });
+                          }
+                        : null,
                     selectedItemBuilder: (BuildContext context) {
                       return _dropdownValues.map<Widget>((String item) {
                         return Center(
@@ -167,6 +171,9 @@ class _EventsCardState extends State<EventsCard> {
                         );
                       }).toList();
                     },
+                    // Apply a disabled style if not a member
+                    style: TextStyle(
+                        color: widget.isMember ? Colors.black : Colors.grey),
                   )
                 : Container()
           ],

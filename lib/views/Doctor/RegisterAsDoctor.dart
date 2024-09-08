@@ -191,12 +191,21 @@ class _RegisterAsDoctorState extends State<RegisterAsDoctor> {
                     MaterialPageRoute(
                         builder: (context) => DoctorTabsScreen()));
               } else {
-                Navigator.of(context).popUntil((route) => route.isFirst);
+                Navigator.of(context).popUntil(
+                    (route) => route.isFirst); // Pop until the first route
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DoctorTabsScreen(),
+                  ),
+                );
+
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ChoosePlan(),
-                    ));
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ChoosePlan(),
+                  ),
+                );
               }
             });
           });

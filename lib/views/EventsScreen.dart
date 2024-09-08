@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:appcode3/en.dart';
 import 'package:appcode3/main.dart';
 import 'package:appcode3/modals/EventsClass.dart';
+import 'package:appcode3/views/ChoosePlan.dart';
 import 'package:appcode3/views/CreateEvent.dart';
 import 'package:appcode3/views/EventDetailsPage.dart';
 import 'package:appcode3/views/EventsCard.dart';
@@ -29,6 +30,7 @@ class _EventsScreenState extends State<EventsScreen>
   String? userId;
   int? userIntId;
   int status = 0;
+  bool isMember = false;
 
   Future<void> fetchAllEvents() async {
     final response = await get(Uri.parse("$SERVER_ADDRESS/api/all_event"));
@@ -75,6 +77,23 @@ class _EventsScreenState extends State<EventsScreen>
     }
   }
 
+  checkIsMember() async {
+    final response = await get(
+        Uri.parse("$SERVER_ADDRESS/api/check_membership?id=${userId}"));
+    if (response.statusCode == 200) {
+      final jsonResponse = jsonDecode(response.body);
+      setState(() {
+        if (jsonResponse['is_member'] == 0) {
+          isMember = false;
+        } else {
+          isMember = true;
+        }
+      });
+    } else {
+      print("Api is not call properly");
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -84,6 +103,7 @@ class _EventsScreenState extends State<EventsScreen>
       setState(() {
         userId = pref.getString("userId");
         fetchAllEvents();
+        checkIsMember();
       });
     });
   }
@@ -148,12 +168,18 @@ class _EventsScreenState extends State<EventsScreen>
                     SizedBox(height: 16.0),
                     ElevatedButton.icon(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => CreateEvent(),
-                          ),
-                        );
+                        isMember
+                            ? Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => CreateEvent(),
+                                ),
+                              )
+                            : Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (builder) => ChoosePlan()),
+                              );
                       },
                       icon: Icon(CupertinoIcons.plus_circle_fill),
                       label: Text(
@@ -208,34 +234,46 @@ class _EventsScreenState extends State<EventsScreen>
 
                                   return InkWell(
                                     onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              EventDetailsPage(
-                                            eventId: event.id,
-                                            imgUrl: event.image,
-                                            eventName: event.name,
-                                            eventDescription: event.description,
-                                            location: event.location,
-                                            startDate: event.startDate,
-                                            endDate: event.endDate,
-                                            time: event.startDateTime,
-                                            countInterested:
-                                                event.interested != null
-                                                    ? event.interested!.length
-                                                        .toString()
-                                                    : "0",
-                                            countGoing: event.going != null
-                                                ? event.going!.length.toString()
-                                                : "0",
-                                            status: status.toString(),
-                                            self: event.userId == userIntId
-                                                ? true
-                                                : false,
-                                          ),
-                                        ),
-                                      );
+                                      isMember
+                                          ? Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    EventDetailsPage(
+                                                  eventId: event.id,
+                                                  imgUrl: event.image,
+                                                  eventName: event.name,
+                                                  eventDescription:
+                                                      event.description,
+                                                  location: event.location,
+                                                  startDate: event.startDate,
+                                                  endDate: event.endDate,
+                                                  time: event.startDateTime,
+                                                  countInterested:
+                                                      event.interested != null
+                                                          ? event.interested!
+                                                              .length
+                                                              .toString()
+                                                          : "0",
+                                                  countGoing:
+                                                      event.going != null
+                                                          ? event.going!.length
+                                                              .toString()
+                                                          : "0",
+                                                  status: status.toString(),
+                                                  self:
+                                                      event.userId == userIntId
+                                                          ? true
+                                                          : false,
+                                                ),
+                                              ),
+                                            )
+                                          : Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (builder) =>
+                                                      ChoosePlan()),
+                                            );
                                     },
                                     child: EventsCard(
                                       eventId: event.id,
@@ -255,6 +293,7 @@ class _EventsScreenState extends State<EventsScreen>
                                       self: event.userId == userIntId
                                           ? true
                                           : false,
+                                      isMember: isMember,
                                     ),
                                   );
                                 },
@@ -317,6 +356,7 @@ class _EventsScreenState extends State<EventsScreen>
                                           : "0",
                                       status: status.toString(),
                                       self: true,
+                                      isMember: isMember,
                                     ),
                                   );
                                 },
