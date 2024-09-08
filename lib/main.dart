@@ -33,15 +33,15 @@ import 'package:http/http.dart' as http;
 import 'en.dart';
 
 /// old url
-const String SERVER_ADDRESS = "https://103.168.140.69/meetlocal";
+// const String SERVER_ADDRESS = "https://103.168.140.69/meetlocal";
 // const String SERVER_ADDRESS = "https://localguide.celibritychatbd.com";
-// const String SERVER_ADDRESS = "http://192.168.68.104/local-guide-backend";
+const String SERVER_ADDRESS = "https://meet-local.smartlab.com.bd";
 // const String SERVER_ADDRESS = "http://192.168.0.150/local-guide-backend";
 // const String SERVER_ADDRESS = "http://192.168.68.105/local-guide-backend";
 // const String SERVER_ADDRESS = "http://192.168.68.26/local-guide-backend";
 // const String IMAGE =
 //     "http://192.168.68.26/local-guide-backend/public/upload/banner/";
-const String IMAGE = "https://103.168.140.69/meetlocal/public/upload/banner/";
+const String IMAGE = "https://meet-local.smartlab.com.bd/public/upload/banner/";
 
 /// new url
 // const String SERVER_ADDRESS = "https://hairitgestione.eu";
