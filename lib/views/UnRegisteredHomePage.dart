@@ -5,7 +5,7 @@ import 'package:appcode3/en.dart';
 import 'package:appcode3/main.dart';
 import 'package:appcode3/modals/NearbyDoctorClass.dart';
 import 'package:appcode3/views/DetailsPage.dart';
-import 'package:appcode3/views/Doctor/UnRegisterFilterPage.dart';
+// import 'package:appcode3/views/Doctor/UnRegisterFilterPage.dart';
 // import 'package:appcode3/views/DetailsPage.dart';
 import 'package:appcode3/views/Doctor/loginAsDoctor.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -237,6 +237,43 @@ class _UnRegisteredHomePageState extends State<UnRegisteredHomePage>
     );
   }
 
+  // void _getLocationStart() async {
+  //   setState(() {
+  //     isErrorInNearby = false;
+  //     isNearbyLoading = true;
+  //   });
+
+  //   var status = await Permission.location.status;
+  //   if (status.isDenied) {
+  //     await [Permission.location].request();
+  //   }
+  //   status = await Permission.location.status;
+
+  //   if (status.isGranted && !hasApiBeenCalled) {
+  //     Position position = await Geolocator.getCurrentPosition(
+  //         desiredAccuracy: LocationAccuracy.high);
+
+  //     setState(() {
+  //       callApi(latitude: position.latitude, longitude: position.longitude);
+  //     });
+  //     hasApiBeenCalled = true;
+  //   } else if (status.isPermanentlyDenied) {
+  //     messageDialog(PERMISSION_NOT_GRANTED,
+  //         "We required location permission to serve you nearby guides.");
+  //     setState(() {
+  //       isErrorInNearby = true;
+  //     });
+  //     _getLocationStart();
+  //     return;
+  //   } else if (status.isDenied) {
+  //     messageDialog(PERMISSION_NOT_GRANTED,
+  //         "We required location permission to serve you nearby guides.");
+  //     setState(() {
+  //       isErrorInNearby = true;
+  //     });
+  //   }
+  // }
+
   void _getLocationStart() async {
     setState(() {
       isErrorInNearby = false;
@@ -245,11 +282,12 @@ class _UnRegisteredHomePageState extends State<UnRegisteredHomePage>
 
     var status = await Permission.location.status;
     if (status.isDenied) {
-      await [Permission.location].request();
+      // Request permission
+      status = await Permission.location.request();
     }
-    status = await Permission.location.status;
 
     if (status.isGranted && !hasApiBeenCalled) {
+      // Permission granted, get the location
       Position position = await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.high);
 
@@ -258,16 +296,18 @@ class _UnRegisteredHomePageState extends State<UnRegisteredHomePage>
       });
       hasApiBeenCalled = true;
     } else if (status.isPermanentlyDenied) {
+      // Show a dialog if permission is permanently denied
       messageDialog(PERMISSION_NOT_GRANTED,
-          "We required location permission to serve you nearby doctors.");
+          "We require location permission to serve you nearby guides. Please go to settings to enable it.");
       setState(() {
         isErrorInNearby = true;
       });
-      _getLocationStart();
-      return;
+      // Optionally, open app settings for the user
+      openAppSettings();
     } else if (status.isDenied) {
+      // Show a dialog if permission is denied
       messageDialog(PERMISSION_NOT_GRANTED,
-          "We required location permission to serve you nearby doctors.");
+          "We require location permission to serve you nearby guides.");
       setState(() {
         isErrorInNearby = true;
       });

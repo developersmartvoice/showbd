@@ -150,13 +150,154 @@
 //   }
 // }
 
-import 'dart:convert';
+// import 'dart:convert';
 
-import 'package:appcode3/main.dart';
+// import 'package:appcode3/main.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+// import 'package:http/http.dart' as http;
+
+// import 'views/Doctor/DoctorAppointmentDetails.dart';
+// import 'views/UserAppointmentDetails.dart';
+
+// class NotificationHelper {
+//   String? title;
+//   String? body;
+//   String? payload;
+//   String? id;
+//   String? type;
+//   BuildContext? context;
+//   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+
+//   NotificationHelper()
+//       : flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin() {
+//     initialize();
+//   }
+
+//   Future<void> checkNotificationStatus(String id) async {
+//     final notifications = await flutterLocalNotificationsPlugin
+//         .resolvePlatformSpecificImplementation<
+//             AndroidFlutterLocalNotificationsPlugin>()
+//         ?.getActiveNotifications();
+
+//     if (notifications != null) {
+//       bool notificationShown = notifications.any((notification) =>
+//           notification.id == int.parse(id) &&
+//           notification.channelId == 'channel_id');
+
+//       print('Notification with ID $id is shown: $notificationShown');
+
+//       if (notificationShown) {
+//         await flutterLocalNotificationsPlugin.cancel(int.parse(id));
+//       }
+//     }
+//   }
+
+//   Future<void> initialize() async {
+//     const AndroidInitializationSettings initializationSettingsAndroid =
+//         AndroidInitializationSettings('@mipmap/launcher_icon');
+//     final InitializationSettings initializationSettings =
+//         InitializationSettings(android: initializationSettingsAndroid);
+//     await flutterLocalNotificationsPlugin.initialize(initializationSettings,
+//         onSelectNotification: onSelectNotification);
+//   }
+
+//   Future<void> showNotification(
+//       {required String title,
+//       required String body,
+//       required String payload,
+//       required String id,
+//       BuildContext? context2}) async {
+//     context = context2;
+//     AndroidNotificationDetails androidPlatformChannelSpecifics =
+//         AndroidNotificationDetails(
+//       id,
+//       'MeetLocal',
+//       importance: Importance.max,
+//       priority: Priority.high,
+//       showWhen: true,
+//     );
+//     NotificationDetails platformChannelSpecifics =
+//         NotificationDetails(android: androidPlatformChannelSpecifics);
+//     await flutterLocalNotificationsPlugin.show(
+//       int.parse(id),
+//       title,
+//       body,
+//       platformChannelSpecifics,
+//       payload: payload,
+//     );
+//   }
+
+//   Future<void> onSelectNotification(String? payload) async {
+//     if (payload != null && context != null) {
+//       List<String> parts = payload.split(":");
+//       if (parts.length >= 2) {
+//         String type = parts[0];
+//         String id = parts[1];
+
+//         if (type == "user_id") {
+//           await Navigator.push(
+//             context!,
+//             MaterialPageRoute(builder: (context) => UserAppointmentDetails(id)),
+//           );
+//         } else if (type == "doctor_id") {
+//           await Navigator.push(
+//             context!,
+//             MaterialPageRoute(
+//                 builder: (context) => DoctorAppointmentDetails(id)),
+//           );
+//         }
+//       }
+//     }
+//   }
+
+//   Future<void> sendNotification({
+//     required String? token,
+//     required String title,
+//     required String body,
+//   }) async {
+//     // const String serverKey = 'YOUR_SERVER_KEY';
+
+//     if (token == null) return;
+
+//     final response = await http.post(
+//       Uri.parse('https://fcm.googleapis.com/fcm/send'),
+//       headers: <String, String>{
+//         'Content-Type': 'application/json',
+//         'Authorization': 'key=$serverToken',
+//       },
+//       body: jsonEncode({
+//         'to': token,
+//         'notification': {
+//           'title': title,
+//           'body': body,
+//         },
+//         'data': {
+//           'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+//           'id': '1',
+//           'status': 'done',
+//         },
+//       }),
+//     );
+
+//     if (response.statusCode == 200) {
+//       print('FCM request for device sent successfully!');
+//     } else {
+//       print('FCM request failed with status: ${response.statusCode}');
+//     }
+//   }
+
+//   Future<void> onDidReceiveLocalNotification(
+//       int id, String? title, String? body, String? payload) async {
+//     // Handle iOS local notification received
+//   }
+// }
+
+import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:http/http.dart' as http;
-
 import 'views/Doctor/DoctorAppointmentDetails.dart';
 import 'views/UserAppointmentDetails.dart';
 
@@ -196,8 +337,16 @@ class NotificationHelper {
   Future<void> initialize() async {
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/launcher_icon');
+
+    final IOSInitializationSettings initializationSettingsIOS =
+        IOSInitializationSettings(
+            onDidReceiveLocalNotification: onDidReceiveLocalNotification);
+
     final InitializationSettings initializationSettings =
-        InitializationSettings(android: initializationSettingsAndroid);
+        InitializationSettings(
+            android: initializationSettingsAndroid,
+            iOS: initializationSettingsIOS);
+
     await flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onSelectNotification: onSelectNotification);
   }
@@ -217,8 +366,14 @@ class NotificationHelper {
       priority: Priority.high,
       showWhen: true,
     );
-    NotificationDetails platformChannelSpecifics =
-        NotificationDetails(android: androidPlatformChannelSpecifics);
+
+    IOSNotificationDetails iosPlatformChannelSpecifics =
+        IOSNotificationDetails();
+
+    NotificationDetails platformChannelSpecifics = NotificationDetails(
+        android: androidPlatformChannelSpecifics,
+        iOS: iosPlatformChannelSpecifics);
+
     await flutterLocalNotificationsPlugin.show(
       int.parse(id),
       title,
@@ -256,7 +411,7 @@ class NotificationHelper {
     required String title,
     required String body,
   }) async {
-    // const String serverKey = 'YOUR_SERVER_KEY';
+    const String serverKey = 'YOUR_SERVER_KEY';
 
     if (token == null) return;
 
@@ -264,7 +419,7 @@ class NotificationHelper {
       Uri.parse('https://fcm.googleapis.com/fcm/send'),
       headers: <String, String>{
         'Content-Type': 'application/json',
-        'Authorization': 'key=$serverToken',
+        'Authorization': 'key=$serverKey',
       },
       body: jsonEncode({
         'to': token,
@@ -289,6 +444,26 @@ class NotificationHelper {
 
   Future<void> onDidReceiveLocalNotification(
       int id, String? title, String? body, String? payload) async {
-    // Handle iOS local notification received
+    if (context != null) {
+      showDialog(
+        context: context!,
+        builder: (BuildContext context) => CupertinoAlertDialog(
+          title: Text(title ?? 'Notification'),
+          content: Text(body ?? ''),
+          actions: [
+            CupertinoDialogAction(
+              isDefaultAction: true,
+              child: Text('Ok'),
+              onPressed: () {
+                Navigator.of(context, rootNavigator: true).pop();
+                if (payload != null) {
+                  onSelectNotification(payload);
+                }
+              },
+            ),
+          ],
+        ),
+      );
+    }
   }
 }
