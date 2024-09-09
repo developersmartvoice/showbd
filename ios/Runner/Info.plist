@@ -26,20 +26,36 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAllowsArbitraryLoadsInWebContent</key>
+	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>This app requires to access your photo library to show image on profile</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>We required your location to server you nearby doctors</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>We need your location even when the app is not in use for background updates.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Need your permission to access the current location of yours to get latitude and longitude</string>
+	<string>We need your location to provide location-based services.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>We require microphone usage to convert speech to text</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>This app requires to access your photo library to show image</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>We require gallery access so you can choose your profile picture</string>
+	<key>NSUserNotificationUsageDescription</key>
+	<string>We need to send you notifications to keep you updated on important events.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>location</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
