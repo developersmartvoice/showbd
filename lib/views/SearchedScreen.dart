@@ -246,53 +246,48 @@ class _SearchedScreenState extends State<SearchedScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: LIGHT_GREY_SCREEN_BACKGROUND,
-        body: Stack(
-          children: [
-            isErrorInLoading
-                ? Container(
-                    child: Center(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
+        body: isErrorInLoading
+            ? Container(
+                child: Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.search_off_rounded,
+                        size: 100,
+                        color: LIGHT_GREY_TEXT,
+                      ),
+                      SizedBox(height: 20),
+                      Text(UNABLE_TO_LOAD_DATA_FORM_SERVER),
+                    ],
+                  ),
+                ),
+              )
+            : SingleChildScrollView(
+                controller: _scrollController,
+                child: isLoading
+                    ? Center(
+                        child: CircularProgressIndicator(
+                          color: const Color.fromARGB(255, 243, 103, 9),
+                          valueColor: AlwaysStoppedAnimation(
+                              Theme.of(context).hintColor),
+                        ),
+                      )
+                    : Column(
                         children: [
-                          Icon(
-                            Icons.search_off_rounded,
-                            size: 100,
-                            color: LIGHT_GREY_TEXT,
-                          ),
-                          SizedBox(height: 20),
-                          Text(UNABLE_TO_LOAD_DATA_FORM_SERVER),
+                          header(),
+                          isFilterLoading
+                              ? Center(
+                                  child: CircularProgressIndicator(
+                                    color:
+                                        const Color.fromARGB(255, 243, 103, 9),
+                                  ),
+                                )
+                              : body()
                         ],
                       ),
-                    ),
-                  )
-                : SingleChildScrollView(
-                    controller: _scrollController,
-                    child: isLoading
-                        ? Center(
-                            child: CircularProgressIndicator(
-                              color: const Color.fromARGB(255, 243, 103, 9),
-                              valueColor: AlwaysStoppedAnimation(
-                                  Theme.of(context).hintColor),
-                            ),
-                          )
-                        : Column(
-                            children: [
-                              header(),
-                              isFilterLoading
-                                  ? Center(
-                                      child: CircularProgressIndicator(
-                                        color: const Color.fromARGB(
-                                            255, 243, 103, 9),
-                                      ),
-                                    )
-                                  : body()
-                            ],
-                          ),
-                  ),
-            header(),
-          ],
-        ),
+              ),
       ),
     );
   }
@@ -306,65 +301,63 @@ class _SearchedScreenState extends State<SearchedScreen> {
           width: MediaQuery.of(context).size.width,
           fit: BoxFit.fill,
         ),
-        SafeArea(
-          child: Container(
-            height: 60,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Image.asset(
-                      "assets/moreScreenImages/back.png",
-                      height: 25,
-                      width: 22,
-                    ),
+        Container(
+          height: 60,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Image.asset(
+                    "assets/moreScreenImages/back.png",
+                    height: 25,
+                    width: 22,
                   ),
-                  SizedBox(width: 10),
-                  Text(
-                    "Filters",
+                ),
+                SizedBox(width: 10),
+                Text(
+                  "Filters",
+                  style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w600,
+                    color: WHITE,
+                    fontSize: MediaQuery.of(context).size.width * 0.05,
+                  ),
+                ),
+                SizedBox(width: 20),
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      print("Filter Fees: $filterFees");
+                      print("Languages Selected: $selectedLanguages");
+                      print("Activities Selected: $selectedActivities");
+                      print("Gender: $filterGender");
+                      if (isFeesSelected ||
+                          isLanguageSelected ||
+                          isActivitiesSelected ||
+                          isGenderSelected) {
+                        setState(() {
+                          isFilterLoading = true;
+                        });
+                        getFiltersDoctors();
+                      } else {
+                        print("No Value Selected");
+                      }
+                    });
+                  },
+                  child: Text(
+                    "Apply",
                     style: GoogleFonts.poppins(
                       fontWeight: FontWeight.w600,
-                      color: WHITE,
-                      fontSize: MediaQuery.of(context).size.width * 0.05,
+                      color: const Color.fromARGB(255, 12, 88, 150),
+                      fontSize: MediaQuery.of(context).size.width * 0.03,
                     ),
                   ),
-                  SizedBox(width: 20),
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        print("Filter Fees: $filterFees");
-                        print("Languages Selected: $selectedLanguages");
-                        print("Activities Selected: $selectedActivities");
-                        print("Gender: $filterGender");
-                        if (isFeesSelected ||
-                            isLanguageSelected ||
-                            isActivitiesSelected ||
-                            isGenderSelected) {
-                          setState(() {
-                            isFilterLoading = true;
-                          });
-                          getFiltersDoctors();
-                        } else {
-                          print("No Value Selected");
-                        }
-                      });
-                    },
-                    child: Text(
-                      "Apply",
-                      style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w600,
-                        color: const Color.fromARGB(255, 12, 88, 150),
-                        fontSize: MediaQuery.of(context).size.width * 0.03,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

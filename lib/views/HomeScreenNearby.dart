@@ -601,7 +601,7 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
       print("Here isPermanentlyDenied");
 
       messageDialog(PERMISSION_NOT_GRANTED,
-          "We required location permission to server you nearby doctors.");
+          "We required location permission to server you nearby guides.");
       setState(() {
         isErrorInNearby = true;
       });
@@ -610,9 +610,12 @@ class _HomeScreenNearbyState extends State<HomeScreenNearby> {
     } else if (status.isDenied) {
       print("Here is else part");
       messageDialog(PERMISSION_NOT_GRANTED,
-          "We required location permission to server you nearby doctors.");
+          "We required location permission to server you nearby guides.");
       setState(() {
-        isErrorInNearby = true;
+        _updateLocation(latitude: 0.0, longitude: 0.0);
+        callApi(latitude: 0.0, longitude: 0.0);
+        isErrorInNearby = false;
+        hasApiBeenCalled = true;
       });
     }
   }

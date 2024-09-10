@@ -85,56 +85,59 @@ class _MemberShipDetails extends State<MemberShipDetails> {
         ),
       ),
       body: SingleChildScrollView(
-          padding: EdgeInsets.all(16.0),
-          child: isEndDateFetched
-              ? Center(
-                  child: Container(
-                    alignment: Alignment.center,
-                    transformAlignment: Alignment.center,
-                    padding: EdgeInsets.all(
-                        20), // Adding padding for better appearance
-                    child: Column(
-                      mainAxisAlignment:
-                          MainAxisAlignment.center, // Centering vertically
-                      children: [
-                        Text(
-                          "You subscribed for 1 month.",
-                          style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w400, // Making text bold
-                            fontSize: MediaQuery.of(context).size.width *
-                                0.04, // Adjusting font size
-                          ),
+        padding: EdgeInsets.all(16.0),
+        child: isEndDateFetched
+            ? Center(
+                child: Container(
+                  alignment: Alignment.center,
+                  transformAlignment: Alignment.center,
+                  padding: EdgeInsets.all(
+                      20), // Adding padding for better appearance
+                  child: Column(
+                    mainAxisAlignment:
+                        MainAxisAlignment.center, // Centering vertically
+                    children: [
+                      Text(
+                        "You subscribed for 1 month.",
+                        style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w400, // Making text bold
+                          fontSize: MediaQuery.of(context).size.width *
+                              0.04, // Adjusting font size
                         ),
-                        SizedBox(
-                          height: 10,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Your subscription will end on :",
+                        style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w400, // Making text bold
+                          fontSize: 18, // Adjusting font size
                         ),
-                        Text(
-                          "Your subscription will end on :",
-                          style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w400, // Making text bold
-                            fontSize: 18, // Adjusting font size
-                          ),
+                      ),
+                      Text(
+                        formattedEndDate!,
+                        style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w400, // Making text bold
+                          fontSize: MediaQuery.of(context).size.width *
+                              0.04, // Adjusting font size
+                          color: Colors.blue, // Changing text color to blue
                         ),
-                        Text(
-                          formattedEndDate!,
-                          style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w400, // Making text bold
-                            fontSize: MediaQuery.of(context).size.width *
-                                0.04, // Adjusting font size
-                            color: Colors.blue, // Changing text color to blue
-                          ),
-                        )
-                      ],
-                    ),
+                      )
+                    ],
                   ),
-                )
-              : Container(
+                ),
+              )
+            : Center(
+                child: Container(
                   alignment: Alignment.center,
                   transformAlignment: Alignment.center,
                   child: CircularProgressIndicator(
                     color: const Color.fromARGB(255, 243, 103, 9),
                   ),
-                )),
+                ),
+              ),
+      ),
     );
   }
 }

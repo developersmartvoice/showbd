@@ -96,11 +96,13 @@ class _FilteredGuidesScreenState extends State<FilteredGuidesScreen> {
               title: Text(
                 "Filtered Result",
                 style: Theme.of(context).textTheme.headlineSmall!.apply(
-                      color: Theme.of(context).primaryColorDark,
+                      // color: Theme.of(context).primaryColorDark,
+                      color: Colors.white,
                       fontWeightDelta: 5,
                     ),
               ),
               backgroundColor: const Color.fromARGB(255, 243, 103, 9),
+              foregroundColor: Colors.white,
               centerTitle: true,
               actions: [
                 IconButton(

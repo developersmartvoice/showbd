@@ -304,6 +304,10 @@ class _UnRegisteredHomePageState extends State<UnRegisteredHomePage>
       });
       // Optionally, open app settings for the user
       openAppSettings();
+
+      // Call the API with static values
+      callApi(latitude: 0.0, longitude: 0.0);
+      hasApiBeenCalled = true;
     } else if (status.isDenied) {
       // Show a dialog if permission is denied
       messageDialog(PERMISSION_NOT_GRANTED,
@@ -311,6 +315,10 @@ class _UnRegisteredHomePageState extends State<UnRegisteredHomePage>
       setState(() {
         isErrorInNearby = true;
       });
+
+      // Call the API with static values
+      callApi(latitude: 0.0, longitude: 0.0);
+      hasApiBeenCalled = true;
     }
   }
 
