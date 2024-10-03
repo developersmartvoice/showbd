@@ -115,6 +115,8 @@ dependencies:
   shurjopay: ^2.0.4
   random_string: ^2.3.1
   share_plus: ^4.5.0
+  googleapis: ^13.1.0
+  googleapis_auth: ^1.4.1
   # dart_webrtc: ^1.2.1
 
 #  unnecessary package
@@ -167,6 +169,7 @@ flutter:
     - assets/braintree/
     - assets/uploadRecipt/
     - assets/home/
+    - assets/meetlocal-7bbe7-3f1ebccc1b7d.json
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

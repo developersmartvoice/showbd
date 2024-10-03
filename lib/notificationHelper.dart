@@ -300,6 +300,8 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:http/http.dart' as http;
 import 'views/Doctor/DoctorAppointmentDetails.dart';
 import 'views/UserAppointmentDetails.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'package:googleapis_auth/auth_io.dart'; // For Google Auth
 
 class NotificationHelper {
   String? title;
@@ -313,6 +315,26 @@ class NotificationHelper {
   NotificationHelper()
       : flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin() {
     initialize();
+  }
+
+  Future<String> getAccessToken() async {
+    // Load the service account credentials from the JSON file
+    final String credentialsJson =
+        await rootBundle.loadString('assets/meetlocal-7bbe7-3f1ebccc1b7d.json');
+
+    // Parse the JSON to create service account credentials
+    final serviceAccountCredentials =
+        ServiceAccountCredentials.fromJson(credentialsJson);
+
+    const scopes = ['https://www.googleapis.com/auth/firebase.messaging'];
+
+    // Requesting OAuth token via service account
+    final client =
+        await clientViaServiceAccount(serviceAccountCredentials, scopes);
+    final accessToken = client.credentials.accessToken.data;
+    client.close();
+
+    return accessToken;
   }
 
   Future<void> checkNotificationStatus(String id) async {
@@ -406,32 +428,86 @@ class NotificationHelper {
     }
   }
 
+  // Future<void> sendNotification({
+  //   required String? token,
+  //   required String title,
+  //   required String body,
+  // }) async {
+  //   const String serverKey = 'YOUR_SERVER_KEY';
+
+  //   if (token == null) return;
+
+  //   final response = await http.post(
+  //     Uri.parse('https://fcm.googleapis.com/fcm/send'),
+  //     headers: <String, String>{
+  //       'Content-Type': 'application/json',
+  //       'Authorization': 'key=$serverKey',
+  //     },
+  //     body: jsonEncode({
+  //       'to': token,
+  //       'notification': {
+  //         'title': title,
+  //         'body': body,
+  //       },
+  //       'data': {
+  //         'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+  //         'id': '1',
+  //         'status': 'done',
+  //       },
+  //     }),
+  //   );
+
+  //   if (response.statusCode == 200) {
+  //     print('FCM request for device sent successfully!');
+  //   } else {
+  //     print('FCM request failed with status: ${response.statusCode}');
+  //   }
+  // }
+
   Future<void> sendNotification({
     required String? token,
     required String title,
     required String body,
   }) async {
-    const String serverKey = 'YOUR_SERVER_KEY';
+    // Get OAuth 2.0 Access Token
+    final String accessToken = await getAccessToken();
 
     if (token == null) return;
 
     final response = await http.post(
-      Uri.parse('https://fcm.googleapis.com/fcm/send'),
+      Uri.parse(
+          'https://fcm.googleapis.com/v1/projects/meetlocal-7bbe7/messages:send'),
       headers: <String, String>{
         'Content-Type': 'application/json',
-        'Authorization': 'key=$serverKey',
+        'Authorization': 'Bearer $accessToken',
       },
       body: jsonEncode({
-        'to': token,
-        'notification': {
-          'title': title,
-          'body': body,
-        },
-        'data': {
-          'click_action': 'FLUTTER_NOTIFICATION_CLICK',
-          'id': '1',
-          'status': 'done',
-        },
+        'message': {
+          'token': token,
+          'notification': {
+            'title': title,
+            'body': body,
+          },
+          'data': {
+            'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+            'id': '1',
+            'status': 'done',
+          },
+          'android': {
+            'priority': 'high',
+          },
+          'apns': {
+            'payload': {
+              'aps': {
+                'alert': {
+                  'title': title,
+                  'body': body,
+                },
+                'sound': 'default',
+              },
+            },
+          },
+        }
       }),
     );
 
@@ -439,6 +515,7 @@ class NotificationHelper {
       print('FCM request for device sent successfully!');
     } else {
       print('FCM request failed with status: ${response.statusCode}');
+      print('Error: ${response.body}');
     }
   }
 
