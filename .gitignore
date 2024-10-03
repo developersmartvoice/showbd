@@ -168,3 +168,7 @@ app.*.symbols
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 !/dev/ci/**/Gemfile.lock
 !.vscode/settings.json
+
+
+# Ignore sensitive JSON file
+assets/meetlocal-7bbe7-3f1ebccc1b7d.json
