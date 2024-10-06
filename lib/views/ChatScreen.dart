@@ -15,6 +15,7 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_uploader/flutter_uploader.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:googleapis_auth/auth_io.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
@@ -374,6 +375,26 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
       value.commit();
       print("0-> Chat Screen Payload : ${value.getString("payload")}");
     });
+  }
+
+  Future<String> getAccessToken() async {
+    // Load the service account credentials from the JSON file
+    final String credentialsJson =
+        await rootBundle.loadString('assets/meetlocal-7bbe7-3f1ebccc1b7d.json');
+
+    // Parse the JSON to create service account credentials
+    final serviceAccountCredentials =
+        ServiceAccountCredentials.fromJson(credentialsJson);
+
+    const scopes = ['https://www.googleapis.com/auth/firebase.messaging'];
+
+    // Requesting OAuth token via service account
+    final client =
+        await clientViaServiceAccount(serviceAccountCredentials, scopes);
+    final accessToken = client.credentials.accessToken.data;
+    client.close();
+
+    return accessToken;
   }
 
   loadUserProfile() async {
@@ -1062,8 +1083,7 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
                                                                       .format(
                                                                     DateTime.parse(snapshot
                                                                             .data!
-                                                                            .docs[index][
-                                                                                'time']
+                                                                            .docs[index]['time']
                                                                             .toString())
                                                                         .toLocal(),
                                                                   ),
@@ -2586,58 +2606,121 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
     }
   }
 
+  // Future<Map<String, dynamic>> sendNotification(
+  //     String userName, String message, String token) async {
+  //   await firebaseMessaging.requestPermission(
+  //       sound: true, badge: true, alert: true, provisional: false);
+
+  //   print('sent message to this token : $token');
+
+  //   await http
+  //       .post(
+  //     Uri.parse('https://fcm.googleapis.com/fcm/send'),
+  //     // 'https://fcm.googleapis.com/fcm/send',
+  //     headers: <String, String>{
+  //       'Content-Type': 'application/json',
+  //       'Authorization': 'key=$serverToken',
+  //     },
+  //     body: jsonEncode(
+  //       <String, dynamic>{
+  //         'priority': 'high',
+  //         'notification': <String, dynamic>{
+  //           'android': <String, String>{},
+  //           'title': userName,
+  //           'body': message,
+  //         },
+  //         'data': <String, String>{
+  //           'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+  //           'body': message,
+  //           'title': userName,
+  //           // 'channel' : channelId?.codeUnits[0].toString() + channelId.codeUnits[1].toString() + channelId.codeUnits.last.toString(),
+  //           'channel':
+  //               '${channelId?.codeUnits[0].toString()}${channelId?.codeUnits[1].toString()}${channelId?.codeUnits.last.toString()}',
+  //           'uid': myUid.toString(),
+  //           'channelId': channelId!,
+  //           'myName': myName,
+  //           // 'ccId': oppConnectCubId.toString(),
+  //           // 'ccId': myconnectCubId!,
+  //           'myUserName': userName,
+  //           // 'myid' : widget.uid!,
+  //           'myid': myUid.toString(),
+  //           'notificationType': 0.toString(),
+  //           // 'oppUserId' :
+  //         },
+  //         'to': token,
+  //       },
+  //     ),
+  //   )
+  //       .then((value) {
+  //     print("\n\nMessage sent : ${value.body}");
+  //   });
+
+  //   final Completer<Map<String, dynamic>> completer =
+  //       Completer<Map<String, dynamic>>();
+
+  //   return completer.future;
+  // }
+
   Future<Map<String, dynamic>> sendNotification(
       String userName, String message, String token) async {
     await firebaseMessaging.requestPermission(
         sound: true, badge: true, alert: true, provisional: false);
 
-    print('sent message to this token : $token');
+    print('Sending message to token: $token');
 
-    await http
-        .post(
-      Uri.parse('https://fcm.googleapis.com/fcm/send'),
-      // 'https://fcm.googleapis.com/fcm/send',
+    // Firebase Cloud Messaging HTTP v1 endpoint
+    final String apiUrl =
+        "https://fcm.googleapis.com/v1/projects/meetlocal-7bbe7/messages:send";
+
+    // OAuth 2.0 access token (should be obtained securely, server-side ideally)
+    final String accessToken = await getAccessToken();
+
+    final response = await http.post(
+      Uri.parse(apiUrl),
       headers: <String, String>{
         'Content-Type': 'application/json',
-        'Authorization': 'key=$serverToken',
+        'Authorization': 'Bearer $accessToken',
       },
-      body: jsonEncode(
-        <String, dynamic>{
-          'priority': 'high',
-          'notification': <String, dynamic>{
-            'android': <String, String>{},
+      body: jsonEncode({
+        'message': {
+          'token': token,
+          'notification': {
             'title': userName,
             'body': message,
           },
-          'data': <String, String>{
+          'data': {
             'click_action': 'FLUTTER_NOTIFICATION_CLICK',
             'body': message,
             'title': userName,
-            // 'channel' : channelId?.codeUnits[0].toString() + channelId.codeUnits[1].toString() + channelId.codeUnits.last.toString(),
             'channel':
-                '${channelId?.codeUnits[0].toString()}${channelId?.codeUnits[1].toString()}${channelId?.codeUnits.last.toString()}',
+                '${channelId?.codeUnits[0]}${channelId?.codeUnits[1]}${channelId?.codeUnits.last}',
             'uid': myUid.toString(),
             'channelId': channelId!,
             'myName': myName,
-            // 'ccId': oppConnectCubId.toString(),
-            // 'ccId': myconnectCubId!,
             'myUserName': userName,
-            // 'myid' : widget.uid!,
             'myid': myUid.toString(),
-            'notificationType': 0.toString(),
-            // 'oppUserId' :
+            'notificationType': '0',
           },
-          'to': token,
-        },
-      ),
-    )
-        .then((value) {
-      print("\n\nMessage sent : ${value.body}");
-    });
+          'android': {
+            // Optional android-specific fields can go here
+          },
+          'apns': {
+            'payload': {
+              'aps': {'sound': 'default'}
+            }
+          }
+        }
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      print("Message sent successfully: ${response.body}");
+    } else {
+      print("Failed to send message: ${response.statusCode} ${response.body}");
+    }
 
     final Completer<Map<String, dynamic>> completer =
         Completer<Map<String, dynamic>>();
-
     return completer.future;
   }
 }
